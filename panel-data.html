@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Econometrics with R at SciencesPo</title>
+  <meta name="description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths.">
+  <meta name="generator" content="bookdown 0.7.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Econometrics with R at SciencesPo" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths." />
+  <meta name="github-repo" content="floswald/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Econometrics with R at SciencesPo" />
+  
+  <meta name="twitter:description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths." />
+  
+
+<meta name="author" content="Florian Oswald and Jean-Marc Robin">
+
+
+<meta name="date" content="2018-04-03">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="quantreg.html">
+<link rel="next" href="IV.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> What is this?</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#book-usage"><i class="fa fa-check"></i><b>2.1</b> Book usage</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>3</b> R</a></li>
+<li class="chapter" data-level="4" data-path="summarize-data.html"><a href="summarize-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a></li>
+<li class="chapter" data-level="5" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a></li>
+<li class="chapter" data-level="7" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>7</b> Multiple Regression</a></li>
+<li class="chapter" data-level="8" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>8</b> Categorial Variables: Dummies and Interactions</a></li>
+<li class="chapter" data-level="9" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>9</b> Quantile Regression</a></li>
+<li class="chapter" data-level="10" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>10</b> Panel Data</a></li>
+<li class="chapter" data-level="11" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>11</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="12" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>12</b> Logit and Probit</a></li>
+<li class="chapter" data-level="13" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>13</b> Principal Component Analysis</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics with R at SciencesPo</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="panel-data" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Panel Data</h1>
+<ul>
+<li>scanner data on breakfast cereals, <span class="math inline">\((Q_{it},D_{it})\)</span></li>
+<li>why does D vary with Q</li>
+<li>pos relation ship</li>
+<li>don’t observe the group identity!</li>
+<li>unobserved het alpha is correlated with Q</li>
+<li>within group estimator</li>
+<li>what if you don’t have panel data?</li>
+</ul>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="quantreg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="IV.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/floswald/ScPoEconometrics/edit/master/09-PanelData.Rmd",
+"text": "Edit"
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
