@@ -113,7 +113,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a></li>
-<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> R</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> R</a><ul>
+<li class="chapter" data-level="2.1" data-path="R-intro.html"><a href="R-intro.html#a-very-quick-r-intro"><i class="fa fa-check"></i><b>2.1</b> A very quick R intro</a></li>
+<li class="chapter" data-level="2.2" data-path="R-intro.html"><a href="R-intro.html#can-do-math"><i class="fa fa-check"></i><b>2.2</b> Can do Math</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="summarize-data.html"><a href="summarize-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing Data</a></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a></li>
 <li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
@@ -150,8 +153,45 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="R-intro" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> R</h1>
-<p>R intro.</p>
+<div id="a-very-quick-r-intro" class="section level2">
+<h2><span class="header-section-number">2.1</span> A very quick R intro</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)
+<span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
+<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cars-fig"></span>
+<img src="ScPoEconometrics_files/figure-html/cars-fig-1.png" alt="A simple plot in R" width="672" />
+<p class="caption">
+Figure 2.1: A simple plot in R
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">residuals</span>(stop_dist_model),<span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(<span class="kw">residuals</span>(stop_dist_model)),<span class="dt">col=</span><span class="st">&#39;red&#39;</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:hist-fig"></span>
+<img src="ScPoEconometrics_files/figure-html/hist-fig-1.png" alt="what you were looking for" width="672" />
+<p class="caption">
+Figure 2.2: what you were looking for
+</p>
+</div>
+</div>
+<div id="can-do-math" class="section level2">
+<h2><span class="header-section-number">2.2</span> Can do Math</h2>
+<p><span class="math display">\[
+\begin{aligned}
+R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} \\[2.5ex]
+    &amp;= \frac{\text{SST} - \text{SSE}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \\[2.5ex]
+    &amp;= 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\end{aligned}
+\]</span></p>
+<p>But don’t have to!</p>
 
+</div>
 </div>
             </section>
 
