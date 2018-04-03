@@ -8,33 +8,25 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
+url: 'https\://floswald.github.io/ScPoEconometrics/'
+favicon: "favicon.gif"
 github-repo: floswald/ScPoEconometrics
 description: "We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths."
 ---
 
-# What is this?
 
-This is our book about Introductory Econometrics for 2nd year UGs at ScPo.
 
-## Prerequisites
+# Econometrics at ScPo - WORK IN PROGRESS
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+![](ScPo.jpg)
 
-The **bookdown** package can be installed from CRAN or Github:
+This is our book about Introductory Econometrics for 2nd year UGs at ScPo. We follow a practical approach with minimal reliance on maths and maximal reliance on practical learning.
 
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
-```
+On this first page we can explain a bit more about the course structure:
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+* Who is who
+* how to communicate
+* how many sessions etc
 
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
 
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+

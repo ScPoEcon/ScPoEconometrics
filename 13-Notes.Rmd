@@ -1,10 +1,19 @@
-# Introduction {#intro}
+# Notes {#notes}
 
+
+this creates a library for the used R packages.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
 
 
 ## Book usage
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(linreg).
 
 Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
 

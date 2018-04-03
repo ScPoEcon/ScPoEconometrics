@@ -8,6 +8,8 @@ bookdown::gitbook:
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/floswald/ScPoEconometrics/edit/master/%s
     download: ["pdf", "epub"]
+  includes:
+    in_header: GA-tracker.html
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
