@@ -1,0 +1,5 @@
+# Standard Errors {#std-errors}
+
+1. Standard Errors
+    1. True data
+    1. play with N and see how errors behave

@@ -1,0 +1,9 @@
+# Panel Data {#panel-data}
+
+* scanner data on breakfast cereals, $(Q_{it},D_{it})$
+* why does D vary with Q
+* pos relation ship 
+* don't observe the group identity!
+* unobserved het alpha is correlated with Q
+* within group estimator
+* what if you don't have panel data?

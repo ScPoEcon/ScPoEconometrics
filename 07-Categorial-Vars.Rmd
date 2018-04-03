@@ -1,0 +1,4 @@
+# Categorial Variables: Dummies and Interactions {#categorical-vars}
+
+1. if you only have educ categories, the estimate is like the conditional mean by educ
+1. if you have too many categories you will have empty bins

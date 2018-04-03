@@ -1,0 +1,6 @@
+# Instrumental Variables {#IV}
+
+1. wage = educ
+1. educ = ability
+1. ols estimator captures your ability
+1. you predict x by z and you only keep the variation that is in the error

@@ -1,0 +1,4 @@
+# Multiple Regression {#multiple-reg}
+
+* Same as simple regression but more variables
+* income ~ age is not linear

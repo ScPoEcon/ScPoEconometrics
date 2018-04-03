@@ -1,3 +1,11 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+# ScPo UG Econometrics
 
-You can find the preview of this example at https://bookdown.org/yihui/bookdown-demo/
+[![Build Status](https://travis-ci.org/floswald/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/floswald/ScPoEconometrics)
+
+This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
+
+
+## Technology
+
+this book is made using bookdown.
+You can find the preview of an example at https://bookdown.org/yihui/bookdown-demo/
