@@ -11,7 +11,7 @@
 
   <meta property="og:title" content="Econometrics with R at SciencesPo" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:url" content="https://floswald.github.io/ScPoEconometrics/" />
   
   <meta property="og:description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths." />
   <meta name="github-repo" content="floswald/ScPoEconometrics" />
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
-  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
 <link rel="prev" href="R-intro.html">
 <link rel="next" href="linreg.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -47,6 +47,15 @@
 
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
 
 
 <style type="text/css">
@@ -103,23 +112,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">ScPo 2nd Year Econometrics</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> What is this?</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> R</a></li>
+<li class="chapter" data-level="3" data-path="summarize-data.html"><a href="summarize-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing Data</a></li>
+<li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a></li>
+<li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
+<li class="chapter" data-level="6" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>6</b> Multiple Regression</a></li>
+<li class="chapter" data-level="7" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>7</b> Categorial Variables: Dummies and Interactions</a></li>
+<li class="chapter" data-level="8" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>8</b> Quantile Regression</a></li>
+<li class="chapter" data-level="9" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>9</b> Panel Data</a></li>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="11" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>11</b> Logit and Probit</a></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Principal Component Analysis</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#book-usage"><i class="fa fa-check"></i><b>2.1</b> Book usage</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>3</b> R</a></li>
-<li class="chapter" data-level="4" data-path="summarize-data.html"><a href="summarize-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a></li>
-<li class="chapter" data-level="5" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a></li>
-<li class="chapter" data-level="7" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>7</b> Multiple Regression</a></li>
-<li class="chapter" data-level="8" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>8</b> Categorial Variables: Dummies and Interactions</a></li>
-<li class="chapter" data-level="9" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>9</b> Quantile Regression</a></li>
-<li class="chapter" data-level="10" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>10</b> Panel Data</a></li>
-<li class="chapter" data-level="11" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>11</b> Instrumental Variables</a></li>
-<li class="chapter" data-level="12" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>12</b> Logit and Probit</a></li>
-<li class="chapter" data-level="13" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>13</b> Principal Component Analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -142,7 +149,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="summarize-data" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Summarizing Data</h1>
+<h1><span class="header-section-number">Chapter 3</span> Summarizing Data</h1>
 <p>We describe our methods in this chapter.</p>
 
 </div>
