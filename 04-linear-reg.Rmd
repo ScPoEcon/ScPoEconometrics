@@ -1,6 +1,7 @@
 # Linear Regression {#linreg}
 
 
+
 1. linear regression - stop at R-squared
     1. different data: missing variable
     1. non-linear realtionship
@@ -29,3 +30,10 @@
     1. poor R2 and large standard error
     1. How **confident** are you about this relationship? Is there enought data?
     1. SE is ameasure of precision depending on N
+    
+## Try to find the Slope!
+
+```{r}
+knitr::include_url("https://gallery.shinyapps.io/simple_regression/",height = "600px")
+```
+    
