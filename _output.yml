@@ -5,7 +5,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">ScPo 2nd Year Econometrics</a></li>
       after: |
-        <li><a href="https://github.com/floswald/ScPoEconometrics" target="blank">Published with bookdown</a></li>
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/floswald/ScPoEconometrics/edit/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
