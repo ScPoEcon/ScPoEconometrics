@@ -1,5 +1,5 @@
 --- 
-title: "Econometrics with R at SciencesPo"
+title: "Econometrics with R at SciencesPo [WIP]"
 author: "Florian Oswald and Jean-Marc Robin"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -11,7 +11,7 @@ link-citations: yes
 url: 'https\://floswald.github.io/ScPoEconometrics/'
 favicon: "favicon.gif"
 github-repo: floswald/ScPoEconometrics
-description: "We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths."
+description: "SciencesPo UG Econometrics online textbook. No Maths."
 ---
 
 

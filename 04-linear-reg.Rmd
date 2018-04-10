@@ -34,6 +34,6 @@
 ## Try to find the Slope!
 
 ```{r}
-knitr::include_url("https://gallery.shinyapps.io/simple_regression/",height = "600px")
+knitr::include_url("https://gallery.shinyapps.io/simple_regression/")
 ```
     

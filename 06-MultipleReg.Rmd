@@ -2,3 +2,8 @@
 
 * Same as simple regression but more variables
 * income ~ age is not linear
+
+
+```{r}
+knitr::include_app("https://gallery.shinyapps.io/multi_regression/",height="1600px")
+```
