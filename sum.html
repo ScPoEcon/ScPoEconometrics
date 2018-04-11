@@ -145,10 +145,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.3" data-path="sum.html"><a href="sum.html#boxplots"><i class="fa fa-check"></i><b>3.2.3</b> Boxplots</a></li>
 <li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
 <li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
-<li class="chapter" data-level="3.2.6" data-path="sum.html"><a href="sum.html#dplyr-ggplot-the-tidyverse"><i class="fa fa-check"></i><b>3.2.6</b> <code>dplyr + ggplot</code> : The <code>tidyverse</code></a></li>
-<li class="chapter" data-level="3.2.7" data-path="sum.html"><a href="sum.html#importing-excel-data-either-in-.xlsx-or-.xls-formats"><i class="fa fa-check"></i><b>3.2.7</b> Importing Excel Data (either in <code>.xlsx</code> or .<code>xls</code> formats)</a></li>
-<li class="chapter" data-level="3.2.8" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.2.8</b> <code>tidyr</code></a></li>
-<li class="chapter" data-level="3.2.9" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.2.9</b> <code>dplyr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>3.3</b> The <code>tidyverse</code></a><ul>
+<li class="chapter" data-level="3.3.1" data-path="sum.html"><a href="sum.html#importing-excel-data"><i class="fa fa-check"></i><b>3.3.1</b> Importing Excel Data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.3.2</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.3.3</b> <code>dplyr</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
@@ -363,8 +364,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>)   <span class="co"># add a title</span></code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 </div>
-<div id="dplyr-ggplot-the-tidyverse" class="section level3">
-<h3><span class="header-section-number">3.2.6</span> <code>dplyr + ggplot</code> : The <code>tidyverse</code></h3>
+</div>
+<div id="the-tidyverse" class="section level2">
+<h2><span class="header-section-number">3.3</span> The <code>tidyverse</code></h2>
 <p><a href="http://hadley.nz">Hadley Wickham</a> is the author of R packages <code>ggplot2</code> and also of <code>dplyr</code> (and also a myriad of others). With <code>ggplot2</code> he pioneered what he calls the <em>grammar of graphics</em> (hence, <code>gg</code>). Grammar in the sense that there are <strong>nouns</strong> and <strong>verbs</strong> and a <strong>syntax</strong>, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the <em>grammar</em> idea into various other packages. The <code>tidyverse</code> package is a collection of those packages.</p>
 <p><code>tidy</code> data is data where:</p>
 <ul>
@@ -373,9 +375,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Each value is a cell</li>
 </ul>
 <p>Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us <em>not</em> tidy most of the times, and we first need to clean, or <code>tidy</code>, it up. Once it’s in <code>tidy</code> format, we can use the tools in the <code>tidyverse</code> with great efficiency to analyse the data and stop worrying about which tool to use.</p>
-</div>
-<div id="importing-excel-data-either-in-.xlsx-or-.xls-formats" class="section level3">
-<h3><span class="header-section-number">3.2.7</span> Importing Excel Data (either in <code>.xlsx</code> or .<code>xls</code> formats)</h3>
+<div id="importing-excel-data" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Importing Excel Data</h3>
 <p>The data we will look at is from <a href="http://ec.europa.eu/eurostat/data/database">Eurostat</a> on demography and migration. You should download the data yourself (click on previous link, then drill down to <em>database by themes &gt; Population and social conditions &gt; Demograph and migration &gt; Population change - Demographic balance and crude rates at national level (demo_gind)</em>).</p>
 <p>Once downloaded, we can read the data with the function <code>read_excel</code> from the package <a href="http://readxl.tidyverse.org"><code>readxl</code></a>, again part of the <code>tidyverse</code> suite.</p>
 <p>It’s important to know how the data is organized in the spreadsheet. Open the file with Excel to see:</p>
@@ -417,7 +418,7 @@ tot_pop_raw</code></pre></div>
 <p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). Notice, in particular, that <em>all</em> columns seem to be of type <code>chr</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
 </div>
 <div id="tidyr" class="section level3">
-<h3><span class="header-section-number">3.2.8</span> <code>tidyr</code></h3>
+<h3><span class="header-section-number">3.3.2</span> <code>tidyr</code></h3>
 <p>In the previous <code>tibble</code>, there is a <em>hidden</em> variable: <code>year</code>. Each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
 <li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>[&quot;2008&quot;, &quot;2009&quot;, &quot;2010&quot;,...]</code>)</li>
@@ -427,27 +428,27 @@ tot_pop_raw</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather function</span>
 tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</code></pre></div>
 <p>Notice that <code>counts</code> is still a <code>chr</code>. Let’s convert it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop<span class="op">$</span>counts =<span class="st"> </span><span class="kw">as.numeric</span>(tot_pop<span class="op">$</span>counts)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop<span class="op">$</span>counts =<span class="st"> </span><span class="kw">as.integer</span>(tot_pop<span class="op">$</span>counts)</code></pre></div>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop</code></pre></div>
 <pre><code>## # A tibble: 590 x 3
-##    Country                                          year      counts
-##    &lt;chr&gt;                                            &lt;chr&gt;      &lt;dbl&gt;
-##  1 European Union (current composition)             2008  500297033.
-##  2 European Union (without United Kingdom)          2008  438725386.
-##  3 European Union (before the accession of Croatia) 2008  495985066.
-##  4 Euro area (19 countries)                         2008  333096775.
-##  5 Euro area (18 countries)                         2008  329884170.
-##  6 Belgium                                          2008   10666866.
-##  7 Bulgaria                                         2008    7518002.
-##  8 Czech Republic                                   2008   10343422.
-##  9 Denmark                                          2008    5475791.
-## 10 Germany (until 1990 former territory of the FRG) 2008   82217837.
+##    Country                                          year     counts
+##    &lt;chr&gt;                                            &lt;chr&gt;     &lt;int&gt;
+##  1 European Union (current composition)             2008  500297033
+##  2 European Union (without United Kingdom)          2008  438725386
+##  3 European Union (before the accession of Croatia) 2008  495985066
+##  4 Euro area (19 countries)                         2008  333096775
+##  5 Euro area (18 countries)                         2008  329884170
+##  6 Belgium                                          2008   10666866
+##  7 Bulgaria                                         2008    7518002
+##  8 Czech Republic                                   2008   10343422
+##  9 Denmark                                          2008    5475791
+## 10 Germany (until 1990 former territory of the FRG) 2008   82217837
 ## # ... with 580 more rows</code></pre>
-<p>Now you can see that column <code>counts</code> is indeed a <code>dbl</code>, i.e. a number with double precision, and we are fine.</p>
+<p>Now you can see that column <code>counts</code> is indeed a <code>int</code>, i.e. an integer number, and we are fine.</p>
 </div>
 <div id="dplyr" class="section level3">
-<h3><span class="header-section-number">3.2.9</span> <code>dplyr</code></h3>
+<h3><span class="header-section-number">3.3.3</span> <code>dplyr</code></h3>
 <blockquote>
 <p>The <a href="http://r4ds.had.co.nz/transform.html">transform</a> chapter of Hadley Wickham’s book is a great place to read up more on using <code>dplyr</code>.</p>
 </blockquote>

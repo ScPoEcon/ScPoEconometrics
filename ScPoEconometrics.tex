@@ -2909,8 +2909,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.956190  3.485536  3.106312 11.036737  6.432686 -3.624753  6.499923
-##  [8]  3.871226 10.551008  6.735400
+##  [1]  2.3725063 -1.0434140  0.7095305  1.3466809  2.2456724  4.2195910
+##  [7]  3.1297321 -1.0481808  4.2151264  2.7822527
 \end{verbatim}
 
 \begin{Shaded}
@@ -2920,8 +2920,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.3833424 -0.2375593 -0.3174068  1.3523846  0.3829781 -1.7346669
-##  [7]  0.3971353 -0.1563503  1.2501118  0.4467161
+##  [1]  0.2525459 -1.5463589 -0.6232167 -0.2876781  0.1857521  1.2252645
+##  [7]  0.6513189 -1.5488691  1.2229133  0.4683280
 \end{verbatim}
 
 This function could be written much more succinctly, simply performing
@@ -3045,7 +3045,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 22.55633
+## [1] 3.605779
 \end{verbatim}
 
 \begin{Shaded}
@@ -3055,7 +3055,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 22.55633
+## [1] 3.605779
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 22.55633
+## [1] 3.605779
 \end{verbatim}
 
 We see the function is working as expected, and when returning the
@@ -3080,7 +3080,7 @@ unbiased estimate it matches \texttt{R}'s built in function
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 20.3007
+## [1] 3.245201
 \end{verbatim}
 
 \chapter{Working With Data}\label{sum}
@@ -3385,8 +3385,8 @@ demonstrate how one could customize that first plot:
 
 \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-113-1.pdf}
 
-\subsection{\texorpdfstring{\texttt{dplyr\ +\ ggplot} : The
-\texttt{tidyverse}}{dplyr + ggplot : The tidyverse}}\label{dplyr-ggplot-the-tidyverse}
+\section{\texorpdfstring{The
+\texttt{tidyverse}}{The tidyverse}}\label{the-tidyverse}
 
 \href{http://hadley.nz}{Hadley Wickham} is the author of R packages
 \texttt{ggplot2} and also of \texttt{dplyr} (and also a myriad of
@@ -3417,9 +3417,7 @@ we first need to clean, or \texttt{tidy}, it up. Once it's in
 with great efficiency to analyse the data and stop worrying about which
 tool to use.
 
-\subsection{\texorpdfstring{Importing Excel Data (either in
-\texttt{.xlsx} or .\texttt{xls}
-formats)}{Importing Excel Data (either in .xlsx or .xls formats)}}\label{importing-excel-data-either-in-.xlsx-or-.xls-formats}
+\subsection{Importing Excel Data}\label{importing-excel-data}
 
 The data we will look at is from
 \href{http://ec.europa.eu/eurostat/data/database}{Eurostat} on
@@ -3531,7 +3529,7 @@ Notice that \texttt{counts} is still a \texttt{chr}. Let's convert it:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tot_pop}\OperatorTok{$}\NormalTok{counts =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(tot_pop}\OperatorTok{$}\NormalTok{counts)}
+\NormalTok{tot_pop}\OperatorTok{$}\NormalTok{counts =}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(tot_pop}\OperatorTok{$}\NormalTok{counts)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3547,23 +3545,23 @@ Notice that \texttt{counts} is still a \texttt{chr}. Let's convert it:
 
 \begin{verbatim}
 ## # A tibble: 590 x 3
-##    Country                                          year      counts
-##    <chr>                                            <chr>      <dbl>
-##  1 European Union (current composition)             2008  500297033.
-##  2 European Union (without United Kingdom)          2008  438725386.
-##  3 European Union (before the accession of Croatia) 2008  495985066.
-##  4 Euro area (19 countries)                         2008  333096775.
-##  5 Euro area (18 countries)                         2008  329884170.
-##  6 Belgium                                          2008   10666866.
-##  7 Bulgaria                                         2008    7518002.
-##  8 Czech Republic                                   2008   10343422.
-##  9 Denmark                                          2008    5475791.
-## 10 Germany (until 1990 former territory of the FRG) 2008   82217837.
+##    Country                                          year     counts
+##    <chr>                                            <chr>     <int>
+##  1 European Union (current composition)             2008  500297033
+##  2 European Union (without United Kingdom)          2008  438725386
+##  3 European Union (before the accession of Croatia) 2008  495985066
+##  4 Euro area (19 countries)                         2008  333096775
+##  5 Euro area (18 countries)                         2008  329884170
+##  6 Belgium                                          2008   10666866
+##  7 Bulgaria                                         2008    7518002
+##  8 Czech Republic                                   2008   10343422
+##  9 Denmark                                          2008    5475791
+## 10 Germany (until 1990 former territory of the FRG) 2008   82217837
 ## # ... with 580 more rows
 \end{verbatim}
 
-Now you can see that column \texttt{counts} is indeed a \texttt{dbl},
-i.e.~a number with double precision, and we are fine.
+Now you can see that column \texttt{counts} is indeed a \texttt{int},
+i.e.~an integer number, and we are fine.
 
 \subsection{\texorpdfstring{\texttt{dplyr}}{dplyr}}\label{dplyr}
 
