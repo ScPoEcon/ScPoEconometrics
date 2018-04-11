@@ -4,3 +4,22 @@ Title: Does not matter.
 Version: 0.0.1
 Imports: bookdown
 Remotes: rstudio/bookdown
+
+
+Package: ScPoEconometrics
+Title: ScPoEconometrics
+Version: 0.0.1
+Authors@R: c(
+  person("Florian", "Oswald" , "florian.oswald@sciencespo.fr", c("aut", "cre")),
+  person("Jean-Marc", "Robin" , "jeanmarc.robin@sciencespo.fr", role="ctb"),
+  )
+Depends: R (>= 3.3.0)
+URL: https://github.com/floswald/ScPoEconometrics
+Imports:
+  bookdown,
+  ggplot2,
+  ggfortify,
+  zoo
+Remotes:
+  sinhrks/ggfortify,
+  rstudio/bookdown

@@ -1,6 +1,7 @@
 language: r
 cache: packages
 pandoc_version: 1.19.2.1
+r_packages: dplyr, ggplot2, reshape2
 
 before_script:
   - chmod +x ./_build.sh
