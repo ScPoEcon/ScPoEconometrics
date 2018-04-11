@@ -158,7 +158,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
 
-### `dplyr + ggplot` : The `tidyverse`
+## The `tidyverse`
 
 [Hadley Wickham](http://hadley.nz) is the author of R packages `ggplot2` and also of `dplyr` (and also a myriad of others). With `ggplot2` he pioneered what he calls the *grammar of graphics* (hence, `gg`). Grammar in the sense that there are **nouns** and **verbs** and a **syntax**, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the *grammar* idea into various other packages. The `tidyverse` package is a collection of those packages. 
 
@@ -170,7 +170,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
 
 Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us *not* tidy most of the times, and we first need to clean, or `tidy`, it up. Once it's in `tidy` format, we can use the tools in the `tidyverse` with great efficiency to analyse the data and stop worrying about which tool to use.
 
-### Importing Excel Data (either in `.xlsx` or .`xls` formats)
+### Importing Excel Data
 
 The data we will look at is from [Eurostat](http://ec.europa.eu/eurostat/data/database) on demography and migration. You should download the data yourself (click on previous link, then drill down to *database by themes > Population and social conditions > Demograph and migration > Population change - Demographic balance and crude rates at national level (demo_gind)*). 
 
@@ -220,11 +220,11 @@ tot_pop = gather(tot_pop_raw, paste(2008:2017),key="year", value = "counts")
 Notice that `counts` is still a `chr`. Let's convert it:
 
 ```{r convert}
-tot_pop$counts = as.numeric(tot_pop$counts)
+tot_pop$counts = as.integer(tot_pop$counts)
 tot_pop
 ```
 
-Now you can see that column `counts` is indeed a `dbl`, i.e. a number with double precision, and we are fine.
+Now you can see that column `counts` is indeed a `int`, i.e. an integer number, and we are fine.
 
 ### `dplyr`
 
@@ -246,7 +246,7 @@ All of those verbs can be used with `group_by()`, where we apply the respective 
 
 Now we can immediately select some countries and plot their population over time. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
 
-```{r gather-plot,warning=FALSE}
+```{r gather-plot,warning=FALSE,message=FALSE}
 library(dplyr)  # for %>%, filter, mutate, ...
 tot_pop %>%
   filter(Country %in% c("France","United Kingdom","Italy","Germany")) %>%
