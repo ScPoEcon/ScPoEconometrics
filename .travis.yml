@@ -1,12 +1,10 @@
 language: r
 cache: packages
+sudo: false
 pandoc_version: 1.19.2.1
-r_packages:
-  dplyr
-  ggplot2
-  reshape2
 
 before_script:
+  - Rscript -e 'install.packages(c("dplyr", "ggplot2", "reshape2"));if (!all(c("dplyr", "ggplot2", "reshape2") %in% installed.packages())) { q(status = 1, save = "no")}'
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
 
