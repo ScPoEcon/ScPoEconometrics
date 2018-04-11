@@ -6,6 +6,10 @@ In this chapter we will first learn some basic concepts that help summarizing da
 
 `R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. Make sure to have loaded the `ggplot2` library to be able to access the `mpg` dataset as introduced in section \@ref(dataframes).
 
+```{r}
+library(ggplot2)
+```
+
 ### Central Tendency {-}
 
 | Measure | `R`               | Result              |
@@ -140,13 +144,13 @@ plot(hwy ~ displ, data = mpg,
 All of the above plots could also have been generate using the `ggplot` function from the already loaded `ggplot2` package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the `boxplot` example maybe), sometimes the other way around.
 
 ```{r}
-ggplot(data=mpg,aes(x=displ,y=hwy)) + geom_point()
+ggplot(data = mpg,mapping = aes(x=displ,y=hwy)) + geom_point()
 ```
 
 `ggplot` is impossible to describe in brief terms, so please look at [the package's website](http://ggplot2.tidyverse.org) which provides excellent guidance. We will from time to time use ggplot in this book, so try to familiarize yourself with it. Let's quickly demonstrate how one could customize that first plot:
 
 ```{r}
-ggplot(data=mpg,aes(x=displ,y=hwy)) +   # ggplot() makes base plot
+ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   geom_point(color="blue",size=2) +     # how to show x and y?
   scale_y_continuous(name="Miles Per Gallon (Highway)") +  # name of y axis
   scale_x_continuous(name="Engine Displacement (in Liters)") + # x axis
@@ -154,6 +158,106 @@ ggplot(data=mpg,aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
 
+### `dplyr + ggplot` : The `tidyverse`
+
+[Hadley Wickham](http://hadley.nz) is the author of R packages `ggplot2` and also of `dplyr` (and also a myriad of others). With `ggplot2` he pioneered what he calls the *grammar of graphics* (hence, `gg`). Grammar in the sense that there are **nouns** and **verbs** and a **syntax**, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the *grammar* idea into various other packages. The `tidyverse` package is a collection of those packages. 
+
+`tidy` data is data where:
+
+* Each variable is a column
+* Each observation is a row
+* Each value is a cell
+
+Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us *not* tidy most of the times, and we first need to clean, or `tidy`, it up. Once it's in `tidy` format, we can use the tools in the `tidyverse` with great efficiency to analyse the data and stop worrying about which tool to use.
+
+### Importing Excel Data (either in `.xlsx` or .`xls` formats)
+
+The data we will look at is from [Eurostat](http://ec.europa.eu/eurostat/data/database) on demography and migration. You should download the data yourself (click on previous link, then drill down to *database by themes > Population and social conditions > Demograph and migration > Population change - Demographic balance and crude rates at national level (demo_gind)*). 
+
+Once downloaded, we can read the data with the function `read_excel` from the package [`readxl`](http://readxl.tidyverse.org), again part of the `tidyverse` suite.
+
+It's important to know how the data is organized in the spreadsheet. Open the file with Excel to see:
+
+* There is a heading which we don't need.
+* There are 5 rows with info that we don't need.
+* There is one table per variable (total population, males, females, etc)
+* Each table has one row for each country, and one column for each year.
+* As such, this data is **not tidy**.
+
+Now we will read the first chunk of data, from the first table: *total population*:
+
+```{r}
+library(readxl)  # load the library
+
+# Suppose I downloaded the file to a directory 
+# data/ in my current working directory (cwd)
+# you can change your cwd with `setwd("your/directory")`
+# or in RStudio by clicking Session > Set Working Directory
+
+# total population in raw format
+tot_pop_raw = read_excel(path = "data/demo_gind.xls", 
+                sheet="Data", # which sheet
+                range="A9:K68")  # which excel cell range to read
+names(tot_pop_raw)[1] <- "Country"   # lets rename the first column
+tot_pop_raw
+```
+
+This shows a `tibble`. This is more informative view of a `data.frame` (it tells us data type, and how many cols and rows). Notice, in particular, that *all* columns seem to be of type `chr`, i.e. characters - a string, not a number! We'll have to fix that, as this is clearly numeric data.
+
+### `tidyr`
+
+In the previous `tibble`, there is a *hidden* variable: `year`. Each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
+
+1. specify which columns are to be gathered: in our case, all years (note that `paste(2008:2017)` produces a vector like `["2008", "2009", "2010",...]`)
+1. say what those columns should be gathered into, i.e. what is the *key* for those values: `year`.
+1. Finally, what is the name of the new resulting column, containing the *value* from each cell: `counts`.
+
+```{r gather,warning=FALSE}
+library(tidyr)   # for the gather function
+tot_pop = gather(tot_pop_raw, paste(2008:2017),key="year", value = "counts")
+```
+
+Notice that `counts` is still a `chr`. Let's convert it:
+
+```{r convert}
+tot_pop$counts = as.numeric(tot_pop$counts)
+tot_pop
+```
+
+Now you can see that column `counts` is indeed a `dbl`, i.e. a number with double precision, and we are fine.
+
 ### `dplyr`
 
-The `dplyr` package is widely used tool to work with data in `R`. We will briefly look at it's functionality now.
+>The [transform](http://r4ds.had.co.nz/transform.html) chapter of Hadley Wickham's book is a great place to read up more on using `dplyr`.
+
+With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
+
+* Choose observations based on a certain value: `filter()`
+* Reorder rows: `arrange()`
+* Select variables by name: `select()`
+* Create new variables out of existing ones: `mutate()`
+* Summarise variables: `summarise()`
+
+All of those verbs can be used with `group_by()`, where we apply the respective operation on a *group* of the dataframe/tibble. For example, on our `tot_pop` tibble we will now
+
+* filter
+* select
+* arrange
+
+Now we can immediately select some countries and plot their population over time. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
+
+```{r gather-plot,warning=FALSE}
+library(dplyr)  # for %>%, filter, mutate, ...
+tot_pop %>%
+  filter(Country %in% c("France","United Kingdom","Italy","Germany")) %>%
+  mutate(millions = counts / 1e6) %>%
+  ggplot(mapping = aes(x=year,y=millions,color=Country,group=Country)) + geom_line()
+```
+
+
+* how many NA's?
+* plot different vars
+* make proportions and plot
+* make growth rates and plot
+* plot different vars by country
+

@@ -11,6 +11,17 @@ knitr::write_bib(c(
 ```
 
 
+In order to install that package, you need to do
+
+```{r,eval=FALSE}
+if (!require(devtools)){
+  install.packages("devtools")
+}
+library(devtools)
+install_github("floswald/ScPoEconometrics")  
+```
+
+
 ## Book usage
 
 You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(linreg).
