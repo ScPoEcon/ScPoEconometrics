@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Econometrics with R at SciencesPo [WIP]</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
+  <meta name="generator" content="bookdown 0.7.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Econometrics with R at SciencesPo [WIP]" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://floswald.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
+  <meta name="github-repo" content="floswald/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Econometrics with R at SciencesPo [WIP]" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
+  
+
+<meta name="author" content="Florian Oswald and Jean-Marc Robin">
+
+
+<meta name="date" content="2018-04-11">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
+<link rel="prev" href="R-intro.html">
+<link rel="next" href="linreg.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.2" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.3" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting Help</a></li>
+<li class="chapter" data-level="2.4" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>2.4</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>2.5</b> Data Types</a></li>
+<li class="chapter" data-level="2.6" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>2.6</b> Data Structures</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="R-intro.html"><a href="R-intro.html#vectors"><i class="fa fa-check"></i><b>2.6.1</b> Vectors</a></li>
+<li class="chapter" data-level="2.6.2" data-path="R-intro.html"><a href="R-intro.html#vectorization"><i class="fa fa-check"></i><b>2.6.2</b> Vectorization</a></li>
+<li class="chapter" data-level="2.6.3" data-path="R-intro.html"><a href="R-intro.html#logical-operators"><i class="fa fa-check"></i><b>2.6.3</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.6.4" data-path="R-intro.html"><a href="R-intro.html#more-vectorization"><i class="fa fa-check"></i><b>2.6.4</b> More Vectorization</a></li>
+<li class="chapter" data-level="2.6.5" data-path="R-intro.html"><a href="R-intro.html#matrices"><i class="fa fa-check"></i><b>2.6.5</b> Matrices</a></li>
+<li class="chapter" data-level="2.6.6" data-path="R-intro.html"><a href="R-intro.html#lists"><i class="fa fa-check"></i><b>2.6.6</b> Lists</a></li>
+<li class="chapter" data-level="2.6.7" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>2.6.7</b> Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>2.7</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="R-intro.html"><a href="R-intro.html#control-flow"><i class="fa fa-check"></i><b>2.7.1</b> Control Flow</a></li>
+<li class="chapter" data-level="2.7.2" data-path="R-intro.html"><a href="R-intro.html#functions"><i class="fa fa-check"></i><b>2.7.2</b> Functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>3</b> Working With Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>3.1</b> Summary Statistics</a><ul>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#spread"><i class="fa fa-check"></i>Spread</a></li>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>3.2</b> Plotting</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="sum.html"><a href="sum.html#histograms"><i class="fa fa-check"></i><b>3.2.1</b> Histograms</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sum.html"><a href="sum.html#barplots"><i class="fa fa-check"></i><b>3.2.2</b> Barplots</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sum.html"><a href="sum.html#boxplots"><i class="fa fa-check"></i><b>3.2.3</b> Boxplots</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
+<li class="chapter" data-level="3.2.6" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.2.6</b> <code>dplyr</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.1</b> Try to find the Slope!</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
+<li class="chapter" data-level="6" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>6</b> Multiple Regression</a></li>
+<li class="chapter" data-level="7" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>7</b> Categorial Variables: Dummies and Interactions</a></li>
+<li class="chapter" data-level="8" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>8</b> Quantile Regression</a></li>
+<li class="chapter" data-level="9" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>9</b> Panel Data</a></li>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="11" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>11</b> Logit and Probit</a></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Principal Component Analysis</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics with R at SciencesPo [WIP]</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sum" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Working With Data</h1>
+<p>In this chapter we will first learn some basic concepts that help summarizing data. Then, we will tackle a real-world task and read, clean, and summarize data from the web.</p>
+<div id="summary-statistics" class="section level2">
+<h2><span class="header-section-number">3.1</span> Summary Statistics</h2>
+<p><code>R</code> has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. Make sure to have loaded the <code>ggplot2</code> library to be able to access the <code>mpg</code> dataset as introduced in section <a href="R-intro.html#dataframes">2.6.7</a>.</p>
+<div id="central-tendency" class="section level3 unnumbered">
+<h3>Central Tendency</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Measure</th>
+<th><code>R</code></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mean</td>
+<td><code>mean(mpg$cty)</code></td>
+<td>16.8589744</td>
+</tr>
+<tr class="even">
+<td>Median</td>
+<td><code>median(mpg$cty)</code></td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="spread" class="section level3 unnumbered">
+<h3>Spread</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Measure</th>
+<th><code>R</code></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variance</td>
+<td><code>var(mpg$cty)</code></td>
+<td>18.1130736</td>
+</tr>
+<tr class="even">
+<td>Standard Deviation</td>
+<td><code>sd(mpg$cty)</code></td>
+<td>4.2559457</td>
+</tr>
+<tr class="odd">
+<td>IQR</td>
+<td><code>IQR(mpg$cty)</code></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Minimum</td>
+<td><code>min(mpg$cty)</code></td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>Maximum</td>
+<td><code>max(mpg$cty)</code></td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>Range</td>
+<td><code>range(mpg$cty)</code></td>
+<td>9, 35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="categorical" class="section level3 unnumbered">
+<h3>Categorical</h3>
+<p>For categorical variables, counts and percentages can be used for summary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(mpg<span class="op">$</span>drv)</code></pre></div>
+<pre><code>## 
+##   4   f   r 
+## 103 106  25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(mpg<span class="op">$</span>drv) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(mpg)</code></pre></div>
+<pre><code>## 
+##         4         f         r 
+## 0.4401709 0.4529915 0.1068376</code></pre>
+</div>
+</div>
+<div id="plotting" class="section level2">
+<h2><span class="header-section-number">3.2</span> Plotting</h2>
+<p>Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.</p>
+<p>We will look at four methods of visualizing data that we will use throughout the course:</p>
+<ul>
+<li>Histograms</li>
+<li>Barplots</li>
+<li>Boxplots</li>
+<li>Scatterplots</li>
+</ul>
+<div id="histograms" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Histograms</h3>
+<p>When visualizing a single numerical variable, a <strong>histogram</strong> will be our go-to tool, which can be created in <code>R</code> using the <code>hist()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg<span class="op">$</span>cty)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg<span class="op">$</span>cty,
+     <span class="dt">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,
+     <span class="dt">main   =</span> <span class="st">&quot;Histogram of MPG (City)&quot;</span>, <span class="co"># main title</span>
+     <span class="dt">breaks =</span> <span class="dv">12</span>,   <span class="co"># how many breaks?</span>
+     <span class="dt">col    =</span> <span class="st">&quot;red&quot;</span>,
+     <span class="dt">border =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
+</div>
+<div id="barplots" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Barplots</h3>
+<p>Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv))</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv),
+        <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
+        <span class="dt">ylab   =</span> <span class="st">&quot;Frequency&quot;</span>,
+        <span class="dt">main   =</span> <span class="st">&quot;Drivetrains&quot;</span>,
+        <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+        <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+</div>
+<div id="boxplots" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Boxplots</h3>
+<p>To visualize the relationship between a numerical and categorical variable, we will use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(mpg<span class="op">$</span>drv)</code></pre></div>
+<pre><code>## [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
+<p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mpg<span class="op">$</span>hwy)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p>Here used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg,
+     <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
+     <span class="dt">ylab   =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,
+     <span class="dt">main   =</span> <span class="st">&quot;MPG (Highway) vs Drivetrain&quot;</span>,
+     <span class="dt">pch    =</span> <span class="dv">20</span>,
+     <span class="dt">cex    =</span> <span class="dv">2</span>,
+     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
+     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
+</div>
+<div id="scatterplots" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Scatterplots</h3>
+<p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg,
+     <span class="dt">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+</div>
+<div id="ggplot" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> <code>ggplot</code></h3>
+<p>All of the above plots could also have been generate using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mpg,<span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p><code>ggplot</code> is impossible to describe in brief terms, so please look at <a href="http://ggplot2.tidyverse.org">the package’s website</a> which provides excellent guidance. We will from time to time use ggplot in this book, so try to familiarize yourself with it. Let’s quickly demonstrate how one could customize that first plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mpg,<span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st">   </span><span class="co"># ggplot() makes base plot</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st">     </span><span class="co"># how to show x and y?</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="co"># name of y axis</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Engine Displacement (in Liters)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># x axis</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st">    </span><span class="co"># change the background</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>)   <span class="co"># add a title</span></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+</div>
+<div id="dplyr" class="section level3">
+<h3><span class="header-section-number">3.2.6</span> <code>dplyr</code></h3>
+<p>The <code>dplyr</code> package is widely used tool to work with data in <code>R</code>. We will briefly look at it’s functionality now.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="R-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linreg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/floswald/ScPoEconometrics/edit/master/03-SummaryStats.Rmd",
+"text": "Edit"
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -5,34 +5,34 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Econometrics with R at SciencesPo</title>
-  <meta name="description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths.">
-  <meta name="generator" content="bookdown 0.7.5 and GitBook 2.6.7">
+  <title>Econometrics with R at SciencesPo [WIP]</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
+  <meta name="generator" content="bookdown 0.7.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Econometrics with R at SciencesPo" />
+  <meta property="og:title" content="Econometrics with R at SciencesPo [WIP]" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://floswald.github.io/ScPoEconometrics/" />
   
-  <meta property="og:description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths." />
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   <meta name="github-repo" content="floswald/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Econometrics with R at SciencesPo" />
+  <meta name="twitter:title" content="Econometrics with R at SciencesPo [WIP]" />
   
-  <meta name="twitter:description" content="We use this book to teach 2nd year Undergraduates at SciencesPo Econometrics from a purely practical perspective. No Maths." />
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   
 
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-04-03">
+<meta name="date" content="2018-04-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
-<link rel="prev" href="summarize-data.html">
+<link rel="prev" href="sum.html">
 <link rel="next" href="std-errors.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -113,11 +113,41 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a></li>
-<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> R</a><ul>
-<li class="chapter" data-level="2.1" data-path="R-intro.html"><a href="R-intro.html#a-very-quick-r-intro"><i class="fa fa-check"></i><b>2.1</b> A very quick R intro</a></li>
-<li class="chapter" data-level="2.2" data-path="R-intro.html"><a href="R-intro.html#can-do-math"><i class="fa fa-check"></i><b>2.2</b> Can do Math</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.2" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.3" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting Help</a></li>
+<li class="chapter" data-level="2.4" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>2.4</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>2.5</b> Data Types</a></li>
+<li class="chapter" data-level="2.6" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>2.6</b> Data Structures</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="R-intro.html"><a href="R-intro.html#vectors"><i class="fa fa-check"></i><b>2.6.1</b> Vectors</a></li>
+<li class="chapter" data-level="2.6.2" data-path="R-intro.html"><a href="R-intro.html#vectorization"><i class="fa fa-check"></i><b>2.6.2</b> Vectorization</a></li>
+<li class="chapter" data-level="2.6.3" data-path="R-intro.html"><a href="R-intro.html#logical-operators"><i class="fa fa-check"></i><b>2.6.3</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.6.4" data-path="R-intro.html"><a href="R-intro.html#more-vectorization"><i class="fa fa-check"></i><b>2.6.4</b> More Vectorization</a></li>
+<li class="chapter" data-level="2.6.5" data-path="R-intro.html"><a href="R-intro.html#matrices"><i class="fa fa-check"></i><b>2.6.5</b> Matrices</a></li>
+<li class="chapter" data-level="2.6.6" data-path="R-intro.html"><a href="R-intro.html#lists"><i class="fa fa-check"></i><b>2.6.6</b> Lists</a></li>
+<li class="chapter" data-level="2.6.7" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>2.6.7</b> Data Frames</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="summarize-data.html"><a href="summarize-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing Data</a></li>
+<li class="chapter" data-level="2.7" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>2.7</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="R-intro.html"><a href="R-intro.html#control-flow"><i class="fa fa-check"></i><b>2.7.1</b> Control Flow</a></li>
+<li class="chapter" data-level="2.7.2" data-path="R-intro.html"><a href="R-intro.html#functions"><i class="fa fa-check"></i><b>2.7.2</b> Functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>3</b> Working With Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>3.1</b> Summary Statistics</a><ul>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#spread"><i class="fa fa-check"></i>Spread</a></li>
+<li class="chapter" data-level="" data-path="sum.html"><a href="sum.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>3.2</b> Plotting</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="sum.html"><a href="sum.html#histograms"><i class="fa fa-check"></i><b>3.2.1</b> Histograms</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sum.html"><a href="sum.html#barplots"><i class="fa fa-check"></i><b>3.2.2</b> Barplots</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sum.html"><a href="sum.html#boxplots"><i class="fa fa-check"></i><b>3.2.3</b> Boxplots</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
+<li class="chapter" data-level="3.2.6" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.2.6</b> <code>dplyr</code></a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.1</b> Try to find the Slope!</a></li>
 </ul></li>
@@ -145,7 +175,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics with R at SciencesPo</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics with R at SciencesPo [WIP]</a>
           </h1>
         </div>
 
@@ -197,8 +227,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol>
 <div id="try-to-find-the-slope" class="section level2">
 <h2><span class="header-section-number">4.1</span> Try to find the Slope!</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_url</span>(<span class="st">&quot;https://gallery.shinyapps.io/simple_regression/&quot;</span>,<span class="dt">height =</span> <span class="st">&quot;600px&quot;</span>)</code></pre></div>
-<iframe src="https://gallery.shinyapps.io/simple_regression/" width="672" height="600px">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_url</span>(<span class="st">&quot;https://gallery.shinyapps.io/simple_regression/&quot;</span>)</code></pre></div>
+<iframe src="https://gallery.shinyapps.io/simple_regression/" width="672" height="400px">
 </iframe>
 
 </div>
@@ -208,7 +238,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="summarize-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sum.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="std-errors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
