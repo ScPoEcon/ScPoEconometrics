@@ -145,7 +145,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.3" data-path="sum.html"><a href="sum.html#boxplots"><i class="fa fa-check"></i><b>3.2.3</b> Boxplots</a></li>
 <li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
 <li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
-<li class="chapter" data-level="3.2.6" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.2.6</b> <code>dplyr</code></a></li>
+<li class="chapter" data-level="3.2.6" data-path="sum.html"><a href="sum.html#dplyr-ggplot-the-tidyverse"><i class="fa fa-check"></i><b>3.2.6</b> <code>dplyr + ggplot</code> : The <code>tidyverse</code></a></li>
+<li class="chapter" data-level="3.2.7" data-path="sum.html"><a href="sum.html#importing-excel-data-either-in-.xlsx-or-.xls-formats"><i class="fa fa-check"></i><b>3.2.7</b> Importing Excel Data (either in <code>.xlsx</code> or .<code>xls</code> formats)</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.2.8</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="3.2.9" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.2.9</b> <code>dplyr</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
@@ -186,6 +189,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="notes" class="section level1">
 <h1><span class="header-section-number">Chapter 13</span> Notes</h1>
 <p>this creates a library for the used R packages.</p>
+<p>In order to install that package, you need to do</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools)){
+  <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
+}
+<span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">&quot;floswald/ScPoEconometrics&quot;</span>)  </code></pre></div>
 <div id="book-usage" class="section level2">
 <h2><span class="header-section-number">13.1</span> Book usage</h2>
 <p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter <a href="#intro"><strong>??</strong></a>. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter <a href="linreg.html#linreg">4</a>.</p>

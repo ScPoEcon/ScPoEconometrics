@@ -2909,8 +2909,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   2.7665009  -0.5246944   7.6859092   2.5269809  10.7340675
-##  [6] -15.5489238  -0.5346690   4.3940025   3.6148929  11.8296569
+##  [1] -1.956190  3.485536  3.106312 11.036737  6.432686 -3.624753  6.499923
+##  [8]  3.871226 10.551008  6.735400
 \end{verbatim}
 
 \begin{Shaded}
@@ -2920,8 +2920,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.009395804 -0.419330954  0.650221334 -0.021805202  1.047288927
-##  [6] -2.376458535 -0.420630289  0.221401905  0.119911391  1.190005617
+##  [1] -1.3833424 -0.2375593 -0.3174068  1.3523846  0.3829781 -1.7346669
+##  [7]  0.3971353 -0.1563503  1.2501118  0.4467161
 \end{verbatim}
 
 This function could be written much more succinctly, simply performing
@@ -3045,7 +3045,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 58.93132
+## [1] 22.55633
 \end{verbatim}
 
 \begin{Shaded}
@@ -3055,7 +3055,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 58.93132
+## [1] 22.55633
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 58.93132
+## [1] 22.55633
 \end{verbatim}
 
 We see the function is working as expected, and when returning the
@@ -3080,7 +3080,7 @@ unbiased estimate it matches \texttt{R}'s built in function
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 53.03818
+## [1] 20.3007
 \end{verbatim}
 
 \chapter{Working With Data}\label{sum}
@@ -3096,6 +3096,12 @@ statistics. For numeric variables, we can summarize data with the center
 and spread. Make sure to have loaded the \texttt{ggplot2} library to be
 able to access the \texttt{mpg} dataset as introduced in section
 \ref{dataframes}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
 
 \subsection*{Central Tendency}\label{central-tendency}
 \addcontentsline{toc}{subsection}{Central Tendency}
@@ -3191,7 +3197,7 @@ be our go-to tool, which can be created in \texttt{R} using the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-101-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 The histogram function has a number of parameters which can be changed
 to make our plot look much nicer. Use the \texttt{?} operator to read
@@ -3209,7 +3215,7 @@ parameters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-102-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-103-1.pdf}
 
 Importantly, you should always be sure to label your axes and give the
 plot a title. The argument \texttt{breaks} is specific to
@@ -3231,7 +3237,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-103-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-104-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3244,7 +3250,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-104-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 \subsection{Boxplots}\label{boxplots}
 
@@ -3273,7 +3279,7 @@ histogram for visualizing a single numerical variable. To do so in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-106-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-107-1.pdf}
 
 However, more often we will use boxplots to compare a numerical variable
 for different values of a categorical variable.
@@ -3284,7 +3290,7 @@ for different values of a categorical variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-107-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-108-1.pdf}
 
 Here used the \texttt{boxplot()} command to create side-by-side
 boxplots. However, since we are now dealing with two variables, the
@@ -3309,7 +3315,7 @@ course.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-108-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-109-1.pdf}
 
 Again, \texttt{boxplot()} has a number of additional arguments which
 have the ability to make our plot more visually appealing.
@@ -3328,7 +3334,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-109-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-110-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3342,7 +3348,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-110-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 \subsection{\texorpdfstring{\texttt{ggplot}}{ggplot}}\label{ggplot}
 
@@ -3354,11 +3360,11 @@ sometimes the other way around.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mpg,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{displ,}\DataTypeTok{y=}\NormalTok{hwy)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg,}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{displ,}\DataTypeTok{y=}\NormalTok{hwy)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 \texttt{ggplot} is impossible to describe in brief terms, so please look
 at \href{http://ggplot2.tidyverse.org}{the package's website} which
@@ -3368,7 +3374,7 @@ demonstrate how one could customize that first plot:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mpg,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{displ,}\DataTypeTok{y=}\NormalTok{hwy)) }\OperatorTok{+}\StringTok{   }\CommentTok{# ggplot() makes base plot}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mpg, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{displ,}\DataTypeTok{y=}\NormalTok{hwy)) }\OperatorTok{+}\StringTok{   }\CommentTok{# ggplot() makes base plot}
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{color=}\StringTok{"blue"}\NormalTok{,}\DataTypeTok{size=}\DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{     }\CommentTok{# how to show x and y?}
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Miles Per Gallon (Highway)"}\NormalTok{) }\OperatorTok{+}\StringTok{  }\CommentTok{# name of y axis}
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Engine Displacement (in Liters)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\CommentTok{# x axis}
@@ -3377,12 +3383,256 @@ demonstrate how one could customize that first plot:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-113-1.pdf}
+
+\subsection{\texorpdfstring{\texttt{dplyr\ +\ ggplot} : The
+\texttt{tidyverse}}{dplyr + ggplot : The tidyverse}}\label{dplyr-ggplot-the-tidyverse}
+
+\href{http://hadley.nz}{Hadley Wickham} is the author of R packages
+\texttt{ggplot2} and also of \texttt{dplyr} (and also a myriad of
+others). With \texttt{ggplot2} he pioneered what he calls the
+\emph{grammar of graphics} (hence, \texttt{gg}). Grammar in the sense
+that there are \textbf{nouns} and \textbf{verbs} and a \textbf{syntax},
+i.e.~rules of how nouns and verbs are to be put together to construct an
+understandable sentence. He has extended the \emph{grammar} idea into
+various other packages. The \texttt{tidyverse} package is a collection
+of those packages.
+
+\texttt{tidy} data is data where:
+
+\begin{itemize}
+\tightlist
+\item
+  Each variable is a column
+\item
+  Each observation is a row
+\item
+  Each value is a cell
+\end{itemize}
+
+Fair enough, you might say, that is a regular spreadsheet. And you are
+right! However, data comes to us \emph{not} tidy most of the times, and
+we first need to clean, or \texttt{tidy}, it up. Once it's in
+\texttt{tidy} format, we can use the tools in the \texttt{tidyverse}
+with great efficiency to analyse the data and stop worrying about which
+tool to use.
+
+\subsection{\texorpdfstring{Importing Excel Data (either in
+\texttt{.xlsx} or .\texttt{xls}
+formats)}{Importing Excel Data (either in .xlsx or .xls formats)}}\label{importing-excel-data-either-in-.xlsx-or-.xls-formats}
+
+The data we will look at is from
+\href{http://ec.europa.eu/eurostat/data/database}{Eurostat} on
+demography and migration. You should download the data yourself (click
+on previous link, then drill down to \emph{database by themes
+\textgreater{} Population and social conditions \textgreater{} Demograph
+and migration \textgreater{} Population change - Demographic balance and
+crude rates at national level (demo\_gind)}).
+
+Once downloaded, we can read the data with the function
+\texttt{read\_excel} from the package
+\href{http://readxl.tidyverse.org}{\texttt{readxl}}, again part of the
+\texttt{tidyverse} suite.
+
+It's important to know how the data is organized in the spreadsheet.
+Open the file with Excel to see:
+
+\begin{itemize}
+\tightlist
+\item
+  There is a heading which we don't need.
+\item
+  There are 5 rows with info that we don't need.
+\item
+  There is one table per variable (total population, males, females,
+  etc)
+\item
+  Each table has one row for each country, and one column for each year.
+\item
+  As such, this data is \textbf{not tidy}.
+\end{itemize}
+
+Now we will read the first chunk of data, from the first table:
+\emph{total population}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readxl)  }\CommentTok{# load the library}
+
+\CommentTok{# Suppose I downloaded the file to a directory }
+\CommentTok{# data/ in my current working directory (cwd)}
+\CommentTok{# you can change your cwd with `setwd("your/directory")`}
+\CommentTok{# or in RStudio by clicking Session > Set Working Directory}
+
+\CommentTok{# total population in raw format}
+\NormalTok{tot_pop_raw =}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\DataTypeTok{path =} \StringTok{"data/demo_gind.xls"}\NormalTok{, }
+                \DataTypeTok{sheet=}\StringTok{"Data"}\NormalTok{, }\CommentTok{# which sheet}
+                \DataTypeTok{range=}\StringTok{"A9:K68"}\NormalTok{)  }\CommentTok{# which excel cell range to read}
+\KeywordTok{names}\NormalTok{(tot_pop_raw)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Country"}   \CommentTok{# lets rename the first column}
+\NormalTok{tot_pop_raw}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 59 x 11
+##    Country  `2008` `2009` `2010` `2011` `2012` `2013` `2014` `2015` `2016`
+##    <chr>    <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr> 
+##  1 Europea~ 50029~ 50209~ 50317~ 50296~ 50404~ 50516~ 50701~ 50854~ 51027~
+##  2 Europea~ 43872~ 44004~ 44066~ 43994~ 44055~ 44125~ 44266~ 44366~ 44489~
+##  3 Europea~ 49598~ 49778~ 49886~ 49867~ 49977~ 50090~ 50276~ 50431~ 50608~
+##  4 Euro ar~ 33309~ 33447~ 33526~ 33457~ 33528~ 33604~ 33754~ 33856~ 33988~
+##  5 Euro ar~ 32988~ 33128~ 33212~ 33152~ 33228~ 33307~ 33459~ 33563~ 33699~
+##  6 Belgium  10666~ 10753~ 10839~ 11000~ 11075~ 11137~ 11180~ 11237~ 11311~
+##  7 Bulgaria 75180~ 74671~ 74217~ 73694~ 73272~ 72845~ 72456~ 72021~ 71537~
+##  8 Czech R~ 10343~ 10425~ 10462~ 10486~ 10505~ 10516~ 10512~ 10538~ 10553~
+##  9 Denmark  54757~ 55114~ 55347~ 55606~ 55805~ 56026~ 56272~ 56597~ 57072~
+## 10 Germany~ 82217~ 82002~ 81802~ 80222~ 80327~ 80523~ 80767~ 81197~ 82175~
+## # ... with 49 more rows, and 1 more variable: `2017` <chr>
+\end{verbatim}
+
+This shows a \texttt{tibble}. This is more informative view of a
+\texttt{data.frame} (it tells us data type, and how many cols and rows).
+Notice, in particular, that \emph{all} columns seem to be of type
+\texttt{chr}, i.e.~characters - a string, not a number! We'll have to
+fix that, as this is clearly numeric data.
+
+\subsection{\texorpdfstring{\texttt{tidyr}}{tidyr}}\label{tidyr}
+
+In the previous \texttt{tibble}, there is a \emph{hidden} variable:
+\texttt{year}. Each year is a column name (like \texttt{2008}) instead
+of all years being in one column \texttt{year}. We really would like to
+have several rows for each Country, one per year. We want to
+\texttt{gather()} all years into a new column to tidy this up - and here
+is how:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  specify which columns are to be gathered: in our case, all years (note
+  that \texttt{paste(2008:2017)} produces a vector like
+  \texttt{{[}"2008",\ "2009",\ "2010",...{]}})
+\item
+  say what those columns should be gathered into, i.e.~what is the
+  \emph{key} for those values: \texttt{year}.
+\item
+  Finally, what is the name of the new resulting column, containing the
+  \emph{value} from each cell: \texttt{counts}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyr)   }\CommentTok{# for the gather function}
+\NormalTok{tot_pop =}\StringTok{ }\KeywordTok{gather}\NormalTok{(tot_pop_raw, }\KeywordTok{paste}\NormalTok{(}\DecValTok{2008}\OperatorTok{:}\DecValTok{2017}\NormalTok{),}\DataTypeTok{key=}\StringTok{"year"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"counts"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Notice that \texttt{counts} is still a \texttt{chr}. Let's convert it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tot_pop}\OperatorTok{$}\NormalTok{counts =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(tot_pop}\OperatorTok{$}\NormalTok{counts)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tot_pop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 590 x 3
+##    Country                                          year      counts
+##    <chr>                                            <chr>      <dbl>
+##  1 European Union (current composition)             2008  500297033.
+##  2 European Union (without United Kingdom)          2008  438725386.
+##  3 European Union (before the accession of Croatia) 2008  495985066.
+##  4 Euro area (19 countries)                         2008  333096775.
+##  5 Euro area (18 countries)                         2008  329884170.
+##  6 Belgium                                          2008   10666866.
+##  7 Bulgaria                                         2008    7518002.
+##  8 Czech Republic                                   2008   10343422.
+##  9 Denmark                                          2008    5475791.
+## 10 Germany (until 1990 former territory of the FRG) 2008   82217837.
+## # ... with 580 more rows
+\end{verbatim}
+
+Now you can see that column \texttt{counts} is indeed a \texttt{dbl},
+i.e.~a number with double precision, and we are fine.
 
 \subsection{\texorpdfstring{\texttt{dplyr}}{dplyr}}\label{dplyr}
 
-The \texttt{dplyr} package is widely used tool to work with data in
-\texttt{R}. We will briefly look at it's functionality now.
+\begin{quote}
+The \href{http://r4ds.had.co.nz/transform.html}{transform} chapter of
+Hadley Wickham's book is a great place to read up more on using
+\texttt{dplyr}.
+\end{quote}
+
+With \texttt{dplyr} you can do the following operations on
+\texttt{data.frame}s and \texttt{tibble}s:
+
+\begin{itemize}
+\tightlist
+\item
+  Choose observations based on a certain value: \texttt{filter()}
+\item
+  Reorder rows: \texttt{arrange()}
+\item
+  Select variables by name: \texttt{select()}
+\item
+  Create new variables out of existing ones: \texttt{mutate()}
+\item
+  Summarise variables: \texttt{summarise()}
+\end{itemize}
+
+All of those verbs can be used with \texttt{group\_by()}, where we apply
+the respective operation on a \emph{group} of the dataframe/tibble. For
+example, on our \texttt{tot\_pop} tibble we will now
+
+\begin{itemize}
+\tightlist
+\item
+  filter
+\item
+  select
+\item
+  arrange
+\end{itemize}
+
+Now we can immediately select some countries and plot their population
+over time. We will make use of the \texttt{piping} syntax of
+\texttt{dplyr} as already mentioned in section \ref{dataframes}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)  }\CommentTok{# for %>%, filter, mutate, ...}
+\NormalTok{tot_pop }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Country }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"France"}\NormalTok{,}\StringTok{"United Kingdom"}\NormalTok{,}\StringTok{"Italy"}\NormalTok{,}\StringTok{"Germany"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{millions =}\NormalTok{ counts }\OperatorTok{/}\StringTok{ }\FloatTok{1e6}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{year,}\DataTypeTok{y=}\NormalTok{millions,}\DataTypeTok{color=}\NormalTok{Country,}\DataTypeTok{group=}\NormalTok{Country)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{ScPoEconometrics_files/figure-latex/gather-plot-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  how many NA's?
+\item
+  plot different vars
+\item
+  make proportions and plot
+\item
+  make growth rates and plot
+\item
+  plot different vars by country
+\end{itemize}
 
 \chapter{Linear Regression}\label{linreg}
 
@@ -3586,6 +3836,18 @@ Interactions}\label{categorical-vars}
 \chapter{Notes}\label{notes}
 
 this creates a library for the used R packages.
+
+In order to install that package, you need to do
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{require}\NormalTok{(devtools))\{}
+  \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\NormalTok{\}}
+\KeywordTok{library}\NormalTok{(devtools)}
+\KeywordTok{install_github}\NormalTok{(}\StringTok{"floswald/ScPoEconometrics"}\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
 
 \section{Book usage}\label{book-usage}
 
