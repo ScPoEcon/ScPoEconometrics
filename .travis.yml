@@ -7,7 +7,7 @@ sudo: false
 pandoc_version: 1.19.2.1
 
 before_install:
-  - Rscript -e 'install.packages(c("dplyr", "ggplot2", "reshape2"));if (!all(c("dplyr", "ggplot2", "reshape2") %in% installed.packages())) { q(status = 1, save = "no")}'
+  - Rscript -e 'install.packages(c("tidyverse", "reshape2"));if (!all(c("tidyverse", "reshape2") %in% installed.packages())) { q(status = 1, save = "no")}'
 
 before_script:
   - chmod +x ./_build.sh
