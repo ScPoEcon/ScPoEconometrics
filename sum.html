@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Econometrics with R at SciencesPo [WIP]</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
-  <meta name="generator" content="bookdown 0.7.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.8 and GitBook 2.6.7">
 
   <meta property="og:title" content="Econometrics with R at SciencesPo [WIP]" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-04-11">
+<meta name="date" content="2018-04-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -146,10 +146,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
 <li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>3.3</b> The <code>tidyverse</code></a><ul>
-<li class="chapter" data-level="3.3.1" data-path="sum.html"><a href="sum.html#importing-excel-data"><i class="fa fa-check"></i><b>3.3.1</b> Importing Excel Data</a></li>
-<li class="chapter" data-level="3.3.2" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.3.2</b> <code>tidyr</code></a></li>
-<li class="chapter" data-level="3.3.3" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.3.3</b> <code>dplyr</code></a></li>
+<li class="chapter" data-level="3.3" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>3.3</b> The <code>tidyverse</code></a></li>
+<li class="chapter" data-level="3.4" data-path="sum.html"><a href="sum.html#example-importing-excel-data"><i class="fa fa-check"></i><b>3.4</b> Example: Importing Excel Data</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.4.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.4.2</b> <code>dplyr</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
@@ -192,10 +192,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In this chapter we will first learn some basic concepts that help summarizing data. Then, we will tackle a real-world task and read, clean, and summarize data from the web.</p>
 <div id="summary-statistics" class="section level2">
 <h2><span class="header-section-number">3.1</span> Summary Statistics</h2>
-<p><code>R</code> has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. Make sure to have loaded the <code>ggplot2</code> library to be able to access the <code>mpg</code> dataset as introduced in section <a href="R-intro.html#dataframes">2.6.7</a>.</p>
+<p><code>R</code> has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example. <em>Make sure to have loaded the <code>ggplot2</code> library to be able to access the <code>mpg</code> dataset as introduced in section <a href="R-intro.html#dataframes">2.6.7</a>.</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
 <div id="central-tendency" class="section level3 unnumbered">
 <h3>Central Tendency</h3>
+<p>Suppose we want to know the <em>mean</em> and <em>median</em> of all the values stored in the <code>data.frame</code> column <code>mpg$cty</code>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -220,6 +221,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="spread" class="section level3 unnumbered">
 <h3>Spread</h3>
+<p>How do the values in that column <em>vary</em>? How far <em>spread out</em> are they?</p>
 <table>
 <thead>
 <tr class="header">
@@ -277,8 +279,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="plotting" class="section level2">
 <h2><span class="header-section-number">3.2</span> Plotting</h2>
-<p>Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.</p>
-<p>We will look at four methods of visualizing data that we will use throughout the course:</p>
+<p>Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks will be to visualize it. Often, a proper visualization can illuminate features of the data that can inform further analysis.</p>
+<p>We will look at four methods of visualizing data by using the basic <code>plot</code> facilities built-in with <code>R</code>:</p>
 <ul>
 <li>Histograms</li>
 <li>Barplots</li>
@@ -287,7 +289,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="histograms" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Histograms</h3>
-<p>When visualizing a single numerical variable, a <strong>histogram</strong> will be our go-to tool, which can be created in <code>R</code> using the <code>hist()</code> function.</p>
+<p>When visualizing a single numerical variable, a <strong>histogram</strong> is useful. It summarizes the <em>distribution</em> of values in a vector. In <code>R</code> you create one using the <code>hist()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg<span class="op">$</span>cty)</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
@@ -315,10 +317,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="boxplots" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Boxplots</h3>
-<p>To visualize the relationship between a numerical and categorical variable, we will use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
+<p>To visualize the relationship between a numerical and categorical variable, once could use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(mpg<span class="op">$</span>drv)</code></pre></div>
 <pre><code>## [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
-<p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function.</p>
+<p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function. The box shows the <em>interquartile range</em>, the solid line in the middle is the value of the median, the wiskers show 1.5 times the interquartile range, and the dots are outliers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mpg<span class="op">$</span>hwy)</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
@@ -352,7 +354,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="ggplot" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> <code>ggplot</code></h3>
-<p>All of the above plots could also have been generate using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
+<p>All of the above plots could also have been generated using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p><code>ggplot</code> is impossible to describe in brief terms, so please look at <a href="http://ggplot2.tidyverse.org">the package’s website</a> which provides excellent guidance. We will from time to time use ggplot in this book, so try to familiarize yourself with it. Let’s quickly demonstrate how one could customize that first plot:</p>
@@ -375,8 +377,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Each value is a cell</li>
 </ul>
 <p>Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us <em>not</em> tidy most of the times, and we first need to clean, or <code>tidy</code>, it up. Once it’s in <code>tidy</code> format, we can use the tools in the <code>tidyverse</code> with great efficiency to analyse the data and stop worrying about which tool to use.</p>
-<div id="importing-excel-data" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Importing Excel Data</h3>
+</div>
+<div id="example-importing-excel-data" class="section level2">
+<h2><span class="header-section-number">3.4</span> Example: Importing Excel Data</h2>
 <p>The data we will look at is from <a href="http://ec.europa.eu/eurostat/data/database">Eurostat</a> on demography and migration. You should download the data yourself (click on previous link, then drill down to <em>database by themes &gt; Population and social conditions &gt; Demograph and migration &gt; Population change - Demographic balance and crude rates at national level (demo_gind)</em>).</p>
 <p>Once downloaded, we can read the data with the function <code>read_excel</code> from the package <a href="http://readxl.tidyverse.org"><code>readxl</code></a>, again part of the <code>tidyverse</code> suite.</p>
 <p>It’s important to know how the data is organized in the spreadsheet. Open the file with Excel to see:</p>
@@ -416,10 +419,9 @@ tot_pop_raw</code></pre></div>
 ## 10 Germany… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175…
 ## # ... with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
 <p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). Notice, in particular, that <em>all</em> columns seem to be of type <code>chr</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
-</div>
 <div id="tidyr" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> <code>tidyr</code></h3>
-<p>In the previous <code>tibble</code>, there is a <em>hidden</em> variable: <code>year</code>. Each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
+<h3><span class="header-section-number">3.4.1</span> <code>tidyr</code></h3>
+<p>In the previous <code>tibble</code>, there is a variable which is there, but not displayed as a single coluym: <code>year</code>. Each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
 <li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>[&quot;2008&quot;, &quot;2009&quot;, &quot;2010&quot;,...]</code>)</li>
 <li>say what those columns should be gathered into, i.e. what is the <em>key</em> for those values: <code>year</code>.</li>
@@ -448,7 +450,7 @@ tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <s
 <p>Now you can see that column <code>counts</code> is indeed a <code>int</code>, i.e. an integer number, and we are fine.</p>
 </div>
 <div id="dplyr" class="section level3">
-<h3><span class="header-section-number">3.3.3</span> <code>dplyr</code></h3>
+<h3><span class="header-section-number">3.4.2</span> <code>dplyr</code></h3>
 <blockquote>
 <p>The <a href="http://r4ds.had.co.nz/transform.html">transform</a> chapter of Hadley Wickham’s book is a great place to read up more on using <code>dplyr</code>.</p>
 </blockquote>
@@ -463,8 +465,8 @@ tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <s
 <p>All of those verbs can be used with <code>group_by()</code>, where we apply the respective operation on a <em>group</em> of the dataframe/tibble. For example, on our <code>tot_pop</code> tibble we will now</p>
 <ul>
 <li>filter</li>
-<li>select</li>
-<li>arrange</li>
+<li>mutate</li>
+<li>and plot the resulting values</li>
 </ul>
 <p>Now we can immediately select some countries and plot their population over time. We will make use of the <code>piping</code> syntax of <code>dplyr</code> as already mentioned in section <a href="R-intro.html#dataframes">2.6.7</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)  <span class="co"># for %&gt;%, filter, mutate, ...</span>
@@ -473,6 +475,64 @@ tot_pop <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" /></p>
+<div id="arrange-a-tibble" class="section level4 unnumbered">
+<h4>Arrange a <code>tibble</code></h4>
+<ul>
+<li>What are the top/bottom 5 most populated areas?</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(counts)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># arrange in descending order of col `counts`</span>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>)
+
+bottom5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(counts)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)
+top5</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   Country                                                   year    counts
+##   &lt;chr&gt;                                                     &lt;chr&gt;    &lt;int&gt;
+## 1 European Economic Area (EU28  - current composition, plu… 2017    5.17e8
+## 2 European Economic Area (EU28  - current composition, plu… 2016    5.16e8
+## 3 European Economic Area (EU28  - current composition, plu… 2015    5.14e8
+## 4 European Economic Area (EU27 -  before the accession of … 2017    5.13e8
+## 5 European Economic Area (EU28  - current composition, plu… 2014    5.12e8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bottom5</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   Country    year  counts
+##   &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
+## 1 San Marino 2015   32789
+## 2 San Marino 2014   32520
+## 3 San Marino 2008   32054
+## 4 San Marino 2011   31863
+## 5 San Marino 2009   31269</code></pre>
+<p>Now this is not exactly what we wanted. It’s always the same country in both top and bottom, because there are multiple years per country. Let’s compute average population over the last 5 years and rank according to that:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topbottom =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2012</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_count =</span> <span class="kw">mean</span>(counts)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_count))
+
+top5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dv">5</span>)
+bottom5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)
+top5</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   Country                                                       mean_count
+##   &lt;chr&gt;                                                              &lt;dbl&gt;
+## 1 European Economic Area (EU28  - current composition, plus IS… 514029320.
+## 2 European Economic Area (EU27 -  before the accession of Croa… 509813491.
+## 3 European Union (current composition)                          508502858.
+## 4 European Union (before the accession of Croatia)              504287028.
+## 5 European Union (without United Kingdom)                       443638309.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bottom5</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   Country       mean_count
+##   &lt;chr&gt;              &lt;dbl&gt;
+## 1 Luxembourg       563319.
+## 2 Malta            440467.
+## 3 Iceland          329501.
+## 4 Liechtenstein     37353.
+## 5 San Marino        33014.</code></pre>
+<p>That’s better!</p>
 <ul>
 <li>how many NA’s?</li>
 <li>plot different vars</li>
@@ -481,6 +541,7 @@ tot_pop <span class="op">%&gt;%</span>
 <li>plot different vars by country</li>
 </ul>
 
+</div>
 </div>
 </div>
 </div>

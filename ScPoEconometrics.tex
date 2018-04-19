@@ -124,7 +124,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-04-11}
+  \date{2018-04-19}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -2909,8 +2909,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  2.3725063 -1.0434140  0.7095305  1.3466809  2.2456724  4.2195910
-##  [7]  3.1297321 -1.0481808  4.2151264  2.7822527
+##  [1]  8.4605507  8.0825667  2.7002814 -4.9751832 -0.1024090  7.5699360
+##  [7]  9.5950636  6.5590756  4.8190229 -0.9771234
 \end{verbatim}
 
 \begin{Shaded}
@@ -2920,8 +2920,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.2525459 -1.5463589 -0.6232167 -0.2876781  0.1857521  1.2252645
-##  [7]  0.6513189 -1.5488691  1.2229133  0.4683280
+##  [1]  0.8846737  0.8066789 -0.3039234 -1.8877096 -0.8822418  0.7009007
+##  [7]  1.1187736  0.4923157  0.1332662 -1.0627339
 \end{verbatim}
 
 This function could be written much more succinctly, simply performing
@@ -3045,7 +3045,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.605779
+## [1] 23.48639
 \end{verbatim}
 
 \begin{Shaded}
@@ -3055,7 +3055,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.605779
+## [1] 23.48639
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.605779
+## [1] 23.48639
 \end{verbatim}
 
 We see the function is working as expected, and when returning the
@@ -3080,7 +3080,7 @@ unbiased estimate it matches \texttt{R}'s built in function
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.245201
+## [1] 21.13775
 \end{verbatim}
 
 \chapter{Working With Data}\label{sum}
@@ -3092,10 +3092,10 @@ clean, and summarize data from the web.
 \section{Summary Statistics}\label{summary-statistics}
 
 \texttt{R} has built in functions for a large number of summary
-statistics. For numeric variables, we can summarize data with the center
-and spread. Make sure to have loaded the \texttt{ggplot2} library to be
-able to access the \texttt{mpg} dataset as introduced in section
-\ref{dataframes}.
+statistics. For numeric variables, we can summarize data by looking at
+their center and spread, for example. \emph{Make sure to have loaded the
+\texttt{ggplot2} library to be able to access the \texttt{mpg} dataset
+as introduced in section \ref{dataframes}.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3105,6 +3105,9 @@ able to access the \texttt{mpg} dataset as introduced in section
 
 \subsection*{Central Tendency}\label{central-tendency}
 \addcontentsline{toc}{subsection}{Central Tendency}
+
+Suppose we want to know the \emph{mean} and \emph{median} of all the
+values stored in the \texttt{data.frame} column \texttt{mpg\$cty}:
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule
@@ -3118,6 +3121,9 @@ Median & \texttt{median(mpg\$cty)} & 17\tabularnewline
 
 \subsection*{Spread}\label{spread}
 \addcontentsline{toc}{subsection}{Spread}
+
+How do the values in that column \emph{vary}? How far \emph{spread out}
+are they?
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule
@@ -3166,12 +3172,12 @@ summary.
 \section{Plotting}\label{plotting}
 
 Now that we have some data to work with, and we have learned about the
-data at the most basic level, our next tasks is to visualize the data.
+data at the most basic level, our next tasks will be to visualize it.
 Often, a proper visualization can illuminate features of the data that
 can inform further analysis.
 
-We will look at four methods of visualizing data that we will use
-throughout the course:
+We will look at four methods of visualizing data by using the basic
+\texttt{plot} facilities built-in with \texttt{R}:
 
 \begin{itemize}
 \tightlist
@@ -3187,9 +3193,9 @@ throughout the course:
 
 \subsection{Histograms}\label{histograms}
 
-When visualizing a single numerical variable, a \textbf{histogram} will
-be our go-to tool, which can be created in \texttt{R} using the
-\texttt{hist()} function.
+When visualizing a single numerical variable, a \textbf{histogram} is
+useful. It summarizes the \emph{distribution} of values in a vector. In
+\texttt{R} you create one using the \texttt{hist()} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3255,9 +3261,10 @@ values, like a ranking from 1 to 10.
 \subsection{Boxplots}\label{boxplots}
 
 To visualize the relationship between a numerical and categorical
-variable, we will use a \textbf{boxplot}. In the \texttt{mpg} dataset,
-the \texttt{drv} variable takes a small, finite number of values. A car
-can only be front wheel drive, 4 wheel drive, or rear wheel drive.
+variable, once could use a \textbf{boxplot}. In the \texttt{mpg}
+dataset, the \texttt{drv} variable takes a small, finite number of
+values. A car can only be front wheel drive, 4 wheel drive, or rear
+wheel drive.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3271,7 +3278,10 @@ can only be front wheel drive, 4 wheel drive, or rear wheel drive.
 
 First note that we can use a single boxplot as an alternative to a
 histogram for visualizing a single numerical variable. To do so in
-\texttt{R}, we use the \texttt{boxplot()} function.
+\texttt{R}, we use the \texttt{boxplot()} function. The box shows the
+\emph{interquartile range}, the solid line in the middle is the value of
+the median, the wiskers show 1.5 times the interquartile range, and the
+dots are outliers.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3352,7 +3362,7 @@ more generally; see the documentation for details.)
 
 \subsection{\texorpdfstring{\texttt{ggplot}}{ggplot}}\label{ggplot}
 
-All of the above plots could also have been generate using the
+All of the above plots could also have been generated using the
 \texttt{ggplot} function from the already loaded \texttt{ggplot2}
 package. Which function you use is up to you, but sometimes a plot is
 easier to build in base R (like in the \texttt{boxplot} example maybe),
@@ -3417,7 +3427,8 @@ we first need to clean, or \texttt{tidy}, it up. Once it's in
 with great efficiency to analyse the data and stop worrying about which
 tool to use.
 
-\subsection{Importing Excel Data}\label{importing-excel-data}
+\section{Example: Importing Excel
+Data}\label{example-importing-excel-data}
 
 The data we will look at is from
 \href{http://ec.europa.eu/eurostat/data/database}{Eurostat} on
@@ -3496,12 +3507,12 @@ fix that, as this is clearly numeric data.
 
 \subsection{\texorpdfstring{\texttt{tidyr}}{tidyr}}\label{tidyr}
 
-In the previous \texttt{tibble}, there is a \emph{hidden} variable:
-\texttt{year}. Each year is a column name (like \texttt{2008}) instead
-of all years being in one column \texttt{year}. We really would like to
-have several rows for each Country, one per year. We want to
-\texttt{gather()} all years into a new column to tidy this up - and here
-is how:
+In the previous \texttt{tibble}, there is a variable which is there, but
+not displayed as a single coluym: \texttt{year}. Each year is a column
+name (like \texttt{2008}) instead of all years being in one column
+\texttt{year}. We really would like to have several rows for each
+Country, one per year. We want to \texttt{gather()} all years into a new
+column to tidy this up - and here is how:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3597,9 +3608,9 @@ example, on our \texttt{tot\_pop} tibble we will now
 \item
   filter
 \item
-  select
+  mutate
 \item
-  arrange
+  and plot the resulting values
 \end{itemize}
 
 Now we can immediately select some countries and plot their population
@@ -3617,6 +3628,106 @@ over time. We will make use of the \texttt{piping} syntax of
 \end{Shaded}
 
 \includegraphics{ScPoEconometrics_files/figure-latex/gather-plot-1.pdf}
+
+\subsubsection*{\texorpdfstring{Arrange a
+\texttt{tibble}}{Arrange a tibble}}\label{arrange-a-tibble}
+\addcontentsline{toc}{subsubsection}{Arrange a \texttt{tibble}}
+
+\begin{itemize}
+\tightlist
+\item
+  What are the top/bottom 5 most populated areas?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top5 =}\StringTok{ }\NormalTok{tot_pop }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(counts)) }\OperatorTok{%>%}\StringTok{  }\CommentTok{# arrange in descending order of col `counts`}
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{bottom5 =}\StringTok{ }\NormalTok{tot_pop }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(counts)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\OperatorTok{-}\DecValTok{5}\NormalTok{)}
+\NormalTok{top5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   Country                                                   year    counts
+##   <chr>                                                     <chr>    <int>
+## 1 European Economic Area (EU28  - current composition, plu~ 2017    5.17e8
+## 2 European Economic Area (EU28  - current composition, plu~ 2016    5.16e8
+## 3 European Economic Area (EU28  - current composition, plu~ 2015    5.14e8
+## 4 European Economic Area (EU27 -  before the accession of ~ 2017    5.13e8
+## 5 European Economic Area (EU28  - current composition, plu~ 2014    5.12e8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bottom5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   Country    year  counts
+##   <chr>      <chr>  <int>
+## 1 San Marino 2015   32789
+## 2 San Marino 2014   32520
+## 3 San Marino 2008   32054
+## 4 San Marino 2011   31863
+## 5 San Marino 2009   31269
+\end{verbatim}
+
+Now this is not exactly what we wanted. It's always the same country in
+both top and bottom, because there are multiple years per country. Let's
+compute average population over the last 5 years and rank according to
+that:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{topbottom =}\StringTok{ }\NormalTok{tot_pop }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Country) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{>}\StringTok{ }\DecValTok{2012}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_count =} \KeywordTok{mean}\NormalTok{(counts)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(mean_count))}
+
+\NormalTok{top5 =}\StringTok{ }\NormalTok{topbottom }\OperatorTok{%>%}\StringTok{ }\KeywordTok{top_n}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\NormalTok{bottom5 =}\StringTok{ }\NormalTok{topbottom }\OperatorTok{%>%}\StringTok{ }\KeywordTok{top_n}\NormalTok{(}\OperatorTok{-}\DecValTok{5}\NormalTok{)}
+\NormalTok{top5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   Country                                                       mean_count
+##   <chr>                                                              <dbl>
+## 1 European Economic Area (EU28  - current composition, plus IS~ 514029320.
+## 2 European Economic Area (EU27 -  before the accession of Croa~ 509813491.
+## 3 European Union (current composition)                          508502858.
+## 4 European Union (before the accession of Croatia)              504287028.
+## 5 European Union (without United Kingdom)                       443638309.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bottom5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   Country       mean_count
+##   <chr>              <dbl>
+## 1 Luxembourg       563319.
+## 2 Malta            440467.
+## 3 Iceland          329501.
+## 4 Liechtenstein     37353.
+## 5 San Marino        33014.
+\end{verbatim}
+
+That's better!
 
 \begin{itemize}
 \tightlist
