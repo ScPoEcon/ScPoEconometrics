@@ -4,7 +4,7 @@ In this chapter we will first learn some basic concepts that help summarizing da
 
 ## Summary Statistics
 
-`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. Make sure to have loaded the `ggplot2` library to be able to access the `mpg` dataset as introduced in section \@ref(dataframes).
+`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example. *Make sure to have loaded the `ggplot2` library to be able to access the `mpg` dataset as introduced in section \@ref(dataframes).*
 
 ```{r}
 library(ggplot2)
@@ -12,12 +12,16 @@ library(ggplot2)
 
 ### Central Tendency {-}
 
+Suppose we want to know the *mean* and *median* of all the values stored in the `data.frame` column `mpg$cty`:
+
 | Measure | `R`               | Result              |
 |---------|-------------------|---------------------|
 | Mean    | `mean(mpg$cty)`   | `r mean(mpg$cty)`   |
 | Median  | `median(mpg$cty)` | `r median(mpg$cty)` |
 
 ### Spread {-}
+
+How do the values in that column *vary*? How far *spread out* are they?
 
 | Measure            | `R`              | Result             |
 |--------------------|------------------|--------------------|
@@ -39,9 +43,9 @@ table(mpg$drv) / nrow(mpg)
 
 ## Plotting
 
-Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.
+Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks will be to visualize it. Often, a proper visualization can illuminate features of the data that can inform further analysis.
 
-We will look at four methods of visualizing data that we will use throughout the course:
+We will look at four methods of visualizing data by using the basic `plot` facilities built-in with `R`:
 
 - Histograms
 - Barplots
@@ -50,7 +54,7 @@ We will look at four methods of visualizing data that we will use throughout the
 
 ### Histograms
 
-When visualizing a single numerical variable, a **histogram** will be our go-to tool, which can be created in `R` using the `hist()` function.
+When visualizing a single numerical variable, a **histogram** is useful. It summarizes the *distribution* of values in a vector. In `R` you create one using the `hist()` function:
 
 ```{r}
 hist(mpg$cty)
@@ -88,13 +92,13 @@ barplot(table(mpg$drv),
 
 ### Boxplots
 
-To visualize the relationship between a numerical and categorical variable, we will use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.
+To visualize the relationship between a numerical and categorical variable, once could use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.
 
 ```{r}
 unique(mpg$drv)
 ```
 
-First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in `R`, we use the `boxplot()` function.
+First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in `R`, we use the `boxplot()` function. The box shows the *interquartile range*, the solid line in the middle is the value of the median, the wiskers show 1.5 times the interquartile range, and the dots are outliers.
 
 ```{r}
 boxplot(mpg$hwy)
@@ -141,7 +145,7 @@ plot(hwy ~ displ, data = mpg,
 
 ### `ggplot` {#ggplot}
 
-All of the above plots could also have been generate using the `ggplot` function from the already loaded `ggplot2` package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the `boxplot` example maybe), sometimes the other way around.
+All of the above plots could also have been generated using the `ggplot` function from the already loaded `ggplot2` package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the `boxplot` example maybe), sometimes the other way around.
 
 ```{r}
 ggplot(data = mpg,mapping = aes(x=displ,y=hwy)) + geom_point()
@@ -170,7 +174,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
 
 Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us *not* tidy most of the times, and we first need to clean, or `tidy`, it up. Once it's in `tidy` format, we can use the tools in the `tidyverse` with great efficiency to analyse the data and stop worrying about which tool to use.
 
-### Importing Excel Data
+## Example: Importing Excel Data
 
 The data we will look at is from [Eurostat](http://ec.europa.eu/eurostat/data/database) on demography and migration. You should download the data yourself (click on previous link, then drill down to *database by themes > Population and social conditions > Demograph and migration > Population change - Demographic balance and crude rates at national level (demo_gind)*). 
 
@@ -206,7 +210,7 @@ This shows a `tibble`. This is more informative view of a `data.frame` (it tells
 
 ### `tidyr`
 
-In the previous `tibble`, there is a *hidden* variable: `year`. Each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
+In the previous `tibble`, there is a variable which is there, but not displayed as a single coluym: `year`. Each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
 
 1. specify which columns are to be gathered: in our case, all years (note that `paste(2008:2017)` produces a vector like `["2008", "2009", "2010",...]`)
 1. say what those columns should be gathered into, i.e. what is the *key* for those values: `year`.
@@ -241,8 +245,8 @@ With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
 All of those verbs can be used with `group_by()`, where we apply the respective operation on a *group* of the dataframe/tibble. For example, on our `tot_pop` tibble we will now
 
 * filter
-* select
-* arrange
+* mutate
+* and plot the resulting values
 
 Now we can immediately select some countries and plot their population over time. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
 
@@ -253,6 +257,39 @@ tot_pop %>%
   mutate(millions = counts / 1e6) %>%
   ggplot(mapping = aes(x=year,y=millions,color=Country,group=Country)) + geom_line()
 ```
+
+#### Arrange a `tibble` {-} 
+
+* What are the top/bottom 5 most populated areas?
+
+```{r,message=FALSE}
+top5 = tot_pop %>%
+  arrange(desc(counts)) %>%  # arrange in descending order of col `counts`
+  top_n(5)
+
+bottom5 = tot_pop %>%
+  arrange(desc(counts)) %>%
+  top_n(-5)
+top5
+bottom5
+```
+
+Now this is not exactly what we wanted. It's always the same country in both top and bottom, because there are multiple years per country. Let's compute average population over the last 5 years and rank according to that:
+
+```{r,message=FALSE}
+topbottom = tot_pop %>%
+  group_by(Country) %>%
+  filter(year > 2012) %>%
+  summarise(mean_count = mean(counts)) %>%
+  arrange(desc(mean_count))
+
+top5 = topbottom %>% top_n(5)
+bottom5 = topbottom %>% top_n(-5)
+top5
+bottom5
+```
+That's better! 
+
 
 
 * how many NA's?
