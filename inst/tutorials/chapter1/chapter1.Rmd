@@ -1,0 +1,217 @@
+---
+title: "Chapter 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Discrete Data
+
+This document contains $N=10$ stored in the object `x`:
+
+```{r}
+x = c(6,2,5,3,5,1,5,7,6,3)
+x
+```
+
+### Mean
+
+We have seen in chapter 2 of our book that the mean is a measure of *centrality* for a variable.
+
+1. Calculate the mean of `x` on a piece of paper by computing $\overline{x}=(x_{1}+...+x_{N})/N$
+2. Now use the `R` function `mean` to do the same thing in the code box below to check your result:
+
+```{r mean1, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r mean1-hint}
+mean(x)
+```
+
+3. *Discrete* means that there is a finite number of values that $X$ can take on. Use the function `unique` to find out the values contained in `x`. How many distinct values are there? 
+
+```{r unique, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r unique-hint}
+u=unique(x)
+n=length(u)
+```
+
+By sorting `x` in ascending order, we can easily see that there are groups of values:
+
+```{r,echo=TRUE}
+sort(x)
+```
+
+Let's denote $p_k$ the proportion of all entries in `x` that have value $k$. I.e. $p_1 = \frac{\text{number of times }x=x_1}{N}$. We can construct $p_k$ in `R` with
+
+```{r,echo=TRUE}
+p_k = table(x) / length(x)
+p_k
+```
+
+4. Re-compute the mean on a piece of paper by computing $\overline{x}=p_{1}x_{(1)}+...+p_{K}x_{(K)}$, where $x_{(k)}$ is the $k$-th possible value and $p_{k}$ is the proportion of observations with value $k$
+
+```{r quiz1}
+quiz(
+  question("The mean you compute in this way compares how to our previous result?",
+    answer("it's smaller"),
+    answer("it's greater"),
+    answer("it's the same", correct = TRUE)
+  )
+)
+```
+
+### Variance and Standard Deviation
+
+*Variance* and *Standard Deviation* inform us about the *spread* of a variable. 
+
+1. Calculate the variance by using $\overline{x}$ from above to compute the number $Var(X) = \frac{1}{N-1}((x_{1}-\overline{x})^{2}+...+(x_{N}-\overline{x})^{2})$.
+2. Calculate the Standard Deviation by doing $\sqrt(Var(X))$.
+3. Check your results again by using functions `var` and `sd` here:
+
+```{r var, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+What's going on with the $N-1$ here? For small samples like ours ($N=10$), there is an adjustment we need to make. In estimating the variance, we use the information in `x`, but we also need a *previous* estimate: the mean $\overline{x}$! This means that we loose one *degree of freedom* in the estimation for $Var(X)$ and we are left with $N-1$ instead of $N$ degrees of freedom. Our *weights* or *proportions* $p_k$ therefore now become:
+
+```{r,echo=TRUE}
+p_k2 = table(x) / (length(x)-1)
+p_k2
+```
+
+4. Re-compute both variance and standard deviation by grouping equal values, e.g. $Var(X)=p_1 ( x_1 - \overline{x})^2 + \dots + p_N ( x_N - \overline{x})^2$. 
+
+```{r var2, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r var2-hint}
+p_k2 %*% (unique(sort(x)) - mean(x))^2
+```
+
+### Barplot
+
+Lets finish this part by producing a bar plot of $X$. This is easily achieved with the function `barplot`, whose main input argument is called `height` - the height of each bar. In our case, the height should be the number of times each value appears. We already saw above that `table` computes that for us.
+
+```{r,echo=TRUE}
+barplot(table(x),col="red",border="dodgerblue")
+```
+
+```{r quiz3}
+quiz(
+  question("Which quantities can you directly read off this plot?",
+    answer("The number of distinct values in $x$", correct = TRUE),
+    answer("The total number of observations, i.e. $N$", correct = TRUE),
+    answer("The number of times each $x_k$ appears", correct = TRUE),
+    answer("The variance of $x$")
+  )
+)
+
+```
+
+
+## Continuous Data
+
+Differently to the previous case, continuous distributions contain values from a *continuum* of values, for example all values in a closed interval, like in $x\in[-3,5]$, or all real numbers, like in $x\in \mathbf{R}$. There are many types of continuous distributions, and each is [defined by a mathematical formula](https://en.wikipedia.org/wiki/Category:Continuous_distributions). We look at the [Lognormal Distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) for an example here.
+
+### Histogram
+
+A *histogram* is a way to **visualize** the distribution of continuously distributed $X$, and it's closely related to the bargraph we just saw. Imagine we were given a set of $N$ values for $x$ drawn randomly from the lognormal distribution. We could write this as $\{x_i\}_{i=1}^N, x_i \sim \text{Lognormal}(\mu,\sigma^2)$ where $(\mu,\sigma^2)$ are numbers that describe a particular instance of that distribution (more on that later). We create a histogram as follows:
+
+1. We categorize the values in a set of $M$ bins: if $x_i$ falls within bin number $j$, we assign $x_i$ to bin $j$.
+1. in each bin, we count the number of contained values
+1. we draw a bargraph with height equal to that number.
+
+A **key observation** is that as the number of bins $M$ increases, the histogram becomes a closer and closer approximation of the true *probability density function* that originally generated the data in $x$. Let's try this out!
+
+
+Move the slider below to change how many *bins* `R` uses to summarize this distribution. 
+
+```{r, echo=FALSE}
+sliderInput("bins", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
+plotOutput("distPlot")
+```
+
+```{r, context="server"}
+output$distPlot <- renderPlot({
+  set.seed(1)
+  x <- rlnorm(10000,meanlog=5)
+  x <- x[x<2000]
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  hist(x, breaks = bins, col = 'darkgray', border = 'white',freq=FALSE)
+  lines(density(x),col="red")
+  
+})
+```
+
+### Exercise 
+
+*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+
+Write the R code required to add two plus two:
+
+```{r two-plus-two, exercise=TRUE}
+
+```
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
