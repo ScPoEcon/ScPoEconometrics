@@ -124,7 +124,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-04-19}
+  \date{2018-04-27}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -138,11 +138,10 @@
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\newtheorem{conjecture}{Conjecture}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{definition}
@@ -201,7 +200,7 @@ get started, you will need to install two pieces of software:
   \tightlist
   \item
     Chose your operating system, and select the most recent version,
-    3.4.4.
+    3.5.0.
   \end{itemize}
 \item
   \href{http://www.rstudio.com/}{RStudio, an excellent IDE for working
@@ -2407,16 +2406,16 @@ frame to a tibble.
 ## # A tibble: 10 x 3
 ##        x y       z    
 ##    <dbl> <fct>   <lgl>
-##  1    1. Hello   TRUE 
-##  2    3. Hello   FALSE
-##  3    5. Hello   TRUE 
-##  4    7. Hello   FALSE
-##  5    9. Hello   TRUE 
-##  6    1. Hello   FALSE
-##  7    3. Hello   TRUE 
-##  8    5. Hello   FALSE
-##  9    7. Hello   TRUE 
-## 10    9. Goodbye FALSE
+##  1     1 Hello   TRUE 
+##  2     3 Hello   FALSE
+##  3     5 Hello   TRUE 
+##  4     7 Hello   FALSE
+##  5     9 Hello   TRUE 
+##  6     1 Hello   FALSE
+##  7     3 Hello   TRUE 
+##  8     5 Hello   FALSE
+##  9     7 Hello   TRUE 
+## 10     9 Goodbye FALSE
 \end{verbatim}
 
 Alternatively, we could use the ``Import Dataset'' feature in RStudio
@@ -2467,16 +2466,16 @@ To look at the data, we have two useful commands: \texttt{head()} and
 ## # A tibble: 10 x 11
 ##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
 ##    <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr>
-##  1 audi         a4        1.80  1999     4 auto(l~ f        18    29 p    
-##  2 audi         a4        1.80  1999     4 manual~ f        21    29 p    
-##  3 audi         a4        2.00  2008     4 manual~ f        20    31 p    
-##  4 audi         a4        2.00  2008     4 auto(a~ f        21    30 p    
-##  5 audi         a4        2.80  1999     6 auto(l~ f        16    26 p    
-##  6 audi         a4        2.80  1999     6 manual~ f        18    26 p    
-##  7 audi         a4        3.10  2008     6 auto(a~ f        18    27 p    
-##  8 audi         a4 quat~  1.80  1999     4 manual~ 4        18    26 p    
-##  9 audi         a4 quat~  1.80  1999     4 auto(l~ 4        16    25 p    
-## 10 audi         a4 quat~  2.00  2008     4 manual~ 4        20    28 p    
+##  1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p    
+##  2 audi         a4         1.8  1999     4 manual~ f        21    29 p    
+##  3 audi         a4         2    2008     4 manual~ f        20    31 p    
+##  4 audi         a4         2    2008     4 auto(a~ f        21    30 p    
+##  5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p    
+##  6 audi         a4         2.8  1999     6 manual~ f        18    26 p    
+##  7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p    
+##  8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p    
+##  9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p    
+## 10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p    
 ## # ... with 1 more variable: class <chr>
 \end{verbatim}
 
@@ -2499,16 +2498,16 @@ output indicates with rows and columns were omitted.
 ## # A tibble: 234 x 11
 ##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
 ##    <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr>
-##  1 audi         a4        1.80  1999     4 auto(l~ f        18    29 p    
-##  2 audi         a4        1.80  1999     4 manual~ f        21    29 p    
-##  3 audi         a4        2.00  2008     4 manual~ f        20    31 p    
-##  4 audi         a4        2.00  2008     4 auto(a~ f        21    30 p    
-##  5 audi         a4        2.80  1999     6 auto(l~ f        16    26 p    
-##  6 audi         a4        2.80  1999     6 manual~ f        18    26 p    
-##  7 audi         a4        3.10  2008     6 auto(a~ f        18    27 p    
-##  8 audi         a4 quat~  1.80  1999     4 manual~ 4        18    26 p    
-##  9 audi         a4 quat~  1.80  1999     4 auto(l~ 4        16    25 p    
-## 10 audi         a4 quat~  2.00  2008     4 manual~ 4        20    28 p    
+##  1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p    
+##  2 audi         a4         1.8  1999     4 manual~ f        21    29 p    
+##  3 audi         a4         2    2008     4 manual~ f        20    31 p    
+##  4 audi         a4         2    2008     4 auto(a~ f        21    30 p    
+##  5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p    
+##  6 audi         a4         2.8  1999     6 manual~ f        18    26 p    
+##  7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p    
+##  8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p    
+##  9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p    
+## 10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p    
 ## # ... with 224 more rows, and 1 more variable: class <chr>
 \end{verbatim}
 
@@ -2909,8 +2908,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  8.4605507  8.0825667  2.7002814 -4.9751832 -0.1024090  7.5699360
-##  [7]  9.5950636  6.5590756  4.8190229 -0.9771234
+##  [1]  3.1360789  0.1017816  4.1631934  9.0954442 -2.2182115 -1.5977643
+##  [7] -0.6367942  5.4369905  5.6320091  9.2093964
 \end{verbatim}
 
 \begin{Shaded}
@@ -2920,8 +2919,8 @@ and a standard deviation of \texttt{5}.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.8846737  0.8066789 -0.3039234 -1.8877096 -0.8822418  0.7009007
-##  [7]  1.1187736  0.4923157  0.1332662 -1.0627339
+##  [1] -0.0228426 -0.7438315  0.2212133  1.3931810 -1.2950924 -1.1476660
+##  [7] -0.9193269  0.5238843  0.5702233  1.4202575
 \end{verbatim}
 
 This function could be written much more succinctly, simply performing
@@ -3045,7 +3044,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 23.48639
+## [1] 17.71165
 \end{verbatim}
 
 \begin{Shaded}
@@ -3055,7 +3054,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 23.48639
+## [1] 17.71165
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3064,7 @@ maximum likelihood) which we will call \(\hat{\sigma}^2\).
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 23.48639
+## [1] 17.71165
 \end{verbatim}
 
 We see the function is working as expected, and when returning the
@@ -3080,7 +3079,7 @@ unbiased estimate it matches \texttt{R}'s built in function
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 21.13775
+## [1] 15.94049
 \end{verbatim}
 
 \chapter{Working With Data}\label{sum}
@@ -3703,7 +3702,7 @@ that:
 ## # A tibble: 5 x 2
 ##   Country                                                       mean_count
 ##   <chr>                                                              <dbl>
-## 1 European Economic Area (EU28  - current composition, plus IS~ 514029320.
+## 1 European Economic Area (EU28  - current composition, plus IS~ 514029320 
 ## 2 European Economic Area (EU27 -  before the accession of Croa~ 509813491.
 ## 3 European Union (current composition)                          508502858.
 ## 4 European Union (before the accession of Croatia)              504287028.
@@ -3723,7 +3722,7 @@ that:
 ## 1 Luxembourg       563319.
 ## 2 Malta            440467.
 ## 3 Iceland          329501.
-## 4 Liechtenstein     37353.
+## 4 Liechtenstein     37353 
 ## 5 San Marino        33014.
 \end{verbatim}
 

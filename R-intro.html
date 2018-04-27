@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Econometrics with R at SciencesPo [WIP]</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
-  <meta name="generator" content="bookdown 0.7.8 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Econometrics with R at SciencesPo [WIP]" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-04-19">
+<meta name="date" content="2018-04-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -195,7 +195,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><a href="https://www.r-project.org"><code>R</code>, the actual programming language.</a>
 <ul>
-<li>Chose your operating system, and select the most recent version, 3.4.4.</li>
+<li>Chose your operating system, and select the most recent version, 3.5.0.</li>
 </ul></li>
 <li><a href="http://www.rstudio.com/">RStudio, an excellent IDE for working with <code>R</code>.</a>
 <ul>
@@ -1126,16 +1126,16 @@ example_data</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##        x y       z    
 ##    &lt;dbl&gt; &lt;fct&gt;   &lt;lgl&gt;
-##  1    1. Hello   TRUE 
-##  2    3. Hello   FALSE
-##  3    5. Hello   TRUE 
-##  4    7. Hello   FALSE
-##  5    9. Hello   TRUE 
-##  6    1. Hello   FALSE
-##  7    3. Hello   TRUE 
-##  8    5. Hello   FALSE
-##  9    7. Hello   TRUE 
-## 10    9. Goodbye FALSE</code></pre>
+##  1     1 Hello   TRUE 
+##  2     3 Hello   FALSE
+##  3     5 Hello   TRUE 
+##  4     7 Hello   FALSE
+##  5     9 Hello   TRUE 
+##  6     1 Hello   FALSE
+##  7     3 Hello   TRUE 
+##  8     5 Hello   FALSE
+##  9     7 Hello   TRUE 
+## 10     9 Goodbye FALSE</code></pre>
 <p>Alternatively, we could use the “Import Dataset” feature in RStudio which can be found in the environment window. (By default, the top-right pane of RStudio.) Once completed, this process will automatically generate the code to import a file. The resulting code will be shown in the console window. In recent versions of RStudio, <code>read_csv()</code> is used by default, thus reading in a tibble.</p>
 <p>Earlier we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
@@ -1151,32 +1151,32 @@ example_data</code></pre></div>
 <pre><code>## # A tibble: 10 x 11
 ##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
 ##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
-##  1 audi         a4        1.80  1999     4 auto(l… f        18    29 p    
-##  2 audi         a4        1.80  1999     4 manual… f        21    29 p    
-##  3 audi         a4        2.00  2008     4 manual… f        20    31 p    
-##  4 audi         a4        2.00  2008     4 auto(a… f        21    30 p    
-##  5 audi         a4        2.80  1999     6 auto(l… f        16    26 p    
-##  6 audi         a4        2.80  1999     6 manual… f        18    26 p    
-##  7 audi         a4        3.10  2008     6 auto(a… f        18    27 p    
-##  8 audi         a4 quat…  1.80  1999     4 manual… 4        18    26 p    
-##  9 audi         a4 quat…  1.80  1999     4 auto(l… 4        16    25 p    
-## 10 audi         a4 quat…  2.00  2008     4 manual… 4        20    28 p    
+##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p    
+##  2 audi         a4         1.8  1999     4 manual… f        21    29 p    
+##  3 audi         a4         2    2008     4 manual… f        20    31 p    
+##  4 audi         a4         2    2008     4 auto(a… f        21    30 p    
+##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p    
+##  6 audi         a4         2.8  1999     6 manual… f        18    26 p    
+##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p    
+##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p    
+##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p    
+## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p    
 ## # ... with 1 more variable: class &lt;chr&gt;</code></pre>
 <p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates with rows and columns were omitted.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg</code></pre></div>
 <pre><code>## # A tibble: 234 x 11
 ##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
 ##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
-##  1 audi         a4        1.80  1999     4 auto(l… f        18    29 p    
-##  2 audi         a4        1.80  1999     4 manual… f        21    29 p    
-##  3 audi         a4        2.00  2008     4 manual… f        20    31 p    
-##  4 audi         a4        2.00  2008     4 auto(a… f        21    30 p    
-##  5 audi         a4        2.80  1999     6 auto(l… f        16    26 p    
-##  6 audi         a4        2.80  1999     6 manual… f        18    26 p    
-##  7 audi         a4        3.10  2008     6 auto(a… f        18    27 p    
-##  8 audi         a4 quat…  1.80  1999     4 manual… 4        18    26 p    
-##  9 audi         a4 quat…  1.80  1999     4 auto(l… 4        16    25 p    
-## 10 audi         a4 quat…  2.00  2008     4 manual… 4        20    28 p    
+##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p    
+##  2 audi         a4         1.8  1999     4 manual… f        21    29 p    
+##  3 audi         a4         2    2008     4 manual… f        20    31 p    
+##  4 audi         a4         2    2008     4 auto(a… f        21    30 p    
+##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p    
+##  6 audi         a4         2.8  1999     6 manual… f        18    26 p    
+##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p    
+##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p    
+##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p    
+## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p    
 ## # ... with 224 more rows, and 1 more variable: class &lt;chr&gt;</code></pre>
 <p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg)</code></pre></div>
@@ -1340,11 +1340,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  6.517686 -5.534132  1.537870 -7.204901  6.261558  0.304467 10.017324
-##  [8]  3.187582  1.349603  6.182341</code></pre>
+<pre><code>##  [1]  0.3566644 -0.1609582  1.1607515 -2.5285740  3.2153380  3.1729423
+##  [7]  3.6437086 14.5016130  8.9325987  8.1395220</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.7827085 -1.4338381 -0.1331694 -1.7411226  0.7356018 -0.3600145
-##  [7]  1.4263548  0.1702422 -0.1677951  0.7210324</code></pre>
+<pre><code>##  [1] -0.72235877 -0.82378000 -0.56480868 -1.28768263 -0.16223995
+##  [6] -0.17054682 -0.07830647  2.04915455  0.95798076  0.80258800</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1381,14 +1381,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 29.5632</code></pre>
+<pre><code>## [1] 26.04767</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 29.5632</code></pre>
+<pre><code>## [1] 26.04767</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 29.5632</code></pre>
+<pre><code>## [1] 26.04767</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 26.60688</code></pre>
+<pre><code>## [1] 23.4429</code></pre>
 
 </div>
 </div>
