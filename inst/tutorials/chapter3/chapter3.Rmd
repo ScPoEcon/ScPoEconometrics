@@ -1,0 +1,284 @@
+---
+title: "Chapter 3 Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+## Discrete Data
+In this tutorial we will refer to [chapter 3 of our textbook](https://floswald.github.io/ScPoEconometrics/sum.html). Please go back there if you have any questions.
+
+I created a vector `x` for you with 10 values, which will be our data in this section:
+
+```{r}
+x = c(6,2,5,3,5,1,5,7,6,3)
+x
+```
+
+### Mean
+
+We have seen in chapter 2 of our book that the mean is a measure of *centrality* for a variable.
+
+1. Calculate the mean of `x` on a piece of paper by computing $\overline{x}=(x_{1}+...+x_{N})/N$
+2. Now use the `R` function `mean` to do the same thing in the code box below to check your result:
+
+```{r mean1, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r mean1-hint}
+mean(x)
+```
+
+3. *Discrete* means that there is a finite number of values that $X$ can take on. Use the function `unique` to find out the values contained in `x`. How many distinct values are there? 
+
+```{r unique, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r unique-hint}
+u=unique(x)
+n=length(u)
+```
+
+By sorting `x` in ascending order, we can easily see that there are groups of values:
+
+```{r,echo=TRUE}
+sort(x)
+```
+
+Let's denote $p_k$ the proportion of all entries in `x` that have value $k$. I.e. $p_1 = \frac{\text{number of times }x=x_1}{N}$. We can construct $p_k$ in `R` with
+
+```{r,echo=TRUE}
+p_k = table(x) / length(x)
+p_k
+```
+
+4. Re-compute the mean on a piece of paper by computing $\overline{x}=p_{1}x_{(1)}+...+p_{K}x_{(K)}$, where $x_{(k)}$ is the $k$-th possible value and $p_{k}$ is the proportion of observations with value $k$
+
+```{r quiz1}
+quiz(
+  question("The mean you compute in this way compares how to our previous result?",
+    answer("it's smaller"),
+    answer("it's greater"),
+    answer("it's the same", correct = TRUE)
+  )
+)
+```
+
+### Variance and Standard Deviation
+
+*Variance* and *Standard Deviation* (SD) inform us about the *spread* of a variable. 
+
+1. Calculate the variance by using $\overline{x}$ from above to compute the number $Var(X) = \frac{1}{N-1}((x_{1}-\overline{x})^{2}+...+(x_{N}-\overline{x})^{2})$.
+2. Calculate the SD by doing $\sqrt(Var(X))$.
+3. Check your results again by using functions `var` and `sd` here:
+
+```{r var, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+What's going on with the $N-1$ here? For small samples like ours ($N=10$), there is an adjustment we need to make. In estimating the variance, we use the information in `x`, but we also need a *previous* estimate: the mean $\overline{x}$! This means that we loose one *degree of freedom* in the estimation for $Var(X)$ and we are left with $N-1$ instead of $N$ degrees of freedom. Our *weights* or *proportions* $p_k$ therefore now become:
+
+```{r,echo=TRUE}
+p_k2 = table(x) / (length(x)-1)
+p_k2
+```
+
+4. Re-compute both variance and standard deviation by grouping equal values, e.g. $Var(X)=p_1 ( x_1 - \overline{x})^2 + \dots + p_N ( x_N - \overline{x})^2$. 
+
+```{r var2, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r var2-hint}
+p_k2 %*% (unique(sort(x)) - mean(x))^2
+```
+
+### Barplot
+
+Lets finish this part by producing a bar plot of $X$. This is easily achieved with the function `barplot`, whose main input argument is called `height` - the height of each bar. In our case, the height should be the number of times each value appears. We already saw above that `table` computes that for us.
+
+```{r,echo=TRUE}
+barplot(table(x),col="red",border="dodgerblue")
+```
+
+```{r quiz3}
+quiz(
+  question("Which quantities can you directly read off this plot?",
+    answer("The number of distinct values in $x$", correct = TRUE),
+    answer("The total number of observations, i.e. $N$", correct = TRUE),
+    answer("The number of times each $x_k$ appears", correct = TRUE),
+    answer("The variance of $x$")
+  )
+)
+
+```
+
+
+## Continuous Data
+
+Differently to the previous case, continuous distributions contain values from a *continuum* of values, for example all values in a closed interval, like in $x\in[-3,5]$, or all real numbers, like in $x\in \mathbf{R}$. There are many types of continuous distributions, and each is [defined by a mathematical formula](https://en.wikipedia.org/wiki/Category:Continuous_distributions). We look at the [Lognormal Distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) for an example here.
+
+### Histogram
+
+A *histogram* is a way to **visualize** the distribution of continuously distributed $X$, and it's closely related to the bargraph we just saw. In variable `x` we have a set of $N$ values for $x$ drawn randomly from the lognormal distribution. We could write this as $\{x_i\}_{i=1}^N, x_i \sim \text{Lognormal}(\mu,\sigma^2)$ where $(\mu,\sigma^2)$ are numbers that describe a particular instance of that distribution (more on that later). We create a histogram as follows:
+
+1. We categorize the values in `x` into a set of $M$ bins: if $x_i$ falls within bin number $j$, we assign $x_i$ to bin $j$.
+1. in each bin, we count the number of contained values
+1. we draw a bargraph with height equal to that number.
+
+A **key observation** is that as the number of bins $M$ increases, the histogram becomes a closer and closer approximation of the true *probability density function* that originally generated the data in `x`. Let's try this out!
+
+
+Move the slider below to change how many *bins* `R` uses to summarize this distribution. 
+
+```{r, context="data",include=FALSE}
+set.seed(1)
+x <- rlnorm(10000,meanlog=3.5,sdlog=1)
+```
+
+```{r, echo=FALSE}
+sliderInput("bins", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
+plotOutput("distPlot")
+```
+
+```{r, context="server"}
+output$distPlot <- renderPlot({
+  y <- x[x<500]
+  bins <- seq(min(y), max(y), length.out = input$bins + 1)
+  hist(y, breaks = bins, col = 'darkgray', border = 'white',freq=FALSE)
+  lines(density(y),col="red",lw=2)
+})
+```
+
+### Mean, Variance and SD
+
+With continous distributions we cannot apply the grouping trick from the previous section. This is because it is extremely unlikely to ever observe two *identical* draws from such a distribution. Therefore, the only way to calculate the mean here is by computing $\overline{x}=(x_{1}+...+x_{N})/N$. The same is true for variance and SD.
+
+1. compute the mean of `x`!
+
+```{r meanln, exercise=TRUE,exercise.eval=TRUE}
+
+```
+
+2. compute the variance and SD of `x`!
+
+```{r sdln, exercise=TRUE,exercise.eval=TRUE}
+
+```
+
+### Income in London
+
+Now suppose that `x` are measures of annual income obtained randomly from the population of London, and as such, are measured in Thousand Pound Sterling (GBP), i.e. `x=10` means *annual income of 10000GBP*. What is the *median* income in London? Remember that the median is the value above and below which exactly half of the data lie. Use the function `median` to compute this.
+
+```{r quizln}
+quiz(
+  question("Is the median greater or smaller than the mean?",
+    answer("smaller!", correct = TRUE),
+    answer("greater!")
+  )
+)
+```
+
+
+What's going on here? They differ by almost 20000 GBP?! Let's draw the probability density function (pdf) of this log normal distribution and both measures of centrality in a picture:
+
+```{r,echo=FALSE}
+pdf <- function(y) dlnorm(y,meanlog=3.5,sdlog=1)
+curve(pdf,from=0.0,to=200,n=400,xlab = "1000 GBP")
+abline(v=mean(x),col="red",lw=2)
+abline(v=median(x),col="blue",lw=2)
+legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
+```
+
+As we have seen already above, the log normal distribution has a very long right tail: The probabiliy of observing high values (like 200000 GBP, say) is very small (measured on the y-axis of this graph). But it is never zero! (Certainly not in London!) 
+Now, you know from above that the mean will weigh each observation equally with weight $\frac{1}{N}$, regardless of whether is very likely or not to be observed in our sample. In this particular instance, a few very high values in our sample *stretch* or *skew* the pdf towards the right of the picture. What we see here is that the mean is sensitive to outliers, i.e. very large values that pull up the entire average. The median seems to be a superior summary for the center of this distribution.
+
+### The Standard Deviation is measured in same units as the Mean
+
+You may want to ask
+
+>What is the actual difference between *Variance* and *Standard Deviation*? 
+
+and that is a good question. We found above that our fictitious income distribution for London has a SD of `r round(sd(x),2)` thousand Pounds. Let's see what this is worth in terms of Euros! Today's exchange rate is 1.13 Euros for one Pound. Let's recompute mean, SD and variance in terms of Euros and compare them in a table!
+
+```{r,echo=TRUE}
+fex <- 1.13   # foreign exchange rate
+euros <- x * fex
+
+```
+
+| Statistic | GBP | Euros | Euro Statistic / `fex` |
+|:---------:|:-----:|:-----:|:---:|
+| Mean | `r round(mean(x),2)` | `r round(mean(euros),2)` | `r round(mean(euros)/ fex,2)`|
+| SD | `r round(sd(x),2)` | `r round(sd(euros),2)` | `r round(sd(euros)/ fex,2)`|
+| Variance | `r round(var(x),2)` | `r round(var(euros),2)` | `r round( var(euros)/fex,2)`|
+
+That's interesting. Both mean and SD in Euros are just the mean and SD in GBP multiplied by the exchange rate! That is, both are scaled by the change in units when going from `x` to `euros`. The variance, on the other hand, changes by the *square* of the unit change. To see that, just divide `var(euros)` by the square of `fex` and compare that to the original variance in GBP!
+
+```{r gpb-euro,exercise=TRUE,exercise.eval=TRUE}
+
+```
+
+### The role of the Standard Deviation
+
+We just saw the the SD of income is supposedly 69 thousand GBP. Is that big or small? How could we tell?
+
+A simple way to see what this number does, is to redraw our initial histogram for different values of SD. Let's do that!
+
+```{r hist2, echo=FALSE}
+sliderInput("sd", "Value of SD", min = 0.5, max = 2, value = 1,step=0.01)
+plotOutput("distPlot2")
+```
+
+```{r hist3, context="server"}
+output$distPlot2 <- renderPlot({
+  y = rlnorm(n=10000,meanlog=3.5,sdlog=input$sd)
+  sd1 = round(sd(y),2)
+  hist(y, breaks=100,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with SD = ",sd1," 1000 GBP"),xlim = c(0,1000),ylim=c(0,0.03),xlab="1000 GBP")
+  lines(density(y),col="red",lw=2)
+})
+```
+
+Notice that your inputs for SD in the slider don't correspond to the title of the histogram (i.e. you see `2` as a max, but a much larger number in the title). This has to do lognormal distribution, where the parameters are given in *log scale*.
+
+## Estimation based on a Sample
+
+The Normal Distribution is another extremely frequent distribution. Let us draw samples of size $N$ from a particular instance of a normal distribution with mean $\mu=5$ and SD $\sigma =2$:
+
+```{r, echo=FALSE}
+fluidRow(
+  column(4,
+         wellPanel(
+           sliderInput("ssize", "Sample Size N", min = 2, max = 500, value = 5)
+         )
+  ),
+  column(4,
+         plotOutput("distPlot3")
+  ),
+   column(4,
+         tableOutput("estTable")
+         )
+)
+```
+
+
+```{r, context="server"}
+output$distPlot3 <- renderPlot({
+  set.seed(2)
+  nsample = rnorm(n=input$ssize,mean=5,sd=2)
+  hist(nsample,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with N = ",input$ssize))
+  lines(density(nsample),col="red",lw=2)
+})
+output$estTable <- renderTable({
+  set.seed(2)
+  nsample = rnorm(n=input$ssize,mean=5,sd=2)
+  data.frame(parameter=c("Mean","SD"),estimate=c(mean(nsample),sd(nsample)))},striped=TRUE)
+```
