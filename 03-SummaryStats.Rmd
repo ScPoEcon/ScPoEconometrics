@@ -290,9 +290,26 @@ bottom5
 ```
 That's better! 
 
+#### Look for `NA`s in a `tibble` {-} 
+
+Sometimes data is *missing*, and `R` represents it with the special value `NA` (not available). It is good to know where in our dataset we are going to encounter any missing values, so the task here is: let's produce a table that has three columns:
+
+1. the names of countries with missing data
+2. how many years of data are missing for each of those
+3. and the actual years that are missing
+
+```{r}
+missings = tot_pop %>%
+  filter(is.na(counts)) %>% # is.na(x) returns TRUE if x is NA
+  group_by(Country) %>%
+  summarise(n_missing = n(),years = paste(year,collapse = ","))
+knitr:::kable(missings)
+```
+Notice that I used the function `kable` from the `knitr` package to produce a nicely looking table here.
+
+#### Look for `NA`s in a `tibble` {-} 
 
 
-* how many NA's?
 * plot different vars
 * make proportions and plot
 * make growth rates and plot
