@@ -3,10 +3,11 @@ Type: Book
 Title: ScPoEconometrics
 Version: 0.0.1
 Authors@R: c(
-  person("Florian", "Oswald" , "florian.oswald@sciencespo.fr", c("aut", "cre")),
-  person("Jean-Marc", "Robin" , "jeanmarc.robin@sciencespo.fr", role="ctb"),
-  )
-Depends: R (>= 3.3.0)
+    person("Florian", "Oswald", email = "florian.oswald@sciencespo.fr", role = c("aut","cre")),
+    person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"))
+Depends: R (>= 3.4.0)
 URL: https://github.com/floswald/ScPoEconometrics
-Imports: bookdown
-Remotes: rstudio/bookdown
+Imports: 
+  bookdown,
+  shiny,
+  learnr
