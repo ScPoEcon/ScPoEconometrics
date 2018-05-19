@@ -10,4 +10,5 @@ URL: https://github.com/floswald/ScPoEconometrics
 Imports: 
   bookdown,
   shiny,
-  learnr
+  learnr,
+  plot3D

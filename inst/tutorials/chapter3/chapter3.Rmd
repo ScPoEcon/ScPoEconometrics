@@ -124,24 +124,24 @@ quiz(
 
 ## Continuous Data
 
-Differently to the previous case, continuous distributions contain values from a *continuum* of values, for example all values in a closed interval, like in $x\in[-3,5]$, or all real numbers, like in $x\in \mathbf{R}$. There are many types of continuous distributions, and each is [defined by a mathematical formula](https://en.wikipedia.org/wiki/Category:Continuous_distributions). We look at the [Lognormal Distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) for an example here.
+Differently to the previous case, continuous distributions contain values from a *continuum* of values, for example all values in a closed interval, like in $y\in[-3,5]$, or all real numbers, like in $x\in \mathbf{R}$. There are many types of continuous distributions, and each is [defined by a mathematical formula](https://en.wikipedia.org/wiki/Category:Continuous_distributions). We look at the [Lognormal Distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) for an example here.
 
 ### Histogram
 
-A *histogram* is a way to **visualize** the distribution of continuously distributed $X$, and it's closely related to the bargraph we just saw. In variable `x` we have a set of $N$ values for $x$ drawn randomly from the lognormal distribution. We could write this as $\{x_i\}_{i=1}^N, x_i \sim \text{Lognormal}(\mu,\sigma^2)$ where $(\mu,\sigma^2)$ are numbers that describe a particular instance of that distribution (more on that later). We create a histogram as follows:
+A *histogram* is a way to **visualize** the distribution of continuously distributed $Y$, and it's closely related to the bargraph we just saw. In variable `y` we have a set of $N$ values for $y$ drawn randomly from the lognormal distribution. We could write this as $\{y_i\}_{i=1}^N, y_i \sim \text{Lognormal}(\mu,\sigma^2)$ where $(\mu,\sigma^2)$ are numbers that describe a particular instance of that distribution (more on that later). We create a histogram as follows:
 
-1. We categorize the values in `x` into a set of $M$ bins: if $x_i$ falls within bin number $j$, we assign $x_i$ to bin $j$.
+1. We categorize the values in `y` into a set of $M$ bins: if $y_i$ falls within bin number $j$, we assign $y_i$ to bin $j$.
 1. in each bin, we count the number of contained values
 1. we draw a bargraph with height equal to that number.
 
-A **key observation** is that as the number of bins $M$ increases, the histogram becomes a closer and closer approximation of the true *probability density function* that originally generated the data in `x`. Let's try this out!
+A **key observation** is that as the number of bins $M$ increases, the histogram becomes a closer and closer approximation of the true *probability density function* that originally generated the data in `y`. Let's try this out!
 
 
 Move the slider below to change how many *bins* `R` uses to summarize this distribution. 
 
 ```{r, context="data",include=FALSE}
 set.seed(1)
-x <- rlnorm(10000,meanlog=3.5,sdlog=1)
+y <- rlnorm(10000,meanlog=3.5,sdlog=1)
 ```
 
 ```{r, echo=FALSE}
@@ -151,7 +151,7 @@ plotOutput("distPlot")
 
 ```{r, context="server"}
 output$distPlot <- renderPlot({
-  y <- x[x<500]
+  y2 <- y[y<500]
   bins <- seq(min(y), max(y), length.out = input$bins + 1)
   hist(y, breaks = bins, col = 'darkgray', border = 'white',freq=FALSE)
   lines(density(y),col="red",lw=2)
@@ -160,15 +160,15 @@ output$distPlot <- renderPlot({
 
 ### Mean, Variance and SD
 
-With continous distributions we cannot apply the grouping trick from the previous section. This is because it is extremely unlikely to ever observe two *identical* draws from such a distribution. Therefore, the only way to calculate the mean here is by computing $\overline{x}=(x_{1}+...+x_{N})/N$. The same is true for variance and SD.
+With continous distributions we cannot apply the grouping trick from the previous section. This is because it is extremely unlikely to ever observe two *identical* draws from such a distribution. Therefore, the only way to calculate the mean here is by computing $\overline{y}=(y_{1}+...+y_{N})/N$. The same is true for variance and SD.
 
-1. compute the mean of `x`!
+1. compute the mean of `y`!
 
 ```{r meanln, exercise=TRUE,exercise.eval=TRUE}
 
 ```
 
-2. compute the variance and SD of `x`!
+2. compute the variance and SD of `y`!
 
 ```{r sdln, exercise=TRUE,exercise.eval=TRUE}
 
@@ -176,7 +176,7 @@ With continous distributions we cannot apply the grouping trick from the previou
 
 ### Income in London
 
-Now suppose that `x` are measures of annual income obtained randomly from the population of London, and as such, are measured in Thousand Pound Sterling (GBP), i.e. `x=10` means *annual income of 10000GBP*. What is the *median* income in London? Remember that the median is the value above and below which exactly half of the data lie. Use the function `median` to compute this.
+Now suppose that `y` are measures of annual income obtained randomly from the population of London, and as such, are measured in Thousand Pound Sterling (GBP), i.e. `y=10` means *annual income of 10000GBP*. What is the *median* income in London? Remember that the median is the value above and below which exactly half of the data lie. Use the function `median` to compute this.
 
 ```{r quizln}
 quiz(
@@ -207,7 +207,7 @@ You may want to ask
 
 >What is the actual difference between *Variance* and *Standard Deviation*? 
 
-and that is a good question. We found above that our fictitious income distribution for London has a SD of `r round(sd(x),2)` thousand Pounds. Let's see what this is worth in terms of Euros! Today's exchange rate is 1.13 Euros for one Pound. Let's recompute mean, SD and variance in terms of Euros and compare them in a table!
+and that is a good question. We found above that our fictitious income distribution for London has a SD of `r round(sd(y),2)` thousand Pounds. Let's see what this is worth in terms of Euros! Today's exchange rate is 1.13 Euros for one Pound. Let's recompute mean, SD and variance in terms of Euros and compare them in a table!
 
 ```{r,echo=TRUE}
 fex <- 1.13   # foreign exchange rate
@@ -217,11 +217,11 @@ euros <- x * fex
 
 | Statistic | GBP | Euros | Euro Statistic / `fex` |
 |:---------:|:-----:|:-----:|:---:|
-| Mean | `r round(mean(x),2)` | `r round(mean(euros),2)` | `r round(mean(euros)/ fex,2)`|
-| SD | `r round(sd(x),2)` | `r round(sd(euros),2)` | `r round(sd(euros)/ fex,2)`|
-| Variance | `r round(var(x),2)` | `r round(var(euros),2)` | `r round( var(euros)/fex,2)`|
+| Mean | `r round(mean(y),2)` | `r round(mean(euros),2)` | `r round(mean(euros)/ fex,2)`|
+| SD | `r round(sd(y),2)` | `r round(sd(euros),2)` | `r round(sd(euros)/ fex,2)`|
+| Variance | `r round(var(y),2)` | `r round(var(euros),2)` | `r round( var(euros)/fex,2)`|
 
-That's interesting. Both mean and SD in Euros are just the mean and SD in GBP multiplied by the exchange rate! That is, both are scaled by the change in units when going from `x` to `euros`. The variance, on the other hand, changes by the *square* of the unit change. To see that, just divide `var(euros)` by the square of `fex` and compare that to the original variance in GBP!
+That's interesting. Both mean and SD in Euros are just the mean and SD in GBP multiplied by the exchange rate! That is, both are scaled by the change in units when going from `y` to `euros`. The variance, on the other hand, changes by the *square* of the unit change. To see that, just divide `var(euros)` by the square of `fex` and compare that to the original variance in GBP!
 
 ```{r gpb-euro,exercise=TRUE,exercise.eval=TRUE}
 
@@ -282,3 +282,9 @@ output$estTable <- renderTable({
   nsample = rnorm(n=input$ssize,mean=5,sd=2)
   data.frame(parameter=c("Mean","SD"),estimate=c(mean(nsample),sd(nsample)))},striped=TRUE)
 ```
+
+## Two Random Variables
+
+* Joint distributions
+* Covariance
+* Correlation
