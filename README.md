@@ -4,6 +4,24 @@
 
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
+## Tutorials
+
+In order to run the accompanying tutorials, you must install this repository as an R package into your computer. Do this:
+
+```R
+library(devtools)
+install_github(repo = "floswald/ScPoEconometrics")
+```
+
+Then you can run the respective tutorial for the corresponding chapter, by typing, for example:
+
+```R
+install.packages("learnr")  # install only once
+library(learnr)
+run_tutorial("chapter3",package="ScPoEconometrics")
+```
+
+
 
 ## Technology
 

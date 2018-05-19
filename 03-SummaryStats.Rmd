@@ -210,7 +210,7 @@ This shows a `tibble`. This is more informative view of a `data.frame` (it tells
 
 ### `tidyr`
 
-In the previous `tibble`, there is a variable which is there, but not displayed as a single coluym: `year`. Each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
+In the previous `tibble`, each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
 
 1. specify which columns are to be gathered: in our case, all years (note that `paste(2008:2017)` produces a vector like `["2008", "2009", "2010",...]`)
 1. say what those columns should be gathered into, i.e. what is the *key* for those values: `year`.
@@ -302,12 +302,11 @@ Sometimes data is *missing*, and `R` represents it with the special value `NA` (
 missings = tot_pop %>%
   filter(is.na(counts)) %>% # is.na(x) returns TRUE if x is NA
   group_by(Country) %>%
-  summarise(n_missing = n(),years = paste(year,collapse = ","))
+  summarise(n_missing = n(),years = paste(year,collapse = ", "))
 knitr:::kable(missings)
 ```
-Notice that I used the function `kable` from the `knitr` package to produce a nicely looking table here.
 
-#### Look for `NA`s in a `tibble` {-} 
+Notice that I used the function `kable` from the `knitr` package to produce a nicely looking table here.
 
 
 * plot different vars

@@ -1,0 +1,20 @@
+---
+title: "Chapter 4 Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+* why do we take the square and not the level? euclidean distance.
+* start with scatter plot
+* choose a and b to minimize dist between line and all points
+* then show red lines
+* then define sum of squared residuals
+
+* 3d plot of SSR(a,b)
+* 

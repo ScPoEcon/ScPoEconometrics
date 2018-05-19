@@ -1,11 +1,60 @@
 # Linear Regression {#linreg}
 
+Notes:
 
-
-1. linear regression - stop at R-squared
-    1. different data: missing variable
-    1. non-linear realtionship
+stop at R-squared
+* different data: missing variable
+* non-linear realtionship
     
+## Data on Cars
+
+We will look at the built-in `cars` dataset. Let's get a view of this by just typing `View(cars)` in Rstudio. You can see something like this:
+
+```{r,echo=FALSE}
+head(cars)
+```
+
+We have a `data.frame` with two columns: `speed` and `dist`. Type `help(cars)` to find out more about the dataset. There you could read that
+
+>The data give the speed of cars (mph) and the distances taken to stop (ft).
+
+It's good practice to know the extent of a dataset. You could just type 
+
+```{r}
+dim(cars)
+```
+
+to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:
+
+### How are `speed` and `dist` related?
+
+The simplest way to start plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph `speed`, and the other one `dist`, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In `R`:
+
+```{r}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+```
+
+Here, each dot represents one observation. In this case, one particular measurement `speed` and `dist` for a car. Now, again: 
+
+
+```{block2, type='INFO'}
+
+
+How are `speed` and `dist` related? How could one best *summarize* this relationship?
+
+```
+
+### non-linear data
+
+```{r}
+with(mtcars,plot(hp,mpg))
+```
     
 1. scatter plot
     1. label observations
