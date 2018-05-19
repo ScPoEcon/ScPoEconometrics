@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-04-28">
+<meta name="date" content="2018-05-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -153,7 +153,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
-<li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.1</b> Try to find the Slope!</a></li>
+<li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#data-on-cars"><i class="fa fa-check"></i><b>4.1</b> Data on Cars</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linreg.html"><a href="linreg.html#how-are-speed-and-dist-related"><i class="fa fa-check"></i><b>4.1.1</b> How are <code>speed</code> and <code>dist</code> related?</a></li>
+<li class="chapter" data-level="4.1.2" data-path="linreg.html"><a href="linreg.html#non-linear-data"><i class="fa fa-check"></i><b>4.1.2</b> non-linear data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.2</b> Try to find the Slope!</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
 <li class="chapter" data-level="6" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>6</b> Multiple Regression</a></li>
@@ -421,7 +425,7 @@ tot_pop_raw</code></pre></div>
 <p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). Notice, in particular, that <em>all</em> columns seem to be of type <code>chr</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
 <div id="tidyr" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> <code>tidyr</code></h3>
-<p>In the previous <code>tibble</code>, there is a variable which is there, but not displayed as a single coluym: <code>year</code>. Each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
+<p>In the previous <code>tibble</code>, each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
 <li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>[&quot;2008&quot;, &quot;2009&quot;, &quot;2010&quot;,...]</code>)</li>
 <li>say what those columns should be gathered into, i.e. what is the <em>key</em> for those values: <code>year</code>.</li>
@@ -533,8 +537,73 @@ top5</code></pre></div>
 ## 4 Liechtenstein     37353 
 ## 5 San Marino        33014.</code></pre>
 <p>That’s better!</p>
+</div>
+<div id="look-for-nas-in-a-tibble" class="section level4 unnumbered">
+<h4>Look for <code>NA</code>s in a <code>tibble</code></h4>
+<p>Sometimes data is <em>missing</em>, and <code>R</code> represents it with the special value <code>NA</code> (not available). It is good to know where in our dataset we are going to encounter any missing values, so the task here is: let’s produce a table that has three columns:</p>
+<ol style="list-style-type: decimal">
+<li>the names of countries with missing data</li>
+<li>how many years of data are missing for each of those</li>
+<li>and the actual years that are missing</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">missings =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(counts)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># is.na(x) returns TRUE if x is NA</span>
+<span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_missing =</span> <span class="kw">n</span>(),<span class="dt">years =</span> <span class="kw">paste</span>(year,<span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))
+knitr<span class="op">:::</span><span class="kw">kable</span>(missings)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Country</th>
+<th align="right">n_missing</th>
+<th align="left">years</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Albania</td>
+<td align="right">2</td>
+<td align="left">2010, 2012</td>
+</tr>
+<tr class="even">
+<td align="left">Andorra</td>
+<td align="right">2</td>
+<td align="left">2014, 2015</td>
+</tr>
+<tr class="odd">
+<td align="left">Armenia</td>
+<td align="right">1</td>
+<td align="left">2014</td>
+</tr>
+<tr class="even">
+<td align="left">France (metropolitan)</td>
+<td align="right">4</td>
+<td align="left">2014, 2015, 2016, 2017</td>
+</tr>
+<tr class="odd">
+<td align="left">Georgia</td>
+<td align="right">1</td>
+<td align="left">2013</td>
+</tr>
+<tr class="even">
+<td align="left">Monaco</td>
+<td align="right">7</td>
+<td align="left">2008, 2009, 2010, 2011, 2012, 2013, 2014</td>
+</tr>
+<tr class="odd">
+<td align="left">Russia</td>
+<td align="right">4</td>
+<td align="left">2013, 2015, 2016, 2017</td>
+</tr>
+<tr class="even">
+<td align="left">San Marino</td>
+<td align="right">1</td>
+<td align="left">2010</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that I used the function <code>kable</code> from the <code>knitr</code> package to produce a nicely looking table here.</p>
 <ul>
-<li>how many NA’s?</li>
 <li>plot different vars</li>
 <li>make proportions and plot</li>
 <li>make growth rates and plot</li>

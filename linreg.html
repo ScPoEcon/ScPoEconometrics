@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-04-28">
+<meta name="date" content="2018-05-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -153,7 +153,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
-<li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.1</b> Try to find the Slope!</a></li>
+<li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#data-on-cars"><i class="fa fa-check"></i><b>4.1</b> Data on Cars</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linreg.html"><a href="linreg.html#how-are-speed-and-dist-related"><i class="fa fa-check"></i><b>4.1.1</b> How are <code>speed</code> and <code>dist</code> related?</a></li>
+<li class="chapter" data-level="4.1.2" data-path="linreg.html"><a href="linreg.html#non-linear-data"><i class="fa fa-check"></i><b>4.1.2</b> non-linear data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.2</b> Try to find the Slope!</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
 <li class="chapter" data-level="6" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>6</b> Multiple Regression</a></li>
@@ -189,12 +193,49 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="linreg" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Linear Regression</h1>
+<p>Notes:</p>
+<p>stop at R-squared * different data: missing variable * non-linear realtionship</p>
+<div id="data-on-cars" class="section level2">
+<h2><span class="header-section-number">4.1</span> Data on Cars</h2>
+<p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
+<pre><code>##   speed dist
+## 1     4    2
+## 2     4   10
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10</code></pre>
+<p>We have a <code>data.frame</code> with two columns: <code>speed</code> and <code>dist</code>. Type <code>help(cars)</code> to find out more about the dataset. There you could read that</p>
+<blockquote>
+<p>The data give the speed of cars (mph) and the distances taken to stop (ft).</p>
+</blockquote>
+<p>It’s good practice to know the extent of a dataset. You could just type</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cars)</code></pre></div>
+<pre><code>## [1] 50  2</code></pre>
+<p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
+<div id="how-are-speed-and-dist-related" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> How are <code>speed</code> and <code>dist</code> related?</h3>
+<p>The simplest way to start plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph <code>speed</code>, and the other one <code>dist</code>, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In <code>R</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<p>Here, each dot represents one observation. In this case, one particular measurement <code>speed</code> and <code>dist</code> for a car. Now, again:</p>
+
+<div class="INFO">
+<p>How are <code>speed</code> and <code>dist</code> related? How could one best <em>summarize</em> this relationship?</p>
+</div>
+
+</div>
+<div id="non-linear-data" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> non-linear data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(mtcars,<span class="kw">plot</span>(hp,mpg))</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
-<li>linear regression - stop at R-squared
-<ol style="list-style-type: decimal">
-<li>different data: missing variable</li>
-<li>non-linear realtionship</li>
-</ol></li>
 <li>scatter plot
 <ol style="list-style-type: decimal">
 <li>label observations</li>
@@ -229,8 +270,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>SE is ameasure of precision depending on N</li>
 </ol></li>
 </ol>
+</div>
+</div>
 <div id="try-to-find-the-slope" class="section level2">
-<h2><span class="header-section-number">4.1</span> Try to find the Slope!</h2>
+<h2><span class="header-section-number">4.2</span> Try to find the Slope!</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_url</span>(<span class="st">&quot;https://gallery.shinyapps.io/simple_regression/&quot;</span>)</code></pre></div>
 <iframe src="https://gallery.shinyapps.io/simple_regression/" width="672" height="400px">
 </iframe>
