@@ -121,6 +121,32 @@ quiz(
 
 ```
 
+A classic example of a *discrete* distribution is the [**Binomial distribution**](https://en.wikipedia.org/wiki/Bernoulli_distribution). Saying that random variable $X$ follows a binomial distribution, we can write $X \sim \operatorname{B}(n, p)$ where $n$ the number of draws and $p$ the probability of success for each draw. $X$ simply keeps track of the total number of successes after $n$ draws.
+
+The applet below allows you to explore the shape of the Binomial distribution for different values of $n$ and $p$:
+
+```{r, echo=FALSE}
+sliderInput("n", "Number of draws n:", min = 1, max = 1000, step = 5, value = 100)
+sliderInput("p", "Probability of success p:", min = 0, max = 1, step = 0.01, value = .5)
+sliderInput("bins", "Number of bins:", min = 1, max = 50, step=5, value = 10)
+plotOutput("binomPlot")
+```
+
+```{r, context="server"}
+output$binomPlot <- renderPlot({
+  
+  n <- input$n
+  p <- input$p
+  
+  b <- rbinom(n = 10000, size = n, prob = p) # simulating the distrib by taking 10,000 draws
+  
+  bins <- seq(min(b), max(b), length.out = input$bins + 1)
+  hist(b, breaks = bins, col = 'darkgray', border = 'white', freq=FALSE)
+  lines(seq(min(b), max(b), .1), dnorm(seq(min(b), max(b), .1), mean = n*p, sd = sqrt(n*p*(1-p))), col="red",lw=2)
+})
+```
+
+
 
 ## Continuous Data
 
