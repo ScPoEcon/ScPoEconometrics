@@ -11,7 +11,7 @@
 
 
 
-<title>WorkInProgress</title>
+<title>Test</title>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">WorkInProgress</h1>
+<h1 class="title toc-ignore">Test</h1>
 
 </div>
 
@@ -123,14 +123,14 @@ $(document).ready(function () {
 <option value="rlnorm">Lognormal</option>
 <option value="runif">Uniform</option>
 <option value="rbeta">Beta</option>
-<option value="rparet">Pareto</option></select>
+<option value="rt">t</option></select>
 <script type="application/json" data-for="dist" data-nonempty="">{}</script>
 </div>
 </div>
 <div data-display-if="input.dist == &#39;runif&#39;" data-ns-prefix="">
 <div class="form-group shiny-input-container">
-<label class="control-label" for="range_unif">Range</label>
-<input class="js-range-slider" id="range_unif" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
+<label class="control-label" for="range">Range</label>
+<input class="js-range-slider" id="range" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
 </div>
 </div>
 <div data-display-if="input.dist == &#39;rbeta&#39;" data-ns-prefix="">
@@ -145,44 +145,30 @@ $(document).ready(function () {
 </div>
 <div data-display-if="input.dist == &#39;rnorm&#39;" data-ns-prefix="">
 <div class="form-group shiny-input-container">
-<label class="control-label" for="mean_norm">Mean</label>
-<input class="js-range-slider" id="mean_norm" data-min="-5" data-max="5" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
+<label class="control-label" for="mean">Mean</label>
+<input class="js-range-slider" id="mean" data-min="-5" data-max="5" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
 </div>
 <div class="form-group shiny-input-container">
-<label class="control-label" for="std_norm">Standard Deviation</label>
-<input class="js-range-slider" id="std_norm" data-min="0.01" data-max="5" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.98" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="2.00400801603206" data-data-type="number"/>
+<label class="control-label" for="std">Standard Deviation</label>
+<input class="js-range-slider" id="std" data-min="0.01" data-max="5" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.98" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="2.00400801603206" data-data-type="number"/>
 </div>
 <div class="form-group shiny-input-container">
-<label class="control-label" for="range_norm">Range</label>
-<input class="js-range-slider" id="range_norm" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
-</div>
-</div>
-<div data-display-if="input.dist == &#39;rparet&#39;" data-ns-prefix="">
-<div class="form-group shiny-input-container">
-<label class="control-label" for="location">Location</label>
-<input class="js-range-slider" id="location" data-min="0.1" data-max="10" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1.01010101010101" data-data-type="number"/>
-</div>
-<div class="form-group shiny-input-container">
-<label class="control-label" for="shape">Shape</label>
-<input class="js-range-slider" id="shape" data-min="0.1" data-max="5" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.8" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="2.04081632653061" data-data-type="number"/>
-</div>
-<div class="form-group shiny-input-container">
-<label class="control-label" for="range_paret">Range</label>
-<input class="js-range-slider" id="range_paret" data-type="double" data-min="0" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-drag-interval="true" data-data-type="number"/>
+<label class="control-label" for="range">Range</label>
+<input class="js-range-slider" id="range" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
 </div>
 </div>
 <div data-display-if="input.dist == &#39;rlnorm&#39;" data-ns-prefix="">
 <div class="form-group shiny-input-container">
-<label class="control-label" for="mean_lnorm">Mean</label>
-<input class="js-range-slider" id="mean_lnorm" data-min="-5" data-max="5" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
+<label class="control-label" for="mean">Mean</label>
+<input class="js-range-slider" id="mean" data-min="-5" data-max="5" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
 </div>
 <div class="form-group shiny-input-container">
-<label class="control-label" for="std_lnorm">Standard Deviation</label>
-<input class="js-range-slider" id="std_lnorm" data-min="0.01" data-max="5" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.98" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="2.00400801603206" data-data-type="number"/>
+<label class="control-label" for="std">Standard Deviation</label>
+<input class="js-range-slider" id="std" data-min="0.01" data-max="5" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.98" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="2.00400801603206" data-data-type="number"/>
 </div>
 <div class="form-group shiny-input-container">
-<label class="control-label" for="range_lnorm">Range</label>
-<input class="js-range-slider" id="range_lnorm" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
+<label class="control-label" for="range">Range</label>
+<input class="js-range-slider" id="range" data-type="double" data-min="-100" data-max="100" data-from="-5" data-to="5" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="0.5" data-drag-interval="true" data-data-type="number"/>
 </div>
 </div>
 </form>
@@ -194,38 +180,33 @@ $(document).ready(function () {
 
 <script type="application/shiny-prerendered" data-context="server-start">
 knitr::opts_chunk$set(echo = TRUE)
-
-library(EnvStats, quietly = TRUE, warn.conflicts = FALSE, verbose = FALSE) # For Pareto Distribution
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 output$dPlot <- renderPlot({
   
   if (input$dist == 'rnorm'){ # Normal
-    range <- seq(input$range_norm[1], input$range_norm[2], .1)
+    range <- seq(input$range[1], input$range[2], .1)
     plot(range,
-         dnorm(range, mean = input$mean_norm, sd = input$std_norm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Normal Distribution")
+         dnorm(range, mean = input$mean, sd = input$std), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Normal Distribution")
     
   } else if(input$dist == 'rlnorm'){ # Log Normal
-    range <- seq(input$range_lnorm[1], input$range_lnorm[2], .1)
+    range <- seq(input$range[1], input$range[2], .1)
     plot(range,
-         dlnorm(range, mean = input$mean_lnorm, sd = input$std_lnorm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Lognormal Distribution")
+         dlnorm(range, mean = input$mean, sd = input$std), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Lognormal Distribution")
 
   } else if(input$dist == 'runif'){
-    range <- seq(input$range_unif[1], input$range_unif[2], .1)
+    range <- seq(input$range[1], input$range[2], .1)
     plot(range,
-         dunif(range, min = input$range_unif[1], max = input$range_unif[2]), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Uniform Distribution")
+         dunif(range, min = input$range[1], max = input$range[2]), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Uniform Distribution")
     
   } else if(input$dist == 'rbeta') {
     range <- seq(0, 1, .01)
     plot(range,
          dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Beta Distribution")
     
-  } else if(input$dist == 'rparet'){
-    range <- seq(input$range_paret[1], input$range_paret[2], .1)
-    plot(range,
-         dpareto(range, location = input$location, shape = input$shape), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Pareto Distribution")
-  }
+    
+  } else {plot(c(1, 2, 3), c(3, 2, 1))}
 })
 </script>
  <!--html_preserve-->

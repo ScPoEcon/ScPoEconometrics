@@ -1,0 +1,73 @@
+---
+title: "Test"
+runtime: shiny_prerendered
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE}
+shinyUI(fluidPage(
+  sidebarPanel(selectInput(inputId = "dist",
+                label = "Distribution:",
+                choices = c(Normal      = "rnorm",
+                            Lognormal   = "rlnorm",
+                            Uniform     = "runif",
+                            Beta        = "rbeta",
+                            t           = "rt"),
+                selected = "rnorm"),
+               
+               conditionalPanel(condition = "input.dist == 'runif'",
+                                sliderInput("range", "Range", min = -100, max = 100, value = c(-5, 5))),
+               
+               conditionalPanel(condition = "input.dist == 'rbeta'",
+                                sliderInput("alpha", "Alpha", min = 0, max = 1, step = 0.01, value = .5),
+                                sliderInput("beta", "Beta", min = 0, max = 1, step = 0.01, value = .5)),
+               
+               conditionalPanel(condition = "input.dist == 'rnorm'",
+                                sliderInput("mean", "Mean", min = -5, max = 5, step = .1, value = 0),
+                                sliderInput("std", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1),
+                                sliderInput("range", "Range", min = -100, max = 100, value = c(-5, 5))),
+               
+               conditionalPanel(condition = "input.dist == 'rlnorm'",
+                                sliderInput("mean", "Mean", min = -5, max = 5, step = .1, value = 0),
+                                sliderInput("std", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1),
+                                sliderInput("range", "Range", min = -100, max = 100, value = c(-5, 5)))),
+  
+  mainPanel(
+    plotOutput("dPlot")
+  )))
+```
+
+```{r, context="server"}
+output$dPlot <- renderPlot({
+  
+  if (input$dist == 'rnorm'){ # Normal
+    range <- seq(input$range[1], input$range[2], .1)
+    plot(range,
+         dnorm(range, mean = input$mean, sd = input$std), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Normal Distribution")
+    
+  } else if(input$dist == 'rlnorm'){ # Log Normal
+    range <- seq(input$range[1], input$range[2], .1)
+    plot(range,
+         dlnorm(range, mean = input$mean, sd = input$std), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Lognormal Distribution")
+
+  } else if(input$dist == 'runif'){
+    range <- seq(input$range[1], input$range[2], .1)
+    plot(range,
+         dunif(range, min = input$range[1], max = input$range[2]), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Uniform Distribution")
+    
+  } else if(input$dist == 'rbeta') {
+    range <- seq(0, 1, .01)
+    plot(range,
+         dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Beta Distribution")
+    
+    
+  } else {plot(c(1, 2, 3), c(3, 2, 1))}
+})
+```
+
+
