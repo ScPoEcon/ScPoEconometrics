@@ -249,6 +249,8 @@ output$distPlot2 <- renderPlot({
 
 Notice that your inputs for SD in the slider don't correspond to the title of the histogram (i.e. you see `2` as a max, but a much larger number in the title). This has to do lognormal distribution, where the parameters are given in *log scale*.
 
+### Vincent's selection of distributions
+
 ## Estimation based on a Sample
 
 The Normal Distribution is another extremely frequent distribution. Let us draw samples of size $N$ from a particular instance of a normal distribution with mean $\mu=5$ and SD $\sigma =2$:
@@ -282,6 +284,11 @@ output$estTable <- renderTable({
   nsample = rnorm(n=input$ssize,mean=5,sd=2)
   data.frame(parameter=c("Mean","SD"),estimate=c(mean(nsample),sd(nsample)))},striped=TRUE)
 ```
+
+
+
+
+
 
 ## Two Random Variables
 
