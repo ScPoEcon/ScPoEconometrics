@@ -141,7 +141,7 @@ output$binomPlot <- renderPlot({
   b <- rbinom(n = 10000, size = n, prob = p) # simulating the distrib by taking 10,000 draws
   
   bins <- seq(min(b), max(b), length.out = input$bins + 1)
-  hist(b, breaks = bins, col = 'darkgray', border = 'white', freq=FALSE)
+  hist(b, breaks = bins, col = 'darkgray', border = 'white', freq=FALSE, main = paste0("B(", n, ",", p, ")"))
   lines(seq(min(b), max(b), .1), dnorm(seq(min(b), max(b), .1), mean = n*p, sd = sqrt(n*p*(1-p))), col="red",lw=2)
 })
 ```
@@ -183,6 +183,11 @@ output$distPlot <- renderPlot({
   lines(density(y),col="red",lw=2)
 })
 ```
+
+Below are some famous distributions for you to play with:
+
+Vincent Here
+
 
 ### Mean, Variance and SD
 
