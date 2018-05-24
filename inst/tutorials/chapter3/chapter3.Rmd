@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 library(EnvStats, quietly = TRUE, warn.conflicts = FALSE, verbose = FALSE) # For Pareto Distribution
+library(distr)
 ```
 
 
@@ -196,7 +197,9 @@ shinyUI(fluidPage(
                             Lognormal   = "rlnorm",
                             Uniform     = "runif",
                             Beta        = "rbeta",
-                            Pareto      = "rparet"),
+                            Pareto      = "rparet",
+                            Arcsine     = "rarcsine",
+                            Ratio_2_Normals = "rationorm"),
                 selected = "rnorm"),
                
                conditionalPanel(condition = "input.dist == 'runif'",
@@ -208,18 +211,21 @@ shinyUI(fluidPage(
                
                conditionalPanel(condition = "input.dist == 'rnorm'",
                                 sliderInput("mean_norm", "Mean", min = -5, max = 5, step = .1, value = 0),
-                                sliderInput("std_norm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1),
-                                sliderInput("range_norm", "Range", min = -100, max = 100, value = c(-5, 5))),
+                                sliderInput("std_norm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1)),
                
                conditionalPanel(condition = "input.dist == 'rparet'",
                                 sliderInput("location", "Location", min = 0.1, max = 10, step = .1, value = 1),
-                                sliderInput("shape", "Shape", min = 0.1, max = 5, step = 0.1, value = 1),
-                                sliderInput("range_paret", "Range", min = 0, max = 100, value = c(-5, 5))),
+                                sliderInput("shape", "Shape", min = 0.1, max = 5, step = 0.1, value = 1)),
+               
+               conditionalPanel(condition = "input.dist == 'rarcsine'"),
+               
+               conditionalPanel(condition = "input.dist == 'rationorm'",
+                                sliderInput("a", "Shift Numerator", min = -5, max = 5, step = .1, value = -2),
+                                sliderInput("b", "Shift Denominator", min = -5, max = 5, step = .1, value = -3)),
                
                conditionalPanel(condition = "input.dist == 'rlnorm'",
                                 sliderInput("mean_lnorm", "Mean", min = -5, max = 5, step = .1, value = 0),
-                                sliderInput("std_lnorm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1),
-                                sliderInput("range_lnorm", "Range", min = -100, max = 100, value = c(-5, 5)))),
+                                sliderInput("std_lnorm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1))),
   
   mainPanel(
     plotOutput("dPlot")
@@ -230,12 +236,12 @@ shinyUI(fluidPage(
 output$dPlot <- renderPlot({
   
   if (input$dist == 'rnorm'){ # Normal
-    range <- seq(input$range_norm[1], input$range_norm[2], .1)
+    range <- seq(-10, 10, .1)
     plot(range,
          dnorm(range, mean = input$mean_norm, sd = input$std_norm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Normal Distribution")
     
   } else if(input$dist == 'rlnorm'){ # Log Normal
-    range <- seq(input$range_lnorm[1], input$range_lnorm[2], .1)
+    range <- seq(0, 10, .1)
     plot(range,
          dlnorm(range, mean = input$mean_lnorm, sd = input$std_lnorm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Lognormal Distribution")
 
@@ -250,9 +256,20 @@ output$dPlot <- renderPlot({
          dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Beta Distribution")
     
   } else if(input$dist == 'rparet'){
-    range <- seq(input$range_paret[1], input$range_paret[2], .1)
+    range <- seq(0, 10, .1)
     plot(range,
          dpareto(range, location = input$location, shape = input$shape), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Pareto Distribution")
+    
+  } else if(input$dist == 'rarcsine'){
+    A <- distr::Arcsine()
+    range <- seq(-1, 1, 0.01)
+    plot(range,
+         d(A)(range), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Arcsine Distribution")
+  } else if (input$dist == 'rationorm') {
+    range <- seq(-5, 5, .1)
+    plot(range,
+         (input$a + dnorm(range, mean = 0, sd = 1)) / (input$b + dnorm(range, mean = 0, sd = 1)),
+          "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Ratio of 2 Normal Distributions")
   }
 })
 ```
