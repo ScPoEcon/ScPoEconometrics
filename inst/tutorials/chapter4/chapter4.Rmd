@@ -12,6 +12,21 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Linear Regression
 
+
+* start with scatter plot
+* build something like this: https://gallery.shinyapps.io/simple_regression/
+
+
+
+* why do we take the square and not the level? euclidean distance.
+* choose a and b to minimize dist between line and all points
+* then show red lines
+* then define sum of squared residuals
+* 3d plot of SSR(a,b)
+
+
+## Multiple linear regression
+
 ```{r}
 attach(mtcars)
  
@@ -38,12 +53,3 @@ scatter3D(z = mpg, x = wt, y = disp, pch = 18, cex = 2,
       colkey = list(length = 0.8, width = 0.4),            
       main = "mtcars")
 ```
-
-* why do we take the square and not the level? euclidean distance.
-* start with scatter plot
-* choose a and b to minimize dist between line and all points
-* then show red lines
-* then define sum of squared residuals
-
-* 3d plot of SSR(a,b)
-* 

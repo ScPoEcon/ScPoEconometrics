@@ -43,11 +43,151 @@ plot(dist ~ speed, data = cars,
 Here, each dot represents one observation. In this case, one particular measurement `speed` and `dist` for a car. Now, again: 
 
 
-```{block2, type='INFO'}
-
-
+```{block, type='note'}
 How are `speed` and `dist` related? How could one best *summarize* this relationship?
+```
 
+<br>
+One thing we could do, is draw a straight line through this scatterplot, like so:
+
+```{r}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+abline(a = 60,b = 0,lw=3)
+```
+
+Now that doesn't seem a particularly *good* way to summarize the relationship. Clearly, a *better* line would be not be flat, but have a *slope*, i.e. go upwards:
+
+```{r,echo=FALSE}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+abline(a = 0,b = 5,lw=3)
+```
+
+That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the *intercept*; and it's too high. We just learned how to represent a *line*, i.e. with two numbers called *intercept* and *slope*. So how to choose the **best** line?
+
+### Choosing the Best Line
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+generate_data = function(int = 1,
+                         slope = 2,
+                         sigma = 10,
+                         n_obs = 15,
+                         x_min = 0,
+                         x_max = 10) {
+  x = seq(x_min, x_max, length.out = n_obs)
+  y = int + slope * x + rnorm(n_obs, 0, sigma)
+  fit = lm(y ~ x)
+  y_hat = fitted(fit)
+  y_bar = rep(mean(y), n_obs)
+  data.frame(x, y, y_hat, y_bar)
+}
+
+plot_total_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y,
+         col = 'grey', lwd = 1, lty = 3, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  # abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_total_dev_prop = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 1, lty = 2, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_unexp_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "Best Line and Errors",
+       xlab = "x", ylab = "y", pch = 20, cex = 2)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'red', lwd = 2, lty = 1, length = 0.1, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+}
+
+plot_exp_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSReg (Sum of Squares Regression)", 
+  xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+  abline(h = mean(reg_data$y), col = "grey")
+}
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(21)
+plot_data = generate_data(sigma = 7)
+```
+
+Suppose we have the following set of `r nrow(plot_data)` observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It looks like this: 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot_unexp_dev(plot_data)
+```
+
+The red arrows indicate the **distance** of the line to each point and we call them *errors* or *residuals*, often written with the symbol $\varepsilon$. An upward pointing arrow indicates a positive value of a particular $\varepsilon_i$, and vice versa for downward pointing arrows. The name *residual* comes from the way we write an equation for this relationship between two particular values $(y_i,x_i)$ belonging to observation $i$:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+Here $\beta_0$ is the intercept, and $\beta_1$ is the slope of our line, and $\varepsilon_i$ is the value of the arrow (i.e. a positive or negative number) indicating the distance between the actual $y_i$ and what is predicted by our line. In other words, $\varepsilon_i$ is what is left to be explained on top of the line $\beta_0 + \beta_1 x_i$, hence, it's a residual to explain $y_i$. Now, back to our claim that this is the *best* line. What exactly characterizes the best line?
+
+```{block,type="warning"}
+<center>
+The best line minimizes the sum of **squared residuals**, i.e. it minimizes the SSR: $$ \varepsilon_1^2 + \dots + \varepsilon_N^2 = \sum_{i=1}^N \varepsilon_i^2 \equiv \text{SSR}$$
+</center>
+```
+
+<br>
+Wait a moment, why *squared* residuals? This is easy to understand: suppose that instead, we wanted to just make the *sum* of the arrows as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)
+
+### Covariance and Regression Coefficients
+
+### Correlation, Covariance and Linearity
+
+It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line are identical. However, the usefulness of the statistics to describe the relationship in the data is not clear.
+
+```{r,echo=FALSE}
+##-- now some "magic" to do the 4 regressions in a loop:
+ff <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  ## or   ff[[2]] <- as.name(paste0("y", i))
+  ##      ff[[3]] <- as.name(paste0("x", i))
+  mods[[i]] <- lmi <- lm(ff, data = anscombe)
+}
+
+op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13),main=paste("dataset",i))
+  abline(mods[[i]], col = "blue")
+}
+par(op)
 ```
 
 ### non-linear data
