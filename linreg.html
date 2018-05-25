@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-05-23">
+<meta name="date" content="2018-05-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -146,16 +146,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.4" data-path="sum.html"><a href="sum.html#scatterplots"><i class="fa fa-check"></i><b>3.2.4</b> Scatterplots</a></li>
 <li class="chapter" data-level="3.2.5" data-path="sum.html"><a href="sum.html#ggplot"><i class="fa fa-check"></i><b>3.2.5</b> <code>ggplot</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>3.3</b> The <code>tidyverse</code></a></li>
-<li class="chapter" data-level="3.4" data-path="sum.html"><a href="sum.html#example-importing-excel-data"><i class="fa fa-check"></i><b>3.4</b> Example: Importing Excel Data</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.4.1</b> <code>tidyr</code></a></li>
-<li class="chapter" data-level="3.4.2" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.4.2</b> <code>dplyr</code></a></li>
+<li class="chapter" data-level="3.3" data-path="sum.html"><a href="sum.html#summarizing-two-variables"><i class="fa fa-check"></i><b>3.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="3.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>3.4</b> The <code>tidyverse</code></a></li>
+<li class="chapter" data-level="3.5" data-path="sum.html"><a href="sum.html#example-importing-excel-data"><i class="fa fa-check"></i><b>3.5</b> Example: Importing Excel Data</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="sum.html"><a href="sum.html#tidyr"><i class="fa fa-check"></i><b>3.5.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="3.5.2" data-path="sum.html"><a href="sum.html#dplyr"><i class="fa fa-check"></i><b>3.5.2</b> <code>dplyr</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="linreg.html"><a href="linreg.html#data-on-cars"><i class="fa fa-check"></i><b>4.1</b> Data on Cars</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="linreg.html"><a href="linreg.html#how-are-speed-and-dist-related"><i class="fa fa-check"></i><b>4.1.1</b> How are <code>speed</code> and <code>dist</code> related?</a></li>
-<li class="chapter" data-level="4.1.2" data-path="linreg.html"><a href="linreg.html#non-linear-data"><i class="fa fa-check"></i><b>4.1.2</b> non-linear data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="linreg.html"><a href="linreg.html#choosing-the-best-line"><i class="fa fa-check"></i><b>4.1.2</b> Choosing the Best Line</a></li>
+<li class="chapter" data-level="4.1.3" data-path="linreg.html"><a href="linreg.html#covariance-and-regression-coefficients"><i class="fa fa-check"></i><b>4.1.3</b> Covariance and Regression Coefficients</a></li>
+<li class="chapter" data-level="4.1.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>4.1.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="4.1.5" data-path="linreg.html"><a href="linreg.html#non-linear-data"><i class="fa fa-check"></i><b>4.1.5</b> non-linear data</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.2</b> Try to find the Slope!</a></li>
 </ul></li>
@@ -223,18 +227,54 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
 <p>Here, each dot represents one observation. In this case, one particular measurement <code>speed</code> and <code>dist</code> for a car. Now, again:</p>
-
-<div class="INFO">
-<p>How are <code>speed</code> and <code>dist</code> related? How could one best <em>summarize</em> this relationship?</p>
+<div class="note">
+<p>
+How are <code>speed</code> and <code>dist</code> related? How could one best <em>summarize</em> this relationship?
+</p>
 </div>
-
+<p><br> One thing we could do, is draw a straight line through this scatterplot, like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">60</span>,<span class="dt">b =</span> <span class="dv">0</span>,<span class="dt">lw=</span><span class="dv">3</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p>Now that doesn’t seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it’s too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. So how to choose the <strong>best</strong> line?</p>
+</div>
+<div id="choosing-the-best-line" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Choosing the Best Line</h3>
+<p>Suppose we have the following set of 15 observations on <code>x</code> and <code>y</code>, and we put the <em>best</em> straight line into it, that we can think of. It looks like this:</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p>The red arrows indicate the <strong>distance</strong> of the line to each point and we call them <em>errors</em> or <em>residuals</em>, often written with the symbol <span class="math inline">\(\varepsilon\)</span>. An upward pointing arrow indicates a positive value of a particular <span class="math inline">\(\varepsilon_i\)</span>, and vice versa for downward pointing arrows. The name <em>residual</em> comes from the way we write an equation for this relationship between two particular values <span class="math inline">\((y_i,x_i)\)</span> belonging to observation <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+\]</span> Here <span class="math inline">\(\beta_0\)</span> is the intercept, and <span class="math inline">\(\beta_1\)</span> is the slope of our line, and <span class="math inline">\(\varepsilon_i\)</span> is the value of the arrow (i.e. a positive or negative number) indicating the distance between the actual <span class="math inline">\(y_i\)</span> and what is predicted by our line. In other words, <span class="math inline">\(\varepsilon_i\)</span> is what is left to be explained on top of the line <span class="math inline">\(\beta_0 + \beta_1 x_i\)</span>, hence, it’s a residual to explain <span class="math inline">\(y_i\)</span>. Now, back to our claim that this is the <em>best</em> line. What exactly characterizes the best line?</p>
+<div class="warning">
+<center>
+The best line minimizes the sum of <strong>squared residuals</strong>, i.e. it minimizes the SSR: <span class="math display"><span class="math display">\[ \varepsilon_1^2 + \dots + \varepsilon_N^2 = \sum_{i=1}^N \varepsilon_i^2 \equiv \text{SSR}\]</span></span>
+</center>
+</div>
+<p><br> Wait a moment, why <em>squared</em> residuals? This is easy to understand: suppose that instead, we wanted to just make the <em>sum</em> of the arrows as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data – given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)</p>
+</div>
+<div id="covariance-and-regression-coefficients" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Covariance and Regression Coefficients</h3>
+</div>
+<div id="correlation-covariance-and-linearity" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Correlation, Covariance and Linearity</h3>
+<p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line are identical. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 </div>
 <div id="non-linear-data" class="section level3">
-<h3><span class="header-section-number">4.1.2</span> non-linear data</h3>
+<h3><span class="header-section-number">4.1.5</span> non-linear data</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(mtcars,<span class="kw">plot</span>(hp,mpg))</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li>scatter plot
 <ol style="list-style-type: decimal">
