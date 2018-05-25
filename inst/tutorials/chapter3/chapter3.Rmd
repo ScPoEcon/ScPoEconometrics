@@ -173,14 +173,14 @@ y <- rlnorm(10000,meanlog=3.5,sdlog=1)
 ```
 
 ```{r, echo=FALSE}
-sliderInput("bins", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
+sliderInput("binz", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
 plotOutput("distPlot")
 ```
 
 ```{r, context="server"}
 output$distPlot <- renderPlot({
   y2 <- y[y<500]
-  bins <- seq(min(y), max(y), length.out = input$bins + 1)
+  bins <- seq(min(y), max(y), length.out = input$binz + 1)
   hist(y, breaks = bins, col = 'darkgray', border = 'white',freq=FALSE)
   lines(density(y),col="red",lw=2)
 })
@@ -188,10 +188,18 @@ output$distPlot <- renderPlot({
 
 Below are some famous distributions for you to play with:
 
+| Distribution | Range | PDF $P(y)$|
+|:------------:|:-----:|:------:|
+| Normal | $(-\infty, \, +\infty)$ | $\frac{1}{{\sigma \sqrt {2\pi}}}e^{\frac{-(y-\mu)^2}{2 \sigma^2}}$|
+| LogNormal | $]0, \, +\infty)$ | $\frac{1}{y\sigma{\sqrt {2\pi}}}e^{\frac{-(\ln{y}-\mu)^2}{2 \sigma^2}}$|
+| Uniform | $[a, \, b]$ | $\frac{1}{b - a}$|
+
+Along with some more exotic distribution.
+
 ```{r, echo=FALSE}
 
 shinyUI(fluidPage(
-  sidebarPanel(selectInput(inputId = "dist",
+  sidebarPanel(selectInput(inputId = "dist", # Dropdown Menu to choose a distribution
                 label = "Distribution:",
                 choices = c(Normal      = "rnorm",
                             Lognormal   = "rlnorm",
@@ -199,8 +207,10 @@ shinyUI(fluidPage(
                             Beta        = "rbeta",
                             Pareto      = "rparet",
                             Arcsine     = "rarcsine",
-                            Ratio_2_Normals = "rationorm"),
+                            Ratio2Normals = "rationorm"),
                 selected = "rnorm"),
+               
+               # Change interactive parameters depending on the chosen distribution
                
                conditionalPanel(condition = "input.dist == 'runif'",
                                 sliderInput("range_unif", "Range", min = -100, max = 100, value = c(-5, 5))),
@@ -228,7 +238,7 @@ shinyUI(fluidPage(
                                 sliderInput("std_lnorm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1))),
   
   mainPanel(
-    plotOutput("dPlot")
+    plotOutput("dPlot") #plot
   )))
 ```
 
@@ -238,38 +248,63 @@ output$dPlot <- renderPlot({
   if (input$dist == 'rnorm'){ # Normal
     range <- seq(-10, 10, .1)
     plot(range,
-         dnorm(range, mean = input$mean_norm, sd = input$std_norm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Normal Distribution")
+         dnorm(range, mean = input$mean_norm, sd = input$std_norm), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Normal Distribution")
+    abline(v=input$mean_norm ,col="red",lw=3)
+    abline(v=input$mean_norm ,col="blue",lw=1)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
     
   } else if(input$dist == 'rlnorm'){ # Log Normal
     range <- seq(0, 10, .1)
     plot(range,
-         dlnorm(range, mean = input$mean_lnorm, sd = input$std_lnorm), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Lognormal Distribution")
+         dlnorm(range, mean = input$mean_lnorm, sd = input$std_lnorm), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Lognormal Distribution")
+        abline(v=exp(input$mean_lnorm + (input$std_lnorm^2)/2) ,col="red",lw=3)
+        abline(v=exp(input$mean_lnorm) ,col="blue",lw=1)
+        legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
 
-  } else if(input$dist == 'runif'){
+
+  } else if(input$dist == 'runif'){ #uniform
     range <- seq(input$range_unif[1], input$range_unif[2], .1)
     plot(range,
-         dunif(range, min = input$range_unif[1], max = input$range_unif[2]), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Uniform Distribution")
+         dunif(range, min = input$range_unif[1], max = input$range_unif[2]), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Uniform Distribution")
+    abline(v=.5*input$b - .5*input$a,col="red",lw=3)
+    abline(v=.5*input$b - .5*input$a,col="blue",lw=1)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
     
-  } else if(input$dist == 'rbeta') {
-    range <- seq(0, 1, .01)
+  } else if(input$dist == 'rbeta') { #Beta
+    range <- seq(0.001, .999, .001)
     plot(range,
-         dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Beta Distribution")
+         dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Beta Distribution")
+    abline(v=(input$alpha/ (input$alpha + input$beta)), col="red",lw=3)
+    #abline(v=input$location * 2^(1/input$shape) ,col="blue",lw=1) Median of the Beta function -> no general closed-form...
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
     
-  } else if(input$dist == 'rparet'){
+  } else if(input$dist == 'rparet'){ #Pareto
     range <- seq(0, 10, .1)
     plot(range,
-         dpareto(range, location = input$location, shape = input$shape), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Pareto Distribution")
+         dpareto(range, location = input$location, shape = input$shape), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Pareto Distribution")
+    abline(v=(input$shape * input$location)/(input$shape -1),col="red",lw=3)
+    abline(v=input$location * 2^(1/input$shape) ,col="blue",lw=1)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
     
-  } else if(input$dist == 'rarcsine'){
+    
+  } else if(input$dist == 'rarcsine'){ #Arcsine
     A <- distr::Arcsine()
-    range <- seq(-1, 1, 0.01)
+    range <- seq(-.99, .99, 0.01)
     plot(range,
-         d(A)(range), "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Arcsine Distribution")
-  } else if (input$dist == 'rationorm') {
+         d(A)(range), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Arcsine Distribution")
+    abline(v=0, col="red",lw=3)
+    abline(v=0, col="blue",lw=1)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
+
+    
+  } else if (input$dist == 'rationorm') { # Ratio of 2 Normal Distributions (TODO: explain clearly what is being done.)
     range <- seq(-5, 5, .1)
     plot(range,
          (input$a + dnorm(range, mean = 0, sd = 1)) / (input$b + dnorm(range, mean = 0, sd = 1)),
-          "l", col = "navyblue", ylab = "Density", xlab = "x", main = "Ratio of 2 Normal Distributions")
+          "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Ratio of 2 Normal Distributions")
+    abline(v=0, col="red",lw=3)
+    abline(v=0, col="blue",lw=1)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
   }
 })
 ```
@@ -281,13 +316,13 @@ With continous distributions we cannot apply the grouping trick from the previou
 
 1. compute the mean of `y`!
 
-```{r meanln, exercise=TRUE,exercise.eval=TRUE}
+```{r meanln, exercise=TRUE, exercise.eval=TRUE}
 
 ```
 
 2. compute the variance and SD of `y`!
 
-```{r sdln, exercise=TRUE,exercise.eval=TRUE}
+```{r sdln, exercise=TRUE, exercise.eval=TRUE}
 
 ```
 
@@ -310,8 +345,8 @@ What's going on here? They differ by almost 20000 GBP?! Let's draw the probabili
 ```{r,echo=FALSE}
 pdf <- function(y) dlnorm(y,meanlog=3.5,sdlog=1)
 curve(pdf,from=0.0,to=200,n=400,xlab = "1000 GBP")
-abline(v=mean(x),col="red",lw=2)
-abline(v=median(x),col="blue",lw=2)
+abline(v=mean(y),col="red",lw=2)
+abline(v=median(y),col="blue",lw=2)
 legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
 ```
 
@@ -332,7 +367,7 @@ euros <- x * fex
 
 ```
 
-| Statistic | GBP | Euros | Euro Statistic / `fex` |
+| Statistic | GBP | Euros | Euro Statistic / `fex` |  
 |:---------:|:-----:|:-----:|:---:|
 | Mean | `r round(mean(y),2)` | `r round(mean(euros),2)` | `r round(mean(euros)/ fex,2)`|
 | SD | `r round(sd(y),2)` | `r round(sd(euros),2)` | `r round(sd(euros)/ fex,2)`|
@@ -377,7 +412,7 @@ fluidRow(
   column(4,
          wellPanel(
            sliderInput("ssize", "Sample Size N", min = 2, max = 500, value = 5)
-         )
+        )
   ),
   column(4,
          plotOutput("distPlot3")
@@ -393,8 +428,10 @@ fluidRow(
 output$distPlot3 <- renderPlot({
   set.seed(2)
   nsample = rnorm(n=input$ssize,mean=5,sd=2)
-  hist(nsample,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with N = ",input$ssize))
+  hist(nsample,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with N = ",input$ssize), xlim = c(0, 10))
   lines(density(nsample),col="red",lw=2)
+  lines(seq(0, 10, .01), dnorm(x = seq(0, 10, .01), mean = 5, sd = 2), col = 'green')
+  legend("bottom",c("Normal Distribution","Sampling Distribution"),col=c("green","red"),lty=c(1,1),lw=c(2,2), cex = 0.75) #Ideally, put legend in the leftmost column of the Shiny app (under the slider), but needs HTML + CSS --> feasible but probably not worth it...
 })
 output$estTable <- renderTable({
   set.seed(2)
