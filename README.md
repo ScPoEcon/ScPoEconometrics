@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/floswald/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/floswald/ScPoEconometrics)
 
-[![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.png)](https://gitter.im/ScPoEcon/ScPoEconometrics)
+[![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)
 
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
