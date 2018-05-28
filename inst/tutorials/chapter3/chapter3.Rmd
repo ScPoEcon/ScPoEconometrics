@@ -238,9 +238,7 @@ shinyUI(fluidPage(
                             Lognormal   = "rlnorm",
                             Uniform     = "runif",
                             Beta        = "rbeta",
-                            Pareto      = "rparet",
-                            Arcsine     = "rarcsine",
-                            Ratio2Normals = "rationorm"),
+                            Pareto      = "rparet"),
                 selected = "rnorm"),
                
                # Change interactive parameters depending on the chosen distribution
@@ -259,12 +257,6 @@ shinyUI(fluidPage(
                conditionalPanel(condition = "input.dist == 'rparet'",
                                 sliderInput("location", "Location", min = 0.1, max = 10, step = .1, value = 2),
                                 sliderInput("shape", "Shape", min = 0.1, max = 5, step = 0.1, value = 1.5)),
-               
-               conditionalPanel(condition = "input.dist == 'rarcsine'"),
-               
-               conditionalPanel(condition = "input.dist == 'rationorm'",
-                                sliderInput("a", "Shift Numerator", min = -5, max = 5, step = .1, value = -2),
-                                sliderInput("b", "Shift Denominator", min = -5, max = 5, step = .1, value = -3)),
                
                conditionalPanel(condition = "input.dist == 'rlnorm'",
                                 sliderInput("mean_lnorm", "Mean", min = -5, max = 5, step = .1, value = 0),
@@ -331,32 +323,57 @@ output$dPlot <- renderPlot({
     abline(v=(input$shape * input$location)/(input$shape -1),col="red",lw=3)
     abline(v=input$location * 2^(1/input$shape) ,col="blue",lw=3)
     legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
-    
-    
-  } else if(input$dist == 'rarcsine'){ #Arcsine
+  }
+})
+```
+
+### Bimodal Distributions
+
+```{r, echo=FALSE}
+
+shinyUI(fluidPage(
+  sidebarPanel(selectInput(inputId = "distBimod", # Dropdown Menu to choose a distribution
+                label = "Distribution:",
+                choices = c(Arcsine     = "rarcsine",
+                            Mixture = "mixture"),
+                selected = "mixture"),
+               
+               # Change interactive parameters depending on the chosen distribution
+               
+               conditionalPanel(condition = "input.distBimod == 'rarcsine'"),
+               
+               conditionalPanel(condition = "input.distBimod == 'mixture'",
+                                sliderInput("m_a", "Mean1", min = -5, max = 5, step = .1, value = -2),
+                                sliderInput("m_b", "Mean2", min = -5, max = 5, step = .1, value = 1))),
+  
+  mainPanel(
+    plotOutput("dPlotBimod") #plot
+  )))
+```
+
+```{r, context="server"}
+output$dPlotBimod <- renderPlot({
+  
+  if(input$distBimod == 'rarcsine'){ #Arcsine
     A <- distr::Arcsine()
     range <- seq(-1, 1, 0.01)
     plot(range,
          d(A)(range), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Arcsine Distribution",
          sub = "\nThe Arcsine Distribution is `bimodal`, meaning\nit has two distinct maxima.")
     abline(v=0, col="red",lw=3)
-    #abline(v=0, col="blue",lw=3)
     legend("topright","mean = median",col=c("red"),lty=1,lw=2)
-
     
-  } else if (input$dist == 'rationorm') { # Ratio of 2 Normal Distributions (TODO: explain clearly what is being done.)
+  } else if (input$distBimod == 'mixture') {
     range <- seq(-5, 5, .1)
     plot(range,
-         (input$a + dnorm(range, mean = 0, sd = 1)) / (input$b + dnorm(range, mean = 0, sd = 1)),
-          "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Ratio of 2 Normal Distributions", 
-         sub = "\nThis distribution is produced by the following formula: \n (shift_num + N(0, 1)) /  (shift_denom + N(0, 1))")
-    abline(v=0, col="red",lw=3)
-    #abline(v=0, col="blue",lw=1)
+         (dnorm(range, mean = input$m_a, sd = 1)) + (dnorm(range, mean = input$m_b, sd = 1)), ylim = c(0, .7),
+          "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Sum of 2 Normal Distributions", 
+         sub = "The two modes correspond to the two peaks (i.e. means) of\n the added distributions.")
+    abline(v=(input$m_a + input$m_b)/2, col="red",lw=3)
     legend("topright","mean = median",col=c("red"),lty=1,lw=2)
   }
 })
 ```
-
 
 ### Mean, Variance and SD
 
