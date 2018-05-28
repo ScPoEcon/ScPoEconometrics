@@ -7,6 +7,8 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
+library(EnvStats, quietly = TRUE, warn.conflicts = FALSE, verbose = FALSE) # For Pareto Distribution
+library(distr)
 ```
 
 
@@ -121,6 +123,60 @@ quiz(
 
 ```
 
+### Example: the Barplot of a Discrete Distribution
+
+A classic example of a *discrete* distribution is the [**Binomial distribution**](https://en.wikipedia.org/wiki/Bernoulli_distribution). Saying that random variable $X$ follows a binomial distribution, we can write $X \sim \operatorname{B}(n, p)$ where $n$ the number of draws and $p$ the probability of success for each draw. $X$ simply keeps track of the total number of successes after $n$ draws.
+
+The applet below allows you to explore the shape of the Binomial distribution for different values of $n$ and $p$. The red line is the (continuous) distribution that the Binomial distribution should converge to as we repeatedly draw many $X$s and increase the number of bins. As it turns out, this distribution is a *Normal distribution*.
+
+```{r, echo=FALSE}
+sliderInput("n", "Number of draws n:", min = 1, max = 1000, step = 5, value = 100)
+sliderInput("p", "Probability of success p:", min = 0, max = 1, step = 0.01, value = .5)
+#sliderInput("bins", "Number of bins:", min = 1, max = 50, step=5, value = 10)
+plotOutput("binomPlot")
+```
+
+```{r, context="server"}
+output$binomPlot <- renderPlot({
+  
+  set.seed(1)
+  
+  n <- input$n
+  p <- input$p
+  
+  b <- rbinom(n = 10000, size = n, prob = p) # simulating the distrib by taking 10,000 draws
+  
+  #bins <- seq(min(b), max(b), length.out = input$bins + 1)
+  #hist(b, breaks = bins, col = 'darkgray', border = 'white', freq=FALSE, main = paste0("B(", n, ",", p, ")"))
+  barplot(table(b)/10000, horiz = F,
+          xlab = paste0("Number of Successes (out of ", n, " draws)."), 
+          ylab = "Frequency", col="red",border="dodgerblue")
+  #lines(seq(min(b), max(b), 1), dnorm(seq(min(b), max(b), 1), mean = n*p, sd = sqrt(n*p*(1-p))), col="red",lw=2)
+})
+```
+
+```{r, echo=FALSE}
+sliderInput("n2", "Number of draws n:", min = 1, max = 1000, step = 5, value = 41)
+sliderInput("p2", "Probability of success p:", min = 0, max = 1, step = 0.01, value = .5)
+#sliderInput("bins", "Number of bins:", min = 1, max = 50, step=5, value = 10)
+plotOutput("binomPlot2")
+```
+
+```{r, context="server"}
+output$binomPlot2 <- renderPlot({
+  
+  n <- input$n2
+  p <- input$p2
+  
+  b <- dbinom(x = seq(0, n, 1), size = n, prob = p) # simulating the distrib by taking 10,000 draws
+  
+  barplot(height=b, names.arg = seq(0, n, 1),
+          xlab = paste0("Number of Successes (out of ", n, " draws)."), 
+          ylab = "Frequency", col="red",border="dodgerblue")
+  #lines(seq(0, n, 1), dnorm(seq(0, n, 1), mean = n*p, sd = sqrt(n*p*(1-p))), col="red",lw=2, )
+})
+```
+
 
 ## Continuous Data
 
@@ -145,16 +201,177 @@ y <- rlnorm(10000,meanlog=3.5,sdlog=1)
 ```
 
 ```{r, echo=FALSE}
-sliderInput("bins", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
+sliderInput("binz", "Number of bins M:", min = 1, max = 500, step=5, value = 4)
 plotOutput("distPlot")
 ```
 
 ```{r, context="server"}
 output$distPlot <- renderPlot({
   y2 <- y[y<500]
-  bins <- seq(min(y), max(y), length.out = input$bins + 1)
+  bins <- seq(min(y), max(y), length.out = input$binz + 1)
   hist(y, breaks = bins, col = 'darkgray', border = 'white',freq=FALSE)
   lines(density(y),col="red",lw=2)
+})
+```
+
+### Exploring Continuous Distributions
+
+Below are some famous distributions for you to play with:
+
+
+<center>
+| Distribution | Range | PDF |
+|:------------:|:-----:|:------:|
+| Normal | $(-\infty, \, +\infty)$ | $\frac{1}{{\sigma \sqrt {2\pi}}}e^{\frac{-(y-\mu)^2}{2 \sigma^2}}$|
+| LogNormal | $]0, \, +\infty)$ | $\frac{1}{y\sigma{\sqrt {2\pi}}}e^{\frac{-(\ln{y}-\mu)^2}{2 \sigma^2}}$|
+| Uniform | $[a, \, b]$ | $\frac{1}{b - a}$|
+</center>
+
+Along with some more exotic distribution.
+
+```{r, echo=FALSE}
+
+shinyUI(fluidPage(
+  sidebarPanel(selectInput(inputId = "dist", # Dropdown Menu to choose a distribution
+                label = "Distribution:",
+                choices = c(Normal      = "rnorm",
+                            Lognormal   = "rlnorm",
+                            Uniform     = "runif",
+                            Beta        = "rbeta",
+                            Pareto      = "rparet"),
+                selected = "rnorm"),
+               
+               # Change interactive parameters depending on the chosen distribution
+               
+               conditionalPanel(condition = "input.dist == 'runif'",
+                                sliderInput("range_unif", "Range", min = -100, max = 100, value = c(-5, 5))),
+               
+               conditionalPanel(condition = "input.dist == 'rbeta'",
+                                sliderInput("alpha", "Alpha", min = 0, max = 3, step = 0.01, value = 2),
+                                sliderInput("beta", "Beta", min = 0, max = 5, step = 0.01, value = 5)),
+               
+               conditionalPanel(condition = "input.dist == 'rnorm'",
+                                sliderInput("mean_norm", "Mean", min = -5, max = 5, step = .1, value = 0),
+                                sliderInput("std_norm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1)),
+               
+               conditionalPanel(condition = "input.dist == 'rparet'",
+                                sliderInput("location", "Location", min = 0.1, max = 10, step = .1, value = 2),
+                                sliderInput("shape", "Shape", min = 0.1, max = 5, step = 0.1, value = 1.5)),
+               
+               conditionalPanel(condition = "input.dist == 'rlnorm'",
+                                sliderInput("mean_lnorm", "Mean", min = -5, max = 5, step = .1, value = 0),
+                                sliderInput("std_lnorm", "Standard Deviation", min = 0.01, max = 5, step = 0.1, value = 1))),
+  
+  mainPanel(
+    plotOutput("dPlot") #plot
+  )))
+```
+
+```{r, context="server"}
+output$dPlot <- renderPlot({
+  
+  if (input$dist == 'rnorm'){ # Normal
+    range <- seq(-10, 10, .1)
+    plot(range,
+         dnorm(range, mean = input$mean_norm, sd = input$std_norm), "l",
+         col = "navyblue", ylab = "Density", xlab = "y",
+         main = "Normal Distribution",
+         sub="For symmetric distributions such as the Normal,\n the mean and the median are the same. \n The Normal distribution is sometimes called the \n'Gaussian' distribution.") #pb: overlap w axis
+    abline(v=input$mean_norm ,col="red",lw=3)
+    #abline(v=input$mean_norm ,col="blue",lw=3) same as mean
+    legend("topright","mean = median",col=c("red"),lty=1,lw=2)
+    
+  } else if(input$dist == 'rlnorm'){ # Log Normal
+    range <- seq(0, 10, .1)
+    plot(range,
+         dlnorm(range, mean = input$mean_lnorm, sd = input$std_lnorm), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Lognormal Distribution")
+        abline(v=exp(input$mean_lnorm + (input$std_lnorm^2)/2) ,col="red",lw=3)
+        abline(v=exp(input$mean_lnorm) ,col="blue",lw=3)
+        legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
+
+
+  } else if(input$dist == 'runif'){ #uniform
+    range <- seq(input$range_unif[1], input$range_unif[2], .1)
+    plot(range,
+         dunif(range, min = input$range_unif[1], max = input$range_unif[2]), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Uniform Distribution",
+         sub="\nThe uniform distribution is constant, \n and its graph is a flat line over a given interval.")
+    abline(v=.5*input$b - .5*input$a,col="red",lw=3)
+    #abline(v=.5*input$b - .5*input$a,col="blue",lw=1)
+    legend("topright","mean = median",col=c("red"),lty=1,lw=2)
+    
+  } else if(input$dist == 'rbeta') { #Beta
+    range <- seq(-.1, 1.1, .001)
+    plot(range,
+         dbeta(range, shape1 = input$alpha, shape2 = input$beta), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Beta Distribution", 
+         sub="\nThe beta distribution is defined over the interval [0, 1]")
+    abline(v=(input$alpha / (input$alpha + input$beta)), col="red",lw=3)
+    if ((input$alpha > 1) && (input$beta > 1)){
+      abline(v= (input$alpha - (1/3)) / (input$alpha + input$beta - (2/3)),
+             col="blue",lw=3) 
+    } #Median of the Beta function -> no general closed-form
+    
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
+    
+  } else if(input$dist == 'rparet'){ #Pareto
+    range <- seq(0, 10, .1)
+    plot(range,
+         dpareto(range, location = input$location, shape = input$shape), "l", col = "navyblue",
+         ylab = "Density", xlab = "y",
+         main = "Pareto Distribution",
+         sub="\nObserve the zero mass left of `location`,\n and the very long right tail.")
+    
+    abline(v=(input$shape * input$location)/(input$shape -1),col="red",lw=3)
+    abline(v=input$location * 2^(1/input$shape) ,col="blue",lw=3)
+    legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
+  }
+})
+```
+
+### Bimodal Distributions
+
+```{r, echo=FALSE}
+
+shinyUI(fluidPage(
+  sidebarPanel(selectInput(inputId = "distBimod", # Dropdown Menu to choose a distribution
+                label = "Distribution:",
+                choices = c(Arcsine     = "rarcsine",
+                            Mixture = "mixture"),
+                selected = "mixture"),
+               
+               # Change interactive parameters depending on the chosen distribution
+               
+               conditionalPanel(condition = "input.distBimod == 'rarcsine'"),
+               
+               conditionalPanel(condition = "input.distBimod == 'mixture'",
+                                sliderInput("m_a", "Mean1", min = -5, max = 5, step = .1, value = -2),
+                                sliderInput("m_b", "Mean2", min = -5, max = 5, step = .1, value = 1))),
+  
+  mainPanel(
+    plotOutput("dPlotBimod") #plot
+  )))
+```
+
+```{r, context="server"}
+output$dPlotBimod <- renderPlot({
+  
+  if(input$distBimod == 'rarcsine'){ #Arcsine
+    A <- distr::Arcsine()
+    range <- seq(-1, 1, 0.01)
+    plot(range,
+         d(A)(range), "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Arcsine Distribution",
+         sub = "\nThe Arcsine Distribution is `bimodal`, meaning\nit has two distinct maxima.")
+    abline(v=0, col="red",lw=3)
+    legend("topright","mean = median",col=c("red"),lty=1,lw=2)
+    
+  } else if (input$distBimod == 'mixture') {
+    range <- seq(-5, 5, .1)
+    plot(range,
+         (dnorm(range, mean = input$m_a, sd = 1)) + (dnorm(range, mean = input$m_b, sd = 1)), ylim = c(0, .7),
+          "l", col = "navyblue", ylab = "Density", xlab = "y", main = "Sum of 2 Normal Distributions", 
+         sub = "The two modes correspond to the two peaks (i.e. means) of\n the added distributions.")
+    abline(v=(input$m_a + input$m_b)/2, col="red",lw=3)
+    legend("topright","mean = median",col=c("red"),lty=1,lw=2)
+  }
 })
 ```
 
@@ -164,13 +381,13 @@ With continous distributions we cannot apply the grouping trick from the previou
 
 1. compute the mean of `y`!
 
-```{r meanln, exercise=TRUE,exercise.eval=TRUE}
+```{r meanln, exercise=TRUE, exercise.eval=TRUE}
 
 ```
 
 2. compute the variance and SD of `y`!
 
-```{r sdln, exercise=TRUE,exercise.eval=TRUE}
+```{r sdln, exercise=TRUE, exercise.eval=TRUE}
 
 ```
 
@@ -193,8 +410,8 @@ What's going on here? They differ by almost 20000 GBP?! Let's draw the probabili
 ```{r,echo=FALSE}
 pdf <- function(y) dlnorm(y,meanlog=3.5,sdlog=1)
 curve(pdf,from=0.0,to=200,n=400,xlab = "1000 GBP")
-abline(v=mean(x),col="red",lw=2)
-abline(v=median(x),col="blue",lw=2)
+abline(v=mean(y),col="red",lw=2)
+abline(v=median(y),col="blue",lw=2)
 legend("topright",c("mean","median"),col=c("red","blue"),lty=c(1,1),lw=c(2,2))
 ```
 
@@ -215,7 +432,7 @@ euros <- x * fex
 
 ```
 
-| Statistic | GBP | Euros | Euro Statistic / `fex` |
+| Statistic | GBP | Euros | Euro Statistic / `fex` |  
 |:---------:|:-----:|:-----:|:---:|
 | Mean | `r round(mean(y),2)` | `r round(mean(euros),2)` | `r round(mean(euros)/ fex,2)`|
 | SD | `r round(sd(y),2)` | `r round(sd(euros),2)` | `r round(sd(euros)/ fex,2)`|
@@ -260,7 +477,7 @@ fluidRow(
   column(4,
          wellPanel(
            sliderInput("ssize", "Sample Size N", min = 2, max = 500, value = 5)
-         )
+        )
   ),
   column(4,
          plotOutput("distPlot3")
@@ -276,8 +493,10 @@ fluidRow(
 output$distPlot3 <- renderPlot({
   set.seed(2)
   nsample = rnorm(n=input$ssize,mean=5,sd=2)
-  hist(nsample,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with N = ",input$ssize))
+  hist(nsample,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Histogram with N = ",input$ssize), xlim = c(0, 10))
   lines(density(nsample),col="red",lw=2)
+  lines(seq(0, 10, .01), dnorm(x = seq(0, 10, .01), mean = 5, sd = 2), col = 'green')
+  legend("bottom",c("Normal Distribution","Sampling Distribution"),col=c("green","red"),lty=c(1,1),lw=c(2,2), cex = 0.75) #Ideally, put legend in the leftmost column of the Shiny app (under the slider), but needs HTML + CSS --> feasible but probably not worth it...
 })
 output$estTable <- renderTable({
   set.seed(2)
