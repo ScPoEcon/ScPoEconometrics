@@ -11,4 +11,7 @@ Imports:
   bookdown,
   shiny,
   learnr,
-  plot3D
+  plot3D,
+  mvtnorm,
+  ggplot2,
+  reshape2
