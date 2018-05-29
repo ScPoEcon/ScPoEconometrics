@@ -107,8 +107,5 @@ output$MSE <- renderText({
   
   paste0("Total Sum of Squared Errors = ", sum(errors^2))
 })
-  
-  
-
 ```
 
