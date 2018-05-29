@@ -6,7 +6,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
+
+## Simple Fit
 
 ```{r, echo=FALSE}
 shinyUI(fluidPage(
@@ -27,10 +30,6 @@ shinyUI(fluidPage(
   mainPanel(
     plotOutput("regPlot"),
     textOutput("MSE"))))
-```
-
-```{r, echo=TRUE}
-
 ```
 
 
@@ -109,3 +108,171 @@ output$MSE <- renderText({
 })
 ```
 
+## Fit with no slope
+
+What if you could only use one fixed number (i.e. a horizontal line) to fit $Y$ ?
+
+```{r, echo=FALSE}
+shinyUI(fluidPage(
+  sidebarPanel(
+    
+    radioButtons("const", label = h4("Fixed Parameter"),
+    choices = list("Slope = 0" = 1, "Intercept = 0" = 2), 
+    selected = 1),
+    
+    conditionalPanel(condition = "input.const == 1",
+                     wellPanel(sliderInput("i2", "Intercept", min = -5, max = 5, step = .1, value = -2),
+                     h5("Slope = 0"))),
+    
+    conditionalPanel(condition = "input.const == 2",
+                     wellPanel(h5("Intercept = 0"),
+                     sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2))),
+    
+               
+    br(),
+               
+    br(),
+               
+    sliderInput("ex2", "Example:", min = 1,
+                           max = 10, step = 1, value = 1, ticks = FALSE),
+    
+    textOutput("userguess2")),
+  
+  mainPanel(
+    plotOutput("regPlot2"),
+    textOutput("MSE2"))))
+```
+
+
+```{r, context="server"}
+
+output$userguess2 <- renderText({
+  
+  if (input$const == 1){
+    a <- input$i2
+    paste0("Your guess:\n y = ", a)
+  } else {
+    b <- input$s2
+    paste0("Your guess:\n y = ", b, "x")
+  }
+
+  
+  
+})
+
+output$regPlot2 <- renderPlot({
+ 
+  set.seed(input$ex2)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 0, sd = 4)
+  coeffslope <- c(-1, -.5, 0, .5, 1)
+  coeffint <- c(-2, -1, 0, 1, 2)
+  a_true <- sample(coeffint, size = 1)
+  b_true <- sample(coeffslope, size = 1)
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+  # True DGP: y = a_t + b_t * x + u
+  
+      
+  if (input$const == 1){     
+    # a = intercept (user input)
+    a <- input$i2
+    
+        
+        
+    # plot
+    #expr <- function(x) a
+    errors <- (a) - y 
+    
+    plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+         xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+         ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+         main = "The Linear Regression (with no slope!)", frame.plot = FALSE,
+         cex = 1.2)
+    abline(h = mean(y), col = "black", lty = "dotted")
+    text(x = min(x), y = mean(y), labels = "Mean of Y", pos = 3)
+    
+    legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+    
+    if (near(a, mean(y), tol = .05)){
+      #curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      abline(h = a, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
+    } else {
+      #curve(expr = expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      abline(h = a, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
+    }
+  } else {
+        # a = intercept (user input)
+    b <- input$s2
+    
+        
+        
+    # plot
+    expr <- function(x) b*x
+    errors <- (b*x) - y 
+    
+    plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+         xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+         ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+         main = "The Linear Regression (with no intercept term!)", frame.plot = FALSE,
+         cex = 1.2)
+
+    
+    legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+    
+    best_b = sum(x*y)/sum(x^2)
+    
+    if (near(b, best_b, .05)){
+      curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
+    } else {
+      curve(expr = expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
+    }
+    
+  }
+
+})
+
+output$MSE2 <- renderText({
+  set.seed(input$ex2)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 0, sd = 4)
+  coeffslope <- c(-1, -.5, 0, .5, 1)
+  coeffint <- c(-2, -1, 0, 1, 2)
+  a_true <- sample(coeffint, size = 1)
+  b_true <- sample(coeffslope, size = 1)
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+  
+  if (input$const == 1){
+    a <- input$i2
+
+    errors <- (a) - y
+  
+    paste0("Total Sum of Squared Errors = ", sum(errors^2))
+    
+  } else {
+    b <- input$s2
+
+    errors <- (b*x) - y
+  
+    paste0("Total Sum of Squared Errors = ", sum(errors^2))
+  }
+  
+})
+```
