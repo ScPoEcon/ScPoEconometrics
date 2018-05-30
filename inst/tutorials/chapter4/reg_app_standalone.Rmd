@@ -108,16 +108,94 @@ output$MSE <- renderText({
 })
 ```
 
-## Fit with no slope
+### Simplest App Possible
 
+```{r, echo=FALSE}
+shinyUI(fluidPage(
+  sidebarPanel(sliderInput("i_simple", "Intercept", min = -4,
+                           max = 4, step = .5, value = .5),
+               sliderInput("s_simple", "Slope", min = -2,
+                           max = 2, step = .5, value = -1),
+               br(),
+               br(),
+               
+               textOutput("userguess_simple")),
+  
+  mainPanel(
+    plotOutput("regPlot_simple"))))
+```
+
+
+```{r, context="server"}
+
+output$userguess_simple <- renderText({
+
+  a <- input$i_simple
+  b <- input$s_simple
+  paste0("Your guess:\n y = ", a, " + ", b, "x")
+  
+})
+
+output$regPlot_simple <- renderPlot({
+ 
+  set.seed(19)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+  
+  a_true <- -2
+  b_true <- 1.5
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+  # True DGP: y = -2 + 1.5 * x + u
+  
+      
+      
+  # a = intercept, b = slope (user input)
+  a <- input$i_simple
+  b <- input$s_simple
+      
+      
+  # plot
+  expr <- function(x) a + b*x
+  errors <- (a + b*x) - y 
+  
+  plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+       xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+       ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+       main = "Fit the data!", frame.plot = FALSE,
+       cex = 1.2)
+  
+  if ((a == a_true) && (b == b_true)){
+    curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 0, green = 1, blue = 0, alpha = 0.05), border = NA)
+  } else {
+    curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.05), border = NA)
+  }
+
+})
+```
+
+
+
+
+## Fit with no slope
 What if you could only use one fixed number (i.e. a horizontal line) to fit $Y$ ?
 
 ```{r, echo=FALSE}
 shinyUI(fluidPage(
   sidebarPanel(
     
-    radioButtons("const", label = h4("Fixed Parameter"),
-    choices = list("Slope = 0" = 1, "Intercept = 0" = 2), 
+    radioButtons("const", label = h4("Fixed Parameter?"),
+    choices = list("Slope = 0" = 1,
+                   "Intercept = 0" = 2,
+                   "No" = 3), 
     selected = 1),
     
     conditionalPanel(condition = "input.const == 1",
@@ -128,13 +206,17 @@ shinyUI(fluidPage(
                      wellPanel(h5("Intercept = 0"),
                      sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2))),
     
+    conditionalPanel(condition = "input.const == 3",
+                     wellPanel(sliderInput("ib", "Intercept", min = -5, max = 5, step = .5, value = -2),
+                     sliderInput("sb", "Slope", min = -5, max = 5, step = .5, value = -1))),
+    
                
     br(),
                
     br(),
                
     sliderInput("ex2", "Example:", min = 1,
-                           max = 10, step = 1, value = 1, ticks = FALSE),
+                           max = 3, step = 1, value = 1, ticks = FALSE),
     
     textOutput("userguess2")),
   
@@ -151,9 +233,13 @@ output$userguess2 <- renderText({
   if (input$const == 1){
     a <- input$i2
     paste0("Your guess:\n y = ", a)
-  } else {
+  } else if (input$const == 2) {
     b <- input$s2
     paste0("Your guess:\n y = ", b, "x")
+  } else {
+    a <- input$ib
+    b <- input$sb
+    paste0("Your guess:\n y = ", a, " + ", b, "x")
   }
 
   
@@ -165,11 +251,11 @@ output$regPlot2 <- renderPlot({
   set.seed(input$ex2)
   
   # Generate Random Data
-  x <- rnorm(n = 20, mean = 0, sd = 4)
-  coeffslope <- c(-1, -.5, 0, .5, 1)
-  coeffint <- c(-2, -1, 0, 1, 2)
-  a_true <- sample(coeffint, size = 1)
-  b_true <- sample(coeffslope, size = 1)
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+  coeffslope <- c(2, 0, -1)
+  coeffint <- c(-2, .5, 1.5)
+  a_true <- coeffint[input$ex2]
+  b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
   # True DGP: y = a_t + b_t * x + u
   
@@ -177,8 +263,6 @@ output$regPlot2 <- renderPlot({
   if (input$const == 1){     
     # a = intercept (user input)
     a <- input$i2
-    
-        
         
     # plot
     #expr <- function(x) a
@@ -186,7 +270,7 @@ output$regPlot2 <- renderPlot({
     
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
          xlim = c(min(c(x, y))-1, max(c(x, y))+1),
-         ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+         ylim = c(-10, 10),
          main = "The Linear Regression (with no slope!)", frame.plot = FALSE,
          cex = 1.2)
     abline(h = mean(y), col = "black", lty = "dotted")
@@ -209,7 +293,7 @@ output$regPlot2 <- renderPlot({
            xright = x + abs(errors), ytop = y + errors, density = -1,
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
     }
-  } else {
+  } else if (input$const == 2){
         # a = intercept (user input)
     b <- input$s2
     
@@ -221,7 +305,7 @@ output$regPlot2 <- renderPlot({
     
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
          xlim = c(min(c(x, y))-1, max(c(x, y))+1),
-         ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+         ylim = c(-10, 10),
          main = "The Linear Regression (with no intercept term!)", frame.plot = FALSE,
          cex = 1.2)
 
@@ -244,6 +328,42 @@ output$regPlot2 <- renderPlot({
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
     }
     
+  } else {
+    
+    # a = intercept, b = slope (user input)
+    a <- input$ib
+    b <- input$sb
+        
+        
+    # plot
+    expr <- function(x) a + b*x
+    errors <- (a + b*x) - y 
+    
+    plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+         xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+         ylim = c(-10, 10),
+         main = "The Linear Regression", frame.plot = FALSE,
+         cex = 1.2)
+    
+    legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+    
+    b_best = cov(x, y)/var(x)
+    a_best = mean(y) - b_best*mean(x)
+    
+    if (near(a, a_best, tol = .25) && (near(b, b_best, tol = .25))){
+      curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
+    } else {
+      curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+      segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+      rect(xleft = x, ybottom = y,
+           xright = x + abs(errors), ytop = y + errors, density = -1,
+           col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
+    }
+    
   }
 
 })
@@ -252,11 +372,11 @@ output$MSE2 <- renderText({
   set.seed(input$ex2)
   
   # Generate Random Data
-  x <- rnorm(n = 20, mean = 0, sd = 4)
-  coeffslope <- c(-1, -.5, 0, .5, 1)
-  coeffint <- c(-2, -1, 0, 1, 2)
-  a_true <- sample(coeffint, size = 1)
-  b_true <- sample(coeffslope, size = 1)
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+  coeffslope <- c(2, 0, -1)
+  coeffint <- c(-2, .5, 1.5)
+  a_true <- coeffint[input$ex2]
+  b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
   
   if (input$const == 1){
@@ -266,10 +386,18 @@ output$MSE2 <- renderText({
   
     paste0("Total Sum of Squared Errors = ", sum(errors^2))
     
-  } else {
+  } else if (input$const == 2){
     b <- input$s2
 
     errors <- (b*x) - y
+  
+    paste0("Total Sum of Squared Errors = ", sum(errors^2))
+    
+  } else {
+    b <- input$sb
+    a <- input$ib
+
+    errors <- (a + (b*x)) - y
   
     paste0("Total Sum of Squared Errors = ", sum(errors^2))
   }
