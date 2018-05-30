@@ -43,7 +43,7 @@ In this section, we throw 2 dice together many times and keep track of each of t
 
 ```{r, echo=FALSE}
 shinyUI(fluidPage(
-  sliderInput("numrep", "Number of throws", min = 1, max = 1000, step = 1, value = 10),
+  sliderInput("numrep", "Number of throws", min = 1, max = 10000, step = 5, value = 10),
   
   plotOutput("outcomeTable")))
 ```
@@ -70,10 +70,10 @@ output$outcomeTable <- renderPlot({
     } else {return(R/num_rep)}
   }
 
-  ggplot(melt(simulate_throw(input$numrep, T)), aes(Var1, Var2)) +
-    geom_tile(aes(fill = value), colour = "white") +
-    geom_text(aes(label = paste0(round(value*100, 2), "%"))) +
-    scale_fill_gradient(low = "white", high = "red") +
+  ggplot(melt(simulate_throw(input$numrep, T), value.name = "Frequency"), aes(Var1, Var2)) +
+    geom_tile(aes(fill = Frequency), colour = "white") +
+    geom_text(aes(label = paste0(round(Frequency*100, 2), "%"))) +
+    scale_fill_gradient(low = "white", high = "red", guide = "colourbar") +
     xlab("First Dice") +
     ylab("Second Dice")+
     ggtitle(paste0("Outcome of ", input$numrep, " draws."), subtitle = "(in proportions)") +
@@ -87,5 +87,49 @@ output$outcomeTable <- renderPlot({
 
 
 Do you think it is likely that this pattern be observed by actually throwing two fair dice many times? What do you expect this outcome to look like if you were to throw 2 fair dice yourself?
+
+#### Here is the same app, with two *fair* dice:
+
+```{r, echo=FALSE}
+shinyUI(fluidPage(
+  sliderInput("numrepf", "Number of throws", min = 1, max = 10000, step = 5, value = 10),
+  
+  plotOutput("outcomeTableF")))
+```
+
+```{r, context="server"}
+
+output$outcomeTableF <- renderPlot({
+  simulate_throw <- function(num_rep, proportions = FALSE){
+  
+    R <- matrix(data = 0, nrow = 6, ncol = 6) #keeps track of result
+    # Arbitrary distribution
+    distribution <- matrix(1/36, ncol = 6, nrow = 6)
+    # Simulation
+    for (n in 1:num_rep){
+      adder <- matrix(data = 0, nrow = 6, ncol = 6)
+      adder[distribution >= matrix(runif(n = 36, min = 0, max = 1),
+                                   nrow = 6, ncol = 6)] <- 1
+      R <- R + adder
+    }
+    #Return result of the simulation
+    if (proportions == FALSE){
+      return(R)
+    } else {return(R/num_rep)}
+  }
+
+  ggplot(melt(simulate_throw(input$numrepf, T), value.name = "Frequency"), aes(Var1, Var2)) +
+    geom_tile(aes(fill = Frequency), colour = "white") +
+    geom_text(aes(label = paste0(round(Frequency*100, 2), "%"))) +
+    scale_fill_gradient(low = "white", high = "red", guide = "colourbar") +
+    xlab("First Dice") +
+    ylab("Second Dice")+
+    ggtitle(paste0("Outcome of ", input$numrepf, " draws."), subtitle = "(in proportions)") +
+    scale_y_continuous(breaks=1:6) +
+    scale_x_continuous(breaks=1:6) +
+    coord_fixed()
+
+})
+```
 
 
