@@ -192,10 +192,10 @@ What if you could only use one fixed number (i.e. a horizontal line) to fit $Y$ 
 shinyUI(fluidPage(
   sidebarPanel(
     
-    radioButtons("const", label = h4("Fixed Parameter?"),
-    choices = list("Slope = 0" = 1,
-                   "Intercept = 0" = 2,
-                   "No" = 3), 
+    radioButtons("const", label = h4("Parameter"),
+    choices = list("Intercept only" = 1,
+                   "Slope only" = 2,
+                   "Both" = 3), 
     selected = 1),
     
     conditionalPanel(condition = "input.const == 1",
