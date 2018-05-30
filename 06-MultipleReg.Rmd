@@ -5,5 +5,47 @@
 
 
 ```{r}
+# add grid lines with this https://stackoverflow.com/questions/40748949/match-gridlines-to-axis-ticks-in-3d-regression-plot-persp-and-rockchalk
+attach(mtcars)
+ 
+# linear fit
+fit <- lm(mpg ~ wt+disp)
+ 
+# predict on x-y grid, for surface
+wt.pred <- seq(1.5, 5.5, length.out = 30)
+disp.pred <- seq(71, 472, length.out = 30)
+xy <- expand.grid(wt = wt.pred, 
+                 disp = disp.pred)
+ 
+mpg.pred <- matrix (nrow = 30, ncol = 30, 
+  data = predict(fit, newdata = data.frame(xy), interval = "prediction"))
+ 
+# predicted z-values, fitted points for droplines to surface
+fitpoints <- predict(fit) 
+ 
+scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5, 
+      theta = 40, phi = 15, ticktype = "detailed",col="red",
+      xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
+      surf = NULL,
+      colkey = FALSE,#list(length = 0.8, width = 0.4),            
+      main = "mtcars")
+
+```
+
+```{r}
+scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5, 
+      theta = 40, phi = 15, ticktype = "detailed",col="red",
+      xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
+      surf = list(x = wt.pred, y = disp.pred, z = mpg.pred, 
+                  facets = NA, fit = fitpoints,col="grey"),
+      colkey = FALSE,#list(length = 0.8, width = 0.4),            
+      main = "mtcars")
+```
+
+
+
+
+not sure about this one:
+```{r}
 knitr::include_app("https://gallery.shinyapps.io/multi_regression/",height="1600px")
 ```

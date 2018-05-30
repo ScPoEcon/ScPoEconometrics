@@ -195,34 +195,4 @@ par(op)
 ```{r}
 with(mtcars,plot(hp,mpg))
 ```
-    
-1. scatter plot
-    1. label observations
-1. how do the data come to us? spreadsheet
-1. approx link x and y by a line
-1. OLS gives the best line for this
-    1. $y_i = a+b x_i$. find a,b s.t. dist is minimal
-    1. write out sum of least-squares and call it MSE: u_1 + u_2 + ... / N
-1. plot fitted values - see imperfect approximation
-1. R-squared: goodness of fit / measure of goodness
-    1. 1 - sum of squared errors / SST
-    1. how much of total variance is explained by the model?
-1. regression on mean
-1. How come there are residuals? 
-    1. measurement error?
-    1. there is more to this than just x
-    1. misspecification 
-1. There is statistical uncertainty about those estimates
-1. plot a second data set with a less clear interpretation
-    1. do you *really* think there is a linear relationship?
-    1. SE tells us whethe rwe really think this is a positive slope
-    1. poor R2 and large standard error
-    1. How **confident** are you about this relationship? Is there enought data?
-    1. SE is ameasure of precision depending on N
-    
-## Try to find the Slope!
 
-```{r}
-knitr::include_url("https://gallery.shinyapps.io/simple_regression/")
-```
-    
