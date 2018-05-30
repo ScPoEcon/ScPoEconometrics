@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Anscombe’s Quartet</title>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="section-header">
+
+
+
+<h1 class="title toc-ignore">Anscombe’s Quartet</h1>
+
+</div>
+
+
+<div class="container-fluid">
+<div class="row">
+<div id="addr" class="form-group shiny-input-checkboxgroup shiny-input-container">
+<label class="control-label" for="addr">Show:</label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="addr" value="1"/>
+<span>Line of Best Fit</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="addr" value="2"/>
+<span>Means</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="addr" value="3"/>
+<span>Standard Deviations</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="addr" value="4"/>
+<span>r coefficient</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div id="quartet" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+</div>
+</div>
+<div id="section-the-datasaurus-dozen" class="section level2">
+<h2>The Datasaurus Dozen</h2>
+<p>Believe it or not, the following 13 dataset all have the same <em>linear summary statistics</em>:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Statistic</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\bar{x}\)</span></td>
+<td><code>54.26</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\bar{y}\)</span></td>
+<td><code>47.83</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_{x}\)</span></td>
+<td><code>16.765</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sigma_{y}\)</span></td>
+<td><code>26.935</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(r_{xy}\)</span></td>
+<td><code>-0.065</code></td>
+</tr>
+</tbody>
+</table>
+<div class="container-fluid">
+<div class="row">
+<div class="form-group shiny-input-container">
+<label class="control-label" for="dataset">Dataset:</label>
+<input class="js-range-slider" id="dataset" data-min="1" data-max="13" data-from="1" data-step="1" data-grid="true" data-grid-num="6" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="8.33333333333333" data-data-type="number"/>
+</div>
+</div>
+<div class="row">
+<div id="dino" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+</div>
+</div>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+knitr::opts_chunk$set(echo = TRUE)
+library(datasauRus)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$quartet <- renderPlot({
+  #Plotting function
+  plot_quartet <- function(mean = F, sd = F, fit = F, r = F){
+    ff <- y ~ x
+    mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+    for(i in 1:4){
+      ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+      mods[[i]] <- lmi <- lm(ff, data = anscombe)
+    }
+    
+    op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+    for(i in 1:4) {
+      ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+      plot(ff, data = anscombe, col = "royalblue", pch = 21, bg = "blue", cex = 1.2,
+           xlim = c(3, 19), ylim = c(3, 13), main=paste("dataset",i))
+      
+      if (fit == T){
+        abline(mods[[i]], col = "green")
+      }
+      
+      if (mean == T){
+        abline(h = mean(anscombe[[paste0("y", i)]]), lty = "dashed")
+        abline(v = mean(anscombe[[paste0("x", i)]]), lty = "dashed")
+      }
+      
+      if (sd == T){
+        text(x = 5.5, y = 11,
+             labels = paste0("sd_y = ", round(sd(anscombe[[paste0("y", i)]]), 2)),
+             cex = 1.1)
+        text(x = 5.5, y = 9.5,
+             labels = paste0("sd_x = ", round(sd(anscombe[[paste0("x", i)]]), 2)),
+             cex = 1.1)
+      }
+      
+      if (r == T){
+        text(x = 15, y = 5,
+             labels = paste0("r = ", round(cor(anscombe[[paste0("y", i)]], 
+                                               anscombe[[paste0("x", i)]]), 2)),
+             cex = 1.1)
+      }
+      
+    }
+    par(op)
+  }
+  # Plot
+  
+  f <- 1 %in% input$addr
+  m <- 2 %in% input$addr
+  s <- 3 %in% input$addr
+  r <- 4 %in% input$addr
+  
+  plot_quartet(mean = m, sd = s, fit = f, r = r)
+  
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$dino <- renderPlot({
+  
+  #Plotting function
+  dz <- datasaurus_dozen
+  
+  plot_dino <- function(i){
+    plot(y~x, dz[dz$dataset == unique(dz$dataset)[i], ], 
+         col = "royalblue", pch = 21, bg = "blue", cex = 1, asp=1,
+         ylim = c(0, 100), xlim = c(-100, 200), 
+         main = paste0('DataSet', i))
+    abline(lm(formula = y~x, data = dz[dz$dataset == "dino", ]), col = 'green')
+    #abline(h = mean(dz[dz$dataset == "dino", ]$x), lty = 'dashed')
+    #abline(v = mean(dz[dz$dataset == "dino", ]$y), lty = 'dashed')
+  }
+  
+  plot_dino(input$dataset)
+  
+})
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/bootstrap.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.7"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href","file"]}},"value":[{"type":"character","attributes":{},"value":["shared/bootstrap"]},{"type":"character","attributes":{},"value":["www/shared/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/bootstrap.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider"]},{"type":"character","attributes":{},"value":["2.1.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css","css/ion.rangeSlider.skinShiny.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.7"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href","file"]}},"value":[{"type":"character","attributes":{},"value":["shared/bootstrap"]},{"type":"character","attributes":{},"value":["www/shared/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/bootstrap.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
