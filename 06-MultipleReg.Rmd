@@ -4,8 +4,9 @@
 * income ~ age is not linear
 
 
-```{r}
+```{r,echo=FALSE}
 # add grid lines with this https://stackoverflow.com/questions/40748949/match-gridlines-to-axis-ticks-in-3d-regression-plot-persp-and-rockchalk
+library(plot3D)
 attach(mtcars)
  
 # linear fit
@@ -32,7 +33,7 @@ scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5,
 
 ```
 
-```{r}
+```{r,echo=FALSE}
 scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5, 
       theta = 40, phi = 15, ticktype = "detailed",col="red",
       xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
