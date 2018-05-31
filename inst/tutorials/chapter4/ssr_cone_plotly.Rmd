@@ -1,5 +1,5 @@
 ---
-title: "Reg_SSR_standalone"
+title: "Reg_SSR_Plotly_standalone"
 runtime: shiny_prerendered
 output: html_document
 ---
@@ -7,7 +7,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
-library(plot3D)
+library(plotly)
+library(viridisLite)
 ```
 
 ```{r, echo=FALSE}
@@ -27,7 +28,7 @@ shinyUI(fluidRow(
          plotOutput("regPlot_ssr")),
   
   column(width = 6,
-         plotOutput("SSR_cone"))
+         plotlyOutput("SSR_cone"))
   
 ))
 ```
@@ -88,7 +89,7 @@ output$regPlot_ssr <- renderPlot({
 
 })
 
-output$SSR_cone <- renderPlot({
+output$SSR_cone <- renderPlotly({
   set.seed(19)
   
   # Generate Random Data
@@ -117,20 +118,22 @@ output$SSR_cone <- renderPlot({
   
   df <- cbind(df, mapply(ssr, df$a, df$b))
   colnames(df) <- c("a", "b", "ssr")
+  #df$ssr <- log(df$ssr) #uncomment for log
   
+  annot <- data.frame(a_ = a, b_ = b, ssr_ = log(ssr(a, b)))
+  #annot <- data.frame(a_ = a, b_ = b, ssr_ = log(ssr(a, b))) uncomment for log
+ 
+  plot_ly(df, x = ~a, y = ~b, z = ~ssr)  %>%
+  add_markers(color = ~ssr, name = "SSR",
+              colors = viridis(10, option = "A"), opacity = .75) %>%
+  colorbar(title = "Sum of Squared\nResiduals") %>%
+  add_markers(x = ~a_, y = ~b_, z = ~ssr_, data = annot, name = "Your Guess") %>%
+  layout(title = "Sum of Squared Residuals\n(Surface Plot, your guess shown in green)",
+         xaxis=list(range=c(-6,6)), yaxis=list(range=c(-6,6))) 
+  # Not sure how to change default zoom...
   
-  
-  plot3D::scatter3D(df$a, df$b, log(df$ssr),
-                    xlab = "a", ylab = "b", zlab = "log(SSR)",
-                    pch = 15, ticktype = "simple",
-                    phi = 45, theta = 65, alpha = .2,
-                    main = "Log(Sum of Squared Residuals)", sub = "Surface Plot",
-                    colkey = FALSE)
 
-  plot3D::arrows3D(x0 = a, x1 = a,
-                   y0 = b, y1 = b,
-                   z0 = log(ssr(a, b)) + 1, z1 = log(ssr(a, b)), add = T,
-                   col = "black")
+
   
   
   
