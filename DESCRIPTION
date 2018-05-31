@@ -15,4 +15,5 @@ Imports:
   mvtnorm,
   ggplot2,
   reshape2,
-  mvtnorm
+  mvtnorm,
+  datasauRus
