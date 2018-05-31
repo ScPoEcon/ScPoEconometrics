@@ -162,6 +162,46 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
 
+## Summarizing Two Variables
+
+We often are interested in how two (or more!) variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(mvtnorm)
+set.seed(10)
+cor = 0.9
+sig = matrix(c(1,cor,cor,1),c(2,2))
+ndat = data.frame(rmvnorm(n=300,sigma = sig))
+x = ndat$X1
+y = ndat$X2
+par(pty="s")
+plot(x ~ y, xlab="x",ylab="y")
+```
+
+Taking as example the data in this plot, the concepts *covariance* and *correlation* relate to the following type of question:
+
+```{block,type="tip"}
+Given we observe high value of `x` (like 2, say), can we expect a high or a low value of `y`, on average? Something like 2 or rather something like -2?
+```
+<br>
+The answer to this type of question can be addressed by computing the covariance of both variables:
+
+```{r}
+cov(x,y)  
+```
+
+Here, this gives a positive number, `r round(cov(x,y),2)`, indicating that as one variable lies above it's average, the other one does as well. In other words, it indicates a **positive relationship**. What is less clear, however, how to interpret the magnitude of `r round(cov(x,y),2)`. Is that a *strong* or a *weak* positive association?
+
+In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the **correlation**, which is obtained by *standardizing* each variable. This way, we get rid of the units problem:
+
+```{r}
+cor(x,y)
+```
+
+This is better. Given that the correlation has to lie in $[-1,1]$, a value of `r round(cor(x,y),2)` is indicative of a rather strong positive relationship. 
+
+
+
 ## The `tidyverse`
 
 [Hadley Wickham](http://hadley.nz) is the author of R packages `ggplot2` and also of `dplyr` (and also a myriad of others). With `ggplot2` he pioneered what he calls the *grammar of graphics* (hence, `gg`). Grammar in the sense that there are **nouns** and **verbs** and a **syntax**, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the *grammar* idea into various other packages. The `tidyverse` package is a collection of those packages. 

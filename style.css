@@ -12,3 +12,29 @@ pre {
 pre code {
   white-space: inherit;
 }
+/*
+ * Admonitions
+ *
+ * Colors (title, body)
+ * warning: #f0b37e #ffedcc (orange)
+ * note:    #6ab0de #e7f2fa (blue)
+ * tip:     #1abc9c #dbfaf4 (green)
+*/
+.note {
+    padding: 0.5em;
+    background-color: #e7f2fa;
+    border-radius: 5px;
+}
+
+.warning {
+    padding: 0.5em;
+    background-color: #f0b37e;
+    border-radius: 5px;
+}
+
+.tip {
+    padding: 0.5em;
+    background-color: #dbfaf4;
+    border-radius: 5px;
+}
+

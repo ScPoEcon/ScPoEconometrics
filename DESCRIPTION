@@ -14,4 +14,5 @@ Imports:
   plot3D,
   mvtnorm,
   ggplot2,
-  reshape2
+  reshape2,
+  mvtnorm
