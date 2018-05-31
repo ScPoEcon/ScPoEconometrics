@@ -176,25 +176,25 @@ $(document).ready(function () {
 <form class="well">
 <div id="const" class="form-group shiny-input-radiogroup shiny-input-container">
 <label class="control-label" for="const">
-<h4>Fixed Parameter?</h4>
+<h4>Parameter</h4>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
 <label>
 <input type="radio" name="const" value="1" checked="checked"/>
-<span>Slope = 0</span>
+<span>Intercept only</span>
 </label>
 </div>
 <div class="radio">
 <label>
 <input type="radio" name="const" value="2"/>
-<span>Intercept = 0</span>
+<span>Slope only</span>
 </label>
 </div>
 <div class="radio">
 <label>
 <input type="radio" name="const" value="3"/>
-<span>No</span>
+<span>Both</span>
 </label>
 </div>
 </div>
@@ -214,6 +214,14 @@ $(document).ready(function () {
 <div class="form-group shiny-input-container">
 <label class="control-label" for="s2">Slope</label>
 <input class="js-range-slider" id="s2" data-min="-5" data-max="5" data-from="-2" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
+</div>
+</div>
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+<label>
+<input id="demean" type="checkbox"/>
+<span>de-Mean x and y</span>
+</label>
 </div>
 </div>
 </div>
@@ -389,7 +397,12 @@ output$userguess2 <- renderText({
     paste0("Your guess:\n y = ", a)
   } else if (input$const == 2) {
     b <- input$s2
-    paste0("Your guess:\n y = ", b, "x")
+    if (input$demean == T){
+      paste0("Your guess:\n [y - mean(y)] = ", b, "[x - mean(x)]")
+    } else {
+      paste0("Your guess:\n y = ", b, "x")
+    }
+    
   } else {
     a <- input$ib
     b <- input$sb
@@ -407,11 +420,11 @@ output$regPlot2 <- renderPlot({
   # Generate Random Data
   x <- rnorm(n = 20, mean = 2, sd = 4)
   coeffslope <- c(2, 0, -1)
-  coeffint <- c(-2, .5, 1.5)
+  coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
   b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
-  # True DGP: y = a_t + b_t * x + u
+  
   
       
   if (input$const == 1){     
@@ -448,20 +461,39 @@ output$regPlot2 <- renderPlot({
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
     }
   } else if (input$const == 2){
-        # a = intercept (user input)
+    
+    if (input$demean == T){
+      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- x - mean(x)
+      coeffslope <- c(2, 0, -1)
+      coeffint <- c(-2, .5, 3)
+      a_true <- coeffint[input$ex2]
+      b_true <- coeffslope[input$ex2]
+      y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+      y <- y - mean(y)
+    }
+        
     b <- input$s2
     
         
         
     # plot
+    
+    
+    
     expr <- function(x) b*x
-    errors <- (b*x) - y 
+    errors <- (b*x) - y
+    
+    
+     
     
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
          xlim = c(min(c(x, y))-1, max(c(x, y))+1),
          ylim = c(-10, 10),
          main = "The Linear Regression (with no intercept term!)", frame.plot = FALSE,
          cex = 1.2)
+    abline(h = 0, col = 'grey')
+    abline(v = 0, col = 'grey')
 
     
     legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
@@ -528,7 +560,7 @@ output$MSE2 <- renderText({
   # Generate Random Data
   x <- rnorm(n = 20, mean = 2, sd = 4)
   coeffslope <- c(2, 0, -1)
-  coeffint <- c(-2, .5, 1.5)
+  coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
   b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
@@ -541,6 +573,18 @@ output$MSE2 <- renderText({
     paste0("Total Sum of Squared Errors = ", sum(errors^2))
     
   } else if (input$const == 2){
+    
+    if (input$demean == T){
+      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- x - mean(x)
+      coeffslope <- c(2, 0, -1)
+      coeffint <- c(-2, .5, 3)
+      a_true <- coeffint[input$ex2]
+      b_true <- coeffslope[input$ex2]
+      y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+      y <- y - mean(y)
+    }
+    
     b <- input$s2
 
     errors <- (b*x) - y

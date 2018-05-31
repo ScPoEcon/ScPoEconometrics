@@ -204,7 +204,8 @@ shinyUI(fluidPage(
     
     conditionalPanel(condition = "input.const == 2",
                      wellPanel(h5("Intercept = 0"),
-                     sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2))),
+                     sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2)),
+                     checkboxInput(inputId = "demean", "de-Mean x and y", value = F)),
     
     conditionalPanel(condition = "input.const == 3",
                      wellPanel(sliderInput("ib", "Intercept", min = -5, max = 5, step = .5, value = -2),
@@ -235,7 +236,12 @@ output$userguess2 <- renderText({
     paste0("Your guess:\n y = ", a)
   } else if (input$const == 2) {
     b <- input$s2
-    paste0("Your guess:\n y = ", b, "x")
+    if (input$demean == T){
+      paste0("Your guess:\n [y - mean(y)] = ", b, "[x - mean(x)]")
+    } else {
+      paste0("Your guess:\n y = ", b, "x")
+    }
+    
   } else {
     a <- input$ib
     b <- input$sb
@@ -253,11 +259,11 @@ output$regPlot2 <- renderPlot({
   # Generate Random Data
   x <- rnorm(n = 20, mean = 2, sd = 4)
   coeffslope <- c(2, 0, -1)
-  coeffint <- c(-2, .5, 1.5)
+  coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
   b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
-  # True DGP: y = a_t + b_t * x + u
+  
   
       
   if (input$const == 1){     
@@ -294,20 +300,39 @@ output$regPlot2 <- renderPlot({
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
     }
   } else if (input$const == 2){
-        # a = intercept (user input)
+    
+    if (input$demean == T){
+      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- x - mean(x)
+      coeffslope <- c(2, 0, -1)
+      coeffint <- c(-2, .5, 3)
+      a_true <- coeffint[input$ex2]
+      b_true <- coeffslope[input$ex2]
+      y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+      y <- y - mean(y)
+    }
+        
     b <- input$s2
     
         
         
     # plot
+    
+    
+    
     expr <- function(x) b*x
-    errors <- (b*x) - y 
+    errors <- (b*x) - y
+    
+    
+     
     
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
          xlim = c(min(c(x, y))-1, max(c(x, y))+1),
          ylim = c(-10, 10),
          main = "The Linear Regression (with no intercept term!)", frame.plot = FALSE,
          cex = 1.2)
+    abline(h = 0, col = 'grey')
+    abline(v = 0, col = 'grey')
 
     
     legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
@@ -374,7 +399,7 @@ output$MSE2 <- renderText({
   # Generate Random Data
   x <- rnorm(n = 20, mean = 2, sd = 4)
   coeffslope <- c(2, 0, -1)
-  coeffint <- c(-2, .5, 1.5)
+  coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
   b_true <- coeffslope[input$ex2]
   y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
@@ -387,6 +412,18 @@ output$MSE2 <- renderText({
     paste0("Total Sum of Squared Errors = ", sum(errors^2))
     
   } else if (input$const == 2){
+    
+    if (input$demean == T){
+      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- x - mean(x)
+      coeffslope <- c(2, 0, -1)
+      coeffint <- c(-2, .5, 3)
+      a_true <- coeffint[input$ex2]
+      b_true <- coeffslope[input$ex2]
+      y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+      y <- y - mean(y)
+    }
+    
     b <- input$s2
 
     errors <- (b*x) - y
