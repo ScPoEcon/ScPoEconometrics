@@ -11,4 +11,5 @@ Imports:
   bookdown,
   shiny,
   learnr,
-  plot3D
+  plot3D,
+  datasauRus
