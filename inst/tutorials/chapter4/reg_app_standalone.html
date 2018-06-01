@@ -681,11 +681,11 @@ output$regPlot_dummy <- renderPlot({
        cex = 1.2)
   if (input$meany_x0 == T){
     points(0, mean(dta[dta$x == 0, "y"]), col = 'orange', add = T, cex = 3, pch = 15)
-    text(0, mean(dta[dta$x == 0, "y"]), "E[Y | X = 0]", pos = 4)
+    text(0.05, mean(dta[dta$x == 0, "y"]), "E[Y | X = 0]", pos = 4)
   }
   if (input$meany_x1 == T){
     points(1, mean(dta[dta$x == 1, "y"]), col = 'orange', add = T, cex = 3, pch = 15)
-    text(1, mean(dta[dta$x == 1, "y"]), "E[Y | X = 1]", pos = 4)
+    text(1.05, mean(dta[dta$x == 1, "y"]), "E[Y | X = 1]", pos = 4)
   }
   
   
