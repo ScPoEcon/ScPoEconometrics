@@ -1,0 +1,140 @@
+---
+title: "Reg_SSR_standalone"
+runtime: shiny_prerendered
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(plot3D)
+```
+
+```{r, echo=FALSE}
+shinyUI(fluidRow(
+  
+  column(width = 2,
+         sliderInput("i_ssr", "Intercept", min = -4,
+                           max = 4, step = .25, value = .5),
+         sliderInput("s_ssr", "Slope", min = -4,
+                           max = 4, step = .25, value = -1),
+         br(),
+         br(),
+               
+         textOutput("userguess_ssr")),
+  
+  column(width = 4,
+         plotOutput("regPlot_ssr")),
+  
+  column(width = 6,
+         plotOutput("SSR_cone"))
+  
+))
+```
+
+
+```{r, context="server"}
+
+output$userguess_ssr <- renderText({
+
+  a <- input$i_simple
+  b <- input$s_simple
+  paste0("Your guess:\n y = ", a, " + ", b, "x")
+  
+})
+
+output$regPlot_ssr <- renderPlot({
+ 
+  set.seed(19)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+  
+  a_true <- -2
+  b_true <- 1.5
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1.5)
+  # True DGP: y = -2 + 1.5 * x + u
+      
+  # a = intercept, b = slope (user input)
+  a <- input$i_ssr
+  b <- input$s_ssr
+      
+  # plot
+  expr <- function(x) a + b*x
+  errors <- (a + b*x) - y 
+  
+  plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+       xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+       ylim = c(min(c(x, y))-1, max(c(x, y))+1),
+       main = "Fit the data!", frame.plot = FALSE,
+       cex = 1.2)
+  
+  b_best = cov(x, y)/var(x) #approx. 1.25
+  a_best = mean(y) - b_best*mean(x) #approx -1
+  
+  if (near(a, a_best, tol = .125) &&  near(b, b_best, tol = .125)){
+    curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 0, green = 1, blue = 0, alpha = 0.05), border = NA)
+  } else {
+    curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.05), border = NA)
+  }
+
+})
+
+output$SSR_cone <- renderPlot({
+  set.seed(19)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+  
+  a_true <- -2
+  b_true <- 1.5
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1.5)
+  # True DGP: y = -2 + 1.5 * x + u
+      
+  # a = intercept, b = slope (user input)
+  a <- input$i_ssr
+  b <- input$s_ssr
+      
+  # plot cone
+
+  ssr <- function(a_, b_){
+    return(sum(((a_ + b_*x) - y)^2))
+  }
+  
+  possible_a <- seq(-4, 4, .25)
+  possible_b <- seq(-4, 4, .25)
+  
+  df <- data.frame(a = rep(possible_a, each = length(possible_b)),
+                   b = rep(possible_b, times = length(possible_b)))
+  
+  df <- cbind(df, mapply(ssr, df$a, df$b))
+  colnames(df) <- c("a", "b", "ssr")
+  
+  
+  
+  plot3D::scatter3D(df$a, df$b, log(df$ssr),
+                    xlab = "a", ylab = "b", zlab = "log(SSR)",
+                    pch = 15, ticktype = "simple",
+                    phi = 45, theta = 65, alpha = .2,
+                    main = "Log(Sum of Squared Residuals)", sub = "Surface Plot",
+                    colkey = FALSE)
+
+  plot3D::arrows3D(x0 = a, x1 = a,
+                   y0 = b, y1 = b,
+                   z0 = log(ssr(a, b)) + 1, z1 = log(ssr(a, b)), add = T,
+                   col = "black")
+  
+  
+  
+})
+
+```
+
