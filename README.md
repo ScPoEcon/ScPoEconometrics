@@ -1,6 +1,6 @@
 # ScPo UG Econometrics
 
-[![Build Status](https://travis-ci.org/floswald/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/floswald/ScPoEconometrics)
+[![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
 
 [![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)
 

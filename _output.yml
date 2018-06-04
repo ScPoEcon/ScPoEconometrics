@@ -6,7 +6,7 @@ bookdown::gitbook:
         <li><a href="./">ScPo 2nd Year Econometrics</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/floswald/ScPoEconometrics/edit/master/%s
+    edit: https://github.com/ScPoEcon/ScPoEconometrics/edit/master/%s
     download: ["pdf", "epub"]
   includes:
     in_header: GA-tracker.html
