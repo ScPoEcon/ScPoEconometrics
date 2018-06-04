@@ -576,14 +576,13 @@ output$userguess_std <- renderText({
 output$regPlot_std <- renderPlot({
  
   set.seed(19)
-  
-  # Generate Random Data
-  x <- rnorm(n = 20, mean = 2, sd = 4)
 
-  a_true <- -2
-  b_true <- 1.5
-  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 3)
-  # True DGP: y = -2 + 1.5 * x + u
+  
+  #Load Data
+  
+  data <- read.csv(file = "~/GIT/ScPoEconometrics/data/corr50.csv", header = F)
+  x <- data[[1]] *.45
+  y <- data[[2]]
   
   if (input$std == T){
     x <- x/sd(x)
@@ -601,11 +600,11 @@ output$regPlot_std <- renderPlot({
   errors <- (a + b*x) - y 
   
   plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
-       xlim = c(-15, 15),
-       ylim = c(-10, 10),
+       xlim = c(-5, 15),
+       ylim = c(-5, 10),
        main = "Fit the data!", frame.plot = FALSE,
        cex = 1.2)
-  legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+  legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 2)))
   
   b_best <- cov(x, y)/var(x)
   a_best <- mean(y) - b_best*mean(x)
