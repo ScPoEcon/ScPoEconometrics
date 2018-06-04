@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-05-25">
+<meta name="date" content="2018-06-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -161,7 +161,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>4.1.4</b> Correlation, Covariance and Linearity</a></li>
 <li class="chapter" data-level="4.1.5" data-path="linreg.html"><a href="linreg.html#non-linear-data"><i class="fa fa-check"></i><b>4.1.5</b> non-linear data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="linreg.html"><a href="linreg.html#try-to-find-the-slope"><i class="fa fa-check"></i><b>4.2</b> Try to find the Slope!</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a></li>
 <li class="chapter" data-level="6" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>6</b> Multiple Regression</a></li>
@@ -275,49 +274,8 @@ The best line minimizes the sum of <strong>squared residuals</strong>, i.e. it 
 <h3><span class="header-section-number">4.1.5</span> non-linear data</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(mtcars,<span class="kw">plot</span>(hp,mpg))</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
-<ol style="list-style-type: decimal">
-<li>scatter plot
-<ol style="list-style-type: decimal">
-<li>label observations</li>
-</ol></li>
-<li>how do the data come to us? spreadsheet</li>
-<li>approx link x and y by a line</li>
-<li>OLS gives the best line for this
-<ol style="list-style-type: decimal">
-<li><span class="math inline">\(y_i = a+b x_i\)</span>. find a,b s.t. dist is minimal</li>
-<li>write out sum of least-squares and call it MSE: u_1 + u_2 + … / N</li>
-</ol></li>
-<li>plot fitted values - see imperfect approximation</li>
-<li>R-squared: goodness of fit / measure of goodness
-<ol style="list-style-type: decimal">
-<li>1 - sum of squared errors / SST</li>
-<li>how much of total variance is explained by the model?</li>
-</ol></li>
-<li>regression on mean</li>
-<li>How come there are residuals?
-<ol style="list-style-type: decimal">
-<li>measurement error?</li>
-<li>there is more to this than just x</li>
-<li>misspecification</li>
-</ol></li>
-<li>There is statistical uncertainty about those estimates</li>
-<li>plot a second data set with a less clear interpretation
-<ol style="list-style-type: decimal">
-<li>do you <em>really</em> think there is a linear relationship?</li>
-<li>SE tells us whethe rwe really think this is a positive slope</li>
-<li>poor R2 and large standard error</li>
-<li>How <strong>confident</strong> are you about this relationship? Is there enought data?</li>
-<li>SE is ameasure of precision depending on N</li>
-</ol></li>
-</ol>
-</div>
-</div>
-<div id="try-to-find-the-slope" class="section level2">
-<h2><span class="header-section-number">4.2</span> Try to find the Slope!</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_url</span>(<span class="st">&quot;https://gallery.shinyapps.io/simple_regression/&quot;</span>)</code></pre></div>
-<iframe src="https://gallery.shinyapps.io/simple_regression/" width="672" height="400px">
-</iframe>
 
+</div>
 </div>
 </div>
             </section>
@@ -356,7 +314,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/floswald/ScPoEconometrics/edit/master/04-linear-reg.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/04-linear-reg.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
