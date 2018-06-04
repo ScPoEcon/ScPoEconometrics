@@ -12,7 +12,7 @@ In order to run the accompanying tutorials, you must install this repository as 
 
 ```R
 library(devtools)
-install_github(repo = "floswald/ScPoEconometrics")
+install_github(repo = "ScPoEcon/ScPoEconometrics")
 ```
 
 Then you can run the respective tutorial for the corresponding chapter, by typing, for example:

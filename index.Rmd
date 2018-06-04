@@ -8,9 +8,9 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-url: 'https\://floswald.github.io/ScPoEconometrics/'
+url: 'https\://scpoecon.github.io/ScPoEconometrics/'
 favicon: "favicon.gif"
-github-repo: floswald/ScPoEconometrics
+github-repo: ScPoEcon/ScPoEconometrics
 description: "SciencesPo UG Econometrics online textbook. No Maths."
 ---
 
@@ -22,11 +22,37 @@ description: "SciencesPo UG Econometrics online textbook. No Maths."
 
 This is our book about Introductory Econometrics for 2nd year UGs at ScPo. We follow a practical approach with minimal reliance on maths and maximal reliance on practical learning.
 
-On this first page we can explain a bit more about the course structure:
+## Objective 
 
-* Who is who
-* how to communicate
-* how many sessions etc
+This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis.
+
+## Syllabus and Requirements
+
+You can find the topics we want to go over in the left panel of this book. The later chapters are optional and depend on the speed with which we will proceed eventually. Chapters 1-4 are the core material of the course.
+
+The only requirement is that you bring *your own personal computer* to each session. Before coming to each session, you should update the associated computer code by executing this command in your `R` console:
+
+```R
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+install_github(repo = "ScPoEcon/ScPoEconometrics")
+```
+
+## Course Structure
+
+This course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
+
+Groups meet once per week for 2 hours. The main purpose of the weekly meetings is to clarify any questions, and to work together through tutorials. The little theory we need will be covered in this book, and you are expected to read through this in your own time before coming to class. 
+
+### Assessments
+
+There will be 2 mid-term exams and one final exam.
+
+## Team
+
+## Communication
+
+
 
 
 
