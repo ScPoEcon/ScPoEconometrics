@@ -76,13 +76,13 @@ output$regPlot <- renderPlot({
   legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
   
   if ((a == a_true) && (b == b_true)){
-    curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    curve(expr = expr, from = min(x)-10, to = max(x)+10, add = T, col = "black")
     segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
     rect(xleft = x, ybottom = y,
          xright = x + abs(errors), ytop = y + errors, density = -1,
          col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
   } else {
-    curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    curve(expr =expr , from = min(x)-10, to = max(x)+10, add = T, col = "black")
     segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
     rect(xleft = x, ybottom = y,
          xright = x + abs(errors), ytop = y + errors, density = -1,
@@ -257,7 +257,7 @@ output$regPlot2 <- renderPlot({
   set.seed(input$ex2)
   
   # Generate Random Data
-  x <- rnorm(n = 20, mean = 2, sd = 4)
+  x <- rnorm(n = 20, mean = 2, sd = 2)
   coeffslope <- c(2, 0, -1)
   coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
@@ -302,7 +302,7 @@ output$regPlot2 <- renderPlot({
   } else if (input$const == 2){
     
     if (input$demean == T){
-      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- rnorm(n = 20, mean = 2, sd = 2)
       x <- x - mean(x)
       coeffslope <- c(2, 0, -1)
       coeffint <- c(-2, .5, 3)
@@ -327,7 +327,7 @@ output$regPlot2 <- renderPlot({
      
     
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
-         xlim = c(min(c(x, y))-1, max(c(x, y))+1),
+         xlim = c(-10, 10),
          ylim = c(-10, 10),
          main = "The Linear Regression (with no intercept term!)", frame.plot = FALSE,
          cex = 1.2)
@@ -397,7 +397,7 @@ output$MSE2 <- renderText({
   set.seed(input$ex2)
   
   # Generate Random Data
-  x <- rnorm(n = 20, mean = 2, sd = 4)
+  x <- rnorm(n = 20, mean = 2, sd = 2)
   coeffslope <- c(2, 0, -1)
   coeffint <- c(-2, .5, 3)
   a_true <- coeffint[input$ex2]
@@ -414,7 +414,7 @@ output$MSE2 <- renderText({
   } else if (input$const == 2){
     
     if (input$demean == T){
-      x <- rnorm(n = 20, mean = 2, sd = 4)
+      x <- rnorm(n = 20, mean = 2, sd = 2)
       x <- x - mean(x)
       coeffslope <- c(2, 0, -1)
       coeffint <- c(-2, .5, 3)
@@ -447,9 +447,9 @@ output$MSE2 <- renderText({
 ```{r, echo=FALSE}
 shinyUI(fluidPage(
   sidebarPanel(sliderInput("i_dummy", "Intercept", min = 0,
-                           max = 5, step = .25, value = 5),
+                           max = 5, step = .25, value = 3),
                sliderInput("s_dummy", "Slope", min = -1,
-                           max = 5, step = .25, value = .25),
+                           max = 5, step = .25, value = 2),
                
                checkboxInput("meany_x0", "Show E[Y | X = 0]", value = FALSE),
                checkboxInput("meany_x1", "Show E[Y | X = 1]", value = FALSE),
@@ -502,11 +502,13 @@ output$regPlot_dummy <- renderPlot({
        main = "Fit the data!", frame.plot = T,
        cex = 1.2)
   if (input$meany_x0 == T){
-    points(0, mean(dta[dta$x == 0, "y"]), col = 'orange', add = T, cex = 3, pch = 15)
+    points(0, mean(dta[dta$x == 0, "y"]), col = 'orange',
+           cex = 3, pch = 15)
     text(0.05, mean(dta[dta$x == 0, "y"]), "E[Y | X = 0]", pos = 4)
   }
   if (input$meany_x1 == T){
-    points(1, mean(dta[dta$x == 1, "y"]), col = 'orange', add = T, cex = 3, pch = 15)
+    points(1, mean(dta[dta$x == 1, "y"]), col = 'orange',
+           cex = 3, pch = 15)
     text(1.05, mean(dta[dta$x == 1, "y"]), "E[Y | X = 1]", pos = 4)
   }
   
@@ -533,4 +535,95 @@ output$regPlot_dummy <- renderPlot({
 ```
 
 
+## Standardized Regression
+
+```{r, echo=FALSE}
+shinyUI(fluidPage(
+  sidebarPanel(sliderInput("i_std", "Intercept", min = -2,
+                           max = 2, step = .5, value = .5),
+               sliderInput("s_std", "Slope", min = -2,
+                           max = 2, step = .1, value = .1),
+               
+               checkboxInput("std", "Standardize X and Y!", value = F),
+               
+               br(),
+               br(),
+               
+               textOutput("userguess_std")),
+  
+  mainPanel(
+    plotOutput("regPlot_std"))))
+```
+
+
+```{r, context="server"}
+
+output$userguess_std <- renderText({
+
+  if (input$std == F){
+    a <- input$i_std
+    b <- input$s_std
+    paste0("Your guess:\n y = ", a, " + ", b, "x")
+  } else {
+    a <- input$i_std
+    b <- input$s_std
+    paste0("Your guess:\n [y / SD(y)] = ", a, " + ", b, "[x / SD(x)]")
+  }
+
+  
+})
+
+output$regPlot_std <- renderPlot({
+ 
+  set.seed(19)
+  
+  # Generate Random Data
+  x <- rnorm(n = 20, mean = 2, sd = 4)
+
+  a_true <- -2
+  b_true <- 1.5
+  y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 3)
+  # True DGP: y = -2 + 1.5 * x + u
+  
+  if (input$std == T){
+    x <- x/sd(x)
+    y <- y/sd(y)
+  }
+  
+      
+      
+  # a = intercept, b = slope (user input)
+  a <- input$i_std
+  b <- input$s_std
+      
+  # plot
+  expr <- function(x) a + b*x
+  errors <- (a + b*x) - y 
+  
+  plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
+       xlim = c(-15, 15),
+       ylim = c(-10, 10),
+       main = "Fit the data!", frame.plot = FALSE,
+       cex = 1.2)
+  legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+  
+  b_best <- cov(x, y)/var(x)
+  a_best <- mean(y) - b_best*mean(x)
+  
+  if (near(a, a_best, tol = .25) && near(b, b_best, tol = .05)){
+    curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 0, green = 1, blue = 0, alpha = 0.05), border = NA)
+  } else {
+    curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+    segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
+    rect(xleft = x, ybottom = y,
+         xright = x + abs(errors), ytop = y + errors, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.05), border = NA)
+  }
+
+})
+```
 
