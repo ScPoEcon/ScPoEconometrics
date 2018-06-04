@@ -11,10 +11,10 @@
 
   <meta property="og:title" content="Econometrics with R at SciencesPo [WIP]" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://floswald.github.io/ScPoEconometrics/" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
   <meta property="og:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
-  <meta name="github-repo" content="floswald/ScPoEconometrics" />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Econometrics with R at SciencesPo [WIP]" />
@@ -112,7 +112,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">ScPo 2nd Year Econometrics</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Econometrics at ScPo - WORK IN PROGRESS</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objective"><i class="fa fa-check"></i><b>1.1</b> Objective</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#syllabus-and-requirements"><i class="fa fa-check"></i><b>1.2</b> Syllabus and Requirements</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#course-structure"><i class="fa fa-check"></i><b>1.3</b> Course Structure</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#assessments"><i class="fa fa-check"></i><b>1.3.1</b> Assessments</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#team"><i class="fa fa-check"></i><b>1.4</b> Team</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#communication"><i class="fa fa-check"></i><b>1.5</b> Communication</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
 <li class="chapter" data-level="2.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
 <li class="chapter" data-level="2.2" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
@@ -1347,11 +1355,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1] -4.6559789  4.4173169  0.3958971 -7.8471520 -1.2010110  2.0320508
-##  [7]  2.2612713  1.7494198 -2.5308367 -1.3950752</code></pre>
+<pre><code>##  [1] 10.510178  1.119530 -6.412595  3.431147 -4.765647 -1.615817 -1.474706
+##  [8]  1.393116  3.211631  1.256136</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1] -1.0876139  1.3927358  0.2934079 -1.9599789 -0.1431359  0.7406801
-##  [7]  0.8033417  0.6634178 -0.5066678 -0.1961868</code></pre>
+<pre><code>##  [1]  2.08054751  0.09599434 -1.49579166  0.58451503 -1.14773736
+##  [6] -0.48207453 -0.45225322  0.15381196  0.53812425  0.12486368</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1388,14 +1396,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 13.38148</code></pre>
+<pre><code>## [1] 22.3906</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 13.38148</code></pre>
+<pre><code>## [1] 22.3906</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 13.38148</code></pre>
+<pre><code>## [1] 22.3906</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 12.04334</code></pre>
+<pre><code>## [1] 20.15154</code></pre>
 
 </div>
 </div>
