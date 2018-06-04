@@ -7,7 +7,8 @@ sudo: false
 pandoc_version: 1.19.2.1
 
 before_install:
-  - Rscript -e 'install.packages(c("tidyverse", "reshape2","Ecdat"));if (!all(c("tidyverse", "reshape2","Ecdat") %in% installed.packages())) { q(status = 1, save = "no")}'
+  - chmod +x ./_install.sh
+  - ./_install.sh
 
 before_script:
   - chmod +x ./_build.sh
