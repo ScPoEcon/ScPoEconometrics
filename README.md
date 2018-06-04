@@ -27,16 +27,17 @@ run_tutorial("chapter3",package="ScPoEconometrics")
 
 1. fork this repository
 1. clone your fork to your computer: `git clone url_or_your_fork`
-1. add the upstream repo as a remote: `git remote add upstream git@github.com:floswald/ScPoEconometrics.git`
-1. make sure your master branch is always up to date with the upstream before you start working: 
+1. Start to work on your things on a new branch: `git checkout -b new_branch`
+1. **commit** your work to that new branch! 
+1. Place your new stuff on top of the most recent `upstream/master`:
+	1. add the upstream repo as a remote: `git remote add upstream git@github.com:floswald/ScPoEconometrics.git`
+	1. Use the `rebase` command
     ```
-    git checkout master  # switch to your master branch
+    # git add your stuff
+    # git commit your stuff
     git fetch upstream   # get stuff from upstream
-    git merge upstrea/master  # merge upstream master
+    git rebase upstream/master  # merge upstream master and put your commits on top of it
     ```
-    only then should you start to edit any code.
-1. Create a new branch from your master: `git checkout -b new_branch`
-1. edit, add, commit
 1. push that branch to your fork: `git push origin new_branch`
 1. create pull request on `upstream`
 
