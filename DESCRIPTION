@@ -12,4 +12,8 @@ Imports:
   shiny,
   learnr,
   plot3D,
-  mvtnorm
+  mvtnorm,
+  ggplot2,
+  reshape2,
+  mvtnorm,
+  datasauRus
