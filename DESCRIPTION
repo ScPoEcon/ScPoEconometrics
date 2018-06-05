@@ -5,7 +5,7 @@ Version: 0.0.1
 Authors@R: c(
     person("Florian", "Oswald", email = "florian.oswald@sciencespo.fr", role = c("aut","cre")),
     person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"),
-    person("Vincent", "Viers", email = "vincent.viers@berkely.edu", role = "ctb"))
+    person("Vincent", "Viers", email = "vincent.viers@sciencespo.fr", role = "ctb"))
 Depends: R (>= 3.4.0)
 URL: https://github.com/ScPoEcon/ScPoEconometrics
 Imports: 
