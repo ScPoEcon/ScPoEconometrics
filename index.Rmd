@@ -62,6 +62,8 @@ There will be 2 mid-term exams and one final exam.
 
 ## Communication {-}
 
+We will communicate exclusively on our [`slack`](econometrics-scpo.slack.com) app. You will get an invitation email to join in due course.
+
 
 
 
