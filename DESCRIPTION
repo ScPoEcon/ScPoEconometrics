@@ -15,7 +15,7 @@ Imports: bookdown,
   learnr,
   plot3D,
   mvtnorm,
-  ggplot2,
+  tidyverse,
   reshape2,
   mvtnorm,
   datasauRus
