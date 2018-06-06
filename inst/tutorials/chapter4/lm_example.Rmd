@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually. As it turns out, `R` can do this much more precisely in a matter of milliseconds.
+Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually. As it turns out, `R` can do this much more precisely, and very fast!
 
 Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool`dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
 
@@ -32,7 +32,7 @@ summary(Caschool[, c("testscr", "str", "avginc")])
 
 Suppose a policymaker is interested in the following linear model:
 
-$$(testscr)_i = \beta_0 + \beta_1 \times (str)_i + \epsilon_i$$
+$$testscr_i = \beta_0 + \beta_1 \times (str)_i + \epsilon_i$$
 Where $(testscr)_i$ is the *average test score* for a given school $i$ and $(str)_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. We can think of $\beta_0$  and $\beta_1$ as the intercept and the slope of the regression line.
 
 The subscript $i$ indexes all unique elementary schools ($i \in \{1, 2, 3, \dots 420\}$) and $\epsilon_i$ is the error, or *residual*, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the *sum of squared residuals* (SSR)).
@@ -85,7 +85,7 @@ fit_california <- lm(formula = "testscr ~ str", data = Caschool)
 summary(fit_california) 
 ```
 
-Again, we recognize our intercept and slope estimates from before, alongside some other cryptic numbers and indications. This output is called a *regression table*, and you will be able to decypher it by the end of this course.
+Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a *regression table*, and you will be able to decypher it by the end of this course.
 
 ## Plotting the regression line
 
@@ -103,13 +103,13 @@ abline(fit_california, col = 'red') # add regression line
 ```
 
 
-As you probably expected, there is a slight downward correlation between a school's Student/Teacher Ratio and its average test results. Even though the data is very noisy, you computer was still able to pick up this trend. And using only 2 lines of code!
+As you probably expected, there is a slight downward correlation between a school's Student/Teacher Ratio and its average test results.
 
 ## Multivariate Regression
 
 With these tools in place, it is fairly straigtforward to estimate models with more than one dependent variables, for example adding families' average income to our previous model:
 
-$$(testscr)_i = \beta_0 + \beta_1 \times (str)_i + \beta_2 (avginc)_i + \epsilon_i$$
+$$testscr_i = \beta_0 + \beta_1  (str)_i + \beta_2  (avginc)_i + \epsilon_i$$
 We can incoporate this new variable to our model by simply adding it to our `formula`:
 
 ```{r lmfit_multiv}
@@ -117,4 +117,28 @@ fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
 summary(fit_multivariate)
 ```
 
+Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane*.
+
+```{r 3DPlotly, echo = FALSE, warning=F, message = F}
+library(plotly)
+library(reshape2)
+
+to_plot_x <- c(min(Caschool$str), max(Caschool$str))
+to_plot_y <- c(min(Caschool$avginc), max(Caschool$avginc))
+
+df <- data.frame(str = rep(to_plot_x, 2),
+           avginc = rep(to_plot_y, each = 2))
+df["pred"] <- predict.lm(fit_multivariate, df, se.fit = F)
+
+surf <- acast(df, avginc ~ str)
+
+Caschool %>%
+  plot_ly() %>%
+  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip") %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane") %>%
+  layout(title =  "Visual Representation of the\nMultivariate Regression")
+
+```
+
+While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $avginc$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
 
