@@ -1,5 +1,5 @@
 Package: ScPoEconometrics
-Type: Book
+Type: Package
 Title: ScPoEconometrics
 Version: 0.0.1
 Authors@R: c(
@@ -7,9 +7,10 @@ Authors@R: c(
     person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"),
     person("Vincent", "Viers", email = "vincent.viers@sciencespo.fr", role = "ctb"))
 Depends: R (>= 3.4.0)
+License: MIT
+Description: The is the R package for the 2nd year UG course in econometrics at SciencesPo.
 URL: https://github.com/ScPoEcon/ScPoEconometrics
-Imports: 
-  bookdown,
+Imports: bookdown,
   shiny,
   learnr,
   plot3D,
@@ -18,3 +19,4 @@ Imports:
   reshape2,
   mvtnorm,
   datasauRus
+RoxygenNote: 6.0.1
