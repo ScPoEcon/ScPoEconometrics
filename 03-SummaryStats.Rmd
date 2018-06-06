@@ -162,7 +162,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
 
-## Summarizing Two Variables
+## Summarizing Two Variables {#summarize-two}
 
 We often are interested in how two (or more!) variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
 

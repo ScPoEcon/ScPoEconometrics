@@ -79,10 +79,10 @@ That is slightly better. However, the line seems at too high a level - the point
 ### Choosing the Best Line
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-generate_data = function(int = 1,
-                         slope = 2,
+generate_data = function(int = 0.5,
+                         slope = 1,
                          sigma = 10,
-                         n_obs = 15,
+                         n_obs = 9,
                          x_min = 0,
                          x_max = 10) {
   x = seq(x_min, x_max, length.out = n_obs)
@@ -90,7 +90,8 @@ generate_data = function(int = 1,
   fit = lm(y ~ x)
   y_hat = fitted(fit)
   y_bar = rep(mean(y), n_obs)
-  data.frame(x, y, y_hat, y_bar)
+  error = resid(fit)
+  data.frame(x, y, y_hat, y_bar, error)
 }
 
 plot_total_dev = function(reg_data) {
@@ -117,11 +118,20 @@ plot_total_dev_prop = function(reg_data) {
 }
 
 plot_unexp_dev = function(reg_data) {
-  plot(reg_data$x, reg_data$y, main = "Best Line and Errors",
-       xlab = "x", ylab = "y", pch = 20, cex = 2)
+  plot(reg_data$x, reg_data$y, 
+       xlab = "x", ylab = "y", pch = 20, cex = 2,asp=1)
   arrows(reg_data$x, reg_data$y_hat,
          reg_data$x, reg_data$y,
          col = 'red', lwd = 2, lty = 1, length = 0.1, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+}
+
+plot_unexp_SSR = function(reg_data) {
+  plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 2, 
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$error), ytop = reg_data$y - reg_data$error, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5), border = NA),asp=1)
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
 }
 
@@ -138,20 +148,23 @@ plot_exp_dev = function(reg_data) {
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(21)
-plot_data = generate_data(sigma = 7)
+plot_data = generate_data(sigma = 2)
 ```
 
 Suppose we have the following set of `r nrow(plot_data)` observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It looks like this: 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r line-arrows, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="The best line and its errors",fig.align="center"}
 plot_unexp_dev(plot_data)
 ```
 
 The red arrows indicate the **distance** of the line to each point and we call them *errors* or *residuals*, often written with the symbol $\varepsilon$. An upward pointing arrow indicates a positive value of a particular $\varepsilon_i$, and vice versa for downward pointing arrows. The name *residual* comes from the way we write an equation for this relationship between two particular values $(y_i,x_i)$ belonging to observation $i$:
 
+
+
 $$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
-$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:abline)
+$$ 
+
 Here $\beta_0$ is the intercept, and $\beta_1$ is the slope of our line, and $\varepsilon_i$ is the value of the arrow (i.e. a positive or negative number) indicating the distance between the actual $y_i$ and what is predicted by our line. In other words, $\varepsilon_i$ is what is left to be explained on top of the line $\beta_0 + \beta_1 x_i$, hence, it's a residual to explain $y_i$. Now, back to our claim that this is the *best* line. What exactly characterizes the best line?
 
 ```{block,type="warning"}
@@ -161,13 +174,32 @@ The best line minimizes the sum of **squared residuals**, i.e. it minimizes the 
 ```
 
 <br>
-Wait a moment, why *squared* residuals? This is easy to understand: suppose that instead, we wanted to just make the *sum* of the arrows as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)
+Wait a moment, why *squared* residuals? This is easy to understand: suppose that instead, we wanted to just make the *sum* of the arrows in figure \@ref(fig:line-arrows) as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)
+We illustrate this in figure \@ref(fig:line-squares). This is the same data as in figure \@ref(fig:line-arrows), but instead of arrows of length $\varepsilon_i$ for each observation $i$, now we draw a square with side $\varepsilon_i$, i.e. an area of $\varepsilon_i^2$. You will see in the practical sessions that choosing a different line to this one will increase the sum of squares.
 
-### Covariance and Regression Coefficients
+```{r line-squares, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="The best line and its SQUARED errors"}
+plot_unexp_SSR(plot_data)
+```
+
+### Ordinary Least Squares (OLS) Coefficients
+
+The method to estimate $\beta_0$ and $\beta_1$ we illustrated above is called *Ordinary Least Squares*, or OLS. There is a connection between the estimate for $\beta_1$ - denoted $\hat{\beta}_1$ - in equation \@ref(eq:abline) and the *covariance* of $y$ and $x$ - remember how we defined this in section \@ref(summarize-two). In the simple case shown in equation \@ref(eq:abline), the relationship is
+
+$$
+\hat{\beta}_1 = \frac{cov(x,y)}{var(x)}.  (\#eq:beta1hat)
+$$
+i.e. the estimate of the slope coefficient is the covariance between $x$ and $y$ divided by the variance of $x$. Similarly, the estimate for the intercept is given by
+
+$$
+\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}.  (\#eq:beta0hat)
+$$
+
+where $\bar{z}$ denotes the sample mean of variable $z$.
 
 ### Correlation, Covariance and Linearity
 
-It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line are identical. However, the usefulness of the statistics to describe the relationship in the data is not clear.
+It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. 
+A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line *are identical*. However, the usefulness of the statistics to describe the relationship in the data is not clear.
 
 ```{r,echo=FALSE}
 ##-- now some "magic" to do the 4 regressions in a loop:
@@ -188,6 +220,14 @@ for(i in 1:4) {
   abline(mods[[i]], col = "blue")
 }
 par(op)
+```
+
+The important lesson from this example is the following:
+
+```{block,type="warning"}
+<center>
+Always **visually inspect** your data, and don't rely exclusively on summary statistics like *mean, variance, correlation and regression line*. All of those assume a **linear** relationship between the variables in your data.
+</center>
 ```
 
 ### non-linear data
