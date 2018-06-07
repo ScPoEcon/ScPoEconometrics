@@ -1,0 +1,166 @@
+---
+title: "Linear Regression in `R` - Your Turn!"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+```
+
+
+## Loading and exploring Data
+
+Now it is your turn to fit your very first linear model!
+
+For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. This dataset can be found in the `AER` package.
+
+We start by attaching the `AER` package to our `R` session, and loading the dataset.
+
+```{r str, warning=F, message = F}
+library(AER)
+data("CPS1988")
+```
+
+Let's now explore the data. Use the following cell to print the `summary` of the dataset.
+```{r summary, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r summary-hint}
+summary(CPS1988)
+```
+
+
+Here, `wage` is the wage in dollars per week, `education` and `experience` are measured in years, and `ethnicity` is a factor with levels Caucasian ("cauc") and African-American ("afam"). 
+
+There are three further factors, `smsa`, `region`, and `parttime`, indicating residence in a standard metropolitan statistical area (SMSA), the region within the United States of America, and whether the individual works part-time.
+
+----
+
+For each of the variables available in the `CPS1988` data, determine its type (continuous, discrete, binary, categorical...)
+
+```{r types_wage, echo=FALSE}
+question("What is the type of `wage`?",
+  answer("Continuous", correct = TRUE, message = "We typically think of wage as taking on an infinite continuum of values (even though it is often rounded to the nearest cent)"),
+  answer("Discrete"),
+  answer("Binary"),
+  answer("Categorical"), allow_retry = T
+)
+```
+```{r types_education, echo=FALSE}
+question("What is the type of `education`",
+  answer("Continuous"),
+  answer("Discrete", correct = TRUE, message = "Education only takes values in [0, 1, 2, ..., 18]"),
+  answer("Binary"),
+  answer("Categorical"), allow_retry = T
+)
+```
+```{r types_region, echo=FALSE}
+question("What is the type of `region`?",
+  answer("Continuous"),
+  answer("Discrete"),
+  answer("Binary"),
+  answer("Categorical", correct = TRUE, message = "4 categories"), allow_retry = T
+)
+```
+```{r types_ethnicity, echo=FALSE}
+question("What is the type of `ethnicity`? (two answers)",
+  answer("Continuous"),
+  answer("Discrete"),
+  answer("Binary", correct = TRUE, message = "Ethnicity can be encoded as 1 or 0. It is a special case of a categorical variable."),
+  answer("Categorical", correct = TRUE), allow_retry = T
+)
+```
+
+Note that work experience was computed as $experience = age - education - 6$, can you think of why? As a result, the dataset sometimes contains *negative* values for work experience. Think of an example of why this may happen. 
+
+Next, use the following cell to compute the number of negative entries for the experience variable:
+
+```{r negative_exp, exercise=TRUE, exercise.eval=TRUE}
+
+```
+
+```{r negative_exp-hint}
+
+# You can compare each value in a vector individually with
+# a scalar using the following syntax:
+
+c(1, 2, 3, 4, 5) > 3 #>   c(FALSE, FALSE, FALSE, TRUE, TRUE)
+
+
+# You can count the number of `TRUE` values in an vector
+# by summing all of its entries. For example:
+
+sum(c(TRUE, TRUE, FALSE, TRUE)) #>   3
+
+sum(c(FALSE, FALSE, FALSE, FALSE)) #>   0
+```
+
+## Multivariate Regression
+
+Now that we understand our data, let's turn to estimating the following model:
+
+$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2 + \beta_3 education + \beta_4 ethnicity + \epsilon$$
+
+This model differs in two crucial ways from the ones we have seen so far:
+
+- We are using the logarithm of wage `log(wage)` instead of its value
+- We are computing the regression using both `experience` and its square `experience^2`
+
+Luckily, we don't have to create these new variables ourselves (although we could!), `R` can do it for us directly from the `formula` object we provide in our `lm()` call:
+
+| Model | `formula` |
+| ----- | --------- |
+| $$Y = \beta_0 + \beta_1 X + \beta_2 Z + \epsilon $$ | `Y ~ X + Z` |
+| $$\log(Y) = \beta_0 + \beta_1 X + \beta_2 \log(Z) + \epsilon $$ | `log(Y) ~ X + log(Z)` |
+| $$Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon $$ | `Y ~ X + I(X^2)` |
+
+Note: the reason we use the `I()` operator around `X^2` is so that it is not confused with another possible use of `^` in the contect of a formula, as we will see later.
+
+Assign the correct formula to `your_formula` so that the following cell returns an estimation for the following model:
+
+$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2$$
+
+```{r reg, exercise=TRUE, exercise.eval=F}
+## Insert your guess below
+your_formula <- # your formula
+##
+your_fit <- lm(formula = your_formula, data = CPS1988)
+summary(your_fit)
+```
+
+```{r reg-hint}
+# see above Table
+```
+
+
+Now you should be ready to run the full regression for the model we were originally concerned with:
+
+$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2 + \beta_3 education + \beta_4 ethnicity + \epsilon$$
+Use the following cell to run this regression:
+
+```{r reg_full, exercise=TRUE, exercise.eval=F}
+#you answer should take two lines of code
+```
+
+```{r reg_full-hint}
+# remember that the "correct" way to run a regression in R
+# is to first create a fit and then call summary() on it
+```
+
+According to the above estimate, what is your estimated coefficient $\hat{\beta_3}$? Answer the following question:
+
+```{r beta_3_interpretation, echo=FALSE}
+question("A 1 year increase in years of education is associated with an average  0.085673 increase in wage.",
+  answer("True", message = "Remember that the dependent variable in the regression is the logarithm of wage, not wage itself!"),
+  answer("False", correct = TRUE, message = "The dependent variable in the regression is the logarithm of wage!")
+)
+```
+
+
+As it turns out, the regression of a variable $X$ into the *log* of another variable $Y$ gives you **the *percent* increase in $Y$ associated with a *unit* increase in $X$**. So an extra year of education is actually associated with an average 8.5% increase in wage.
+
+
+
