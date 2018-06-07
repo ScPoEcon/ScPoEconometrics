@@ -42,7 +42,7 @@ for (i in seq(1, 999, 2)){
 
 counter <- reactiveValues(j = 3) #define the counter j as a reactiveValue (stored in the list "counter")
 
-observeEvent(input$new, { #dynamically update counter j
+observeEvent(input$new, { #dynamically update counter j, handle j > 999
   if (counter$j > 999){
     counter$j <- 3
   } else {
