@@ -94,19 +94,19 @@ output$reg_mul <- renderPlotly({
   
   if ((a == a_true) && (b1 == b1_true) && (b2 == b2_true)){
     plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
-    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .75) %>%
+    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .5, surfacecolor = rep('green', length(possible_x1))) %>%
     hide_colorbar()%>%
     add_markers(x = x2, y = x1, z = y, data = df,
                 name = "Observed Data", hoverinfo = 'name', inherit = F,
-                marker = list(color = 'lightgreen', size = 5), opacity = .75) %>%
+                marker = list(color = 'lightgreen', size = 5), opacity = .5) %>%
     layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz))
   } else {
     plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
-    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .75) %>%
+    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .5, surfacecolor = rep('red', length(possible_x1))) %>%
     hide_colorbar()%>%
     add_markers(x = x2, y = x1, z = y, data = df,
                 name = "Observed Data", hoverinfo = 'name',
-                marker = list(color = 'red', size = 5), opacity = .75) %>%
+                marker = list(color = 'red', size = 5), opacity = .5) %>%
     layout(title = "Multivariate Regression", scene = scene)
   }
   
