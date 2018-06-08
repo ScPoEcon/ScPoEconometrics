@@ -248,10 +248,28 @@ Always <strong>visually inspect</strong> your data, and don’t rely exclusively
 </center>
 </div>
 </div>
-<div id="non-linear-data" class="section level3">
-<h3><span class="header-section-number">3.1.5</span> non-linear data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(mtcars,<span class="kw">plot</span>(hp,mpg))</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
+<div id="non-linear-relationships-in-data" class="section level3">
+<h3><span class="header-section-number">3.1.5</span> Non-Linear Relationships in Data</h3>
+<p>Suppose our data now looks like this:</p>
+<p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" /></p>
+<p>Putting our previous <em>best line</em> defined in equation <a href="linreg.html#eq:abline">(3.1)</a> as <span class="math inline">\(y = \beta_0 + \beta_1 x + u\)</span>, we get something like this:</p>
+<div class="figure" style="text-align: centre"><span id="fig:non-line-cars-ols"></span>
+<img src="ScPoEconometrics_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
+<p class="caption">
+Figure 3.3: Best line with non-linear data?
+</p>
+</div>
+<p>Somehow when looking at <a href="linreg.html#fig:non-line-cars-ols">3.3</a> one is not totally convinced that the straight line is a good summary of this relationship. For values <span class="math inline">\(x\in[50,120]\)</span> the line seems to low, then again too high, and it completely misses the right boundary. It’s easy to address this shortcoming by including <em>higher order terms</em> of an explanatory variable. We would modify <a href="linreg.html#eq:abline">(3.1)</a> to read now</p>
+<p><span class="math display" id="eq:abline2">\[
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i \tag{3.4}
+\]</span></p>
+<p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">5</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let’s just see how this performs:</p>
+<div class="figure" style="text-align: centre"><span id="fig:non-line-cars-ols2"></span>
+<img src="ScPoEconometrics_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
+<p class="caption">
+Figure 3.4: Better line with non-linear data!
+</p>
+</div>
 
 </div>
 </div>
