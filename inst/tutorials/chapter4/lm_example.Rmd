@@ -134,10 +134,9 @@ surf <- acast(df, avginc ~ str)
 
 Caschool %>%
   plot_ly() %>%
-  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .75, marker=list(color = 'red', size = 3)) %>%
+  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .5, marker=list(color = 'blue', size = 3)) %>%
   add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane", opacity = .75, cauto = F, surfacecolor = rep('grey', 4)) %>%
-  hide_colorbar() %>%
-  layout(title =  "Visual Representation of the\nMultivariate Regression")
+  hide_colorbar()
 
 ```
 
