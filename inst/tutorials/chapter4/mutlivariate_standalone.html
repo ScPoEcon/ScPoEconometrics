@@ -172,8 +172,8 @@ output$reg_mul <- renderPlotly({
   y <- a_true + b1_true*x1 + b2_true*x2 + rnorm(n = 20, mean = 0, sd = 1)
   
   
-  possible_x1 <- c(min(x1)-.5, max(x1)+.5) # only need 4 pts total
-  possible_x2 <- c(min(x2)-.5, max(x2)+.5)
+  possible_x1 <- c(min(x1)-1, max(x1)+1) # only need 4 pts total
+  possible_x2 <- c(min(x2)-1, max(x2)+1)
   
   # a = intercept, b = slope (user input)
   a <- input$i_mul
@@ -189,66 +189,42 @@ output$reg_mul <- renderPlotly({
   #plot
   
   axx <- list(
-    title = "X1"
+    title = "X1",
+    range = c(-2, 9)
   )
   
   axy <- list(
-    title = "X2"
+    title = "X2",
+    range = c(-2, 9)
   )
   
   axz <- list(
-    title = "Y"
+    title = "Y",
+    range = c(-15, 15)
   )
+  
+  scene = list(
+    xaxis = axx,
+    yaxis = axy,
+    zaxis = axz)
   
   if ((a == a_true) && (b1 == b1_true) && (b2 == b2_true)){
     plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
-    add_surface(name = "Regression Plane", hoverinfo = 'name') %>%
+    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .75) %>%
+    hide_colorbar()%>%
     add_markers(x = x2, y = x1, z = y, data = df,
-                name = "Observed Data", hoverinfo = 'name', inherit = F, marker = list(color = 'lightgreen')) %>%
+                name = "Observed Data", hoverinfo = 'name', inherit = F,
+                marker = list(color = 'lightgreen', size = 5), opacity = .75) %>%
     layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz))
   } else {
     plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
-    add_surface(name = "Regression Plane", hoverinfo = 'name') %>%
+    add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .75) %>%
+    hide_colorbar()%>%
     add_markers(x = x2, y = x1, z = y, data = df,
-                name = "Observed Data", hoverinfo = 'name', marker = list(color = 'red')) %>%
-    layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz))
+                name = "Observed Data", hoverinfo = 'name',
+                marker = list(color = 'red', size = 5), opacity = .75) %>%
+    layout(title = "Multivariate Regression", scene = scene)
   }
-  
-
-
-
-
-      
-
-      
-  # plot fit
-  #expr <- function(x1, x2) a + (b1*x1) + (b2*x2)
-  #errors <- (a + (b1*x1) + (b2*x2)) - y
-  
-  
-  #ax <- list(
-  #zeroline = TRUE,
-  ##showline = TRUE,
-  #mirror = "ticks",
-  #gridcolor = toRGB("gray50"),
-  #gridwidth = 2,
-  #zerolinecolor = toRGB("red"),
-  #zerolinewidth = 4,
-  #linecolor = toRGB("black"),
-  #linewidth = 6)
-  
-  #plot_ly(df, x = ~x1, y = ~x2, z = ~y)  %>%
-   # add_markers(name = "Observed Data", hoverinfo = 'name', color = "darkred") #%>%
-    #add_surface()
-    
-    
-    
-    #%>% layout(xaxis = ax, yaxis = ax)
-  #add_markers(x = ~a_, y = ~b_, z = ~ssr_, data = annot, name = "Your Guess") %>%
-  #layout(title = "Sum of Squared Residuals\n(Surface Plot, your guess shown in green)",
-  #       xaxis=list(range=c(-6,6)), yaxis=list(range=c(-6,6))) 
-  # Not sure how to change default zoom...
-  
   
 })
 
