@@ -8,7 +8,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(plotly)
-library(viridisLite)
 library(reshape2)
 ```
 
@@ -90,7 +89,8 @@ output$reg_mul <- renderPlotly({
   scene = list(
     xaxis = axx,
     yaxis = axy,
-    zaxis = axz)
+    zaxis = axz, 
+    aspectmode = "cube")
   
   if ((a == a_true) && (b1 == b1_true) && (b2 == b2_true)){
     plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
