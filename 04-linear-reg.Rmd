@@ -230,9 +230,34 @@ Always **visually inspect** your data, and don't rely exclusively on summary sta
 </center>
 ```
 
-### non-linear data
+### Non-Linear Relationships in Data
 
-```{r}
-with(mtcars,plot(hp,mpg))
+Suppose our data now looks like this:
+
+```{r non-line-cars,echo=FALSE}
+with(mtcars,plot(hp,mpg,xlab="x",ylab="y"))
 ```
 
+Putting our previous *best line* defined in equation \@ref(eq:abline) as $y = \beta_0 + \beta_1 x + u$, we get something like this:
+
+```{r non-line-cars-ols,echo=FALSE,fig.align='centre',fig.cap='Best line with non-linear data?'}
+l1 = lm(mpg~hp,data=mtcars)
+plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
+abline(reg=l1,lw=2)
+```
+
+Somehow when looking at \@ref(fig:non-line-cars-ols) one is not totally convinced that the straight line is a good summary of this relationship. For values $x\in[50,120]$ the line seems to low, then again too high, and it completely misses the right boundary. It's easy to address this shortcoming by including *higher order terms* of an explanatory variable. We would modify \@ref(eq:abline) to read now
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i (\#eq:abline2)
+$$ 
+
+This is a special case of *multiple regression*, which we will talk about in chapter \@ref(multiple-reg). You can see that there are *multiple* slope coefficients. For now, let's just see how this performs:
+
+```{r non-line-cars-ols2,echo=FALSE,fig.align="centre",fig.cap="Better line with non-linear data!",echo=FALSE}
+l1 = lm(mpg~hp+I(hp^2),data=mtcars)
+newdata=data.frame(hp=seq(from=min(mtcars$hp),to=max(mtcars$hp),length.out=100))
+newdata$y = predict(l1,newdata=newdata)
+plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
+lines(newdata$hp,newdata$y,lw=2)
+```

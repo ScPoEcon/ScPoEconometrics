@@ -43,10 +43,3 @@ scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5,
       main = "mtcars")
 ```
 
-
-
-
-not sure about this one:
-```{r}
-knitr::include_app("https://gallery.shinyapps.io/multi_regression/",height="1600px")
-```
