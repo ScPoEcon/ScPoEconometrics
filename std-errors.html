@@ -148,14 +148,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="std-errors" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Standard Errors</h1>
-<ol style="list-style-type: decimal">
-<li>Standard Errors
-<ol style="list-style-type: decimal">
-<li>True data</li>
-<li>play with N and see how errors behave</li>
-</ol></li>
-</ol>
+<p>In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are <em>estimates</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates.</p>
+<div class="tip">
+<center>
+How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(\hat{\beta}_0\)</span></span> and <span class="math inline"><span class="math inline">\(\hat{\beta}_1\)</span></span>?
+</center>
+</div>
+<p>The discussion here is closely linked to the practical exercise that you did by typing</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
+<span class="kw">runExample</span>(<span class="st">&quot;sampler&quot;</span>)</code></pre></div>
+<p>which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are as well just statistics computed from the data, the same fact will apply. One question you should ask now, however, is:</p>
+<div class="note">
+<center>
+What exactly is a <em>data generating process</em> (or short, a <em>GDP</em>)? And what do <span class="math inline"><span class="math inline">\(\beta_0\)</span></span> and <span class="math inline"><span class="math inline">\(\beta_1\)</span></span> have to do with it?
+</center>
+</div>
+<div id="dgp-and-models" class="section level2">
+<h2><span class="header-section-number">4.1</span> DGP and Models</h2>
+<p>When we talk about a <em>model</em> in econometrics, we are making assumptions about how <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are related in the data. For example, we have repeatedly seen the following equation,</p>
+<p><span class="math display" id="eq:abline2">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i  \tag{3.4}
+\]</span> which is a particular kind of model. What <em>generated</em> our data, on the other hand, is an unknown mechanism that we want to investigate: it’s the <strong>data generating process</strong>, and our model is our assumption about how we think the GDP could look like. A first order concern is that our model in <a href="linreg.html#eq:abline2">(3.4)</a> might not be a particularly <em>good</em> model for the GDP at hand. How would that impact our estimates for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>? And what’s the interpretation of the error <span class="math inline">\(\varepsilon\)</span> now?</p>
 
+</div>
 </div>
             </section>
 
