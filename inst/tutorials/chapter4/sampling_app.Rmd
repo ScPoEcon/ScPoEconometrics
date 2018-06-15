@@ -11,7 +11,7 @@ library(plotly)
 
 ## Sampling App
 
-This app simulates the drawing of a random sample of 20 observation from a population, with the underlying data generationg process (DGP):
+This app simulates the drawing of a random sample of 20 observation from a population, with the underlying data generating process (DGP):
 
 $$Y = 5 + 2X + \nu, \quad \text{with:}$$
 $$X \sim \mathcal{N}(5, 2^2)\quad \text{and} \quad \nu \sim \mathcal{N}(0, 5^2)$$ 
