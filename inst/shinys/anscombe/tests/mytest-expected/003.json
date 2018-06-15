@@ -1,0 +1,42 @@
+{
+  "input": {
+    "addr": [
+      "1",
+      "3",
+      "4"
+    ]
+  },
+  "output": {
+    "quartet": {
+      "src": "[image data sha1: 8ee85faff2ee85e851634ce34ce42536e1432f4f]",
+      "width": 992,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": 2.36,
+            "right": 19.64,
+            "bottom": 2.6,
+            "top": 13.4
+          },
+          "range": {
+            "left": 98.0064,
+            "right": 965.7056,
+            "bottom": 294.764485663235,
+            "top": 26.9656257976686
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}

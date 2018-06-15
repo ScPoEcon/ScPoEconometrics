@@ -1,0 +1,41 @@
+{
+  "input": {
+    "i_std": -0.5,
+    "s_std": 2,
+    "std": true
+  },
+  "output": {
+    "regPlot_std": {
+      "src": "[image data sha1: e438e1c538625ebcd07f794b5ed015b2ac67d640]",
+      "width": 611,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -10.7966955741627,
+            "right": 20.7966955741627,
+            "bottom": -5.6,
+            "top": 10.6
+          },
+          "range": {
+            "left": 59.04,
+            "right": 580.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    },
+    "userguess_std": "Your guess:\n [y / SD(y)] = -0.5 + 2[x / SD(x)]"
+  },
+  "export": {
+
+  }
+}

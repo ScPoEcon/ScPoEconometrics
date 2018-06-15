@@ -18,5 +18,11 @@ Imports: bookdown,
   tidyverse,
   reshape2,
   mvtnorm,
-  datasauRus
+  datasauRus,
+  plotly
+Suggests:
+  shinytest,
+  testthat
+Remotes:
+    rstudio/shinytest
 RoxygenNote: 6.0.1

@@ -6,14 +6,14 @@ cache:
 sudo: false
 pandoc_version: 1.19.2.1
 
-before_install:
-  - chmod +x ./_install.sh
-  - ./_install.sh
+install:
+  - R -e 'devtools::install(dependencies = TRUE)'
 
 before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
 
 script:
+  - R -e 'devtools::test()'
   - ./_build.sh
   - ./_deploy.sh

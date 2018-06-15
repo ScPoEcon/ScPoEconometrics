@@ -1,0 +1,38 @@
+{
+  "input": {
+    "c": 0
+  },
+  "output": {
+    "corrPlot": {
+      "src": "[image data sha1: 7e6dae19bb60e14e4683f51df01bf3b0f8fa8a10]",
+      "width": 962,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -4.32,
+            "right": 4.32,
+            "bottom": -4.32,
+            "top": 4.32
+          },
+          "range": {
+            "left": 361.64,
+            "right": 629.16,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
