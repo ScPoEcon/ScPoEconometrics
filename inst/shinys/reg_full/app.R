@@ -3,6 +3,8 @@ library(plotly)
 library(shiny)
 
 ui <- fluidPage(
+  br(),
+  br(),
   sidebarPanel(sliderInput("i", "Intercept", min = -4,
                            max = 4, step = 2, value = -2),
                sliderInput("s", "Slope", min = -2,

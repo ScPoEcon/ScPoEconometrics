@@ -2,7 +2,10 @@ library(dplyr)
 library(plotly)
 library(reshape2)
 
-ui <- fluidPage(sidebarLayout(
+ui <- fluidPage(
+  br(),
+  br(),
+  sidebarLayout(
   
   sidebarPanel(wellPanel(
     sliderInput("i_mul", "Intercept", min = -4,

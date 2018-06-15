@@ -96,14 +96,14 @@ output$sample <- renderPlotly({
 
 output$hist_a <- renderPlotly({
   ab[3:counter$j, ] %>% plot_ly() %>%
-  add_histogram(x = ~a, histnorm = "probability") %>%
+  add_histogram(x = ~b, histnorm = "probability") %>%
   layout(title = "Distribution of Estimated Intercepts",
          xaxis = list(title = "Estimated Intercepts"))
 })
 
 output$hist_b <- renderPlotly({
   ab[3:counter$j, ] %>% plot_ly() %>%
-  add_histogram(x = ~b, histnorm = "probability") %>%
+  add_histogram(x = ~a, histnorm = "probability") %>%
   layout(title = "Distribution of Estimated Slopes",
          xaxis = list(title = "Estimated Slopes"))
 })

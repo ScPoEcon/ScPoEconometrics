@@ -1,9 +1,11 @@
 ui <- fluidPage(
-  fluidRow(checkboxGroupInput(inputId = "addr", label = "Show:",
-                              choices = list("Line of Best Fit" = 1,
-                                             "Means" = 2,
+  br(),
+  br(),
+  fluidRow(column(12, align = 'center', checkboxGroupInput(inputId = "addr", label = "Show:",
+                              choices = list("Line of Best Fit   " = 1,
+                                             "Means              " = 2,
                                              "Standard Deviations" = 3,
-                                             "r coefficient" = 4))),
+                                             "r coefficient      " = 4)))),
   fluidRow(plotOutput("quartet"))
 )
 

@@ -1,7 +1,10 @@
 library(dplyr)
 library(plotly)
 
-ui <- fluidPage(fluidRow(
+ui <- fluidPage(
+  br(),
+  br(),
+  fluidRow(
   
   column(width = 2,
          sliderInput("i_ssr", "Intercept", min = -4,

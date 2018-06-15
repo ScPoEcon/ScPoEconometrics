@@ -3,6 +3,8 @@ library(plotly)
 library(shiny)
 
 ui <- fluidPage(
+  br(),
+  br(),
   checkboxInput("withdummy", "Allow for gender-specific intercepts!", value = F),
   plotlyOutput("plotdummy"))
 
