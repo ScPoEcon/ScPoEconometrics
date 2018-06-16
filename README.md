@@ -1,6 +1,8 @@
 # ScPo UG Econometrics
 
-[![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
+**Unix ShinyApp Tests and Book Build**: [![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
+
+**Windows ShinyApp Tests**: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ScPoEcon/ScPoEconometrics?branch=master&svg=true)](https://ci.appveyor.com/project/ScPoEcon/ScPoEconometrics)
 
 [![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)
 

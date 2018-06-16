@@ -12,9 +12,4 @@ _book*
 ^.*\.tex$
 images
 
-
-
-
-
-
-
+^appveyor\.yml$
