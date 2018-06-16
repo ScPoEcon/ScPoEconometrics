@@ -239,7 +239,7 @@ library(readxl)  # load the library
 # or in RStudio by clicking Session > Set Working Directory
 
 # total population in raw format
-tot_pop_raw = read_excel(path = "data/demo_gind.xls", 
+tot_pop_raw = read_excel(path = system.file(package="ScPoEconometrics","datasets","demo_gind.xls"), 
                 sheet="Data", # which sheet
                 range="A9:K68")  # which excel cell range to read
 names(tot_pop_raw)[1] <- "Country"   # lets rename the first column

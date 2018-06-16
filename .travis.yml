@@ -15,6 +15,4 @@ before_script:
 
 script:
   - R CMD build .
-  - R CMD check *tar.gz
-  - ./_build.sh
-  - ./_deploy.sh
+  - R CMD check *tar.gz && ./_build.sh && ./_deploy.sh
