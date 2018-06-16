@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-15">
+<meta name="date" content="2018-06-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -377,7 +377,7 @@ Given we observe high value of <code>x</code> (like 2, say), can we expect a hig
 <span class="co"># or in RStudio by clicking Session &gt; Set Working Directory</span>
 
 <span class="co"># total population in raw format</span>
-tot_pop_raw =<span class="st"> </span><span class="kw">read_excel</span>(<span class="dt">path =</span> <span class="st">&quot;data/demo_gind.xls&quot;</span>, 
+tot_pop_raw =<span class="st"> </span><span class="kw">read_excel</span>(<span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,<span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), 
                 <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span>
                 <span class="dt">range=</span><span class="st">&quot;A9:K68&quot;</span>)  <span class="co"># which excel cell range to read</span>
 <span class="kw">names</span>(tot_pop_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span>
