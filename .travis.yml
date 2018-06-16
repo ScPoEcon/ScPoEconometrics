@@ -14,6 +14,7 @@ before_script:
   - chmod +x ./_deploy.sh
 
 script:
-  - R -e 'devtools::test()'
+  - R CMD build .
+  - R CMD check *tar.gz
   - ./_build.sh
   - ./_deploy.sh

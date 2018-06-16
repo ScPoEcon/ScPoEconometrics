@@ -6,6 +6,10 @@
 \usage{
 runExample(example)
 }
+\arguments{
+\item{example}{string of which example app you want to run
+This function runs the shiny app for a given `example`. run without an argument \code{runExample()} to see a list of available apps.}
+}
 \description{
-This function runs the shiny app for a given `example`. run without an argument \code{runExample()} to see a list of available apps.
+runExample: Run Examples!
 }
