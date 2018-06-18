@@ -1,6 +1,8 @@
 library(datasauRus)
 
 ui <- fluidPage(
+  br(),
+  br(),
   fluidRow(sliderInput(inputId = "dataset", label = "Dataset:", min = 1, max = 13, value = 1, step = 1)),
   fluidRow(plotOutput("dino"))
 )

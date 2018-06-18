@@ -1,6 +1,8 @@
 library(plotly)
 
 ui <- fluidPage(
+  br(),
+  br(),
   actionButton("new", "New Draw!"),
   plotlyOutput("sample")
 )

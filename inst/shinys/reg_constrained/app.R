@@ -3,6 +3,8 @@ library(plotly)
 library(shiny)
 
 ui <- fluidPage(
+  br(),
+  br(),
   sidebarPanel(
     
     radioButtons("const", label = h4("Parameter"),

@@ -1,10 +1,12 @@
 library(plotly)
 
 ui <- fluidPage(
-  actionButton("new", "New Draw!"),
-  plotlyOutput("sample"),
-  fluidRow(column(width = 6, plotlyOutput("hist_a")),
-           column(width = 6, plotlyOutput("hist_b")))
+  br(),
+  br(),
+  fluidRow(column(width = 6, plotlyOutput("sample")),
+           column(width = 3, plotlyOutput("hist_a")),
+           column(width = 3, plotlyOutput("hist_b"))),
+  column(6, align = 'center', actionButton("new", "New Draw!"))
 )
 
 server <- function(input, output){

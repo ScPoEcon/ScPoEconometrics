@@ -1,6 +1,10 @@
 library(plotly)
 
-ui <- fluidPage(sidebarLayout(
+ui <- fluidPage(
+  br(),
+  br(),
+  
+  sidebarLayout(
   
   sidebarPanel(
     sliderInput("n", "Number of Simulations", min = 1, max = 500, value = 10),

@@ -1,16 +1,17 @@
 library(plotly)
 
 ui <- fluidPage(
-  fluidRow(column(width = 6, actionButton("new_f", "New Draw!")),
+  br(),
+  br(),
+  fluidRow(column(width = 6, align = 'center', actionButton("new_f", "New Draw!")),
            
            #column(width = 4, sliderInput("noise", "DGP Noisiness", min = 0, max = 5, step = 2.5, value = 2.5)),
            
-           column(width = 6, sliderInput("n_f", "N", min = 10, max = 300, step = 10, value = 10))),
+           column(width = 6, align = 'center', sliderInput("n_f", "N", min = 10, max = 300, step = 10, value = 10))),
   
-  plotlyOutput("sample_f"),
-  
-  fluidRow(column(width = 6, plotlyOutput("hist_a_f")),
-           column(width = 6, plotlyOutput("hist_b_f")))
+  fluidRow(column(width = 6, plotlyOutput("sample_f")),
+           column(width = 3, plotlyOutput("hist_a_f")),
+           column(width = 3, plotlyOutput("hist_b_f")))
 )
 
 server <- function(input, output){
