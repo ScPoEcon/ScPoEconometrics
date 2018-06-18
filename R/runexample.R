@@ -27,3 +27,15 @@ runExample <- function(example) {
   appDir <- system.file("shinys", example, package = "ScPoEconometrics")
   shiny::runApp(appDir, display.mode = "normal")
 }
+
+
+costas <- function(){
+  d = data.table(x = rnorm(1000),g = rep(1:100,each=10),u=runif(1000))
+  a = 1
+  b = 2
+  d[,y := a + b*x + u]
+  m = d[,list(y=mean(y),x=mean(x),u=mean(u)),by=g]
+  m1 = lm(y~x,d)
+  m2 = lm(y~x,m)
+  return(list(m1,m2))
+}
