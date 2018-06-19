@@ -2,7 +2,7 @@
 
 In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are *estimates*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
 
-```{block,type="tip"}
+```{block,type="note"}
 <center>
 How *confident* should we be about the estimated values $\hat{\beta}_0$ and $\hat{\beta}_1$?
 </center>

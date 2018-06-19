@@ -180,7 +180,7 @@ plot(x ~ y, xlab="x",ylab="y")
 
 Taking as example the data in this plot, the concepts *covariance* and *correlation* relate to the following type of question:
 
-```{block,type="tip"}
+```{block,type="note"}
 Given we observe high value of `x` (like 2, say), can we expect a high or a low value of `y`, on average? Something like 2 or rather something like -2?
 ```
 <br>

@@ -1,4 +1,3 @@
-always_allow_html: yes
 bookdown::gitbook:
   toc_depth: 1
   css: style.css
@@ -9,9 +8,10 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/ScPoEcon/ScPoEconometrics/edit/master/%s
-    download: ["pdf", "epub"]
+    download: ["epub"]
   includes:
     in_header: GA-tracker.html
+
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

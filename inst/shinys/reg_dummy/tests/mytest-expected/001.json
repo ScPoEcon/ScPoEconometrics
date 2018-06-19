@@ -1,0 +1,42 @@
+{
+  "input": {
+    "i_dummy": 3,
+    "meany_x0": false,
+    "meany_x1": false,
+    "s_dummy": 2
+  },
+  "output": {
+    "regPlot_dummy": {
+      "src": "[image data sha1: 6270c4e0a603fc0c0b92154a12888bf0442362ec]",
+      "width": 611,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -1.29892221101963,
+            "right": 2.29892221101963,
+            "bottom": 0.11321295880197,
+            "top": 7.49261447520114
+          },
+          "range": {
+            "left": 59.04,
+            "right": 580.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    },
+    "userguess_dummy": "Your guess:\n y = 3 + 2x"
+  },
+  "export": {
+
+  }
+}

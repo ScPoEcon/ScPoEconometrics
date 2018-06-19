@@ -53,7 +53,7 @@ scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$hp, pch = 20, cex = 1.5,
 
 From this visualization we can see that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible, hence we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
 
-```{block,type="note"}
+```{block,type="tip"}
 <center>
 Keeping the value of `wt` fixed for a certain car, what would be the impact on `mpg` be if we were to increase **only** its `hp`?
 </center>
