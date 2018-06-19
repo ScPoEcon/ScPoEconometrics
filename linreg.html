@@ -313,10 +313,10 @@ Figure 3.4: Better line with non-linear data!
      <span class="dt">data =</span> Caschool,
      <span class="dt">xlab =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Average Test Score&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)</code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="ScPoEconometrics_files/figure-html/first_plot-1.png" alt="Student Teacher Ratio vs Test Scores" width="672" />
+<div class="figure" style="text-align: centre"><span id="fig:first-reg0"></span>
+<img src="ScPoEconometrics_files/figure-html/first-reg0-1.png" alt="Student Teacher Ratio vs Test Scores" width="672" />
 <p class="caption">
-(#fig:first_plot)Student Teacher Ratio vs Test Scores
+Figure 3.5: Student Teacher Ratio vs Test Scores
 </p>
 </div>
 <p>Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let’s ask <code>R</code>!</p>
@@ -372,12 +372,11 @@ fit_california &lt;-<span class="st"> </span><span class="kw">lm</span>(<span cl
      <span class="dt">data =</span> Caschool,
      <span class="dt">xlab =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Average Test Score&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)<span class="co"># same plot as before</span>
-
 <span class="kw">abline</span>(fit_california, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>) <span class="co"># add regression line</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="ScPoEconometrics_files/figure-html/plot_reg-1.png" alt="Test Scores with Regression Line." width="672" />
+<div class="figure" style="text-align: centre"><span id="fig:plot-reg1"></span>
+<img src="ScPoEconometrics_files/figure-html/plot-reg1-1.png" alt="Test Scores with Regression Line" width="672" />
 <p class="caption">
-(#fig:plot_reg)Test Scores with Regression Line.
+Figure 3.6: Test Scores with Regression Line
 </p>
 </div>
 <p>As you probably expected, the best line for schools’ Student/Teacher Ratio and its average test results is downward sloping.</p>
