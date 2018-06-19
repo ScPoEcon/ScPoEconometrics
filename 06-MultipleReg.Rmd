@@ -1,45 +1,104 @@
 # Multiple Regression {#multiple-reg}
 
-* Same as simple regression but more variables
-* income ~ age is not linear
+We can extend the discussion from chapter \@ref(linreg) to more than one explanatory variable. For example, suppose that instead of only $x$ we now had $x_1$ and $x_2$ in order to explain $y$. Everything we've learned for the single variable case applies here as well. Instead of a regression *line*, we now get a regression *plane*, i.e. an object representable in 3 dimenions: $(x_1,x_2,y)$.
+As an example, suppose we wanted to explain how many *miles per gallon* (`mpg`) a car can travel as a function of its *horse power* (`hp`) and its *weight* (`wt`). In other words we want to estimate the equation
+
+$$
+mpg_i = \beta_0 + \beta_1 hp_i + \beta_2 wt_i + \varepsilon_i (\#eq:abline2d)
+$$
+on our built-in dataset of cars (`mtcars`):
+
+```{r mtcarsdata}
+subset(mtcars, select = c(mpg,hp,wt))
+```
+
+How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $\beta_1$ and $\beta_2$ to be? 
 
 
-```{r,echo=FALSE}
+With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@(fig:plane3Dreg):
+
+```{r plane3Dreg,echo=FALSE,fig.align='center',fig.cap='Multiple Regression - a plane in 3D'}
 # add grid lines with this https://stackoverflow.com/questions/40748949/match-gridlines-to-axis-ticks-in-3d-regression-plot-persp-and-rockchalk
 library(plot3D)
-attach(mtcars)
+data(mtcars)
  
 # linear fit
-fit <- lm(mpg ~ wt+disp)
+fit <- lm(mpg ~ wt+hp,data=mtcars)
  
 # predict on x-y grid, for surface
 wt.pred <- seq(1.5, 5.5, length.out = 30)
-disp.pred <- seq(71, 472, length.out = 30)
+disp.pred <- seq(52, 335, length.out = 30)
 xy <- expand.grid(wt = wt.pred, 
-                 disp = disp.pred)
+                 hp = disp.pred)
  
 mpg.pred <- matrix (nrow = 30, ncol = 30, 
   data = predict(fit, newdata = data.frame(xy), interval = "prediction"))
  
 # predicted z-values, fitted points for droplines to surface
 fitpoints <- predict(fit) 
- 
-scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5, 
+# scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$disp, pch = 20, cex = 1.5, 
+#       theta = 40, phi = 15, ticktype = "detailed",col="red",
+#       xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
+#       surf = NULL,
+#       colkey = FALSE,#list(length = 0.8, width = 0.4),            
+#       main = "mtcars")
+scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$hp, pch = 20, cex = 1.5,
       theta = 40, phi = 15, ticktype = "detailed",col="red",
-      xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
-      surf = NULL,
-      colkey = FALSE,#list(length = 0.8, width = 0.4),            
-      main = "mtcars")
-
-```
-
-```{r,echo=FALSE}
-scatter3D(z = mpg, x = wt, y = disp, pch = 20, cex = 1.5, 
-      theta = 40, phi = 15, ticktype = "detailed",col="red",
-      xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
-      surf = list(x = wt.pred, y = disp.pred, z = mpg.pred, 
+      xlab = "weight", ylab = "horse power", zlab = "mpg", clab = "mpg",
+      surf = list(x = wt.pred, y = disp.pred, z = mpg.pred,
                   facets = NA, fit = fitpoints,col="grey"),
-      colkey = FALSE,#list(length = 0.8, width = 0.4),            
+      colkey = FALSE,#list(length = 0.8, width = 0.4),
       main = "mtcars")
 ```
+
+From this visualization we can see that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible, hence we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
+
+```{block,type="info"}
+<center>
+Keeping the value of `wt` fixed for a certain car, what would be the impact on `mpg` be if we were to increase **only** its `hp`?
+</center>
+```
+
+We ask this kind of question all the time in econometrics. In figure \@(fig:plane3Dreg) you clearly see that 
+
+## An Example
+
+
+### California Test Scores 2
+
+With the tools introduced in \@ref(lm-example1) it is fairly straigtforward to estimate models with more than one dependent variables, for example adding families' average income to our previous model:
+
+$$testscr_i = \beta_0 + \beta_1  str_i + \beta_2  avginc_i + \epsilon_i$$
+We can incoporate this new variable to our model by simply adding it to our `formula`:
+
+```{r lmfit_multiv}
+library("Ecdat") # reload the data
+fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
+summary(fit_multivariate)
+```
+
+Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane*.
+
+```{r 3DPlotly, echo = FALSE, warning=F, message = F}
+library(plotly)
+library(reshape2)
+
+to_plot_x <- c(min(Caschool$str), max(Caschool$str))
+to_plot_y <- c(min(Caschool$avginc), max(Caschool$avginc))
+
+df <- data.frame(str = rep(to_plot_x, 2),
+           avginc = rep(to_plot_y, each = 2))
+df["pred"] <- predict.lm(fit_multivariate, df, se.fit = F)
+
+surf <- acast(df, avginc ~ str)
+
+Caschool %>%
+  plot_ly() %>%
+  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .5, marker=list(color = 'blue', size = 3)) %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane", opacity = .75, cauto = F, surfacecolor = rep('grey', 4)) %>%
+  hide_colorbar()
+
+```
+
+While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $avginc$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
 

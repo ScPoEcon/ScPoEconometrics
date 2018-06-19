@@ -25,12 +25,13 @@ What exactly is a *data generating process* (or short, a *GDP*)? And what do $\b
 
 ## DGP and Models 
 
-When we talk about a *model* in econometrics, we are making assumptions about how $y$ and $x$ are related in the data. For example, we have repeatedly seen the following equation,
+When we talk about a **model** in econometrics, we are making assumptions about how $y$ and $x$ are related in the data. For example, we have repeatedly seen the following equation,
 
 $$
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i  (\#eq:abline2)
 $$ 
 which is a particular kind of model. What *generated* our data, on the other hand, is an unknown mechanism that we want to investigate: it's the **data generating process**, and our model is our assumption about how we think the GDP could look like.
 A first order concern is that our model in \@ref(eq:abline2) might not be a particularly *good* model for the GDP at hand. How would that impact our estimates for $\hat{\beta}_0$ and $\hat{\beta}_1$? And what's the interpretation of the error $\varepsilon$ now?
+
 
 

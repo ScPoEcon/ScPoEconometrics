@@ -233,9 +233,14 @@ Now we will read the first chunk of data, from the first table: *total populatio
 ```{r}
 library(readxl)  # load the library
 
-# Suppose I downloaded the file to a directory 
-# data/ in my current working directory (cwd)
-# you can change your cwd with `setwd("your/directory")`
+
+# Notice that if you installed the R package of this book,
+# you have the data file installed at 
+# `system.file(package="ScPoEconometrics","datasets","demo_gind.xls")`
+# otherwise:
+# * download the file to your computer
+# * change the argument `path` to where you downloaded it
+# you may want to change your working directory with `setwd("your/directory")
 # or in RStudio by clicking Session > Set Working Directory
 
 # total population in raw format

@@ -745,6 +745,7 @@ When using data from inside a package, there are three things we would generally
 To look at the data, we have two useful commands: `head()` and `str()`.
 
 ```{r}
+data(mpg)  # load dataset `mpg` from `ggplot2` package
 head(mpg, n = 10)
 ```
 

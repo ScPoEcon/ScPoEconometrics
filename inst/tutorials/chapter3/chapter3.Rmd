@@ -129,6 +129,11 @@ A classic example of a *discrete* distribution is the [**Binomial distribution**
 
 The applet below allows you to explore the shape of the Binomial distribution for different values of $n$ and $p$. The red line is the (continuous) distribution that the Binomial distribution should converge to as we repeatedly draw many $X$s and increase the number of bins. As it turns out, this distribution is a *Normal distribution*.
 
+```{r,eval=FALSE}
+# and now you type
+ScPoEconometrics:::run_example("reg1")
+```
+
 ```{r, echo=FALSE}
 sliderInput("n", "Number of draws n:", min = 1, max = 1000, step = 5, value = 100)
 sliderInput("p", "Probability of success p:", min = 0, max = 1, step = 0.01, value = .5)
