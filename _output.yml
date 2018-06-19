@@ -1,3 +1,4 @@
+always_allow_html: yes
 bookdown::gitbook:
   toc_depth: 1
   css: style.css
@@ -18,3 +19,4 @@ bookdown::pdf_book:
   citation_package: natbib
   keep_tex: yes
 bookdown::epub_book: default
+
