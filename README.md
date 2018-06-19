@@ -8,19 +8,33 @@
 
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
-## Tutorials
+## Usage and Installation
 
-In order to run the accompanying tutorials, you must install this repository as an R package into your computer. Do this:
+In order to participate in the course and to use the course material, you need to install this `R` package in your computer. To do so, just copy and paste those lines into your `R` console:
 
 ```R
-library(devtools)
+if (!require(devtools)) {install.packages("devtools"); library(devtools)}
 install_github(repo = "ScPoEcon/ScPoEconometrics")
 ```
 
-Then you can run the respective tutorial for the corresponding chapter, by typing, for example:
+### Shiny Apps
+
+A key part of this course are a series of interactive applications (or *apps*) that we developed with the `shiny` framework. You launch the apps from a running `R` session on your computer. The app will run in your web browser. You launch an app like this from `R`:
 
 ```R
-install.packages("learnr")  # install only once
+library(ScPoEconometrics)   # load our library
+launchApp('anscombe')       # runs the `anscombe` app in browser
+
+launchApp()                 # no arg produces an error that shows all available apps
+Error: Please run `launchApp()` with a valid app as an argument.
+Valid apps are: 'anscombe', 'confidence_intervals', 'corr_continuous', 'datasaurus', 'reg_constrained', 'reg_dummy', 'reg_dummy_example', 'reg_full', 'reg_multivariate', 'reg_simple', 'reg_standardized', 'sampling', 'SSR_cone', 'standard_errors_changeN', 'standard_errors_simple'
+```
+
+### Tutorials
+
+In order to run the accompanying tutorials you would type, for example:
+
+```R
 library(learnr)
 run_tutorial("chapter3",package="ScPoEconometrics")
 ```

@@ -15,9 +15,9 @@ subset(mtcars, select = c(mpg,hp,wt))
 How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $\beta_1$ and $\beta_2$ to be? 
 
 
-With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@(fig:plane3Dreg):
+With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@ref(fig:plane3D-reg):
 
-```{r plane3Dreg,echo=FALSE,fig.align='center',fig.cap='Multiple Regression - a plane in 3D'}
+```{r plane3D-reg,echo=FALSE,fig.align='centre',fig.cap='Multiple Regression - a plane in 3D'}
 # add grid lines with this https://stackoverflow.com/questions/40748949/match-gridlines-to-axis-ticks-in-3d-regression-plot-persp-and-rockchalk
 library(plot3D)
 data(mtcars)
@@ -51,18 +51,29 @@ scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$hp, pch = 20, cex = 1.5,
       main = "mtcars")
 ```
 
-From this visualization we can see that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible, hence we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
+This visualization shows a couple of things: the data are shown with red points, the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d), and the red lines show the size of the error between estimated plane and observed data. You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
+
+We can see from this plot that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible. Hence, we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
 
 ```{block,type="tip"}
 <center>
-Keeping the value of `wt` fixed for a certain car, what would be the impact on `mpg` be if we were to increase **only** its `hp`?
+Keeping the value of `wt` fixed for a certain car, what would be the impact on `mpg` be if we were to increase **only** its `hp`? Put differently, keeping **all else equal**, what's the impact of changing `hp` on `mpg`?
 </center>
 ```
+<br>
+We ask this kind of question all the time in econometrics. In figure \@ref(fig:plane3D-reg) you clearly see that both explanatory variables have a negative impact on the outcome of interest: as one increases either the horse power or the weight of a car, one finds that miles per gallon decreases. What is kind of hard to read off is *how negative* an impact each variable has in isolation. 
 
-We ask this kind of question all the time in econometrics. In figure \@(fig:plane3Dreg) you clearly see that both explanatory variables have a negative impact on the outcome of interest, but it's kind of hard to read off *how negative* each variable in isolation. Mutiple regression to the rescue!
+The kind of question asked here is so common that indeed it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. To answer the question, thus, multiple regression to the rescue:
+<br>
 
 ```{r,echo=FALSE}
 summary(fit)
+```
+
+From this table you see that the coefficient on `wt` has value `r round(coef(fit)[2],5)`. You can interpret this as follows:
+
+```{block,type="warning"}
+Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in `wt` implies a -3.87783 units change in `mpg`. Similarly, one more `hp` horse power implies a change in `mpg` of -0.03177 units, *all else (i.e. `wt`) equal*.
 ```
 
 ## California Test Scores 2
@@ -72,7 +83,7 @@ With the tools introduced in \@ref(lm-example1) it is fairly straigtforward to e
 $$testscr_i = \beta_0 + \beta_1  str_i + \beta_2  avginc_i + \epsilon_i$$
 We can incoporate this new variable to our model by simply adding it to our `formula`:
 
-```{r lmfit_multiv}
+```{r lmfit-multiv,warning=FALSE,message=FALSE}
 library("Ecdat") # reload the data
 fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
 summary(fit_multivariate)
@@ -80,7 +91,7 @@ summary(fit_multivariate)
 
 Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane*.
 
-```{r 3DPlotly, echo = FALSE, warning=F, message = F}
+```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.'}
 library(plotly)
 library(reshape2)
 

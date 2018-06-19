@@ -300,7 +300,7 @@ At this point you should step back and take a second to think about what you bel
 
 Let's find out! As always, we will start by plotting the data to inspect it visually (don't worry if the syntax doesn't make much sense right now, we will come back to it very soon):
 
-```{r first_plot,fig.align='center',fig.cap="Student Teacher Ratio vs Test Scores"}
+```{r first-reg0,fig.align='centre',fig.cap='Student Teacher Ratio vs Test Scores'}
 
 plot(formula = testscr ~ str,
      data = Caschool,
@@ -346,13 +346,11 @@ Again, we recognize our intercept and slope estimates from before, alongside som
 
 We can also use our `lm` fit to draw the regression line on top of our initial scatterplot, using the following syntax:
 
-```{r plot_reg,fig.align='center',fig.cap="Test Scores with Regression Line."}
-
+```{r plot-reg1,fig.align='centre',fig.cap='Test Scores with Regression Line'}
 plot(formula = testscr ~ str,
      data = Caschool,
      xlab = "Student/Teacher Ratio",
      ylab = "Average Test Score", pch = 21, col = 'blue')# same plot as before
-
 abline(fit_california, col = 'red') # add regression line
 
 ```
