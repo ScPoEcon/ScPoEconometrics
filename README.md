@@ -10,7 +10,10 @@ This is the git repo for the UG Econometrics book taught to 2nd year students at
 
 ## Usage and Installation
 
-In order to participate in the course and to use the course material, you need to install this `R` package in your computer. To do so, just copy and paste those lines into your `R` console:
+In order to participate in the course and to use the course material, you need to 
+
+1. install `R`: download for free at [https://www.r-project.org](https://www.r-project.org)
+2. install **this** `R` package in your computer. To do so, just copy and paste those lines into your `R` console:
 
 ```R
 if (!require(devtools)) {install.packages("devtools"); library(devtools)}
@@ -23,12 +26,19 @@ A key part of this course are a series of interactive applications (or *apps*) t
 
 ```R
 library(ScPoEconometrics)   # load our library
-launchApp('anscombe')       # runs the `anscombe` app in browser
+launchApp('SSR_cone')       # runs the `SSR_cone` app in browser
 
 launchApp()                 # no arg produces an error that shows all available apps
 Error: Please run `launchApp()` with a valid app as an argument.
-Valid apps are: 'anscombe', 'confidence_intervals', 'corr_continuous', 'datasaurus', 'reg_constrained', 'reg_dummy', 'reg_dummy_example', 'reg_full', 'reg_multivariate', 'reg_simple', 'reg_standardized', 'sampling', 'SSR_cone', 'standard_errors_changeN', 'standard_errors_simple'
+Valid apps are: 'anscombe', 'confidence_intervals', 'corr_continuous', 
+'datasaurus', 'reg_constrained', 'reg_dummy', 'reg_dummy_example', 
+'reg_full', 'reg_multivariate', 'reg_simple', 'reg_standardized', 
+'sampling', 'SSR_cone', 'standard_errors_changeN', 'standard_errors_simple'
 ```
+
+Here is a screenshot of the `SSR_cone` app:
+
+![SSR_cone](images/SSR_cone.png)
 
 ### Tutorials
 
