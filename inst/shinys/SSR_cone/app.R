@@ -27,8 +27,8 @@ ui <- fluidPage(
 server <- function(input,output){
   output$userguess_ssr <- renderText({
     
-    a <- input$i_simple
-    b <- input$s_simple
+    a <- input$i_ssr
+    b <- input$s_ssr
     paste0("Your guess:\n y = ", a, " + ", b, "x")
     
   })
