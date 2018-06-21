@@ -14,7 +14,8 @@ ui <- fluidPage(
            br(),
            br(),
 
-           verbatimTextOutput("standarderrors")),
+           verbatimTextOutput("standarderrors"),
+           plotOutput("CI")),
 
     column(width = 8,
            plotlyOutput("planefit"))
@@ -97,9 +98,41 @@ server <- function(input,output){
 
   })
 
+  output$CI <- renderPlot({
+
+    set.seed(42)
+
+    #Generate Data
+    x <- rmvnorm(100, mean = c(0, 0), sigma = matrix(c(1, input$corr_x1x2,
+                                                       input$corr_x1x2, 1),
+                                                     c(2,2)))
+    y <- 1 + 2*x[,1] - x[,2] + rnorm(100, 0, 5)
+    df <- as.data.frame(cbind(x, y))
+    colnames(df) <- c("x1", "x2", "y")
+
+    fit <- lm(y~x1+x2, df)
+
+    plot(x = c(1.9, -1), y = c(1, 2), col = "green",
+         xlim = c(-10, 10), ylim = c(0.5, 2.5),
+         yaxt='n', xaxt='n',
+         pch=15, bg = "lightgreen",
+         xlab = "Estimated Slopes", ylab="", cex = 1.5)
+    segments(x0 = 1.9 - 1.96*summary(fit)$coefficients[, 2]["x1"],
+             x1 = 1.9 + 1.96*summary(fit)$coefficients[, 2]["x1"],
+             y0 = 1, y1 = 1, col = 'red', lwd = 2)
+    segments(x0 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
+             x1 = -1 + 1.96*summary(fit)$coefficients[, 2]["x2"],
+             y0 = 2, y1 = 2, col = 'red', lwd = 2)
+    title(main = "Point Estimates and\nConfidence Intervals")
+    axis(side = 2, at = c(1, 2), labels = c("Beta1", "Beta2"))
+  })
+
 
 
 }
 
 shinyApp(ui = ui, server = server)
+
+
+
 
