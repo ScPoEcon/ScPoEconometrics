@@ -8,15 +8,15 @@ ui <- fluidPage(
   br(),
   fluidRow(
 
-    column(width = 3,
+    column(width = 4,
            sliderInput("corr_x1x2", "Correlation(x1, x2)", min = 0,
                        max = 1, step = .01, value = 0),
            br(),
            br(),
 
-           textOutput("standarderrors")),
+           verbatimTextOutput("standarderrors")),
 
-    column(width = 9,
+    column(width = 8,
            plotlyOutput("planefit"))
 
 ))
@@ -45,6 +45,27 @@ server <- function(input,output){
 
     surf <- reshape2::acast(plotting_data, x2~x1)
 
+    axx <- list(
+      title = "X1",
+      range = c(-3, 3)
+    )
+
+    axy <- list(
+      title = "X2",
+      range = c(-3, 3)
+    )
+
+    axz <- list(
+      title = "Y",
+      range = c(-10, 15)
+    )
+
+    scene = list(
+      xaxis = axx,
+      yaxis = axy,
+      zaxis = axz,
+      aspectmode = "cube")
+
     df %>% plot_ly() %>%
       add_markers(x = ~x1, y = ~x2, z = ~y,
                   marker = list(color = 'red', size = 5),
@@ -54,7 +75,7 @@ server <- function(input,output){
                   y = c(min(x[,1]), max(x[,1])),
                   z = surf, opacity = .5, surfacecolor = rep('grey', 2)) %>%
       hide_colorbar()%>%
-      layout(title="Best Fit Plane")
+      layout(title="Best Fit Plane", scene = scene)
   })
 
   output$standarderrors <- renderText({
@@ -71,8 +92,8 @@ server <- function(input,output){
 
     fit <- lm(y~x1+x2, df)
 
-    print(paste0("Standard Error Beta(x1): ", round(summary(fit)$coefficients[, 2]["x1"], 4),
-           "\nStandard Error Beta(x2): ", round(summary(fit)$coefficients[, 2]["x2"], 4)))
+    paste0("Estimates (+ Std.Errors): \n", "x1: 1.9 (", round(summary(fit)$coefficients[, 2]["x1"], 4), ")\n",
+                 "x2: -1.0 (", round(summary(fit)$coefficients[, 2]["x2"], 4), ")\n\n", "R^2: ", summary(fit)$r.squared)
 
   })
 
@@ -81,3 +102,4 @@ server <- function(input,output){
 }
 
 shinyApp(ui = ui, server = server)
+
