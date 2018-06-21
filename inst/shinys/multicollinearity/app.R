@@ -4,6 +4,7 @@ library(mvtnorm)
 library(reshape2)
 
 ui <- fluidPage(
+  titlePanel("Multicollinearity"),
   br(),
   br(),
   fluidRow(
@@ -115,16 +116,33 @@ server <- function(input,output){
     plot(x = c(1.9, -1), y = c(1, 2), col = "green",
          xlim = c(-10, 10), ylim = c(0.5, 2.5),
          yaxt='n', xaxt='n',
-         pch=15, bg = "lightgreen",
-         xlab = "Estimated Slopes", ylab="", cex = 1.5)
+         pch=21, bg = "lightgreen",
+         xlab = "Estimated Slopes", ylab="", cex = 1.25)
+
     segments(x0 = 1.9 - 1.96*summary(fit)$coefficients[, 2]["x1"],
              x1 = 1.9 + 1.96*summary(fit)$coefficients[, 2]["x1"],
              y0 = 1, y1 = 1, col = 'red', lwd = 2)
     segments(x0 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
              x1 = -1 + 1.96*summary(fit)$coefficients[, 2]["x2"],
              y0 = 2, y1 = 2, col = 'red', lwd = 2)
+
+    segments(x0 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
+             x1 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
+             y0 = 1.95, y1 = 2.05, col = 'red', lwd = 2)
+    segments(x0 = -1 + 1.96*summary(fit)$coefficients[, 2]["x2"],
+             x1 = -1 + 1.96*summary(fit)$coefficients[, 2]["x2"],
+             y0 = 1.95, y1 = 2.05, col = 'red', lwd = 2)
+
+    segments(x0 = 1.9 - 1.96*summary(fit)$coefficients[, 2]["x1"],
+             x1 = 1.9 - 1.96*summary(fit)$coefficients[, 2]["x1"],
+             y0 = .95, y1 = 1.05, col = 'red', lwd = 2)
+    segments(x0 = 1.9 + 1.96*summary(fit)$coefficients[, 2]["x1"],
+             x1 = 1.9 + 1.96*summary(fit)$coefficients[, 2]["x1"],
+             y0 = .95, y1 = 1.05, col = 'red', lwd = 2)
+
     title(main = "Point Estimates and\nConfidence Intervals")
     axis(side = 2, at = c(1, 2), labels = c("Beta1", "Beta2"))
+
   })
 
 
