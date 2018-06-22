@@ -95,7 +95,7 @@ server <- function(input,output){
     fit <- lm(y~x1+x2, df)
 
     paste0("Estimates (+ Std.Errors): \n", "x1: 1.9 (", round(summary(fit)$coefficients[, 2]["x1"], 4), ")\n",
-                 "x2: -1.0 (", round(summary(fit)$coefficients[, 2]["x2"], 4), ")\n\n", "R^2: ", summary(fit)$r.squared)
+                 "x2: -1.0 (", round(summary(fit)$coefficients[, 2]["x2"], 4), ")\n\n", "R^2: ", round(summary(fit)$r.squared, 2))
 
   })
 
@@ -121,10 +121,10 @@ server <- function(input,output){
 
     segments(x0 = 1.9 - 1.96*summary(fit)$coefficients[, 2]["x1"],
              x1 = 1.9 + 1.96*summary(fit)$coefficients[, 2]["x1"],
-             y0 = 1, y1 = 1, col = 'red', lwd = 2)
+             y0 = 1, y1 = 1, col = 'red', lwd = 3)
     segments(x0 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
              x1 = -1 + 1.96*summary(fit)$coefficients[, 2]["x2"],
-             y0 = 2, y1 = 2, col = 'red', lwd = 2)
+             y0 = 2, y1 = 2, col = 'red', lwd = 3)
 
     segments(x0 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
              x1 = -1 - 1.96*summary(fit)$coefficients[, 2]["x2"],
@@ -142,6 +142,9 @@ server <- function(input,output){
 
     title(main = "Point Estimates and\nConfidence Intervals")
     axis(side = 2, at = c(1, 2), labels = c("Beta1", "Beta2"))
+    axis(side = 1, at = c(-1, 1.9), labels = c(-1, 1.9))
+    #abline(v = -1, lty = 'dashed', col = "lightgrey")
+    #abline(v = 1.9, lty = 'dashed', col = "lightgrey")
 
   })
 
@@ -150,7 +153,3 @@ server <- function(input,output){
 }
 
 shinyApp(ui = ui, server = server)
-
-
-
-
