@@ -11,5 +11,6 @@ _book*
 ^.*\.bib$
 ^.*\.tex$
 images
-
+data/.keep
+js/
 ^appveyor\.yml$
