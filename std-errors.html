@@ -163,7 +163,8 @@ How <em>confident</em> should we be about the estimated values <span class="math
 </div>
 <p>The discussion here is closely linked to the practical exercise that you did by typing</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
-<span class="kw">runExample</span>(<span class="st">&quot;sampler&quot;</span>)</code></pre></div>
+<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_simple&quot;</span>) <span class="co"># and</span>
+<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_changeN&quot;</span>) <span class="co"># and</span></code></pre></div>
 <p>which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are as well just statistics computed from the data, the same fact will apply. One question you should ask now, however, is:</p>
 <div class="note">
 <center>
@@ -176,6 +177,11 @@ What exactly is a <em>data generating process</em> (or short, a <em>GDP</em>)? A
 <p><span class="math display" id="eq:abline2">\[
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i  \tag{3.4}
 \]</span> which is a particular kind of model. What <em>generated</em> our data, on the other hand, is an unknown mechanism that we want to investigate: it’s the <strong>data generating process</strong>, and our model is our assumption about how we think the GDP could look like. A first order concern is that our model in <a href="linreg.html#eq:abline2">(3.4)</a> might not be a particularly <em>good</em> model for the GDP at hand. How would that impact our estimates for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>? And what’s the interpretation of the error <span class="math inline">\(\varepsilon\)</span> now?</p>
+<ul>
+<li>missing variables go into error</li>
+<li>more observations allow to generate better estimates</li>
+<li></li>
+</ul>
 
 </div>
 </div>

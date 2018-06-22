@@ -155,8 +155,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="linreg" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Linear Regression</h1>
-<p>Notes:</p>
-<p>stop at R-squared * different data: missing variable * non-linear realtionship</p>
 <div id="data-on-cars" class="section level2">
 <h2><span class="header-section-number">3.1</span> Data on Cars</h2>
 <p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
@@ -277,6 +275,21 @@ y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i \tag{3.4}
 Figure 3.4: Better line with non-linear data!
 </p>
 </div>
+</div>
+<div id="assessing-the-goodness-of-fit" class="section level3">
+<h3><span class="header-section-number">3.1.6</span> Assessing the <em>Goodness of Fit</em></h3>
+<p>There is a convenient measure for how good our statistical model fits the data. It is called <span class="math inline">\(R^2\)</span>, also called the <em>coefficient of determination</em>. There are several equivalent definitions, and for our present case we will use the following:</p>
+<div class="tip">
+<p>
+The coefficient of determination is defined by <span class="math display"><span class="math display">\[R^2 = 1 - \frac{\text{SSR from our model}}{\text{SSR of }y_i = \beta_0 + \varepsilon_i}.\]</span></span> In the simple linear model, we have that <span class="math inline"><span class="math inline">\(R^2 \in [0,1]\)</span></span>, where <span class="math inline"><span class="math inline">\(R^2 = 1\)</span></span> would indicate that our model is a <strong>very good</strong> fit to the data, and vice versa for <span class="math inline"><span class="math inline">\(R^2 = 0\)</span></span>. You can interpret the value of <span class="math inline"><span class="math inline">\(R^2\)</span></span> as the fraction of variation in outcome <span class="math inline"><span class="math inline">\(y\)</span></span> that is accounted for by explanatory variable <span class="math inline"><span class="math inline">\(x\)</span></span>.
+</p>
+</div>
+<p>You can see in the above definition that this measure relates the quality of our model to a very basic <em>benchmark</em> model, i.e. a model without any regressors: As you will see in the <code>apps</code> to this chapter, the model <span class="math inline">\(y_i = \beta_0 + \varepsilon_i\)</span> simply estimates the mean of <span class="math inline">\(y\)</span>. Given that the number SSR is a summary of how large a total error we make, and given that this benchmark model is kind of the worst case scenario in this respect, you can see how the <span class="math inline">\(R^2\)</span> statistic will behave: the smaller the SSR from our model in relation to the baseline model, the higher it will be.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data =<span class="st"> </span><span class="kw">generate_data</span>(<span class="dt">sigma =</span> <span class="dv">2</span>,<span class="dt">n=</span><span class="dv">4</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot_unexp_SSR</span>(plot_data)
+<span class="kw">plot_total_dev</span>(plot_data)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/r-squared-1.png" width="672" /></p>
 </div>
 </div>
 <div id="lm-example1" class="section level2">
