@@ -1,4 +1,88 @@
 # Categorial Variables: Dummies and Interactions {#categorical-vars}
 
+Up until now, we have encountered only examples with *continuous* variables $x$ and $y$, that is, $x,y \in \mathbb{R}$, so that a typical observation could have been $(y_i,x_i) = (1.5,5.62)$. There are many situations where it makes sense to think about the data in terms of *categories*, rather than continuous numbers. For example, whether an observation $i$ is *male* or *female*, whether a pixel on a screen is *black* or *white*, and whether a good was produced in *France*, *Germany*, *Italy*, *China* or *Spain* are all categorical classifications of data. 
+
+Probably the simplest type of categorical variable is the *binary*, *boolean*, or just *dummy* variable. As the name suggests, it can take on only two values, `0` and `1`, or `TRUE` and `FALSE`. Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation $i$ **is a member** of a certain category $j$. For example, we could have a variable called `is.male` that is `TRUE` whenever $i$ is male, and `FALSE` otherwise. A common way to represent this is with the so-called *indicator function* $\mathbf{1}[\text{condition}]$, 
+
+\begin{align*}
+\text{is.male}_i &= \mathbf{1}[\text{sex}_i==\text{male}], \\
+\end{align*}
+
+which would just mean
+
+\begin{align*}
+\mathbf{1}[\text{sex}_i==\text{male}] &= \begin{cases}
+                    1 & \text{if }i\text{ is male} \\
+                    0 & \text{if }i\text{ is female}. \\
+                 \end{cases}
+\end{align*}
+
+Notice the use of `x == y` to represent the relationship *`x` is equal `y`*, which is (very!) different from `x = y` meaning *assign `y` to `x`. 
+
+
+## Saturated Models
+
+We have seen in the `app` launched via
+
+```{r,eval=FALSE}
+launchApp("reg_dummy")
+```
+
+what happens when $x\in\{0,1\}$: Our regression simplifies to the straight line connecting the mean, or the *expected value (E)* of $y$ when $x=0$, $E[y|x=0]$ to the mean when $x=1$, $E[y|x=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let's just refresh our memory by replicating the graph here in figure \@ref(fig:x-zero-one). 
+
+```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $x \\in \\{0,1\\}$',echo=FALSE}
+set.seed(19)
+
+# Generate Random Data
+dta <- data.frame(x = sample(x = c(0, 1), size = 20, replace = T),
+                y = rnorm(n = 20, mean = 2, sd = 1))
+dta[dta$x == 1, "y"] <- dta[dta$x == 1, "y"] + 3
+
+x <- dta[, "x"]
+y <- dta[, "y"]
+#y = 2 + 3*x + u
+
+
+# a = intercept, b = slope (user input)
+a <- 2
+b <- 3.75
+
+# plot
+expr <- function(x) a + b*x
+errors <- (a + b*x) - y
+
+plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=.25,
+   xlim = c(-.1, 1.1),
+   ylim = c(min(y)-.1, max(y)+.1),
+   frame.plot = T,
+   cex = 1.2)
+
+points(0, mean(dta[dta$x == 0, "y"]), col = 'orange',
+       cex = 3, pch = 15)
+text(0.05, mean(dta[dta$x == 0, "y"]), "E[Y | X = 0]", pos = 4)
+
+points(1, mean(dta[dta$x == 1, "y"]), col = 'orange',
+       cex = 3, pch = 15)
+text(1.05, mean(dta[dta$x == 1, "y"]), "E[Y | X = 1]", pos = 4)
+curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+rect(xleft = x, ybottom = y,
+     xright = x + abs(errors), ytop = y + errors, density = -1,
+     col = rgb(red = 0, green = 1, blue = 0, alpha = 0.05), border = NA)
+abline(a=mean(dta$y),b=0,col="red",lw=2)
+
+```
+
+
+
+
+## Categorical Variables in `R`: `factor`s
+
+`R` has extensive support for categorical variables built-in. The relevant data type representing a categorical variable, or a dummy, is called `factor`. We encountered them as basic data types in section \ref(data-types) already, but it is worth repeating this here. We have seen that a factor *categorizes* a usually small number of numeric values by *labels*:
+
+```{r factors}
+factor(x=c(0,1,1,0),labels=c("male","female"))
+```
+
 1. if you only have educ categories, the estimate is like the conditional mean by educ
 1. if you have too many categories you will have empty bins

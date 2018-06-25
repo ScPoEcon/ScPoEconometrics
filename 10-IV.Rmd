@@ -1,6 +1,22 @@
 # Instrumental Variables {#IV}
 
-1. wage = educ
-1. educ = ability
-1. ols estimator captures your ability
-1. you predict x by z and you only keep the variation that is in the error
+## Simultaneity Bias
+
+* Detroit has a large police force
+* Detroit has a high crime rate
+* Omaha has a small police force
+* Omana has a small crime rate
+
+Do large police forces **cause** high crime rates?
+
+Absurd! Absurd? How could we use data to tell?
+
+We have the problem that large police forces and high crime rates covary positively in the data, and for obvious reasons: Cities want to protect their citizens and therefore respond to increased crime with increased police. Using mathematical symbols, we have the following *system of linear equations*, i.e. two equations which are **jointly determined**:
+
+
+\begin{align*}
+\text{crime}_{it} &= f(\text{police}_{it}) \\
+\text{police}_{it}&= g(\text{crime}_{it} )
+\end{align*}
+
+We need a factor that is outside this circular system, affecting **only** the size of the police force, but not the actual crime rate. Such a factor is called an *instrumental variable*.

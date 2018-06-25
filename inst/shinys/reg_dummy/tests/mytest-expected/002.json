@@ -1,13 +1,14 @@
 {
   "input": {
-    "i_dummy": 1.25,
+    "i_dummy": 2,
+    "meany": false,
     "meany_x0": false,
-    "meany_x1": false,
-    "s_dummy": -0.5
+    "meany_x1": true,
+    "s_dummy": 3.75
   },
   "output": {
     "regPlot_dummy": {
-      "src": "[image data sha1: c01bbb6046ef311777c231d88159215f40a5d7dd]",
+      "src": "[image data sha1: 5a386e4bc924a455ea3da971f3336c8e80f659c9]",
       "width": 611,
       "height": 400,
       "coordmap": [
@@ -34,7 +35,7 @@
         }
       ]
     },
-    "userguess_dummy": "Your guess:\n y = 1.25 + -0.5x"
+    "userguess_dummy": "Your guess:\n y = 2 + 3.75x"
   },
   "export": {
 

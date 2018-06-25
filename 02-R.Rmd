@@ -120,7 +120,7 @@ library(ggplot2)
 
 Once you close `R`, all the packages are closed and put back on the imaginary shelf. The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.
 
-## Data Types
+## Data Types {#data-types}
 
 `R` has a number of basic data *types*.
 
@@ -137,6 +137,9 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
     - `NA` is also considered logical.
 - Character
     - Examples: `"a"`, `"Statistics"`, `"1 plus 2."`
+- Categorical or `factor`
+    - A mixture of integer and character. A `factor` variable assigns a label to a numeric value.
+    - For example `factor(x=c(0,1),labels=c("male","female"))` assigns the string *male* to the numeric values `0`, and the string *female* to the value `1`. 
 
 ## Data Structures
 
