@@ -89,12 +89,12 @@ generate_data = function(int = 0.5,
   data.frame(x, y, y_hat, y_bar, error, meandev)
 }
 
-plot_total_dev = function(reg_data,asp=1) {
-  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+plot_total_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y, 
        xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   rect(xleft = reg_data$x, ybottom = reg_data$y,
          xright = reg_data$x + abs(reg_data$meandev), ytop = reg_data$y - reg_data$meandev, density = -1,
-         col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA,asp=asp)
+         col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA)
   # arrows(reg_data$x, reg_data$y_bar,
   #        reg_data$x, reg_data$y,
   #        col = 'grey', lwd = 1, lty = 3, length = 0.2, angle = 20)
@@ -103,7 +103,7 @@ plot_total_dev = function(reg_data,asp=1) {
 }
 
 plot_total_dev_prop = function(reg_data) {
-  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+  plot(reg_data$x, reg_data$y, 
        xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_bar,
          reg_data$x, reg_data$y_hat,
@@ -271,11 +271,13 @@ In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would 
 
 You can see in the above definition that this measure relates the quality of our model to a very basic *benchmark* model, i.e. a model without any regressors: As you will see in the `apps` to this chapter, the model $y_i = \beta_0 + \varepsilon_i$ simply estimates the mean of $y$. Given that the number SSR is a summary of how large a total error we make, and given that this benchmark model is kind of the worst case scenario in this respect, you can see how the $R^2$ statistic will behave: the smaller the SSR from our model in relation to the baseline model, the higher it will be.
 
-```{r r-squared,fig.asp=0.5}
+```{r r-squared}
 plot_data = generate_data(sigma = 2,n=4)
-par(mfrow=c(1,2))
+# op <- par(mfrow=c(1,2),pin=c(2.8,2.5))
+op <- par(mfrow=c(1,2))
 plot_unexp_SSR(plot_data)
 plot_total_dev(plot_data)
+par(op)
 ```
 
 ## An Example: California Student Test Scores {#lm-example1}
