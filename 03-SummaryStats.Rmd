@@ -166,7 +166,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
 
 We often are interested in how two (or more!) variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
 
-```{r,echo=FALSE,message=FALSE,warning=FALSE}
+```{r x-y-corr,echo=FALSE,message=FALSE,warning=FALSE,fig.cap='How are $x$ and $y$ related?',fig.align='center'}
 library(mvtnorm)
 set.seed(10)
 cor = 0.9
@@ -181,7 +181,7 @@ plot(x ~ y, xlab="x",ylab="y")
 Taking as example the data in this plot, the concepts *covariance* and *correlation* relate to the following type of question:
 
 ```{block,type="note"}
-Given we observe high value of `x` (like 2, say), can we expect a high or a low value of `y`, on average? Something like 2 or rather something like -2?
+Given we observe high value of `x` (like 2, say), can we expect a high or a low value of `y`, on average? Something like $y=2$ or rather something like $y=-2$?
 ```
 <br>
 The answer to this type of question can be addressed by computing the covariance of both variables:
@@ -192,13 +192,25 @@ cov(x,y)
 
 Here, this gives a positive number, `r round(cov(x,y),2)`, indicating that as one variable lies above it's average, the other one does as well. In other words, it indicates a **positive relationship**. What is less clear, however, how to interpret the magnitude of `r round(cov(x,y),2)`. Is that a *strong* or a *weak* positive association?
 
-In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the **correlation**, which is obtained by *standardizing* each variable. This way, we get rid of the units problem:
+In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the **correlation**, which is obtained by *standardizing* each variable. By *standardizing* a variable $x$ one means to divide $x$ by its standard deviation:
+
+$$
+z = \frac{x}{\sigma_x}
+$$
+
+The *correlation coefficient* between $x$ and $y$, $r_{x,y}$ is then defined as
+
+$$
+r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
+$$
+
+and we get rid of the units problem. In `R`, you can call directly
 
 ```{r}
 cor(x,y)
 ```
 
-This is better. Given that the correlation has to lie in $[-1,1]$, a value of `r round(cor(x,y),2)` is indicative of a rather strong positive relationship. 
+Now this is better. Given that the correlation has to lie in $[-1,1]$, a value of `r round(cor(x,y),2)` is indicative of a rather strong positive relationship for the data in figure \@ref(fig:x-y-corr)
 
 
 
