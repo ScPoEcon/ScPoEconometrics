@@ -1312,11 +1312,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  6.5300978  7.7182338 -1.6020233 11.2812469 -0.5462156 -6.3855205
-##  [7]  6.2307789  6.4366239  1.4828505 11.2616951</code></pre>
+<pre><code>##  [1]  4.0413528  5.5607924  8.2553812  1.7918649  0.2131090 -4.4082842
+##  [7]  3.5286169  8.2443255  2.2711553 -0.9140451</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.3948442  0.5997646 -1.0077205  1.2142853 -0.8256230 -1.8327407
-##  [7]  0.3432200  0.3787226 -0.4756656  1.2109131</code></pre>
+<pre><code>##  [1]  0.2969683  0.6784168  1.3548813 -0.2677556 -0.6640952 -1.8242754
+##  [7]  0.1682482  1.3521058 -0.1474319 -0.9470623</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1353,14 +1353,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 33.61722</code></pre>
+<pre><code>## [1] 15.86701</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 33.61722</code></pre>
+<pre><code>## [1] 15.86701</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 33.61722</code></pre>
+<pre><code>## [1] 15.86701</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 30.2555</code></pre>
+<pre><code>## [1] 14.28031</code></pre>
 
 </div>
 </div>

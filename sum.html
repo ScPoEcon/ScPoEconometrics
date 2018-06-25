@@ -345,18 +345,18 @@ Figure 2.1: How are <span class="math inline">\(x\)</span> and <span class="math
 <p>Taking as example the data in this plot, the concepts <em>covariance</em> and <em>correlation</em> relate to the following type of question:</p>
 <div class="note">
 <p>
-Given we observe high value of <code>x</code> (like 2, say), can we expect a high or a low value of <code>y</code>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
+Given we observe value of something like <span class="math inline"><span class="math inline">\(x=2\)</span></span>, say, can we expect a high or a low value of <code>y</code>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
 </p>
 </div>
 <p><br> The answer to this type of question can be addressed by computing the covariance of both variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cov</span>(x,y)  </code></pre></div>
 <pre><code>## [1] 1.041195</code></pre>
 <p>Here, this gives a positive number, 1.04, indicating that as one variable lies above it’s average, the other one does as well. In other words, it indicates a <strong>positive relationship</strong>. What is less clear, however, how to interpret the magnitude of 1.04. Is that a <em>strong</em> or a <em>weak</em> positive association?</p>
-<p>In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the <strong>correlation</strong>, which is obtained by <em>standardizing</em> each variable. By <em>standardizing</em> a variable <span class="math inline">\(x\)</span> one means to divide <span class="math inline">\(x\)</span> by its standard deviation:</p>
+<p>In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the <strong>correlation</strong>, which is obtained by <em>standardizing</em> each variable. By <em>standardizing</em> a variable <span class="math inline">\(x\)</span> one means to divide <span class="math inline">\(x\)</span> by its standard deviation <span class="math inline">\(\sigma_x\)</span>:</p>
 <p><span class="math display">\[
 z = \frac{x}{\sigma_x}
 \]</span></p>
-<p>The <em>correlation coefficient</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, <span class="math inline">\(r_{x,y}\)</span> is then defined as</p>
+<p>The <em>correlation coefficient</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, commonly denoted <span class="math inline">\(r_{x,y}\)</span>, is then defined as</p>
 <p><span class="math display">\[
 r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 \]</span></p>
@@ -375,9 +375,8 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 <li>Each value is a cell</li>
 </ul>
 <p>Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us <em>not</em> tidy most of the times, and we first need to clean, or <code>tidy</code>, it up. Once it’s in <code>tidy</code> format, we can use the tools in the <code>tidyverse</code> with great efficiency to analyse the data and stop worrying about which tool to use.</p>
-</div>
-<div id="example-importing-excel-data" class="section level2">
-<h2><span class="header-section-number">2.5</span> Example: Importing Excel Data</h2>
+<div id="tidy-example-importing-excel-data" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Tidy Example: Importing Excel Data</h3>
 <p>The data we will look at is from <a href="http://ec.europa.eu/eurostat/data/database">Eurostat</a> on demography and migration. You should download the data yourself (click on previous link, then drill down to <em>database by themes &gt; Population and social conditions &gt; Demograph and migration &gt; Population change - Demographic balance and crude rates at national level (demo_gind)</em>).</p>
 <p>Once downloaded, we can read the data with the function <code>read_excel</code> from the package <a href="http://readxl.tidyverse.org"><code>readxl</code></a>, again part of the <code>tidyverse</code> suite.</p>
 <p>It’s important to know how the data is organized in the spreadsheet. Open the file with Excel to see:</p>
@@ -422,8 +421,8 @@ tot_pop_raw</code></pre></div>
 ## 10 Germany… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175…
 ## # ... with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
 <p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). Notice, in particular, that <em>all</em> columns seem to be of type <code>chr</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
-<div id="tidyr" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> <code>tidyr</code></h3>
+<div id="tidyr" class="section level4">
+<h4><span class="header-section-number">2.4.1.1</span> <code>tidyr</code></h4>
 <p>In the previous <code>tibble</code>, each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
 <li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>[&quot;2008&quot;, &quot;2009&quot;, &quot;2010&quot;,...]</code>)</li>
@@ -452,8 +451,8 @@ tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <s
 ## # ... with 580 more rows</code></pre>
 <p>Now you can see that column <code>counts</code> is indeed a <code>int</code>, i.e. an integer number, and we are fine.</p>
 </div>
-<div id="dplyr" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> <code>dplyr</code></h3>
+<div id="dplyr" class="section level4">
+<h4><span class="header-section-number">2.4.1.2</span> <code>dplyr</code></h4>
 <blockquote>
 <p>The <a href="http://r4ds.had.co.nz/transform.html">transform</a> chapter of Hadley Wickham’s book is a great place to read up more on using <code>dplyr</code>.</p>
 </blockquote>
@@ -478,6 +477,7 @@ tot_pop <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" /></p>
+</div>
 <div id="arrange-a-tibble" class="section level4 unnumbered">
 <h4>Arrange a <code>tibble</code></h4>
 <ul>

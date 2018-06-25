@@ -175,7 +175,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
 <div id="how-are-speed-and-dist-related" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> How are <code>speed</code> and <code>dist</code> related?</h3>
-<p>The simplest way to start plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph <code>speed</code>, and the other one <code>dist</code>, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In <code>R</code>:</p>
+<p>The simplest way to start is to plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph <code>speed</code>, and the other one <code>dist</code>, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In <code>R</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
      <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
@@ -244,7 +244,7 @@ Figure 3.2: The best line and its SQUARED errors
 </div>
 <div id="correlation-covariance-and-linearity" class="section level3">
 <h3><span class="header-section-number">3.1.4</span> Correlation, Covariance and Linearity</h3>
-<p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
+<p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 <p>The important lesson from this example is the following:</p>
 <div class="warning">
@@ -258,7 +258,7 @@ Always <strong>visually inspect</strong> your data, and don’t rely exclusively
 <p>Suppose our data now looks like this:</p>
 <p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" /></p>
 <p>Putting our previous <em>best line</em> defined in equation <a href="linreg.html#eq:abline">(3.1)</a> as <span class="math inline">\(y = \beta_0 + \beta_1 x + u\)</span>, we get something like this:</p>
-<div class="figure" style="text-align: centre"><span id="fig:non-line-cars-ols"></span>
+<div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols"></span>
 <img src="ScPoEconometrics_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
 <p class="caption">
 Figure 3.3: Best line with non-linear data?
@@ -269,7 +269,7 @@ Figure 3.3: Best line with non-linear data?
 y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i \tag{3.4}
 \]</span></p>
 <p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">5</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let’s just see how this performs:</p>
-<div class="figure" style="text-align: centre"><span id="fig:non-line-cars-ols2"></span>
+<div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols2"></span>
 <img src="ScPoEconometrics_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
 <p class="caption">
 Figure 3.4: Better line with non-linear data!
@@ -328,7 +328,7 @@ op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mf
      <span class="dt">data =</span> Caschool,
      <span class="dt">xlab =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Average Test Score&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)</code></pre></div>
-<div class="figure" style="text-align: centre"><span id="fig:first-reg0"></span>
+<div class="figure" style="text-align: center"><span id="fig:first-reg0"></span>
 <img src="ScPoEconometrics_files/figure-html/first-reg0-1.png" alt="Student Teacher Ratio vs Test Scores" width="672" />
 <p class="caption">
 Figure 3.5: Student Teacher Ratio vs Test Scores
@@ -388,7 +388,7 @@ fit_california &lt;-<span class="st"> </span><span class="kw">lm</span>(<span cl
      <span class="dt">xlab =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Average Test Score&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)<span class="co"># same plot as before</span>
 <span class="kw">abline</span>(fit_california, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>) <span class="co"># add regression line</span></code></pre></div>
-<div class="figure" style="text-align: centre"><span id="fig:plot-reg1"></span>
+<div class="figure" style="text-align: center"><span id="fig:plot-reg1"></span>
 <img src="ScPoEconometrics_files/figure-html/plot-reg1-1.png" alt="Test Scores with Regression Line" width="672" />
 <p class="caption">
 Figure 3.6: Test Scores with Regression Line
