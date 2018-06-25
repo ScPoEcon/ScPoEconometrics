@@ -22,7 +22,7 @@ to find out that we have 50 rows and 2 columns. A central question that we want 
 
 ### How are `speed` and `dist` related?
 
-The simplest way to start plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph `speed`, and the other one `dist`, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In `R`:
+The simplest way to start is to plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph `speed`, and the other one `dist`, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In `R`:
 
 ```{r}
 plot(dist ~ speed, data = cars,
@@ -197,7 +197,7 @@ where $\bar{z}$ denotes the sample mean of variable $z$.
 ### Correlation, Covariance and Linearity
 
 It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. 
-A famous exercise by Francis Anscombe (1973) illustrates this by constucting 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line *are identical*. However, the usefulness of the statistics to describe the relationship in the data is not clear.
+A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line *are identical*. However, the usefulness of the statistics to describe the relationship in the data is not clear.
 
 ```{r,echo=FALSE}
 ##-- now some "magic" to do the 4 regressions in a loop:
@@ -238,7 +238,7 @@ with(mtcars,plot(hp,mpg,xlab="x",ylab="y"))
 
 Putting our previous *best line* defined in equation \@ref(eq:abline) as $y = \beta_0 + \beta_1 x + u$, we get something like this:
 
-```{r non-line-cars-ols,echo=FALSE,fig.align='centre',fig.cap='Best line with non-linear data?'}
+```{r non-line-cars-ols,echo=FALSE,fig.align='center',fig.cap='Best line with non-linear data?'}
 l1 = lm(mpg~hp,data=mtcars)
 plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 abline(reg=l1,lw=2)
@@ -252,7 +252,7 @@ $$
 
 This is a special case of *multiple regression*, which we will talk about in chapter \@ref(multiple-reg). You can see that there are *multiple* slope coefficients. For now, let's just see how this performs:
 
-```{r non-line-cars-ols2,echo=FALSE,fig.align="centre",fig.cap="Better line with non-linear data!",echo=FALSE}
+```{r non-line-cars-ols2,echo=FALSE,fig.align="center",fig.cap="Better line with non-linear data!",echo=FALSE}
 l1 = lm(mpg~hp+I(hp^2),data=mtcars)
 newdata=data.frame(hp=seq(from=min(mtcars$hp),to=max(mtcars$hp),length.out=100))
 newdata$y = predict(l1,newdata=newdata)
@@ -317,7 +317,7 @@ At this point you should step back and take a second to think about what you bel
 
 Let's find out! As always, we will start by plotting the data to inspect it visually (don't worry if the syntax doesn't make much sense right now, we will come back to it very soon):
 
-```{r first-reg0,fig.align='centre',fig.cap='Student Teacher Ratio vs Test Scores'}
+```{r first-reg0,fig.align='center',fig.cap='Student Teacher Ratio vs Test Scores'}
 
 plot(formula = testscr ~ str,
      data = Caschool,
@@ -363,7 +363,7 @@ Again, we recognize our intercept and slope estimates from before, alongside som
 
 We can also use our `lm` fit to draw the regression line on top of our initial scatterplot, using the following syntax:
 
-```{r plot-reg1,fig.align='centre',fig.cap='Test Scores with Regression Line'}
+```{r plot-reg1,fig.align='center',fig.cap='Test Scores with Regression Line'}
 plot(formula = testscr ~ str,
      data = Caschool,
      xlab = "Student/Teacher Ratio",
