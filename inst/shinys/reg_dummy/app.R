@@ -54,7 +54,6 @@ server <- function(input,output){
     b <- input$s_dummy
 
     # plot
-    expr <- function(x) a + b*x
     errors <- (a + b*x) - y
 
     plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=.25,
@@ -79,6 +78,8 @@ server <- function(input,output){
 
     b_true = cov(x, y)/var(x)
     a_true = mean(y) - b_true*mean(x)
+    expr <- function(x) a_true + b_true*x
+
 
     if (near(a, a_true, tol = .125) && near(b, b_true, tol = .125)){
       curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")

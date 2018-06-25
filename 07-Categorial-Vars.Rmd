@@ -17,20 +17,18 @@ which would just mean
                  \end{cases}
 \end{align*}
 
-Notice the use of `x == y` to represent the relationship *`x` is equal `y`*, which is (very!) different from `x = y` meaning *assign `y` to `x`. 
+Notice the use of `x == y` to represent the relationship *`x` is equal `y`*, which is (very!) different from `x = y` meaning *assign `y` to `x`*. 
 
 
-## Saturated Models
+In terms of a regression formulation, this is our model:
 
-We have seen in the `app` launched via
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} (\#eq:zero-one-reg)
+$$
 
-```{r,eval=FALSE}
-launchApp("reg_dummy")
-```
+when our regressor is binary. Let's run that regression here:
 
-what happens when $x\in\{0,1\}$: Our regression simplifies to the straight line connecting the mean, or the *expected value (E)* of $y$ when $x=0$, $E[y|x=0]$ to the mean when $x=1$, $E[y|x=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let's just refresh our memory by replicating the graph here in figure \@ref(fig:x-zero-one). 
-
-```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $x \\in \\{0,1\\}$',echo=FALSE}
+```{r x-zero-one-data,echo=FALSE}
 set.seed(19)
 
 # Generate Random Data
@@ -41,11 +39,22 @@ dta[dta$x == 1, "y"] <- dta[dta$x == 1, "y"] + 3
 x <- dta[, "x"]
 y <- dta[, "y"]
 #y = 2 + 3*x + u
+zero_one = lm(y~x,dta)
+zero_one
+```
 
+We have seen in the `app` launched via
 
-# a = intercept, b = slope (user input)
-a <- 2
-b <- 3.75
+```{r,eval=FALSE}
+launchApp("reg_dummy")
+```
+
+that the regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $x=0$, $E[y|x=0]$ to the mean when $x=1$, $E[y|x=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let's just refresh our memory by replicating the graph from the `app` here in figure \@ref(fig:x-zero-one):
+
+```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $x \\in \\{0,1\\}$. The red line is $E[y]$',echo=FALSE}
+
+a <- coef(zero_one)[1]
+b <- coef(zero_one)[2]
 
 # plot
 expr <- function(x) a + b*x
@@ -66,23 +75,78 @@ points(1, mean(dta[dta$x == 1, "y"]), col = 'orange',
 text(1.05, mean(dta[dta$x == 1, "y"]), "E[Y | X = 1]", pos = 4)
 curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
 segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
-rect(xleft = x, ybottom = y,
-     xright = x + abs(errors), ytop = y + errors, density = -1,
-     col = rgb(red = 0, green = 1, blue = 0, alpha = 0.05), border = NA)
 abline(a=mean(dta$y),b=0,col="red",lw=2)
+dta$is.male = factor(x)
+
+dummy_reg = lm(y~is.male,dta)
 
 ```
 
+Now suppose for a moment that in fact 
+
+$$
+x_i = \begin{cases}
+          1 & \text{if }i\text{ is male} \\
+            0 & \text{if }i\text{ is female}. \\
+   \end{cases}
+$$
+and that $y_i$ is a measure of $i$'s annual labor income. The dummy variable version of the above regression is just
+
+$$
+y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i (\#eq:dummy-reg)
+$$
+where 
+\begin{align*}
+\text{is.male}_i &= \mathbf{1}[x_i==1], \\
+\end{align*}
+
+and the resulting estimates of $\beta_1$ and $\alpha$ are in fact the same. Here we see the estimates from \@ref(eq:dummy-reg):
+
+```{r,echo=FALSE}
+summary(dummy_reg)
+```
+
+It is interesting to note that the estimate for $\alpha = `r round(coef(dummy_reg)[2],4)`$ (and $\beta_1 = `r round(coef(zero_one)[2],4)`$!) is the same as the difference in conditional means: 
+
+$$E[y|x=1] - E[y|x=0]=`r round(mean(dta[dta$x == 1, "y"]) - mean(dta[dta$x == 0, "y"]),4)`.$$ 
 
 
+## Categorical Variables in `R`: `factor`
 
-## Categorical Variables in `R`: `factor`s
+We have just seen that there is a `1:1` equivalence between running a regression on $x_i\in\{0,1\}$ and on coding $\text{is.male}_i = \mathbf{1}[x_i==1]$. This equivalence is harder to see if we move beyond *binary* categorical variables such as `TRUE` vs `FALSE`, but consider something like $x_i \in \{\text{blue,green,yellow,red}\}$. In `R` parlance, *blue, green, yellow, red* are the **levels of factor $x$**. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like 
 
-`R` has extensive support for categorical variables built-in. The relevant data type representing a categorical variable, or a dummy, is called `factor`. We encountered them as basic data types in section \ref(data-types) already, but it is worth repeating this here. We have seen that a factor *categorizes* a usually small number of numeric values by *labels*:
+\begin{align*}
+\text{is.blue}_i &= \mathbf{1}[x_i==\text{blue}] \\
+\text{is.green}_i &= \mathbf{1}[x_i==\text{green}] \\
+\text{is.yellow}_i &= \mathbf{1}[x_i==\text{yellow}] \\
+\text{is.red}_i &= \mathbf{1}[x_i==\text{red}] 
+\end{align*}
+
+but you can see that this is cumbersome. There is a better solution for us available!
+
+`R` has extensive support for categorical variables built-in. The relevant data type representing a categorical variable, or a dummy, is called `factor`. We encountered them as basic data types in section \@ref(data-types) already, but it is worth repeating this here. We have seen that a factor *categorizes* a usually small number of numeric values by *labels*, as in this example which is similar to what I used to create regressor `is.male` for the above regression:
 
 ```{r factors}
-factor(x=c(0,1,1,0),labels=c("male","female"))
+is.male = factor(x = c(0,1,1,0), labels = c(FALSE,TRUE))
+is.male
 ```
 
-1. if you only have educ categories, the estimate is like the conditional mean by educ
-1. if you have too many categories you will have empty bins
+You can see the result is a vector object of type `factor` with 4 entries, whereby `0` is represented as `FALSE` and `1` as `TRUE`. An other example could be if we wanted to record a variable *sex* instead, and we could do 
+
+```{r}
+sex = factor(x = c(0,1,1,0), labels = c("female","male"))
+sex
+```
+
+You can see that this is almost identical, just the *labels* are different. 
+
+### More Levels
+
+## Saturated Models
+
+
+
+* introduce second factor
+* introduce saturation
+    * main effects, interactions
+    * fully saturated model and redudant interactions
