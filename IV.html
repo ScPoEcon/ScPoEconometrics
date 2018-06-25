@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-22">
+<meta name="date" content="2018-06-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,13 +155,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="IV" class="section level1">
 <h1><span class="header-section-number">Chapter 9</span> Instrumental Variables</h1>
-<ol style="list-style-type: decimal">
-<li>wage = educ</li>
-<li>educ = ability</li>
-<li>ols estimator captures your ability</li>
-<li>you predict x by z and you only keep the variation that is in the error</li>
-</ol>
+<div id="simultaneity-bias" class="section level2">
+<h2><span class="header-section-number">9.1</span> Simultaneity Bias</h2>
+<ul>
+<li>Detroit has a large police force</li>
+<li>Detroit has a high crime rate</li>
+<li>Omaha has a small police force</li>
+<li>Omana has a small crime rate</li>
+</ul>
+<p>Do large police forces <strong>cause</strong> high crime rates?</p>
+<p>Absurd! Absurd? How could we use data to tell?</p>
+<p>We have the problem that large police forces and high crime rates covary positively in the data, and for obvious reasons: Cities want to protect their citizens and therefore respond to increased crime with increased police. Using mathematical symbols, we have the following <em>system of linear equations</em>, i.e. two equations which are <strong>jointly determined</strong>:</p>
+<span class="math display">\[\begin{align*}
+\text{crime}_{it} &amp;= f(\text{police}_{it}) \\
+\text{police}_{it}&amp;= g(\text{crime}_{it} )
+\end{align*}\]</span>
+<p>We need a factor that is outside this circular system, affecting <strong>only</strong> the size of the police force, but not the actual crime rate. Such a factor is called an <em>instrumental variable</em>.</p>
 
+</div>
 </div>
             </section>
 

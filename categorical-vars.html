@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-22">
+<meta name="date" content="2018-06-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,11 +155,111 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="categorical-vars" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> Categorial Variables: Dummies and Interactions</h1>
-<ol style="list-style-type: decimal">
-<li>if you only have educ categories, the estimate is like the conditional mean by educ</li>
-<li>if you have too many categories you will have empty bins</li>
-</ol>
+<p>Up until now, we have encountered only examples with <em>continuous</em> variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, that is, <span class="math inline">\(x,y \in \mathbb{R}\)</span>, so that a typical observation could have been <span class="math inline">\((y_i,x_i) = (1.5,5.62)\)</span>. There are many situations where it makes sense to think about the data in terms of <em>categories</em>, rather than continuous numbers. For example, whether an observation <span class="math inline">\(i\)</span> is <em>male</em> or <em>female</em>, whether a pixel on a screen is <em>black</em> or <em>white</em>, and whether a good was produced in <em>France</em>, <em>Germany</em>, <em>Italy</em>, <em>China</em> or <em>Spain</em> are all categorical classifications of data.</p>
+<p>Probably the simplest type of categorical variable is the <em>binary</em>, <em>boolean</em>, or just <em>dummy</em> variable. As the name suggests, it can take on only two values, <code>0</code> and <code>1</code>, or <code>TRUE</code> and <code>FALSE</code>. Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation <span class="math inline">\(i\)</span> <strong>is a member</strong> of a certain category <span class="math inline">\(j\)</span>. For example, we could have a variable called <code>is.male</code> that is <code>TRUE</code> whenever <span class="math inline">\(i\)</span> is male, and <code>FALSE</code> otherwise. A common way to represent this is with the so-called <em>indicator function</em> <span class="math inline">\(\mathbf{1}[\text{condition}]\)</span>,</p>
+<span class="math display">\[\begin{align*}
+\text{is.male}_i &amp;= \mathbf{1}[\text{sex}_i==\text{male}], \\
+\end{align*}\]</span>
+<p>which would just mean</p>
+<span class="math display">\[\begin{align*}
+\mathbf{1}[\text{sex}_i==\text{male}] &amp;= \begin{cases}
+                    1 &amp; \text{if }i\text{ is male} \\
+                    0 &amp; \text{if }i\text{ is female}. \\
+                 \end{cases}
+\end{align*}\]</span>
+<p>Notice the use of <code>x == y</code> to represent the relationship <em><code>x</code> is equal <code>y</code></em>, which is (very!) different from <code>x = y</code> meaning <em>assign <code>y</code> to <code>x</code></em>.</p>
+<p>In terms of a regression formulation, this is our model:</p>
+<p><span class="math display" id="eq:zero-one-reg">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} \tag{6.1}
+\]</span></p>
+<p>when our regressor is binary. Let’s run that regression here:</p>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = dta)
+## 
+## Coefficients:
+## (Intercept)            x  
+##       1.889        3.756</code></pre>
+<p>We have seen in the <code>app</code> launched via</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy&quot;</span>)</code></pre></div>
+<p>that the regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, <span class="math inline">\(E[y|x=0]\)</span> to the mean when <span class="math inline">\(x=1\)</span>, <span class="math inline">\(E[y|x=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let’s just refresh our memory by replicating the graph from the <code>app</code> here in figure <a href="categorical-vars.html#fig:x-zero-one">6.1</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:x-zero-one"></span>
+<img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $x \in \{0,1\}$. The red line is $E[y]$" width="672" />
+<p class="caption">
+Figure 6.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(x \in \{0,1\}\)</span>. The red line is <span class="math inline">\(E[y]\)</span>
+</p>
+</div>
+<p>Now suppose for a moment that in fact</p>
+<p><span class="math display">\[
+x_i = \begin{cases}
+          1 &amp; \text{if }i\text{ is male} \\
+            0 &amp; \text{if }i\text{ is female}. \\
+   \end{cases}
+\]</span> and that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>’s annual labor income. The dummy variable version of the above regression is just</p>
+<span class="math display" id="eq:dummy-reg">\[
+y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \tag{6.2}
+\]</span> where
+<span class="math display">\[\begin{align*}
+\text{is.male}_i &amp;= \mathbf{1}[x_i==1], \\
+\end{align*}\]</span>
+<p>and the resulting estimates of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\alpha\)</span> are in fact the same. Here we see the estimates from <a href="categorical-vars.html#eq:dummy-reg">(6.2)</a>:</p>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ is.male, data = dta)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.40227 -0.50683 -0.09763  0.66287  1.53463 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
+## is.male1      3.7558     0.3902   9.626 1.60e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.868 on 18 degrees of freedom
+## Multiple R-squared:  0.8374, Adjusted R-squared:  0.8283 
+## F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08</code></pre>
+<p>It is interesting to note that the estimate for <span class="math inline">\(\alpha = 3.7558\)</span> (and <span class="math inline">\(\beta_1 = 3.7558\)</span>!) is the same as the difference in conditional means:</p>
+<p><span class="math display">\[E[y|x=1] - E[y|x=0]=3.7558.\]</span></p>
+<div id="categorical-variables-in-r-factor" class="section level2">
+<h2><span class="header-section-number">6.1</span> Categorical Variables in <code>R</code>: <code>factor</code></h2>
+<p>We have just seen that there is a <code>1:1</code> equivalence between running a regression on <span class="math inline">\(x_i\in\{0,1\}\)</span> and on coding <span class="math inline">\(\text{is.male}_i = \mathbf{1}[x_i==1]\)</span>. This equivalence is harder to see if we move beyond <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>, but consider something like <span class="math inline">\(x_i \in \{\text{blue,green,yellow,red}\}\)</span>. In <code>R</code> parlance, <em>blue, green, yellow, red</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
+<span class="math display">\[\begin{align*}
+\text{is.blue}_i &amp;= \mathbf{1}[x_i==\text{blue}] \\
+\text{is.green}_i &amp;= \mathbf{1}[x_i==\text{green}] \\
+\text{is.yellow}_i &amp;= \mathbf{1}[x_i==\text{yellow}] \\
+\text{is.red}_i &amp;= \mathbf{1}[x_i==\text{red}] 
+\end{align*}\]</span>
+<p>but you can see that this is cumbersome. There is a better solution for us available!</p>
+<p><code>R</code> has extensive support for categorical variables built-in. The relevant data type representing a categorical variable, or a dummy, is called <code>factor</code>. We encountered them as basic data types in section <a href="R-intro.html#data-types">1.5</a> already, but it is worth repeating this here. We have seen that a factor <em>categorizes</em> a usually small number of numeric values by <em>labels</em>, as in this example which is similar to what I used to create regressor <code>is.male</code> for the above regression:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">is.male =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>))
+is.male</code></pre></div>
+<pre><code>## [1] FALSE TRUE  TRUE  FALSE
+## Levels: FALSE TRUE</code></pre>
+<p>You can see the result is a vector object of type <code>factor</code> with 4 entries, whereby <code>0</code> is represented as <code>FALSE</code> and <code>1</code> as <code>TRUE</code>. An other example could be if we wanted to record a variable <em>sex</em> instead, and we could do</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sex =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>,<span class="st">&quot;male&quot;</span>))
+sex</code></pre></div>
+<pre><code>## [1] female male   male   female
+## Levels: female male</code></pre>
+<p>You can see that this is almost identical, just the <em>labels</em> are different.</p>
+<div id="more-levels" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> More Levels</h3>
+</div>
+</div>
+<div id="saturated-models" class="section level2">
+<h2><span class="header-section-number">6.2</span> Saturated Models</h2>
+<ul>
+<li>introduce second factor</li>
+<li>introduce saturation
+<ul>
+<li>main effects, interactions</li>
+<li>fully saturated model and redudant interactions</li>
+</ul></li>
+</ul>
 
+</div>
 </div>
             </section>
 
