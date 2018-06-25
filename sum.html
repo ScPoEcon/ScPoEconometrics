@@ -336,21 +336,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="summarize-two" class="section level2">
 <h2><span class="header-section-number">2.3</span> Summarizing Two Variables</h2>
 <p>We often are interested in how two (or more!) variables are related to each other. The core concepts here are <em>covariance</em> and <em>correlation</em>. Let’s generate some data on <code>x</code> and <code>y</code> and plot them against each other:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
+<div class="figure" style="text-align: center"><span id="fig:x-y-corr"></span>
+<img src="ScPoEconometrics_files/figure-html/x-y-corr-1.png" alt="How are $x$ and $y$ related?" width="672" />
+<p class="caption">
+Figure 2.1: How are <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> related?
+</p>
+</div>
 <p>Taking as example the data in this plot, the concepts <em>covariance</em> and <em>correlation</em> relate to the following type of question:</p>
 <div class="note">
 <p>
-Given we observe high value of <code>x</code> (like 2, say), can we expect a high or a low value of <code>y</code>, on average? Something like 2 or rather something like -2?
+Given we observe high value of <code>x</code> (like 2, say), can we expect a high or a low value of <code>y</code>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
 </p>
 </div>
 <p><br> The answer to this type of question can be addressed by computing the covariance of both variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cov</span>(x,y)  </code></pre></div>
 <pre><code>## [1] 1.041195</code></pre>
 <p>Here, this gives a positive number, 1.04, indicating that as one variable lies above it’s average, the other one does as well. In other words, it indicates a <strong>positive relationship</strong>. What is less clear, however, how to interpret the magnitude of 1.04. Is that a <em>strong</em> or a <em>weak</em> positive association?</p>
-<p>In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the <strong>correlation</strong>, which is obtained by <em>standardizing</em> each variable. This way, we get rid of the units problem:</p>
+<p>In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the <strong>correlation</strong>, which is obtained by <em>standardizing</em> each variable. By <em>standardizing</em> a variable <span class="math inline">\(x\)</span> one means to divide <span class="math inline">\(x\)</span> by its standard deviation:</p>
+<p><span class="math display">\[
+z = \frac{x}{\sigma_x}
+\]</span></p>
+<p>The <em>correlation coefficient</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, <span class="math inline">\(r_{x,y}\)</span> is then defined as</p>
+<p><span class="math display">\[
+r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
+\]</span></p>
+<p>and we get rid of the units problem. In <code>R</code>, you can call directly</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(x,y)</code></pre></div>
 <pre><code>## [1] 0.9142495</code></pre>
-<p>This is better. Given that the correlation has to lie in <span class="math inline">\([-1,1]\)</span>, a value of 0.91 is indicative of a rather strong positive relationship.</p>
+<p>Now this is better. Given that the correlation has to lie in <span class="math inline">\([-1,1]\)</span>, a value of 0.91 is indicative of a rather strong positive relationship for the data in figure <a href="sum.html#fig:x-y-corr">2.1</a></p>
 </div>
 <div id="the-tidyverse" class="section level2">
 <h2><span class="header-section-number">2.4</span> The <code>tidyverse</code></h2>
