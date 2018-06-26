@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-25">
+<meta name="date" content="2018-06-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -125,7 +125,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a></li>
 <li class="chapter" data-level="4" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>4</b> Standard Errors</a></li>
 <li class="chapter" data-level="5" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>5</b> Multiple Regression</a></li>
-<li class="chapter" data-level="6" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>6</b> Categorial Variables: Dummies and Interactions</a></li>
+<li class="chapter" data-level="6" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>6</b> Categorial Variables</a></li>
 <li class="chapter" data-level="7" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>7</b> Quantile Regression</a></li>
 <li class="chapter" data-level="8" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>8</b> Panel Data</a></li>
 <li class="chapter" data-level="9" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>9</b> Instrumental Variables</a></li>
@@ -276,30 +276,45 @@ Figure 3.4: Better line with non-linear data!
 </p>
 </div>
 </div>
+</div>
+<div id="dgp-and-models" class="section level2">
+<h2><span class="header-section-number">3.2</span> DGP and Models</h2>
+<p>When we talk about a <strong>model</strong> in econometrics, we are making assumptions about how <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are related in the data. For example, we have repeatedly seen the following equation,</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
+\]</span></p>
+<p>which is a particular kind of model. What <em>generated</em> our data, on the other hand, is an unknown mechanism that we want to investigate: it’s the <strong>data generating process</strong> (GDP), and our model is our assumption about how we think the GDP could look like. A natural question that comes to mind here, is <em>how to discriminate between models</em>, or in other words: which model to choose?</p>
 <div id="assessing-the-goodness-of-fit" class="section level3">
-<h3><span class="header-section-number">3.1.6</span> Assessing the <em>Goodness of Fit</em></h3>
-<p>There is a convenient measure for how good our statistical model fits the data. It is called <span class="math inline">\(R^2\)</span>, also called the <em>coefficient of determination</em>. There are several equivalent definitions, and for our present case we will use the following:</p>
+<h3><span class="header-section-number">3.2.1</span> Assessing the <em>Goodness of Fit</em></h3>
+<p>In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called <span class="math inline">\(R^2\)</span> (<em>R squared</em>), also called the <em>coefficient of determination</em>. It is a statistic that makes use of a <em>benchmark</em> model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:</p>
+<p><span class="math display" id="eq:ssr-mod">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{3.5} 
+\]</span></p>
+<p>and let us write down the benchmark model as follows:</p>
+<p><span class="math display" id="eq:ssr-bench">\[
+y_i = \beta_0 + \varepsilon_i \tag{3.6}
+\]</span></p>
+<p>As you can see, the benchmark model in <a href="linreg.html#eq:ssr-bench">(3.6)</a> is a model with an intercept only. You will see in one of our <code>apps</code> that this delivers an estimate of <span class="math inline">\(y\)</span>. It is a benchmark because it does not include <em>any</em> explanatory variables, so we can compare against this other models which do in fact contain some <span class="math inline">\(x\)</span>’s. Back to our <span class="math inline">\(R^2\)</span> statistic: there are several equivalent definitions, and for our present case we will use the following.</p>
 <div class="tip">
 <p>
-The coefficient of determination is defined by <span class="math display"><span class="math display">\[R^2 = 1 - \frac{\text{SSR from our model}}{\text{SSR of }y_i = \beta_0 + \varepsilon_i}.\]</span></span> In the simple linear model, we have that <span class="math inline"><span class="math inline">\(R^2 \in [0,1]\)</span></span>, where <span class="math inline"><span class="math inline">\(R^2 = 1\)</span></span> would indicate that our model is a <strong>very good</strong> fit to the data, and vice versa for <span class="math inline"><span class="math inline">\(R^2 = 0\)</span></span>. You can interpret the value of <span class="math inline"><span class="math inline">\(R^2\)</span></span> as the fraction of variation in outcome <span class="math inline"><span class="math inline">\(y\)</span></span> that is accounted for by explanatory variable <span class="math inline"><span class="math inline">\(x\)</span></span>.
+The <strong>coefficient of determination</strong> (<em>R squared</em>) is defined by <span class="math display"><span class="math display">\[R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.\]</span></span> In the simple linear model, we have that <span class="math inline"><span class="math inline">\(R^2 \in [0,1]\)</span></span>, where <span class="math inline"><span class="math inline">\(R^2 = 1\)</span></span> would indicate that our model is a <strong>very good</strong> fit to the data, and vice versa for <span class="math inline"><span class="math inline">\(R^2 = 0\)</span></span>. You can interpret the value of <span class="math inline"><span class="math inline">\(R^2\)</span></span> as the fraction of variation in outcome <span class="math inline"><span class="math inline">\(y\)</span></span> that is accounted for by explanatory variable <span class="math inline"><span class="math inline">\(x\)</span></span>.
 </p>
 </div>
-<p>You can see in the above definition that this measure relates the quality of our model to a very basic <em>benchmark</em> model, i.e. a model without any regressors: As you will see in the <code>apps</code> to this chapter, the model <span class="math inline">\(y_i = \beta_0 + \varepsilon_i\)</span> simply estimates the mean of <span class="math inline">\(y\)</span>. Given that the number SSR is a summary of how large a total error we make, and given that this benchmark model is kind of the worst case scenario in this respect, you can see how the <span class="math inline">\(R^2\)</span> statistic will behave: the smaller the SSR from our model in relation to the baseline model, the higher it will be.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data =<span class="st"> </span><span class="kw">generate_data</span>(<span class="dt">sigma =</span> <span class="dv">2</span>,<span class="dt">n=</span><span class="dv">4</span>)
-<span class="co"># op &lt;- par(mfrow=c(1,2),pin=c(2.8,2.5))</span>
-op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
-<span class="kw">plot_unexp_SSR</span>(plot_data)
-<span class="kw">plot_total_dev</span>(plot_data)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/r-squared-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(op)</code></pre></div>
+<p><br> The workings of this statistic are illustrated in the following figure <a href="linreg.html#fig:r-squared">3.5</a>. There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>. The right panel shows the SSR of <span class="math inline">\(y_i = \beta_0 + \varepsilon_i\)</span>. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.</p>
+<div class="figure" style="text-align: center"><span id="fig:r-squared"></span>
+<img src="ScPoEconometrics_files/figure-html/r-squared-1.png" alt="Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square." width="672" />
+<p class="caption">
+Figure 3.5: Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. <span class="math inline">\(R^2\)</span> compares the size of each red square to each blue square.
+</p>
+</div>
 </div>
 </div>
 <div id="lm-example1" class="section level2">
-<h2><span class="header-section-number">3.2</span> An Example: California Student Test Scores</h2>
-<p>Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually. As it turns out, <code>R</code> can do this much more precisely, and very fast!</p>
+<h2><span class="header-section-number">3.3</span> An Example: California Student Test Scores</h2>
+<p>Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our <code>apps</code>. As it turns out, <code>R</code> can do this much more precisely, and very fast!</p>
 <p>Let’s explore how to do this, using a real life dataset taken from the <code>Ecdat</code> package which includes many economics-related dataset. In this example, we will use the <code>Caschool</code>dataset which contains the average test scores of 420 elementary schools in California along with some additional information.</p>
 <div id="loading-and-exploring-data" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Loading and exploring Data</h3>
+<h3><span class="header-section-number">3.3.1</span> Loading and exploring Data</h3>
 <p>We can explore which variables are included in the dataset using the <code>names()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Ecdat&quot;</span>) <span class="co"># Attach the Ecdat library</span>
 <span class="kw">names</span>(Caschool) <span class="co"># Display the variables of the Caschool dataset</span></code></pre></div>
@@ -317,7 +332,7 @@ op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mf
 ##  Max.   :706.8   Max.   :25.80   Max.   :55.328</code></pre>
 </div>
 <div id="fitting-a-linear-model" class="section level3">
-<h3><span class="header-section-number">3.2.2</span> Fitting a linear model</h3>
+<h3><span class="header-section-number">3.3.2</span> Fitting a linear model</h3>
 <p>Suppose a policymaker is interested in the following linear model:</p>
 <p><span class="math display">\[testscr_i = \beta_0 + \beta_1 \times str_i + \epsilon_i\]</span> Where <span class="math inline">\((testscr)_i\)</span> is the <em>average test score</em> for a given school <span class="math inline">\(i\)</span> and <span class="math inline">\((str)_i\)</span> is the <em>Student/Teacher Ratio</em> (i.e. the average number of students per teacher) in the same school <span class="math inline">\(i\)</span>. We can think of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> as the intercept and the slope of the regression line.</p>
 <p>The subscript <span class="math inline">\(i\)</span> indexes all unique elementary schools (<span class="math inline">\(i \in \{1, 2, 3, \dots 420\}\)</span>) and <span class="math inline">\(\epsilon_i\)</span> is the error, or <em>residual</em>, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the <em>sum of squared residuals</em> (SSR)).</p>
@@ -331,14 +346,14 @@ op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mf
 <div class="figure" style="text-align: center"><span id="fig:first-reg0"></span>
 <img src="ScPoEconometrics_files/figure-html/first-reg0-1.png" alt="Student Teacher Ratio vs Test Scores" width="672" />
 <p class="caption">
-Figure 3.5: Student Teacher Ratio vs Test Scores
+Figure 3.6: Student Teacher Ratio vs Test Scores
 </p>
 </div>
 <p>Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let’s ask <code>R</code>!</p>
 </div>
 </div>
 <div id="the-lm-function" class="section level2">
-<h2><span class="header-section-number">3.3</span> The <code>lm()</code> function</h2>
+<h2><span class="header-section-number">3.4</span> The <code>lm()</code> function</h2>
 <p>We will use the built-in <code>lm()</code> function to estimate the coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> using the data at hand. <code>lm</code> stands for <em>linear model</em>, which is what our representation in <a href="linreg.html#eq:abline">(3.1)</a> amounts to. This function typically only takes 2 arguments, <code>formula</code> and <code>data</code>:</p>
 <p><code>lm(formula, data)</code></p>
 <ul>
@@ -379,9 +394,9 @@ fit_california &lt;-<span class="st"> </span><span class="kw">lm</span>(<span cl
 ## Residual standard error: 18.58 on 418 degrees of freedom
 ## Multiple R-squared:  0.05124,    Adjusted R-squared:  0.04897 
 ## F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06</code></pre>
-<p>Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a <em>regression table</em>, and you will be able to decypher it by the end of this course.</p>
+<p>Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a <em>regression table</em>, and you will be able to decypher it by the end of this course. You should be able to find an interpret the <span class="math inline">\(R^2\)</span> though: Are we explaining a lot of the variance in <code>testscr</code> with this simple model, or not?</p>
 <div id="plotting-the-regression-line" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Plotting the regression line</h3>
+<h3><span class="header-section-number">3.4.1</span> Plotting the regression line</h3>
 <p>We can also use our <code>lm</code> fit to draw the regression line on top of our initial scatterplot, using the following syntax:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">formula =</span> testscr <span class="op">~</span><span class="st"> </span>str,
      <span class="dt">data =</span> Caschool,
@@ -391,7 +406,7 @@ fit_california &lt;-<span class="st"> </span><span class="kw">lm</span>(<span cl
 <div class="figure" style="text-align: center"><span id="fig:plot-reg1"></span>
 <img src="ScPoEconometrics_files/figure-html/plot-reg1-1.png" alt="Test Scores with Regression Line" width="672" />
 <p class="caption">
-Figure 3.6: Test Scores with Regression Line
+Figure 3.7: Test Scores with Regression Line
 </p>
 </div>
 <p>As you probably expected, the best line for schools’ Student/Teacher Ratio and its average test results is downward sloping.</p>
