@@ -262,16 +262,28 @@ lines(newdata$hp,newdata$y,lw=2)
 
 ### Assessing the *Goodness of Fit*
 
-There is a convenient measure for how good our statistical model fits the data. It is called $R^2$, also called the *coefficient of determination*. There are several equivalent definitions, and for our present case we will use the following:
+There is a convenient measure for how good our statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose, we posit our standard representation of the best line:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:ssr-mod) 
+$$
+ 
+and let us write down the benchmark model as follows:
+
+$$
+y_i = \beta_0 + \varepsilon_i (\#eq:ssr-bench)
+$$
+
+As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of $y$. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
 
 ```{block,type="tip"}
-The coefficient of determination is defined by $$R^2 = 1 - \frac{\text{SSR from our model}}{\text{SSR of }y_i = \beta_0 + \varepsilon_i}.$$
+The coefficient of determination (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR of }\ref{eq:ssr-mod}}{\text{SSR of }\ref{eq:ssr-bench}}.$$
 In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would indicate that our model is a **very good** fit to the data, and vice versa for $R^2 = 0$. You can interpret the value of $R^2$ as the fraction of variation in outcome $y$ that is accounted for by explanatory variable $x$.
 ```
 
-You can see in the above definition that this measure relates the quality of our model to a very basic *benchmark* model, i.e. a model without any regressors: As you will see in the `apps` to this chapter, the model $y_i = \beta_0 + \varepsilon_i$ simply estimates the mean of $y$. Given that the number SSR is a summary of how large a total error we make, and given that this benchmark model is kind of the worst case scenario in this respect, you can see how the $R^2$ statistic will behave: the smaller the SSR from our model in relation to the baseline model, the higher it will be.
+You can see in the above definition that this measure relates the quality of our model to a very basic *benchmark* model, i.e. a model without any regressors: As you will see in the `apps` to this chapter, the model $y_i = \beta_0 + \varepsilon_i$ simply estimates the mean of $y$. Given that the number SSR is a summary of how large a total error we make, this particular benchmark model is kind of the worst case scenario in this respect, as we don't use *any* explanatory variable at all. The $R^2$ statistic tells us how much better our model performs with respect to this benchmark. The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared).
 
-```{r r-squared}
+```{r r-squared,echo=FALSE,fig.align='center',fig.cap='Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.'}
 plot_data = generate_data(sigma = 2,n=4)
 # op <- par(mfrow=c(1,2),pin=c(2.8,2.5))
 op <- par(mfrow=c(1,2))
@@ -279,6 +291,8 @@ plot_unexp_SSR(plot_data)
 plot_total_dev(plot_data)
 par(op)
 ```
+
+Here, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. The right panel shows the SSR of $y_i = \beta_0 + \varepsilon_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation. 
 
 ## An Example: California Student Test Scores {#lm-example1}
 
