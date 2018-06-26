@@ -7,33 +7,18 @@ In the previous chapter we have seen how the OLS method can produce estimates ab
 How *confident* should we be about the estimated values $\hat{\beta}_0$ and $\hat{\beta}_1$?
 </center>
 ```
-  
+<br>
   
 The discussion here is closely linked to the practical exercise that you did by typing
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
+launchApp("sampler") # and
 launchApp("standard_errors_simple") # and
-launchApp("standard_errors_changeN") # and
+launchApp("standard_errors_changeN") 
 ```
 
-which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are as well just statistics computed from the data, the same fact will apply. One question you should ask now, however, is:
-
-```{block,type="note"}
-<center>
-What exactly is a *data generating process* (or short, a *GDP*)? And what do $\beta_0$ and $\beta_1$ have to do with it?
-</center>
-```
-
-## DGP and Models 
-
-When we talk about a **model** in econometrics, we are making assumptions about how $y$ and $x$ are related in the data. For example, we have repeatedly seen the following equation,
-
-$$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i  (\#eq:abline2)
-$$ 
-which is a particular kind of model. What *generated* our data, on the other hand, is an unknown mechanism that we want to investigate: it's the **data generating process**, and our model is our assumption about how we think the GDP could look like.
-A first order concern is that our model in \@ref(eq:abline2) might not be a particularly *good* model for the GDP at hand. How would that impact our estimates for $\hat{\beta}_0$ and $\hat{\beta}_1$? And what's the interpretation of the error $\varepsilon$ now?
+which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are as well just statistics computed from the data, the same fact will apply. 
 
 * missing variables go into error
 * more observations allow to generate better estimates

@@ -17,7 +17,7 @@ How do you think `hp` and `wt` will influence how many miles per gallon of gasol
 
 With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@ref(fig:plane3D-reg):
 
-```{r plane3D-reg,echo=FALSE,fig.align='centre',fig.cap='Multiple Regression - a plane in 3D'}
+```{r plane3D-reg,echo=FALSE,fig.align='center',fig.cap='Multiple Regression - a plane in 3D. The red lines indicate the residual for each observation.'}
 # add grid lines with this https://stackoverflow.com/questions/40748949/match-gridlines-to-axis-ticks-in-3d-regression-plot-persp-and-rockchalk
 library(plot3D)
 data(mtcars)
@@ -63,7 +63,7 @@ Keeping the value of `wt` fixed for a certain car, what would be the impact on `
 <br>
 We ask this kind of question all the time in econometrics. In figure \@ref(fig:plane3D-reg) you clearly see that both explanatory variables have a negative impact on the outcome of interest: as one increases either the horse power or the weight of a car, one finds that miles per gallon decreases. What is kind of hard to read off is *how negative* an impact each variable has in isolation. 
 
-The kind of question asked here is so common that indeed it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. To answer the question, thus, multiple regression to the rescue:
+The kind of question asked here is so common that indeed it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. To answer the question, thus, **multiple regression** to the rescue:
 <br>
 
 ```{r,echo=FALSE}
@@ -80,7 +80,7 @@ Holding all other variables fixed at their observed values - or *ceteris paribus
 
 With the tools introduced in \@ref(lm-example1) it is fairly straigtforward to estimate models with more than one dependent variables, for example adding families' average income to our previous model:
 
-$$testscr_i = \beta_0 + \beta_1  str_i + \beta_2  avginc_i + \epsilon_i$$
+$$\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \epsilon_i$$
 We can incoporate this new variable to our model by simply adding it to our `formula`:
 
 ```{r lmfit-multiv,warning=FALSE,message=FALSE}
@@ -89,7 +89,7 @@ fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
 summary(fit_multivariate)
 ```
 
-Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane*.
+Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane* [Interactive!].
 
 ```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.'}
 library(plotly)

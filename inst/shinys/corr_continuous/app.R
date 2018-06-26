@@ -1,12 +1,11 @@
 library(mvtnorm)
-library(ggplot2)
-library(reshape2)
+
 
 ui <- fluidPage(
   br(),
   br(),
   sliderInput("c", "Correlation r", min = -1, max = 1, step = .05, value = 0),
-  
+
   plotOutput("corrPlot"))
 
 server <- function(input,output){

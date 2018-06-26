@@ -89,12 +89,21 @@ generate_data = function(int = 0.5,
   data.frame(x, y, y_hat, y_bar, error, meandev)
 }
 
-plot_total_dev = function(reg_data) {
-  plot(reg_data$x, reg_data$y, 
+plot_total_dev = function(reg_data,title=NULL) {
+  if (is.null(title)){
+    plot(reg_data$x, reg_data$y, 
        xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   rect(xleft = reg_data$x, ybottom = reg_data$y,
          xright = reg_data$x + abs(reg_data$meandev), ytop = reg_data$y - reg_data$meandev, density = -1,
          col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA)
+  } else {
+    plot(reg_data$x, reg_data$y, 
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey",main=title,ylim=c(-2,10.5))
+     axis(side=2,at=seq(-2,10,by=2))
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$meandev), ytop = reg_data$y - reg_data$meandev, density = -1,
+         col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA)
+  }
   # arrows(reg_data$x, reg_data$y_bar,
   #        reg_data$x, reg_data$y,
   #        col = 'grey', lwd = 1, lty = 3, length = 0.2, angle = 20)
@@ -124,13 +133,23 @@ plot_unexp_dev = function(reg_data) {
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
 }
 
-plot_unexp_SSR = function(reg_data,asp=1) {
-  plot(reg_data$x, reg_data$y,
+plot_unexp_SSR = function(reg_data,asp=1,title=NULL) {
+  if (is.null(title)){
+      plot(reg_data$x, reg_data$y,
        xlab = "x", ylab = "y", pch = 20, cex = 2, 
   rect(xleft = reg_data$x, ybottom = reg_data$y,
          xright = reg_data$x + abs(reg_data$error), ytop = reg_data$y - reg_data$error, density = -1,
          col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5), border = NA),asp=asp)
-  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+      abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+  } else {
+      plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 2, 
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$error), ytop = reg_data$y - reg_data$error, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5), border = NA),asp=asp,main=title)
+    axis(side=2,at=seq(-2,10,by=2))
+      abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+  }
 }
 
 plot_exp_dev = function(reg_data) {
@@ -260,9 +279,20 @@ plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 lines(newdata$hp,newdata$y,lw=2)
 ```
 
+
+## DGP and Models 
+
+When we talk about a **model** in econometrics, we are making assumptions about how $y$ and $x$ are related in the data. For example, we have repeatedly seen the following equation,
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
+$$ 
+
+which is a particular kind of model. What *generated* our data, on the other hand, is an unknown mechanism that we want to investigate: it's the **data generating process** (GDP), and our model is our assumption about how we think the GDP could look like. A natural question that comes to mind here, is *how to discriminate between models*, or in other words: which model to choose?
+
 ### Assessing the *Goodness of Fit*
 
-There is a convenient measure for how good our statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose, we posit our standard representation of the best line:
+In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:
 
 $$
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:ssr-mod) 
@@ -274,29 +304,31 @@ $$
 y_i = \beta_0 + \varepsilon_i (\#eq:ssr-bench)
 $$
 
-As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of $y$. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
+As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
 
 ```{block,type="tip"}
-The coefficient of determination (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR of }\ref{eq:ssr-mod}}{\text{SSR of }\ref{eq:ssr-bench}}.$$
+The **coefficient of determination** (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
 In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would indicate that our model is a **very good** fit to the data, and vice versa for $R^2 = 0$. You can interpret the value of $R^2$ as the fraction of variation in outcome $y$ that is accounted for by explanatory variable $x$.
 ```
-
-You can see in the above definition that this measure relates the quality of our model to a very basic *benchmark* model, i.e. a model without any regressors: As you will see in the `apps` to this chapter, the model $y_i = \beta_0 + \varepsilon_i$ simply estimates the mean of $y$. Given that the number SSR is a summary of how large a total error we make, this particular benchmark model is kind of the worst case scenario in this respect, as we don't use *any* explanatory variable at all. The $R^2$ statistic tells us how much better our model performs with respect to this benchmark. The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared).
+<br>
+The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared). There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. The right panel shows the SSR of $y_i = \beta_0 + \varepsilon_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.
 
 ```{r r-squared,echo=FALSE,fig.align='center',fig.cap='Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.'}
 plot_data = generate_data(sigma = 2,n=4)
 # op <- par(mfrow=c(1,2),pin=c(2.8,2.5))
+# op <- par(mfrow=c(1,2),cex=2, cex.lab=0.5, cex.axis=0.5, cex.main=1, mgp=c(2, 
+# 1, 0), omi=c(0.5,0.25,0.25, 0.25))
 op <- par(mfrow=c(1,2))
-plot_unexp_SSR(plot_data)
-plot_total_dev(plot_data)
+plot_unexp_SSR(plot_data,title="SSR our model")
+plot_total_dev(plot_data,title="SSR of benchmark")
 par(op)
 ```
 
-Here, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. The right panel shows the SSR of $y_i = \beta_0 + \varepsilon_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation. 
+ 
 
 ## An Example: California Student Test Scores {#lm-example1}
 
-Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually. As it turns out, `R` can do this much more precisely, and very fast!
+Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our `apps`. As it turns out, `R` can do this much more precisely, and very fast!
 
 Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool`dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
 
@@ -371,7 +403,7 @@ fit_california <- lm(formula = testscr ~ str, data = Caschool)
 summary(fit_california) 
 ```
 
-Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a *regression table*, and you will be able to decypher it by the end of this course.
+Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a *regression table*, and you will be able to decypher it by the end of this course. You should be able to find an interpret the $R^2$ though: Are we explaining a lot of the variance in `testscr` with this simple model, or not?
 
 ### Plotting the regression line
 
