@@ -1,5 +1,11 @@
 # Instrumental Variables {#IV}
 
+* Measurement error
+* Omitted Variable Bias
+* Reverse Causality / Simultaneity Bias
+
+are all called *endogeneity* problems. 
+
 ## Simultaneity Bias
 
 * Detroit has a large police force

@@ -1,5 +1,7 @@
 # Categorial Variables {#categorical-vars}
 
+TODO: excluded category vs intercept?
+
 Up until now, we have encountered only examples with *continuous* variables $x$ and $y$, that is, $x,y \in \mathbb{R}$, so that a typical observation could have been $(y_i,x_i) = (1.5,5.62)$. There are many situations where it makes sense to think about the data in terms of *categories*, rather than continuous numbers. For example, whether an observation $i$ is *male* or *female*, whether a pixel on a screen is *black* or *white*, and whether a good was produced in *France*, *Germany*, *Italy*, *China* or *Spain* are all categorical classifications of data. 
 
 Probably the simplest type of categorical variable is the *binary*, *boolean*, or just *dummy* variable. As the name suggests, it can take on only two values, `0` and `1`, or `TRUE` and `FALSE`. Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation $i$ **is a member** of a certain category $j$. For example, we could have a variable called `is.male` that is `TRUE` whenever $i$ is male, and `FALSE` otherwise. A common way to represent this is with the so-called *indicator function* $\mathbf{1}[\text{condition}]$, 
