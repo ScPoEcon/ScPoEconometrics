@@ -84,9 +84,19 @@ You are free to:
 * Share — copy and redistribute the material in any medium or format
 * Adapt — remix, transform, and build upon the material
 
-Under the following **terms**:
+**under the following terms**:
 
-1. Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+1. Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. We are happy to suggest the following citation if you use our material in your work:
+
+```
+@book{
+  oswald_robin_2018, 
+  title={Introduction to Econometrics with R},
+  url={https://scpoecon.github.io/ScPoEconometrics/}, 
+  publisher={github.com}, 
+  author={Oswald, Florian and Robin, Jean-Marc}, year={2018}
+}
+```
 2. NonCommercial — You may not use the material for commercial purposes.
 3. ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 

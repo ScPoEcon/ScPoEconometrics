@@ -12,5 +12,6 @@ _book*
 ^.*\.tex$
 images
 data/.keep
+^.*\.md$
 js/
 ^appveyor\.yml$
