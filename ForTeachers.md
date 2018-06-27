@@ -6,7 +6,7 @@ This document contains info for teachers (at SciencesPo and elsewhere) who want 
 ## Outline and Philosophie
 
 * This is an introductory course to econometrics taught to 2nd year students at SciencesPo
-* The course is mandatory for the Economics and Society major. In the first year, this means about 116 students across several campuses of SciencesPo.
+* The course is mandatory for the Economics and Society major.
 * Based on our experience teaching this course for many years, the traditional setup of teaching econometrics was found to be unsuitable. 
 	* The traditional curriculum assumes some basic maths knowledge, summation notation for example, as well as some basic statistics.
 		* Both maths and stats are taught in the first year.
