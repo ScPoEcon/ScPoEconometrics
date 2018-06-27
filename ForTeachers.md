@@ -6,9 +6,11 @@ This document contains info for teachers (at SciencesPo and elsewhere) who want 
 ## Outline and Philosophie
 
 * This is an introductory course to econometrics taught to 2nd year students at SciencesPo
-* The course is mandatory for the major “Society and Economics”. In the first year, this means about 116 students across several campuses of SciencesPo.
-* Based on JMR’s experience teaching this course for many years, the traditional setup of teaching econometrics was found to be unsuitable. 
+* The course is mandatory for the Economics and Society major. In the first year, this means about 116 students across several campuses of SciencesPo.
+* Based on our experience teaching this course for many years, the traditional setup of teaching econometrics was found to be unsuitable. 
 	* The traditional curriculum assumes some basic maths knowledge, summation notation for example, as well as some basic statistics.
+		* Both maths and stats are taught in the first year.
+		* It seems that for many students this is too abstract (or not interesting):
 	* The distribution of student evaluations was always *bimodal*: some students thought it was great, but didn’t go far enough, and a relatively larger number thought it was much too hard and they didn’t get much out of it.
 * This edition of the course uses only minimal maths and statistics
 	* We are focusing on the lower mode of the above mentioned student evaluations population.
@@ -54,13 +56,14 @@ This document contains info for teachers (at SciencesPo and elsewhere) who want 
     	* every group gets their separate channel
     	* every teacher is responsible to manage questions in their group’s channel
     	* general questions should be asked in the #general channel
-    	* this will allow me to get a global view of what is going on
-    * please communicate with your students ONLY via slack, not via email.
+    	* using this technology is a viable way for me to maintain a global view of how this course is going in the various locations. If I can see what you and your students are talking about, we can react fast to adapt the course. On the other hand, if I have to read through several threaded emails back and forth between you and your students before I can understand what the problem is, this will be much harder (read: *impossible*) to do.
+    * I **strongly recommend** to communicate with your students via slack, not via email.
+    	* When working with software and computers, there is **ALWAYS** another student who as exactly the same problem as the one you are currently emailing to. The economies of scale are almost unlimited in this domain.
     * I would prefer if you communicated with me as well on slack. You can send private messages.
 
 ## TODO list teachers
 
-If you want to teach this course at SciencesPo, abiding by the following list is **mandatory**. All of those steps are required to ensure a consistent level of quality:
+To ensure consistency in the department's approach to the *Introduction to Econometrics* curriculum, instructors are strongly encouraged to follow the following guidelines.
 
 1. sign up to slack: send me an email at florian.oswald@sciencespo.fr so I can add you
 2. get a free account on github.com
