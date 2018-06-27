@@ -38,7 +38,7 @@ To get started, we'll use `R` like a simple calculator.
 #### Addition, Subtraction, Multiplication and Division {-}
 
 | Math          | `R`     | Result    |
-|---------------|---------|-----------|
+|:-------------:|:-------:|:---------:|
 | $3 + 2$       | `3 + 2` | `r 3 + 2` |
 | $3 - 2$       | `3 - 2` | `r 3 - 2` |
 | $3 \cdot2$    | `3 * 2` | `r 3 * 2` |
@@ -47,7 +47,7 @@ To get started, we'll use `R` like a simple calculator.
 #### Exponents  {-}
 
 | Math         | `R`             | Result            |
-|--------------|-----------------|-------------------|
+|:-------------:|:-------:|:---------:|
 | $3^2$        | `3 ^ 2`         | `r 3 ^ 2`         |
 | $2^{(-3)}$   | `2 ^ (-3)`      | `r 2 ^ (-3)`      |
 | $100^{1/2}$  | `100 ^ (1 / 2)` | `r 100 ^ (1 / 2)` |
@@ -57,7 +57,7 @@ To get started, we'll use `R` like a simple calculator.
 #### Mathematical Constants  {-}
 
 | Math         | `R`             | Result            |
-|--------------|-----------------|-------------------|
+|:------------:|:---------------:|:-----------------:|
 | $\pi$        | `pi`            | `r pi`            |
 | $e$          | `exp(1)`        | `r exp(1)`        |
 
@@ -66,7 +66,7 @@ To get started, we'll use `R` like a simple calculator.
 Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logarithm. There is no `ln()` in `R`, instead it uses `log()` to mean the natural logarithm.
 
 | Math              | `R`                 | Result                |
-|-------------------|---------------------|-----------------------|
+|:------------:|:---------------:|:-----------------:|
 | $\log(e)$         | `log(exp(1))`       | `r log(exp(1))`       |
 | $\log_{10}(1000)$ | `log10(1000)`       | `r log10(1000)`       |
 | $\log_{2}(8)$     | `log2(8)`           | `r log2(8)`           |
@@ -75,7 +75,7 @@ Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logar
 #### Trigonometry  {-}
 
 | Math            | `R`           | Result          |
-|-----------------|---------------|-----------------|
+|:------------:|:---------------:|:-----------------:|
 | $\sin(\pi / 2)$ | `sin(pi / 2)` | `r sin(pi / 2)` |
 | $\cos(0)$       | `cos(0)`      | `r cos(0)`      |
 
@@ -97,7 +97,7 @@ Frequently one of the most difficult things to do when learning `R` is asking fo
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
 - Provide the full text of any errors you have received.
-- Provide enough code to recreate the error. Often for the purpose of this course, you could simply email your entire `.R` or `.Rmd` file.
+- Provide enough code to recreate the error. Often for the purpose of this course, you could simply post your entire `.R` or `.Rmd` to `slack`.
 - Sometimes it is also helpful to include a screenshot of your entire RStudio window when the error occurs.
 
 If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process. Do not be discouraged by running into errors and difficulties when learning `R`. (Or any technical skill.) It is simply part of the learning process.
@@ -122,7 +122,7 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
 
 ## Data Types {#data-types}
 
-`R` has a number of basic data *types*.
+`R` has a number of basic *data types*. While `R` is not a *strongly typed language* (i.e. you can be agnostic about types most of the times), it is useful to know what data types are available to you:
 
 - Numeric
     - Also known as Double. The default type when dealing with numbers.
@@ -146,16 +146,16 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
 `R` also has a number of basic data *structures*. A data structure is either homogeneous (all elements are of the same data type) or heterogeneous (elements can be of more than one data type).
 
 | Dimension | **Homogeneous** | **Heterogeneous** |
-|-----------|-----------------|-------------------|
+|:---------:|:---------------:|:-----------------:|
 | 1         | Vector          | List              |
 | 2         | Matrix          | Data Frame        |
-| 3+        | Array           |                   |
+| 3+        | Array           |    nested Lists               |
 
 ### Vectors
 
-Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
+Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with something like `[7]` where `7` is the index of the first element of that row.
 
-Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine."" As the name suggests, it combines a list of elements separated by commas. 
+Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine."" As the name suggests, it combines a list of elements separated by commas. [you should type all of those examples into your `R` console!!]
 
 ```{r}
 c(1, 3, 5, 7, 8, 9)
@@ -174,7 +174,7 @@ The pros and cons of these two are well beyond the scope of this book, but know 
 
 If you wish to use `<-`, you will still need to use `=`, however only for argument passing. Some users like to keep assignment (`<-`) and argument passing (`=`) separate. No matter what you choose, the more important thing is that you **stay consistent**. Also, if working on a larger collaborative project, you should use whatever style is already in place.
 
-Because vectors must contains elements that are all the same type, `R` will automatically coerce to a single type when attempting to create a vector that combines multiple types.
+Because vectors must contain elements that are all the same type, `R` will automatically coerce (i.e. convert) to a single type when attempting to create a vector that combines multiple types.
 
 ```{r}
 c(42, "Statistics", TRUE)
@@ -305,7 +305,7 @@ We see that when a function like `log()` is called on a vector `x`, a vector is 
 ### Logical Operators
 
 | Operator | Summary               | Example               | Result |
-|----------|-----------------------|-----------------------|--------|
+|:---------|:---------------------:|:---------------------:|:-------:|
 | `x < y`  | `x` less than `y`                | `3 < 42`               | `r 3 < 42`               |
 | `x > y`  | `x` greater than `y`             | `3 > 42`               | `r 3 > 42`               |
 | `x <= y` | `x` less than or equal to `y`    | `3 <= 42`              | `r 3 <= 42`              |
@@ -489,7 +489,7 @@ X * Y
 X / Y
 ```
 
-Note that `X * Y` is not matrix multiplication. It is element by element multiplication. (Same for `X / Y`). Instead, matrix multiplication uses `%*%`. Other matrix functions include `t()` which gives the transpose of a matrix and `solve()` which returns the inverse of a square matrix if it is invertible.
+Note that `X * Y` is **not** matrix multiplication. It is element by element multiplication. (Same for `X / Y`). Instead, matrix multiplication uses `%*%`. Other matrix functions include `t()` which gives the transpose of a matrix and `solve()` which returns the inverse of a square matrix if it is invertible.
 
 ```{r}
 X %*% Y
@@ -709,7 +709,7 @@ write.csv(example_data, "data/example-data.csv", row.names = FALSE)
 [The example data above can also be found here as a .csv file.](data/example-data.csv) To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
 
 ```{r, message = FALSE, warning = FALSE}
-library(readr)
+library(readr)  # you need `install.packages("readr")` once!
 example_data_from_csv = read_csv("data/example-data.csv")
 ```
 
@@ -818,7 +818,7 @@ mpg %>%
   select(manufacturer, model, year)
 ```
 
-All three approaches produce the same results. Which you use will be largely based on a given situation as well as user preference.
+All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
 
 When subsetting a data frame, be aware of what is being returned, as sometimes it may be a vector instead of a data frame. Also note that there are differences between subsetting a data frame and a tibble. A data frame operates more like a matrix where it is possible to reduce the subset to a vector. A tibble operates more like a list where it always subsets to another tibble.
 
@@ -829,7 +829,7 @@ When subsetting a data frame, be aware of what is being returned, as sometimes i
 In `R`, the if/else syntax is:
 
 ```{r, eval = FALSE}
-if (...) {
+if (condition = TRUE) {
   some R code
 } else {
   more R code
@@ -899,7 +899,7 @@ An **argument** is a variable which is used in the body of the function. Specify
 We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.
 
 \[
-\frac{x - \bar{x}}{s}
+z = \frac{x - \bar{x}}{s}
 \]
 
 In `R` we would write a function to do this. When writing a function, there are three thing you must do.
