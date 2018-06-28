@@ -11,7 +11,10 @@ ui <- fluidPage(
 
   fluidRow(column(width = 6, plotlyOutput("sample_f")),
            column(width = 3, plotlyOutput("hist_a_f")),
-           column(width = 3, plotlyOutput("hist_b_f")))
+           column(width = 3, plotlyOutput("hist_b_f"))),
+
+  fluidRow(column(6, offset = 6, align = 'center', verbatimTextOutput("counter_f")))
+
 )
 
 server <- function(input, output){
@@ -90,8 +93,10 @@ server <- function(input, output){
 
     ab[3:counter$j, ] %>% plot_ly() %>%
       add_histogram(x = ~b, histnorm = "probability") %>%
-      layout(title = "Distribution of Estimated Intercepts",
-             xaxis = list(title = "Estimated Intercepts", range = c(-20, 20)))
+      layout(xaxis = list(title = "Estimated Intercepts",
+                          range = c(-3,15)),
+             yaxis = list(range = c(0,0.16))
+      )
   })
 
   output$hist_b_f <- renderPlotly({
@@ -108,9 +113,18 @@ server <- function(input, output){
 
     ab[3:counter$j, ] %>% plot_ly() %>%
       add_histogram(x = ~a, histnorm = "probability") %>%
-      layout(title = "Distribution of Estimated Slopes",
-             xaxis = list(title = "Estimated Slopes", range = c(-20, 20)))
+      layout(xaxis = list(title = "Estimated Slopes",
+                          range = c(0,5)),
+             yaxis = list(range = c(0,0.16))
+      )
   })
+
+  output$counter_f <- renderText({
+
+    paste0("Number of Draws: ", (.5 + .5 * counter$j))
+
+  })
+
 }
 
 
