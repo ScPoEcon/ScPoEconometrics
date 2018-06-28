@@ -6,25 +6,26 @@ ui <- fluidPage(
   fluidRow(column(width = 6, plotlyOutput("sample")),
            column(width = 3, plotlyOutput("hist_a")),
            column(width = 3, plotlyOutput("hist_b"))),
-  column(6, align = 'center', actionButton("new", "New Draw!"), actionButton("new_n", "10 New Draws!"))
+  fluidRow(column(6, align = 'center', actionButton("new", "New Draw!"), actionButton("new_n", "10 New Draws!")),
+           column(6, align = 'center', verbatimTextOutput("counter")))
 )
 
 server <- function(input, output){
   set.seed(19)
-  df <- as.data.frame(matrix(rep(0, 20*1000), c(20, 1000)))
+  df <- as.data.frame(matrix(rep(0, 20*3000), c(20, 3000)))
 
-  for (i in seq(1, 999, 2)){
+  for (i in seq(1, 2999, 2)){
     df[i] <- rnorm(20, 5, 2)
     df[i+1] <- 5 + 2*df[i] + rnorm(20, 0, 5)
   }
 
-  ab <- as.data.frame(matrix(rep(NA, 2*999), c(999, 2)))
+  ab <- as.data.frame(matrix(rep(NA, 2*2999), c(2999, 2)))
   colnames(ab) <- c("a", "b")
 
-  for (i in seq(1, 999, 2)){
+  for (i in seq(1, 2999, 2)){
     ab[i, "a"] <- cov(df[[i]], df[[i+1]])/var(df[[i]])
   }
-  for (i in seq(1, 999, 2)){
+  for (i in seq(1, 2999, 2)){
     ab[i, "b"] <- mean(df[[i+1]]) - ab$a[i] * mean(df[[i]])
   }
 
@@ -32,7 +33,7 @@ server <- function(input, output){
   counter <- reactiveValues(j = 3) #define the counter j as a reactiveValue (stored in the list "counter")
 
   observeEvent(input$new, { #dynamically update counter j, handle j > 999
-    if (counter$j > 999){
+    if (counter$j >= 2999){
       counter$j <- 3
     } else {
       counter$j <- (counter$j + 2)
@@ -40,7 +41,7 @@ server <- function(input, output){
   })
 
   observeEvent(input$new_n, { #dynamically update counter j, handle j > 9999
-    if (counter$j > 999){
+    if (counter$j >= 2999){
       counter$j <- 3
     } else {
       counter$j <- (counter$j + 20)
@@ -82,15 +83,25 @@ server <- function(input, output){
   output$hist_a <- renderPlotly({
     ab[3:counter$j, ] %>% plot_ly() %>%
       add_histogram(x = ~b, histnorm = "probability") %>%
-      layout(title = "Distribution of Estimated Intercepts",
-             xaxis = list(title = "Estimated Intercepts"))
+      layout(xaxis = list(title = "Estimated Intercepts",
+                          range = c(-3,15)),
+             yaxis = list(range = c(0,0.16))
+      )
   })
 
   output$hist_b <- renderPlotly({
     ab[3:counter$j, ] %>% plot_ly() %>%
       add_histogram(x = ~a, histnorm = "probability") %>%
-      layout(title = "Distribution of Estimated Slopes",
-             xaxis = list(title = "Estimated Slopes"))
+      layout(xaxis = list(title = "Estimated Slopes",
+                          range = c(0,5)),
+             yaxis = list(range = c(0,0.16))
+      )
+  })
+
+  output$counter <- renderText({
+
+    paste0("Number of Draws: ", (.5 + .5 * counter$j))
+
   })
 }
 
