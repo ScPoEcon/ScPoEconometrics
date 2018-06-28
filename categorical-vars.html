@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-27">
+<meta name="date" content="2018-06-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -239,7 +239,7 @@ sex</code></pre></div>
 <p>You can see that this is almost identical, just the <em>labels</em> are different.</p>
 <div id="more-levels" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> More Levels</h3>
-<p>We have just seen that there is a <code>1:1</code> equivalence between running a regression on <span class="math inline">\(x_i\in\{0,1\}\)</span> and on coding <span class="math inline">\(\text{is.male}_i = \mathbf{1}[x_i==1]\)</span>. This equivalence is harder to see if we move beyond <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
+<p>We can go <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
 <span class="math display">\[\begin{align*}
 \text{has.HS}_i &amp;= \mathbf{1}[x_i==\text{high school}] \\
 \text{has.someCol}_i &amp;= \mathbf{1}[x_i==\text{some college}] \\
@@ -340,11 +340,20 @@ Figure 6.3: log wage vs experience with different intercepts by sex
 </div>
 <div id="saturated-models-main-effects-and-interactions" class="section level2">
 <h2><span class="header-section-number">6.2</span> Saturated Models: Main Effects and Interactions</h2>
-<p>You can see above that we <em>restricted</em> male and female to have the same slope with repect to year of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called <em>interaction</em> effects. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes in figure <a href="categorical-vars.html#fig:wage-plot2">6.3</a>. Therefore we formulate this version of our model:</p>
+<p>You can see above that we <em>restricted</em> male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called <em>interaction</em> effects. As already introduced in chapter <a href="multiple-reg.html#mreg-interactions">5.2</a>, interactions allow that the <em>ceteris paribus</em> effect of a certain regressor, <code>exp</code> say, depends also on the value of yet another regressor, <code>sex</code> for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to <code>exp</code> in figure <a href="categorical-vars.html#fig:wage-plot2">6.3</a>. Therefore we formulate this version of our model:</p>
 <p><span class="math display" id="eq:wage-sex-inter">\[
 \ln w_i = \beta_0 + \beta_1 exp_i + \beta_2 sex_i + \beta_3 (sex_i \times exp_i) + \varepsilon_i \tag{6.5}
 \]</span></p>
-<p>The inclusion of the <em>product</em> of <code>exp</code> and <code>sex</code> amounts to having different slopes for different categories in <code>sex</code>:</p>
+<p>The inclusion of the <em>product</em> of <code>exp</code> and <code>sex</code> amounts to having different slopes for different categories in <code>sex</code>. This is easy to see if we take the partial derivative of <a href="categorical-vars.html#eq:wage-sex-inter">(6.5)</a> with respect to <code>sex</code>:</p>
+<p><span class="math display" id="eq:wage-sex-inter-deriv">\[
+\frac{\partial \ln w_i}{\partial sex_i} = \beta_2 + \beta_3 exp_i \tag{6.6}
+\]</span></p>
+<div class="tip">
+<p>
+You should go back to chapter <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(multiple-reg) and in particular equation <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(eq:abline2d-deriv) to remind yourself of what a <em>partial effect</em> was, and how exactly the present <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(eq:wage-sex-inter-deriv) differs from what we saw there.
+</p>
+</div>
+<p><br> Back in our <code>R</code> session, we can run the full interactions model like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_inter =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp<span class="op">*</span>sex, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_inter)</code></pre></div>
 <pre><code>## 
@@ -367,7 +376,7 @@ Figure 6.3: log wage vs experience with different intercepts by sex
 ## Residual standard error: 0.4285 on 4161 degrees of freedom
 ## Multiple R-squared:  0.1385, Adjusted R-squared:  0.1379 
 ## F-statistic:   223 on 3 and 4161 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>You can see here that <code>R</code> automatically expands <code>exp*sex</code> to include both <em>main effects</em>, i.e. <code>exp</code> and <code>sex</code> as single regressors as before, and their interaction, denoted by <code>exp:sexmale</code>. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>. If you for some reason wanted to include only the interaction, you could supply directly <code>formula = lwage ~ exp:sex</code> to <code>lm</code>, although this would be a rather difficult to interpret model.</p>
+<p>You can see here that <code>R</code> automatically expands <code>exp*sex</code> to include both <em>main effects</em>, i.e. <code>exp</code> and <code>sex</code> as single regressors as before, and their interaction, denoted by <code>exp:sexmale</code>. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>. (If, for some reason, you wanted to include only the interaction, you could supply directly <code>formula = lwage ~ exp:sex</code> to <code>lm</code>, although this would be a rather difficult to interpret model.)</p>
 <p>We call a model like <a href="categorical-vars.html#eq:wage-sex-inter">(6.5)</a> a <em>saturated model</em>, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.</p>
 <p>To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for <code>sex</code>, <code>smsa</code>, <code>union</code> and <code>bluecol</code>, including all main and all interaction effects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_full =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>sex<span class="op">*</span>smsa<span class="op">*</span>union<span class="op">*</span>bluecol,<span class="dt">data=</span>Wages)
