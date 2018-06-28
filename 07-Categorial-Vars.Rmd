@@ -134,7 +134,7 @@ You can see that this is almost identical, just the *labels* are different.
 
 ### More Levels
 
-We have just seen that there is a `1:1` equivalence between running a regression on $x_i\in\{0,1\}$ and on coding $\text{is.male}_i = \mathbf{1}[x_i==1]$. This equivalence is harder to see if we move beyond *binary* categorical variables such as `TRUE` vs `FALSE`. For example, suppose that $x$ measures educational attainment, i.e. it is now something like $x_i \in \{\text{high school,some college,BA,MSc}\}$. In `R` parlance, *high school, some college, BA, MSc* are the **levels of factor $x$**. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like 
+We can go *binary* categorical variables such as `TRUE` vs `FALSE`. For example, suppose that $x$ measures educational attainment, i.e. it is now something like $x_i \in \{\text{high school,some college,BA,MSc}\}$. In `R` parlance, *high school, some college, BA, MSc* are the **levels of factor $x$**. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like 
 
 \begin{align*}
 \text{has.HS}_i &= \mathbf{1}[x_i==\text{high school}] \\
@@ -215,20 +215,30 @@ Figure \@ref(fig:wage-plot2) illustrates this. You can see that both male and fe
 
 ## Saturated Models: Main Effects and Interactions
 
-You can see above that we *restricted* male and female to have the same slope with repect to year of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
+You can see above that we *restricted* male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. As already introduced in chapter \@ref(mreg-interactions), interactions allow that the *ceteris paribus* effect of a certain regressor, `exp` say, depends also on the value of yet another regressor, `sex` for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to `exp` in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
 
 $$
 \ln w_i = \beta_0 + \beta_1 exp_i + \beta_2 sex_i + \beta_3 (sex_i \times exp_i) + \varepsilon_i (\#eq:wage-sex-inter)
 $$
 
-The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`: 
+The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`. This is easy to see if we take the partial derivative of \@ref(eq:wage-sex-inter) with respect to `sex`:
+
+$$
+\frac{\partial \ln w_i}{\partial sex_i} = \beta_2 + \beta_3 exp_i (\#eq:wage-sex-inter-deriv)
+$$
+
+```{block,type="tip"}
+You should go back to chapter \@ref(multiple-reg) and in particular equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:wage-sex-inter-deriv) differs from what we saw there.
+```
+<br>
+Back in our `R` session, we can run the full interactions model like this:
 
 ```{r}
 lm_inter = lm(lwage ~ exp*sex, data = Wages)
 summary(lm_inter)
 ```
 
-You can see here that `R` automatically expands `exp*sex` to include both *main effects*, i.e. `exp` and `sex` as single regressors as before, and their interaction, denoted by `exp:sexmale`. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that $\beta_3 = 0$. If you for some reason wanted to include only the interaction, you could supply directly `formula = lwage ~ exp:sex` to `lm`, although this would be a rather difficult to interpret model.
+You can see here that `R` automatically expands `exp*sex` to include both *main effects*, i.e. `exp` and `sex` as single regressors as before, and their interaction, denoted by `exp:sexmale`. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that $\beta_3 = 0$. (If, for some reason, you wanted to include only the interaction, you could supply directly `formula = lwage ~ exp:sex` to `lm`, although this would be a rather difficult to interpret model.)
 
 We call a model like \@ref(eq:wage-sex-inter) a *saturated model*, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.
 

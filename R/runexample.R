@@ -28,3 +28,7 @@ launchApp <- function(appname) {
   shiny::runApp(appDir, display.mode = "normal")
 }
 
+gitbook <- function(){
+  bookdown::render_book('index.Rmd', 'bookdown::gitbook')
+}
+

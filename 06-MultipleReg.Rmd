@@ -63,7 +63,12 @@ Keeping the value of `wt` fixed for a certain car, what would be the impact on `
 <br>
 We ask this kind of question all the time in econometrics. In figure \@ref(fig:plane3D-reg) you clearly see that both explanatory variables have a negative impact on the outcome of interest: as one increases either the horse power or the weight of a car, one finds that miles per gallon decreases. What is kind of hard to read off is *how negative* an impact each variable has in isolation. 
 
-The kind of question asked here is so common that indeed it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. To answer the question, thus, **multiple regression** to the rescue:
+As a matter of fact, the kind of question asked here is so common that it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. In terms of our model in \@ref(eq:abline2d), we want to know the following quantity:
+
+$$
+\frac{\partial mpg_i}{\partial hp_i} = \beta_1 (\#eq:abline2d-deriv)
+$$
+This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $\beta_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
 <br>
 
 ```{r,echo=FALSE}
@@ -78,9 +83,12 @@ Holding all other variables fixed at their observed values - or *ceteris paribus
 
 ## California Test Scores 2
 
-With the tools introduced in \@ref(lm-example1) it is fairly straigtforward to estimate models with more than one dependent variables, for example adding families' average income to our previous model:
+Let us extend our example of student test scores from chapter \@ref(linreg) by adding families' average income to our previous model:
 
-$$\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \epsilon_i$$
+$$
+\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \epsilon_i
+$$
+
 We can incoporate this new variable to our model by simply adding it to our `formula`:
 
 ```{r lmfit-multiv,warning=FALSE,message=FALSE}
@@ -91,7 +99,7 @@ summary(fit_multivariate)
 
 Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane* [Interactive!].
 
-```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.'}
+```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.',fig.align='center'}
 library(plotly)
 library(reshape2)
 
@@ -114,3 +122,57 @@ Caschool %>%
 
 While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $avginc$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
 
+
+## Interactions {#mreg-interactions}
+
+Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. To measure such an effect, we would reformulate our model like this:
+
+
+$$
+\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \beta_3 (\text{str}_i \times  \text{avginc}_i)+ \epsilon_i (\#eq:caschool-inter)
+$$
+
+
+
+The inclusion of the *product* of `str` and `avginc` amounts to having different slopes with respect to `str` for different values of  `avginc` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
+
+$$
+\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = \beta_1 + \beta_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
+$$
+
+```{block,type="tip"}
+You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.
+```
+<br>
+Back in our `R` session, we can run the full interactions model like this:
+
+```{r}
+lm_inter = lm(formula = testscr ~ str + avginc + str*avginc, data = Caschool)
+# note that this would produce the same result:
+# lm(formula = testscr ~ str*avginc, data = Caschool)
+# R expands str*avginc for you in main effects + interactions
+summary(lm_inter)
+```
+
+We see here that the regression now estimates and additional coefficient $\beta_3$ for us. We observe also that the estimate of $\beta_2$ changes signs and becomes negative, while the interaction effect $\beta_3$ is positive. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an increase in average district income in isolation actually reduces scores; and that the interaction of both increases scores (more students per teacher are actually a good thing for student performance in richer areas).
+
+Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? Discuss with your neighbor and give some reasons for your choice (other than "\@ref(fig:3D-Plotly-inter) looks nicer" ;-) ). In particular, comparing both visualizations, can you explain why we observe this strange inversion of coefficient signs?
+
+```{r 3D-Plotly-inter, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income plus interaction term'}
+
+to_plot_x <- c(min(Caschool$str), max(Caschool$str))
+to_plot_y <- c(min(Caschool$avginc), max(Caschool$avginc))
+
+df <- data.frame(str = rep(to_plot_x, 2),
+           avginc = rep(to_plot_y, each = 2))
+df["pred"] <- predict.lm(lm_inter, df, se.fit = F)
+
+surf <- acast(df, avginc ~ str)
+
+Caschool %>%
+  plot_ly() %>%
+  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .5, marker=list(color = 'blue', size = 3)) %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane with Interactions", opacity = .75, cauto = F, surfacecolor = rep('grey', 4)) %>%
+  hide_colorbar()
+
+```

@@ -104,5 +104,5 @@ You are free to:
 
 Under the CC licence above, we are obliged to attribute any material that this book uses and which was shared under the same license:
 
-1. Chapter 2 *Introduction to R* is copied almost entirely from [appliedstats](https://daviddalpiaz.github.io/appliedstats/) by [David Dalpiaz](https://daviddalpiaz.com). I added a couple of practical tasks and made some minor edits. 
-1. Chapter 3 is partly based on [appliedstats](https://daviddalpiaz.github.io/appliedstats/), but only up to *scatterplots*.
+1. Chapter 1 *Introduction to R* is copied almost entirely from [appliedstats](https://daviddalpiaz.github.io/appliedstats/) by [David Dalpiaz](https://daviddalpiaz.com). I added a couple of practical tasks and made some minor edits. 
+1. Chapter 2 is partly based on [appliedstats](https://daviddalpiaz.github.io/appliedstats/), but only up to *scatterplots*.
