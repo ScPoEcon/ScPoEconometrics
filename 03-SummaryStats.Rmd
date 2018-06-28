@@ -15,7 +15,7 @@ library(ggplot2)
 Suppose we want to know the *mean* and *median* of all the values stored in the `data.frame` column `mpg$cty`:
 
 | Measure | `R`               | Result              |
-|---------|-------------------|---------------------|
+|:---------:|:-------------------:|:---------------------:|
 | Mean    | `mean(mpg$cty)`   | `r mean(mpg$cty)`   |
 | Median  | `median(mpg$cty)` | `r median(mpg$cty)` |
 
@@ -24,7 +24,7 @@ Suppose we want to know the *mean* and *median* of all the values stored in the 
 How do the values in that column *vary*? How far *spread out* are they?
 
 | Measure            | `R`              | Result             |
-|--------------------|------------------|--------------------|
+|:---------:|:-------------------:|:---------------------:|
 | Variance           | `var(mpg$cty)`   | `r var(mpg$cty)`   |
 | Standard Deviation | `sd(mpg$cty)`    | `r sd(mpg$cty)`    |
 | IQR                | `IQR(mpg$cty)`   | `r IQR(mpg$cty)`   |
