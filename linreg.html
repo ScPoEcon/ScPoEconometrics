@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-28">
+<meta name="date" content="2018-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -410,6 +410,15 @@ Figure 3.7: Test Scores with Regression Line
 </p>
 </div>
 <p>As you probably expected, the best line for schools’ Student/Teacher Ratio and its average test results is downward sloping.</p>
+<p>Just as a way of showcasing another way to make the above plot, here is how you could use <code>ggplot</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> str, <span class="dt">y =</span> testscr), <span class="dt">data =</span> Caschool) <span class="co"># base plot</span>
+p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="co"># add points</span>
+p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="co"># add regression line</span>
+p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Average Test Score&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>)
+p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Testscores vs Student/Teacher Ratio&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-133-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

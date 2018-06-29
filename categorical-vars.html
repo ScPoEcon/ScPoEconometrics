@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-06-28">
+<meta name="date" content="2018-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -348,12 +348,7 @@ Figure 6.3: log wage vs experience with different intercepts by sex
 <p><span class="math display" id="eq:wage-sex-inter-deriv">\[
 \frac{\partial \ln w_i}{\partial sex_i} = \beta_2 + \beta_3 exp_i \tag{6.6}
 \]</span></p>
-<div class="tip">
-<p>
-You should go back to chapter <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(multiple-reg) and in particular equation <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(eq:abline2d-deriv) to remind yourself of what a <em>partial effect</em> was, and how exactly the present <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(eq:wage-sex-inter-deriv) differs from what we saw there.
-</p>
-</div>
-<p><br> Back in our <code>R</code> session, we can run the full interactions model like this:</p>
+<p>Back in our <code>R</code> session, we can run the full interactions model like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_inter =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp<span class="op">*</span>sex, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_inter)</code></pre></div>
 <pre><code>## 
