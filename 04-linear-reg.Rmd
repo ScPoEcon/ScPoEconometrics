@@ -420,3 +420,15 @@ abline(fit_california, col = 'red') # add regression line
 
 
 As you probably expected, the best line for schools' Student/Teacher Ratio and its average test results is downward sloping.
+
+Just as a way of showcasing another way to make the above plot, here is how you could use `ggplot`:
+
+```{r,fig.align="center"}
+library(ggplot2)
+p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
+p <- p + geom_point() # add points
+p <- p + geom_smooth(method = "lm", size=1, color="red") # add regression line
+p <- p + scale_y_continuous(name = "Average Test Score") + 
+         scale_x_continuous(name = "Student/Teacher Ratio")
+p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
+```
