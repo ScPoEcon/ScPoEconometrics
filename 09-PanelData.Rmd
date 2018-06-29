@@ -1,5 +1,14 @@
 # Panel Data {#panel-data}
 
+## fixed effects
+
+## DiD
+
+## RDD
+
+
+## Example
+
 * scanner data on breakfast cereals, $(Q_{it},D_{it})$
 * why does D vary with Q
 * pos relation ship 

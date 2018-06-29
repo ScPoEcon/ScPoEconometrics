@@ -57,7 +57,7 @@ We can see from this plot that cars with more horse power and greater weight, in
 
 ```{block,type="tip"}
 <center>
-Keeping the value of `wt` fixed for a certain car, what would be the impact on `mpg` be if we were to increase **only** its `hp`? Put differently, keeping **all else equal**, what's the impact of changing `hp` on `mpg`?
+Keeping the value of $wt$ fixed for a certain car, what would be the impact on $mpg$ be if we were to increase **only** its $hp$? Put differently, keeping **all else equal**, what's the impact of changing $hp$ on $mpg$?
 </center>
 ```
 <br>
@@ -78,7 +78,7 @@ summary(fit)
 From this table you see that the coefficient on `wt` has value `r round(coef(fit)[2],5)`. You can interpret this as follows:
 
 ```{block,type="warning"}
-Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in `wt` implies a -3.87783 units change in `mpg`. Similarly, one more `hp` horse power implies a change in `mpg` of -0.03177 units, *all else (i.e. `wt`) equal*.
+Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $mp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
 ```
 
 ## California Test Scores 2
@@ -140,10 +140,10 @@ $$
 \frac{\partial \text{testscr}_i}{\partial \text{str}_i} = \beta_1 + \beta_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
 $$
 
-```{block,type="tip"}
-You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.
-```
-<br>
+
+>You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.
+
+
 Back in our `R` session, we can run the full interactions model like this:
 
 ```{r}

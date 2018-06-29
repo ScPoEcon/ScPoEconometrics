@@ -227,10 +227,6 @@ $$
 \frac{\partial \ln w_i}{\partial sex_i} = \beta_2 + \beta_3 exp_i (\#eq:wage-sex-inter-deriv)
 $$
 
-```{block,type="tip"}
-You should go back to chapter \@ref(multiple-reg) and in particular equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:wage-sex-inter-deriv) differs from what we saw there.
-```
-<br>
 Back in our `R` session, we can run the full interactions model like this:
 
 ```{r}
