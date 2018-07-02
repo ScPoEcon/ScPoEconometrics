@@ -5,9 +5,9 @@
   },
   "output": {
     "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 50",
-    "best_fit": "Best Slope: 3.284\nBest Intercept: 8.121",
+    "best_fit": "Original Slope: 3.284\nOriginal Intercept: 8.121\nCurrent Slope: 3.284\nCurrent Intercept: 8.121",
     "regPlot_rescale": {
-      "src": "[image data sha1: 4784ccc7fbd7af0a951de761497ea9d8ec5124aa]",
+      "src": "[image data sha1: dd76fffd5fb98c07508219c4cb55f48fc9f1084f]",
       "width": 611,
       "height": 400,
       "coordmap": [

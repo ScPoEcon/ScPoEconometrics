@@ -1,13 +1,13 @@
 {
   "input": {
-    "scale_x": -1.5,
-    "scale_y": 2.5
+    "scale_x": -4,
+    "scale_y": 4
   },
   "output": {
     "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 50",
-    "best_fit": "Best Slope: -5.474\nBest Intercept: 20.302",
+    "best_fit": "Original Slope: 3.284\nOriginal Intercept: 8.121\nCurrent Slope: -3.284\nCurrent Intercept: 32.484",
     "regPlot_rescale": {
-      "src": "[image data sha1: 68e1bbbcbed14635de563a91f11d64f0cad661b4]",
+      "src": "[image data sha1: ddea8f67800c79c2f46a7158f1afacafc06afd4e]",
       "width": 611,
       "height": 400,
       "coordmap": [
