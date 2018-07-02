@@ -294,7 +294,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{3.5}
 <p><span class="math display" id="eq:ssr-bench">\[
 y_i = \beta_0 + \varepsilon_i \tag{3.6}
 \]</span></p>
-<p>As you can see, the benchmark model in <a href="linreg.html#eq:ssr-bench">(3.6)</a> is a model with an intercept only. You will see in one of our <code>apps</code> that this delivers an estimate of <span class="math inline">\(y\)</span>. It is a benchmark because it does not include <em>any</em> explanatory variables, so we can compare against this other models which do in fact contain some <span class="math inline">\(x\)</span>’s. Back to our <span class="math inline">\(R^2\)</span> statistic: there are several equivalent definitions, and for our present case we will use the following.</p>
+<p>As you can see, the benchmark model in <a href="linreg.html#eq:ssr-bench">(3.6)</a> is a model with an intercept only. You will see in one of our <code>apps</code> that this delivers an estimate of the mean of <span class="math inline">\(y\)</span>. It is a benchmark because it does not include <em>any</em> explanatory variables, so we can compare against this other models which do in fact contain some <span class="math inline">\(x\)</span>’s. Back to our <span class="math inline">\(R^2\)</span> statistic: there are several equivalent definitions, and for our present case we will use the following.</p>
 <div class="tip">
 <p>
 The <strong>coefficient of determination</strong> (<em>R squared</em>) is defined by <span class="math display"><span class="math display">\[R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.\]</span></span> In the simple linear model, we have that <span class="math inline"><span class="math inline">\(R^2 \in [0,1]\)</span></span>, where <span class="math inline"><span class="math inline">\(R^2 = 1\)</span></span> would indicate that our model is a <strong>very good</strong> fit to the data, and vice versa for <span class="math inline"><span class="math inline">\(R^2 = 0\)</span></span>. You can interpret the value of <span class="math inline"><span class="math inline">\(R^2\)</span></span> as the fraction of variation in outcome <span class="math inline"><span class="math inline">\(y\)</span></span> that is accounted for by explanatory variable <span class="math inline"><span class="math inline">\(x\)</span></span>.
@@ -419,6 +419,7 @@ p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </s
 <span class="st">         </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>)
 p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Testscores vs Student/Teacher Ratio&quot;</span>)</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-133-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient <span class="math inline">\(\beta_1\)</span>. We will learn more about it in the next chapter.</p>
 
 </div>
 </div>

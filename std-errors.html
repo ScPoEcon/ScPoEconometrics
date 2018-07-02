@@ -155,25 +155,44 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="std-errors" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Standard Errors</h1>
-<p>In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are <em>estimates</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates.</p>
+<p>In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are <em>estimates</em> of some unkown <em>population parameters</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates.</p>
 <div class="note">
 <center>
 How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(\hat{\beta}_0\)</span></span> and <span class="math inline"><span class="math inline">\(\hat{\beta}_1\)</span></span>?
 </center>
 </div>
-<p><br></p>
-<p>The discussion here is closely linked to the practical exercise that you did by typing</p>
+<p><br> Let’s remind ourselves of the example at the end of the previous chapter, and that we introduced the term <em>confidence interval</em>, shown here as the shaded area:</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-135-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
+<div id="what-is-true" class="section level2">
+<h2><span class="header-section-number">4.1</span> What is <em>true</em>?</h2>
+<p>We have a true data-generating process in mind. Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.1)</a> from the previous chapter:</p>
+<p><span class="math display" id="eq:abline-5">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{4.1}
+\]</span></p>
+<p>First, we <em>assume</em> that this is the correct represenation of the DGP, which looks like the above equation. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice, that both <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> don’t have a “hat”, which is widely used to indicate an estimate. Now, the fact that our data <span class="math inline">\((y_i,x_i)\)</span> are a sample from a larger population means that there will be <em>sampling variation</em> in our estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> - exactly like in the case of the sample mean estimating the population average as mentioned above.</p>
+</div>
+<div id="experiencing-standard-errors" class="section level2">
+<h2><span class="header-section-number">4.2</span> Experiencing Standard Errors</h2>
+<p>We would like to make this point in a purely experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps, before going into the associated tutorial:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
-<span class="kw">launchApp</span>(<span class="st">&quot;sampler&quot;</span>) <span class="co"># and</span>
-<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_simple&quot;</span>) <span class="co"># and</span>
-<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_changeN&quot;</span>) </code></pre></div>
-<p>which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are as well just statistics computed from the data, the same fact will apply.</p>
-<ul>
-<li>missing variables go into error</li>
-<li>more observations allow to generate better estimates</li>
+<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_simple&quot;</span>) <span class="co"># start with this</span>
+<span class="kw">launchApp</span>(<span class="st">&quot;standard_errors_changeN&quot;</span>)  <span class="co"># then do that</span>
+<span class="kw">library</span>(learnr)   <span class="co"># load the learner library</span>
+<span class="kw">run_tutorial</span>(<span class="st">&quot;standared-errors&quot;</span>)   <span class="co"># WIP</span></code></pre></div>
+</div>
+<div id="standard-errors-in-theory" class="section level2">
+<h2><span class="header-section-number">4.3</span> Standard Errors in Theory</h2>
+<p>The precise formulae for the standard errors of regression coefficients depend critically on exactly which model we talk about. In other words, certain assumptions about the underlying DGP give rise to certain standard error formulas. What we continue to call the <em>simple linear regression model</em> is in fact a list of 5 assumptions. It is time to spell them out here:</p>
+<ol style="list-style-type: decimal">
+<li>The model is linear in parameters. I.e. it looks like <a href="std-errors.html#eq:abline-5">(4.1)</a> above.</li>
+<li><span class="math inline">\((y_i,x_i)\)</span> constitute a <em>random</em> sample from the underlying population: the sample is <em>representative</em>.</li>
+<li>The mean of <span class="math inline">\(\varepsilon\)</span> in <a href="std-errors.html#eq:abline-5">(4.1)</a> is zero, conditional on <span class="math inline">\(x\)</span>. This means that <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(x\)</span> should not be correlated.</li>
 <li></li>
-</ul>
+</ol>
+<p>In our simple linear regression model the standard errors of the estimates have the following form</p>
 
+</div>
 </div>
             </section>
 
