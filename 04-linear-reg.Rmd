@@ -304,7 +304,7 @@ $$
 y_i = \beta_0 + \varepsilon_i (\#eq:ssr-bench)
 $$
 
-As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
+As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of the mean of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
 
 ```{block,type="tip"}
 The **coefficient of determination** (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$

@@ -8,9 +8,9 @@ How *confident* should we be about the estimated values $\hat{\beta}_0$ and $\ha
 </center>
 ```
 <br>
-Let's remind ourselves of the example at the end of the previous chapter: 
+Let's remind ourselves of the example at the end of the previous chapter, and that we introduced the term *confidence interval*, shown here as the shaded area:
 
-```{r,fig.align="center",message=FALSE,warning=FALSE}
+```{r,fig.align="center",message=FALSE,warning=FALSE,echo=FALSE}
 library(ggplot2)
 library(Ecdat)
 p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
@@ -21,20 +21,38 @@ p <- p + scale_y_continuous(name = "Average Test Score") +
 p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
 ```
   
-The discussion here is closely linked to the practical exercise that you did by typing
+The shaded area shows us the region within which the **true** red line will lie with 95% probability. The fact that there is unknown true line (i.e. a *true* slope coefficient $\beta_1$) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size $N$ increased, our estimate got better and better - fundamentally this is the same idea here.
+
+## What is *true*?
+
+We have a true data-generating process in mind. Let's bring back our simple model \@ref(eq:abline) from the previous chapter:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:abline-5)
+$$ 
+
+First, we *assume* that this is the correct represenation of the DGP, which looks like the above equation. With that assumption in place, the values $\beta_0$ and $\beta_1$ are the *true parameter values* which generated the data. Notice, that both $\beta_0$ and $\beta_1$ don't have a "hat", which is widely used to indicate an estimate. Now, the fact that our data $(y_i,x_i)$ are a sample from a larger population means that there will be *sampling variation* in our estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ - exactly like in the case of the sample mean estimating the population average as mentioned above.
+
+## Experiencing Standard Errors
+
+We would like to make this point in a purely experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps, before going into the associated tutorial:
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
-launchApp("sampler") # and
-launchApp("standard_errors_simple") # and
-launchApp("standard_errors_changeN") 
+launchApp("standard_errors_simple") # start with this
+launchApp("standard_errors_changeN")  # then do that
+library(learnr)   # load the learner library
+run_tutorial("standared-errors")   # WIP
 ```
 
-which illustrated that every time one regenerates a random sample from a given data-generating process, one finds slightly different values for the mean (and other statistics). Given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are as well just statistics computed from the data, the same fact will apply. 
+## Standard Errors in Theory
 
-* missing variables go into error
-* more observations allow to generate better estimates
-* 
+The precise formulae for the standard errors of regression coefficients depend critically on exactly which model we talk about. In other words, certain assumptions about the underlying DGP give rise to certain standard error formulas. What we continue to call the *simple linear regression model* is in fact a list of 5 assumptions. It is time to spell them out here:
 
+1. The model is linear in parameters. I.e. it looks like \@ref(eq:abline-5) above.
+2. $(y_i,x_i)$ constitute a *random* sample from the underlying population: the sample is *representative*.
+3. The mean of $\varepsilon$ in \@ref(eq:abline-5) is zero, conditional on $x$. This means that $\varepsilon$ and $x$ should not be correlated.
+4. 
 
+In our simple linear regression model the standard errors of the estimates have the following form
 
