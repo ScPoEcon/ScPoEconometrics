@@ -432,3 +432,5 @@ p <- p + scale_y_continuous(name = "Average Test Score") +
          scale_x_continuous(name = "Student/Teacher Ratio")
 p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
 ```
+
+The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $\beta_1$. We will learn more about it in the next chapter.

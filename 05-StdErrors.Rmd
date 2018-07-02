@@ -1,6 +1,6 @@
 # Standard Errors {#std-errors}
 
-In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are *estimates*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
+In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $\hat{\beta}_0$ and $\hat{\beta}_1$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
 
 ```{block,type="note"}
 <center>
@@ -8,6 +8,18 @@ How *confident* should we be about the estimated values $\hat{\beta}_0$ and $\ha
 </center>
 ```
 <br>
+Let's remind ourselves of the example at the end of the previous chapter: 
+
+```{r,fig.align="center",message=FALSE,warning=FALSE}
+library(ggplot2)
+library(Ecdat)
+p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
+p <- p + geom_point() # add points
+p <- p + geom_smooth(method = "lm", size=1, color="red") # add regression line
+p <- p + scale_y_continuous(name = "Average Test Score") + 
+         scale_x_continuous(name = "Student/Teacher Ratio")
+p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
+```
   
 The discussion here is closely linked to the practical exercise that you did by typing
 

@@ -17,7 +17,7 @@ How do you think `hp` and `wt` will influence how many miles per gallon of gasol
 
 With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@ref(fig:plane3D-reg):
 
-```{r plane3D-reg,echo=FALSE,fig.align='center',fig.cap='Multiple Regression - a plane in 3D. The red lines indicate the residual for each observation.'}
+```{r plane3D-reg,echo=FALSE,fig.align='center',fig.cap='Multiple Regression - a plane in 3D. The red lines indicate the residual for each observation.',warning=FALSE,message=FALSE}
 library(plotly)
 library(reshape2)
 data(mtcars)
@@ -97,7 +97,7 @@ summary(fit)
 From this table you see that the coefficient on `wt` has value `r round(coef(fit)[2],5)`. You can interpret this as follows:
 
 ```{block,type="warning"}
-Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $mp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
+Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $hp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
 ```
 
 ## California Test Scores 2
