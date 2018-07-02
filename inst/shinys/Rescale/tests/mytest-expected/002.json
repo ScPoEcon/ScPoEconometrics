@@ -1,0 +1,41 @@
+{
+  "input": {
+    "scale_x": -1.5,
+    "scale_y": 2.5
+  },
+  "output": {
+    "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 50",
+    "best_fit": "Best Slope: -5.474\nBest Intercept: 20.302",
+    "regPlot_rescale": {
+      "src": "[image data sha1: 68e1bbbcbed14635de563a91f11d64f0cad661b4]",
+      "width": 611,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -54,
+            "right": 54,
+            "bottom": -220,
+            "top": 320
+          },
+          "range": {
+            "left": 59.04,
+            "right": 580.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
