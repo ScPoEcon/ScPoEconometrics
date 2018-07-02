@@ -119,20 +119,20 @@ lines(n, se)
 
 In fact, it can be shown that the variance of the sampling distribution of estimated slopes $\hat\beta_1$ is given by:
 
-$$\sigma^2_{\hat\beta_1} = \frac{1}{n} \frac{var[(X_i - \mu_X)\varepsilon_i]}{[var(X_i)]^2}$$
+$$\sigma^2_{\hat\beta_1} = \frac{1}{n} \frac{\sigma^2_{\varepsilon}}{\sigma^2_X}$$
 
 So the standard errors are 
-$$\sigma_{\hat\beta_1} = \sqrt{\frac{1}{n} \frac{var[(X_i - \mu_X)\varepsilon_i]}{[var(X_i)]^2}}$$
-$$\ = \frac{1}{\sqrt{n}} \frac{\sqrt{var[(X_i - \mu_X)\varepsilon_i]}}{var(X_i)}$$
+$$\sigma_{\hat\beta_1} = \sqrt{\frac{1}{n} \frac{\sigma^2_{\varepsilon}}{\sigma^2_X}}$$
+$$\ = \frac{1}{\sqrt{n}} \frac{\sigma_{\varepsilon}}{\sigma_X}$$
 
 Plugging numbers from our examples, 
-$$\sigma_{\hat\beta_1} \approx \frac{1}{\sqrt{n}} \cdot\frac{3.45}{9} $$
+$$\sigma_{\hat\beta_1} \approx \frac{1}{\sqrt{n}} \cdot\sqrt{\frac{1.33}{9}} $$
 
 Let's check that this is indeed the case:
 
 ```{r plot-stderr-2}
 
-curv <- function(x) (3.45)/(sqrt(x)*(9))
+curv <- function(x) sqrt(1.33/9)/sqrt(x)
 
 
 plot(n, se, xlab = "Sample Size", ylab = "Standard Errors of Estimated Slope")
