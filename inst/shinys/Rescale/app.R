@@ -22,8 +22,11 @@ server <- function(input,output){
   output$best_fit <- renderText({
 
     set.seed(19)
-    x <- rnorm(50, 2, 10)
-    y <- 10 + 3*x + rnorm(50, 0, 10)
+    n = 100
+    sigma = 5
+
+    x <- rnorm(n, 2, 10)
+    y <- 10 + 3*x + rnorm(n, 0, sigma)
 
     s_x <- input$scale_x
     s_y <- input$scale_y
@@ -51,9 +54,11 @@ server <- function(input,output){
   output$regPlot_rescale <- renderPlot({
 
     set.seed(19)
+    n = 100
+    sigma = 5
 
-    x <- rnorm(50, 2, 5)
-    y <- 10 + 3*x + rnorm(50, 0, 10)
+    x <- rnorm(n, 2, 10)
+    y <- 10 + 3*x + rnorm(n, 0, sigma)
 
     s_x <- input$scale_x
     s_y <- input$scale_y
@@ -67,7 +72,7 @@ server <- function(input,output){
          ylim = c(-200, 300),
          ylab = paste0(s_y, "Y"),
          main = "Rescale X and Y", frame.plot = FALSE,
-         cex = 1.2)
+         cex = 1.)
     abline(v = 0, lty="dashed")
     if (s_x != 0){
       abline(fit, col = "green", lw = 2)
@@ -75,7 +80,8 @@ server <- function(input,output){
   })
 
   output$DGP <- renderText({
-    paste0("Data Generating Process: Y = 10 + 3X + error\nSample Size N = 50")
+    n = 100
+    paste0("Data Generating Process: Y = 10 + 3X + error\nSample Size N = ",n)
   })
 
 }
