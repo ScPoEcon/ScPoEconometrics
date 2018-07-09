@@ -19,9 +19,9 @@ We will write a function called `simulate_1_sample_normal` that draws a sample o
 
 ```{r simulate_1_sample_normal}
 simulate_1_sample_normal <- function(size){
-  x = rnorm(size, 3, 3)
-  y = 5 + 2*x + rnorm(size, 0, 2)
-  return(data.frame(x = x, y = y))
+  x = rnorm(size, 3, 3) # Generate X randomly
+  y = 5 + 2*x + rnorm(size, 0, 2) # Generate Y according to the DGP
+  return(data.frame(x = x, y = y)) # return X and Y in a data.frame
 }
 ```
 
@@ -34,7 +34,8 @@ simulate_1_sample_normal(size = 10)
 One of the advantages of having the function return a `data.frame` is that we can plot its output very easily:
 
 ```{r simulate_1_sample_plot_normal, exercise=TRUE, exercise.eval=TRUE}
-plot(simulate_1_sample_normal(size = 10), xlim = c(-10, 15), ylim = c(-15, 35))
+plot(simulate_1_sample_normal(size = 10),  # plot
+     xlim = c(-10, 15), ylim = c(-15, 35)) # Set plot limits
 ```
 
 You should try and run the above line several times and using several different sample sizes. Notice how each sample differs from the previous one (although this is harder to tell when you use large samples!)
@@ -42,7 +43,11 @@ You should try and run the above line several times and using several different 
 Similarly, we can simulate the process of taking one sample of size N = 10 and fitting a linear model to it:
 
 ```{r simulate_1_sample_lm_normal, exercise=TRUE, exercise.eval=TRUE}
-fit <- lm(y~x, simulate_1_sample_normal(size = 10))
+# simulate 10 draws and fit
+fit <- lm(y~x,
+          simulate_1_sample_normal(size = 10))
+
+#output
 summary(fit)
 ```
 
@@ -61,9 +66,9 @@ We will write a function called `simulate_1_sample_unif` that draws a sample of 
 
 ```{r simulate_1_sample_unif}
 simulate_1_sample_unif <- function(size){
-  x = rnorm(size, 3, 3)
-  y = 5 + 2*x + runif(n = size, -2, 2)
-  return(data.frame(x = x, y = y))
+  x = rnorm(size, 3, 3) # generate X randomly
+  y = 5 + 2*x + runif(n = size, -2, 2) # Gen Y as specified in DGP
+  return(data.frame(x = x, y = y)) # return {X, Y} is a data.frame
 }
 ```
 
@@ -76,7 +81,8 @@ simulate_1_sample_unif(size = 10)
 One of the advantages of having the function return a `data.frame` is that we can plot its output very easily:
 
 ```{r simulate_1_sample_plot, exercise=TRUE, exercise.eval=TRUE}
-plot(simulate_1_sample_unif(size = 10), xlim = c(-10, 15), ylim = c(-15, 35))
+plot(simulate_1_sample_unif(size = 10),    # plot
+     xlim = c(-10, 15), ylim = c(-15, 35)) # set plot limits
 ```
 
 You should try and run the above line several times and using several different sample sizes. Notice how each sample differs from the previous one (although this is harder to tell when you use large samples!)
@@ -84,7 +90,10 @@ You should try and run the above line several times and using several different 
 Similarly, we can simulate the process of taking one sample of size N = 10 and fitting a linear model to it:
 
 ```{r simulate_1_sample_lm, exercise=TRUE, exercise.eval=TRUE}
-fit <- lm(y~x, simulate_1_sample_unif(size = 10))
+# simulate 10 draws and fit
+fit <- lm(y~x,
+          simulate_1_sample_unif(size = 10))
+#output
 summary(fit)
 ```
 
@@ -96,13 +105,23 @@ Thanks to R (and to the fact that the data itself is simulated), we can get an i
 
 ```{r simulate_N_sample}
 simulate_N_samples_unif <- function(size, N){
+  
+  # initialize 2 variables that will keep track
+  # of each value in the for-loop
   slopes <- NULL
   intercepts <- NULL
+  
+  # for-loop of size N
   for (i in 1:N){
+    
+    # simulate a sample of size N and fit:
     fit <- lm(y~x, simulate_1_sample_unif(size = size))
+    # store intercept along with previous ones
     intercepts <- append(intercepts, as.numeric(fit$coefficients[1]))
+    # store slope along with previous ones
     slopes <- append(slopes, as.numeric(fit$coefficients[2]))
   }
+  # return slopes and intercepts
   return(data.frame(intercepts = intercepts, slopes = slopes))
 }
 ```
@@ -141,13 +160,18 @@ A useful summary statistic here is the standard-deviation of the difference betw
 Let's plot how standard errors evolve with the sample size:
 
 ```{r plot-stderr}
+# All samples size we will simulate for
 n <- c(5, 10, 20, 30, 50, 75, 100, 200)
-se <- NULL
+se <- NULL # to store se
+
 for (i in n){
-  sim <- simulate_N_samples_unif(size = i, N = 1000)
-  se <- append(se, sd(sim$slope))
+  sim <- simulate_N_samples_unif(size = i, N = 500) # simulate and fit
+  se <- append(se, sd(sim$slope)) # store
 }
+
+# plot points
 plot(n, se, xlab = "Sample Size", ylab = "Standard Errors of Estimated Slope")
+# connect points with lines
 lines(n, se)
 ```
 
@@ -168,12 +192,16 @@ Let's check that this is indeed the case:
 
 ```{r plot-stderr-2}
 
-curv <- function(x) sqrt(1.33/9)/sqrt(x)
+curv <- function(x) sqrt(1.33/9)/sqrt(x) # function to be plotted
 
-
+# Plot actual simulated data
 plot(n, se, xlab = "Sample Size", ylab = "Standard Errors of Estimated Slope")
 lines(n, se)
+
+# Plot expected data
 curve(curv, from = 0, to = 200, n = 200, col = "green", add = T)
+
+# add a legend
 legend(x = "top", legend = c("Simulated", "Expected"), lty = "solid", col = c("black", "green"))
 ```
 
@@ -185,22 +213,26 @@ We can also plot how an increase in $\sigma_{\varepsilon}$ affects our standard 
 
 ```{r plot-stderr-3}
 
-curv = function(x) (1/sqrt(200)) * x
+curv = function(x) (1/sqrt(200)) * x #expected
 
-sig <- seq(0.2, 20, .5)
-se = NULL
+sig <- seq(0.2, 20, .5) #sigmas to be simulated over
+se = NULL # store
+
 for (i in sig){
-  x = rnorm(200, 5, 1)
-  y = 7- 2*x + rnorm(200, 0, i) 
-  fit <- lm(y~x, data.frame(x=x, y=y))
-  se <- append(se, summary(fit)$coefficients[2,2])
+  x = rnorm(200, 5, 1) # simulate X
+  y = 7- 2*x + rnorm(200, 0, i) # simulate Y with sd = sigmas 
+  fit <- lm(y~x, data.frame(x=x, y=y)) # fit
+  se <- append(se, summary(fit)$coefficients[2,2]) # store
 }
 
+# plot simulation
 plot(sig, se, xlab = expression(sigma[epsilon]), ylab = "Standard Errors of Estimated Slope")
 lines(sig, se)
+
+# plot expected
 curve(curv, from = 0, to = 20, n = 10, col = "green", add = T)
 
-
+# add legend
 legend(x = "top", legend = c("Simulated", "Expected"), lty = "solid", col = c("black", "green"))
 
 ```
@@ -214,17 +246,21 @@ Here, we'll draw 1000 samples of size `sample_size` from the distribution $\math
 
 #Do not change this
 simulate_N_sample_means <- function(sample_size){
-  samples <- c()
+  
+  samples <- NULL # store
+  
   for (i in 1:1000){
-    draw <- rnorm(sample_size, 5, 10)
-    samples <- append(samples, mean(draw))
+    draw <- rnorm(sample_size, 5, 10) # simulate data
+    samples <- append(samples, mean(draw)) # store sample mean
   }
 return(samples)
 }
 
 
 #Choose a sample size:
-hist(simulate_N_sample_means(sample_size = 10), xlim = c(-10, 20), col = "forestgreen")
+hist(simulate_N_sample_means(sample_size = 10),  # plot histogram 
+     xlim = c(-10, 20),
+     col = "forestgreen")
 
 
 ```
