@@ -18,7 +18,8 @@ Imports: bookdown,
   reshape2,
   datasauRus,
   plotly,
-  webshot
+  webshot,
+  Ecdat
 Suggests:
   shinytest,
   testthat
