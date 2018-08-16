@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-08-13">
+<meta name="date" content="2018-08-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -392,8 +392,9 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 
 
 <span class="co"># Notice that if you installed the R package of this book,</span>
-<span class="co"># you have the data file installed at </span>
-<span class="co"># `system.file(package=&quot;ScPoEconometrics&quot;,&quot;datasets&quot;,&quot;demo_gind.xls&quot;)`</span>
+<span class="co"># you have the .xls data file already at </span>
+<span class="co"># `system.file(package=&quot;ScPoEconometrics&quot;,</span>
+<span class="co">#                        &quot;datasets&quot;,&quot;demo_gind.xls&quot;)`</span>
 <span class="co"># otherwise:</span>
 <span class="co"># * download the file to your computer</span>
 <span class="co"># * change the argument `path` to where you downloaded it</span>
@@ -401,7 +402,9 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 <span class="co"># or in RStudio by clicking Session &gt; Set Working Directory</span>
 
 <span class="co"># total population in raw format</span>
-tot_pop_raw =<span class="st"> </span><span class="kw">read_excel</span>(<span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,<span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), 
+tot_pop_raw =<span class="st"> </span><span class="kw">read_excel</span>(
+                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,
+                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), 
                 <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span>
                 <span class="dt">range=</span><span class="st">&quot;A9:K68&quot;</span>)  <span class="co"># which excel cell range to read</span>
 <span class="kw">names</span>(tot_pop_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span>
@@ -420,18 +423,33 @@ tot_pop_raw</code></pre></div>
 ##  9 Denmark 54757… 55114… 55347… 55606… 55805… 56026… 56272… 56597… 57072…
 ## 10 German… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175…
 ## # ... with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
-<p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). Notice, in particular, that <em>all</em> columns seem to be of type <code>chr</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
+<p>This shows a <code>tibble</code>. This is more informative view of a <code>data.frame</code> (it tells us data type, and how many cols and rows). The column names are <code>Country,2008,2009,...</code>, and the rows are numbered <code>1,2,3,...</code>. Notice, in particular, that <em>all</em> columns seem to be of type <code>&lt;chr&gt;</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
 <div id="tidyr" class="section level4">
 <h4><span class="header-section-number">2.4.1.1</span> <code>tidyr</code></h4>
 <p>In the previous <code>tibble</code>, each year is a column name (like <code>2008</code>) instead of all years being in one column <code>year</code>. We really would like to have several rows for each Country, one per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
 <li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>[&quot;2008&quot;, &quot;2009&quot;, &quot;2010&quot;,...]</code>)</li>
-<li>say what those columns should be gathered into, i.e. what is the <em>key</em> for those values: <code>year</code>.</li>
-<li>Finally, what is the name of the new resulting column, containing the <em>value</em> from each cell: <code>counts</code>.</li>
+<li>say what those columns should be gathered into, i.e. what is the <em>key</em> for those values: we’ll call it <code>year</code>.</li>
+<li>Finally, what is the name of the new resulting column, containing the <em>value</em> from each cell: let’s call it <code>counts</code>.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather function</span>
-tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</code></pre></div>
-<p>Notice that <code>counts</code> is still a <code>chr</code>. Let’s convert it:</p>
+tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)
+tot_pop</code></pre></div>
+<pre><code>## # A tibble: 590 x 3
+##    Country                                          year  counts   
+##    &lt;chr&gt;                                            &lt;chr&gt; &lt;chr&gt;    
+##  1 European Union (current composition)             2008  500297033
+##  2 European Union (without United Kingdom)          2008  438725386
+##  3 European Union (before the accession of Croatia) 2008  495985066
+##  4 Euro area (19 countries)                         2008  333096775
+##  5 Euro area (18 countries)                         2008  329884170
+##  6 Belgium                                          2008  10666866 
+##  7 Bulgaria                                         2008  7518002  
+##  8 Czech Republic                                   2008  10343422 
+##  9 Denmark                                          2008  5475791  
+## 10 Germany (until 1990 former territory of the FRG) 2008  82217837 
+## # ... with 580 more rows</code></pre>
+<p>That’s better! However, <code>counts</code> is still <code>chr</code>! Let’s convert it to a number:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop<span class="op">$</span>counts =<span class="st"> </span><span class="kw">as.integer</span>(tot_pop<span class="op">$</span>counts)</code></pre></div>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop</code></pre></div>
@@ -449,7 +467,7 @@ tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <s
 ##  9 Denmark                                          2008    5475791
 ## 10 Germany (until 1990 former territory of the FRG) 2008   82217837
 ## # ... with 580 more rows</code></pre>
-<p>Now you can see that column <code>counts</code> is indeed a <code>int</code>, i.e. an integer number, and we are fine.</p>
+<p>Now you can see that column <code>counts</code> is indeed <code>int</code>, i.e. an integer number, and we are fine.</p>
 </div>
 <div id="dplyr" class="section level4">
 <h4><span class="header-section-number">2.4.1.2</span> <code>dplyr</code></h4>
@@ -473,9 +491,9 @@ tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <s
 <p>Now we can immediately select some countries and plot their population over time. We will make use of the <code>piping</code> syntax of <code>dplyr</code> as already mentioned in section <a href="R-intro.html#dataframes">1.6.7</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)  <span class="co"># for %&gt;%, filter, mutate, ...</span>
 tot_pop <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>,<span class="st">&quot;Germany&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)</code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" /></p>
 </div>
 <div id="arrange-a-tibble" class="section level4 unnumbered">
@@ -490,6 +508,7 @@ tot_pop <span class="op">%&gt;%</span>
 bottom5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(counts)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)
+<span class="co"># let&#39;s see top 5</span>
 top5</code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   Country                                                   year    counts
@@ -499,7 +518,8 @@ top5</code></pre></div>
 ## 3 European Economic Area (EU28  - current composition, plu… 2015    5.14e8
 ## 4 European Economic Area (EU27 -  before the accession of … 2017    5.13e8
 ## 5 European Economic Area (EU28  - current composition, plu… 2014    5.12e8</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bottom5</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and bottom 5</span>
+bottom5</code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   Country    year  counts
 ##   &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
@@ -549,7 +569,7 @@ top5</code></pre></div>
 <span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(counts)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># is.na(x) returns TRUE if x is NA</span>
 <span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_missing =</span> <span class="kw">n</span>(),<span class="dt">years =</span> <span class="kw">paste</span>(year,<span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))
-knitr<span class="op">:::</span><span class="kw">kable</span>(missings)</code></pre></div>
+knitr<span class="op">:::</span><span class="kw">kable</span>(missings)  <span class="co"># knitr:::kable makes a nice table</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -601,13 +621,126 @@ knitr<span class="op">:::</span><span class="kw">kable</span>(missings)</code></
 </tr>
 </tbody>
 </table>
-<p>Notice that I used the function <code>kable</code> from the <code>knitr</code> package to produce a nicely looking table here.</p>
-<ul>
-<li>plot different vars</li>
-<li>make proportions and plot</li>
-<li>make growth rates and plot</li>
-<li>plot different vars by country</li>
-</ul>
+</div>
+<div id="males-and-females" class="section level4 unnumbered">
+<h4>Males and Females</h4>
+<p>Let’s look at the numbers by male and female population. They are in the same xls file, but at different cell ranges. Also, I just realised that the special character <code>:</code> indicates <em>missing</em> data. We can feed that to <code>read_excel</code> and that will spare us the need to convert data types afterwards. Let’s see:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">females_raw =<span class="st"> </span><span class="kw">read_excel</span>(
+                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,
+                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), 
+                <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span>
+                <span class="dt">range=</span><span class="st">&quot;A141:K200&quot;</span>,  <span class="co"># which excel cell range to read</span>
+                <span class="dt">na=</span><span class="st">&quot;:&quot;</span> )   <span class="co"># missing data indicator</span>
+<span class="kw">names</span>(females_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span>
+females_raw</code></pre></div>
+<pre><code>## # A tibble: 59 x 11
+##    Country `2008` `2009` `2010` `2011` `2012` `2013` `2014` `2015` `2016`
+##    &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Europe… 2.56e8 2.57e8 2.58e8 2.58e8 2.58e8 2.59e8 2.60e8 2.60e8 2.61e8
+##  2 Europe… 2.25e8 2.26e8 2.26e8 2.26e8 2.26e8 2.26e8 2.27e8 2.27e8 2.28e8
+##  3 Europe… 2.54e8 2.55e8 2.55e8 2.56e8 2.56e8 2.57e8 2.57e8 2.58e8 2.59e8
+##  4 Euro a… 1.71e8 1.71e8 1.72e8 1.72e8 1.72e8 1.72e8 1.73e8 1.73e8 1.74e8
+##  5 Euro a… 1.69e8 1.70e8 1.70e8 1.70e8 1.70e8 1.71e8 1.71e8 1.72e8 1.72e8
+##  6 Belgium 5.44e6 5.48e6 5.53e6 5.60e6 5.64e6 5.67e6 5.69e6 5.71e6 5.74e6
+##  7 Bulgar… 3.86e6 3.83e6 3.81e6 3.78e6 3.76e6 3.74e6 3.72e6 3.70e6 3.68e6
+##  8 Czech … 5.28e6 5.31e6 5.33e6 5.34e6 5.35e6 5.35e6 5.35e6 5.36e6 5.37e6
+##  9 Denmark 2.76e6 2.78e6 2.79e6 2.80e6 2.81e6 2.82e6 2.83e6 2.85e6 2.87e6
+## 10 German… 4.19e7 4.18e7 4.17e7 4.11e7 4.11e7 4.11e7 4.12e7 4.14e7 4.17e7
+## # ... with 49 more rows, and 1 more variable: `2017` &lt;dbl&gt;</code></pre>
+<p>You can see that <code>R</code> now correctly read the numbers as such, after we told it that the <code>:</code> character has the special <em>missing</em> meaning: before, it <em>coerced</em> the entire <code>2008</code> column (for example) to be of type <code>chr</code> after it hit the first <code>:</code>. We had to manually convert the column back to <code>numeric</code>, in the process automatically coercing the <code>:</code>s into <code>NA</code>. Now we addressed that issue directly. Let’s also get the male data in the same way:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">males_raw =<span class="st"> </span><span class="kw">read_excel</span>(
+                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,
+                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), 
+                <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span>
+                <span class="dt">range=</span><span class="st">&quot;A75:K134&quot;</span>,  <span class="co"># which excel cell range to read</span>
+                <span class="dt">na=</span><span class="st">&quot;:&quot;</span> )   <span class="co"># missing data indicator</span>
+<span class="kw">names</span>(males_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span></code></pre></div>
+<p>Next step was to <code>tidy</code> up this data, just as before:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">females =<span class="st"> </span><span class="kw">gather</span>(females_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)
+males =<span class="st"> </span><span class="kw">gather</span>(males_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</code></pre></div>
+<p>Let’s try to tweak our above plot to show the same data in two separate panels: one for males and one for females. This is easiest to do with <code>ggplot</code> if we have all the data in one single <code>data.frame</code> (or <code>tibble</code>), and marked with a <em>group identifier</em>. Let’s first add this to both datasets, and then let’s just combine both into one:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">females<span class="op">$</span>sex =<span class="st"> &quot;female&quot;</span>
+males<span class="op">$</span>sex =<span class="st"> &quot;male&quot;</span>
+sexes =<span class="st"> </span><span class="kw">rbind</span>(males,females)   <span class="co"># &quot;row bind&quot; 2 data.frames</span>
+sexes</code></pre></div>
+<pre><code>## # A tibble: 1,180 x 4
+##    Country                                          year     counts sex  
+##    &lt;chr&gt;                                            &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
+##  1 European Union (current composition)             2008  243990548 male 
+##  2 European Union (without United Kingdom)          2008  213826199 male 
+##  3 European Union (before the accession of Croatia) 2008  241913560 male 
+##  4 Euro area (19 countries)                         2008  162516883 male 
+##  5 Euro area (18 countries)                         2008  161029464 male 
+##  6 Belgium                                          2008    5224309 male 
+##  7 Bulgaria                                         2008    3660367 male 
+##  8 Czech Republic                                   2008    5065117 male 
+##  9 Denmark                                          2008    2712666 male 
+## 10 Germany (until 1990 former territory of the FRG) 2008   40274292 male 
+## # ... with 1,170 more rows</code></pre>
+<p>Now that we have all the data nice and <code>tidy</code> in a <code>data.frame</code>, this is a very small change to our previous plotting code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sexes <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.Date</span>(year,<span class="dt">format=</span><span class="st">&quot;%Y&quot;</span>),  <span class="co"># convert to `Date`</span>
+                       <span class="dt">y=</span>millions,<span class="dt">colour=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">name =</span> <span class="st">&quot;year&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># rename x axis</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>sex)   <span class="co"># make two panels, splitting by groups `sex`</span></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/psexes-1.png" width="672" /></p>
+</div>
+<div id="always-compare-to-germany--" class="section level4 unnumbered">
+<h4>Always Compare to Germany :-)</h4>
+<p>How do our three countries compare with respect to the biggest country in the EU in terms of population? What <em>fraction</em> of Germany does the French population make in any given year, for example?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remember that the pipe operator %&gt;% takes the </span>
+<span class="co"># result of the previous operation and passes it</span>
+<span class="co"># as the *first* argument to the next function call</span>
+merge_GER &lt;-<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co"># 1. subset to countries of interest</span>
+<span class="st">  </span><span class="kw">filter</span>(
+    Country <span class="op">%in%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,
+        <span class="st">&quot;United Kingdom&quot;</span>,
+        <span class="st">&quot;Italy&quot;</span>)
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co"># 2. group data by year</span>
+<span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co"># 3. add GER&#39;s count as new column *by year*</span>
+<span class="st">  </span><span class="kw">left_join</span>(
+    <span class="co"># Germany only</span>
+    <span class="kw">filter</span>(tot_pop,
+           Country <span class="op">%in%</span><span class="st"> &quot;Germany including former GDR&quot;</span>),
+    <span class="co"># join back in `by year`</span>
+    <span class="dt">by=</span><span class="st">&quot;year&quot;</span>)
+merge_GER</code></pre></div>
+<pre><code>## # A tibble: 30 x 5
+## # Groups:   year [?]
+##    Country.x      year  counts.x Country.y                    counts.y
+##    &lt;chr&gt;          &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;                           &lt;int&gt;
+##  1 France         2008  64007193 Germany including former GDR 82217837
+##  2 Italy          2008  58652875 Germany including former GDR 82217837
+##  3 United Kingdom 2008  61571647 Germany including former GDR 82217837
+##  4 France         2009  64350226 Germany including former GDR 82002356
+##  5 Italy          2009  59000586 Germany including former GDR 82002356
+##  6 United Kingdom 2009  62042343 Germany including former GDR 82002356
+##  7 France         2010  64658856 Germany including former GDR 81802257
+##  8 Italy          2010  59190143 Germany including former GDR 81802257
+##  9 United Kingdom 2010  62510197 Germany including former GDR 81802257
+## 10 France         2011  64978721 Germany including former GDR 80222065
+## # ... with 20 more rows</code></pre>
+<p>Here you see that the merge (or join) operation labelled <code>col.x</code> and <code>col.y</code> if both datasets contained a column called <code>col</code>. Now let’s continue to compute what proportion of german population each country amounts to:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(merge_GER)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>
+merge_GER <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop_GER =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>counts.x <span class="op">/</span><span class="st"> </span>counts.y) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co"># 5. plot</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> 
+           <span class="kw">aes</span>(<span class="dt">x =</span> year,
+               <span class="dt">y =</span> prop_GER,
+               <span class="dt">color =</span> Country,
+               <span class="dt">group =</span> Country)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;percent of German population&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()  <span class="co"># new theme for a change?</span></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
 
 </div>
 </div>
