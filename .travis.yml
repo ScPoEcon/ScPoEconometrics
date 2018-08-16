@@ -10,4 +10,5 @@ before_script:
 
 script:
   - R CMD build .
+  - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz && ./_build.sh && ./_deploy.sh
