@@ -1,0 +1,273 @@
+---
+title: "Standard Errors"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+```
+
+## A Simple Linear Model with Normally distributed errors
+
+We start our discussion by considering the following model, which you should be familiar with by now:
+
+$$Y = 5 + 2X + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 2^2)$$
+
+We will write a function called `simulate_1_sample_normal` that draws a sample of a given size from the population and returns it as a `data.frame`.
+
+```{r simulate_1_sample_normal}
+simulate_1_sample_normal <- function(size){
+  x = rnorm(size, 3, 3) # Generate X randomly
+  y = 5 + 2*x + rnorm(size, 0, 2) # Generate Y according to the DGP
+  return(data.frame(x = x, y = y)) # return X and Y in a data.frame
+}
+```
+
+For example, we can now simulate a sample of size N = 10 by simply calling the function:
+
+```{r simulate_1_sample_example_normal}
+simulate_1_sample_normal(size = 10)
+```
+
+One of the advantages of having the function return a `data.frame` is that we can plot its output very easily:
+
+```{r simulate_1_sample_plot_normal, exercise=TRUE, exercise.eval=TRUE}
+plot(simulate_1_sample_normal(size = 10),  # plot
+     xlim = c(-10, 15), ylim = c(-15, 35)) # Set plot limits
+```
+
+You should try and run the above line several times and using several different sample sizes. Notice how each sample differs from the previous one (although this is harder to tell when you use large samples!)
+
+Similarly, we can simulate the process of taking one sample of size N = 10 and fitting a linear model to it:
+
+```{r simulate_1_sample_lm_normal, exercise=TRUE, exercise.eval=TRUE}
+# simulate 10 draws and fit
+fit <- lm(y~x,
+          simulate_1_sample_normal(size = 10))
+
+#output
+summary(fit)
+```
+
+Again, play around with the above cell for a little bit -- choosing different sample sizes and keeping track of the precision and variability of the slope and intercept estimates. Start with `size = 10` and run the cell 5 times, how big is the variation in the estimated coefficients? Now repeat the process using `size = 1000`, do you think the model is estimated more precisely now?
+
+
+## A Simple Linear Model with uniformly distributed errors
+
+We now consider the following model:
+
+$$Y = 5 + 2X + \varepsilon, \quad \varepsilon \sim unif(-2, 2)$$
+
+Note how this time *the error term is not normally distributed*, instead it is uniformly distributed between -2 and 2 (but still has mean zero!)
+
+We will write a function called `simulate_1_sample_unif` that draws a sample of a given size from the population and returns it as a `data.frame`.
+
+```{r simulate_1_sample_unif}
+simulate_1_sample_unif <- function(size){
+  x = rnorm(size, 3, 3) # generate X randomly
+  y = 5 + 2*x + runif(n = size, -2, 2) # Gen Y as specified in DGP
+  return(data.frame(x = x, y = y)) # return {X, Y} is a data.frame
+}
+```
+
+For example, we can now simulate a sample of size N = 10 by simply calling the function:
+
+```{r simulate_1_sample_example}
+simulate_1_sample_unif(size = 10)
+```
+
+One of the advantages of having the function return a `data.frame` is that we can plot its output very easily:
+
+```{r simulate_1_sample_plot, exercise=TRUE, exercise.eval=TRUE}
+plot(simulate_1_sample_unif(size = 10),    # plot
+     xlim = c(-10, 15), ylim = c(-15, 35)) # set plot limits
+```
+
+You should try and run the above line several times and using several different sample sizes. Notice how each sample differs from the previous one (although this is harder to tell when you use large samples!)
+
+Similarly, we can simulate the process of taking one sample of size N = 10 and fitting a linear model to it:
+
+```{r simulate_1_sample_lm, exercise=TRUE, exercise.eval=TRUE}
+# simulate 10 draws and fit
+fit <- lm(y~x,
+          simulate_1_sample_unif(size = 10))
+#output
+summary(fit)
+```
+
+Again, play around with the above cell for a little bit -- choosing different sample sizes and keeping track of the precision and variability of the slope and intercept estimates. Start with `size = 10` and run the cell 5 times, how big is the variation in the estimated coefficients? Now repeat the process using `size = 1000`, do you think the model is estimated more precisely now?
+
+## Simulating Many Samples
+
+Thanks to R (and to the fact that the data itself is simulated), we can get an idea of what would happen if we could estimate the parameters of our linear models using **many different samples** of any given size! For this, we define the function `simulate_N_samples_unif` which essentially calls the `simulate_1_sample_unif` function N times, fits a linear model to each of the samples, and keeps track of all estimated slopes and intercepts.
+
+```{r simulate_N_sample}
+simulate_N_samples_unif <- function(size, N){
+  
+  # initialize 2 variables that will keep track
+  # of each value in the for-loop
+  slopes <- NULL
+  intercepts <- NULL
+  
+  # for-loop of size N
+  for (i in 1:N){
+    
+    # simulate a sample of size N and fit:
+    fit <- lm(y~x, simulate_1_sample_unif(size = size))
+    # store intercept along with previous ones
+    intercepts <- append(intercepts, as.numeric(fit$coefficients[1]))
+    # store slope along with previous ones
+    slopes <- append(slopes, as.numeric(fit$coefficients[2]))
+  }
+  # return slopes and intercepts
+  return(data.frame(intercepts = intercepts, slopes = slopes))
+}
+```
+
+Let's put it to the test:
+
+```{r simulate_N_samples_test, exercise = T, exercise.eval = T}
+simulate_N_samples_unif(10, 5)
+```
+
+> NB: We should pause for a second here and realise that what we are simulating is the *imaginary scenario* in which the social scientist has access to many different samples from the population. In reality, *researchers only have access to a single sample*! However, it is a very useful fiction to imagine what would happen if we did have access to an infinity of samples in order to be able to assess the reliability of the sample at hand.
+
+Now we are ready to compare how our estimates' precision changes as a function of the sample size! For this, we will:
+
+- 1. Simulate 5,000 different samples of size N
+- 2. Estimate a slope and an intercept coefficient for each of these 5,000 samples
+- 3. Visualize our 5,000 estimates in a histogram.
+
+Run the following cell to see the histograms:
+
+```{r simulate_N_samples_hist, exercise = T}
+# Pick a value for `size`, do not change N!
+sim <- simulate_N_samples_unif(size = 10, N = 5000)
+
+#DO NOT CHANGE THESE LINES
+hist(sim$intercepts, main = "Intercept Estimates", xlab="", xlim = c(0, 10), col = "lightblue");
+
+hist(sim$slopes, main = "Slope Estimates", xlab="", xlim = c(0, 4), col = "lightblue")
+```
+
+Start with a sample size of 10, then increase the sample size to 100 and then to 1000. As you can see, the precision of our estimates increases with the sample size! This property of the OLS estimates is called **consistency** and is a crucial assumption in econometrics.
+
+A useful summary statistic here is the standard-deviation of the difference between the true value of the parameter and our estimates, that is to say by how much do our estimates typically vary. These are called the *standard errors* or the estimates. Intuitively speaking, an estimate that varies very much from one sample to the other should be interpreted with more carefulness (and less believed) than one that is very constistent.
+
+
+Let's plot how standard errors evolve with the sample size:
+
+```{r plot-stderr}
+# All samples size we will simulate for
+n <- c(5, 10, 20, 30, 50, 75, 100, 200)
+se <- NULL # to store se
+
+for (i in n){
+  sim <- simulate_N_samples_unif(size = i, N = 500) # simulate and fit
+  se <- append(se, sd(sim$slope)) # store
+}
+
+# plot points
+plot(n, se, xlab = "Sample Size", ylab = "Standard Errors of Estimated Slope")
+# connect points with lines
+lines(n, se)
+```
+
+
+
+In fact, it can be shown that the variance of the sampling distribution of estimated slopes $\hat\beta_1$ is given by:
+
+$$\sigma^2_{\hat\beta_1} = \frac{1}{n} \frac{\sigma^2_{\varepsilon}}{\sigma^2_X}$$
+
+So the standard errors are 
+$$\sigma_{\hat\beta_1} = \sqrt{\frac{1}{n} \frac{\sigma^2_{\varepsilon}}{\sigma^2_X}}$$
+$$\ = \frac{1}{\sqrt{n}} \frac{\sigma_{\varepsilon}}{\sigma_X}$$
+
+Plugging numbers from our examples, 
+$$\sigma_{\hat\beta_1} \approx \frac{1}{\sqrt{n}} \cdot\sqrt{\frac{1.33}{9}} $$
+
+Let's check that this is indeed the case:
+
+```{r plot-stderr-2}
+
+curv <- function(x) sqrt(1.33/9)/sqrt(x) # function to be plotted
+
+# Plot actual simulated data
+plot(n, se, xlab = "Sample Size", ylab = "Standard Errors of Estimated Slope")
+lines(n, se)
+
+# Plot expected data
+curve(curv, from = 0, to = 200, n = 200, col = "green", add = T)
+
+# add a legend
+legend(x = "top", legend = c("Simulated", "Expected"), lty = "solid", col = c("black", "green"))
+```
+
+The theoretical formula suggests that the bigger the variance of $\varepsilon_i$ (denoted as $\sigma^2_{\varepsilon}$), the bigger the sample size $n$ needs to be in order to reach reasonable certainty about your estimates.
+
+The fact that the empirical standard error is higher than the expected ones for small samples is due to the fact that the theoretical formula used above relies on a *Normal Approximation* that gets better and better as the sample size increases. As a rule of thumbs, your sample should contain at least n = 100 observations to use the normal approximation in computing your standard errors (otherwise, you will underestimate the variance of your estimates!)
+
+We can also plot how an increase in $\sigma_{\varepsilon}$ affects our standard errors, for a *fixed* sample size (here, N = 100).
+
+```{r plot-stderr-3}
+
+curv = function(x) (1/sqrt(200)) * x #expected
+
+sig <- seq(0.2, 20, .5) #sigmas to be simulated over
+se = NULL # store
+
+for (i in sig){
+  x = rnorm(200, 5, 1) # simulate X
+  y = 7- 2*x + rnorm(200, 0, i) # simulate Y with sd = sigmas 
+  fit <- lm(y~x, data.frame(x=x, y=y)) # fit
+  se <- append(se, summary(fit)$coefficients[2,2]) # store
+}
+
+# plot simulation
+plot(sig, se, xlab = expression(sigma[epsilon]), ylab = "Standard Errors of Estimated Slope")
+lines(sig, se)
+
+# plot expected
+curve(curv, from = 0, to = 20, n = 10, col = "green", add = T)
+
+# add legend
+legend(x = "top", legend = c("Simulated", "Expected"), lty = "solid", col = c("black", "green"))
+
+```
+
+
+Both statistical theory and practice therefore seem to suggest that **the standard deviation of our estimates are decreasing in sample size $n$ (in fact, by a factor of $\frac{1}{\sqrt n}$)**. To understand this, it is easier to look at the distribution of sample means (under the assumption of *i.i.d samples*, *i*ndependent and *i*dentically *d*istributed):
+
+Here, we'll draw 1000 samples of size `sample_size` from the distribution $\mathcal{N}(5, 10^2)$, compute each sample mean, and plot their distribution. Try and increase the sample size.
+
+```{r iid means, exercise = T}
+
+#Do not change this
+simulate_N_sample_means <- function(sample_size){
+  
+  samples <- NULL # store
+  
+  for (i in 1:1000){
+    draw <- rnorm(sample_size, 5, 10) # simulate data
+    samples <- append(samples, mean(draw)) # store sample mean
+  }
+return(samples)
+}
+
+
+#Choose a sample size:
+hist(simulate_N_sample_means(sample_size = 10),  # plot histogram 
+     xlim = c(-10, 20),
+     col = "forestgreen")
+
+
+```
+
+
+You should observe that the distribution of means becomes tighter as the sample size increases! In fact, the standard deviation of the distribution of sample means $\bar X$ is given by:
+
+$$\sigma_{\bar{X}} = \frac{\sigma_X}{\sqrt n} = \frac{10}{\sqrt n}$$
+
+Recall that the sample mean is the OLS estimator of the most simple linear model. Statistical theory shows that this intuition applies to more complex models (such as when you use one regressor !)

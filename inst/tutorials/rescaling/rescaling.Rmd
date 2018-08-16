@@ -1,0 +1,290 @@
+---
+title: "Regression with rescaled variables"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+```
+
+## Tutorial: Rescaling
+
+In this short tutorial, we will explore what happens when we rescale the variables in a simple bivariate regression.
+
+### Generating Token Data
+
+For the sake of this example, we will generate fake data using the following Data Generating Process:
+
+$Y = 15 + 7X + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 10^2)$
+
+This can be done using the following code:
+
+```{r dgp}
+
+set.seed(42) #this ensures that everybody gets the same "random"" data
+
+# We'll use a sample size of n = 200
+
+x <- rnorm(n = 200, mean = 2, sd = 5) 
+# X is normally distributed w/ mean = 2 and sd = 5
+
+y <- 15 + 7*x + rnorm(n = 200, mean = 0, sd = 10)
+# the last term is the simulation of epsilon (added random noise)
+
+# store data in a data.frame
+dta <- data.frame(x = x, 
+                  y = y)
+
+plot(y~x, dta)
+```
+
+Keep an eye on the axes of the plot and the range of the data, as this tutorial is about rescaling.
+
+### Exploratory Data Analysis (EDA)
+
+Let's first print out some summary statistics for our data. This can be done by calling the `summary` function on our `data.frame`.
+
+```{r, eda-1}
+summary(dta)
+```
+
+What we are most interested with, however, is a summary of the *relationship* between $X$ and $Y$. Their correlation coefficient is an obvious candidate:
+
+```{r, eda-2}
+cor(dta)
+```
+
+The resulting output is called a "correlation matrix". The correlation between any variable and itself is obviously 1, hence the ones on the diagonal of the matrix. What we are interested are the coefficients of the off-diagonal: $Cov(X, Y) = Cov(Y, X) =$ `r cor(x, y)[1]`. This is a fairly high correlation coefficient, which is unsurprising as the data is made up.
+
+Lastly, we can try and fit $Y$ onto $X$ to see if a regression model can retrieve the underlying model from our sample.
+
+```{r, reg-1}
+fit <- lm(y~x, dta)
+summary(fit)
+```
+
+As you can see the estimated slope is `r summary(fit)$coefficients[2, 1]` and the estimated intercept is `r summary(fit)$coefficients[1, 1]`. Close enough from the "true" coefficients!
+
+```{r, reg-plot-1}
+plot(y~x, dta)
+abline(fit, col = "darkred")
+```
+
+We're now ready to explore how rescaling $X$ and $Y$ affects their relationship.
+
+### Rescaling $X$ and $Y$
+
+#### Multiplying one variable by a constant
+
+Change and run the following cell to rescale (multiply, really) $X$ and $Y$ by a constant term of your choosing, and then plot the data.
+
+```{r rescale_exo, exercise=TRUE, exercise.eval=TRUE}
+rescale_X <- 1 # change this (or not!)
+rescale_Y <- 1 # change this (or not!)
+
+dta_new <- data.frame(x = x * rescale_X,
+                      y = y * rescale_Y)
+
+# write code to plot your new data below:
+
+
+```
+
+The following function generates a rescaled version of the original data and takes two arguments: by how much you want to rescale X and Y, respectively.
+
+```{r rescale_function}
+rescale_xy <- function(rescale_X, rescale_Y){
+  dta_new <- data.frame(x = x * rescale_X,
+                      y = y * rescale_Y)
+  return(dta_new)
+}
+```
+
+
+Now, use the following cell to obtain summary statistics for both $X$ and $Y$:
+
+```{r summary_exo, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
+
+## Summary Statistics
+
+
+
+
+## Correlation
+
+
+```
+
+Compare this output with that obtained from the original data and answer the following questions.
+
+> What happens to the mean of $X$ when you multiply it by 10? what about its standard deviation? its maximum?
+
+#### Scaling $X$ only
+
+To answer the following question, rescale $X$ by multiplying it by 10 and leave $Y$ unchanged (i.e. use `rescale_xy(rescale_X = 10, rescale_Y = 1)`)
+
+
+```{r x_ten, echo=FALSE}
+question("What happens to the correlation coefficient of X and Y?",
+answer("It is multiplied by 10"),
+answer("It is divided by 10"),
+answer("It does not change.", correct = T, message = "The correlation coefficient of two variables is always between -1 and 1. In fact, it was specifically created as a more robust alternative to the covariance (which would have been multiplied by 10 here)!"),
+answer("It is multiplied by 100"), allow_retry = T
+)
+```
+
+Let's now turn to estimating the regression of $Y$ onto our new, rescaled $X$. From your above plot, what do you think has happened to the intercept of our model? to its slope?
+
+```{r x_ten_coefs, echo=FALSE}
+question("How will intercept and slope change?",
+answer("Both unchanged."),
+answer("Intercept unchanged, slope multiplied by 10."),
+answer("Intercept unchanged, slope divided by 10.", correct = T),
+answer("Intercept multiplied by 10, slope unchanged."),
+answer("Intercept divided by 10, slope unchanged."),
+answer("Both multiplied by 10."),
+answer("Both divided by 10."), allow_retry = T
+)
+```
+
+Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
+
+```{r reg_exo, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
+
+# Fit a linear model to the data using `lm`
+
+
+
+```
+
+Verify that the slope is indeed divided by 10. Can you think of why this must be the case? Discuss with your neighbour.
+(Hint: go back to the original data generating process equation).
+
+#### Scaling $Y$ only
+
+To answer the following question, rescale $Y$ by multiplying it by 2 and leave $X$ unchanged (i.e. use `rescale_xy(rescale_X = 1, rescale_Y = 2)`)
+
+Let's start by plotting the data.
+
+```{r plot_exo_y, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
+
+plot(y~x, dta_new)
+
+```
+
+Let's now turn to estimating the regression of our rescaled $Y$ onto $X$. From your above plot, what do you think has happened to the intercept of our model? to its slope?
+
+```{r y_two_coefs, echo=FALSE}
+question("How will intercept and slope change?",
+answer("Both unchanged."),
+answer("Intercept unchanged, slope multiplied by 2"),
+answer("Intercept unchanged, slope divided by 2"),
+answer("Intercept multiplied by 2, slope unchanged."),
+answer("Intercept divided by 2, slope unchanged."),
+answer("Both multiplied by 2.",  correct = T),
+answer("Both divided by 2."), allow_retry = T
+)
+```
+
+Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
+
+```{r reg_exo_y, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
+
+# Fit a linear model to the data using `lm`
+
+
+
+```
+
+Verify that both the slope and the intercept are indeed multiplied by 2. Can you think of why this must be the case? Discuss with your neighbour.
+(Hint: go back to the original data generating process equation).
+
+#### Scaling both $Y$ and $X$
+
+To answer the following question, rescale $Y$ by multiplying it by 10 and rescale $X$ by multiplying it by 2 (i.e. use `rescale_xy(rescale_X = 2, rescale_Y = 10)`)
+
+Let's start by plotting the data.
+
+```{r plot_exo_yx, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
+
+plot(y~x, dta_new)
+
+```
+
+Let's now turn to estimating the regression of our rescaled $Y$ onto our rescaled $X$. From your above plot, what do you think has happened to the intercept of our model? to its slope?
+
+```{r xy_int, echo=FALSE}
+question("How will the intercept change?",
+answer("Unchanged."),
+answer("Multiplied by 10",correct = T),
+answer("Multiplied by 5"),
+answer("Divided by 10"),
+answer("Divided by 5"), allow_retry = T
+)
+```
+
+```{r xy_slo, echo=FALSE}
+question("How will the slope change?",
+answer("Unchanged."),
+answer("Multiplied by 20"),
+answer("Multiplied by 5", correct = T),
+answer("Divided by 20"),
+answer("Divided by 5"), allow_retry = T
+)
+```
+
+Use the following cell to get an estimate of the intercept and slope coefficients.
+
+```{r reg_exo_yx, exercise=TRUE, exercise.eval=TRUE}
+dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
+
+# Fit a linear model to the data using `lm`
+
+
+
+```
+
+
+## Summary: Rescaling
+
+Here's a table summarizing the effect of rescaling $X$, $Y$, or both, on your regression output
+
+| Rescaling | Effect on Slope | Effect on Intercept |
+|:---------:|:---------------:|:-------------------:|
+|$X \rightarrow c \cdot X$| Multiplied by $\frac{1}{c}$ | Untouched |
+|$Y \rightarrow d \cdot Y$| Multiplied by $d$ | Multiplied by $d$ |
+|$(X, Y) \rightarrow (c \cdot X, d \cdot Y)$| Multiplied by $\frac{d}{c}$ | Multiplied by $d$ |
+
+**Proof:**
+
+It can be shown that for Ordinary Least Squares (OLS):
+
+$$Slope = \frac{Cov(X, Y)}{Var(X)}$$
+$$Intercept = \mathbb{E}[Y] - \frac{Cov(X, Y)}{Var(X)} \mathbb{E}[X]$$
+
+Multiplying $X$ by $c$ and $Y$ by $d$:
+
+
+
+
+$$NewSlope = \frac{Cov(cX, dY)}{Var(cX)} \\
+= \frac{c\cdot d}{c^2} \frac{Cov(X, Y)}{Var(X)} \\
+= \frac{d}{c} \frac{Cov(X, Y)}{Var(X)} \\
+= \frac{d}{c} Slope  \\$$
+
+
+and
+
+
+$$NewIntercept = \mathbb{E}[d\cdot Y] - \frac{Cov(cX, dY)}{Var(cX)} \mathbb{E}[c\cdot X] \\
+= d \cdot \mathbb{E}[Y] - \frac{d}{c} \frac{Cov(X, Y)}{Var(X)} c\cdot \mathbb{E}[X] \\
+= d \cdot \mathbb{E}[Y] - d \frac{Cov(X, Y)}{Var(X)}\mathbb{E}[X] \\
+= d \cdot (\mathbb{E}[Y] -\frac{Cov(X, Y)}{Var(X)}\mathbb{E}[X]) \\
+= d \cdot Intercept $$
