@@ -242,7 +242,7 @@ It's important to know how the data is organized in the spreadsheet. Open the fi
 
 Now we will read the first chunk of data, from the first table: *total population*:
 
-```{r}
+```{r,message=FALSE,warning=FALSE}
 library(readxl)  # load the library
 
 
@@ -266,11 +266,11 @@ names(tot_pop_raw)[1] <- "Country"   # lets rename the first column
 tot_pop_raw
 ```
 
-This shows a `tibble`. This is more informative view of a `data.frame` (it tells us data type, and how many cols and rows). The column names are `Country,2008,2009,...`, and the rows are numbered `1,2,3,...`. Notice, in particular, that *all* columns seem to be of type `<chr>`, i.e. characters - a string, not a number! We'll have to fix that, as this is clearly numeric data.
+This shows a `tibble`, which we encountered already in \@ref(dataframes). The column names are `Country,2008,2009,...`, and the rows are numbered `1,2,3,...`. Notice, in particular, that *all* columns seem to be of type `<chr>`, i.e. characters - a string, not a number! We'll have to fix that, as this is clearly numeric data.
 
 #### `tidyr`
 
-In the previous `tibble`, each year is a column name (like `2008`) instead of all years being in one column `year`. We really would like to have several rows for each Country, one per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
+In the previous `tibble`, each year is a column name (like `2008`) instead of all years being collected in one column `year`. We really would like to have several rows for each Country, one row per year. We want to `gather()` all years into a new column to tidy this up - and here is how:
 
 1. specify which columns are to be gathered: in our case, all years (note that `paste(2008:2017)` produces a vector like `["2008", "2009", "2010",...]`)
 1. say what those columns should be gathered into, i.e. what is the *key* for those values: we'll call it `year`.
@@ -289,13 +289,13 @@ tot_pop$counts = as.integer(tot_pop$counts)
 tot_pop
 ```
 
-Now you can see that column `counts` is indeed `int`, i.e. an integer number, and we are fine.
+Now you can see that column `counts` is indeed `int`, i.e. an integer number, and we are fine. The `Warning: NAs introduced by coercion` means that `R` converted some values to `NA`, because it couldn't convert them into `numeric`. More below!
 
 #### `dplyr`
 
 >The [transform](http://r4ds.had.co.nz/transform.html) chapter of Hadley Wickham's book is a great place to read up more on using `dplyr`.
 
-With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
+We already saw the `dplyr` package in action in chapter \@ref(dataframes), but now we go further. With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
 
 * Choose observations based on a certain value: `filter()`
 * Reorder rows: `arrange()`
@@ -309,13 +309,19 @@ All of those verbs can be used with `group_by()`, where we apply the respective 
 * mutate
 * and plot the resulting values
 
-Now we can immediately select some countries and plot their population over time. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
+Let's get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
 
 ```{r gather-plot,warning=FALSE,message=FALSE}
 library(dplyr)  # for %>%, filter, mutate, ...
+# 1. take the data.frame `tot_pop`
 tot_pop %>%
+  # 2. pipe it into the filter function
+  # filter on Country being one of "France","United Kingdom" or "Italy"
   filter(Country %in% c("France","United Kingdom","Italy")) %>%
+  # 3. pipe the result into the mutate function
+  # create a new column called millions
   mutate(millions = counts / 1e6) %>%
+  # 4. pipe the result into ggplot to make a plot
   ggplot(mapping = aes(x=year,y=millions,color=Country,group=Country)) + geom_line(size=1)
 ```
 

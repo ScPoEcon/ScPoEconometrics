@@ -16,17 +16,17 @@ description: "SciencesPo UG Econometrics online textbook. No Maths."
 
 
 
-# Introduction {-}
+# Syllabus {-}
 
 ![](ScPo.jpg)
 
-Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. This is still **work in progress**.
+Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. As of today, this is still **work in progress**!
 
-## Objective {-}
+### Objective {-}
 
 This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts.
 
-## Syllabus and Requirements {-}
+### Syllabus and Requirements {-}
 
 You can find the topics we want to go over in the left panel of this page. The later chapters are optional and depend on the speed with which we will proceed eventually. Chapters 1-4 are the core material of the course.
 
@@ -38,7 +38,7 @@ library(devtools)
 install_github(repo = "ScPoEcon/ScPoEconometrics")
 ```
 
-## Course Structure {-}
+### Course Structure {-}
 
 This course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
 
@@ -58,11 +58,11 @@ The book and all other content for this course are hosted under an open source l
 
 We will assess participation in class and conduct a final exam.
 
-## Team {-}
+### Team {-}
 
 tbc
 
-## Communication {-}
+### Communication {-}
 
 We will communicate exclusively on our [`slack`](https://econometrics-scpo.slack.com) app. You will get an invitation email to join in due course.
 
