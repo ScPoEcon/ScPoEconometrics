@@ -7,6 +7,12 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
+# add rescale function here to have avail everywhere
+rescale_xy <- function(rescale_X, rescale_Y){
+  dta_new <- data.frame(x = x * rescale_X,
+                      y = y * rescale_Y)
+  return(dta_new)
+}
 ```
 
 ## Tutorial: Rescaling
@@ -21,7 +27,7 @@ $Y = 15 + 7X + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 10^2)$
 
 This can be done using the following code:
 
-```{r dgp}
+```{r dgp-setup}
 
 set.seed(42) #this ensures that everybody gets the same "random"" data
 
@@ -80,7 +86,7 @@ We're now ready to explore how rescaling $X$ and $Y$ affects their relationship.
 
 Change and run the following cell to rescale (multiply, really) $X$ and $Y$ by a constant term of your choosing, and then plot the data.
 
-```{r rescale_exo, exercise=TRUE, exercise.eval=TRUE}
+```{r rescale_exo, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 rescale_X <- 1 # change this (or not!)
 rescale_Y <- 1 # change this (or not!)
 
@@ -94,7 +100,7 @@ dta_new <- data.frame(x = x * rescale_X,
 
 The following function generates a rescaled version of the original data and takes two arguments: by how much you want to rescale X and Y, respectively.
 
-```{r rescale_function}
+```{r rescale_function,eval=FALSE}
 rescale_xy <- function(rescale_X, rescale_Y){
   dta_new <- data.frame(x = x * rescale_X,
                       y = y * rescale_Y)
@@ -105,7 +111,7 @@ rescale_xy <- function(rescale_X, rescale_Y){
 
 Now, use the following cell to obtain summary statistics for both $X$ and $Y$:
 
-```{r summary_exo, exercise=TRUE, exercise.eval=TRUE}
+```{r summary_exo, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
 
 ## Summary Statistics
@@ -152,7 +158,7 @@ answer("Both divided by 10."), allow_retry = T
 
 Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo, exercise=TRUE, exercise.eval=TRUE}
+```{r reg_exo, exercise=TRUE, exercise.eval=TRUE,exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
 
 # Fit a linear model to the data using `lm`
@@ -170,7 +176,7 @@ To answer the following question, rescale $Y$ by multiplying it by 2 and leave $
 
 Let's start by plotting the data.
 
-```{r plot_exo_y, exercise=TRUE, exercise.eval=TRUE}
+```{r plot_exo_y, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
 
 plot(y~x, dta_new)
@@ -193,7 +199,7 @@ answer("Both divided by 2."), allow_retry = T
 
 Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo_y, exercise=TRUE, exercise.eval=TRUE}
+```{r reg_exo_y, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
 
 # Fit a linear model to the data using `lm`
@@ -211,7 +217,7 @@ To answer the following question, rescale $Y$ by multiplying it by 10 and rescal
 
 Let's start by plotting the data.
 
-```{r plot_exo_yx, exercise=TRUE, exercise.eval=TRUE}
+```{r plot_exo_yx, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
 
 plot(y~x, dta_new)
@@ -242,7 +248,7 @@ answer("Divided by 5"), allow_retry = T
 
 Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo_yx, exercise=TRUE, exercise.eval=TRUE}
+```{r reg_exo_yx, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
 dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
 
 # Fit a linear model to the data using `lm`
