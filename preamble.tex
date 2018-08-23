@@ -1,8 +1,15 @@
 \usepackage{booktabs}
 \usepackage{amsthm}
+\usepackage{tcolorbox}
+\newenvironment{note}{\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{Note:}]}{\end{tcolorbox}}
+\newenvironment{warning}{\begin{tcolorbox}[colback=orange!5!white,colframe=orange,title=\textbf{Warning!}]}{\end{tcolorbox}}
+\newenvironment{tip}{\begin{tcolorbox}[colback=green!5!white,colframe=green,title=\textbf{Tip:}]}{\end{tcolorbox}}
+
 \makeatletter
 \def\thm@space@setup{%
   \thm@preskip=8pt plus 2pt minus 4pt
   \thm@postskip=\thm@preskip
 }
 \makeatother
+
+

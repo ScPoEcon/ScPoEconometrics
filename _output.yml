@@ -8,7 +8,7 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/ScPoEcon/ScPoEconometrics/edit/master/%s
-    download: ["epub"]
+    download: ["pdf","epub"]
   includes:
     in_header: GA-tracker.html
 
