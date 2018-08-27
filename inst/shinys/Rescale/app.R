@@ -21,11 +21,13 @@ ui <- fluidPage(
 server <- function(input,output){
   output$best_fit <- renderText({
 
+    rd = 1  # digits to round
+
     set.seed(19)
-    n = 100
+    n = 10000
     sigma = 5
 
-    x <- rnorm(n, 2, 10)
+    x <- rnorm(n, 2, 40)
     y <- 10 + 3*x + rnorm(n, 0, sigma)
 
     s_x <- input$scale_x
@@ -38,15 +40,15 @@ server <- function(input,output){
     best_inter <- s_y * orig_inter
 
     if (s_x != 0){
-      paste0("Original Slope: ", round(orig_slope, 3),
-             "\nOriginal Intercept: ", round(orig_inter, 3),
-             "\nCurrent Slope: ", round(best_slope, 3),
-             "\nCurrent Intercept: ", round(best_inter, 3))
+      paste0("Original Slope: ", round(orig_slope, rd),
+             "\nOriginal Intercept: ", round(orig_inter, rd),
+             "\nCurrent Slope: ", round(best_slope, rd),
+             "\nCurrent Intercept: ", round(best_inter, rd))
     } else {
-      paste0("Original Slope: ", round(orig_slope, 3),
-             "\nOriginal Intercept: ", round(orig_inter, 3),
-             "\nCurrent Slope: ", round(best_slope, 3),
-             "\nCurrent Intercept: ", round(best_inter, 3),
+      paste0("Original Slope: ", round(orig_slope, rd),
+             "\nOriginal Intercept: ", round(orig_inter, rd),
+             "\nCurrent Slope: ", round(best_slope, rd),
+             "\nCurrent Intercept: ", round(best_inter, rd),
              "\n\nRemember that, when X = 0, the best linear predictor of Y is simply its (potentially rescaled) mean!")
     }
   })

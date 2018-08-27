@@ -4,10 +4,10 @@
     "scale_y": 1
   },
   "output": {
+    "best_fit": "Original Slope: 3\nOriginal Intercept: 10\nCurrent Slope: 3\nCurrent Intercept: 10",
     "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 100",
-    "best_fit": "Original Slope: 3.078\nOriginal Intercept: 10.575\nCurrent Slope: 3.078\nCurrent Intercept: 10.575",
     "regPlot_rescale": {
-      "src": "[image data sha1: c12e2264c2cada98df48703a89e469e5e92bba6b]",
+      "src": "[image data sha1: d7b875c3cd31c0c6b867142ca14b56a98dac8d67]",
       "width": 611,
       "height": 400,
       "coordmap": [
