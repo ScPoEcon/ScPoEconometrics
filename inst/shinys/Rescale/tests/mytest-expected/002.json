@@ -1,0 +1,41 @@
+{
+  "input": {
+    "scale_x": 0,
+    "scale_y": -3
+  },
+  "output": {
+    "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 100",
+    "best_fit": "Original Slope: 3.078\nOriginal Intercept: 10.575\nCurrent Slope: -Inf\nCurrent Intercept: -31.724\n\nRemember that, when X = 0, the best linear predictor of Y is simply its (potentially rescaled) mean!",
+    "regPlot_rescale": {
+      "src": "[image data sha1: 084f1aa385604119a4a57993e60b824db1491de5]",
+      "width": 611,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -54,
+            "right": 54,
+            "bottom": -220,
+            "top": 320
+          },
+          "range": {
+            "left": 59.04,
+            "right": 580.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
