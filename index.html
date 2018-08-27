@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald and Jean-Marc Robin">
 
 
-<meta name="date" content="2018-08-23">
+<meta name="date" content="2018-08-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -125,9 +125,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.2</b> Basic Calculations</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a></li>
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.4</b> Installing Packages</a></li>
-<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.5</b> Data Types</a></li>
-<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.6</b> Data Structures</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.7</b> Programming Basics</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.5</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.6</b> Data Types</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.7</b> Data Structures</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.8</b> Programming Basics</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
@@ -198,7 +199,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">Introduction to Econometrics with R</h1>
 <h4 class="author"><em>Florian Oswald and Jean-Marc Robin</em></h4>
-<h4 class="date"><em>2018-08-23</em></h4>
+<h4 class="date"><em>2018-08-27</em></h4>
 </div>
 <div id="syllabus" class="section level1 unnumbered">
 <h1>Syllabus</h1>
@@ -214,10 +215,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="syllabus-and-requirements" class="section level3 unnumbered">
 <h3>Syllabus and Requirements</h3>
 <p>You can find the topics we want to go over in the left panel of this page. The later chapters are optional and depend on the speed with which we will proceed eventually. Chapters 1-4 are the core material of the course.</p>
-<p>The only requirement is that you bring <em>your own personal computer</em> to each session. We will be using the free statistical computing language <a href="https://www.r-project.org"><code>R</code></a> very intensively. Before coming to the first session, you should update computer code associated to the course by executing the following three commands in your <code>R</code> console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
-<span class="kw">library</span>(devtools)
-<span class="kw">install_github</span>(<span class="dt">repo =</span> <span class="st">&quot;ScPoEcon/ScPoEconometrics&quot;</span>)</code></pre></div>
+<p>The only requirement is that <strong>you bring your own personal computer</strong> to each session. We will be using the free statistical computing language <a href="https://www.r-project.org"><code>R</code></a> very intensively. Before coming to the first session, please install <code>R</code> and <code>RStudio</code> as explained at the beginning of chapter <a href="R-intro.html#R-intro">1</a>.</p>
 </div>
 <div id="course-structure" class="section level3 unnumbered">
 <h3>Course Structure</h3>
