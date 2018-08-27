@@ -122,14 +122,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
 <li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
-<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.2</b> Basic Calculations</a></li>
-<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a></li>
-<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.4</b> Installing Packages</a></li>
-<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.5</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.6</b> <code>ScPoEconometrics</code> Package</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.7</b> Data Types</a></li>
-<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.8</b> Data Structures</a></li>
-<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.9</b> Programming Basics</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.6</b> Data Types</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.7</b> Data Structures</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.8</b> Programming Basics</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
@@ -218,13 +217,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} \tag{6.1}
 \]</span></p>
 <p>Let’s run that regression here:</p>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = y ~ x, data = dta)
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt; (Intercept)            x  
-#OUT&gt;       1.889        3.756</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = dta)
+## 
+## Coefficients:
+## (Intercept)            x  
+##       1.889        3.756</code></pre>
 <p>We have seen in the <code>app</code> launched via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy&quot;</span>)</code></pre></div>
 <p>that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, i.e. <span class="math inline">\(E[y|x=0]\)</span>, to the mean when <span class="math inline">\(x=1\)</span>, i.e. <span class="math inline">\(E[y|x=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let’s just refresh our memory by replicating the graph from the <code>app</code> here in figure <a href="categorical-vars.html#fig:x-zero-one">6.1</a>:</p>
@@ -248,38 +247,38 @@ y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \tag{6.2}
 \text{is.male}_i &amp;= \mathbf{1}[x_i==1], \\
 \end{align*}\]</span>
 <p>and the resulting estimates of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\alpha\)</span> are in fact the same. Here we see the estimates from <a href="categorical-vars.html#eq:dummy-reg">(6.2)</a>:</p>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = y ~ is.male, data = dta)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.40227 -0.50683 -0.09763  0.66287  1.53463 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
-#OUT&gt; is.male1      3.7558     0.3902   9.626 1.60e-08 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.868 on 18 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
-#OUT&gt; F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ is.male, data = dta)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.40227 -0.50683 -0.09763  0.66287  1.53463 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
+## is.male1      3.7558     0.3902   9.626 1.60e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.868 on 18 degrees of freedom
+## Multiple R-squared:  0.8374, Adjusted R-squared:  0.8283 
+## F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08</code></pre>
 <p>It is interesting to note that the estimate for <span class="math inline">\(\alpha = 3.7558\)</span> (and <span class="math inline">\(\beta_1 = 3.7558\)</span>!) is the same as the difference in conditional means:</p>
 <p><span class="math display">\[E[y|x=1] - E[y|x=0]=3.7558.\]</span></p>
 <div id="categorical-variables-in-r-factor" class="section level2">
 <h2><span class="header-section-number">6.1</span> Categorical Variables in <code>R</code>: <code>factor</code></h2>
-<p><code>R</code> has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called <code>factor</code>. We encountered them as basic data types in section <a href="R-intro.html#data-types">1.7</a> already, but it is worth repeating this here. We have seen that a factor <em>categorizes</em> a usually small number of numeric values by <em>labels</em>, as in this example which is similar to what I used to create regressor <code>is.male</code> for the above regression:</p>
+<p><code>R</code> has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called <code>factor</code>. We encountered them as basic data types in section <a href="R-intro.html#data-types">1.6</a> already, but it is worth repeating this here. We have seen that a factor <em>categorizes</em> a usually small number of numeric values by <em>labels</em>, as in this example which is similar to what I used to create regressor <code>is.male</code> for the above regression:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">is.male =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>))
 is.male</code></pre></div>
-<pre><code>#OUT&gt; [1] FALSE TRUE  TRUE  FALSE
-#OUT&gt; Levels: FALSE TRUE</code></pre>
+<pre><code>## [1] FALSE TRUE  TRUE  FALSE
+## Levels: FALSE TRUE</code></pre>
 <p>You can see the result is a vector object of type <code>factor</code> with 4 entries, whereby <code>0</code> is represented as <code>FALSE</code> and <code>1</code> as <code>TRUE</code>. An other example could be if we wanted to record a variable <em>sex</em> instead, and we could do</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sex =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>,<span class="st">&quot;male&quot;</span>))
 sex</code></pre></div>
-<pre><code>#OUT&gt; [1] female male   male   female
-#OUT&gt; Levels: female male</code></pre>
+<pre><code>## [1] female male   male   female
+## Levels: female male</code></pre>
 <p>You can see that this is almost identical, just the <em>labels</em> are different.</p>
 <div id="more-levels" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> More Levels</h3>
@@ -292,8 +291,8 @@ sex</code></pre></div>
 \end{align*}\]</span>
 <p>but you can see that this is cumbersome. There is a better solution for us available:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;HS&quot;</span>,<span class="st">&quot;someCol&quot;</span>,<span class="st">&quot;BA&quot;</span>,<span class="st">&quot;MSc&quot;</span>))</code></pre></div>
-<pre><code>#OUT&gt; [1] HS      HS      someCol MSc     BA      MSc    
-#OUT&gt; Levels: HS someCol BA MSc</code></pre>
+<pre><code>## [1] HS      HS      someCol MSc     BA      MSc    
+## Levels: HS someCol BA MSc</code></pre>
 <p>Notice here that <code>R</code> will apply the labels in increasing order the way you supplied it (i.e. a numerical value <code>4</code> will correspond to “MSc”, no matter the ordering in <code>x</code>.)</p>
 </div>
 <div id="factor-and-lm" class="section level3">
@@ -302,43 +301,43 @@ sex</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Ecdat)  <span class="co"># need to load this library</span>
 <span class="kw">data</span>(<span class="st">&quot;Wages&quot;</span>)   <span class="co"># from Ecdat</span>
 <span class="kw">str</span>(Wages)   <span class="co"># let&#39;s examine this dataset!</span></code></pre></div>
-<pre><code>#OUT&gt; &#39;data.frame&#39;: 4165 obs. of  12 variables:
-#OUT&gt;  $ exp    : int  3 4 5 6 7 8 9 30 31 32 ...
-#OUT&gt;  $ wks    : int  32 43 40 39 42 35 32 34 27 33 ...
-#OUT&gt;  $ bluecol: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 2 2 2 ...
-#OUT&gt;  $ ind    : int  0 0 0 0 1 1 1 0 0 1 ...
-#OUT&gt;  $ south  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 1 1 1 ...
-#OUT&gt;  $ smsa   : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-#OUT&gt;  $ married: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...
-#OUT&gt;  $ sex    : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 2 2 2 2 2 2 2 2 2 ...
-#OUT&gt;  $ union  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 2 ...
-#OUT&gt;  $ ed     : int  9 9 9 9 9 9 9 11 11 11 ...
-#OUT&gt;  $ black  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-#OUT&gt;  $ lwage  : num  5.56 5.72 6 6 6.06 ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    4165 obs. of  12 variables:
+##  $ exp    : int  3 4 5 6 7 8 9 30 31 32 ...
+##  $ wks    : int  32 43 40 39 42 35 32 34 27 33 ...
+##  $ bluecol: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ ind    : int  0 0 0 0 1 1 1 0 0 1 ...
+##  $ south  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 1 1 1 ...
+##  $ smsa   : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ married: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ sex    : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ union  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 2 ...
+##  $ ed     : int  9 9 9 9 9 9 9 11 11 11 ...
+##  $ black  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ lwage  : num  5.56 5.72 6 6 6.06 ...</code></pre>
 <p>Assume that this is a single cross section for wages of US workers. The main outcome variable is <code>lwage</code> which stands for <em>logarithm of wage</em>. Let’s initially say that a workers wage depends only on his <em>experience</em>, measured in the number of years he/she worked full-time:</p>
 <p><span class="math display" id="eq:wage-exp">\[
 \ln w_i = \beta_0 + \beta_1 exp_i + \varepsilon_i \tag{6.3}
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_w =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_w)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -2.30153 -0.29144  0.02307  0.27927  1.97171 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.5014318  0.0144657  449.44   &lt;2e-16 ***
-#OUT&gt; exp         0.0088101  0.0006378   13.81   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4513 on 4163 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.04383, Adjusted R-squared:  0.0436 
-#OUT&gt; F-statistic: 190.8 on 1 and 4163 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ exp, data = Wages)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.30153 -0.29144  0.02307  0.27927  1.97171 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.5014318  0.0144657  449.44   &lt;2e-16 ***
+## exp         0.0088101  0.0006378   13.81   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4513 on 4163 degrees of freedom
+## Multiple R-squared:  0.04383,    Adjusted R-squared:  0.0436 
+## F-statistic: 190.8 on 1 and 4163 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We see from this that an additional year of full-time work experience will increase the mean of <span class="math inline">\(\ln w\)</span> by 0.0088. Given the log transformation on wages, we can just exponentiate that to get an estimated effect on the (geometric!) mean of wages as <span class="math inline">\(\exp(\hat{\beta}_1) = 1.0088491\)</span>. This means that hourly wages increase by roughly <span class="math inline">\(100 * (\exp(\hat{\beta}_1)-1) = 0.88\)</span> percent with an additional year of experience. We can verify the positive relationship in figure <a href="categorical-vars.html#fig:wage-plot">6.2</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot"></span>
 <img src="ScPoEconometrics_files/figure-html/wage-plot-1.png" alt="log wage vs experience. Red line shows the regression." width="672" />
@@ -353,25 +352,25 @@ Figure 6.2: log wage vs experience. Red line shows the regression.
 <p>We can do this easily by using the <code>update</code> function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_sex =<span class="st"> </span><span class="kw">update</span>(lm_w, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>sex)  <span class="co"># update lm_w with same LHS, same RHS, but add sex to it</span>
 <span class="kw">summary</span>(lm_sex)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp + sex, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.87081 -0.26688  0.01733  0.26336  1.90325 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.1257661  0.0223319  274.31   &lt;2e-16 ***
-#OUT&gt; exp         0.0076134  0.0006082   12.52   &lt;2e-16 ***
-#OUT&gt; sexmale     0.4501101  0.0210974   21.34   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4286 on 4162 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.1381,  Adjusted R-squared:  0.1377 
-#OUT&gt; F-statistic: 333.4 on 2 and 4162 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ exp + sex, data = Wages)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.87081 -0.26688  0.01733  0.26336  1.90325 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.1257661  0.0223319  274.31   &lt;2e-16 ***
+## exp         0.0076134  0.0006082   12.52   &lt;2e-16 ***
+## sexmale     0.4501101  0.0210974   21.34   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4286 on 4162 degrees of freedom
+## Multiple R-squared:  0.1381, Adjusted R-squared:  0.1377 
+## F-statistic: 333.4 on 2 and 4162 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>What’s going on here? Remember from above that <code>sex</code> is a <code>factor</code> with 2 levels <em>female</em> and <em>male</em>. We see in the above output that <code>R</code> included a regressor called <code>sexmale</code> <span class="math inline">\(=\mathbf{1}[sex_i==&quot;male&quot;]\)</span>. This is a combination of the variable name <code>sex</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>sex==&quot;female&quot;</code>. The interpretation is that <span class="math inline">\(\beta_2\)</span> measures the effect of being male <em>relative</em> to being female. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category. In particular, if <code>sex</code> had a third category <code>dont want to say</code>, there would be an additional regressor called <code>sexdontwanttosay</code>.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
 <img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs experience with different intercepts by sex" width="672" />
@@ -395,80 +394,80 @@ Figure 6.3: log wage vs experience with different intercepts by sex
 <p>Back in our <code>R</code> session, we can run the full interactions model like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_inter =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp<span class="op">*</span>sex, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_inter)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp * sex, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.82137 -0.26797  0.01781  0.26231  1.90757 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.169017   0.038165 161.643  &lt; 2e-16 ***
-#OUT&gt; exp         0.005071   0.001918   2.644  0.00822 ** 
-#OUT&gt; sexmale     0.401116   0.040917   9.803  &lt; 2e-16 ***
-#OUT&gt; exp:sexmale 0.002826   0.002022   1.397  0.16236    
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4285 on 4161 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.1385,  Adjusted R-squared:  0.1379 
-#OUT&gt; F-statistic:   223 on 3 and 4161 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ exp * sex, data = Wages)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.82137 -0.26797  0.01781  0.26231  1.90757 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.169017   0.038165 161.643  &lt; 2e-16 ***
+## exp         0.005071   0.001918   2.644  0.00822 ** 
+## sexmale     0.401116   0.040917   9.803  &lt; 2e-16 ***
+## exp:sexmale 0.002826   0.002022   1.397  0.16236    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4285 on 4161 degrees of freedom
+## Multiple R-squared:  0.1385, Adjusted R-squared:  0.1379 
+## F-statistic:   223 on 3 and 4161 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>You can see here that <code>R</code> automatically expands <code>exp*sex</code> to include both <em>main effects</em>, i.e. <code>exp</code> and <code>sex</code> as single regressors as before, and their interaction, denoted by <code>exp:sexmale</code>. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that <span class="math inline">\(\beta_3 = 0\)</span>. (If, for some reason, you wanted to include only the interaction, you could supply directly <code>formula = lwage ~ exp:sex</code> to <code>lm</code>, although this would be a rather difficult to interpret model.)</p>
 <p>We call a model like <a href="categorical-vars.html#eq:wage-sex-inter">(6.5)</a> a <em>saturated model</em>, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.</p>
 <p>To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for <code>sex</code>, <code>smsa</code>, <code>union</code> and <code>bluecol</code>, including all main and all interaction effects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_full =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>sex<span class="op">*</span>smsa<span class="op">*</span>union<span class="op">*</span>bluecol,<span class="dt">data=</span>Wages)
 <span class="kw">summary</span>(lm_full)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ sex * smsa * union * bluecol, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.95214 -0.23409 -0.01681  0.25317  1.90450 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;                                     Estimate Std. Error t value Pr(&gt;|t|)
-#OUT&gt; (Intercept)                          6.12378    0.06300  97.198  &lt; 2e-16
-#OUT&gt; sexmale                              0.67057    0.06577  10.195  &lt; 2e-16
-#OUT&gt; smsayes                              0.33424    0.06872   4.864 1.19e-06
-#OUT&gt; unionyes                             0.84284    0.16866   4.997 6.06e-07
-#OUT&gt; bluecolyes                          -0.34016    0.08423  -4.039 5.47e-05
-#OUT&gt; sexmale:smsayes                     -0.15917    0.07226  -2.203 0.027670
-#OUT&gt; sexmale:unionyes                    -0.92893    0.17816  -5.214 1.94e-07
-#OUT&gt; smsayes:unionyes                    -0.83927    0.17979  -4.668 3.14e-06
-#OUT&gt; sexmale:bluecolyes                  -0.15046    0.08820  -1.706 0.088100
-#OUT&gt; smsayes:bluecolyes                  -0.12471    0.09727  -1.282 0.199882
-#OUT&gt; unionyes:bluecolyes                 -0.31819    0.22924  -1.388 0.165208
-#OUT&gt; sexmale:smsayes:unionyes             0.72672    0.19060   3.813 0.000139
-#OUT&gt; sexmale:smsayes:bluecolyes           0.25860    0.10327   2.504 0.012318
-#OUT&gt; sexmale:unionyes:bluecolyes          0.71906    0.23772   3.025 0.002503
-#OUT&gt; smsayes:unionyes:bluecolyes          0.50057    0.24862   2.013 0.044137
-#OUT&gt; sexmale:smsayes:unionyes:bluecolyes -0.58330    0.25899  -2.252 0.024361
-#OUT&gt;                                        
-#OUT&gt; (Intercept)                         ***
-#OUT&gt; sexmale                             ***
-#OUT&gt; smsayes                             ***
-#OUT&gt; unionyes                            ***
-#OUT&gt; bluecolyes                          ***
-#OUT&gt; sexmale:smsayes                     *  
-#OUT&gt; sexmale:unionyes                    ***
-#OUT&gt; smsayes:unionyes                    ***
-#OUT&gt; sexmale:bluecolyes                  .  
-#OUT&gt; smsayes:bluecolyes                     
-#OUT&gt; unionyes:bluecolyes                    
-#OUT&gt; sexmale:smsayes:unionyes            ***
-#OUT&gt; sexmale:smsayes:bluecolyes          *  
-#OUT&gt; sexmale:unionyes:bluecolyes         ** 
-#OUT&gt; smsayes:unionyes:bluecolyes         *  
-#OUT&gt; sexmale:smsayes:unionyes:bluecolyes *  
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.3832 on 4149 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.3129,  Adjusted R-squared:  0.3105 
-#OUT&gt; F-statistic:   126 on 15 and 4149 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ sex * smsa * union * bluecol, data = Wages)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.95214 -0.23409 -0.01681  0.25317  1.90450 
+## 
+## Coefficients:
+##                                     Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                          6.12378    0.06300  97.198  &lt; 2e-16
+## sexmale                              0.67057    0.06577  10.195  &lt; 2e-16
+## smsayes                              0.33424    0.06872   4.864 1.19e-06
+## unionyes                             0.84284    0.16866   4.997 6.06e-07
+## bluecolyes                          -0.34016    0.08423  -4.039 5.47e-05
+## sexmale:smsayes                     -0.15917    0.07226  -2.203 0.027670
+## sexmale:unionyes                    -0.92893    0.17816  -5.214 1.94e-07
+## smsayes:unionyes                    -0.83927    0.17979  -4.668 3.14e-06
+## sexmale:bluecolyes                  -0.15046    0.08820  -1.706 0.088100
+## smsayes:bluecolyes                  -0.12471    0.09727  -1.282 0.199882
+## unionyes:bluecolyes                 -0.31819    0.22924  -1.388 0.165208
+## sexmale:smsayes:unionyes             0.72672    0.19060   3.813 0.000139
+## sexmale:smsayes:bluecolyes           0.25860    0.10327   2.504 0.012318
+## sexmale:unionyes:bluecolyes          0.71906    0.23772   3.025 0.002503
+## smsayes:unionyes:bluecolyes          0.50057    0.24862   2.013 0.044137
+## sexmale:smsayes:unionyes:bluecolyes -0.58330    0.25899  -2.252 0.024361
+##                                        
+## (Intercept)                         ***
+## sexmale                             ***
+## smsayes                             ***
+## unionyes                            ***
+## bluecolyes                          ***
+## sexmale:smsayes                     *  
+## sexmale:unionyes                    ***
+## smsayes:unionyes                    ***
+## sexmale:bluecolyes                  .  
+## smsayes:bluecolyes                     
+## unionyes:bluecolyes                    
+## sexmale:smsayes:unionyes            ***
+## sexmale:smsayes:bluecolyes          *  
+## sexmale:unionyes:bluecolyes         ** 
+## smsayes:unionyes:bluecolyes         *  
+## sexmale:smsayes:unionyes:bluecolyes *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3832 on 4149 degrees of freedom
+## Multiple R-squared:  0.3129, Adjusted R-squared:  0.3105 
+## F-statistic:   126 on 15 and 4149 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The main effects remain clear to interpret: being a blue collar worker, for example, reduces average wages by 34% relative to white collar workers. One-way interactions are still ok to interpret as well: <code>sexmale:bluecolyes</code> indicates in addition to a wage premium over females of 0.67, and a penalty of being blue collar of -0.34, <strong>male</strong> blue collar workers suffer an additional wage loss of -0.15. All of this is relative to the base category, which are female white collar workers who don’t live in an smsa and are not union members. If we now add a third or even a fourth interaction, this becomes much harder to interpret, and in fact we rarely see such interactions in applied work.</p>
 
 </div>
