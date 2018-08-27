@@ -127,7 +127,7 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
 
 A quick note on styling choices in this book. We had to make a decide how to visually separate `R` code and resutling output in this book. We decided prefix all output lines with ``r OUT_PROMPT`` to make the distinction. Notice that you can simply copy and paste the code into your `R` console.
 
-### `ScPoEconometrics` Package {#install-package}
+## `ScPoEconometrics` Package {#install-package}
 
 To fully take advantage of our course, please install the associated `R` package directly from its online code repository. You can do this by copy and pasting the following three lines into your `R` console:
 
