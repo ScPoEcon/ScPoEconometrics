@@ -30,13 +30,8 @@ This course aims to teach you the basics of data analysis needed in a Social Sci
 
 You can find the topics we want to go over in the left panel of this page. The later chapters are optional and depend on the speed with which we will proceed eventually. Chapters 1-4 are the core material of the course.
 
-The only requirement is that you bring *your own personal computer* to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, you should update computer code associated to the course by executing the following three commands in your `R` console:
+The only requirement is that **you bring your own personal computer** to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, please install `R` and `RStudio` as explained at the beginning of chapter \@ref(R-intro). 
 
-```R
-if (!require("devtools")) install.packages("devtools")
-library(devtools)
-install_github(repo = "ScPoEcon/ScPoEconometrics")
-```
 
 ### Course Structure {-}
 

@@ -1,5 +1,10 @@
 # Introduction to `R`  {#R-intro}
 
+```{r setup, include=FALSE}
+OUT_PROMPT = "#OUT>"
+knitr::opts_chunk$set(comment=OUT_PROMPT)
+```
+
 ## Getting Started
 
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
@@ -117,6 +122,29 @@ library(ggplot2)
 ```
 
 Once you close `R`, all the packages are closed and put back on the imaginary shelf. The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.
+
+## `Code` vs Output in this Book {#code-output}
+
+A quick note on styling choices in this book. We had to make a decide how to visually separate `R` code and resutling output in this book. We decided prefix all output lines with ``r OUT_PROMPT`` to make the distinction. Notice that you can simply copy and paste the code into your `R` console.
+
+### `ScPoEconometrics` Package {#install-package}
+
+To fully take advantage of our course, please install the associated `R` package directly from its online code repository. You can do this by copy and pasting the following three lines into your `R` console:
+
+```R
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+install_github(repo = "ScPoEcon/ScPoEconometrics")
+```
+
+In order to check whether everything works fine, you could load the library, and check it's current version:
+
+```{r,warning=FALSE,message=FALSE}
+library(ScPoEconometrics)
+packageVersion("ScPoEconometrics")
+```
+
+
 
 ## Data Types {#data-types}
 
