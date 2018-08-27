@@ -1,10 +1,5 @@
 # Introduction to `R`  {#R-intro}
 
-```{r setup, include=FALSE}
-OUT_PROMPT = "#OUT>"
-knitr::opts_chunk$set(comment=OUT_PROMPT)
-```
-
 ## Getting Started
 
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
@@ -19,6 +14,18 @@ The popularity of `R` is on the rise, and everyday it becomes a better tool for 
 The following few chapters will serve as a whirlwind introduction to `R`. They are by no means meant to be a complete reference for the `R` language, but simply an introduction to the basics that we will need along the way. Several of the more important topics will be re-stressed as they are actually needed for analyses.
 
 This introductory `R` chapter may feel like an overwhelming amount of information. You are not expected to pick up everything the first time through. You should try all of the code from this chapter, then return to it a number of times as you return to the concepts when performing analyses. We present the bare basics in this chapter, some more details are in chapter \@ref(R-advanced).
+
+
+## Starting R and RStudio
+
+A key difference for you to understand is that between `R`, the actual programming language, and RStudio which is a software that allows you to efficiently and easily work with the R language. 
+
+The best way to appreciate the value of RStudio is to start using R *without* RStudio. To do this, click on the R application that you should have downloaded on your computer (see above). You've just opened the R **console** which allows you to start typing code right after the red `>` sign. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
+
+Typing each command after the other is however not very convenient, and we would like to be able to write all the lines of code beforehand and then run all of them in one go. We can do this by writing **scripts**, and for this we will need tools like RStudio!
+
+Open RStudio by clicking on the RStudio application on your computer, and notice how different (and prettier!) the whole environment is from the basic R console – which you can still find and use in the bottom panel of RStudio. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
+
 
 RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut -- the keyboard shortcut to rule them all:
 
@@ -36,11 +43,11 @@ For this course, our main deviation from these two guides is the use of `=` in p
 
 ## Basic Calculations
 
-To get started, we'll use `R` like a simple calculator.
+To get started, we'll use `R` like a simple calculator. Run the following code either directly from the R console, or in RStudio by writting them in a script and running them using `Command` + `Return`.
 
 #### Addition, Subtraction, Multiplication and Division {-}
 
-| Math          | `R`     | Result    |
+| Math          | `R` code    | Result    |
 |:-------------:|:-------:|:---------:|
 | $3 + 2$       | `3 + 2` | `r 3 + 2` |
 | $3 - 2$       | `3 - 2` | `r 3 - 2` |
@@ -49,7 +56,7 @@ To get started, we'll use `R` like a simple calculator.
 
 #### Exponents  {-}
 
-| Math         | `R`             | Result            |
+| Math         | `R` code             | Result            |
 |:-------------:|:-------:|:---------:|
 | $3^2$        | `3 ^ 2`         | `r 3 ^ 2`         |
 | $2^{(-3)}$   | `2 ^ (-3)`      | `r 2 ^ (-3)`      |
@@ -59,7 +66,7 @@ To get started, we'll use `R` like a simple calculator.
 
 #### Mathematical Constants  {-}
 
-| Math         | `R`             | Result            |
+| Math         | `R` code             | Result            |
 |:------------:|:---------------:|:-----------------:|
 | $\pi$        | `pi`            | `r pi`            |
 | $e$          | `exp(1)`        | `r exp(1)`        |
@@ -68,7 +75,7 @@ To get started, we'll use `R` like a simple calculator.
 
 Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logarithm. There is no `ln()` in `R`, instead it uses `log()` to mean the natural logarithm.
 
-| Math              | `R`                 | Result                |
+| Math              | `R` code                | Result                |
 |:------------:|:---------------:|:-----------------:|
 | $\log(e)$         | `log(exp(1))`       | `r log(exp(1))`       |
 | $\log_{10}(1000)$ | `log10(1000)`       | `r log10(1000)`       |
@@ -77,7 +84,7 @@ Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logar
 
 #### Trigonometry  {-}
 
-| Math            | `R`           | Result          |
+| Math            | `R` code           | Result          |
 |:------------:|:---------------:|:-----------------:|
 | $\sin(\pi / 2)$ | `sin(pi / 2)` | `r sin(pi / 2)` |
 | $\cos(0)$       | `cos(0)`      | `r cos(0)`      |
@@ -100,7 +107,7 @@ Frequently one of the most difficult things to do when learning `R` is asking fo
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
 - Provide the full text of any errors you have received.
-- Provide enough code to recreate the error. Often for the purpose of this course, you could simply post your entire `.R` or `.Rmd` to `slack`.
+- Provide enough code to recreate the error. Often for the purpose of this course, you could simply post your entire `.R` script or `.Rmd` to `slack`.
 - Sometimes it is also helpful to include a screenshot of your entire RStudio window when the error occurs.
 
 If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process. Do not be discouraged by running into errors and difficulties when learning `R`. (Or any other technical skill.) It is simply part of the learning process.
@@ -122,29 +129,6 @@ library(ggplot2)
 ```
 
 Once you close `R`, all the packages are closed and put back on the imaginary shelf. The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.
-
-## `Code` vs Output in this Book {#code-output}
-
-A quick note on styling choices in this book. We had to make a decide how to visually separate `R` code and resutling output in this book. We decided prefix all output lines with ``r OUT_PROMPT`` to make the distinction. Notice that you can simply copy and paste the code into your `R` console.
-
-## `ScPoEconometrics` Package {#install-package}
-
-To fully take advantage of our course, please install the associated `R` package directly from its online code repository. You can do this by copy and pasting the following three lines into your `R` console:
-
-```R
-if (!require("devtools")) install.packages("devtools")
-library(devtools)
-install_github(repo = "ScPoEcon/ScPoEconometrics")
-```
-
-In order to check whether everything works fine, you could load the library, and check it's current version:
-
-```{r,warning=FALSE,message=FALSE}
-library(ScPoEconometrics)
-packageVersion("ScPoEconometrics")
-```
-
-
 
 ## Data Types {#data-types}
 
@@ -266,8 +250,8 @@ length(y)
 Let's try this out!
 
 1. Create a vector of five ones, i.e. `[1,1,1,1,1]`
-1. Notice that the colon operator `a:b` is just short for *construct a sequence **from** `a` **to** `b`*. Create a vector the counts down from 10 to 0, i.e. it looks like `10,9,8,7,6,5,4,3,2,1,0`!
-1. the `rep` function takes additional arguments `times` (as above), and `each`, which tells you how often *each element* should be repeated (as opposed to the entire input vector). Use `rep` to create a vector that looks like this: `1 1 1 2 2 2 3 3 3 1 1 1 2 2 2 3 3 3`
+1. Notice that the colon operator `a:b` is just short for *construct a sequence **from** `a` **to** `b`*. Create a vector the counts down from 10 to 0, i.e. it looks like `[10,9,8,7,6,5,4,3,2,1,0]`!
+1. the `rep` function takes additional arguments `times` (as above), and `each`, which tells you how often *each element* should be repeated (as opposed to the entire input vector). Use `rep` to create a vector that looks like this: `[1 1 1 2 2 2 3 3 3 1 1 1 2 2 2 3 3 3]`
 
 #### Subsetting
 
@@ -312,10 +296,10 @@ One of the biggest strengths of `R` is its use of vectorized operations. This me
 ```{r}
 x = 1:10  # a vector
 x + 1     # add scalar
-2 * x     # multiply all elts by 2
+2 * x     # multiply all elements by 2
 2 ^ x     # take 2 to the x as exponents
 sqrt(x)   # compute the square root of all elements in x
-log(x)
+log(x)    # take the natural log of all elements in x
 ```
 
 We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
@@ -592,7 +576,7 @@ write.csv(example_data, "data/example-data.csv", row.names = FALSE)
 write.csv(example_data,"inst/datasets/example-data.csv", row.names=FALSE)
 ```
 
-To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) A `tibble` is simply a data frame that prints with sanity. Notice in the output below that we are given additional information such as dimension and variable type.
+To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) **A `tibble` is simply a data frame that prints with sanity.** Notice in the output below that we are given additional information such as dimension and variable type.
 
 ```{r, message = FALSE, warning = FALSE}
 library(readr)  # you need `install.packages("readr")` once!
@@ -704,7 +688,14 @@ mpg %>%
   select(manufacturer, model, year)
 ```
 
-All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
+Note that the above syntax is equivalent to the following pipe-free command (which is much harder to read!):
+
+```{r, eval = TRUE,message=FALSE,warning=FALSE}
+library(dplyr)
+select(filter(mpg, hwy > 35), manufacturer, model, year)
+```
+
+All three (four?) approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
 
 #### Task 5
 
