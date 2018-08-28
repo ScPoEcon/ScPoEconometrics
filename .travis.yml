@@ -1,4 +1,7 @@
 language: r
+os:
+  - linux
+  - osx
 cache:
   packages: yes
 sudo: false
