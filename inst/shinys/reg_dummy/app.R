@@ -1,5 +1,4 @@
 library(dplyr)
-library(plotly)
 library(shiny)
 
 ui <- fluidPage(
@@ -78,7 +77,7 @@ server <- function(input,output){
 
     b_true = cov(x, y)/var(x)
     a_true = mean(y) - b_true*mean(x)
-    expr <- function(x) a_true + b_true*x
+    expr <- function(x) a + b*x
 
 
     if (near(a, a_true, tol = .125) && near(b, b_true, tol = .125)){

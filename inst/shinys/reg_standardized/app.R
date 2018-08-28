@@ -10,7 +10,7 @@ ui <- fluidPage(
                sliderInput("s_std", "Slope", min = -2,
                            max = 2, step = .1, value = .1),
 
-               checkboxInput("std", "Standardize X and Y!", value = F),
+               checkboxInput("std", "Standardize X and Y!", value = FALSE),
 
                br(),
                br(),
@@ -23,7 +23,7 @@ ui <- fluidPage(
 server <- function(input,output){
   output$userguess_std <- renderText({
 
-    if (input$std == F){
+    if (input$std == FALSE){
       a <- input$i_std
       b <- input$s_std
       paste0("Your guess:\n y = ", a, " + ", b, "x")
@@ -43,11 +43,11 @@ server <- function(input,output){
 
     #Load Data
 
-    data <- read.csv(file = system.file(package = "ScPoEconometrics","datasets","corr50.csv"), header = F)
+    data <- read.csv(file = system.file(package = "ScPoEconometrics","datasets","corr50.csv"), header = FALSE)
     x <- data[[1]] *.45
     y <- data[[2]]
 
-    if (input$std == T){
+    if (input$std == TRUE){
       x <- x/sd(x)
       y <- y/sd(y)
     }

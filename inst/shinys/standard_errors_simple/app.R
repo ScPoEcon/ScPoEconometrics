@@ -76,8 +76,8 @@ server <- function(input, output){
                 line = list(color = 'grey', dash = 'dash')) %>%
 
       layout(title = "Fitted Sample of n = 20 Draws From the Population",
-             xaxis = list(range = c(-1, 10), showgrid = F, title = "X"),
-             yaxis = list(range = c(0, 30), showgrid = F, title = "Y"))
+             xaxis = list(range = c(-1, 10), showgrid = FALSE, title = "X"),
+             yaxis = list(range = c(0, 30), showgrid = FALSE, title = "Y"))
   })
 
   output$hist_a <- renderPlotly({
