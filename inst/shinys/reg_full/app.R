@@ -68,13 +68,13 @@ server <- function(input,output){
     legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
 
     if ((a == a_true) && (b == b_true)){
-      curve(expr = expr, from = min(x)-10, to = max(x)+10, add = T, col = "black")
+      curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
       segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
       rect(xleft = x, ybottom = y,
            xright = x + abs(errors), ytop = y + errors, density = -1,
            col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
     } else {
-      curve(expr =expr , from = min(x)-10, to = max(x)+10, add = T, col = "black")
+      curve(expr =expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
       segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
       rect(xleft = x, ybottom = y,
            xright = x + abs(errors), ytop = y + errors, density = -1,
