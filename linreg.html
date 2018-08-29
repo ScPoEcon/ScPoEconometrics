@@ -22,7 +22,7 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   
 
-<meta name="author" content="Florian Oswald and Jean-Marc Robin">
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
 <meta name="date" content="2018-08-29">
@@ -126,9 +126,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
-<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.6</b> Data Types</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.7</b> Data Structures</a></li>
-<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.8</b> Programming Basics</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
@@ -201,20 +204,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="data-on-cars" class="section level2">
 <h2><span class="header-section-number">3.1</span> Data on Cars</h2>
 <p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
-<pre><code>##   speed dist
-## 1     4    2
-## 2     4   10
-## 3     7    4
-## 4     7   22
-## 5     8   16
-## 6     9   10</code></pre>
+<pre><code>#OUT&gt;   speed dist
+#OUT&gt; 1     4    2
+#OUT&gt; 2     4   10
+#OUT&gt; 3     7    4
+#OUT&gt; 4     7   22
+#OUT&gt; 5     8   16
+#OUT&gt; 6     9   10</code></pre>
 <p>We have a <code>data.frame</code> with two columns: <code>speed</code> and <code>dist</code>. Type <code>help(cars)</code> to find out more about the dataset. There you could read that</p>
 <blockquote>
 <p>The data give the speed of cars (mph) and the distances taken to stop (ft).</p>
 </blockquote>
 <p>It’s good practice to know the extent of a dataset. You could just type</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cars)</code></pre></div>
-<pre><code>## [1] 50  2</code></pre>
+<pre><code>#OUT&gt; [1] 50  2</code></pre>
 <p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
 <div id="how-are-speed-and-dist-related" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> How are <code>speed</code> and <code>dist</code> related?</h3>
@@ -226,7 +229,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>Here, each dot represents one observation. In this case, one particular measurement <code>speed</code> and <code>dist</code> for a car. Now, again:</p>
 <div class="note">
 <p>
@@ -242,9 +245,9 @@ How are <code>speed</code> and <code>dist</code> related? How could one best <em
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">60</span>,<span class="dt">b =</span> <span class="dv">0</span>,<span class="dt">lw=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>Now that doesn’t seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it’s too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. So how to choose the <strong>best</strong> line?</p>
 </div>
 <div id="choosing-the-best-line" class="section level3">
@@ -288,7 +291,7 @@ Figure 3.2: The best line and its SQUARED errors
 <div id="correlation-covariance-and-linearity" class="section level3">
 <h3><span class="header-section-number">3.1.4</span> Correlation, Covariance and Linearity</h3>
 <p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
 <p>The important lesson from this example is the following:</p>
 <div class="warning">
 <center>
@@ -361,18 +364,18 @@ Figure 3.5: Left panel: SSR from our model. Right panel: SSR from benchmark (mea
 <p>We can explore which variables are included in the dataset using the <code>names()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Ecdat&quot;</span>) <span class="co"># Attach the Ecdat library</span>
 <span class="kw">names</span>(Caschool) <span class="co"># Display the variables of the Caschool dataset</span></code></pre></div>
-<pre><code>##  [1] &quot;distcod&quot;  &quot;county&quot;   &quot;district&quot; &quot;grspan&quot;   &quot;enrltot&quot;  &quot;teachers&quot;
-##  [7] &quot;calwpct&quot;  &quot;mealpct&quot;  &quot;computer&quot; &quot;testscr&quot;  &quot;compstu&quot;  &quot;expnstu&quot; 
-## [13] &quot;str&quot;      &quot;avginc&quot;   &quot;elpct&quot;    &quot;readscr&quot;  &quot;mathscr&quot;</code></pre>
+<pre><code>#OUT&gt;  [1] &quot;distcod&quot;  &quot;county&quot;   &quot;district&quot; &quot;grspan&quot;   &quot;enrltot&quot;  &quot;teachers&quot;
+#OUT&gt;  [7] &quot;calwpct&quot;  &quot;mealpct&quot;  &quot;computer&quot; &quot;testscr&quot;  &quot;compstu&quot;  &quot;expnstu&quot; 
+#OUT&gt; [13] &quot;str&quot;      &quot;avginc&quot;   &quot;elpct&quot;    &quot;readscr&quot;  &quot;mathscr&quot;</code></pre>
 <p>For each variable in the dataset, basic summary statistics can be obtained by calling <code>summary()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(Caschool[, <span class="kw">c</span>(<span class="st">&quot;testscr&quot;</span>, <span class="st">&quot;str&quot;</span>, <span class="st">&quot;avginc&quot;</span>)])</code></pre></div>
-<pre><code>##     testscr           str            avginc      
-##  Min.   :605.5   Min.   :14.00   Min.   : 5.335  
-##  1st Qu.:640.0   1st Qu.:18.58   1st Qu.:10.639  
-##  Median :654.5   Median :19.72   Median :13.728  
-##  Mean   :654.2   Mean   :19.64   Mean   :15.317  
-##  3rd Qu.:666.7   3rd Qu.:20.87   3rd Qu.:17.629  
-##  Max.   :706.8   Max.   :25.80   Max.   :55.328</code></pre>
+<pre><code>#OUT&gt;     testscr           str            avginc      
+#OUT&gt;  Min.   :605.5   Min.   :14.00   Min.   : 5.335  
+#OUT&gt;  1st Qu.:640.0   1st Qu.:18.58   1st Qu.:10.639  
+#OUT&gt;  Median :654.5   Median :19.72   Median :13.728  
+#OUT&gt;  Mean   :654.2   Mean   :19.64   Mean   :15.317  
+#OUT&gt;  3rd Qu.:666.7   3rd Qu.:20.87   3rd Qu.:17.629  
+#OUT&gt;  Max.   :706.8   Max.   :25.80   Max.   :55.328</code></pre>
 </div>
 <div id="fitting-a-linear-model" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Fitting a linear model</h3>
@@ -405,13 +408,13 @@ Figure 3.6: Student Teacher Ratio vs Test Scores
 </ul>
 <p>In the context of our example, the function call is therefore:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(<span class="dt">formula =</span> testscr <span class="op">~</span><span class="st"> </span>str, <span class="dt">data =</span> Caschool)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = testscr ~ str, data = Caschool)
-## 
-## Coefficients:
-## (Intercept)          str  
-##      698.93        -2.28</code></pre>
+<pre><code>#OUT&gt; 
+#OUT&gt; Call:
+#OUT&gt; lm(formula = testscr ~ str, data = Caschool)
+#OUT&gt; 
+#OUT&gt; Coefficients:
+#OUT&gt; (Intercept)          str  
+#OUT&gt;      698.93        -2.28</code></pre>
 <p>As we can see, <code>R</code> returns its estimates for the Intercept and Slope coefficients, <span class="math inline">\(\hat{\beta_0} =\)</span> 698.93 and <span class="math inline">\(\hat{\beta_1} =\)</span> -2.28. The estimated relationship between a school’s Student/Teacher Ratio and its average test results is <strong>negative</strong>.</p>
 <p>Running a linear regression in <code>R</code> is typically a two-steps process. You first assign the output of the <code>lm()</code> call to an object and <strong>then</strong> call a second function (for our purpose, mainly <code>summary()</code>) on the resulting object. In practice, this looks like this :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># assign lm() output to some object `fit_california`</span>
@@ -419,24 +422,24 @@ fit_california &lt;-<span class="st"> </span><span class="kw">lm</span>(<span cl
 
 <span class="co"># ask R for the regression summary</span>
 <span class="kw">summary</span>(fit_california) </code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = testscr ~ str, data = Caschool)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -47.727 -14.251   0.483  12.822  48.540 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 698.9330     9.4675  73.825  &lt; 2e-16 ***
-## str          -2.2798     0.4798  -4.751 2.78e-06 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 18.58 on 418 degrees of freedom
-## Multiple R-squared:  0.05124,    Adjusted R-squared:  0.04897 
-## F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06</code></pre>
+<pre><code>#OUT&gt; 
+#OUT&gt; Call:
+#OUT&gt; lm(formula = testscr ~ str, data = Caschool)
+#OUT&gt; 
+#OUT&gt; Residuals:
+#OUT&gt;     Min      1Q  Median      3Q     Max 
+#OUT&gt; -47.727 -14.251   0.483  12.822  48.540 
+#OUT&gt; 
+#OUT&gt; Coefficients:
+#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#OUT&gt; (Intercept) 698.9330     9.4675  73.825  &lt; 2e-16 ***
+#OUT&gt; str          -2.2798     0.4798  -4.751 2.78e-06 ***
+#OUT&gt; ---
+#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#OUT&gt; 
+#OUT&gt; Residual standard error: 18.58 on 418 degrees of freedom
+#OUT&gt; Multiple R-squared:  0.05124, Adjusted R-squared:  0.04897 
+#OUT&gt; F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06</code></pre>
 <p>Again, we recognize our intercept and slope estimates from before, alongside some other numbers and indications. This output is called a <em>regression table</em>, and you will be able to decypher it by the end of this course. You should be able to find an interpret the <span class="math inline">\(R^2\)</span> though: Are we explaining a lot of the variance in <code>testscr</code> with this simple model, or not?</p>
 <div id="plotting-the-regression-line" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Plotting the regression line</h3>
@@ -461,7 +464,7 @@ p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </s
 p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Average Test Score&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">         </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Student/Teacher Ratio&quot;</span>)
 p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Testscores vs Student/Teacher Ratio&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-120-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient <span class="math inline">\(\beta_1\)</span>. We will learn more about it in the next chapter.</p>
 
 </div>

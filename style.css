@@ -30,11 +30,13 @@ pre code {
     padding: 0.5em;
     background-color: #f0b37e;
     border-radius: 5px;
+    text-align: center;
 }
 
 .tip {
     padding: 0.5em;
     background-color: #dbfaf4;
     border-radius: 5px;
+    text-align: center;
 }
 
