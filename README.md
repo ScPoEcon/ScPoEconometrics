@@ -1,10 +1,11 @@
 # ScPo UG Econometrics
 
-**Unix ShinyApp Tests and Book Build**: [![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
+**Tests on MacOS and Linux**: [![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
 
-**Windows ShinyApp Tests**: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ScPoEcon/ScPoEconometrics?branch=master&svg=true)](https://ci.appveyor.com/project/ScPoEcon/ScPoEconometrics)
+**Tests on Windows**: [![Build status](https://ci.appveyor.com/api/projects/status/9ctm2rneexsid3t2?svg=true)](https://ci.appveyor.com/project/FlorianOswald/scpoeconometrics)
 
-[![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)
+
+**Developers Chatroom**: [![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)  [Students please only talk to us on Slack!]
 
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
@@ -13,7 +14,9 @@ This is the git repo for the UG Econometrics book taught to 2nd year students at
 In order to participate in the course and to use the course material, you need to 
 
 1. install `R`: download for free at [https://www.r-project.org](https://www.r-project.org)
-2. install **this** `R` package in your computer. To do so, just copy and paste those lines into your `R` console:
+1. install the `RStudio` IDE at [RStudio.com](https://www.rstudio.com/products/rstudio/download/#download)
+1. We recommend to use our code **exclusively via `RStudio`**.
+1. install **this** `R` package in your computer. To do so, just copy and paste those lines into your `RStudio` console:
 
 ```R
 if (!require(devtools)) {install.packages("devtools"); library(devtools)}
@@ -49,28 +52,30 @@ library(learnr)
 run_tutorial("chapter3",package="ScPoEconometrics")
 ```
 
-## Contribution Workflow
+## Contribution Workflow - Developers only!
+
+This section is only for people who want to contribute code to this project.
 
 1. fork this repository
-1. clone your fork to your computer: `git clone url_or_your_fork`
+1. clone your fork to your computer: `git clone url_of_your_fork`
 1. Start to work on your things on a new branch: `git checkout -b new_branch`
 1. **commit** your work to that new branch! 
 1. Place your new stuff on top of the most recent `upstream/master`:
-	1. add the upstream repo as a remote: `git remote add upstream git@github.com:floswald/ScPoEconometrics.git`
+	1. add the upstream repo as a remote: `git remote add upstream git@github.com:ScPoEcon/ScPoEconometrics.git`
 	1. Use the `rebase` command
     ```
-    # git add your stuff
-    # git commit your stuff
+    # git add your stuff
+    # git commit your stuff
     git fetch upstream   # get stuff from upstream
     git rebase upstream/master  # merge upstream master and put your commits on top of it
     ```
 1. push that branch to your fork: `git push origin new_branch`
-1. create pull request on `upstream`
+1. create pull request on `upstream` (from your fork at github.com)
 
 
 ## Technology
 
-this book is made using bookdown.
+The book is made using bookdown.
 You can find the preview of an example at https://bookdown.org/yihui/bookdown-demo/
 
 
@@ -88,13 +93,14 @@ You are free to:
 
 1. Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. We are happy to suggest the following citation if you use our material in your work:
 
-```
+```R
+citation("ScPoEconometrics")
 @book{
-  oswald_robin_2018, 
+  oswald_robin_viers2018, 
   title={Introduction to Econometrics with R},
   url={https://scpoecon.github.io/ScPoEconometrics/}, 
   publisher={github.com}, 
-  author={Oswald, Florian and Robin, Jean-Marc}, year={2018}
+  author={Oswald, Florian, Robin, Jean-Marc and Viers, Vincent}, year={2018}
 }
 ```
 2. NonCommercial — You may not use the material for commercial purposes.
