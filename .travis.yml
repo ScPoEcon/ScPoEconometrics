@@ -16,4 +16,5 @@ before_script:
 script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
-  - R CMD check *tar.gz && ./_build.sh && ./_deploy.sh
+  - if [ $TRAVIS_OS_NAME = osx ]; then R CMD check *tar.gz && ./_build.sh; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then R CMD check *tar.gz && ./_build.sh && ./_deploy.sh; fi
