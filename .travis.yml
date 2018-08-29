@@ -1,4 +1,8 @@
 language: r
+os:
+  - linux
+  - osx
+
 cache:
   packages: yes
 sudo: false
@@ -7,6 +11,7 @@ pandoc_version: 1.19.2.1
 before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew install phantomJS; fi
 
 script:
   - R CMD build .
