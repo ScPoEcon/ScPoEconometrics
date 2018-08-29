@@ -2,13 +2,11 @@ language: r
 os:
   - linux
   - osx
+
 cache:
   packages: yes
 sudo: false
 pandoc_version: 1.19.2.1
-
-before_install:
-  - brew update
 
 before_script:
   - chmod +x ./_build.sh
