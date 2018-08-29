@@ -10,11 +10,11 @@ knitr::opts_chunk$set(comment=OUT_PROMPT)
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 1. [`R`, the actual programming language.](https://www.r-project.org)
-    - Chose your operating system, and select the most recent version, `r paste0(version$major, "." ,version$minor)`.
+    - Chose your operating system, and select the most recent version.
 1. [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/)
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 
-The popularity of `R` is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! There are many good resources for learning `R`. 
+The popularity of `R` is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book!
 
 The following few chapters will serve as a whirlwind introduction to `R`. They are by no means meant to be a complete reference for the `R` language, but simply an introduction to the basics that we will need along the way. Several of the more important topics will be re-stressed as they are actually needed for analyses.
 
@@ -23,18 +23,18 @@ This introductory `R` chapter may feel like an overwhelming amount of informatio
 
 ## Starting R and RStudio
 
-A key difference for you to understand is the one between `R`, the actual programming language, and `RStudio`, a popular interface to `R` which allows you to efficiently. 
+A key difference for you to understand is the one between `R`, the actual programming language, and `RStudio`, a popular interface to `R` which allows you to work efficiently and with greater ease with `R`.
 
-The best way to appreciate the value of RStudio is to start using R *without* RStudio. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows), or start R in your terminal (on Linux or Mac) by just typing `R` in a terminal, see figure \@ref(fig:console). You've just opened the R **console** which allows you to start typing code right after the `>` sign, called *prompt*. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
+The best way to appreciate the value of `RStudio` is to start using `R` *without* `RStudio`. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows or Mac), or start R in your terminal (on Linux or Mac) by just typing `R` in a terminal, see figure \@ref(fig:console). You've just opened the R **console** which allows you to start typing code right after the `>` sign, called *prompt*. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
 
 ```{r console,fig.cap="R GUI symbol and R in a MacOS Terminal",fig.align='center',out.width="50%",echo=FALSE}
 knitr::include_graphics(c("images/RLogo.png","images/console.png"))
 ```
 
 
-Typing each command after the other is however not very convenient, and we would like to be able to write all the lines of code beforehand and then run all of them in one go. We can do this by writing **scripts**, and RStudio makes this process very easy.
+Typing one command after the other is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called **scripts**, i.e. simple text files with extension `.R` or `.r` which can be *inserted* (or *sourced*) into an `R` session. RStudio makes this process very easy.
 
-Open RStudio by clicking on the RStudio application on your computer, and notice how different the whole environment is from the basic R console – in fact, that very same `R` console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
+Open `RStudio` by clicking on the `RStudio` application on your computer, and notice how different the whole environment is from the basic R console – in fact, that very same `R` console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
 
 ```{block, type='note'}
 We highly recommend that you use `RStudio` for everything related to this course (in particular, to launch our apps and tutorials).
@@ -46,21 +46,14 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 - On Windows: `Alt` + `Shift` + `K`
 - On Mac:  `Option` + `Shift` + `K`
 
-The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/) for working with both `R` and RStudio. [This particular cheatseet for Base `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
+The `RStudio` team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/) for working with both `R` and `RStudio`. [This particular cheatseet for Base `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document. ^[When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more import thing is to be consistent within your own code. Here are two guides: [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html), and the [Google Style Guide](https://google.github.io/styleguide/Rguide.xml). For this course, our main deviation from these two guides is the use of `=` in place of `<-`. For all practical purposes, you should think `=` whenever you see `<-`.]
 
-When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more import thing is to be consistent within your own code.
-
-- [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html) from [Advanced `R`](http://adv-r.had.co.nz/)
-- [Google Style Guide](https://google.github.io/styleguide/Rguide.xml)
-
-For this course, our main deviation from these two guides is the use of `=` in place of `<-`. For all practical purposes, you should think `=` whenever you see `<-`.
-
-### Glossary
+### First Glossary
 
 * `R`: a statistical programming language
 * `RStudio`: an integrated development environment (IDE) to work with `R`
-* *command*: user input (text or numbers) that `R` *understands*
-* *script*: a list of commands, each separated by a new line
+* *command*: user input (text or numbers) that `R` *understands*.
+* *script*: a list of commands collected in a text file, each separated by a new line, to be run one after the other.
 
 ## Basic Calculations
 
