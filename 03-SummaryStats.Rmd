@@ -4,9 +4,10 @@ In this chapter we will first learn some basic concepts that help summarizing da
 
 ## Summary Statistics
 
-`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example. *Make sure to have loaded the `ggplot2` library to be able to access the `mpg` dataset as introduced in section \@ref(dataframes).*
+`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example.
 
 ```{r}
+# for the mpg dataset, we load:
 library(ggplot2)
 ```
 
@@ -151,7 +152,7 @@ All of the above plots could also have been generated using the `ggplot` functio
 ggplot(data = mpg,mapping = aes(x=displ,y=hwy)) + geom_point()
 ```
 
-`ggplot` is impossible to describe in brief terms, so please look at [the package's website](http://ggplot2.tidyverse.org) which provides excellent guidance. We will from time to time use ggplot in this book, so try to familiarize yourself with it. Let's quickly demonstrate how one could customize that first plot:
+`ggplot` is impossible to describe in brief terms, so please look at [the package's website](http://ggplot2.tidyverse.org) which provides excellent guidance. We will from time to time use ggplot in this book, so you could familiarize yourself with it. Let's quickly demonstrate how one could further customize that first plot:
 
 ```{r}
 ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
@@ -161,6 +162,8 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   theme_bw() +    # change the background
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
+
+If you want to see `ggplot` in action, you could start with [this](http://jcyhong.github.io/ggplot_demo.html) and then look at that [very nice tutorial](https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html)? It's fun!
 
 ## Summarizing Two Variables {#summarize-two}
 
@@ -180,7 +183,7 @@ plot(x ~ y, xlab="x",ylab="y")
 
 Taking as example the data in this plot, the concepts *covariance* and *correlation* relate to the following type of question:
 
-```{block,type="note"}
+```{block, type="note"}
 Given we observe value of something like $x=2$, say, can we expect a high or a low value of `y`, on average? Something like $y=2$ or rather something like $y=-2$?
 ```
 <br>
@@ -212,11 +215,13 @@ cor(x,y)
 
 Now this is better. Given that the correlation has to lie in $[-1,1]$, a value of `r round(cor(x,y),2)` is indicative of a rather strong positive relationship for the data in figure \@ref(fig:x-y-corr)
 
+Note that $x,y$ being drawn from a *continuous distribution* (they are joint normally distributed) had no implication for covariance and correlation: We can compute those measures also for discrete random variables (like the throws of two dice, as you will see in one of our tutorials).
+
 
 
 ## The `tidyverse`
 
-[Hadley Wickham](http://hadley.nz) is the author of R packages `ggplot2` and also of `dplyr` (and also a myriad of others). With `ggplot2` he pioneered what he calls the *grammar of graphics* (hence, `gg`). Grammar in the sense that there are **nouns** and **verbs** and a **syntax**, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the *grammar* idea into various other packages. The `tidyverse` package is a collection of those packages. 
+[Hadley Wickham](http://hadley.nz) is the author of R packages `ggplot2` and also of `dplyr` (and also a myriad of others). With `ggplot2` he introduced what is called the *grammar of graphics* (hence, `gg`) to `R`. Grammar in the sense that there are **nouns** and **verbs** and a **syntax**, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the *grammar* idea into various other packages. The `tidyverse` package is a collection of those packages. 
 
 `tidy` data is data where:
 
@@ -226,7 +231,94 @@ Now this is better. Given that the correlation has to lie in $[-1,1]$, a value o
 
 Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us *not* tidy most of the times, and we first need to clean, or `tidy`, it up. Once it's in `tidy` format, we can use the tools in the `tidyverse` with great efficiency to analyse the data and stop worrying about which tool to use.
 
-### Tidy Example: Importing Excel Data
+### Reading `.csv` data in the *tidy* way
+
+We could have used the `read_csv()` function from the `readr` package to read our example dataset from the previous chapter. The `readr` function `read_csv()` has a number of advantages over the built-in `read.csv`. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) **A `tibble` is simply a data frame that prints with sanity.** Notice in the output below that we are given additional information such as dimension and variable type.
+
+```{r, message = FALSE, warning = FALSE}
+library(readr)  # you need `install.packages("readr")` once!
+path = system.file(package="ScPoEconometrics","datasets","example-data.csv")
+example_data_from_disk = read_csv(path)
+```
+
+
+### Tidy `data.frames` are `tibbles`
+
+Let's grab some data from the `ggplot2` package:
+
+```{r}
+data(mpg,package = "ggplot2")  # load dataset `mpg` from `ggplot2` package
+head(mpg, n = 10)
+```
+
+The function `head()` will display the first `n` observations of the data frame, as we have seen. The `head()` function was more useful before tibbles. Notice that `mpg` is a tibble already, so the output from `head()` indicates there are only `10` observations. Note that this applies to `head(mpg, n = 10)` and not `mpg` itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates with rows and columns were omitted.
+
+```{r}
+mpg
+```
+
+Let's look at `str` as well to get familiar with the content of the data:
+
+```{r}
+str(mpg)
+```
+
+In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.
+
+To understand more about the data set, we use the `?` operator to pull up the documentation for the data.
+
+```{r, eval = FALSE}
+?mpg
+```
+
+Working with tibbles is mostly the same as working with plain data.frames:
+
+```{r}
+names(mpg)
+mpg$year
+mpg$hwy
+```
+
+Subsetting is also similar to dataframe. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display `manufacturer`, `model` and `year`.
+
+```{r}
+# mpg[row condition, col condition]
+mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
+```
+
+An alternative would be to use the `subset()` function, which has a much more readable syntax.
+
+```{r, eval = FALSE}
+subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
+```
+
+Lastly, and most *tidy*, we could use the `filter` and `select` functions from the `dplyr` package which introduces the *pipe operator* `%>%` from the `magrittr` package.^[A *pipe* is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a *pipeline* of commands. For additional info on the pipe operator in R, you might be interested [in this tutorial](https://www.datacamp.com/community/tutorials/pipe-r-tutorial).]
+
+```{r, eval = TRUE,message=FALSE,warning=FALSE}
+library(dplyr)
+mpg %>% 
+  filter(hwy > 35) %>% 
+  select(manufacturer, model, year)
+```
+
+Note that the above syntax is equivalent to the following pipe-free command (which is much harder to read!):
+
+```{r, eval = TRUE,message=FALSE,warning=FALSE}
+library(dplyr)
+select(filter(mpg, hwy > 35), manufacturer, model, year)
+```
+
+All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
+
+#### Task
+
+1. Make sure to have the `mpg` dataset loaded by typing `data(mpg)` (and `library(ggplot2)` if you haven't!). Use the `table` function to find out how many cars were built by *mercury*? 
+1. What is the average year the audi's were built in this dataset? Use the function `mean` on the subset of column `year` that corresponds to `audi`. (Be careful: subsetting a `tibble` returns a `tibble` (and not a vector)!. so get the `year` column after you have subset the `tibble`.) 
+1. Use the `dplyr` piping syntax from above first with `group_by` and then with `summarise(newvar=your_expression)` to find the mean `year` by all manufacturers (i.e. same as previous task, but for all manufacturers. don't write a loop!).
+
+
+
+### Tidy Example: Importing Non-Tidy Excel Data
 
 The data we will look at is from [Eurostat](http://ec.europa.eu/eurostat/data/database) on demography and migration. You should download the data yourself (click on previous link, then drill down to *database by themes > Population and social conditions > Demograph and migration > Population change - Demographic balance and crude rates at national level (demo_gind)*). 
 
@@ -266,7 +358,7 @@ names(tot_pop_raw)[1] <- "Country"   # lets rename the first column
 tot_pop_raw
 ```
 
-This shows a `tibble`, which we encountered already in \@ref(dataframes). The column names are `Country,2008,2009,...`, and the rows are numbered `1,2,3,...`. Notice, in particular, that *all* columns seem to be of type `<chr>`, i.e. characters - a string, not a number! We'll have to fix that, as this is clearly numeric data.
+This shows a `tibble`, which we encountered just above. The column names are `Country,2008,2009,...`, and the rows are numbered `1,2,3,...`. Notice, in particular, that *all* columns seem to be of type `<chr>`, i.e. characters - a string, not a number! We'll have to fix that, as this is clearly numeric data.
 
 #### `tidyr`
 
@@ -295,9 +387,9 @@ Now you can see that column `counts` is indeed `int`, i.e. an integer number, an
 
 >The [transform](http://r4ds.had.co.nz/transform.html) chapter of Hadley Wickham's book is a great place to read up more on using `dplyr`.
 
-We already saw the `dplyr` package in action in chapter \@ref(dataframes), but now we go further. With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
+With `dplyr` you can do the following operations on `data.frame`s and `tibble`s:
 
-* Choose observations based on a certain value: `filter()`
+* Choose observations based on a certain value (i.e. subset): `filter()`
 * Reorder rows: `arrange()`
 * Select variables by name: `select()`
 * Create new variables out of existing ones: `mutate()`

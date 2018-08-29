@@ -1,6 +1,6 @@
 --- 
 title: "Introduction to Econometrics with R"
-author: "Florian Oswald and Jean-Marc Robin"
+author: "Florian Oswald, Jean-Marc Robin and Vincent Viers"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook

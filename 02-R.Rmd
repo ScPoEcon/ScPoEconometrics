@@ -1,15 +1,20 @@
 # Introduction to `R`  {#R-intro}
 
+```{r setup, include=FALSE}
+OUT_PROMPT = "#OUT>"
+knitr::opts_chunk$set(comment=OUT_PROMPT)
+```
+
 ## Getting Started
 
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
-- [`R`, the actual programming language.](https://www.r-project.org)
+1. [`R`, the actual programming language.](https://www.r-project.org)
     - Chose your operating system, and select the most recent version, `r paste0(version$major, "." ,version$minor)`.
-- [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/)
+1. [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/)
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 
-The popularity of `R` is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this course.) There are many good resources for learning `R`. 
+The popularity of `R` is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! There are many good resources for learning `R`. 
 
 The following few chapters will serve as a whirlwind introduction to `R`. They are by no means meant to be a complete reference for the `R` language, but simply an introduction to the basics that we will need along the way. Several of the more important topics will be re-stressed as they are actually needed for analyses.
 
@@ -18,13 +23,22 @@ This introductory `R` chapter may feel like an overwhelming amount of informatio
 
 ## Starting R and RStudio
 
-A key difference for you to understand is that between `R`, the actual programming language, and RStudio which is a software that allows you to efficiently and easily work with the R language. 
+A key difference for you to understand is the one between `R`, the actual programming language, and `RStudio`, a popular interface to `R` which allows you to efficiently. 
 
-The best way to appreciate the value of RStudio is to start using R *without* RStudio. To do this, click on the R application that you should have downloaded on your computer (see above). You've just opened the R **console** which allows you to start typing code right after the red `>` sign. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
+The best way to appreciate the value of RStudio is to start using R *without* RStudio. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows), or start R in your terminal (on Linux or Mac) by just typing `R` in a terminal, see figure \@ref(fig:console). You've just opened the R **console** which allows you to start typing code right after the `>` sign, called *prompt*. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
 
-Typing each command after the other is however not very convenient, and we would like to be able to write all the lines of code beforehand and then run all of them in one go. We can do this by writing **scripts**, and for this we will need tools like RStudio!
+```{r console,fig.cap="R GUI symbol and R in a MacOS Terminal",fig.align='center',out.width="50%",echo=FALSE}
+knitr::include_graphics(c("images/RLogo.png","images/console.png"))
+```
 
-Open RStudio by clicking on the RStudio application on your computer, and notice how different (and prettier!) the whole environment is from the basic R console – which you can still find and use in the bottom panel of RStudio. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
+
+Typing each command after the other is however not very convenient, and we would like to be able to write all the lines of code beforehand and then run all of them in one go. We can do this by writing **scripts**, and RStudio makes this process very easy.
+
+Open RStudio by clicking on the RStudio application on your computer, and notice how different the whole environment is from the basic R console – in fact, that very same `R` console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
+
+```{block, type='note'}
+We highly recommend that you use `RStudio` for everything related to this course (in particular, to launch our apps and tutorials).
+```
 
 
 RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut -- the keyboard shortcut to rule them all:
@@ -41,9 +55,16 @@ When programming, it is often a good practice to follow a style guide. (Where do
 
 For this course, our main deviation from these two guides is the use of `=` in place of `<-`. For all practical purposes, you should think `=` whenever you see `<-`.
 
+### Glossary
+
+* `R`: a statistical programming language
+* `RStudio`: an integrated development environment (IDE) to work with `R`
+* *command*: user input (text or numbers) that `R` *understands*
+* *script*: a list of commands, each separated by a new line
+
 ## Basic Calculations
 
-To get started, we'll use `R` like a simple calculator. Run the following code either directly from the R console, or in RStudio by writting them in a script and running them using `Command` + `Return`.
+To get started, we'll use `R` like a simple calculator. Run the following code either directly from your RStudio console, or in RStudio by writting them in a script and running them using `Command` + `Return`.
 
 #### Addition, Subtraction, Multiplication and Division {-}
 
@@ -102,7 +123,7 @@ help(lm)   # help() is equivalent
 help(ggplot,package="ggplot2")  # show help from a certain package
 ```
 
-Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as [Stack Overflow](https://stackoverflow.com).
+Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when contacting an instructor, or posting to a help website such as [Stack Overflow](https://stackoverflow.com).
 
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
@@ -129,6 +150,45 @@ library(ggplot2)
 ```
 
 Once you close `R`, all the packages are closed and put back on the imaginary shelf. The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.
+
+## `Code` vs Output in this Book {#code-output}
+
+A quick note on styling choices in this book. We had to make a decision how to visually separate `R` code and resulting output in this book. We decided to prefix all output lines with ``r OUT_PROMPT`` to make the distinction. A typical code snippet with output is thus going to look like this:
+
+```{r}
+1 + 3
+# everything after a # is a comment, i.e. R disregards it.
+```
+
+where you see on the first line the `R` code, and on the second line the output. As mentioned, that line starts with ``r OUT_PROMPT`` to say *this is an output*, followed by `[1]` (indicating this is a vector of length *one* - more on this below!), followed by the actual result - `1 + 3 = 4`!
+
+Notice that you can simply copy and paste all the code you see into your `R` console. In fact, you are *strongly* encouraged to actually do this and try out **all the code** you see in this book.
+
+Finally, please note that this way of showing output is fully our choice in this textbook, and that you should expect other output formats elsewhere. For example, in my `RStudio` console, the above code and output looks like this:
+
+```R
+> 1 + 3
+[1] 4
+```
+
+
+## `ScPoEconometrics` Package {#install-package}
+
+To fully take advantage of our course, please install the associated `R` package directly from its online code repository. You can do this by copy and pasting the following three lines into your `R` console:
+
+```R
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+install_github(repo = "ScPoEcon/ScPoEconometrics")
+```
+
+In order to check whether everything works fine, you could load the library, and check it's current version:
+
+```{r,warning=FALSE,message=FALSE}
+library(ScPoEconometrics)
+packageVersion("ScPoEconometrics")
+```
+
 
 ## Data Types {#data-types}
 
@@ -161,11 +221,15 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
 | 2         | Matrix          | Data Frame        |
 | 3+        | Array           |    nested Lists               |
 
+
+
+
+
 ### Vectors
 
-Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with something like `[7]` where `7` is the index of the first element of that row.
+Many operations in `R` make heavy use of **vectors**. A vector is a *container* for objects of identical type (see \@ref(data-types) above). Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with something like `[7]` where `7` is the index of the first element of that row.
 
-Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine". As the name suggests, it combines a list of elements separated by commas. [you should type all of those examples into your `R` console!!]
+Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine". As the name suggests, it combines a list of elements separated by commas. (Are you busy typing all of those examples into your `R` console? :-) )
 
 ```{r}
 c(1, 3, 5, 7, 8, 9)
@@ -245,9 +309,12 @@ length(x)
 length(y)
 ```
 
-#### Task 1
 
-Let's try this out!
+```{block type="warning"}
+Let's try this out! **Your turn**:
+```
+
+#### Task 1
 
 1. Create a vector of five ones, i.e. `[1,1,1,1,1]`
 1. Notice that the colon operator `a:b` is just short for *construct a sequence **from** `a` **to** `b`*. Create a vector the counts down from 10 to 0, i.e. it looks like `[10,9,8,7,6,5,4,3,2,1,0]`!
@@ -255,7 +322,7 @@ Let's try this out!
 
 #### Subsetting
 
-To subset a vector, i.e. to choose only some elements of it, we use square brackets, `[]`. 
+To subset a vector, i.e. to choose only some elements of it, we use square brackets, `[]`. Here we see that `x[1]` returns the first element, and `x[3]` returns the third element:
 
 ```{r}
 x
@@ -263,20 +330,19 @@ x[1]
 x[3]
 ```
 
-We see that `x[1]` returns the first element, and `x[3]` returns the third element.
+We can also exclude certain indexes, in this case the second element. 
 
 ```{r}
 x[-2]
 ```
 
-We can also exclude certain indexes, in this case the second element. 
+Lastly we see that we can subset based on a vector of indices.
 
 ```{r}
 x[1:3]
 x[c(1,3,4)]
 ```
 
-Lastly we see that we can subset based on a vector of indices.
 
 All of the above are subsetting a vector using a vector of indexes. (Remember a single number is still a vector.) We could instead use a vector of logical values.
 
@@ -289,17 +355,16 @@ z
 x[z]
 ```
 
-### Vectorization
-
-One of the biggest strengths of `R` is its use of vectorized operations. This means, operations which work on - and are optimized for - entire vectors.
+`R` is able to perform many operations on vectors and scalars alike:
 
 ```{r}
 x = 1:10  # a vector
-x + 1     # add scalar
+x + 1     # add a scalar
 2 * x     # multiply all elements by 2
 2 ^ x     # take 2 to the x as exponents
 sqrt(x)   # compute the square root of all elements in x
 log(x)    # take the natural log of all elements in x
+x + 2*x   # add vector x to vector 2x
 ```
 
 We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
@@ -319,7 +384,7 @@ We see that when a function like `log()` is called on a vector `x`, a vector is 
 | `x | y`  | `x` or `y`                       | `(3 > 42) | TRUE`      | `r (3 > 42) | TRUE`      |
 | `x & y`  | `x` and `y`                      | `(3 < 4) & ( 42 > 13)` | `r (3 < 4) & ( 42 > 13)` |
 
-In `R`, logical operators are vectorized. 
+In `R`, logical operators also work on vectors:
 
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
@@ -337,7 +402,7 @@ x == 3 & x != 3
 x == 3 | x != 3
 ```
 
-This is extremely useful for subsetting.
+This is quite useful for subsetting.
 
 ```{r}
 x[x > 3]
@@ -350,7 +415,7 @@ sum(x > 3)
 as.numeric(x > 3)
 ```
 
-Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
+Here we saw that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result: you just *counted* for how many elements of `x`, the condition `> 3` is `TRUE`. During the call to `sum()`, `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
 
 ```{r}
 # which(condition of x) returns true/false  
@@ -413,7 +478,7 @@ X[1, ]
 X[, 2]
 ```
 
-We can also use vectors to subset more than one row or column at a time. Here we subset to the first and third column of the second row.
+We can also use vectors to subset more than one row or column at a time. Here we subset to the first and third column of the second row:
 
 ```{r}
 X[2, c(1, 3)]
@@ -536,7 +601,7 @@ ex_list$d(arg = 1)
 1. Accessing members is like in a plain list, just with several layers now. Get the element `c` from `ex_list` in `new_list`!
 1. Compose a new string out of the first element in `new_list`, the element under label `this`. Use the function `paste` to print `R is awesome` to your screen.
 
-### Data Frames {#dataframes}
+## Data Frames {#dataframes}
 
 We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course. A `data.frame` is similar to a python `pandas.dataframe` or a julia `DataFrame`. (But the `R` version was the first! :-) )
 
@@ -548,11 +613,18 @@ example_data = data.frame(x = c(1, 3, 5, 7, 9, 1, 3, 5, 7, 9),
 
 Unlike a matrix, which can be thought of as a vector rearranged into rows and columns, a data frame is not required to have the same data type for each element. A data frame is a **list** of vectors, and each vector has a *name*. So, each vector must contain the same data type, but the different vectors can store different data types. Note, however, that all vectors must have **the same length** (differently from a `list`)!
 
+```{block, type="tip"}
+A **data.frame** is similar to a typical Spreadsheet. There are *rows*,  and there are *columns*. A row is typically thought of as an *observation*, and each column is a certain *variable*, *characteristic* or *feature* of that observation.
+```
+
+<br>
+Let's look at the data frame we just created above:
+
 ```{r}
 example_data
 ```
 
-Unlike a list which has more flexibility, the elements of a data frame must all be vectors. Again, we access any given column with the `$` operator:
+Unlike a list, which has more flexibility, the elements of a data frame must all be vectors. Again, we access any given column with the `$` operator:
 
 ```{r}
 example_data$x
@@ -569,6 +641,9 @@ dim(example_data)
 names(example_data)
 ```
 
+
+### Working with `data.frames`
+
 The `data.frame()` function above is one way to create a data frame. We can also import data from various file types in into `R`, as well as use data stored in packages.
 
 ```{r, echo = FALSE}
@@ -576,12 +651,11 @@ write.csv(example_data, "data/example-data.csv", row.names = FALSE)
 write.csv(example_data,"inst/datasets/example-data.csv", row.names=FALSE)
 ```
 
-To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) **A `tibble` is simply a data frame that prints with sanity.** Notice in the output below that we are given additional information such as dimension and variable type.
+To read this data back into `R`, we will use the built-in function `read.csv`:
 
 ```{r, message = FALSE, warning = FALSE}
-library(readr)  # you need `install.packages("readr")` once!
 path = system.file(package="ScPoEconometrics","datasets","example-data.csv")
-example_data_from_disk = read_csv(path)
+example_data_from_disk = read.csv(path)
 ```
 
 This particular line of code assumes that you installed the associated R package to this book, hence you have this dataset stored on your computer at `system.file(package = "ScPoEconometrics","datasets","example-data.csv")`. 
@@ -590,132 +664,113 @@ This particular line of code assumes that you installed the associated R package
 example_data_from_disk
 ```
 
-
-
-The `as_tibble()` function can be used to coerce a regular data frame to a tibble.
-
-```{r}
-library(tibble)
-example_data = as_tibble(example_data)
-example_data
-```
-
-Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. (By default, the top-right pane of RStudio.)  Once completed, this process will automatically generate the code to import a file. The resulting code will be shown in the console window. In recent versions of RStudio, `read_csv()` is used by default, thus reading in a tibble.
-
-Earlier we looked at installing packages, in particular the `ggplot2` package. 
-
-```{r}
-library(ggplot2)
-```
-
-Inside the `ggplot2` package is a dataset called `mpg`. By loading the package using the `library()` function, we can now access `mpg`.
-
-When using data from inside a package, there are three things we would generally like to do:
+When using data, there are three things we would generally like to do:
 
 - Look at the raw data.
 - Understand the data. (Where did it come from? What are the variables? Etc.)
 - Visualize the data.
 
-To look at the data, we have two useful commands: `head()` and `str()`.
+To look at data in a `data.frame`, we have two useful commands: `head()` and `str()`.
 
 ```{r}
-data(mpg)  # load dataset `mpg` from `ggplot2` package
-head(mpg, n = 10)
+# we are working with the built-in mtcars dataset:
+mtcars
 ```
 
-The function `head()` will display the first `n` observations of the data frame. The `head()` function was more useful before tibbles. Notice that `mpg` is a tibble already, so the output from `head()` indicates there are only `10` observations. Note that this applies to `head(mpg, n = 10)` and not `mpg` itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates with rows and columns were omitted.
+You can see that this prints the entire data.frame to screen. The function `head()` will display the first `n` observations of the data frame. 
 
 ```{r}
-mpg
+head(mtcars,n=2)
+head(mtcars) # default
 ```
 
 The function `str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the "Environment" window in RStudio.
 
 ```{r}
-str(mpg)
+str(mtcars)
 ```
 
-In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.
+In this dataset an observation is for a particular model of a car, and the variables describe attributes of the car, for example its fuel efficiency, or its weight.
 
 To understand more about the data set, we use the `?` operator to pull up the documentation for the data.
 
 ```{r, eval = FALSE}
-?mpg
+?mtcars
 ```
 
 `R` has a number of functions for quickly working with and extracting basic information from data frames. To quickly obtain a vector of the variable names, we use the `names()` function.
 
 ```{r}
-names(mpg)
+names(mtcars)
 ```
 
 To access one of the variables **as a vector**, we use the `$` operator.
 
 ```{r}
-mpg$year
-mpg$hwy
+mtcars$mpg
+mtcars$wt
 ```
 
 We can use the `dim()`, `nrow()` and `ncol()` functions to obtain information about the dimension of the data frame.
 
 ```{r}
-dim(mpg)
-nrow(mpg)
-ncol(mpg)
+dim(mtcars)
+nrow(mtcars)
+ncol(mtcars)
 ```
 
 Here `nrow()` is also the number of observations, which in most cases is the *sample size*.
 
-Subsetting data frames can work much like subsetting matrices using square brackets, `[ , ]`. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display `manufacturer`, `model` and `year`.
+Subsetting data frames can work much like subsetting matrices using square brackets, `[ , ]`. Here, we find vehicles with mpg over 25 miles per gallon and only display columns `cyl`, `disp` and `wt`.
 
 ```{r}
 # mpg[row condition, col condition]
-mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
+mtcars[mtcars$mpg > 20, c("cyl", "disp", "wt")]
 ```
 
 An alternative would be to use the `subset()` function, which has a much more readable syntax.
 
 ```{r, eval = FALSE}
-subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
+subset(mtcars, subset = mpg > 25, select = c("cyl", "disp", "wt"))
 ```
-
-Lastly, we could use the `filter` and `select` functions from the `dplyr` package which introduces the *pipe operator* `%>%` from the `magrittr` package. A *pipe* is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a *pipeline* of commands. We will see more of this in chapter \@ref(sum). For additional info on the pipe operator in R, you might be interested [in this tutorial](https://www.datacamp.com/community/tutorials/pipe-r-tutorial).
-
-```{r, eval = TRUE,message=FALSE,warning=FALSE}
-library(dplyr)
-mpg %>% 
-  filter(hwy > 35) %>% 
-  select(manufacturer, model, year)
-```
-
-Note that the above syntax is equivalent to the following pipe-free command (which is much harder to read!):
-
-```{r, eval = TRUE,message=FALSE,warning=FALSE}
-library(dplyr)
-select(filter(mpg, hwy > 35), manufacturer, model, year)
-```
-
-All three (four?) approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
 
 #### Task 5
 
-1. Make sure to have the `mpg` dataset loaded by typing `data(mpg)` (and `library(ggplot2)` if you haven't!). Use the `table` function to find out how many cars were built by *mercury*? 
-1. What is the average year the audi's were built in this dataset? Use the function `mean` on the subset of column `year` that corresponds to `audi`. (Be careful: subsetting a `tibble` returns a `tibble` (and not a vector)!. so get the `year` column after you have subset the `tibble`.) 
-1. Use the `dplyr` piping syntax from above first with `group_by` and then with `summarise(newvar=your_expression)` to find the mean `year` by all manufacturers (i.e. same as previous task, but for all manufacturers. don't write a loop!).
-
-
+1. How many observations are there in `mtcars`?
+1. How many variables?
+1. What is the average value of `mpg`?
+1. What is the average value of `mpg` for cars with more than 4 cylinders, i.e. with `cyl>4`?
 
 ## Programming Basics
 
+In this section we illustrate some general concepts related to programming.
+
+### Variables
+
+We encountered the term *variable* already several times, but mainly in the context of a column of a data.frame. In programming, a variable is denotes an *object*. Another way to say it is that a variable is a name or a *label* for something:
+
+```{r}
+x = 1
+y = "roses"
+z = function(x){sqrt(x)}
+```
+
+Here `x` refers to the value `1`, `y` holds the string "roses", and `z` is the name of a function that computes $\sqrt{x}$. Notice that the argument `x` of the function is different from the `x` we just defined. It is **local** to the function: 
+
+```{r}
+x
+z(9)
+```
+
 ### Control Flow
 
-In `R`, the if/else syntax is:
+Control Flow relates to ways in which you can adapt your code to different circumstances. Based on a `condition` being `TRUE`, your program will do one thing, as opposed to another thing. This is most widely known as an `if/else` statement. In `R`, the if/else syntax is:
 
 ```{r, eval = FALSE}
 if (condition = TRUE) {
   some R code
 } else {
-  more R code
+  some other R code
 }
 ```
 
@@ -724,10 +779,12 @@ For example,
 ```{r}
 x = 1
 y = 3
-if (x > y) {
+if (x > y) {  # test if x > y
+  # if TRUE
   z = x * y
   print("x is larger than y")
 } else {
+  # if FALSE
   z = x + 5 * y
   print("x is less than or equal to y")
 }
@@ -735,135 +792,89 @@ if (x > y) {
 z
 ```
 
-`R` also has a special function `ifelse()` which is very useful. It returns one of two specified values based on a conditional statement.
 
-```{r}
-ifelse(4 > 3, 1, 0)
-```
+### Loops
 
-**For Loops**
+Loops are a very important programming construct. As the name suggests, in a *loop*, the programming *repeatedly* loops over a set of instructions, until some condition tells it to stop. A very powerful, yet simple, construction is that the program can *count how many steps* it has done already - which may be important to know for many algorithms. The syntax of a `for` loop (there are others), is
 
-Now a `for` loop example,
-
-```{r}
-x = 11:15
-for (i in 1:5) {
-  x[i] = x[i] + i
+```{r eval=FALSE}
+for (ix in 1:10){   # does not have to be 1:10!
+  # loop body: gets executed each time
+  # the value of ix changes with each iteration
 }
-
-x
 ```
 
+For example, consider this simple `for` loop, which will simply print the value of the *iterator* (called `i` in this case) to screen:
+
+```{r}
+for (i in 1:5){
+  print(i)
+}
+```
+
+Notice that instead of `1:5`, we could have *any* kind of iterable collection:
+
+```{r}
+for (i in c("mangos","bananas","apples")){
+  print(paste("I love",i))  # the paste function pastes together strings
+}
+```
+
+We often also see *nested* loops, which are just what its name suggests:
+
+```{r}
+for (i in 2:3){
+  # first nest: for each i
+  for (j in c("mangos","bananas","apples")){
+    # second nest: for each j
+    print(paste("Can I get",i,j,"please?"))
+  }
+}
+```
+
+The important thing to note here is that you can do calculations with the iterators *while inside a loop*. 
 
 ### Functions
 
-So far we have been using functions, but haven't actually discussed some of their details.
+So far we have been using functions, but haven't actually discussed some of their details. A function is a set of instructions that `R` executes for us, much like those collected in a script file. The good thing is that functions are much more flexible than scripts, since they can depend on *input arguments*, which change the way the function behaves. Here is how to define a function:
 
-```{r, eval = FALSE}
-function_name(arg1 = 10, arg2 = 20)
-```
-
-To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parenthesis. 
-
-An **argument** is a variable which is used in the body of the function. Specifying the values of the arguments is essentially providing the inputs to the function.
-
-We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.
-
-\[
-z = \frac{x - \bar{x}}{s}
-\]
-
-In `R` we would write a function to do this. When writing a function, there are three thing you must do.
-
-- Give the function a name. Preferably something that is short, but descriptive.
-- Specify the arguments using `function()`
-- Write the body of the function within curly braces, `{}`.
-
-```{r}
-standardize = function(x) {
-  m = mean(x)
-  std = sd(x)
-  result = (x - m) / std
-  result
+```{r eval=FALSE}
+function_name <- function(arg1,arg2=default_value){
+  # function body
+  # you do stuff with arg1 and arg2
+  # you can have any number of arguments, with or without defaults
+  # any valid `R` commands can be included here
+  # the last line is returned
 }
 ```
 
-Here the name of the function is `standardize`, and the function has a single argument `x` which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable `result`.
-
-To test our function, we will take a random sample of size `n = 10` from a normal distribution with a mean of `2` and a standard deviation of `5`.
+And here is a trivial example of a function definition:
 
 ```{r}
-(test_sample = rnorm(n = 10, mean = 2, sd = 5))
-standardize(x = test_sample)
-```
-
-This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
-
-```{r}
-standardize = function(x) {
-  (x - mean(x)) / sd(x)
+hello <- function(your_name = "Lord Vader"){
+  paste("You R most welcome,",your_name)
+  # we could also write:
+  # return(paste("You R most welcome,",your_name))
 }
-```
 
-When specifying arguments, you can provide default arguments.
+# we call the function by typing it's name with round brackets
+hello()
+```
+You see that by not specifying the argument `your_name`, `R` reverts to the default value given. Try with your own name now! 
+
+Just typing the function name returns the actual definition to us, which is handy sometimes:
 
 ```{r}
-power_of_num = function(num, power = 2) {
-  num ^ power
-}
+hello
 ```
 
-Let's look at a number of ways that we could run this function to perform the operation `10^2` resulting in `100`.
+It's instructive to consider that before we defined the function `hello` above, `R` did not know what to do, had you called `hello()`. The function did not exist! In this sense, we *taught `R` a new trick*. This feature to create new capabilities on top of a core language is one of the most powerful characteristics of programming languages. In general, it is good practice to split your code into several smaller functions, rather than one long script file. It makes your code more readable, and it is easier to track down mistakes.
 
-```{r}
-power_of_num(10)
-power_of_num(10, 2)
-power_of_num(num = 10, power = 2)
-power_of_num(power = 2, num = 10)
+#### Task 6
 
-```
+1. Write a for loop that counts down from 10 to 1, printing the value of the iterator to the screen.
+1. Modify that loop to write "i iterations to go" where `i` is the iterator
+1. Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command `Sys.sleep(1)` below the line that prints "i iterations to go". 
 
-Note that without using the argument names, the order matters. The following code will not evaluate to the same output as the previous example.
 
-```{r}
-power_of_num(2, 10)
-```
 
-Also, the following line of code would produce an error since arguments without a default value must be specified.
-
-```{r, eval = FALSE}
-power_of_num(power = 5)
-```
-
-To further illustrate a function with a default argument, we will write a function that calculates sample variance two ways.
-
-By default, the function will calculate the unbiased estimate of $\sigma^2$, which we will call $s^2$.
-
-\[
-s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
-\]
-
-It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call $\hat{\sigma}^2$.
-
-\[
-\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2
-\]
-
-```{r}
-get_var = function(x, biased = FALSE) {
-  n = length(x) - 1 * !biased
-  (1 / n) * sum((x - mean(x)) ^ 2)
-}
-```
-
-```{r}
-get_var(test_sample)
-get_var(test_sample, biased = FALSE)
-var(test_sample)
-```
-
-We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
-
-```{r}
-get_var(test_sample, biased = TRUE)
-```
