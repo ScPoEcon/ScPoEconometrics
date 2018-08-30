@@ -1,5 +1,6 @@
 # Categorial Variables {#categorical-vars}
 
+
 TODO: excluded category vs intercept?
 
 Up until now, we have encountered only examples with *continuous* variables $x$ and $y$, that is, $x,y \in \mathbb{R}$, so that a typical observation could have been $(y_i,x_i) = (1.5,5.62)$. There are many situations where it makes sense to think about the data in terms of *categories*, rather than continuous numbers. For example, whether an observation $i$ is *male* or *female*, whether a pixel on a screen is *black* or *white*, and whether a good was produced in *France*, *Germany*, *Italy*, *China* or *Spain* are all categorical classifications of data. 

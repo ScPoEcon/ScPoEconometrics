@@ -1,5 +1,7 @@
 # Advanced `R` {#R-advanced}
 
+
+
 This chapter continues with some advanced usage examples from chapter \@ref(R-intro)
 
 ## More Vectorization

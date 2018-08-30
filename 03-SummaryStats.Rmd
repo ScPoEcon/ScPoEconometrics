@@ -1,5 +1,6 @@
 # Working With Data  {#sum}
 
+
 In this chapter we will first learn some basic concepts that help summarizing data. Then, we will tackle a real-world task and read, clean, and summarize data from the web.
 
 ## Summary Statistics

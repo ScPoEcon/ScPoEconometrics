@@ -1,9 +1,6 @@
 # Introduction to `R`  {#R-intro}
 
-```{r setup, include=FALSE}
-OUT_PROMPT = "#OUT>"
-knitr::opts_chunk$set(comment=OUT_PROMPT)
-```
+
 
 ## Getting Started
 
@@ -146,14 +143,14 @@ Once you close `R`, all the packages are closed and put back on the imaginary sh
 
 ## `Code` vs Output in this Book {#code-output}
 
-A quick note on styling choices in this book. We had to make a decision how to visually separate `R` code and resulting output in this book. We decided to prefix all output lines with ``r OUT_PROMPT`` to make the distinction. A typical code snippet with output is thus going to look like this:
+A quick note on styling choices in this book. We had to make a decision how to visually separate `R` code and resulting output in this book. We decided to prefix all output lines with ``r ScPoEconometrics:::getprompt()`` to make the distinction. A typical code snippet with output is thus going to look like this:
 
 ```{r}
 1 + 3
 # everything after a # is a comment, i.e. R disregards it.
 ```
 
-where you see on the first line the `R` code, and on the second line the output. As mentioned, that line starts with ``r OUT_PROMPT`` to say *this is an output*, followed by `[1]` (indicating this is a vector of length *one* - more on this below!), followed by the actual result - `1 + 3 = 4`!
+where you see on the first line the `R` code, and on the second line the output. As mentioned, that line starts with ``r ScPoEconometrics:::getprompt()`` to say *this is an output*, followed by `[1]` (indicating this is a vector of length *one* - more on this below!), followed by the actual result - `1 + 3 = 4`!
 
 Notice that you can simply copy and paste all the code you see into your `R` console. In fact, you are *strongly* encouraged to actually do this and try out **all the code** you see in this book.
 

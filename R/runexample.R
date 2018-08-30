@@ -32,3 +32,6 @@ gitbook <- function(){
   bookdown::render_book('index.Rmd', 'bookdown::gitbook')
 }
 
+getprompt <- function(){
+  return("#OUT>")
+}
