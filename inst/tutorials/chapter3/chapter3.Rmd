@@ -8,7 +8,8 @@ runtime: shiny_prerendered
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 library(EnvStats, quietly = TRUE, warn.conflicts = FALSE, verbose = FALSE) # For Pareto Distribution
-library(distr)
+# library(distr)
+x = c(6,2,5,3,5,1,5,7,6,3)
 ```
 
 
@@ -19,7 +20,6 @@ In this tutorial we will refer to [chapter 3 of our textbook](https://floswald.g
 I created a vector `x` for you with 10 values, which will be our data in this section:
 
 ```{r}
-x = c(6,2,5,3,5,1,5,7,6,3)
 x
 ```
 
@@ -339,8 +339,7 @@ output$dPlot <- renderPlot({
 shinyUI(fluidPage(
   sidebarPanel(selectInput(inputId = "distBimod", # Dropdown Menu to choose a distribution
                 label = "Distribution:",
-                choices = c(Arcsine     = "rarcsine",
-                            Mixture = "mixture"),
+                choices = c(Mixture = "mixture"),
                 selected = "mixture"),
                
                # Change interactive parameters depending on the chosen distribution

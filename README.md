@@ -48,8 +48,8 @@ Here is a screenshot of the `SSR_cone` app:
 In order to run the accompanying tutorials you would type, for example:
 
 ```R
-library(learnr)
-run_tutorial("chapter3",package="ScPoEconometrics")
+library(ScPoEconometrics)
+runTutorial("chapter3")
 ```
 
 ## Contribution Workflow - Developers only!
@@ -94,14 +94,25 @@ You are free to:
 1. Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. We are happy to suggest the following citation if you use our material in your work:
 
 ```R
-citation("ScPoEconometrics")
-@book{
-  oswald_robin_viers2018, 
-  title={Introduction to Econometrics with R},
-  url={https://scpoecon.github.io/ScPoEconometrics/}, 
-  publisher={github.com}, 
-  author={Oswald, Florian, Robin, Jean-Marc and Viers, Vincent}, year={2018}
-}
+> citation("ScPoEconometrics")
+
+Oswald F, Robin J, Viers V (2018).
+_Introduction to Econometrics with
+R_. SciencesPo Department of
+Economics, Paris, France. <URL:
+https://scpoecon.github.io/ScPoEconometrics/>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {Introduction to Econometrics with R},
+    author = {Florian Oswald and Jean-Marc Robin and Vincent Viers},
+    organization = {SciencesPo Department of Economics},
+    address = {Paris, France},
+    year = {2018},
+    url = {https://scpoecon.github.io/ScPoEconometrics/},
+  }
+
 ```
 2. NonCommercial — You may not use the material for commercial purposes.
 3. ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
@@ -110,5 +121,5 @@ citation("ScPoEconometrics")
 
 Under the CC licence above, we are obliged to attribute any material that this book uses and which was shared under the same license:
 
-1. Chapter 1 *Introduction to R* is copied almost entirely from [appliedstats](https://daviddalpiaz.github.io/appliedstats/) by [David Dalpiaz](https://daviddalpiaz.com). I added a couple of practical tasks and made some minor edits. 
+1. Large parts of Chapter 1 *Introduction to R* are copied  [appliedstats](https://daviddalpiaz.github.io/appliedstats/) by [David Dalpiaz](https://daviddalpiaz.com). I added a couple of practical tasks and made some minor edits. 
 1. Chapter 2 is partly based on [appliedstats](https://daviddalpiaz.github.io/appliedstats/), but only up to *scatterplots*.

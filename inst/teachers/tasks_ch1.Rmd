@@ -2,7 +2,9 @@
 title: "tasks for session 1"
 author: "Florian Oswald"
 date: "8/18/2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}

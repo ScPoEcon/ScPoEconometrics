@@ -5,6 +5,6 @@ _publish.R
 _book
 _bookdown_files
 rsconnect
-*.html
 /data/
 /inst/shinys/**/*.html
+/inst/tutorials/**/*.html

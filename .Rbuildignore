@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^.*\.Rmd$
 ^.*\.html$
 ^.*\.jpg$
 _book*
@@ -12,6 +11,5 @@ _book*
 ^.*\.tex$
 images
 data/.keep
-^.*\.md$
 js/
 ^appveyor\.yml$

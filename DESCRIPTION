@@ -2,7 +2,7 @@ Package: ScPoEconometrics
 Type: Package
 Title: ScPoEconometrics
 Date: 2018-09-28
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person("Florian", "Oswald", email = "florian.oswald@sciencespo.fr", role = c("aut","cre")),
     person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"),
@@ -20,7 +20,9 @@ Imports: bookdown,
   datasauRus,
   plotly,
   webshot,
-  Ecdat
+  Ecdat,
+  EnvStats,
+  rmarkdown
 Suggests:
   shinytest,
   testthat

@@ -7,6 +7,7 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
+data("CPS1988", package = "AER")
 ```
 
 
@@ -14,16 +15,11 @@ library(learnr)
 
 Now it is your turn to fit your very first linear model!
 
-For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. This dataset can be found in the `AER` package.
+For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. This dataset can be found in the `AER` package. You probably need to install this first with `install.packages("AER")`.
 
-We start by attaching the `AER` package to our `R` session, and loading the dataset.
-
-```{r str, warning=F, message = F}
-library(AER)
-data("CPS1988")
-```
 
 Let's now explore the data. Use the following cell to print the `summary` of the dataset.
+
 ```{r summary, exercise=TRUE, exercise.eval=TRUE}
 
 ```

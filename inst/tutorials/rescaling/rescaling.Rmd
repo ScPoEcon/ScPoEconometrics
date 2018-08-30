@@ -29,7 +29,7 @@ This can be done using the following code:
 
 ```{r dgp-setup}
 
-set.seed(42) #this ensures that everybody gets the same "random"" data
+set.seed(42) #this ensures that you get the same "random" data each time.
 
 # We'll use a sample size of n = 200
 

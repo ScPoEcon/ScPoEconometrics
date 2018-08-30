@@ -4,7 +4,7 @@ rref <- bibentry(
   author = c(person("Florian", "Oswald", role=c("aut","cre")),
              person("Jean-Marc", "Robin", role=c("ctb")),
              person("Vincent", "Viers", role=c("aut","ctb"))),
-  organization = "SciencesPo Department of Economics",
+  organization = "SciencesPo, Department of Economics",
   address = "Paris, France",
   year = "2018",
   url = "https://scpoecon.github.io/ScPoEconometrics/")

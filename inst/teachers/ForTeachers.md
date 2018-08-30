@@ -1,5 +1,4 @@
-
-# Meta Info
+# Meta Info For Teachers
 
 This document contains info for teachers (at SciencesPo and elsewhere) who want to teach this course.
 
