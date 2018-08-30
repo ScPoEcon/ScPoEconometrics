@@ -23,7 +23,7 @@ knitr::opts_chunk$set(comment=ScPoEconometrics:::getprompt())
 
 ![](ScPo.jpg)
 
-Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. As of today, this is still **work in progress**!
+Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 is the first time this course will be taught, so we are still in a *beta* release stage - you should expect a couple of loose ends here and there, but we think the overall experience is going to be pleasant!
 
 ### Objective {-}
 
@@ -58,11 +58,11 @@ We will assess participation in class and conduct a final exam.
 
 ### Team {-}
 
-tbc
+This material is used in the Economtrics course of the Campuses of SciencesPo in Paris, Reims, LeHavre, Menton and Dijon. The teaching and development team can be found [here on github](https://github.com/orgs/ScPoEcon/teams/ugmetrics)
 
 ### Communication {-}
 
-We will communicate exclusively on our [`slack`](https://econometrics-scpo.slack.com) app. You will get an invitation email to join in due course.
+We will communicate exclusively on our [`slack`](https://econometrics-scpo.slack.com) app. You will get an invitation email to join from your instructor in due course.
 
 
 
