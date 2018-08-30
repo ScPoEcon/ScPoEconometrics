@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-29}
+    \date{2018-08-30}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -172,8 +172,11 @@
 \end{figure}
 
 Welcome to Introductory Econometrics for 2nd year undergraduates at
-ScPo! On this page we outline the course and present the Syllabus. As of
-today, this is still \textbf{work in progress}!
+ScPo! On this page we outline the course and present the Syllabus.
+2018/2019 is the first time this course will be taught, so we are still
+in a \emph{beta} release stage - you should expect a couple of loose
+ends here and there, but we think the overall experience is going to be
+pleasant!
 
 \subsection*{Objective}\label{objective}
 \addcontentsline{toc}{subsection}{Objective}
@@ -246,14 +249,17 @@ We will assess participation in class and conduct a final exam.
 \subsection*{Team}\label{team}
 \addcontentsline{toc}{subsection}{Team}
 
-tbc
+This material is used in the Economtrics course of the Campuses of
+SciencesPo in Paris, Reims, LeHavre, Menton and Dijon. The teaching and
+development team can be found
+\href{https://github.com/orgs/ScPoEcon/teams/ugmetrics}{here on github}
 
 \subsection*{Communication}\label{communication}
 \addcontentsline{toc}{subsection}{Communication}
 
 We will communicate exclusively on our
 \href{https://econometrics-scpo.slack.com}{\texttt{slack}} app. You will
-get an invitation email to join in due course.
+get an invitation email to join from your instructor in due course.
 
 \chapter{\texorpdfstring{Introduction to
 \texttt{R}}{Introduction to R}}\label{R-intro}
@@ -274,8 +280,7 @@ get started, you will need to install two pieces of software:
   \begin{itemize}
   \tightlist
   \item
-    Chose your operating system, and select the most recent version,
-    3.5.0.
+    Chose your operating system, and select the most recent version.
   \end{itemize}
 \item
   \href{http://www.rstudio.com/}{RStudio, an excellent IDE for working
@@ -290,8 +295,7 @@ get started, you will need to install two pieces of software:
 \end{enumerate}
 
 The popularity of \texttt{R} is on the rise, and everyday it becomes a
-better tool for statistical analysis. It even generated this book! There
-are many good resources for learning \texttt{R}.
+better tool for statistical analysis. It even generated this book!
 
 The following few chapters will serve as a whirlwind introduction to
 \texttt{R}. They are by no means meant to be a complete reference for
@@ -310,17 +314,19 @@ more details are in chapter \ref{R-advanced}.
 
 A key difference for you to understand is the one between \texttt{R},
 the actual programming language, and \texttt{RStudio}, a popular
-interface to \texttt{R} which allows you to efficiently.
+interface to \texttt{R} which allows you to work efficiently and with
+greater ease with \texttt{R}.
 
-The best way to appreciate the value of RStudio is to start using R
-\emph{without} RStudio. To do this, double-click on the R GUI that you
-should have downloaded on your computer following the steps above (on
-windows), or start R in your terminal (on Linux or Mac) by just typing
-\texttt{R} in a terminal, see figure \ref{fig:console}. You've just
-opened the R \textbf{console} which allows you to start typing code
-right after the \texttt{\textgreater{}} sign, called \emph{prompt}. Try
-typing \texttt{2\ +\ 2} or \texttt{print("Your\ Name")} and hit the
-return key. And \emph{voilà}, your first R commands!
+The best way to appreciate the value of \texttt{RStudio} is to start
+using \texttt{R} \emph{without} \texttt{RStudio}. To do this,
+double-click on the R GUI that you should have downloaded on your
+computer following the steps above (on windows or Mac), or start R in
+your terminal (on Linux or Mac) by just typing \texttt{R} in a terminal,
+see figure \ref{fig:console}. You've just opened the R \textbf{console}
+which allows you to start typing code right after the
+\texttt{\textgreater{}} sign, called \emph{prompt}. Try typing
+\texttt{2\ +\ 2} or \texttt{print("Your\ Name")} and hit the return key.
+And \emph{voilà}, your first R commands!
 
 \begin{figure}
 
@@ -338,18 +344,22 @@ return key. And \emph{voilà}, your first R commands!
 \caption{R GUI symbol and R in a MacOS Terminal}\label{fig:console2}
 \end{figure}
 
-Typing each command after the other is however not very convenient, and
-we would like to be able to write all the lines of code beforehand and
-then run all of them in one go. We can do this by writing
-\textbf{scripts}, and RStudio makes this process very easy.
+Typing one command after the other into the console is not very
+convenient as our analysis becomes more involved. Ideally, we would like
+to collect all command statements in a file and run them one after the
+other, automatically. We can do this by writing so-called \textbf{script
+files} or just \textbf{scripts}, i.e.~simple text files with extension
+\texttt{.R} or \texttt{.r} which can be \emph{inserted} (or
+\emph{sourced}) into an \texttt{R} session. RStudio makes this process
+very easy.
 
-Open RStudio by clicking on the RStudio application on your computer,
-and notice how different the whole environment is from the basic R
-console -- in fact, that very same \texttt{R} console is running in your
-bottom left panel. The upper-left panel is a space for you to write
-scripts -- that is to say many lines of codes which you can run when you
-choose to. To run a line of code, simply highlight it and hit
-\texttt{Command} + \texttt{Return}.
+Open \texttt{RStudio} by clicking on the \texttt{RStudio} application on
+your computer, and notice how different the whole environment is from
+the basic \texttt{R} console -- in fact, that \emph{very same}
+\texttt{R} console is running in your bottom left panel. The upper-left
+panel is a space for you to write scripts -- that is to say many lines
+of codes which you can run when you choose to. To run a single line of
+code, simply highlight it and hit \texttt{Command} + \texttt{Return}.
 
 \begin{note}
 We highly recommend that you use \texttt{RStudio} for everything related
@@ -368,35 +378,25 @@ them all:
   On Mac: \texttt{Option} + \texttt{Shift} + \texttt{K}
 \end{itemize}
 
-The RStudio team has developed
+The \texttt{RStudio} team has developed
 \href{https://www.rstudio.com/resources/cheatsheets/}{a number of
-``cheatsheets''} for working with both \texttt{R} and RStudio.
+``cheatsheets''} for working with both \texttt{R} and \texttt{RStudio}.
 \href{http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf}{This
 particular cheatseet for Base \texttt{R}} will summarize many of the
-concepts in this document.
-
-When programming, it is often a good practice to follow a style guide.
-(Where do spaces go? Tabs or spaces? Underscores or CamelCase when
-naming variables?) No style guide is ``correct'' but it helps to be
-aware of what others do. The more import thing is to be consistent
-within your own code.
-
-\begin{itemize}
-\tightlist
-\item
-  \href{http://adv-r.had.co.nz/Style.html}{Hadley Wickham Style Guide}
-  from \href{http://adv-r.had.co.nz/}{Advanced \texttt{R}}
-\item
+concepts in this document. \footnote{When programming, it is often a
+  good practice to follow a style guide. (Where do spaces go? Tabs or
+  spaces? Underscores or CamelCase when naming variables?) No style
+  guide is ``correct'' but it helps to be aware of what others do. The
+  more import thing is to be consistent within your own code. Here are
+  two guides: \href{http://adv-r.had.co.nz/Style.html}{Hadley Wickham
+  Style Guide}, and the
   \href{https://google.github.io/styleguide/Rguide.xml}{Google Style
-  Guide}
-\end{itemize}
+  Guide}. For this course, our main deviation from these two guides is
+  the use of \texttt{=} in place of \texttt{\textless{}-}. For all
+  practical purposes, you should think \texttt{=} whenever you see
+  \texttt{\textless{}-}.}
 
-For this course, our main deviation from these two guides is the use of
-\texttt{=} in place of \texttt{\textless{}-}. For all practical
-purposes, you should think \texttt{=} whenever you see
-\texttt{\textless{}-}.
-
-\subsection{Glossary}\label{glossary}
+\subsection{First Glossary}\label{first-glossary}
 
 \begin{itemize}
 \tightlist
@@ -407,9 +407,10 @@ purposes, you should think \texttt{=} whenever you see
   with \texttt{R}
 \item
   \emph{command}: user input (text or numbers) that \texttt{R}
-  \emph{understands}
+  \emph{understands}.
 \item
-  \emph{script}: a list of commands, each separated by a new line
+  \emph{script}: a list of commands collected in a text file, each
+  separated by a new line, to be run one after the other.
 \end{itemize}
 
 \section{Basic Calculations}\label{basic-calculations}
@@ -658,7 +659,7 @@ library, and check it's current version:
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] '0.1.2'
+#OUT> [1] '0.1.3'
 \end{verbatim}
 
 \section{Data Types}\label{data-types}
@@ -3391,7 +3392,7 @@ command (which is much harder to read!):
 All three approaches produce the same results. Which you use will be
 largely based on a given situation as well as your preference.
 
-\subsubsection{Task}\label{task}
+\subsubsection{Task 1}\label{task-1-1}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5021,7 +5022,9 @@ that a certain observation \(i\) \textbf{is a member} of a certain
 category \(j\). For example, we could have a variable called
 \texttt{is.male} that is \texttt{TRUE} whenever \(i\) is male, and
 \texttt{FALSE} otherwise. A common way to represent this is with the
-so-called \emph{indicator function} \(\mathbf{1}[\text{condition}]\),
+so-called \emph{indicator function} \(\mathbf{1}[\text{condition}]\).
+For example, to encode whether subject \(i\) is male or female, one
+could do this:
 
 \begin{align*}
 \text{is.male}_i &= \mathbf{1}[\text{sex}_i==\text{male}], \\
@@ -5047,19 +5050,54 @@ regressor is binary:
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} \label{eq:zero-one-reg}
 \]
 
-Let's run that regression here:
+Let's generate some random data and look at the regression output of
+\eqref{eq:zero-one-reg}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(dta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT>   x        y
+#OUT> 1 0 2.518630
+#OUT> 2 0 2.883465
+#OUT> 3 1 5.589829
+#OUT> 4 0 1.803295
+#OUT> 5 0 2.659594
+#OUT> 6 0 1.739415
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(zero_one)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 #OUT> 
 #OUT> Call:
 #OUT> lm(formula = y ~ x, data = dta)
 #OUT> 
+#OUT> Residuals:
+#OUT>      Min       1Q   Median       3Q      Max 
+#OUT> -1.40227 -0.50683 -0.09763  0.66287  1.53463 
+#OUT> 
 #OUT> Coefficients:
-#OUT> (Intercept)            x  
-#OUT>       1.889        3.756
+#OUT>             Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
+#OUT> x             3.7558     0.3902   9.626 1.60e-08 ***
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 0.868 on 18 degrees of freedom
+#OUT> Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
+#OUT> F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08
 \end{verbatim}
 
-We have seen in the \texttt{app} launched via
+This setup is identical to what we have seen in the \texttt{app}
+launched via
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5067,14 +5105,15 @@ We have seen in the \texttt{app} launched via
 \end{Highlighting}
 \end{Shaded}
 
-that this regression simplifies to the straight line connecting the
-mean, or the \emph{expected value} of \(y\) when \(x=0\), i.e.
-\(E[y|x=0]\), to the mean when \(x=1\), i.e. \(E[y|x=1]\). It is useful
-to remember that the \emph{unconditional mean} of \(y\), i.e. \(E[y]\),
-is going to be the result of regressing \(y\) only on an intercept,
-illustrated by the red line. The red line will always lie in between
-both conditional means. Let's just refresh our memory by replicating the
-graph from the \texttt{app} here in figure \ref{fig:x-zero-one}:
+We learned that this regression simplifies to the straight line
+connecting the mean, or the \emph{expected value} of \(y\) when \(x=0\),
+i.e. \(E[y|x=0]\), to the mean when \(x=1\), i.e. \(E[y|x=1]\). It is
+useful to remember that the \emph{unconditional mean} of \(y\), i.e.
+\(E[y]\), is going to be the result of regressing \(y\) only on an
+intercept, illustrated by the red line. The red line will always lie in
+between both conditional means. Let's just refresh our memory by
+replicating the graph from the \texttt{app} here in figure
+\ref{fig:x-zero-one}:
 
 \begin{figure}
 
@@ -5085,15 +5124,15 @@ graph from the \texttt{app} here in figure \ref{fig:x-zero-one}:
 \caption{regressing $y \in \mathbb{R}$ on $x \in \{0,1\}$. The red line is $E[y]$}\label{fig:x-zero-one}
 \end{figure}
 
-Now suppose for a moment that in fact
+Now let's encode \(x\) to represent male and female,
 
 \[
 x_i = \begin{cases}
           1 & \text{if }i\text{ is male} \\
             0 & \text{if }i\text{ is female}. \\
    \end{cases}
-\] and that \(y_i\) is a measure of \(i\)'s annual labor income. The
-dummy variable version of the above regression is just
+\] and let's suppose that \(y_i\) is a measure of \(i\)'s annual labor
+income. The dummy variable version of the above regression is just
 
 \[
 y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \label{eq:dummy-reg}
@@ -5103,8 +5142,19 @@ y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \label{eq:dummy-reg}
 \text{is.male}_i &= \mathbf{1}[x_i==1], \\
 \end{align*}
 
-and the resulting estimates of \(\beta_1\) and \(\alpha\) are in fact
-the same. Here we see the estimates from \eqref{eq:dummy-reg}:
+Given our definitions, those two formulations are equivalent. What
+changes, is the representation of \texttt{x} and \texttt{is.male} for
+\texttt{R}. Here is how I ran model \eqref{eq:dummy-reg}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dta}\OperatorTok{$}\NormalTok{is.male =}\StringTok{ }\KeywordTok{factor}\NormalTok{(x)  }\CommentTok{# convert x to factor}
+\NormalTok{dummy_reg =}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{is.male,dta)}
+\end{Highlighting}
+\end{Shaded}
+
+Looking at the output of this, the resulting estimates of \(\beta_1\)
+and \(\alpha\) are of course the same:
 
 \begin{verbatim}
 #OUT> 
@@ -5127,11 +5177,18 @@ the same. Here we see the estimates from \eqref{eq:dummy-reg}:
 #OUT> F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08
 \end{verbatim}
 
-It is interesting to note that the estimate for \(\alpha = 3.7558\) (and
-\(\beta_1 = 3.7558\)!) is the same as the difference in conditional
-means:
+More interesting, however, is that both of them are equal to the
+difference in conditional means:
 
 \[E[y|x=1] - E[y|x=0]=3.7558.\]
+
+\begin{note}
+A dummy variable measures the difference or the \emph{offset} in the
+mean of the response variable, \(E[y]\), \textbf{conditional} on \(x\)
+belonging to some category. In our artificial example, the coefficient
+\(\alpha\) informs us that men earn on average 3.756 units more than
+women.
+\end{note}
 
 \section{\texorpdfstring{Categorical Variables in \texttt{R}:
 \texttt{factor}}{Categorical Variables in R: factor}}\label{categorical-variables-in-r-factor}
@@ -5178,9 +5235,9 @@ different.
 
 \subsection{More Levels}\label{more-levels}
 
-We can go \emph{binary} categorical variables such as \texttt{TRUE} vs
-\texttt{FALSE}. For example, suppose that \(x\) measures educational
-attainment, i.e.~it is now something like
+We can go beyond \emph{binary} categorical variables such as
+\texttt{TRUE} vs \texttt{FALSE}. For example, suppose that \(x\)
+measures educational attainment, i.e.~it is now something like
 \(x_i \in \{\text{high school,some college,BA,MSc}\}\). In \texttt{R}
 parlance, \emph{high school, some college, BA, MSc} are the
 \textbf{levels of factor \(x\)}. A straightforward extension of the
@@ -5613,101 +5670,6 @@ rate. Such a factor is called an \emph{instrumental variable}.
 \chapter{Logit and Probit}\label{logit-probit}
 
 \chapter{Principal Component Analysis}\label{pca}
-
-\chapter{Notes}\label{notes}
-
-this creates a library for the used R packages.
-
-In order to install that package, you need to do
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{require}\NormalTok{(devtools))\{}
-  \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
-\NormalTok{\}}
-\KeywordTok{library}\NormalTok{(devtools)}
-\KeywordTok{install_github}\NormalTok{(}\StringTok{"floswald/ScPoEconometrics"}\NormalTok{)  }
-\end{Highlighting}
-\end{Shaded}
-
-\section{Book usage}\label{book-usage}
-
-You can label chapter and section titles using \texttt{\{\#label\}}
-after them, e.g., we can reference Chapter \ref{intro}. If you do not
-manually label them, there will be automatic labels anyway, e.g.,
-Chapter \ref{linreg}.
-
-Figures and tables with captions will be placed in \texttt{figure} and
-\texttt{table} environments, respectively.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{))}
-\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{ScPoEconometrics_files/figure-latex/nice-fig-1} 
-
-}
-
-\caption{Here is a nice figure!}\label{fig:nice-fig}
-\end{figure}
-
-Reference a figure by its code chunk label with the \texttt{fig:}
-prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can
-reference tables generated from \texttt{knitr::kable()}, e.g., see Table
-\ref{tab:nice-tab}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
-  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
-  \DataTypeTok{booktabs =} \OtherTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:nice-tab}Here is a nice table!}
-\centering
-\begin{tabular}[t]{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.1 & 3.5 & 1.4 & 0.2 & setosa\\
-4.9 & 3.0 & 1.4 & 0.2 & setosa\\
-4.7 & 3.2 & 1.3 & 0.2 & setosa\\
-4.6 & 3.1 & 1.5 & 0.2 & setosa\\
-5.0 & 3.6 & 1.4 & 0.2 & setosa\\
-\addlinespace
-5.4 & 3.9 & 1.7 & 0.4 & setosa\\
-4.6 & 3.4 & 1.4 & 0.3 & setosa\\
-5.0 & 3.4 & 1.5 & 0.2 & setosa\\
-4.4 & 2.9 & 1.4 & 0.2 & setosa\\
-4.9 & 3.1 & 1.5 & 0.1 & setosa\\
-\addlinespace
-5.4 & 3.7 & 1.5 & 0.2 & setosa\\
-4.8 & 3.4 & 1.6 & 0.2 & setosa\\
-4.8 & 3.0 & 1.4 & 0.1 & setosa\\
-4.3 & 3.0 & 1.1 & 0.1 & setosa\\
-5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-\addlinespace
-5.7 & 4.4 & 1.5 & 0.4 & setosa\\
-5.4 & 3.9 & 1.3 & 0.4 & setosa\\
-5.1 & 3.5 & 1.4 & 0.3 & setosa\\
-5.7 & 3.8 & 1.7 & 0.3 & setosa\\
-5.1 & 3.8 & 1.5 & 0.3 & setosa\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-You can write citations, too. For example, we are using the
-\textbf{bookdown} package \citep{R-bookdown} in this sample book, which
-was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
 
 \chapter{\texorpdfstring{Advanced
 \texttt{R}}{Advanced R}}\label{R-advanced}
@@ -6332,6 +6294,101 @@ off-diagonals.
 #OUT> [4,]    0    0    0    1    0
 #OUT> [5,]    0    0    0    0    1
 \end{verbatim}
+
+\chapter{Notes}\label{notes}
+
+this creates a library for the used R packages.
+
+In order to install that package, you need to do
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{require}\NormalTok{(devtools))\{}
+  \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\NormalTok{\}}
+\KeywordTok{library}\NormalTok{(devtools)}
+\KeywordTok{install_github}\NormalTok{(}\StringTok{"floswald/ScPoEconometrics"}\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
+
+\section{Book usage}\label{book-usage}
+
+You can label chapter and section titles using \texttt{\{\#label\}}
+after them, e.g., we can reference Chapter \ref{intro}. If you do not
+manually label them, there will be automatic labels anyway, e.g.,
+Chapter \ref{linreg}.
+
+Figures and tables with captions will be placed in \texttt{figure} and
+\texttt{table} environments, respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{ScPoEconometrics_files/figure-latex/nice-fig-1} 
+
+}
+
+\caption{Here is a nice figure!}\label{fig:nice-fig}
+\end{figure}
+
+Reference a figure by its code chunk label with the \texttt{fig:}
+prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can
+reference tables generated from \texttt{knitr::kable()}, e.g., see Table
+\ref{tab:nice-tab}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
+  \DataTypeTok{booktabs =} \OtherTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:nice-tab}Here is a nice table!}
+\centering
+\begin{tabular}[t]{rrrrl}
+\toprule
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+\midrule
+5.1 & 3.5 & 1.4 & 0.2 & setosa\\
+4.9 & 3.0 & 1.4 & 0.2 & setosa\\
+4.7 & 3.2 & 1.3 & 0.2 & setosa\\
+4.6 & 3.1 & 1.5 & 0.2 & setosa\\
+5.0 & 3.6 & 1.4 & 0.2 & setosa\\
+\addlinespace
+5.4 & 3.9 & 1.7 & 0.4 & setosa\\
+4.6 & 3.4 & 1.4 & 0.3 & setosa\\
+5.0 & 3.4 & 1.5 & 0.2 & setosa\\
+4.4 & 2.9 & 1.4 & 0.2 & setosa\\
+4.9 & 3.1 & 1.5 & 0.1 & setosa\\
+\addlinespace
+5.4 & 3.7 & 1.5 & 0.2 & setosa\\
+4.8 & 3.4 & 1.6 & 0.2 & setosa\\
+4.8 & 3.0 & 1.4 & 0.1 & setosa\\
+4.3 & 3.0 & 1.1 & 0.1 & setosa\\
+5.8 & 4.0 & 1.2 & 0.2 & setosa\\
+\addlinespace
+5.7 & 4.4 & 1.5 & 0.4 & setosa\\
+5.4 & 3.9 & 1.3 & 0.4 & setosa\\
+5.1 & 3.5 & 1.4 & 0.3 & setosa\\
+5.7 & 3.8 & 1.7 & 0.3 & setosa\\
+5.1 & 3.8 & 1.5 & 0.3 & setosa\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+You can write citations, too. For example, we are using the
+\textbf{bookdown} package \citep{R-bookdown} in this sample book, which
+was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
 
 \bibliography{book.bib,packages.bib}
 

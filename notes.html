@@ -25,15 +25,15 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
-<link rel="prev" href="pca.html">
-<link rel="next" href="R-advanced.html">
+<link rel="prev" href="R-advanced.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -170,13 +170,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
 <li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
-<li class="chapter" data-level="12" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>12</b> Notes</a><ul>
-<li class="chapter" data-level="12.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>12.1</b> Book usage</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>13</b> Advanced <code>R</code></a><ul>
-<li class="chapter" data-level="13.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>13.1</b> More Vectorization</a></li>
-<li class="chapter" data-level="13.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>13.2</b> Calculations with Vectors and Matrices</a></li>
-<li class="chapter" data-level="13.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>13.3</b> Matrices</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -200,7 +200,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="notes" class="section level1">
-<h1><span class="header-section-number">Chapter 12</span> Notes</h1>
+<h1><span class="header-section-number">Chapter 13</span> Notes</h1>
 <p>this creates a library for the used R packages.</p>
 <p>In order to install that package, you need to do</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools)){
@@ -209,7 +209,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&quot;floswald/ScPoEconometrics&quot;</span>)  </code></pre></div>
 <div id="book-usage" class="section level2">
-<h2><span class="header-section-number">12.1</span> Book usage</h2>
+<h2><span class="header-section-number">13.1</span> Book usage</h2>
 <p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter <a href="#intro"><strong>??</strong></a>. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter <a href="linreg.html#linreg">3</a>.</p>
 <p>Figures and tables with captions will be placed in <code>figure</code> and <code>table</code> environments, respectively.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))
@@ -217,16 +217,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
 <img src="ScPoEconometrics_files/figure-html/nice-fig-1.png" alt="Here is a nice figure!" width="80%" />
 <p class="caption">
-Figure 12.1: Here is a nice figure!
+Figure 13.1: Here is a nice figure!
 </p>
 </div>
-<p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="notes.html#fig:nice-fig">12.1</a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="notes.html#tab:nice-tab">12.1</a>.</p>
+<p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="notes.html#fig:nice-fig">13.1</a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="notes.html#tab:nice-tab">13.1</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,
   <span class="dt">booktabs =</span> <span class="ot">TRUE</span>
 )</code></pre></div>
 <table>
-<caption><span id="tab:nice-tab">Table 12.1: </span>Here is a nice table!</caption>
+<caption><span id="tab:nice-tab">Table 13.1: </span>Here is a nice table!</caption>
 <thead>
 <tr class="header">
 <th align="right">Sepal.Length</th>
@@ -397,8 +397,8 @@ Figure 12.1: Here is a nice figure!
           </div>
         </div>
       </div>
-<a href="pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="R-advanced.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="R-advanced.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -428,7 +428,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/13-Notes.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/14-Notes.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],

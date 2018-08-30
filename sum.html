@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,13 +170,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
 <li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
-<li class="chapter" data-level="12" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>12</b> Notes</a><ul>
-<li class="chapter" data-level="12.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>12.1</b> Book usage</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>13</b> Advanced <code>R</code></a><ul>
-<li class="chapter" data-level="13.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>13.1</b> More Vectorization</a></li>
-<li class="chapter" data-level="13.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>13.2</b> Calculations with Vectors and Matrices</a></li>
-<li class="chapter" data-level="13.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>13.3</b> Matrices</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -531,7 +531,7 @@ mpg[mpg<span class="op">$</span>hwy <span class="op">&gt;</span><span class="st"
 #OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
 <p>An alternative would be to use the <code>subset()</code> function, which has a much more readable syntax.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(mpg, <span class="dt">subset =</span> hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>))</code></pre></div>
-<p>Lastly, and most <em>tidy</em>, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <em>pipe operator</em> <code>%&gt;%</code> from the <code>magrittr</code> package.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Lastly, and most <em>tidy</em>, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <em>pipe operator</em> <code>%&gt;%</code> from the <code>magrittr</code> package.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 mpg <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -558,8 +558,8 @@ mpg <span class="op">%&gt;%</span><span class="st"> </span>
 #OUT&gt; 5 volkswagen   new beetle  1999
 #OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
 <p>All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.</p>
-<div id="task" class="section level4">
-<h4><span class="header-section-number">2.4.2.1</span> Task</h4>
+<div id="task-1-1" class="section level4">
+<h4><span class="header-section-number">2.4.2.1</span> Task 1</h4>
 <ol style="list-style-type: decimal">
 <li>Make sure to have the <code>mpg</code> dataset loaded by typing <code>data(mpg)</code> (and <code>library(ggplot2)</code> if you haven’t!). Use the <code>table</code> function to find out how many cars were built by <em>mercury</em>?</li>
 <li>What is the average year the audi’s were built in this dataset? Use the function <code>mean</code> on the subset of column <code>year</code> that corresponds to <code>audi</code>. (Be careful: subsetting a <code>tibble</code> returns a <code>tibble</code> (and not a vector)!. so get the <code>year</code> column after you have subset the <code>tibble</code>.)</li>
@@ -946,8 +946,8 @@ merge_GER <span class="op">%&gt;%</span>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>A <em>pipe</em> is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a <em>pipeline</em> of commands. For additional info on the pipe operator in R, you might be interested <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">in this tutorial</a>.<a href="sum.html#fnref1">↩</a></p></li>
+<ol start="2">
+<li id="fn2"><p>A <em>pipe</em> is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a <em>pipeline</em> of commands. For additional info on the pipe operator in R, you might be interested <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">in this tutorial</a>.<a href="sum.html#fnref2">↩</a></p></li>
 </ol>
 </div>
             </section>

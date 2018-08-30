@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,13 +170,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
 <li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
-<li class="chapter" data-level="12" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>12</b> Notes</a><ul>
-<li class="chapter" data-level="12.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>12.1</b> Book usage</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>13</b> Advanced <code>R</code></a><ul>
-<li class="chapter" data-level="13.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>13.1</b> More Vectorization</a></li>
-<li class="chapter" data-level="13.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>13.2</b> Calculations with Vectors and Matrices</a></li>
-<li class="chapter" data-level="13.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>13.3</b> Matrices</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -207,21 +207,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ol style="list-style-type: decimal">
 <li><a href="https://www.r-project.org"><code>R</code>, the actual programming language.</a>
 <ul>
-<li>Chose your operating system, and select the most recent version, 3.5.0.</li>
+<li>Chose your operating system, and select the most recent version.</li>
 </ul></li>
 <li><a href="http://www.rstudio.com/">RStudio, an excellent IDE for working with <code>R</code>.</a>
 <ul>
 <li>Note, you must have <code>R</code> installed to use RStudio. RStudio is simply an interface used to interact with <code>R</code>.</li>
 </ul></li>
 </ol>
-<p>The popularity of <code>R</code> is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! There are many good resources for learning <code>R</code>.</p>
+<p>The popularity of <code>R</code> is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book!</p>
 <p>The following few chapters will serve as a whirlwind introduction to <code>R</code>. They are by no means meant to be a complete reference for the <code>R</code> language, but simply an introduction to the basics that we will need along the way. Several of the more important topics will be re-stressed as they are actually needed for analyses.</p>
-<p>This introductory <code>R</code> chapter may feel like an overwhelming amount of information. You are not expected to pick up everything the first time through. You should try all of the code from this chapter, then return to it a number of times as you return to the concepts when performing analyses. We present the bare basics in this chapter, some more details are in chapter <a href="R-advanced.html#R-advanced">13</a>.</p>
+<p>This introductory <code>R</code> chapter may feel like an overwhelming amount of information. You are not expected to pick up everything the first time through. You should try all of the code from this chapter, then return to it a number of times as you return to the concepts when performing analyses. We present the bare basics in this chapter, some more details are in chapter <a href="R-advanced.html#R-advanced">12</a>.</p>
 </div>
 <div id="starting-r-and-rstudio" class="section level2">
 <h2><span class="header-section-number">1.2</span> Starting R and RStudio</h2>
-<p>A key difference for you to understand is the one between <code>R</code>, the actual programming language, and <code>RStudio</code>, a popular interface to <code>R</code> which allows you to efficiently.</p>
-<p>The best way to appreciate the value of RStudio is to start using R <em>without</em> RStudio. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows), or start R in your terminal (on Linux or Mac) by just typing <code>R</code> in a terminal, see figure <a href="R-intro.html#fig:console">1.1</a>. You’ve just opened the R <strong>console</strong> which allows you to start typing code right after the <code>&gt;</code> sign, called <em>prompt</em>. Try typing <code>2 + 2</code> or <code>print(&quot;Your Name&quot;)</code> and hit the return key. And <em>voilà</em>, your first R commands!</p>
+<p>A key difference for you to understand is the one between <code>R</code>, the actual programming language, and <code>RStudio</code>, a popular interface to <code>R</code> which allows you to work efficiently and with greater ease with <code>R</code>.</p>
+<p>The best way to appreciate the value of <code>RStudio</code> is to start using <code>R</code> <em>without</em> <code>RStudio</code>. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows or Mac), or start R in your terminal (on Linux or Mac) by just typing <code>R</code> in a terminal, see figure <a href="R-intro.html#fig:console">1.1</a>. You’ve just opened the R <strong>console</strong> which allows you to start typing code right after the <code>&gt;</code> sign, called <em>prompt</em>. Try typing <code>2 + 2</code> or <code>print(&quot;Your Name&quot;)</code> and hit the return key. And <em>voilà</em>, your first R commands!</p>
 <div class="figure" style="text-align: center"><span id="fig:console"></span>
 <img src="images/RLogo.png" alt="R GUI symbol and R in a MacOS Terminal" width="50%" />
 <p class="caption">
@@ -234,8 +234,8 @@ Figure 1.1: R GUI symbol and R in a MacOS Terminal
 Figure 1.1: R GUI symbol and R in a MacOS Terminal
 </p>
 </div>
-<p>Typing each command after the other is however not very convenient, and we would like to be able to write all the lines of code beforehand and then run all of them in one go. We can do this by writing <strong>scripts</strong>, and RStudio makes this process very easy.</p>
-<p>Open RStudio by clicking on the RStudio application on your computer, and notice how different the whole environment is from the basic R console – in fact, that very same <code>R</code> console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit <code>Command</code> + <code>Return</code>.</p>
+<p>Typing one command after the other into the console is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called <strong>script files</strong> or just <strong>scripts</strong>, i.e. simple text files with extension <code>.R</code> or <code>.r</code> which can be <em>inserted</em> (or <em>sourced</em>) into an <code>R</code> session. RStudio makes this process very easy.</p>
+<p>Open <code>RStudio</code> by clicking on the <code>RStudio</code> application on your computer, and notice how different the whole environment is from the basic <code>R</code> console – in fact, that <em>very same</em> <code>R</code> console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a single line of code, simply highlight it and hit <code>Command</code> + <code>Return</code>.</p>
 <div class="note">
 <p>
 We highly recommend that you use <code>RStudio</code> for everything related to this course (in particular, to launch our apps and tutorials).
@@ -246,20 +246,14 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <li>On Windows: <code>Alt</code> + <code>Shift</code> + <code>K</code></li>
 <li>On Mac: <code>Option</code> + <code>Shift</code> + <code>K</code></li>
 </ul>
-<p>The RStudio team has developed <a href="https://www.rstudio.com/resources/cheatsheets/">a number of “cheatsheets”</a> for working with both <code>R</code> and RStudio. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This particular cheatseet for Base <code>R</code></a> will summarize many of the concepts in this document.</p>
-<p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is “correct” but it helps to be aware of what others do. The more import thing is to be consistent within your own code.</p>
-<ul>
-<li><a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham Style Guide</a> from <a href="http://adv-r.had.co.nz/">Advanced <code>R</code></a></li>
-<li><a href="https://google.github.io/styleguide/Rguide.xml">Google Style Guide</a></li>
-</ul>
-<p>For this course, our main deviation from these two guides is the use of <code>=</code> in place of <code>&lt;-</code>. For all practical purposes, you should think <code>=</code> whenever you see <code>&lt;-</code>.</p>
-<div id="glossary" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> Glossary</h3>
+<p>The <code>RStudio</code> team has developed <a href="https://www.rstudio.com/resources/cheatsheets/">a number of “cheatsheets”</a> for working with both <code>R</code> and <code>RStudio</code>. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This particular cheatseet for Base <code>R</code></a> will summarize many of the concepts in this document.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<div id="first-glossary" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> First Glossary</h3>
 <ul>
 <li><code>R</code>: a statistical programming language</li>
 <li><code>RStudio</code>: an integrated development environment (IDE) to work with <code>R</code></li>
-<li><em>command</em>: user input (text or numbers) that <code>R</code> <em>understands</em></li>
-<li><em>script</em>: a list of commands, each separated by a new line</li>
+<li><em>command</em>: user input (text or numbers) that <code>R</code> <em>understands</em>.</li>
+<li><em>script</em>: a list of commands collected in a text file, each separated by a new line, to be run one after the other.</li>
 </ul>
 </div>
 </div>
@@ -467,7 +461,7 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <p>In order to check whether everything works fine, you could load the library, and check it’s current version:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">packageVersion</span>(<span class="st">&quot;ScPoEconometrics&quot;</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] &#39;0.1.2&#39;</code></pre>
+<pre><code>#OUT&gt; [1] &#39;0.1.3&#39;</code></pre>
 </div>
 <div id="data-types" class="section level2">
 <h2><span class="header-section-number">1.8</span> Data Types</h2>
@@ -1312,6 +1306,12 @@ y =<span class="st"> </span><span class="dv">3</span>
 </div>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is “correct” but it helps to be aware of what others do. The more import thing is to be consistent within your own code. Here are two guides: <a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham Style Guide</a>, and the <a href="https://google.github.io/styleguide/Rguide.xml">Google Style Guide</a>. For this course, our main deviation from these two guides is the use of <code>=</code> in place of <code>&lt;-</code>. For all practical purposes, you should think <code>=</code> whenever you see <code>&lt;-</code>.<a href="R-intro.html#fnref1">↩</a></p></li>
+</ol>
 </div>
             </section>
 

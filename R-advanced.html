@@ -25,15 +25,15 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
-<link rel="prev" href="notes.html">
-<link rel="next" href="references.html">
+<link rel="prev" href="pca.html">
+<link rel="next" href="notes.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -170,13 +170,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
 <li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
-<li class="chapter" data-level="12" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>12</b> Notes</a><ul>
-<li class="chapter" data-level="12.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>12.1</b> Book usage</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>13</b> Advanced <code>R</code></a><ul>
-<li class="chapter" data-level="13.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>13.1</b> More Vectorization</a></li>
-<li class="chapter" data-level="13.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>13.2</b> Calculations with Vectors and Matrices</a></li>
-<li class="chapter" data-level="13.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>13.3</b> Matrices</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -200,10 +200,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="R-advanced" class="section level1">
-<h1><span class="header-section-number">Chapter 13</span> Advanced <code>R</code></h1>
+<h1><span class="header-section-number">Chapter 12</span> Advanced <code>R</code></h1>
 <p>This chapter continues with some advanced usage examples from chapter <a href="R-intro.html#R-intro">1</a></p>
 <div id="more-vectorization" class="section level2">
-<h2><span class="header-section-number">13.1</span> More Vectorization</h2>
+<h2><span class="header-section-number">12.1</span> More Vectorization</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)
 y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
@@ -254,7 +254,7 @@ x <span class="op">+</span><span class="st"> </span>y</code></pre></div>
 <span class="co"># ?all.equal</span></code></pre></div>
 </div>
 <div id="calculations-with-vectors-and-matrices" class="section level2">
-<h2><span class="header-section-number">13.2</span> Calculations with Vectors and Matrices</h2>
+<h2><span class="header-section-number">12.2</span> Calculations with Vectors and Matrices</h2>
 <p>Certain operations in <code>R</code>, for example <code>%*%</code> have different behavior on vectors and matrices. To illustrate this, we will first create two vectors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre></div>
@@ -339,7 +339,7 @@ D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
 </div>
 <div id="matrices-1" class="section level2">
-<h2><span class="header-section-number">13.3</span> Matrices</h2>
+<h2><span class="header-section-number">12.3</span> Matrices</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 Z</code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
@@ -407,8 +407,8 @@ X</code></pre></div>
           </div>
         </div>
       </div>
-<a href="notes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="notes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -438,7 +438,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/14-R-advanced.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/13-R-advanced.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],

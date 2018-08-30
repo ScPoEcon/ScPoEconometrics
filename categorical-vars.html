@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-08-29">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,13 +170,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
 <li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
-<li class="chapter" data-level="12" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>12</b> Notes</a><ul>
-<li class="chapter" data-level="12.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>12.1</b> Book usage</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>13</b> Advanced <code>R</code></a><ul>
-<li class="chapter" data-level="13.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>13.1</b> More Vectorization</a></li>
-<li class="chapter" data-level="13.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>13.2</b> Calculations with Vectors and Matrices</a></li>
-<li class="chapter" data-level="13.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>13.3</b> Matrices</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -203,7 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 6</span> Categorial Variables</h1>
 <p>TODO: excluded category vs intercept?</p>
 <p>Up until now, we have encountered only examples with <em>continuous</em> variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, that is, <span class="math inline">\(x,y \in \mathbb{R}\)</span>, so that a typical observation could have been <span class="math inline">\((y_i,x_i) = (1.5,5.62)\)</span>. There are many situations where it makes sense to think about the data in terms of <em>categories</em>, rather than continuous numbers. For example, whether an observation <span class="math inline">\(i\)</span> is <em>male</em> or <em>female</em>, whether a pixel on a screen is <em>black</em> or <em>white</em>, and whether a good was produced in <em>France</em>, <em>Germany</em>, <em>Italy</em>, <em>China</em> or <em>Spain</em> are all categorical classifications of data.</p>
-<p>Probably the simplest type of categorical variable is the <em>binary</em>, <em>boolean</em>, or just <em>dummy</em> variable. As the name suggests, it can take on only two values, <code>0</code> and <code>1</code>, or <code>TRUE</code> and <code>FALSE</code>. Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation <span class="math inline">\(i\)</span> <strong>is a member</strong> of a certain category <span class="math inline">\(j\)</span>. For example, we could have a variable called <code>is.male</code> that is <code>TRUE</code> whenever <span class="math inline">\(i\)</span> is male, and <code>FALSE</code> otherwise. A common way to represent this is with the so-called <em>indicator function</em> <span class="math inline">\(\mathbf{1}[\text{condition}]\)</span>,</p>
+<p>Probably the simplest type of categorical variable is the <em>binary</em>, <em>boolean</em>, or just <em>dummy</em> variable. As the name suggests, it can take on only two values, <code>0</code> and <code>1</code>, or <code>TRUE</code> and <code>FALSE</code>. Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation <span class="math inline">\(i\)</span> <strong>is a member</strong> of a certain category <span class="math inline">\(j\)</span>. For example, we could have a variable called <code>is.male</code> that is <code>TRUE</code> whenever <span class="math inline">\(i\)</span> is male, and <code>FALSE</code> otherwise. A common way to represent this is with the so-called <em>indicator function</em> <span class="math inline">\(\mathbf{1}[\text{condition}]\)</span>. For example, to encode whether subject <span class="math inline">\(i\)</span> is male or female, one could do this:</p>
 <span class="math display">\[\begin{align*}
 \text{is.male}_i &amp;= \mathbf{1}[\text{sex}_i==\text{male}], \\
 \end{align*}\]</span>
@@ -219,37 +219,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><span class="math display" id="eq:zero-one-reg">\[
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} \tag{6.1}
 \]</span></p>
-<p>Let’s run that regression here:</p>
+<p>Let’s generate some random data and look at the regression output of <a href="categorical-vars.html#eq:zero-one-reg">(6.1)</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(dta)</code></pre></div>
+<pre><code>#OUT&gt;   x        y
+#OUT&gt; 1 0 2.518630
+#OUT&gt; 2 0 2.883465
+#OUT&gt; 3 1 5.589829
+#OUT&gt; 4 0 1.803295
+#OUT&gt; 5 0 2.659594
+#OUT&gt; 6 0 1.739415</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(zero_one)</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = y ~ x, data = dta)
 #OUT&gt; 
+#OUT&gt; Residuals:
+#OUT&gt;      Min       1Q   Median       3Q      Max 
+#OUT&gt; -1.40227 -0.50683 -0.09763  0.66287  1.53463 
+#OUT&gt; 
 #OUT&gt; Coefficients:
-#OUT&gt; (Intercept)            x  
-#OUT&gt;       1.889        3.756</code></pre>
-<p>We have seen in the <code>app</code> launched via</p>
+#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#OUT&gt; (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
+#OUT&gt; x             3.7558     0.3902   9.626 1.60e-08 ***
+#OUT&gt; ---
+#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#OUT&gt; 
+#OUT&gt; Residual standard error: 0.868 on 18 degrees of freedom
+#OUT&gt; Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
+#OUT&gt; F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08</code></pre>
+<p>This setup is identical to what we have seen in the <code>app</code> launched via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy&quot;</span>)</code></pre></div>
-<p>that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, i.e. <span class="math inline">\(E[y|x=0]\)</span>, to the mean when <span class="math inline">\(x=1\)</span>, i.e. <span class="math inline">\(E[y|x=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let’s just refresh our memory by replicating the graph from the <code>app</code> here in figure <a href="categorical-vars.html#fig:x-zero-one">6.1</a>:</p>
+<p>We learned that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, i.e. <span class="math inline">\(E[y|x=0]\)</span>, to the mean when <span class="math inline">\(x=1\)</span>, i.e. <span class="math inline">\(E[y|x=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the red line. The red line will always lie in between both conditional means. Let’s just refresh our memory by replicating the graph from the <code>app</code> here in figure <a href="categorical-vars.html#fig:x-zero-one">6.1</a>:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-zero-one"></span>
 <img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $x \in \{0,1\}$. The red line is $E[y]$" width="672" />
 <p class="caption">
 Figure 6.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(x \in \{0,1\}\)</span>. The red line is <span class="math inline">\(E[y]\)</span>
 </p>
 </div>
-<p>Now suppose for a moment that in fact</p>
+<p>Now let’s encode <span class="math inline">\(x\)</span> to represent male and female,</p>
 <p><span class="math display">\[
 x_i = \begin{cases}
           1 &amp; \text{if }i\text{ is male} \\
             0 &amp; \text{if }i\text{ is female}. \\
    \end{cases}
-\]</span> and that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>’s annual labor income. The dummy variable version of the above regression is just</p>
+\]</span> and let’s suppose that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>’s annual labor income. The dummy variable version of the above regression is just</p>
 <span class="math display" id="eq:dummy-reg">\[
 y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \tag{6.2}
 \]</span> where
 <span class="math display">\[\begin{align*}
 \text{is.male}_i &amp;= \mathbf{1}[x_i==1], \\
 \end{align*}\]</span>
-<p>and the resulting estimates of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\alpha\)</span> are in fact the same. Here we see the estimates from <a href="categorical-vars.html#eq:dummy-reg">(6.2)</a>:</p>
+<p>Given our definitions, those two formulations are equivalent. What changes, is the representation of <code>x</code> and <code>is.male</code> for <code>R</code>. Here is how I ran model <a href="categorical-vars.html#eq:dummy-reg">(6.2)</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dta<span class="op">$</span>is.male =<span class="st"> </span><span class="kw">factor</span>(x)  <span class="co"># convert x to factor</span>
+dummy_reg =<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>is.male,dta)</code></pre></div>
+<p>Looking at the output of this, the resulting estimates of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\alpha\)</span> are of course the same:</p>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = y ~ is.male, data = dta)
@@ -268,8 +291,13 @@ y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \tag{6.2}
 #OUT&gt; Residual standard error: 0.868 on 18 degrees of freedom
 #OUT&gt; Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
 #OUT&gt; F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08</code></pre>
-<p>It is interesting to note that the estimate for <span class="math inline">\(\alpha = 3.7558\)</span> (and <span class="math inline">\(\beta_1 = 3.7558\)</span>!) is the same as the difference in conditional means:</p>
+<p>More interesting, however, is that both of them are equal to the difference in conditional means:</p>
 <p><span class="math display">\[E[y|x=1] - E[y|x=0]=3.7558.\]</span></p>
+<div class="note">
+<p>
+A dummy variable measures the difference or the <em>offset</em> in the mean of the response variable, <span class="math inline"><span class="math inline">\(E[y]\)</span></span>, <strong>conditional</strong> on <span class="math inline"><span class="math inline">\(x\)</span></span> belonging to some category. In our artificial example, the coefficient <span class="math inline"><span class="math inline">\(\alpha\)</span></span> informs us that men earn on average 3.756 units more than women.
+</p>
+</div>
 <div id="categorical-variables-in-r-factor" class="section level2">
 <h2><span class="header-section-number">6.1</span> Categorical Variables in <code>R</code>: <code>factor</code></h2>
 <p><code>R</code> has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called <code>factor</code>. We encountered them as basic data types in section <a href="R-intro.html#data-types">1.8</a> already, but it is worth repeating this here. We have seen that a factor <em>categorizes</em> a usually small number of numeric values by <em>labels</em>, as in this example which is similar to what I used to create regressor <code>is.male</code> for the above regression:</p>
@@ -285,7 +313,7 @@ sex</code></pre></div>
 <p>You can see that this is almost identical, just the <em>labels</em> are different.</p>
 <div id="more-levels" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> More Levels</h3>
-<p>We can go <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
+<p>We can go beyond <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
 <span class="math display">\[\begin{align*}
 \text{has.HS}_i &amp;= \mathbf{1}[x_i==\text{high school}] \\
 \text{has.someCol}_i &amp;= \mathbf{1}[x_i==\text{some college}] \\
