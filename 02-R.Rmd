@@ -29,9 +29,9 @@ knitr::include_graphics(c("images/RLogo.png","images/console.png"))
 ```
 
 
-Typing one command after the other is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called **scripts**, i.e. simple text files with extension `.R` or `.r` which can be *inserted* (or *sourced*) into an `R` session. RStudio makes this process very easy.
+Typing one command after the other into the console is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called **script files** or just **scripts**, i.e. simple text files with extension `.R` or `.r` which can be *inserted* (or *sourced*) into an `R` session. RStudio makes this process very easy.
 
-Open `RStudio` by clicking on the `RStudio` application on your computer, and notice how different the whole environment is from the basic R console – in fact, that very same `R` console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a line of code, simply highlight it and hit `Command` + `Return`.
+Open `RStudio` by clicking on the `RStudio` application on your computer, and notice how different the whole environment is from the basic `R` console – in fact, that *very same* `R` console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a single line of code, simply highlight it and hit `Command` + `Return`.
 
 ```{block, type='note'}
 We highly recommend that you use `RStudio` for everything related to this course (in particular, to launch our apps and tutorials).

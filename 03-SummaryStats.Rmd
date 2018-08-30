@@ -311,7 +311,7 @@ select(filter(mpg, hwy > 35), manufacturer, model, year)
 
 All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.
 
-#### Task
+#### Task 1
 
 1. Make sure to have the `mpg` dataset loaded by typing `data(mpg)` (and `library(ggplot2)` if you haven't!). Use the `table` function to find out how many cars were built by *mercury*? 
 1. What is the average year the audi's were built in this dataset? Use the function `mean` on the subset of column `year` that corresponds to `audi`. (Be careful: subsetting a `tibble` returns a `tibble` (and not a vector)!. so get the `year` column after you have subset the `tibble`.) 

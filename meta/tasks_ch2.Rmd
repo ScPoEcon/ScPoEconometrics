@@ -1,0 +1,23 @@
+---
+title: "tasks for chapter 2"
+author: "Florian Oswald"
+date: "8/18/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 
+
+
+1. Make sure to have the `mpg` dataset loaded by typing `data(mpg)` (and `library(ggplot2)` if you haven't!). Use the `table` function to find out how many cars were built by *mercury*? `table(mpg$manufacturer)`, `4`.
+1. What is the average year the audi's were built in this dataset? Use the function `mean` on the subset of column `year` that corresponds to `audi`. (Be careful: subsetting a `tibble` returns a `tibble` (and not a vector)!. so get the `year` column after you have subset the `tibble`.) `mean(subset(mpg,subset=manufacturer=="audi")$year)`, `mean(mpg[mpg$manufacturer=="audi","year"]$year)`
+1. Use the `dplyr` piping syntax from above first with `group_by` and then with `summarise(newvar=your_expression)` to find the mean `year` by manufacturer!
+```
+mpg %>%
+  group_by(manufacturer) %>%
+  summarise(year=mean(year))
+```
+
