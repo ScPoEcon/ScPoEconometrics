@@ -59,6 +59,7 @@ Today
 
 But Right Now:
 =====================
+type: prompt
 
 ![](images/RStudio.png)
 
@@ -120,6 +121,10 @@ log(exp(1))
 [1] 1
 ```
 
+```r
+# by the way: this is a comment! (R disregards it)
+```
+
 
 R as a Calculator 2
 ========================================================
@@ -170,6 +175,7 @@ incremental: true
 ?paste
 ?lm
 help(lm)   # help() is equivalent
+??plot  # get all help on keyword "plot"
 help(ggplot,package="ggplot2")  # show help from a certain package
 ```
 
@@ -209,6 +215,7 @@ library(ggplot2)
 
 
 ==========
+type: prompt
 
 ![](images/bond-meme.png)
 
@@ -390,10 +397,19 @@ Logical Subsetting
 class: small-code
 incremental: true
 
-* Let's create a *logical vector*
+* One can use a vector of `TRUE` and `FALSE` to index:
 
 ```r
 x = c(1, 3, 5, 7, 8, 9)
+x[c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE)]
+```
+
+```
+[1] 1 3 5 8
+```
+* Let's create a *logical vector* for condition `x > 3`
+
+```r
 x > 3
 ```
 
@@ -409,18 +425,10 @@ x[ x > 3 ]
 ```
 [1] 5 7 8 9
 ```
-* We can compose the conditions
 
-```r
-x[ (x > 3) & (x != 8) ]
-```
-
-```
-[1] 5 7 9
-```
 
 Task 2!
-======
+========
 class: small-code
 type: alert
 
@@ -447,7 +455,8 @@ incremental: true
 * A `Matrix` is a two-dimensional Array
 
 ```r
-(X = matrix(1:9, nrow = 3, ncol = 3))
+X = matrix(1:9, nrow = 3, ncol = 3)
+X
 ```
 
 ```
@@ -497,17 +506,7 @@ X * Y # equally for +, - and /
 [2,]    6    4
 ```
 * But `X * Y` is **not** matrix multiplication. All of above are *element by element* operations.
-* Matrix multiplication uses `%*%`.
-
-```r
-X %*% Y
-```
-
-```
-     [,1] [,2]
-[1,]   13    5
-[2,]   20    8
-```
+* Matrix multiplication uses `%*%`. What is `X %*% Y` for you?
 
 Task 3
 ======
@@ -731,7 +730,7 @@ type: sub-section
 Variables
 ==============
 
-* A variable is denotes an *object*.
+* A variable refers to an *object*.
 * Another way to say it is that a variable is a name or a *label* for something:
 
 ```r
@@ -841,7 +840,7 @@ Functions
 =========
 incremental: true
 
-* Function `f` tells `R` what to do when it you tell it `f()`.
+* Function `say_hello` tells `R` what to do when it you tell it `say_hello()`.
 
 ```r
 say_hello <- function(your_name = "Lord Vader"){

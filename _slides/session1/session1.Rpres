@@ -61,6 +61,7 @@ Today
 
 But Right Now:
 =====================
+type: prompt
 
 ![](images/RStudio.png)
 
@@ -103,6 +104,7 @@ incremental: true
 
 ```{r}
 log(exp(1))
+# by the way: this is a comment! (R disregards it)
 ```
 
 
@@ -144,6 +146,7 @@ incremental: true
 ?paste
 ?lm
 help(lm)   # help() is equivalent
+??plot  # get all help on keyword "plot"
 help(ggplot,package="ggplot2")  # show help from a certain package
 ```
 
@@ -181,6 +184,7 @@ library(ggplot2)
 
 
 ==========
+type: prompt
 
 ![](images/bond-meme.png)
 
@@ -308,22 +312,23 @@ Logical Subsetting
 class: small-code
 incremental: true
 
-* Let's create a *logical vector*
+* One can use a vector of `TRUE` and `FALSE` to index:
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
+x[c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE)]
+```
+* Let's create a *logical vector* for condition `x > 3`
+```{r}
 x > 3
 ```
 * We can get all values of `x` where `x>3` is `TRUE`:
 ```{r}
 x[ x > 3 ]
 ```
-* We can compose the conditions
-```{r}
-x[ (x > 3) & (x != 8) ]
-```
+
 
 Task 2!
-======
+========
 class: small-code
 type: alert
 
@@ -353,7 +358,8 @@ incremental: true
 
 * A `Matrix` is a two-dimensional Array
 ```{r}
-(X = matrix(1:9, nrow = 3, ncol = 3))
+X = matrix(1:9, nrow = 3, ncol = 3)
+X
 ```
 * Subsetting needs two indices now:
 ```{r}
@@ -376,10 +382,7 @@ Y = matrix(4:1, 2, 2)
 X * Y # equally for +, - and /
 ```
 * But `X * Y` is **not** matrix multiplication. All of above are *element by element* operations.
-* Matrix multiplication uses `%*%`.
-```{r}
-X %*% Y
-```
+* Matrix multiplication uses `%*%`. What is `X %*% Y` for you?
 
 Task 3
 ======
@@ -506,7 +509,7 @@ type: sub-section
 Variables
 ==============
 
-* A variable is denotes an *object*.
+* A variable refers to an *object*.
 * Another way to say it is that a variable is a name or a *label* for something:
 ```{r}
 x = 1
@@ -587,7 +590,7 @@ Functions
 =========
 incremental: true
 
-* Function `f` tells `R` what to do when it you tell it `f()`.
+* Function `say_hello` tells `R` what to do when it you tell it `say_hello()`.
 ```{r}
 say_hello <- function(your_name = "Lord Vader"){
   paste("You R most welcome,",your_name)
