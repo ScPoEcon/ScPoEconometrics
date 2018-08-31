@@ -1,0 +1,618 @@
+```{r setup, include=FALSE}
+opts_chunk$set(cache=TRUE)
+```
+
+
+
+ScPoEconometrics
+========================================================
+author: Florian Oswald
+date: `r Sys.Date()`
+autosize: true
+css: style.css
+
+
+Welcome to ScPoEconometrics!
+================
+
+![scpo](images/ScPo.jpg)
+
+* This is *not* a course about `R`!
+* We want to teach you basic Econometrics, with `R`.
+* We don't rely on maths, but pratical experience.
+
+Who Are *We*?
+=============================
+type: sub-section
+
+![floswald](images/floswald.jpg) ![JMR](images/JMR.jpg) ![vviers](images/vviers.jpg)
+
+* [Florian Oswald](https://floswald.github.io)
+* [Jean-Marc Robin](https://sites.google.com/site/jmarcrobin/home)
+* [Vincent Viers](https://github.com/vviers)
+
+This Course is ...
+========================================================
+
+![](images/WIP.png)
+
+But:
+========================================================
+
+<div style="width:100%;height:0;padding-bottom:50%;position:relative;"><iframe src="https://giphy.com/embed/dIxkmtCuuBQuM9Ux1E" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/reaction-mrw-weight-dIxkmtCuuBQuM9Ux1E"></a></p>
+
+Exams and Grades
+=========================
+
+
+* There will be quizzes on Moodle roughly every two weeks.
+* There will be a final exam on paper.
+* We will do online quizzes on kahoot.com
+  * On your smartphones!
+  * Really fun.
+  * but those will not be part of your grade.
+
+Today
+==================
+
+1. Logistics
+1. Communication - Slack
+1. `R` and `RStudio`
+
+But Right Now:
+=====================
+
+![](images/RStudio.png)
+
+Slack:
+========================================================
+incremental: true
+
+* Let me tell you a bit about Slack first.
+* Now let's all open Slack on our computers!
+
+R Glossary Number 1
+========================================================
+
+* `R`: a statistical programming language
+* `RStudio`: an integrated development environment (IDE) to work with `R`
+* *command*: user input (text or numbers) that `R` *understands*.
+* *script*: a list of commands collected in a text file, each separated by a new line, to be run one after the other.
+
+Warning
+========================================================
+
+![](images/warning.png)
+
+* Those slides are a *subset* of [chapter 1](https://scpoecon.github.io/ScPoEconometrics/R-intro.html)
+* You **must read the entire chapter**.
+
+R as a Calculator
+========================================================
+class: small-code
+incremental: true
+
+* Let's do some basic arithmetic first:
+
+```{r}
+4 + 1
+8 / 2
+```
+
+* Great! What about this?
+
+```{r}
+log(exp(1))
+```
+
+
+R as a Calculator 2
+========================================================
+class: small-code
+incremental: true
+
+* We can also do exponents with `^`:
+
+```{r}
+x = 2
+x^3
+```
+
+* Square roots
+
+```{r}
+sqrt(2)
+```
+
+* and many logarithmic and trigonometric functions.
+* ... What??
+
+
+=========
+
+![](images/help.png)
+
+
+Where To Get HELP!
+================
+incremental: true
+
+* `R` built-in `help`:
+```{r, eval = FALSE}
+?log
+?sin
+?paste
+?lm
+help(lm)   # help() is equivalent
+help(ggplot,package="ggplot2")  # show help from a certain package
+```
+
+* Help from Humans!
+  * [stackoverflow.com](https://stackoverflow.com) [SO]
+  * Your classroom channel on Slack
+  * [rstudio forum](https://community.rstudio.com)
+
+HOW to get help?
+================
+incremental: true
+
+1. Describe what you want to do.
+1. Describe what you *expect* your code to do.
+1. Describe what you your code *does instead*.
+  1. Provide the entire error message.
+1. Provide enough code to *reproduce* your error.
+  1. You can post post code snippets on slack and SO
+
+Packages
+========
+
+* `R` users contribute add-on data and functions as *packages*
+* Installing packages is easy!
+
+```{r, eval = FALSE}
+install.packages("ggplot2")
+```
+
+* To *use* the contents of a packge, we must load it from our library:
+
+```{r, message = FALSE, warning = FALSE,eval=FALSE}
+library(ggplot2)
+```
+
+
+==========
+
+![](images/bond-meme.png)
+
+The ScPoEconometrics Package
+============================
+incremental:true
+class: small-code
+
+* We wrote an `R` package for you.
+* It's hosted on github.com
+* You can install (and frequently update!) from there:
+```{r,eval=FALSE}
+if (!require("devtools")) install.packages("devtools")
+library(devtools)
+install_github(repo = "ScPoEcon/ScPoEconometrics")
+```
+
+* Did it work?
+```{r,warning=FALSE,message=FALSE}
+library(ScPoEconometrics)
+packageVersion("ScPoEconometrics")
+```
+
+
+Data Types and Data Structures
+========================
+incremental:true
+
+- Numeric: `1.0, 2.1`
+- Integer: `1L`, `2L`, `42L`
+- Logical: `TRUE` and `FALSE`
+- Character: `"a"`, `"Statistics"`, `"1 plus 2."`
+- Categorical or `factor`
+
+* [You should read more right here!](https://scpoecon.github.io/ScPoEconometrics/R-intro.html#data-types)
+
+Vectors
+========================
+incremental:true
+class: small-code
+
+* What *is* a **vector**?
+* The `c` function creates vectors.
+```{r}
+c(1, 3, 5, 7, 8, 9)
+```
+
+* Coercion to unique types:
+```{r}
+c(42, "Statistics", TRUE)
+```
+
+* Creating a *Range*
+```{r}
+(y = 1:6)
+```
+
+
+Vectors from Sequences and Repetitions
+=======================
+incremental:true
+class: small-code
+
+* `seq` creates a sequence `from` `to` in steps of `by`:
+```{r}
+seq(from = 1.5, to = 2.1, by = 0.1)
+```
+
+* `rep` repeats items:
+```{r}
+rep("A", times = 10)
+```
+
+* They also work in combination:
+```{r}
+c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
+```
+
+Your Turn!
+==========
+
+![](images/alert.png)
+
+Task 1
+=======
+class: small-code
+type: alert
+
+* Create a vector of five ones, i.e.
+```{r,echo=FALSE}
+rep(1,5)
+```
+* Notice that the colon operator `a:b` is just short for *construct a sequence from `a` to `b`*. Create a vector the counts down from 10 to 0, i.e. it looks like
+```{r,echo=FALSE}
+10:0
+```
+* Use `rep` to create a vector that looks like this:
+```{r,echo=FALSE}
+rep(rep(1:3,each=3),2)
+```
+* Find out (using `help()`, google or whatever) how to get the *length* of a vector in `R`!
+
+Indexing or Subsetting a Vector
+============
+class: small-code
+incremental: true
+
+* `R` uses `1` based indexing.
+* We use `[]` to get the value at an index
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
+x[2]
+```
+* Works with vectors of indices:
+```{r}
+x[c(2,5)]
+```
+* And can get *all but* indices:
+```{r}
+x[-4]
+```
+
+Logical Subsetting
+================
+class: small-code
+incremental: true
+
+* Let's create a *logical vector*
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
+x > 3
+```
+* We can get all values of `x` where `x>3` is `TRUE`:
+```{r}
+x[ x > 3 ]
+```
+* We can compose the conditions
+```{r}
+x[ (x > 3) & (x != 8) ]
+```
+
+Task 2!
+======
+class: small-code
+type: alert
+
+* From the `runif` function get 10 numbers drawn from the uniform distribution and store in `x`.
+```{r,echo=FALSE}
+set.seed(10)
+x = runif(10)
+```
+* get all the elements of `x` larger than 0.3, and store them in `y`.
+```{r,echo=FALSE}
+y = x[x>0.3]
+```
+* using the function `which`, store the *indices* of all of those elements in `iy`.
+```{r,echo=FALSE}
+iy = which(x>0.3)
+iy
+```
+* Check that `y` and `x[iy]` are identical.
+```{r,echo=FALSE}
+y == x[iy]
+```
+
+Matrix
+=======
+class: small-code
+incremental: true
+
+* A `Matrix` is a two-dimensional Array
+```{r}
+(X = matrix(1:9, nrow = 3, ncol = 3))
+```
+* Subsetting needs two indices now:
+```{r}
+X[1,2]
+X[3, ]
+```
+
+Matrix Operations
+=================
+class: small-code
+incremental: true
+
+* Let's create two matrices.
+```{r}
+X = matrix(1:4, 2, 2)
+Y = matrix(4:1, 2, 2)
+```
+* Arithmetic!
+```{r}
+X * Y # equally for +, - and /
+```
+* But `X * Y` is **not** matrix multiplication. All of above are *element by element* operations.
+* Matrix multiplication uses `%*%`.
+```{r}
+X %*% Y
+```
+
+Task 3
+======
+type: alert
+
+* Create a vector containing `1,2,3,4,5` called v.
+```{r, echo=FALSE}
+v = 1:5
+```
+* Create the (2,5) matrix `m`:
+```{r, echo=FALSE}
+(m = matrix(data = 1:10,nrow=2,ncol=5,byrow=T))
+```
+* Perform matrix multiplication of `m` with `v`. Use the command `%*%`. What dimension does the output have?
+```{r, echo=FALSE}
+dim(m%*%v)
+```
+* Why does the command `v %*% m` not work?
+
+Lists
+======
+class: small-code
+incremental: true
+
+* Up to now, all containers were *homogeneous*
+* `lists` are more flexible:
+```{r}
+# works with and without fieldnames
+ex_list = list(
+  a = c(1, 2, 3, 4),
+  b = TRUE,
+  c = "Hello!",
+  d = diag(2)
+)
+ex_list
+```
+
+Indexing Lists
+======
+class: small-code
+incremental: true
+
+* `[]` gets a *sublist*
+* `[[]]` gets a list element
+* Can index by numerical index or name
+```{r}
+ex_list[1]
+ex_list[[1]]
+ex_list$d
+```
+
+Task 4
+======
+type: alert
+
+1. Copy and paste the above code for `ex_list` into your R session. Remember that `list` can hold any kind of `R` object. Like...another list! So, create a new list `new_list` that has two fields: a first field called "this" with string content `"is awesome"`, and a second field called "ex_list" that contains `ex_list`.
+1. Accessing members is like in a plain list, just with several layers now. Get the element `c` from `ex_list` in `new_list`!
+1. Compose a new string out of the first element in `new_list`, the element under label `this`. Use the function `paste` to print the string `R is awesome` to your screen.
+```{r,echo=FALSE}
+new_list = list(this = "is awesome", ex_list = ex_list)
+```
+```{r}
+names(new_list)
+paste("R",new_list$this)
+```
+
+
+DataFrames
+==========
+class: small-code
+incremental: true
+
+* `DataFrames` are like spreadsheets.
+```{r}
+example_data = data.frame(x = c(1, 3, 5, 7),
+                          y = c(rep("Hello", 3), "Goodbye"),
+                          z = sample(c(TRUE,FALSE),size=4,replace=TRUE))
+example_data
+nrow(example_data)
+ncol(example_data)
+names(example_data)
+```
+
+Data on Cars
+===========
+class: small-code
+incremental: true
+
+* The `mtcars` dataset is built-in to `R`.
+```{r}
+head(mtcars,n=3)  # show first 3 rows
+```
+* To access one of the variables **as a vector**, we use the `$` operator as in `mtcars$mpg`
+* Subsetting is like with matrices, `[,]`
+```{r}
+# mpg[row condition, col condition]
+mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
+```
+* But there is a special function which looks nicer.
+```{r,eval=FALSE}
+mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
+```
+
+
+Task 4
+======
+type: alert
+
+1. How many observations are there in `mtcars`?
+1. How many variables?
+1. What is the average value of `mpg`?
+1. What is the average value of `mpg` for cars with more than 4 cylinders, i.e. with `cyl>4`?
+
+
+Basic Programming
+==============
+type: sub-section
+
+* It's useful for us to review some basics for programming.
+* We won't be going very deep here, but it's good for you to know some of this.
+
+
+
+Variables
+==============
+
+* A variable is denotes an *object*.
+* Another way to say it is that a variable is a name or a *label* for something:
+```{r}
+x = 1
+y = "roses"
+z = function(x){sqrt(x)}
+```
+* *local* variables are only defined (and hence visible) within a certain area of your code, called a *scope*
+* *global* variables are defined everywhere.
+* Try to **avoid global variables**.
+
+
+Control Flow
+===========
+
+* We can influence which *branch* our code executes based on *conditionals*
+```{r, eval = FALSE}
+if (condition = TRUE) {
+  some R code
+} else {
+  some other R code
+}
+```
+* For example
+```{r,eval=FALSE}
+x = 1
+y = 3
+if (x > y) {  # test if x > y
+  # if TRUE
+  z = x * y  # assign value to z
+  print("x is larger than y")
+} else {
+  # if FALSE
+  z = x + 5 * y  # assign other value to z
+  print("x is less than or equal to y")
+}
+z
+```
+
+
+Loops
+=====
+class: small-code
+incremental: true
+
+* This is an example for a loop:
+```{r}
+for (i in 1:5){  # does not have to be 1:5!
+  print(i) # loop body: gets executed each time
+  # the value of i changes with each iteration
+}
+```
+* We can iterate over things other than numbers:
+```{r}
+for (i in c("mangos","bananas","apples")){
+  print(paste("I love",i))  # the paste function pastes together strings
+}
+```
+
+
+Nested Loops
+==========
+incremental: true
+
+We often also see *nested* loops, which are just what its name suggests:
+
+```{r}
+for (i in 2:3){
+  # first nest: for each i
+  for (j in c("mangos","bananas","apples")){
+    # second nest: for each j
+    print(paste("Can I get",i,j,"please?"))
+  }
+}
+```
+
+
+Functions
+=========
+incremental: true
+
+* Function `f` tells `R` what to do when it you tell it `f()`.
+```{r}
+say_hello <- function(your_name = "Lord Vader"){
+  paste("You R most welcome,",your_name)
+}
+# we call the function by typing it's name with round brackets
+say_hello()
+```
+* We specified a default argument, but we don't have to.
+* Call the function with your name!
+
+Task 5
+=====
+type: alert
+incremental: true
+
+1. Write a for loop that counts down from 10 to 1, printing the value of the iterator to the screen.
+1. Modify that loop to write "i iterations to go" where `i` is the iterator
+1. Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command `Sys.sleep(1)` below the line that prints "i iterations to go".
+1. Finally, make it print "BOOOOM!" after the iterator reaches `1`.
+```{r,echo=FALSE}
+for (i in 10:1){
+  print(paste(i,"iterations to go"))
+  Sys.sleep(1)
+  if (i==1){
+    print("BOOOOM!")
+  }
+}
+```

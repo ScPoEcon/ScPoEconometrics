@@ -47,6 +47,8 @@ Teacher brings a laptop with Slack, R and Rstudio installed. Our package code is
 		1. [checks *members* in right panel]
 		1. I'll post an example message now in our channel to say hello to you all.
 		1. [posts hello message into their channel]
+		1. You can **react** to any post by clicking on the appropriate symbol at the top right corner of the post.
+		1. [reacts to hello message just posted]
 	1. Let me show you now how to nicely format computer code in a slack post. it's easy.
 		1. [starts typing x + y = 3 and alerts students to the appearing info just below the text box]
 		1. We want this to be formatted like ``code``. So we put this in backticks `` ` ``, like so: `` `x + y = 3` `` [hits enter]
@@ -89,6 +91,9 @@ Teacher brings a laptop with Slack, R and Rstudio installed. Our package code is
 		* download as pdf or as epub.
 		* If you like what you see, on the right you can tweet and post to facebook about this book.
 * All the code you see in the book actually works. so please copy and paste from it as much as you can!
+
+### Continue with Slides!
+
 * Start at 1.2.1: First Glossary
 * Do some basics from 1.3
 * Do 1.4

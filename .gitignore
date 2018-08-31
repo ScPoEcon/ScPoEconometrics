@@ -8,3 +8,4 @@ rsconnect
 /data/
 /inst/shinys/**/*.html
 /inst/tutorials/**/*.html
+inst/slides/session1/session1-*

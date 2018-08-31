@@ -1,0 +1,8 @@
+.midcenter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+.small-code pre code {
+  font-size: 1em;
+}
