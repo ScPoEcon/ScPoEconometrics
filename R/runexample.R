@@ -65,7 +65,7 @@ launchApp <- function(appname) {
 #' @param appname string of which app you want to get info about
 #' This function opens the description of any given app
 #'
-#'@export
+#' @export
 aboutApp <- function(appname){
 
   # locate all the shiny app examples that exist
@@ -87,7 +87,7 @@ aboutApp <- function(appname){
   }
 
   # render and launch the about document
-  appDir = system.file("shinys", "datasaurus/", package = "ScPoEconometrics")
+  appDir = system.file("shinys", appname, package = "ScPoEconometrics")
   rmarkdown::render(paste0(appDir, "about.Rmd"))
   browseURL(paste0(appDir, "about.html"))
 }
