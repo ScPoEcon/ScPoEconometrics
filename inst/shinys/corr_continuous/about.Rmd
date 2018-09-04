@@ -19,13 +19,13 @@ Here, each of the 300 $\{(X_i, Y_i)\}$ pairs are simulated such that the correla
 
 We then plot $Y$ against $X$ (this is called a bivariate plot, or scatterplot since the data is vizualized as a scatter of points) and observe how different correlations result in different plots.
 
-### A few things to note
+The correlation coefficient between $X$ and $Y$ is typically denoted as $r_{xy}$.
 
-Note a few things:
+### A few things to note
 
 + **When $r_{xy} > 0$**, the cloud of points concentrates along an upward-sloping line: *higher-than-average* values of $X$ are generally associated with *higher-than-average* values of $Y$. We say that $X$ and $Y$ are **positively correlated**.
 
-+ **When $r_{xy} < 0$**, the cloud of points concentrates along an downward-sloping line: *higher-than-average* values of $X$ are generally associated with *lower-than-average* values of $Y$. We say that $X$ and $Y$ are **positively correlated**.
++ **When $r_{xy} < 0$**, the cloud of points concentrates along an downward-sloping line: *higher-than-average* values of $X$ are generally associated with *lower-than-average* values of $Y$. We say that $X$ and $Y$ are **negatively correlated**.
 
 + At the extreme end of this, when **$r_{xy} = 1 \; \text{or} \; -1$**, then the data lies on a straight line meaning that $X$ and $Y$ are perfectly linearly associated, or **perfectly correlated**. This means that the value of any of them can be perfectly predicted from the other. An example of two perfectly correlated variables is temperature as measured in Celcius, and as measured in Fahrenheit.
 
