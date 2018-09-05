@@ -1,0 +1,43 @@
+---
+title: "anscombe"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(ScPoEconometrics)
+launchApp("anscombe")
+```
+
+This app let's you visualize the line of best fit and various summary statistics for 4 different x-y datasets -- known as [Anscombe's Quartet](https://heapanalytics.com/blog/data-stories/anscombes-quartet-and-why-summary-statistics-dont-tell-the-whole-story) in honor of British statistician Francis Anscombe who first created the data.
+
+### Observe
+
+This is another illustration of why you should never trust summary statistics alone and **always plot your data**. In fact, all 4 datasets have:
+
++ Exactly the same x and y means, `mean(x)` = $9$ and `mean(y)` = $7.5$
+
++ Exactly the same x and y standard deviations, `sd(x)` = $3.3$ and `sd(y)` = $2$
+
++ Exactly the same correlation coefficient, `cor(x, y)` = $0.82$.
+
++ Exactly the same line of best fit: $Y = 0.5X + 3$
+
+But you would agree that all 4 datasets tell very different stories! Can you find examples of when you could observe each of them in real life?
+
+### Explore Anscombe's Quartet yourself
+
+You don't have to believe everything we tell you! If you wish to check the above statements for yourself, the `anscombe` dataset is included in base `R`, just run:
+
+```{r, eval = FALSE}
+df = anscombe #load the data in the `df` variable
+df
+```
+
+PS: you can explore many other cool built-in datasets by running: `?datasets`, or equivalently `help(datasets)`
+
+
+---
