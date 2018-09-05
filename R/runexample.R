@@ -88,8 +88,8 @@ aboutApp <- function(appname){
 
   # render and launch the about document
   appDir = system.file("shinys", appname, package = "ScPoEconometrics")
-  rmarkdown::render(paste0(appDir, "about.Rmd"))
-  browseURL(paste0(appDir, "about.html"))
+  rmarkdown::render(paste0(appDir, "/about.Rmd"))
+  browseURL(paste0(appDir, "/about.html"))
 }
 
 gitbook <- function(){
