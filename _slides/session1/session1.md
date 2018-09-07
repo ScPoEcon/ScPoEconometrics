@@ -5,7 +5,7 @@
 ScPoEconometrics
 ========================================================
 author: Florian Oswald
-date: 2018-08-31
+date: 2018-09-07
 autosize: true
 css: style.css
 
@@ -627,7 +627,6 @@ paste("R",new_list$this)
 
 DataFrames
 ==========
-class: small-code
 incremental: true
 
 * `DataFrames` are like spreadsheets.
@@ -646,6 +645,13 @@ example_data
 3 5   Hello  TRUE
 4 7 Goodbye FALSE
 ```
+
+DataFrames
+==========
+class: small-code
+incremental: true
+
+* Useful methods for a dataframe:
 
 ```r
 nrow(example_data)
@@ -689,10 +695,17 @@ Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
 Datsun 710    22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
 ```
 * To access one of the variables **as a vector**, we use the `$` operator as in `mtcars$mpg`
+* Or we use the column name or index: `mtcars[,"mpg"]` or `mtcars[,1]`
+
+Subsetting Data.Frames
+===========
+class: small-code
+incremental: true
+
 * Subsetting is like with matrices, `[,]`
 
 ```r
-# mpg[row condition, col condition]
+# mpg[row condition, col index]
 mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
 ```
 
@@ -704,9 +717,8 @@ Toyota Corolla   4 71.1 1.835
 * But there is a special function which looks nicer.
 
 ```r
-mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
+subset(mtcars, subset = mpg > 32, select = c("cyl", "disp", "wt")]
 ```
-
 
 Task 4
 ======
@@ -746,7 +758,10 @@ z = function(x){sqrt(x)}
 Control Flow
 ===========
 
-* We can influence which *branch* our code executes based on *conditionals*
+* We can influence which *branch* our code executes based on
+* Whether we follow one branch or another depends on a `condition`.
+
+
 
 ```r
 if (condition = TRUE) {
@@ -755,7 +770,11 @@ if (condition = TRUE) {
   some other R code
 }
 ```
-* For example
+
+Example if-else
+=================
+
+
 
 ```r
 x = 1
@@ -812,6 +831,7 @@ for (i in c("mangos","bananas","apples")){
 Nested Loops
 ==========
 incremental: true
+class: small-code
 
 We often also see *nested* loops, which are just what its name suggests:
 
@@ -864,18 +884,4 @@ incremental: true
 1. Write a for loop that counts down from 10 to 1, printing the value of the iterator to the screen.
 1. Modify that loop to write "i iterations to go" where `i` is the iterator
 1. Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command `Sys.sleep(1)` below the line that prints "i iterations to go".
-1. Finally, make it print "BOOOOM!" after the iterator reaches `1`.
-
-```
-[1] "10 iterations to go"
-[1] "9 iterations to go"
-[1] "8 iterations to go"
-[1] "7 iterations to go"
-[1] "6 iterations to go"
-[1] "5 iterations to go"
-[1] "4 iterations to go"
-[1] "3 iterations to go"
-[1] "2 iterations to go"
-[1] "1 iterations to go"
-[1] "BOOOOM!"
-```
+1. Finally, let's create a function called `ticking_bomb`. it takes no arguments, it's body is the loop you wrote in the preceding question. The only think you should add to the body is a line after the loop finishes, printing "BOOOOM!" with `print("BOOOOM!")`. You can repeatedly redefine the function in the console, and try it out with `ticking_bomb()`.

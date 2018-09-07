@@ -452,7 +452,6 @@ paste("R",new_list$this)
 
 DataFrames
 ==========
-class: small-code
 incremental: true
 
 * `DataFrames` are like spreadsheets.
@@ -461,6 +460,15 @@ example_data = data.frame(x = c(1, 3, 5, 7),
                           y = c(rep("Hello", 3), "Goodbye"),
                           z = sample(c(TRUE,FALSE),size=4,replace=TRUE))
 example_data
+```
+
+DataFrames
+==========
+class: small-code
+incremental: true
+
+* Useful methods for a dataframe:
+```{r}
 nrow(example_data)
 ncol(example_data)
 names(example_data)
@@ -476,16 +484,22 @@ incremental: true
 head(mtcars,n=3)  # show first 3 rows
 ```
 * To access one of the variables **as a vector**, we use the `$` operator as in `mtcars$mpg`
+* Or we use the column name or index: `mtcars[,"mpg"]` or `mtcars[,1]`
+
+Subsetting Data.Frames
+===========
+class: small-code
+incremental: true
+
 * Subsetting is like with matrices, `[,]`
 ```{r}
-# mpg[row condition, col condition]
+# mpg[row condition, col index]
 mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
 ```
 * But there is a special function which looks nicer.
 ```{r,eval=FALSE}
-mtcars[mtcars$mpg > 32, c("cyl", "disp", "wt")]
+subset(mtcars, subset = mpg > 32, select = c("cyl", "disp", "wt")]
 ```
-
 
 Task 4
 ======
@@ -524,7 +538,10 @@ z = function(x){sqrt(x)}
 Control Flow
 ===========
 
-* We can influence which *branch* our code executes based on *conditionals*
+* We can influence which *branch* our code executes based on
+* Whether we follow one branch or another depends on a `condition`.
+
+
 ```{r, eval = FALSE}
 if (condition = TRUE) {
   some R code
@@ -532,7 +549,11 @@ if (condition = TRUE) {
   some other R code
 }
 ```
-* For example
+
+Example if-else
+=================
+
+
 ```{r,eval=FALSE}
 x = 1
 y = 3
@@ -572,6 +593,7 @@ for (i in c("mangos","bananas","apples")){
 Nested Loops
 ==========
 incremental: true
+class: small-code
 
 We often also see *nested* loops, which are just what its name suggests:
 
@@ -609,13 +631,4 @@ incremental: true
 1. Write a for loop that counts down from 10 to 1, printing the value of the iterator to the screen.
 1. Modify that loop to write "i iterations to go" where `i` is the iterator
 1. Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command `Sys.sleep(1)` below the line that prints "i iterations to go".
-1. Finally, make it print "BOOOOM!" after the iterator reaches `1`.
-```{r,echo=FALSE}
-for (i in 10:1){
-  print(paste(i,"iterations to go"))
-  Sys.sleep(1)
-  if (i==1){
-    print("BOOOOM!")
-  }
-}
-```
+1. Finally, let's create a function called `ticking_bomb`. it takes no arguments, it's body is the loop you wrote in the preceding question. The only think you should add to the body is a line after the loop finishes, printing "BOOOOM!" with `print("BOOOOM!")`. You can repeatedly redefine the function in the console, and try it out with `ticking_bomb()`.
