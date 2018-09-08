@@ -1,5 +1,5 @@
 ---
-title: "Chapter 3 Tutorial"
+title: "Chapter 2 Tutorial"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -15,7 +15,7 @@ x = c(6,2,5,3,5,1,5,7,6,3)
 
 
 ## Discrete Data
-In this tutorial we will refer to [chapter 3 of our textbook](https://floswald.github.io/ScPoEconometrics/sum.html). Please go back there if you have any questions.
+In this tutorial we will refer to [chapter 2 of our textbook](https://floswald.github.io/ScPoEconometrics/sum.html). Please go back there if you have any questions.
 
 I created a vector `x` for you with 10 values, which will be our data in this section:
 
@@ -79,7 +79,7 @@ quiz(
 *Variance* and *Standard Deviation* (SD) inform us about the *spread* of a variable. 
 
 1. Calculate the variance by using $\overline{x}$ from above to compute the number $Var(X) = \frac{1}{N-1}((x_{1}-\overline{x})^{2}+...+(x_{N}-\overline{x})^{2})$.
-2. Calculate the SD by doing $\sqrt(Var(X))$.
+2. Calculate the SD by doing $\sqrt{Var(X)}$.
 3. Check your results again by using functions `var` and `sd` here:
 
 ```{r var, exercise=TRUE, exercise.eval=TRUE}
@@ -470,8 +470,6 @@ output$distPlot2 <- renderPlot({
 
 Notice that your inputs for SD in the slider don't correspond to the title of the histogram (i.e. you see `2` as a max, but a much larger number in the title). This has to do lognormal distribution, where the parameters are given in *log scale*.
 
-### Vincent's selection of distributions
-
 ## Estimation based on a Sample
 
 The Normal Distribution is another extremely frequent distribution. Let us draw samples of size $N$ from a particular instance of a normal distribution with mean $\mu=5$ and SD $\sigma =2$:
@@ -515,6 +513,13 @@ output$estTable <- renderTable({
 
 ## Two Random Variables
 
-* Joint distributions
+```{r,eval=FALSE}
+runTutorial('correlation')
+```
+
+### Joint distributions
+
+* Define 
+
 * Covariance
 * Correlation
