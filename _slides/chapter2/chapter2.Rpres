@@ -185,10 +185,14 @@ runTutorial('chapter2')
 Covariance and Correlation
 ==========================
 
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+runTutorial('correlation')
+```
 
 
 Tidyverse
-==========================
+==========
 
 
 tibbles are tidy data.frames

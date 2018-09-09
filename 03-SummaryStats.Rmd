@@ -168,7 +168,7 @@ If you want to see `ggplot` in action, you could start with [this](http://jcyhon
 
 ## Summarizing Two Variables {#summarize-two}
 
-We often are interested in how two (or more!) variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
+We often are interested in how two variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
 
 ```{r x-y-corr,echo=FALSE,message=FALSE,warning=FALSE,fig.cap='How are $x$ and $y$ related?',fig.align='center'}
 library(mvtnorm)
@@ -185,7 +185,7 @@ plot(x ~ y, xlab="x",ylab="y")
 Taking as example the data in this plot, the concepts *covariance* and *correlation* relate to the following type of question:
 
 ```{block, type="note"}
-Given we observe value of something like $x=2$, say, can we expect a high or a low value of `y`, on average? Something like $y=2$ or rather something like $y=-2$?
+Given we observe value of something like $x=2$, say, can we expect a high or a low value of $y$, on average? Something like $y=2$ or rather something like $y=-2$?
 ```
 <br>
 The answer to this type of question can be addressed by computing the covariance of both variables:
@@ -293,7 +293,7 @@ An alternative would be to use the `subset()` function, which has a much more re
 subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
 ```
 
-Lastly, and most *tidy*, we could use the `filter` and `select` functions from the `dplyr` package which introduces the *pipe operator* `%>%` from the `magrittr` package.^[A *pipe* is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a *pipeline* of commands. For additional info on the pipe operator in R, you might be interested [in this tutorial](https://www.datacamp.com/community/tutorials/pipe-r-tutorial).]
+Lastly, and most *tidy*, we could use the `filter` and `select` functions from the `dplyr` package which introduces the *pipe operator* `f(x) %>% g(z)` from the `magrittr` package. This operator takes the output of the first command, for example `y = f(x)`, and passes it *as the first argument* to the next function, i.e. we'd obtain `g(y,z)` here.^[A *pipe* is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a *pipeline* of commands. For additional info on the pipe operator in R, you might be interested [in this tutorial](https://www.datacamp.com/community/tutorials/pipe-r-tutorial).]
 
 ```{r, eval = TRUE,message=FALSE,warning=FALSE}
 library(dplyr)
@@ -337,8 +337,6 @@ Now we will read the first chunk of data, from the first table: *total populatio
 
 ```{r,message=FALSE,warning=FALSE}
 library(readxl)  # load the library
-
-
 # Notice that if you installed the R package of this book,
 # you have the .xls data file already at 
 # `system.file(package="ScPoEconometrics",
@@ -402,7 +400,7 @@ All of those verbs can be used with `group_by()`, where we apply the respective 
 * mutate
 * and plot the resulting values
 
-Let's get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the `piping` syntax of `dplyr` as already mentioned in section \@ref(dataframes).
+Let's get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the `piping` syntax of `dplyr` which we introduced just above.
 
 ```{r gather-plot,warning=FALSE,message=FALSE}
 library(dplyr)  # for %>%, filter, mutate, ...

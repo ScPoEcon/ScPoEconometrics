@@ -505,21 +505,3 @@ output$estTable <- renderTable({
   nsample = rnorm(n=input$ssize,mean=5,sd=2)
   data.frame(parameter=c("Mean","SD"),estimate=c(mean(nsample),sd(nsample)))},striped=TRUE)
 ```
-
-
-
-
-
-
-## Two Random Variables
-
-```{r,eval=FALSE}
-runTutorial('correlation')
-```
-
-### Joint distributions
-
-* Define 
-
-* Covariance
-* Correlation
