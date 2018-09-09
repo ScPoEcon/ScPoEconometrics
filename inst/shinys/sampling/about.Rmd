@@ -1,0 +1,46 @@
+---
+title: "sampling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(ScPoEconometrics)
+launchApp("sampling")
+```
+
+The goal of this app is to introduce the concept of *sampling*. It let's you visualize how different samples of size n = 20 from the underlying population look like and differ from one another.
+
+Here, the underlying population (which can be thought of as the quasi-infinity of points from which we draw samples) is defined as follows:
+
++ $X$ is a random variable which is normally distributed with mean 5 and standard deviation 2: $X \sim N(5, 2^2)$
++ $Y$ is also a random variable and follows the following process: $Y = 5 + 2X + \epsilon$ where $\epsilon$ is random noise with mean 0 and standard deviation 5 ($\epsilon \sim N(0, 5^2)$)
+
+In practice, you can think of the underlying population as looking roughly like this:
+
+```{r}
+X = rnorm(5000, 5, 2) # simulate 5000 draws of X
+Y = 5 + 2*X + rnorm(5000, 0, 5) # simulate 5000 draws of Y
+plot(Y~X, main = "The Underlying Population") # plot
+```
+
+In practice, however, a scientist only has access to a subset of the population -- a sample.
+
+The app draws 20 points at random from the above population and plots them along with their mean (called the *sample mean*). It also keeps track of the previous sample so that you can observe how each sample differs from another.
+
+### Observe
+
++ Click on `new draw` several times and try and keep track of how the *sample means* of both X and Y change with each new sample.
+
++ Looking at the above description of the *population*, can you guess what the *population means* of X and Y are? Do *population means* change with each sample? Why?
+
++ Compare each *sample mean* with its population counterpart computed above. Do they usually fall close?
+
++ What do you think would happen to the variability of sample means if we were to take 100 draws instead of 20? (we'll look at this later on!)
+
+
+
+---

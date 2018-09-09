@@ -11,17 +11,18 @@ server <- function(input, output){
   output$dino <- renderPlot({
     #Plotting function
     dz <- datasaurus_dozen
-    
+
     plot_dino <- function(i){
-      plot(y~x, dz[dz$dataset == unique(dz$dataset)[i], ], 
+      plot(y~x, dz[dz$dataset == unique(dz$dataset)[i], ],
            col = "royalblue", pch = 21, bg = "blue", cex = 1, asp=1,
-           ylim = c(0, 100), xlim = c(-100, 200), 
-           main = paste0('DataSet', i))
+           ylim = c(0, 100), xlim = c(-100, 200),
+           main = paste0('DataSet ', i))
       abline(lm(formula = y~x, data = dz[dz$dataset == "dino", ]), col = 'green')
+      text("cor(x, y) = -0.06412835", x = 0, y = 0)
     }
-    
+
     plot_dino(input$dataset)
-    
+
   })
 }
 
