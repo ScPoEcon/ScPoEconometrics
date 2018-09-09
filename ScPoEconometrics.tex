@@ -659,7 +659,7 @@ library, and check it's current version:
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] '0.1.3'
+#OUT> [1] '0.1.4'
 \end{verbatim}
 
 \section{Data Types}\label{data-types}
@@ -3006,10 +3006,10 @@ nice tutorial}? It's fun!
 
 \section{Summarizing Two Variables}\label{summarize-two}
 
-We often are interested in how two (or more!) variables are related to
-each other. The core concepts here are \emph{covariance} and
-\emph{correlation}. Let's generate some data on \texttt{x} and
-\texttt{y} and plot them against each other:
+We often are interested in how two variables are related to each other.
+The core concepts here are \emph{covariance} and \emph{correlation}.
+Let's generate some data on \texttt{x} and \texttt{y} and plot them
+against each other:
 
 \begin{figure}
 
@@ -3025,7 +3025,7 @@ and \emph{correlation} relate to the following type of question:
 
 \begin{note}
 Given we observe value of something like \(x=2\), say, can we expect a
-high or a low value of \texttt{y}, on average? Something like \(y=2\) or
+high or a low value of \(y\), on average? Something like \(y=2\) or
 rather something like \(y=-2\)?
 \end{note}
 
@@ -3337,12 +3337,15 @@ a much more readable syntax.
 
 Lastly, and most \emph{tidy}, we could use the \texttt{filter} and
 \texttt{select} functions from the \texttt{dplyr} package which
-introduces the \emph{pipe operator} \texttt{\%\textgreater{}\%} from the
-\texttt{magrittr} package.\footnote{A \emph{pipe} is a concept from the
-  Unix world, where it means to take the output of some command, and
-  pass it on to another command. This way, one can construct a
-  \emph{pipeline} of commands. For additional info on the pipe operator
-  in R, you might be interested
+introduces the \emph{pipe operator}
+\texttt{f(x)\ \%\textgreater{}\%\ g(z)} from the \texttt{magrittr}
+package. This operator takes the output of the first command, for
+example \texttt{y\ =\ f(x)}, and passes it \emph{as the first argument}
+to the next function, i.e.~we'd obtain \texttt{g(y,z)} here.\footnote{A
+  \emph{pipe} is a concept from the Unix world, where it means to take
+  the output of some command, and pass it on to another command. This
+  way, one can construct a \emph{pipeline} of commands. For additional
+  info on the pipe operator in R, you might be interested
   \href{https://www.datacamp.com/community/tutorials/pipe-r-tutorial}{in
   this tutorial}.}
 
@@ -3456,8 +3459,6 @@ Now we will read the first chunk of data, from the first table:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(readxl)  }\CommentTok{# load the library}
-
-
 \CommentTok{# Notice that if you installed the R package of this book,}
 \CommentTok{# you have the .xls data file already at }
 \CommentTok{# `system.file(package="ScPoEconometrics",}
@@ -3635,8 +3636,7 @@ example, on our \texttt{tot\_pop} tibble we will now
 
 Let's get a plot of the populations of France, the UK and Italy over
 time, in terms of millions of people. We will make use of the
-\texttt{piping} syntax of \texttt{dplyr} as already mentioned in section
-\ref{dataframes}.
+\texttt{piping} syntax of \texttt{dplyr} which we introduced just above.
 
 \begin{Shaded}
 \begin{Highlighting}[]

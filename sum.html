@@ -383,7 +383,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="summarize-two" class="section level2">
 <h2><span class="header-section-number">2.3</span> Summarizing Two Variables</h2>
-<p>We often are interested in how two (or more!) variables are related to each other. The core concepts here are <em>covariance</em> and <em>correlation</em>. Let’s generate some data on <code>x</code> and <code>y</code> and plot them against each other:</p>
+<p>We often are interested in how two variables are related to each other. The core concepts here are <em>covariance</em> and <em>correlation</em>. Let’s generate some data on <code>x</code> and <code>y</code> and plot them against each other:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-y-corr"></span>
 <img src="ScPoEconometrics_files/figure-html/x-y-corr-1.png" alt="How are $x$ and $y$ related?" width="672" />
 <p class="caption">
@@ -393,7 +393,7 @@ Figure 2.1: How are <span class="math inline">\(x\)</span> and <span class="math
 <p>Taking as example the data in this plot, the concepts <em>covariance</em> and <em>correlation</em> relate to the following type of question:</p>
 <div class="note">
 <p>
-Given we observe value of something like <span class="math inline"><span class="math inline">\(x=2\)</span></span>, say, can we expect a high or a low value of <code>y</code>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
+Given we observe value of something like <span class="math inline"><span class="math inline">\(x=2\)</span></span>, say, can we expect a high or a low value of <span class="math inline"><span class="math inline">\(y\)</span></span>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
 </p>
 </div>
 <p><br> The answer to this type of question can be addressed by computing the covariance of both variables:</p>
@@ -531,7 +531,7 @@ mpg[mpg<span class="op">$</span>hwy <span class="op">&gt;</span><span class="st"
 #OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
 <p>An alternative would be to use the <code>subset()</code> function, which has a much more readable syntax.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(mpg, <span class="dt">subset =</span> hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>))</code></pre></div>
-<p>Lastly, and most <em>tidy</em>, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <em>pipe operator</em> <code>%&gt;%</code> from the <code>magrittr</code> package.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>Lastly, and most <em>tidy</em>, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <em>pipe operator</em> <code>f(x) %&gt;% g(z)</code> from the <code>magrittr</code> package. This operator takes the output of the first command, for example <code>y = f(x)</code>, and passes it <em>as the first argument</em> to the next function, i.e. we’d obtain <code>g(y,z)</code> here.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 mpg <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -581,8 +581,6 @@ mpg <span class="op">%&gt;%</span><span class="st"> </span>
 </ul>
 <p>Now we will read the first chunk of data, from the first table: <em>total population</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)  <span class="co"># load the library</span>
-
-
 <span class="co"># Notice that if you installed the R package of this book,</span>
 <span class="co"># you have the .xls data file already at </span>
 <span class="co"># `system.file(package=&quot;ScPoEconometrics&quot;,</span>
@@ -680,7 +678,7 @@ tot_pop</code></pre></div>
 <li>mutate</li>
 <li>and plot the resulting values</li>
 </ul>
-<p>Let’s get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the <code>piping</code> syntax of <code>dplyr</code> as already mentioned in section <a href="R-intro.html#dataframes">1.10</a>.</p>
+<p>Let’s get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the <code>piping</code> syntax of <code>dplyr</code> which we introduced just above.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)  <span class="co"># for %&gt;%, filter, mutate, ...</span>
 <span class="co"># 1. take the data.frame `tot_pop`</span>
 tot_pop <span class="op">%&gt;%</span>
