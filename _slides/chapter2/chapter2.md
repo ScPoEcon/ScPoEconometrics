@@ -1,7 +1,7 @@
-ScPoEconometrics: Chapter 2
+ScPoEconometrics 2
 ========================================================
 author: Florian Oswald
-date: 2018-09-08
+date: 2018-09-14
 autosize: true
 css: ../style.css
 
@@ -199,7 +199,7 @@ Crosstables
 incremental:true
 class: small-code
 
-* Given two vectors, table produces a contingency table:
+* Given two vectors, `table` produces a contingency table:
 
 ```r
 table(mpg$trans,mpg$drv)
@@ -233,6 +233,11 @@ Plotting
 * There is an extremely powerful alternative in package `ggplot2`. We'll see both.
 * A `hist`ogram counts how many obserations fall within a certain bin.
 
+Histogram
+===============
+class: small-code
+
+
 ```r
 hist(mpg$cty)
 ```
@@ -251,7 +256,7 @@ hist(mpg$cty, xlab   = "Miles Per Gallon (City)", main   = "Histogram of MPG (Ci
 <img src="chapter2-figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
 
 
-Looking for Outliers
+Looking for Outliers: Boxplots
 ====================
 class: small-code
 
@@ -305,22 +310,122 @@ library(ScPoEconometrics)
 runTutorial('chapter2')
 ```
 
-Covariance and Correlation
+How are x and y related? Covariance
 ==========================
 
 
+<img src="chapter2-figure/x-y-corr-1.png" title="plot of chunk x-y-corr" alt="plot of chunk x-y-corr" style="display: block; margin: auto;" />
 
-Tidyverse
-==========================
+The [relevant section in the book](https://scpoecon.github.io/ScPoEconometrics/sum.html#summarize-two) is **mandatory** reading.
+
+Correlation App
+==============
+
+
+```r
+library(ScPoEconometrics)
+runTutorial('correlation')
+```
+
+
+The Tidyverse
+==========
+incremental: true
+
+* [Hadley Wickham](http://hadley.nz)
+* What is *tidy* data?
+  1. Each variable is a column
+  1. Each observation is a row
+  1. Each value is a cell.
+* That's not always how we get data.
+* Some tools first.
+
 
 
 tibbles are tidy data.frames
 ==========================
+class: small-code
+incremental: true
 
-task 2.4.2.1
-=========
 
-importing messy excel data
-==========================
+```r
+library(tidyr)  # also loads library(tibble)
+data(mpg,package = "ggplot2")  # data from the ggplot2 package
+mpg
+```
+
+```
+# A tibble: 234 x 11
+   manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla…
+   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <ch>
+ 1 audi         a4      1.8  1999     4 auto… f        18    29 p     com…
+ 2 audi         a4      1.8  1999     4 manu… f        21    29 p     com…
+ 3 audi         a4      2    2008     4 manu… f        20    31 p     com…
+ 4 audi         a4      2    2008     4 auto… f        21    30 p     com…
+ 5 audi         a4      2.8  1999     6 auto… f        16    26 p     com…
+ 6 audi         a4      2.8  1999     6 manu… f        18    26 p     com…
+ 7 audi         a4      3.1  2008     6 auto… f        18    27 p     com…
+ 8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     com…
+ 9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     com…
+10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     com…
+# ... with 224 more rows
+```
+
+Subsetting tibbles
+=================
+incremental:true
+
+* Same as before.
+
+
+```r
+# mpg[row condition, col condition]
+mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
+```
+
+```
+# A tibble: 6 x 3
+  manufacturer model       year
+  <chr>        <chr>      <int>
+1 honda        civic       2008
+2 honda        civic       2008
+3 toyota       corolla     2008
+4 volkswagen   jetta       1999
+5 volkswagen   new beetle  1999
+6 volkswagen   new beetle  1999
+```
+
+Enter: dplyr
+============
+class: small-code
+incremental:true
+
+* Very powerful package. [Check it out!](https://dplyr.tidyverse.org)
+
+
+```r
+library(dplyr)
+mpg %>%    # %>% is the "pipe" operator
+  filter(hwy > 35) %>%  # takes output and puts into next function
+  select(manufacturer, model, year)
+```
+
+```
+# A tibble: 6 x 3
+  manufacturer model       year
+  <chr>        <chr>      <int>
+1 honda        civic       2008
+2 honda        civic       2008
+3 toyota       corolla     2008
+4 volkswagen   jetta       1999
+5 volkswagen   new beetle  1999
+6 volkswagen   new beetle  1999
+```
+
+
+```r
+# as such, equivalent to
+select(filter(mpg, hwy > 35), manufacturer, model, year)
+```
 
 

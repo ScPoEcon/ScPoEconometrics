@@ -1,4 +1,4 @@
-ScPoEconometrics: Chapter 2
+ScPoEconometrics 2
 ========================================================
 author: Florian Oswald
 date: `r Sys.Date()`
@@ -112,7 +112,7 @@ Crosstables
 incremental:true
 class: small-code
 
-* Given two vectors, table produces a contingency table:
+* Given two vectors, `table` produces a contingency table:
 ```{r}
 table(mpg$trans,mpg$drv)
 ```
@@ -128,6 +128,11 @@ Plotting
 * `R` base plotting is fairly good.
 * There is an extremely powerful alternative in package `ggplot2`. We'll see both.
 * A `hist`ogram counts how many obserations fall within a certain bin.
+
+Histogram
+===============
+class: small-code
+
 ```{r,fig.align='center'}
 hist(mpg$cty)
 ```
@@ -141,7 +146,7 @@ hist(mpg$cty, xlab   = "Miles Per Gallon (City)", main   = "Histogram of MPG (Ci
 ```
 
 
-Looking for Outliers
+Looking for Outliers: Boxplots
 ====================
 class: small-code
 
@@ -182,8 +187,26 @@ library(ScPoEconometrics)
 runTutorial('chapter2')
 ```
 
-Covariance and Correlation
+How are x and y related? Covariance
 ==========================
+
+
+```{r x-y-corr,echo=FALSE,message=FALSE,warning=FALSE,fig.align='center'}
+library(mvtnorm)
+set.seed(10)
+cor = 0.9
+sig = matrix(c(1,cor,cor,1),c(2,2))
+ndat = data.frame(rmvnorm(n=300,sigma = sig))
+x = ndat$X1
+y = ndat$X2
+par(pty="s")
+plot(x ~ y, xlab="x",ylab="y")
+```
+
+The [relevant section in the book](https://scpoecon.github.io/ScPoEconometrics/sum.html#summarize-two) is **mandatory** reading.
+
+Correlation App
+==============
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
@@ -191,17 +214,59 @@ runTutorial('correlation')
 ```
 
 
-Tidyverse
+The Tidyverse
 ==========
+incremental: true
+
+* [Hadley Wickham](http://hadley.nz)
+* What is *tidy* data?
+  1. Each variable is a column
+  1. Each observation is a row
+  1. Each value is a cell.
+* That's not always how we get data.
+* Some tools first.
+
 
 
 tibbles are tidy data.frames
 ==========================
+class: small-code
+incremental: true
 
-task 2.4.2.1
-=========
+```{r}
+library(tidyr)  # also loads library(tibble)
+data(mpg,package = "ggplot2")  # data from the ggplot2 package
+mpg
+```
 
-importing messy excel data
-==========================
+Subsetting tibbles
+=================
+incremental:true
+
+* Same as before.
+
+```{r}
+# mpg[row condition, col condition]
+mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
+```
+
+Enter: dplyr
+============
+class: small-code
+incremental:true
+
+* Very powerful package. [Check it out!](https://dplyr.tidyverse.org)
+
+```{r}
+library(dplyr)
+mpg %>%    # %>% is the "pipe" operator
+  filter(hwy > 35) %>%  # takes output and puts into next function
+  select(manufacturer, model, year)
+```
+
+```{r,eval=FALSE}
+# as such, equivalent to
+select(filter(mpg, hwy > 35), manufacturer, model, year)
+```
 
 
