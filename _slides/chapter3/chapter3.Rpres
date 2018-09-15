@@ -1,0 +1,232 @@
+ScPoEconometrics 3
+========================================================
+author: Florian Oswald
+date: `r Sys.Date()`
+autosize: true
+css: ../style.css
+
+Data On Cars
+============
+
+* Suppose we had data on car `speed` and stopping `dist` (ance):
+
+```{r}
+head(cars)
+```
+
+* How are `speed` and `dist` related?
+
+Scatterplot of Cars
+===================
+incremental:true
+
+```{r,echo=FALSE,fig.align='center',fig.height=5,fig.width=8}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+```
+
+* What's a reasonable **summary** of this relationship?
+
+A Line throught the Scatterplot of Cars
+===================
+incremental:true
+
+```{r,echo=FALSE,fig.align='center',fig.height=5,fig.width=8}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+abline(a = 60,b = 0,lw=3)
+```
+
+* *A line*. Great. But **which** line? This one?
+* That's a *flat* line. But `dist` is increasing. :-(
+
+
+A Line throught the Scatterplot of Cars
+===================
+incremental:true
+
+```{r,echo=FALSE,fig.align='center',fig.height=5,fig.width=8}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "red")
+abline(a = 0,b = 5,lw=3)
+```
+
+* **That** one?
+* Slightly better. Has a *slope* and an *intercept*.
+
+The Best Line
+======================
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+generate_data = function(int = 0.5,
+                         slope = 1,
+                         sigma = 10,
+                         n_obs = 9,
+                         x_min = 0,
+                         x_max = 10) {
+  x = seq(x_min, x_max, length.out = n_obs)
+  y = int + slope * x + rnorm(n_obs, 0, sigma)
+  fit = lm(y ~ x)
+  y_hat = fitted(fit)
+  y_bar = rep(mean(y), n_obs)
+  error = resid(fit)
+  meandev = y - y_bar
+  data.frame(x, y, y_hat, y_bar, error, meandev)
+}
+
+plot_total_dev = function(reg_data,title=NULL) {
+  if (is.null(title)){
+    plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 4, col = "grey")
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$meandev), ytop = reg_data$y - reg_data$meandev, density = -1,
+         col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA)
+  } else {
+    plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey",main=title,ylim=c(-2,10.5))
+     axis(side=2,at=seq(-2,10,by=2))
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$meandev), ytop = reg_data$y - reg_data$meandev, density = -1,
+         col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5), border = NA)
+  }
+  # arrows(reg_data$x, reg_data$y_bar,
+  #        reg_data$x, reg_data$y,
+  #        col = 'grey', lwd = 1, lty = 3, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  # abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_total_dev_prop = function(reg_data) {
+  plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 1, lty = 2, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_unexp_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 3,asp=1)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'red', lwd = 4, lty = 1, length = 0.1, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 4, col = "black")
+}
+
+plot_unexp_SSR = function(reg_data,asp=1,title=NULL) {
+  if (is.null(title)){
+      plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 4,
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$error), ytop = reg_data$y - reg_data$error, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5), border = NA),asp=asp)
+      abline(lm(y ~ x, data = reg_data), lwd = 4, col = "black")
+  } else {
+      plot(reg_data$x, reg_data$y,
+       xlab = "x", ylab = "y", pch = 20, cex = 2,
+  rect(xleft = reg_data$x, ybottom = reg_data$y,
+         xright = reg_data$x + abs(reg_data$error), ytop = reg_data$y - reg_data$error, density = -1,
+         col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5), border = NA),asp=asp,main=title)
+    axis(side=2,at=seq(-2,10,by=2))
+      abline(lm(y ~ x, data = reg_data), lwd = 2, col = "black")
+  }
+}
+
+plot_exp_dev = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSReg (Sum of Squares Regression)",
+  xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+  abline(h = mean(reg_data$y), col = "grey")
+}
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(21)
+plot_data = generate_data(sigma = 2)
+```
+
+```{r line-arrows, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="The best line and its errors",fig.align="center",fig.height=5,fig.width=8}
+plot_unexp_dev(plot_data)
+```
+
+* Red Arrows are *errors* or *residuals* (often $\varepsilon$ or $u$)
+
+
+Writing Down A Line
+=============
+incremental:true
+
+* We observe $(y_i,x_i)$ in the data.
+* Here is a formula that describes their relationship:
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+* How to choose $\beta_0$ and $\beta_1$ s.t. this is **best** line?
+
+App Time!
+=========
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp('reg_simple_arrows')
+```
+
+Writing Down The Best Line
+=============
+incremental:true
+
+* choose $(\beta_0,\beta_1)$ s.t. the sum $\varepsilon_1^2 + \dots + \varepsilon_N^2$ is **as small as possible**
+* $\varepsilon_1^2 + \dots + \varepsilon_N^2$ is the *sum of squared residuals*, or SSR.
+* Wait a moment... Why *squared* residuals?!
+
+Minimizing Squared Residuals
+=============
+incremental:true
+
+* In previous plot, errors of different sign ($+/-$) cancel out!
+* The line with minimal SSR need not be a *very good* summary of our data.
+* Squaring each $\varepsilon_i$ solves that issue as $\varepsilon_i \geq 0, \forall i$
+
+Best Line and Squared Errors
+=============
+incremental:true
+
+```{r line-squares, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+plot_unexp_SSR(plot_data)
+```
+
+App Time!
+=========
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp('reg_simple')
+```
+
+Formulae For OLS
+=================
+incremental:true
+

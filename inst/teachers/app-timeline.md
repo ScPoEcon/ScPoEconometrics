@@ -18,7 +18,9 @@ Nothing
 ## Chapter 3: Linear Regression
 
 This is by far the most important chapter, so we have a lot of apps. You should take as long for this chapter as you feel is necessary. It's the core of the course.
-* After you showed figure 3.1 *but before you mention the term SSR*, `launchApp('reg_simple')`. explanation for the squares comes later, at this stage this is just intuition. 
+* After you showed figure 3.1 do `launchApp('reg_simple_arrows')`
+
+* continue with `launchApp('reg_simple')`. explanation for the squares comes later, at this stage this is just intuition. 
 * continue in 3.1.2 to introduce SSR
 * after this point, they **must** have the simple formula (3.1) and what each part means in their head for the rest of their lives. make sure that is the case.
 * go back to `launchApp('reg_simple')` and explain the squares

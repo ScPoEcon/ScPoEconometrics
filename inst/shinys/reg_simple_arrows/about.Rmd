@@ -1,0 +1,21 @@
+---
+title: "reg_simple_arrows"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_simple_arrows")
+```
+In this app we study what happens if we try to minimize the sum of errors only, as opposed to the sum of *squared* errors. $a$ is the intercept, $b$ is the slope.
+
+## Observe
+
+* Try to find the true line!
+* It's at $a=-2,b=1.5$
+* Compare the sum of errors at the true line to the sum of errors when you set $a=-2.1$! Which error is smaller?
+* $a=-4$! 
