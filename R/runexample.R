@@ -69,7 +69,14 @@ launchApp <- function(appname) {
 aboutApp <- function(appname){
 
   # locate all the shiny app examples that exist
-  validExamples <- list.files(system.file("shinys", package = "ScPoEconometrics"))
+  validExamples <- character(0)
+  v <- list.files(system.file("shinys", package = "ScPoEconometrics"),full.names=TRUE)
+  for (i in v){
+    # if i has an about.Rmd
+    if (file.exists(file.path(i,"about.Rmd"))){
+      validExamples <- c(validExamples,basename(i))
+    }
+  }
 
   validExamplesMsg <-
     paste0(
@@ -81,7 +88,7 @@ aboutApp <- function(appname){
   if (missing(appname) || !nzchar(appname) ||
       !appname %in% validExamples) {
     stop(
-      'Please run `launchApp()` with a valid app as an argument.\n',
+      'Please run `aboutApp()` with a valid app as an argument.\n',
       validExamplesMsg,
       call. = FALSE)
   }
