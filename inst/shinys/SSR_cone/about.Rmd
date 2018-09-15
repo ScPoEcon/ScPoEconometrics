@@ -1,0 +1,50 @@
+---
+title: "SSR_cone"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(ScPoEconometrics)
+launchApp("SSR_cone")
+```
+
+This app provides you with the visual intuition behind the minimization problem that Ordinary Least Squares (OLS) is looking to solve.
+
+As you saw in `aboutApp("reg_simple")`, OLS tries to minimize the **total sum of squared errors** (SSR):
+
+$$SSR = \sum_{i = 1}^{N}(\text{observed value of }y_i - \text{predicted value of }y_i)^2$$
+Over two values, the intercept ($\alpha$) and the slope ($\beta$) coefficients of the regression line. In equations:
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$(\hat\alpha, \hat\beta) = \argmin_{\hat\alpha, \hat\beta} \text{SSR}(\hat\alpha, \hat\beta)$$
+or more explicitly:
+
+$$(\hat\alpha, \hat\beta) = \argmin_{\hat\alpha, \hat\beta} \sum_{i = 1}^N(y_i - \hat\alpha - \hat\beta x_i)^2$$
+
+This minimization problem can be vizualized in three-dimentions by plotting the SSR as a function of $\hat\alpha$ and $\hat\beta$. The resulting figure is called the **SSR cone** because, well, it is shaped like a cone.
+
+
+### Observe
+
++ Why do you think the SSR cone is shaped like this? (hint: this has to do with the "squares" part of ordinary least squares.)
+
++ Try and move one slider. How does your current SSR value moves along the cone?
+
++ Find the best values for $\hat\alpha$ and $\hat\beta$ (the plot should turn green) and check that you are indeed at the very bottom of the SSR cone.
+
++ Does this minimization problem only have one unique solution? In general, does this have to be the case?
+
+
+
+
+
+
+
+
+
+
+
