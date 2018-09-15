@@ -9,5 +9,6 @@ rsconnect
 /inst/shinys/**/*.html
 /inst/tutorials/**/*.html
 /inst/tutorials/**/*data
+inst/tutorials/chapter2/chapter2_files/
 _slides/chapter1/chapter1-*
 _slides/chapter2/chapter2-*

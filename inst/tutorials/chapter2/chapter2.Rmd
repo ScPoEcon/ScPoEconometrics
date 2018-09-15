@@ -127,7 +127,7 @@ quiz(
 
 A classic example of a *discrete* distribution is the [**Binomial distribution**](https://en.wikipedia.org/wiki/Bernoulli_distribution). This is like flipping a coin $n$ times and couting how many tails come up. Saying that random variable $X$ follows a binomial distribution, we can write $X \sim \operatorname{B}(n, p)$ where $n$ the number of draws and $p$ the probability of success for each draw. $X$ simply keeps track of the total number of successes after $n$ draws, and $p$ is the probability that the *coin* shows heads.
 
-The applet below allows you to explore the shape of the Binomial distribution for different values of $n$ and $p$. The red line is the (continuous) distribution that the Binomial distribution should converge to, as we repeatedly draw many $X$s and increase the number of trials $n$. As it turns out, this distribution is a *Normal distribution*.
+The applet below allows you to explore the shape of the Binomial distribution for different values of $n$ and $p$. You can see that the distribution of $X$s converges to  a *Normal distribution* as the number of trials $n$ increases.
 
 
 ```{r, echo=FALSE}
@@ -152,7 +152,7 @@ output$binomPlot <- renderPlot({
   barplot(table(b)/10000, horiz = F,
           xlab = paste0("Number of Successes (out of ", n, " draws)."), 
           ylab = "Frequency", col="red",border="dodgerblue")
-  #lines(seq(min(b), max(b), 1), dnorm(seq(min(b), max(b), 1), mean = n*p, sd = sqrt(n*p*(1-p))), col="red",lw=2)
+
 })
 ```
 
