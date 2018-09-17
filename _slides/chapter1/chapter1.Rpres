@@ -543,7 +543,7 @@ Control Flow
 
 
 ```{r, eval = FALSE}
-if (condition = TRUE) {
+if (condition == TRUE) {
   some R code
 } else {
   some other R code
