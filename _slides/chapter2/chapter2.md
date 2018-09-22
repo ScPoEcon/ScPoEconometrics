@@ -1,7 +1,7 @@
 ScPoEconometrics 2
 ========================================================
 author: Florian Oswald
-date: 2018-09-14
+date: 2018-09-21
 autosize: true
 css: ../style.css
 
@@ -429,3 +429,10 @@ select(filter(mpg, hwy > 35), manufacturer, model, year)
 ```
 
 
+Case Study: How to Read xls data
+=================================
+
+* Excel (or other spreadsheet) data is ubiquous.
+* Unfortunately it doesn't always come in a easy to use form to us.
+* We need to *clean* it.
+* Let's go through the worked example [in the book](https://scpoecon.github.io/ScPoEconometrics/sum.html#the-tidyverse)!

@@ -1,7 +1,7 @@
 ScPoEconometrics 3
 ========================================================
 author: Florian Oswald
-date: 2018-09-15
+date: 2018-09-22
 autosize: true
 css: ../style.css
 
@@ -117,7 +117,100 @@ library(ScPoEconometrics)
 launchApp('reg_simple')
 ```
 
-Formulae For OLS
+Ordinary Least Squares (OLS)
 =================
 incremental:true
+
+* OLS estimates the best line for us.
+* In our single regressor case, there is a simple formula for the slope:
+  $$
+  \hat{\beta_1} = \frac{cov(x,y)}{var(x)}
+  $$
+* and for the intercept
+  $$
+  \hat{\beta_0} = \bar{y} - \hat{\beta_1} \bar{x}
+  $$
+* The *hat* $\hat{x}$ means *estimate of* $x$.
+
+App Time!
+=========
+
+How does OLS actually work?
+
+
+```r
+library(ScPoEconometrics)
+launchApp('SSR_cone')
+aboutApp('SSR_cone')  # after
+```
+
+App Time!
+=========
+
+Let's do some more OLS!
+
+
+```r
+library(ScPoEconometrics)
+launchApp('reg_full')
+aboutApp('reg_full')  # after
+```
+
+Common Restrictions on OLS
+==========
+incremental:true
+
+* There are some common *flavors* of OLS.
+* We will go through some of them.
+* E.g. what happens without an intercept?
+* Or, what happens if we *demean* boty $y$ and $x$?
+
+App: demeaned regression
+=========
+
+
+```r
+library(ScPoEconometrics)
+launchApp('demeaned_reg')
+```
+
+App: constrained regression
+=========
+
+
+```r
+library(ScPoEconometrics)
+launchApp('reg_constrained')
+```
+
+Rescaling Regressions
+=====================
+incremental: true
+
+* Suppose outcome $y$ is *income in Euros*
+* $x$ be years of schooling
+  $$
+  y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+  $$
+* Assume that $\beta_1 = 2000$, s.t. each additional year of schooling gives 2000 Euros more income.
+* What is $\beta_1$ if we measure $y$ in *thousands of euros* instead?
+
+App: Rescaling Regressors
+=========
+
+
+```r
+library(ScPoEconometrics)
+launchApp('rescale')
+```
+
+
+Tutorial: Rescaling Regressors
+=========
+
+
+```r
+library(ScPoEconometrics)
+runTutorial('rescaling')
+```
 

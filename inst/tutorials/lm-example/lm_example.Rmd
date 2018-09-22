@@ -1,6 +1,9 @@
 ---
 title: "Linear Regression in `R` - Your Turn!"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    highlight: pygments
+    ace_theme: textmate
 runtime: shiny_prerendered
 ---
 
