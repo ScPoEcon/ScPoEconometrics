@@ -1,6 +1,9 @@
 ---
 title: "Regression with rescaled variables"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    highlight: pygments
+    ace_theme: textmate
 runtime: shiny_prerendered
 ---
   

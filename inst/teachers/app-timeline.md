@@ -13,13 +13,13 @@ Nothing
     - Continuous Data
     - Estimation based on a sample
 * Immediately after, `runTutorial('correlation')`
+* After that, introduce the `aboutApp()` function. do `aboutApp("corr_continous")` (slightly different app, but fitting explanation)
 * Finally in that chapter, I would recommend to go through the *entire* worked example in the book at 2.4.1 "Reading .csv data in the tidy way"
 
 ## Chapter 3: Linear Regression
 
 This is by far the most important chapter, so we have a lot of apps. You should take as long for this chapter as you feel is necessary. It's the core of the course.
 * After you showed figure 3.1 do `launchApp('reg_simple_arrows')`
-
 * continue with `launchApp('reg_simple')`. explanation for the squares comes later, at this stage this is just intuition. 
 * continue in 3.1.2 to introduce SSR
 * after this point, they **must** have the simple formula (3.1) and what each part means in their head for the rest of their lives. make sure that is the case.

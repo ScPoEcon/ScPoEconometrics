@@ -1,6 +1,9 @@
 ---
 title: "Standard Errors"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    highlight: pygments
+    ace_theme: textmate
 runtime: shiny_prerendered
 ---
   

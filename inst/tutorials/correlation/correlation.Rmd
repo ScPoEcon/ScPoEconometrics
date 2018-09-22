@@ -1,7 +1,10 @@
 ---
 title: "Correlation"
 runtime: shiny_prerendered
-output: html_document
+output: 
+  learnr::tutorial:
+    highlight: pygments
+    ace_theme: textmate
 ---
 
 ### Continuous Correlation - Illustration
