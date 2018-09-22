@@ -27,6 +27,6 @@ Suggests:
   shinytest,
   testthat
 Remotes:
-    rstudio/shinytest
+    rstudio/shinytest,
     rstudio/learnr
 RoxygenNote: 6.1.0
