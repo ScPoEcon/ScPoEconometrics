@@ -47,12 +47,17 @@ run_tutorial("standared-errors")   # WIP
 
 ## Standard Errors in Theory
 
-The precise formulae for the standard errors of regression coefficients depend critically on exactly which model we talk about. In other words, certain assumptions about the underlying DGP give rise to certain standard error formulas. What we continue to call the *simple linear regression model* is in fact a list of 5 assumptions. It is time to spell them out here:
+The precise formulae for the standard errors of regression coefficients depend critically on exactly which model we talk about. In other words, certain assumptions about the underlying DGP give rise to certain standard error formulas. What we continue to call the *simple linear regression model* is in fact a list of (at a minimum) three assumptions, and it is time to spell them out:
 
 1. The model is linear in parameters. I.e. it looks like \@ref(eq:abline-5) above.
-2. $(y_i,x_i)$ constitute a *random* sample from the underlying population: the sample is *representative*.
-3. The mean of $\varepsilon$ in \@ref(eq:abline-5) is zero, conditional on $x$. This means that $\varepsilon$ and $x$ should not be correlated.
-4. 
+1. The mean of $\varepsilon$ in \@ref(eq:abline-5) is zero, conditional on $x$. This means that $\varepsilon$ and $x$ should not be correlated, i.e. we require that $Cov(x_i,\varepsilon_i) = 0$.
+1. Finally, either it is known that $\varepsilon$ is normally distributed, or we have a sufficiently large sample size $n$.
 
-In our simple linear regression model the standard errors of the estimates have the following form
+Assumptions 1. and 3. are mainly of a technical nature. Assumption 2., however, is key for our understanding of the regression machinery in econometrics. Imagine model \@ref(eq:abline-5) measures the sales price of houses, and that the explanatory variable $x$ measures the number of rooms in each house sold. You find a positive impact of 
 
+Example 
+
+```{r}
+data(Housing, package="Ecdat")
+ggplot(data=subset(Housing,lotsize<13000 & bathrms<4),aes(x=lotsize,color=factor(bathrms),fill=factor(bathrms))) + geom_density(alpha=0.2)
+```
