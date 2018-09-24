@@ -74,7 +74,9 @@ mtcars %>%
 
 This visualization shows a couple of things: the data are shown with red points, the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d), and the red lines show the size of the error between estimated plane and observed data. You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
 
-We can see from this plot that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible. Hence, we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
+## All Else Equal {#ceteris}
+
+We can see from the above plot that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible. Hence, we observe a plane that is downward sloping in both the *weight* and *horse power* directions. Suppose now we wanted to know impact of `hp` on `mpg` *in isolation*, so as if we could ask 
 
 ```{block,type="tip"}
 <center>

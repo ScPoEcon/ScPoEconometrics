@@ -1,6 +1,6 @@
 # Standard Errors {#std-errors}
 
-In the previous chapter we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $\hat{\beta}_0$, $\hat{\beta}_1$ and $\hat{\beta}_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
+In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $\hat{\beta}_0$, $\hat{\beta}_1$ and $\hat{\beta}_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
 
 ```{block,type="note"}
 <center>
@@ -46,6 +46,8 @@ These assumptions are necessary to successfully (and correctly!) run an OLS regr
 3. The data are drawn from a **random sample** of size $n$: observation $(x_i,y_i)$ comes from the exact same distribution, and is independent of observation $(x_j,y_j)$, for all $i\neq j$.
 4. The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
 
+### Standard Errors in Theory
+
 Under assumptions 1. through 4. we can define the formula for the standard error of our slope coefficient in the context of our single regressor model \@ref(eq:abline-5) as follows: 
 
 $$
@@ -64,7 +66,7 @@ $$
 
 You can clearly see that, as $n$ increases, the denominator increases, and therefore the variance of the estimate will decrease.
 
-### Experiencing Standard Errors
+### Standard Errors in Practice
 
 We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps, before going into the associated tutorial:
 
@@ -77,37 +79,80 @@ launchApp("standard_errors_changeN")  # then do that
 
 ## What's in my model? (And what is not?)
 
-We need to talk a bit more about assumption 2. of the above definition in \@ref(class-reg). It said this:
+We want to revisit the underlying assumptions of the classical model outlined in \@ref(class-reg). Right now we to talk a bit more about assumption number 2 of the above definition in \@ref(class-reg). It said this:
 
 ```{block type='warning'}
-We require that $Cov(\varepsilon,x) = 0$, i.e. that the errors and our explanatory variable(s) should be *uncorrelated*. We want $x$ to be **strictly exogenous** to the model.
+The mean of the residuals conditional on $x$ should be zero, $E[\varepsilon|x] = 0$. This means that $Cov(\varepsilon,x) = 0$, i.e. that the errors and our explanatory variable(s) should be *uncorrelated*. We want $x$ to be **strictly exogenous** to the model.
 ```
 <br>
+Great. But what does this *mean*? How could $x$ be correlated with something we don't even observe?! Good questions - let's try with an example.
 
-
-Imagine this model
+Imagine that this model
 
 $$
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
 $$ 
 
-is used to measures the impact of number of bathrooms on the sales price of houses. You find a positive impact of rooms on houses:
+is used to measures the impact of number of bathrooms ($x$) on the sales price of houses ($y$). You find a positive impact of bathrooms on houses:
 
 ```{r housing,echo=FALSE}
 data(Housing, package="Ecdat")
-options(scipen=999)
 hlm = lm(price ~ bathrms, data = Housing)
 summary(hlm)
+
 ```
 
-In fact, from this you conclude that each additional bathroom increases the sales price of a house by `r round(coef(hlm)[2],1)` dollars. Let's see if our assumption $Cov(\varepsilon,x) = 0$ is satisfied:
+In fact, from this you conclude that each additional bathroom increases the sales price of a house by `r options(scipen=999);round(coef(hlm)[2],1)` dollars. Let's see if our assumption $E[\varepsilon|x] = 0$ is satisfied:
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+# add residuals to the data
+Housing$resid <- resid(hlm)
+Housing %>%
+  group_by(bathrms) %>%
+  summarise(mean_of_resid=mean(resid))
+```
+
+Oh, that doesn't look good. Even though the unconditional mean $E[\varepsilon] = 0$ is *very* close to zero (type `mean(resid(hlm))`!), this doesn't seem to hold at all by categories of $x$. This indicates that there is something in the error term $\varepsilon$ which is *correlated* with `bathrms`. Going back to our discussion about *ceteris paribus* in section \@ref(ceteris), we stated that the interpretation of our OLS slope estimate is that 
+
+```{block,type="tip"}
+Keeping everything else fixed at the current value, what is the impact of $x$ on $y$? *Everything* also includes things in $\varepsilon$!
+```
+<br>
+
+Well that's the problem then. `r options(scipen=999)`We said above that one more bathroom is worth `r round(coef(hlm)[2],1)` dollars - if **nothing else changes**! But that doesn't seem to hold, because we have seen that as we increase `bathrms` from `1` to `2`, the mean of the resulting residuals changes quite a bit. So there **is something in $\varepsilon$ which does change**, hence, our conclusion that one more bathroom is worth `r round(coef(hlm)[2],1)` dollars is in fact *invalid*!
+
+### Omitted Variable Bias
+
+What we are discussing here is called *Omitted Variable Bias*. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it's *reasonable* that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with `bathrms`? 
+
+Let's try with `lotsize`, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let's check this out:
 
 
+```{r,echo=FALSE}
+options(scipen=0)
+hlm2 = update(hlm, . ~ . + lotsize)
+summary(hlm2)
+options(scipen=999)
+```
+
+Here we see that the estimate for the effect of an additional bathroom *decreased* from `r round(coef(hlm)[2],1)` to `r round(coef(hlm2)[2],1)` by almost 5000 dollars! The way in which `bathrms` and `lotsize` are correlated is important here, so let's investigate that:
 
 
-```{r, fig.align='center', fig.cap='Distribution of `lotsize` by `bathrms`'}
-options(scipen = 0)
+```{r, fig.align='center', fig.cap='Distribution of `lotsize` by `bathrms`',echo=FALSE}
+options(scipen=0)
 h = subset(Housing,lotsize<13000 & bathrms<4)
 h$bathrms = factor(h$bathrms)
 ggplot(data=h,aes(x=lotsize,color=bathrms,fill=bathrms)) + geom_density(alpha=0.2,size=1) + theme_bw()
 ```
+
+This shows that lotsize and the number of bathrooms is indeed positively related. Larger lot of the house, more bathrooms. This leads to a general result:
+
+```{block type='note'}
+**Direction of Omitted Variable Bias**
+
+If there is an omitted variable $z$ that is *positively* correlated with our explanatory variable $x$, then our estimate of effect of $x$ on $y$ will be too large (or, *biased upwards*). The correlation between $x$ and $z$ means that we attribute part of the impact of $z$ on $y$ mistakenly to $x$! And, of course, vice versa for *negatively* correlated omitted variables.
+```
+<br>
+
+
