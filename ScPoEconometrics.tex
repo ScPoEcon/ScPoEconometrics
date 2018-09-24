@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-22}
+    \date{2018-09-24}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4591,104 +4591,7 @@ how you could use \texttt{ggplot}:
 
 The shaded area around the red line shows the width of the 95\%
 confidence interval around our estimate of the slope coefficient
-\(\beta_1\). We will learn more about it in the next chapter.
-
-\chapter{Standard Errors}\label{std-errors}
-
-In the previous chapter we have seen how the OLS method can produce
-estimates about intercept and slope coefficients from data. You have
-seen this method at work in \texttt{R} by using the \texttt{lm} function
-as well. It is now time to introduce the notion that given that
-\(\hat{\beta}_0\) and \(\hat{\beta}_1\) are \emph{estimates} of some
-unkown \emph{population parameters}, there is some degree of
-\textbf{uncertainty} about their values. An other way to say this is
-that we want some indication about the \emph{precision} of those
-estimates.
-
-\begin{note}
-How \emph{confident} should we be about the estimated values
-\(\hat{\beta}_0\) and \(\hat{\beta}_1\)?
-\end{note}
-
- Let's remind ourselves of the example at the end of the previous
-chapter, and that we introduced the term \emph{confidence interval},
-shown here as the shaded area:
-
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-122-1} \end{center}
-
-The shaded area shows us the region within which the \textbf{true} red
-line will lie with 95\% probability. The fact that there is unknown true
-line (i.e.~a \emph{true} slope coefficient \(\beta_1\)) that we wish to
-uncover from a sample of data should remind you immediately of our first
-tutorial. There we wanted to estimate the true population mean from a
-sample of data, and we saw that as the sample size \(N\) increased, our
-estimate got better and better - fundamentally this is the same idea
-here.
-
-\section{\texorpdfstring{What is
-\emph{true}?}{What is true?}}\label{what-is-true}
-
-We have a true data-generating process in mind. Let's bring back our
-simple model \eqref{eq:abline} from the previous chapter:
-
-\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
-\]
-
-First, we \emph{assume} that this is the correct represenation of the
-DGP, which looks like the above equation. With that assumption in place,
-the values \(\beta_0\) and \(\beta_1\) are the \emph{true parameter
-values} which generated the data. Notice, that both \(\beta_0\) and
-\(\beta_1\) don't have a ``hat'', which is widely used to indicate an
-estimate. Now, the fact that our data \((y_i,x_i)\) are a sample from a
-larger population means that there will be \emph{sampling variation} in
-our estimates \(\hat{\beta}_0\) and \(\hat{\beta}_1\) - exactly like in
-the case of the sample mean estimating the population average as
-mentioned above.
-
-\section{Experiencing Standard
-Errors}\label{experiencing-standard-errors}
-
-We would like to make this point in a purely experiential way, i.e.~we
-want you to experience what is going on. We invite you to spend some
-time with the following apps, before going into the associated tutorial:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }\CommentTok{# start with this}
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{)  }\CommentTok{# then do that}
-\KeywordTok{library}\NormalTok{(learnr)   }\CommentTok{# load the learner library}
-\KeywordTok{run_tutorial}\NormalTok{(}\StringTok{"standared-errors"}\NormalTok{)   }\CommentTok{# WIP}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Standard Errors in Theory}\label{standard-errors-in-theory}
-
-The precise formulae for the standard errors of regression coefficients
-depend critically on exactly which model we talk about. In other words,
-certain assumptions about the underlying DGP give rise to certain
-standard error formulas. What we continue to call the \emph{simple
-linear regression model} is in fact a list of 5 assumptions. It is time
-to spell them out here:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  The model is linear in parameters. I.e. it looks like
-  \eqref{eq:abline-5} above.
-\item
-  \((y_i,x_i)\) constitute a \emph{random} sample from the underlying
-  population: the sample is \emph{representative}.
-\item
-  The mean of \(\varepsilon\) in \eqref{eq:abline-5} is zero, conditional
-  on \(x\). This means that \(\varepsilon\) and \(x\) should not be
-  correlated.
-\item
-\end{enumerate}
-
-In our simple linear regression model the standard errors of the
-estimates have the following form
+\(\beta_1\). We will learn more about it in chapter \ref{std-errors}.
 
 \chapter{Multiple Regression}\label{multiple-reg}
 
@@ -4775,12 +4678,14 @@ between estimated plane and observed data. You should realize that this
 is exactly the same story as told in figure \ref{fig:line-arrows} - just
 in three dimensions!
 
-We can see from this plot that cars with more horse power and greater
-weight, in general travel fewer miles per gallon of combustible. Hence,
-we observe a plane that is downward sloping in both the \emph{weight}
-and \emph{horse power} directions. Suppose now we wanted to know impact
-of \texttt{hp} on \texttt{mpg} \emph{in isolation}, so as if we could
-ask
+\section{All Else Equal}\label{ceteris}
+
+We can see from the above plot that cars with more horse power and
+greater weight, in general travel fewer miles per gallon of combustible.
+Hence, we observe a plane that is downward sloping in both the
+\emph{weight} and \emph{horse power} directions. Suppose now we wanted
+to know impact of \texttt{hp} on \texttt{mpg} \emph{in isolation}, so as
+if we could ask
 
 \begin{tip}
 Keeping the value of \(wt\) fixed for a certain car, what would be the
@@ -4997,6 +4902,313 @@ strange inversion of coefficient signs?
 \caption{\label{fig:3D-Plotly-inter}Californa Test Scores vs student/teach
 ratio and avg income plus interaction term}
 \end{figure}
+
+\chapter{Standard Errors}\label{std-errors}
+
+In the previous chapters we have seen how the OLS method can produce
+estimates about intercept and slope coefficients from data. You have
+seen this method at work in \texttt{R} by using the \texttt{lm} function
+as well. It is now time to introduce the notion that given that
+\(\hat{\beta}_0\), \(\hat{\beta}_1\) and \(\hat{\beta}_2\) are
+\emph{estimates} of some unkown \emph{population parameters}, there is
+some degree of \textbf{uncertainty} about their values. An other way to
+say this is that we want some indication about the \emph{precision} of
+those estimates.
+
+\begin{note}
+How \emph{confident} should we be about the estimated values
+\(\hat{\beta}\)?
+\end{note}
+
+ Let's go back to the regression with one variable and remind ourselves
+of the example at the end of chapter \ref{lin-reg}. There we introduced
+the term \emph{confidence interval}, shown here as the shaded area:
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-126-1} \end{center}
+
+The shaded area shows us the region within which the \textbf{true} red
+line will lie with 95\% probability. The fact that there is unknown true
+line (i.e.~a \emph{true} slope coefficient \(\beta_1\)) that we wish to
+uncover from a sample of data should remind you immediately of our first
+tutorial. There, we wanted to estimate the true population mean from a
+sample of data, and we saw that as the sample size \(N\) increased, our
+estimate got better and better - fundamentally this is the same idea
+here.
+
+\section{\texorpdfstring{What is
+\emph{true}?}{What is true?}}\label{what-is-true}
+
+We have a true data-generating process in mind. Let's bring back our
+simple model \eqref{eq:abline}:
+
+\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
+\]
+
+First, we \emph{assume} that this is the correct represenation of the
+DGP, which looks like the above equation. With that assumption in place,
+the values \(\beta_0\) and \(\beta_1\) are the \emph{true parameter
+values} which generated the data. Notice, that both \(\beta_0\) and
+\(\beta_1\) do \textbf{not} have a ``hat'', which is widely used to
+indicate an estimate. Now, the fact that our data \((y_i,x_i)\) are a
+sample from a larger population means that there will be \emph{sampling
+variation} in our estimates \(\hat{\beta}_0\) and \(\hat{\beta}_1\) -
+exactly like in the case of the sample mean estimating the population
+average as mentioned above. In general, the more observations we have
+the greater the precision of our estimates.
+
+\section{The Classical Regression Model}\label{class-reg}
+
+The smallest set of assumptions used to define the \emph{classical
+regression model} are the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The data are \textbf{not linearly dependent}: Each variable provides
+  new information for the outcome, and it cannot be replicated as a
+  linear combination of other variables. For example, suppose we have
+  two variables for each individual, \(x_1,x_2\) which determine an
+  outcome \(y\). If \(x_{2} = 2x_{1}\), then \(x_2\) provides no new
+  information. It's enough to know \(x_1\), and multiply it by 2. In
+  this sense, \(x_2\) is a redundant variable and should not be included
+  in the model.
+\item
+  The mean of the residuals conditional on \(x\) should be zero,
+  \(E[\varepsilon|x] = 0\). Notice that this also means that
+  \(Cov(\varepsilon,x) = 0\), i.e.~that the errors and our explanatory
+  variable(s) should be \emph{uncorrelated}. It is said that \(x\)
+  should be \textbf{strictly exogenous} to the model.
+\end{enumerate}
+
+These assumptions are necessary to successfully (and correctly!) run an
+OLS regression. They are often supplemented with an additional set of
+assumptions, which help with certain aspects of the exposition, but are
+not strictly necessary:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The data are drawn from a \textbf{random sample} of size \(n\):
+  observation \((x_i,y_i)\) comes from the exact same distribution, and
+  is independent of observation \((x_j,y_j)\), for all \(i\neq j\).
+\item
+  The variance of the error term \(\varepsilon\) is the same for each
+  value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
+  called \textbf{homoskedasticity}.
+\end{enumerate}
+
+\subsection{Standard Errors in Theory}\label{standard-errors-in-theory}
+
+Under assumptions 1. through 4. we can define the formula for the
+standard error of our slope coefficient in the context of our single
+regressor model \eqref{eq:abline-5} as follows:
+
+\[
+Var(\beta_1|x_i) = \frac{\sigma^2}{x_1^2 + x_2^2 + \dots + x_n^2}  \label{eq:var-ols}
+\] In pratice, we don't know the theoretical variance of
+\(\varepsilon\), but we form an estimate about it from our sample of
+data. A widely used estimate uses the already encountered SSR (sum of
+squared residuals), and is denoted \(s^2\):
+
+\[
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - \hat{\beta_0} - \hat{\beta_1}x_i)^2}{n-p}
+\] where \(n-p\) are the \emph{degrees of freedom} available in this
+estimation. \(p\) is the number of parameters we wish to estimate (here:
+1). So, the variance formula would become
+
+\[
+Var(\beta_1|x_i) = \frac{SSR}{(n-p)(x_1^2 + x_2^2 + \dots + x_n^2)}  \label{eq:var-ols2}
+\]
+
+You can clearly see that, as \(n\) increases, the denominator increases,
+and therefore the variance of the estimate will decrease.
+
+\subsection{Standard Errors in
+Practice}\label{standard-errors-in-practice}
+
+We would like to further make this point in an experiential way, i.e.~we
+want you to experience what is going on. We invite you to spend some
+time with the following apps, before going into the associated tutorial:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{)  }\CommentTok{# then do that}
+\end{Highlighting}
+\end{Shaded}
+
+\section{What's in my model? (And what is
+not?)}\label{whats-in-my-model-and-what-is-not}
+
+We want to revisit the underlying assumptions of the classical model
+outlined in \ref{class-reg}. Right now we to talk a bit more about
+assumption number 2 of the above definition in \ref{class-reg}. It said
+this:
+
+\begin{warning}
+The mean of the residuals conditional on \(x\) should be zero,
+\(E[\varepsilon|x] = 0\). This means that \(Cov(\varepsilon,x) = 0\),
+i.e.~that the errors and our explanatory variable(s) should be
+\emph{uncorrelated}. We want \(x\) to be \textbf{strictly exogenous} to
+the model.
+\end{warning}
+
+ Great. But what does this \emph{mean}? How could \(x\) be correlated
+with something we don't even observe?! Good questions - let's try with
+an example.
+
+Imagine that this model
+
+\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
+\]
+
+is used to measures the impact of number of bathrooms (\(x\)) on the
+sales price of houses (\(y\)). You find a positive impact of bathrooms
+on houses:
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = price ~ bathrms, data = Housing)
+#OUT> 
+#OUT> Residuals:
+#OUT>    Min     1Q Median     3Q    Max 
+#OUT> -77225 -15271  -2510  11704 102729 
+#OUT> 
+#OUT> Coefficients:
+#OUT>             Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept)    32794       2694   12.17   <2e-16 ***
+#OUT> bathrms        27477       1952   14.08   <2e-16 ***
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 22880 on 544 degrees of freedom
+#OUT> Multiple R-squared:  0.267,   Adjusted R-squared:  0.2657 
+#OUT> F-statistic: 198.2 on 1 and 544 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+In fact, from this you conclude that each additional bathroom increases
+the sales price of a house by 27477 dollars. Let's see if our assumption
+\(E[\varepsilon|x] = 0\) is satisfied:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\CommentTok{# add residuals to the data}
+\NormalTok{Housing}\OperatorTok{$}\NormalTok{resid <-}\StringTok{ }\KeywordTok{resid}\NormalTok{(hlm)}
+\NormalTok{Housing }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(bathrms) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_of_resid=}\KeywordTok{mean}\NormalTok{(resid))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> # A tibble: 4 x 2
+#OUT>   bathrms mean_of_resid
+#OUT>     <dbl>         <dbl>
+#OUT> 1       1         -118.
+#OUT> 2       2          955.
+#OUT> 3       3       -11195.
+#OUT> 4       4        32298.
+\end{verbatim}
+
+Oh, that doesn't look good. Even though the unconditional mean
+\(E[\varepsilon] = 0\) is \emph{very} close to zero (type
+\texttt{mean(resid(hlm))}!), this doesn't seem to hold at all by
+categories of \(x\). This indicates that there is something in the error
+term \(\varepsilon\) which is \emph{correlated} with \texttt{bathrms}.
+Going back to our discussion about \emph{ceteris paribus} in section
+\ref{ceteris}, we stated that the interpretation of our OLS slope
+estimate is that
+
+\begin{tip}
+Keeping everything else fixed at the current value, what is the impact
+of \(x\) on \(y\)? \emph{Everything} also includes things in
+\(\varepsilon\)!
+\end{tip}
+
+Well that's the problem then. We said above that one more bathroom is
+worth 27477 dollars - if \textbf{nothing else changes}! But that doesn't
+seem to hold, because we have seen that as we increase \texttt{bathrms}
+from \texttt{1} to \texttt{2}, the mean of the resulting residuals
+changes quite a bit. So there \textbf{is something in \(\varepsilon\)
+which does change}, hence, our conclusion that one more bathroom is
+worth 27477 dollars is in fact \emph{invalid}!
+
+\subsection{Omitted Variable Bias}\label{omitted-variable-bias}
+
+What we are discussing here is called \emph{Omitted Variable Bias}.
+There is a variable which we omitted from our regression, i.e.~we forgot
+to include it. It is often difficult to find out what that variable
+could be, and you can go a long way by just reasoning about the
+data-generating process. In other words, do you think it's
+\emph{reasonable} that price be determined by the number of bathrooms
+only? Or could there be another variable, omitted from our model, that
+is important to explain prices, and at the same time correlated with
+\texttt{bathrms}?
+
+Let's try with \texttt{lotsize}, i.e.~the size of the area on which the
+house stands. Intuitively, larger lots should command a higher price; At
+the same time, however, larger lots imply more space, hence, you can
+also have more bathrooms! Let's check this out:
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = price ~ bathrms + lotsize, data = Housing)
+#OUT> 
+#OUT> Residuals:
+#OUT>    Min     1Q Median     3Q    Max 
+#OUT> -60752 -12532  -1674  10514  92931 
+#OUT> 
+#OUT> Coefficients:
+#OUT>              Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
+#OUT> bathrms     2.281e+04  1.703e+03  13.397  < 2e-16 ***
+#OUT> lotsize     5.575e+00  3.944e-01  14.136  < 2e-16 ***
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 19580 on 543 degrees of freedom
+#OUT> Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
+#OUT> F-statistic: 235.2 on 2 and 543 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Here we see that the estimate for the effect of an additional bathroom
+\emph{decreased} from 27477 to 22811.5 by almost 5000 dollars! The way
+in which \texttt{bathrms} and \texttt{lotsize} are correlated is
+important here, so let's investigate that:
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-132-1} 
+
+}
+
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-132}
+\end{figure}
+
+This shows that lotsize and the number of bathrooms is indeed positively
+related. Larger lot of the house, more bathrooms. This leads to a
+general result:
+
+\begin{note}
+\textbf{Direction of Omitted Variable Bias}
+
+If there is an omitted variable \(z\) that is \emph{positively}
+correlated with our explanatory variable \(x\), then our estimate of
+effect of \(x\) on \(y\) will be too large (or, \emph{biased upwards}).
+The correlation between \(x\) and \(z\) means that we attribute part of
+the impact of \(z\) on \(y\) mistakenly to \(x\)! And, of course, vice
+versa for \emph{negatively} correlated omitted variables.
+\end{note}
 
 \chapter{Categorial Variables}\label{categorical-vars}
 
