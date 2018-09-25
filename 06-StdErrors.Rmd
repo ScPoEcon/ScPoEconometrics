@@ -8,7 +8,7 @@ How *confident* should we be about the estimated values $\hat{\beta}$?
 </center>
 ```
 <br>
-Let's go back to the regression with one variable and remind ourselves of the example at the end of chapter \@ref(lin-reg). There we introduced the term *confidence interval*, shown here as the shaded area:
+Let's go back to the regression with one variable and remind ourselves of the example at the end of chapter \@ref(linreg). There we introduced the term *confidence interval*, shown here as the shaded area:
 
 ```{r,fig.align="center",message=FALSE,warning=FALSE,echo=FALSE}
 library(ggplot2)
