@@ -22,27 +22,37 @@ ui <- fluidPage(
 
 server <- function(input,output){
   output$userguess_dm <- renderText({
+    data <- read.csv(file = system.file(package = "ScPoEconometrics","datasets","corr50.csv"), header = FALSE)
+    x <- data[[1]] *.45
+    y <- data[[2]]
+
+    if (input$dm == TRUE){
+      x <- x - mean(x)
+      y <- y - mean(y)
+    }
+    # a = intercept, b = slope (user input)
+    a <- input$i_dm
+    b <- input$s_dm
+
+    # plot
+    expr <- function(x) a + b*x
+    errors <- (a + b*x) - y
 
     if (input$dm == FALSE){
       a <- input$i_dm
       b <- input$s_dm
-      paste0("Your guess:\n y = ", a, " + ", b, "x")
+      paste0("Your guess:\n y = ", a, " + ", b, "x. SSR = ",round(mean(errors^2),2))
     } else {
       a <- input$i_dm
       b <- input$s_dm
-      paste0("Your guess:\n [y - mean(y)] = ", a, " + ", b, " [x - mean(x)]")
+      paste0("Your guess:\n [y - mean(y)] = ", a, " + ", b, " [x - mean(x)]. SSR = ",round(mean(errors^2),2))
     }
 
 
   })
 
   output$regPlot_dm <- renderPlot({
-
-    set.seed(42)
-
-
     #Load Data
-
     data <- read.csv(file = system.file(package = "ScPoEconometrics","datasets","corr50.csv"), header = FALSE)
     x <- data[[1]] *.45
     y <- data[[2]]
@@ -67,7 +77,7 @@ server <- function(input,output){
          ylim = c(-5, 10),
          main = "Fit the data!", frame.plot = FALSE,
          cex = 1.2)
-    legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 2)))
+
 
     b_best <- cov(x, y)/var(x)
     a_best <- mean(y) - b_best*mean(x)
@@ -84,6 +94,10 @@ server <- function(input,output){
       rect(xleft = x, ybottom = y,
            xright = x + abs(errors), ytop = y + errors, density = -1,
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.05), border = NA)
+    }
+    if (input$dm == TRUE){
+      abline(h=0,col='blue',lty='dashed')
+      abline(v=0,col='blue',lty='dashed')
     }
 
   })

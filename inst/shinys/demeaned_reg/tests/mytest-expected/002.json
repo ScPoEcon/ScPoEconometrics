@@ -1,12 +1,12 @@
 {
   "input": {
-    "dm": false,
-    "i_dm": 0.5,
-    "s_dm": 0.1
+    "dm": true,
+    "i_dm": 0,
+    "s_dm": 1.2
   },
   "output": {
     "regPlot_dm": {
-      "src": "[image data sha1: f65e9ad196fbb82a65d5fe23ec51a9f456efea7e]",
+      "src": "[image data sha1: 1cc189c852985d243970c1fed641b72888910c35]",
       "width": 611,
       "height": 400,
       "coordmap": [
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "userguess_dm": "Your guess:\n y = 0.5 + 0.1x. SSR = 20.29"
+    "userguess_dm": "Your guess:\n [y - mean(y)] = 0 + 1.2 [x - mean(x)]. SSR = 8.28"
   },
   "export": {
 
