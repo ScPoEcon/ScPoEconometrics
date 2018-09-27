@@ -1,21 +1,21 @@
 {
   "input": {
-    "i_std": -1,
-    "s_std": 1.4,
-    "std": false
+    "i_std": 0,
+    "s_std": 0.6,
+    "std": true
   },
   "output": {
     "regPlot_std": {
-      "src": "[image data sha1: 04ae6ddbfec9f1d4767bfba977efd94e67bfaa27]",
+      "src": "[image data sha1: 4c41b159c14439f392ca99fa3e00a7b670d76292]",
       "width": 611,
       "height": 400,
       "coordmap": [
         {
           "domain": {
-            "left": -10.7966955741627,
-            "right": 20.7966955741627,
-            "bottom": -5.6,
-            "top": 10.6
+            "left": -7.89137639747014,
+            "right": 7.75892564899204,
+            "bottom": -3.96959719468073,
+            "top": 4.05533725956592
           },
           "range": {
             "left": 59.04,
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "userguess_std": "Your guess:\n y = -1 + 1.4x"
+    "userguess_std": "Your guess:\n [y / SD(y)] = 0 + 0.6[x / SD(x)]"
   },
   "export": {
 
