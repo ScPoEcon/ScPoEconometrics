@@ -1,0 +1,45 @@
+{
+  "input": {
+    "const": "2",
+    "ex2": 3,
+    "i2": -2.4,
+    "ib": -0.5,
+    "s2": -0.2,
+    "sb": 1
+  },
+  "output": {
+    "MSE2": "Total Sum of Squared Errors = 138.09.  mean(x)*mean(y) / mean(x^2) = -0.22",
+    "regPlot2": {
+      "src": "[image data sha1: c9c6b3bbb66bd07ede790be296a19e70058bf089]",
+      "width": 611,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": -21.0622607655502,
+            "right": 21.0622607655502,
+            "bottom": -10.8,
+            "top": 10.8
+          },
+          "range": {
+            "left": 59.04,
+            "right": 580.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    },
+    "userguess2": "Your guess:\n y = -0.2x"
+  },
+  "export": {
+
+  }
+}

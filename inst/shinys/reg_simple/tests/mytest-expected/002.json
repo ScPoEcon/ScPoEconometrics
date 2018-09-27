@@ -1,11 +1,12 @@
 {
   "input": {
-    "i_simple": -1.5,
-    "s_simple": -1
+    "i_simple": -2,
+    "s_simple": 1.5
   },
   "output": {
+    "MSE2": "Total Sum of Squared Errors = 34.61",
     "regPlot_simple": {
-      "src": "[image data sha1: f43aee57ebf090f03ab483f07a1dbc4fd2f73f0e]",
+      "src": "[image data sha1: 963227b5845a069d40fed57b688698af32a1d3fb]",
       "width": 611,
       "height": 400,
       "coordmap": [
@@ -32,7 +33,7 @@
         }
       ]
     },
-    "userguess_simple": "Your guess:\n y = -1.5 + -1x"
+    "userguess_simple": "Your guess:\n y = -2 + 1.5x"
   },
   "export": {
 

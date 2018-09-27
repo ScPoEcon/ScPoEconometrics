@@ -11,7 +11,7 @@ ui <- fluidPage(
                  choices = list("Intercept only" = 1,
                                 "Slope only" = 2,
                                 "Both" = 3),
-                 selected = 1),
+                 selected = 3),
 
     conditionalPanel(condition = "input.const == 1",
                      wellPanel(sliderInput("i2", "Intercept", min = -5, max = 5, step = .1, value = -2),
@@ -19,14 +19,12 @@ ui <- fluidPage(
 
     conditionalPanel(condition = "input.const == 2",
                      wellPanel(h5("Intercept = 0"),
-                               sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2)),
-                     checkboxInput(inputId = "demean", "de-Mean x and y", value = FALSE)),
+                               sliderInput("s2", "Slope", min = -5, max = 5, step = .1, value = -2))),
+
 
     conditionalPanel(condition = "input.const == 3",
                      wellPanel(sliderInput("ib", "Intercept", min = -5, max = 5, step = .5, value = -2),
                                sliderInput("sb", "Slope", min = -5, max = 5, step = .5, value = -1))),
-
-
     br(),
 
     br(),
@@ -38,7 +36,9 @@ ui <- fluidPage(
 
   mainPanel(
     plotOutput("regPlot2"),
-    textOutput("MSE2")))
+    textOutput("MSE2"))
+)
+
 
 server <- function(input,output){
   output$userguess2 <- renderText({
@@ -48,12 +48,7 @@ server <- function(input,output){
       paste0("Your guess:\n y = ", a)
     } else if (input$const == 2) {
       b <- input$s2
-      if (input$demean == TRUE){
-        paste0("Your guess:\n [y - mean(y)] = ", b, "[x - mean(x)]")
-      } else {
-        paste0("Your guess:\n y = ", b, "x")
-      }
-
+      paste0("Your guess:\n y = ", b, "x")
     } else {
       a <- input$ib
       b <- input$sb
@@ -94,8 +89,6 @@ server <- function(input,output){
       abline(h = mean(y), col = "black", lty = "dotted")
       text(x = min(x), y = mean(y), labels = "Mean of Y", pos = 3)
 
-      legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
-
       if (near(a, mean(y), tol = .05)){
         #curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
         abline(h = a, col = "black")
@@ -113,30 +106,20 @@ server <- function(input,output){
       }
     } else if (input$const == 2){
 
-      if (input$demean == TRUE){
         x <- rnorm(n = 20, mean = 2, sd = 2)
-        x <- x - mean(x)
+
         coeffslope <- c(2, 0, -1)
         coeffint <- c(-2, .5, 3)
         a_true <- coeffint[input$ex2]
         b_true <- coeffslope[input$ex2]
         y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
-        y <- y - mean(y)
-      }
+
+
 
       b <- input$s2
-
-
-
       # plot
-
-
-
       expr <- function(x) b*x
       errors <- (b*x) - y
-
-
-
 
       plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=1,
            xlim = c(-10, 10),
@@ -146,8 +129,9 @@ server <- function(input,output){
       abline(h = 0, col = 'grey')
       abline(v = 0, col = 'grey')
 
-
-      legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+      # put a line at mean x and mean y
+      # abline(v = mean(x), col = 'cyan')
+      # abline(h = mean(y), col = 'cyan')
 
       best_b = sum(x*y)/sum(x^2)
 
@@ -157,12 +141,17 @@ server <- function(input,output){
         rect(xleft = x, ybottom = y,
              xright = x + abs(errors), ytop = y + errors, density = -1,
              col = rgb(red = 0, green = 1, blue = 0, alpha = 0.1), border = NA)
+        # axis(1,at = c(-20,-10,0,round(mean(x),1),10,20))
+        # axis(2,at = c(-10,-5,0,round(mean(y),1),5,10))
+
       } else {
         curve(expr = expr , from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
         segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "red")
         rect(xleft = x, ybottom = y,
              xright = x + abs(errors), ytop = y + errors, density = -1,
              col = rgb(red = 1, green = 0, blue = 0, alpha = 0.1), border = NA)
+        # axis(1,at = c(-20,-10,0,round(mean(x),1),10,20))
+        # axis(2,at = c(-10,-5,0,round(mean(y),1),5,10))
       }
 
     } else {
@@ -182,7 +171,7 @@ server <- function(input,output){
            main = "The Linear Regression", frame.plot = FALSE,
            cex = 1.2)
 
-      legend("topleft", legend = paste0("r (correlation coefficient) = ", round(cor(x, y), 3)))
+
 
       b_best = cov(x, y)/var(x)
       a_best = mean(y) - b_best*mean(x)
@@ -221,26 +210,21 @@ server <- function(input,output){
 
       errors <- (a) - y
 
-      paste0("Total Sum of Squared Errors = ", sum(errors^2))
+      paste0("Total Sum of Squared Errors = ", round(sum(errors^2),2))
 
     } else if (input$const == 2){
 
-      if (input$demean == TRUE){
         x <- rnorm(n = 20, mean = 2, sd = 2)
-        x <- x - mean(x)
         coeffslope <- c(2, 0, -1)
         coeffint <- c(-2, .5, 3)
         a_true <- coeffint[input$ex2]
         b_true <- coeffslope[input$ex2]
         y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
-        y <- y - mean(y)
-      }
-
       b <- input$s2
 
       errors <- (b*x) - y
 
-      paste0("Total Sum of Squared Errors = ", sum(errors^2))
+      paste0("Total Sum of Squared Errors = ", round(sum(errors^2),2),".  mean(x)*mean(y) / mean(x^2) = ",round(mean(x*y) / mean(x^2),2))
 
     } else {
       b <- input$sb
@@ -248,7 +232,7 @@ server <- function(input,output){
 
       errors <- (a + (b*x)) - y
 
-      paste0("Total Sum of Squared Errors = ", sum(errors^2))
+      paste0("Total Sum of Squared Errors = ", round(sum(errors^2),2))
     }
 
   })
