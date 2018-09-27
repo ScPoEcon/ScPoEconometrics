@@ -1,5 +1,7 @@
 # Linear Regression {#linreg}
 
+In this chapter we will learn an additional way how one can represent the relationship between *outcome*, or *dependent* variable variable $y$ and an *explanatory* or *independent* variable $x$. We will refer throughout to the graphical representation of a collection of independent observations on $x$ and $y$, i.e., a *dataset*. 
+
     
 ## Data on Cars
 
@@ -69,7 +71,12 @@ plot(dist ~ speed, data = cars,
 abline(a = 0,b = 5,lw=3)
 ```
 
-That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the *intercept*; and it's too high. We just learned how to represent a *line*, i.e. with two numbers called *intercept* and *slope*. So how to choose the **best** line?
+That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the *intercept*; and it's too high. We just learned how to represent a *line*, i.e. with two numbers called *intercept* and *slope*. Let's write down a simple formula which represents a line where some outcome $z$ is related to a variable $x$:
+
+$$
+z = b_0 + b_1 x (\#eq:bline)
+$$
+Here $b_0$ represents the value of the intercept (i.e. $z$ when $x=0$), and $b_1$ is the value of the slope. The question for us is now: How to choose the number $b_0$ and $b_1$ such that the result is the **good** line?
 
 ### Choosing the Best Line
 
@@ -169,50 +176,213 @@ set.seed(21)
 plot_data = generate_data(sigma = 2)
 ```
 
-Suppose we have the following set of `r nrow(plot_data)` observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It looks like this: 
+In order to be able to reason about good or bad line, we need to denote the *output* of equation \@ref(eq:bline). We call the value $\hat{y}_i$ the *predicted value* for obseration $i$, after having chosen values $b_0$ and $b_1$:
+
+$$
+\hat{y}_i = b_0 + b_1 x_i (\#eq:abline-pred)
+$$ 
+In general it is likely that we won't be able to choose $b_0$ and $b_1$ in such as way as to provide a perfect prediction, i.e. one where $\hat{y}_i = y_i$ for all $i$. That is, we expect to make an *error* in our prediction $\hat{y}_i$, so let's denote this value $e_i$. If we acknowlegdge that we will make errors, let's at least make them as small as possible! Exactly this is going to be our task now.
+
+Suppose we have the following set of `r nrow(plot_data)` observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It would look like this: 
 
 ```{r line-arrows, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="The best line and its errors",fig.align="center"}
 plot_unexp_dev(plot_data)
 ```
 
-The red arrows indicate the **distance** of the line to each point and we call them *errors* or *residuals*, often written with the symbol $\varepsilon$. An upward pointing arrow indicates a positive value of a particular $\varepsilon_i$, and vice versa for downward pointing arrows. The name *residual* comes from the way we write an equation for this relationship between two particular values $(y_i,x_i)$ belonging to observation $i$:
-
-
+Here, the red arrows indicate the **distance** between the prediction (i.e. the black line) to each data point, in other words, each arrow is a particular $e_i$. An upward pointing arrow indicates a positive value of a particular $e_i$, and vice versa for downward pointing arrows. The erros are also called *residuals*, which comes from the way can write the equation for this relationship between two particular values $(y_i,x_i)$ belonging to observation $i$:
 
 $$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:abline)
+y_i = b_0 + b_1 x_i + e_i (\#eq:abline)
 $$ 
+You realize of course that $\hat{y}_i = y_i - e_i$, which just means that our prediction is the observed value $y_i$ minus any error $e_i$ we make. In other words, $e_i$ is what is left to be explained on top of the line $b_0 + b_1 x_i$, hence, it's a residual to explain $y_i$. Here are $y,\hat{y}$ and the resulting $e$ which are plotted in figure \@ref(fig:line-arrows):
 
-Here $\beta_0$ is the intercept, and $\beta_1$ is the slope of our line, and $\varepsilon_i$ is the value of the arrow (i.e. a positive or negative number) indicating the distance between the actual $y_i$ and what is predicted by our line. In other words, $\varepsilon_i$ is what is left to be explained on top of the line $\beta_0 + \beta_1 x_i$, hence, it's a residual to explain $y_i$. Now, back to our claim that this is the *best* line. What exactly characterizes the best line?
+```{r,echo=FALSE}
+knitr:::kable(subset(plot_data,select=c(y,y_hat,error)),align = "c",digits = 2)
+```
+
+If our line was a **perfect fit** to the data, all $e_i = 0$, and the column `error` would display `0` for each row - there would be no errors at all. (All points in figure \@ref(fig:line-arrows) would perfectly line up on a straight line). 
+
+Now, back to our claim that this particular line is the *best* line. What exactly characterizes this best line? We now come back to what we said above - *how to make the errors as small as possible*? Keeping in mind that each residual $e_i$ is $y_i - \hat{y}_i$, we have the following minization problem to solve:
+
+\begin{align}
+e_i & = y_i - \hat{y}_i = y_i - \left(b_0 + b_1 x_i\right)\\
+e_1^2 + \dots + e_N^2 &= \sum_{i=1}^N e_i^2 \equiv \text{SSR}(b_0,b_1) \\
+(b_0,b_1) &= \arg \min_{\text{int},\text{slope}} \sum_{i=1}^N \left[y_i - \left(\text{int} + \text{slope } x_i\right)\right]^2 (\#eq:ols-min)
+\end{align}
 
 ```{block,type="warning"}
-<center>
-The best line minimizes the sum of **squared residuals**, i.e. it minimizes the SSR: $$ \varepsilon_1^2 + \dots + \varepsilon_N^2 = \sum_{i=1}^N \varepsilon_i^2 \equiv \text{SSR}$$
-</center>
+The best line chooses $b_0$ and $b_1$ so as to minimize the sum of **squared residuals** (SSR). 
 ```
 
 <br>
 Wait a moment, why *squared* residuals? This is easy to understand: suppose that instead, we wanted to just make the *sum* of the arrows in figure \@ref(fig:line-arrows) as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)
-We illustrate this in figure \@ref(fig:line-squares). This is the same data as in figure \@ref(fig:line-arrows), but instead of arrows of length $\varepsilon_i$ for each observation $i$, now we draw a square with side $\varepsilon_i$, i.e. an area of $\varepsilon_i^2$. You will see in the practical sessions that choosing a different line to this one will increase the sum of squares.
 
 ```{r line-squares, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="The best line and its SQUARED errors"}
 plot_unexp_SSR(plot_data)
 ```
 
-### Ordinary Least Squares (OLS) Coefficients
+We illustrate this in figure \@ref(fig:line-squares). This is the same data as in figure \@ref(fig:line-arrows), but instead of arrows of length $e_i$ for each observation $i$, now we draw a square with side $e_i$, i.e. an area of $e_i^2$. We have two apps for you at this point, one where you have to try and find the best line by choosing $b_0$ and $b_1$, only focusing on the sum of errors (and not their square), and a second one focusing on squared errors:
 
-The method to estimate $\beta_0$ and $\beta_1$ we illustrated above is called *Ordinary Least Squares*, or OLS. There is a connection between the estimate for $\beta_1$ - denoted $\hat{\beta}_1$ - in equation \@ref(eq:abline) and the *covariance* of $y$ and $x$ - remember how we defined this in section \@ref(summarize-two). In the simple case shown in equation \@ref(eq:abline), the relationship is
+```{r app1, eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_simple_arrows")
+launchApp("reg_simple") # with squared errors
+```
+
+
+
+### Ordinary Least Squares (OLS) Estimator
+
+The method to compute (or *estimate*) $b_0$ and $b_1$ we illustrated above is called *Ordinary Least Squares*, or OLS. $b_0$ and $b_1$ are also often called the *OLS coefficients*. By solving problem \@ref(eq:ols-min) one can derive an explicit formula for them:
 
 $$
-\hat{\beta}_1 = \frac{cov(x,y)}{var(x)}.  (\#eq:beta1hat)
+b_1 = \frac{cov(x,y)}{var(x)},  (\#eq:beta1hat)
 $$
-i.e. the estimate of the slope coefficient is the covariance between $x$ and $y$ divided by the variance of $x$. Similarly, the estimate for the intercept is given by
+i.e. the estimate of the slope coefficient is the covariance between $x$ and $y$ divided by the variance of $x$, both computed from our sample of data. With $b_1$ in hand, we can get the estimate for the intercept as
 
 $$
-\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}.  (\#eq:beta0hat)
+b_0 = \bar{y} - b_1 \bar{x}.  (\#eq:beta0hat)
 $$
 
-where $\bar{z}$ denotes the sample mean of variable $z$.
+where $\bar{z}$ denotes the sample mean of variable $z$. The interpretation of the OLS slope coefficient $b_1$ is as follows. Given a line as in $y = b_0 + b_1 x$,
+
+* $b_1 = \frac{d y}{d x}$ measures the change in $y$ resulting from a one unit change in $x$
+* For example, if $y$ is wage and $x$ is years of education, $b_1$ would measure the effect of an additional year of education on wages.
+
+### Particular Cases of Linear Regression
+
+#### No Regressor
+
+There are several important special cases for the linear regression introduced above. Let's start with the most obvious one: What is the meaning of running a regression *without any regressor*, i.e. without a $x$? Our line becomes very simple. Instead of \@ref(eq:bline), we get
+
+$$
+y = b_0. (\#eq:b0line)
+$$
+This means that our minization problem in \@ref(eq:ols-min) *also* becomes very simple: We only have to choose $b_0$! We have 
+
+$$
+b_0 = \arg\min_{\text{int}} \sum_{i=1}^N \left[y_i - \text{int}\right]^2,
+$$
+which is a quadratic equation with a unique optimum such that 
+$$
+b_0 = \frac{1}{N} \sum_{i=1}^N y_i = \overline{y}.
+$$
+
+```{block type='tip'}
+Least Squares **without regressor** $x$ estimates the sample mean of the outcome variable $y$, i.e. it produces $\overline{y}$.
+```
+
+
+#### No Intercept
+
+We follow the same logic here, just that we miss another bit from our initial equation and the minimisation problem in \@ref(eq:ols-min) now becomes:
+
+\begin{align}
+b_1 &= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right]^2\\
+\mapsto b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2} = \frac{\bar{x} \bar{y}}{\overline{x^2}} (\#eq:b1line)
+\end{align}
+
+```{block type='tip'}
+Least Squares **without intercept** (i.e. with $b_0=0$) is a line that passes through the origin. 
+```
+<br>
+
+In this case we only get to choose the slope $b_1$ of this anchored line.^[ This slope is related to the angle between vectors $\mathbf{a} = (\overline{x},\overline{y})$, and $\mathbf{b} = (\overline{x},0)$. Hence, it's related to the [scalar projection](https://en.wikipedia.org/wiki/Scalar_projection) of $\mathbf{a}$ on $\mathbf{b}$.] You should now try out both of those restrictions on our linear model by spending some with 
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_constrained")
+```
+
+#### Centering A Regression
+
+By *centering* or *demeaning* a regression, we mean to substract from both $y$ and $x$ their respective averages to obtain $\tilde{y}_i = y_i - \bar{y}$ and $\tilde{x}_i = x_i - \bar{x}$. We then run a regression *without intercept* as above. That is, we use $\tilde{x}_i,\tilde{y}_i$ instead of $x_i,y_i$ in \@ref(eq:b1line) to obtain our slope estimate $b_1$:
+
+\begin{align}
+b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i^2}\\
+    &= \frac{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x})^2}  (\#eq:bline-centered)
+\end{align}
+
+From this, you can see the following: 
+
+```{block type='tip'}
+Adding a constant to a regression produces the same result as centering all variables. So, unless all variables are centered, **always** include an intercept in the regression.
+```
+<br>
+To get a better feel for what is going on here, you can try this out now by yourself by typing:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("demeaned_reg")
+```
+
+#### Standardizing A Regression
+
+*Standardizing* a variable $z$ means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for *centering*, we define transformed variables $\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}$ and $\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}$ where $\sigma_z$ is the standard deviation of variable $z$. From here on, you should by now be used to what comes next! As above, we use $\breve{x}_i,\breve{y}_i$ instead of $x_i,y_i$ in \@ref(eq:b1line) to this time obtain:
+
+\begin{align}
+b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \breve{x}_i \breve{y}_i}{\frac{1}{N}\sum_{i=1}^N \breve{x}_i^2}\\
+    &= \frac{\frac{1}{N}\sum_{i=1}^N \frac{x_i - \bar{x}}{\sigma_x} \frac{y_i - \bar{y}}{\sigma_y}}{\frac{1}{N}\sum_{i=1}^N \left(\frac{x_i - \bar{x}}{\sigma_x}\right)^2} \\
+    &= \frac{Cov(x,y)}{\sigma_x \sigma_y} \\
+    &= Corr(x,y)  (\#eq:bline-standardized)
+\end{align}
+
+```{block type='tip'}
+After we standardize both $y$ and $x$, the slope coefficient $b_1$ in the regression without intercept is equal to the **correlation coefficient**.
+```
+<br>
+And also for this case we have a practical application for you. Just type this and play around with the app for a little while!
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_standardized")
+```
+
+
+### Predictions and Residuals
+
+Now we want to ask how our residuals $e_i$ relate to the prediction $\hat{y_i}$. Let us first think about the average of all predictions $\hat{y_i}$, i.e. the number $\frac{1}{N} \sum_{i=1}^N \hat{y_i}$. Let's just take \@ref(eq:abline-pred) and plug this into this average, so that we get
+
+\begin{align}
+\frac{1}{N} \sum_{i=1}^N \hat{y_i} &= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\
+&= b_0 + b_1  \frac{1}{N} \sum_{i=1}^N x_i \\
+&= b_0 + b_1  \bar{x} \\
+\end{align}
+
+But that last line is just equal to the formula for the OLS intercept \@ref(eq:beta0hat), $b_0 = \bar{y} - b_1 \bar{x}$! That means of course that
+
+$$
+\frac{1}{N} \sum_{i=1}^N \hat{y_i}  = b_0 + b_1  \bar{x} = \bar{y}
+$$
+in other words:
+
+```{block type='tip'}
+The average of our predictions $\hat{y_i}$ is identically equal to the mean of the outcome $y$. This implies that the average of the residuals is equal to zero.
+```
+
+Related to this result, we can show that the prediction $\hat{y}$ and the residuals are *uncorrelated*, something that is often called **orthogonality** between $\hat{y}_i$ and $e_i$. We would write
+
+\begin{align}
+Cov(\hat{y},e) &=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =   \frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})e_i \\
+&=  \frac{1}{N} \sum_{i=1}^N \hat{y}_i e_i-\bar{y} \frac{1}{N} \sum_{i=1}^N e_i = 0
+\end{align}
+
+It's useful to bring back the sample data which generate figure \@ref(fig:line-arrows) at this point in order to verify these claims:
+
+```{r,echo=FALSE}
+ss = subset(plot_data,select=c(y,y_hat,error))
+round(ss,2)
+```
+
+Let's check that these things are true in this sample of data:
+
+```{r}
+all.equal(mean(ss$error), 0)
+all.equal(mean(ss$y_hat), mean(ss$y))
+all.equal(cov(ss$error,ss$y_hat), 0)
+```
+
+So indeed we can confirm this result with our test dataset. Great! 
 
 ### Correlation, Covariance and Linearity
 
@@ -256,7 +426,7 @@ Suppose our data now looks like this:
 with(mtcars,plot(hp,mpg,xlab="x",ylab="y"))
 ```
 
-Putting our previous *best line* defined in equation \@ref(eq:abline) as $y = \beta_0 + \beta_1 x + u$, we get something like this:
+Putting our previous *best line* defined in equation \@ref(eq:abline) as $y = b_0 + b_1 x + e$, we get something like this:
 
 ```{r non-line-cars-ols,echo=FALSE,fig.align='center',fig.cap='Best line with non-linear data?'}
 l1 = lm(mpg~hp,data=mtcars)
@@ -267,7 +437,7 @@ abline(reg=l1,lw=2)
 Somehow when looking at \@ref(fig:non-line-cars-ols) one is not totally convinced that the straight line is a good summary of this relationship. For values $x\in[50,120]$ the line seems to low, then again too high, and it completely misses the right boundary. It's easy to address this shortcoming by including *higher order terms* of an explanatory variable. We would modify \@ref(eq:abline) to read now
 
 $$
-y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i (\#eq:abline2)
+y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i (\#eq:abline2)
 $$ 
 
 This is a special case of *multiple regression*, which we will talk about in chapter \@ref(multiple-reg). You can see that there are *multiple* slope coefficients. For now, let's just see how this performs:
@@ -280,39 +450,28 @@ plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 lines(newdata$hp,newdata$y,lw=2)
 ```
 
-
-## DGP and Models 
-
-When we talk about a **model** in econometrics, we are making assumptions about how $y$ and $x$ are related in the data. For example, we have repeatedly seen the following equation,
-
-$$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
-$$ 
-
-which is a particular kind of model. What *generated* our data, on the other hand, is an unknown mechanism that we want to investigate: it's the **data generating process** (GDP), and our model is our assumption about how we think the GDP could look like. A natural question that comes to mind here, is *how to discriminate between models*, or in other words: which model to choose?
-
 ### Assessing the *Goodness of Fit*
 
 In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:
 
 $$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:ssr-mod) 
+y_i = b_0 + b_1 x_i + e_i (\#eq:ssr-mod) 
 $$
  
 and let us write down the benchmark model as follows:
 
 $$
-y_i = \beta_0 + \varepsilon_i (\#eq:ssr-bench)
+y_i = b_0 + e_i (\#eq:ssr-bench)
 $$
 
-As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. You will see in one of our `apps` that this delivers an estimate of the mean of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
+As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. We just saw that this delivers an estimate of the mean of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
 
 ```{block,type="tip"}
 The **coefficient of determination** (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
 In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would indicate that our model is a **very good** fit to the data, and vice versa for $R^2 = 0$. You can interpret the value of $R^2$ as the fraction of variation in outcome $y$ that is accounted for by explanatory variable $x$.
 ```
 <br>
-The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared). There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. The right panel shows the SSR of $y_i = \beta_0 + \varepsilon_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.
+The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared). There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = b_0 + b_1 x_i + e_i$. The right panel shows the SSR of $y_i = b_0 + e_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.
 
 ```{r r-squared,echo=FALSE,fig.align='center',fig.cap='Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.'}
 plot_data = generate_data(sigma = 2,n=4)
@@ -353,8 +512,8 @@ summary(Caschool[, c("testscr", "str", "avginc")])
 
 Suppose a policymaker is interested in the following linear model:
 
-$$testscr_i = \beta_0 + \beta_1 \times str_i + \epsilon_i$$
-Where $(testscr)_i$ is the *average test score* for a given school $i$ and $(str)_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. We can think of $\beta_0$  and $\beta_1$ as the intercept and the slope of the regression line.
+$$\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i$$
+Where $\text{testscr}_i$ is the *average test score* for a given school $i$ and $\text{str}_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. Again, $b_0$ and $b_1$ are the intercept and the slope of the regression line.
 
 The subscript $i$ indexes all unique elementary schools ($i \in \{1, 2, 3, \dots 420\}$) and $\epsilon_i$ is the error, or *residual*, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the *sum of squared residuals* (SSR)).
 
@@ -376,12 +535,12 @@ Can you spot a trend in the data? According to you, what would the line of best 
 
 ## The `lm()` function
 
-We will use the built-in `lm()` function to estimate the coefficients $\beta_0$ and $\beta_1$ using the data at hand. `lm` stands for *linear model*, which is what our representation in \@ref(eq:abline) amounts to. This function typically only takes 2 arguments, `formula` and `data`:
+We will use the built-in `lm()` function to estimate the coefficients $b_0$ and $b_1$ using the data at hand. `lm` stands for *linear model*, which is what our representation in \@ref(eq:abline) amounts to. This function typically only takes 2 arguments, `formula` and `data`:
 
 `lm(formula, data)`
 
 - `formula` is the description of our model which we want `R` to estimate for us. Its syntax is very simple: `Y ~ X` (more generally, `DependentVariable ~ Independent Variables`). You can think of the tilda operator `~` as the equal sign in your model equation. An intercept is included by default and so you do not have to ask for it in `formula`.
-  For example, the simple model $income = \beta_0 + \beta_1 \cdot age$ can be written as `income ~ age`. You can also ask `R` to estimate a multivariate regression such as $income = \beta_0 + \beta_1 \cdot age + \beta_2 \cdot isWoman$ by simply separating all variables on the right-hand side of the equation with the `+` operator, like this : `income ~ age + isWoman`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
+  For example, the simple model $income = b_0 + b_1 \cdot age$ can be written as `income ~ age`. You can also ask `R` to estimate a multivariate regression such as $income = b_0 + b_1 \cdot age + b_2 \cdot isWoman$ by simply separating all variables on the right-hand side of the equation with the `+` operator, like this : `income ~ age + isWoman`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
 
 - `data` is simply the `data.frame` containing the variables in the model.
 
@@ -391,7 +550,7 @@ In the context of our example, the function call is therefore:
 lm(formula = testscr ~ str, data = Caschool)
 ```
 
-As we can see, `R` returns its estimates for the Intercept and Slope coefficients, $\hat{\beta_0} =$ `r round(lm(testscr ~ str, Caschool)$coefficients[1], 2)` and $\hat{\beta_1} =$ `r round(lm(testscr ~ str, Caschool)$coefficients[2], 2)`. The estimated relationship between a school's Student/Teacher Ratio and its average test results is **negative**.
+As we can see, `R` returns its estimates for the Intercept and Slope coefficients, $b_0 =$ `r round(lm(testscr ~ str, Caschool)$coefficients[1], 2)` and $b_1 =$ `r round(lm(testscr ~ str, Caschool)$coefficients[2], 2)`. The estimated relationship between a school's Student/Teacher Ratio and its average test results is **negative**.
 
 Running a linear regression in `R` is typically a two-steps process. You first assign the output of the `lm()` call to an object and **then** call a second function (for our purpose, mainly `summary()`) on the resulting object. In practice, this looks like this :
 
