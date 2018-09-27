@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-25}
+    \date{2018-09-27}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4010,6 +4010,13 @@ population each country amounts to:
 
 \chapter{Linear Regression}\label{linreg}
 
+In this chapter we will learn an additional way how one can represent
+the relationship between \emph{outcome}, or \emph{dependent} variable
+variable \(y\) and an \emph{explanatory} or \emph{independent} variable
+\(x\). We will refer throughout to the graphical representation of a
+collection of independent observations on \(x\) and \(y\), i.e., a
+\emph{dataset}.
+
 \section{Data on Cars}\label{data-on-cars}
 
 We will look at the built-in \texttt{cars} dataset. Let's get a view of
@@ -4108,14 +4115,37 @@ have a \emph{slope}, i.e.~go upwards:
 That is slightly better. However, the line seems at too high a level -
 the point at which it crosses the y-axis is called the \emph{intercept};
 and it's too high. We just learned how to represent a \emph{line},
-i.e.~with two numbers called \emph{intercept} and \emph{slope}. So how
-to choose the \textbf{best} line?
+i.e.~with two numbers called \emph{intercept} and \emph{slope}. Let's
+write down a simple formula which represents a line where some outcome
+\(z\) is related to a variable \(x\):
+
+\[
+z = b_0 + b_1 x \label{eq:bline}
+\] Here \(b_0\) represents the value of the intercept (i.e. \(z\) when
+\(x=0\)), and \(b_1\) is the value of the slope. The question for us is
+now: How to choose the number \(b_0\) and \(b_1\) such that the result
+is the \textbf{good} line?
 
 \subsection{Choosing the Best Line}\label{choosing-the-best-line}
 
+In order to be able to reason about good or bad line, we need to denote
+the \emph{output} of equation \eqref{eq:bline}. We call the value
+\(\hat{y}_i\) the \emph{predicted value} for obseration \(i\), after
+having chosen values \(b_0\) and \(b_1\):
+
+\[
+\hat{y}_i = b_0 + b_1 x_i \label{eq:abline-pred}
+\] In general it is likely that we won't be able to choose \(b_0\) and
+\(b_1\) in such as way as to provide a perfect prediction, i.e.~one
+where \(\hat{y}_i = y_i\) for all \(i\). That is, we expect to make an
+\emph{error} in our prediction \(\hat{y}_i\), so let's denote this value
+\(e_i\). If we acknowlegdge that we will make errors, let's at least
+make them as small as possible! Exactly this is going to be our task
+now.
+
 Suppose we have the following set of 9 observations on \texttt{x} and
 \texttt{y}, and we put the \emph{best} straight line into it, that we
-can think of. It looks like this:
+can think of. It would look like this:
 
 \begin{figure}
 
@@ -4126,31 +4156,67 @@ can think of. It looks like this:
 \caption{The best line and its errors}\label{fig:line-arrows}
 \end{figure}
 
-The red arrows indicate the \textbf{distance} of the line to each point
-and we call them \emph{errors} or \emph{residuals}, often written with
-the symbol \(\varepsilon\). An upward pointing arrow indicates a
-positive value of a particular \(\varepsilon_i\), and vice versa for
-downward pointing arrows. The name \emph{residual} comes from the way we
-write an equation for this relationship between two particular values
-\((y_i,x_i)\) belonging to observation \(i\):
+Here, the red arrows indicate the \textbf{distance} between the
+prediction (i.e.~the black line) to each data point, in other words,
+each arrow is a particular \(e_i\). An upward pointing arrow indicates a
+positive value of a particular \(e_i\), and vice versa for downward
+pointing arrows. The erros are also called \emph{residuals}, which comes
+from the way can write the equation for this relationship between two
+particular values \((y_i,x_i)\) belonging to observation \(i\):
 
 \[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline}
-\]
+y_i = b_0 + b_1 x_i + e_i \label{eq:abline}
+\] You realize of course that \(\hat{y}_i = y_i - e_i\), which just
+means that our prediction is the observed value \(y_i\) minus any error
+\(e_i\) we make. In other words, \(e_i\) is what is left to be explained
+on top of the line \(b_0 + b_1 x_i\), hence, it's a residual to explain
+\(y_i\). Here are \(y,\hat{y}\) and the resulting \(e\) which are
+plotted in figure \ref{fig:line-arrows}:
 
-Here \(\beta_0\) is the intercept, and \(\beta_1\) is the slope of our
-line, and \(\varepsilon_i\) is the value of the arrow (i.e.~a positive
-or negative number) indicating the distance between the actual \(y_i\)
-and what is predicted by our line. In other words, \(\varepsilon_i\) is
-what is left to be explained on top of the line
-\(\beta_0 + \beta_1 x_i\), hence, it's a residual to explain \(y_i\).
-Now, back to our claim that this is the \emph{best} line. What exactly
-characterizes the best line?
+\begin{tabular}{c|c|c}
+\hline
+y & y\_hat & error\\
+\hline
+2.09 & 2.57 & -0.48\\
+\hline
+2.79 & 3.41 & -0.62\\
+\hline
+6.49 & 4.25 & 2.24\\
+\hline
+1.71 & 5.10 & -3.39\\
+\hline
+9.89 & 5.94 & 3.95\\
+\hline
+7.62 & 6.78 & 0.83\\
+\hline
+4.86 & 7.63 & -2.77\\
+\hline
+7.38 & 8.47 & -1.09\\
+\hline
+10.63 & 9.31 & 1.32\\
+\hline
+\end{tabular}
+
+If our line was a \textbf{perfect fit} to the data, all \(e_i = 0\), and
+the column \texttt{error} would display \texttt{0} for each row - there
+would be no errors at all. (All points in figure \ref{fig:line-arrows}
+would perfectly line up on a straight line).
+
+Now, back to our claim that this particular line is the \emph{best}
+line. What exactly characterizes this best line? We now come back to
+what we said above - \emph{how to make the errors as small as possible}?
+Keeping in mind that each residual \(e_i\) is \(y_i - \hat{y}_i\), we
+have the following minization problem to solve:
+
+\begin{align}
+e_i & = y_i - \hat{y}_i = y_i - \left(b_0 + b_1 x_i\right)\\
+e_1^2 + \dots + e_N^2 &= \sum_{i=1}^N e_i^2 \equiv \text{SSR}(b_0,b_1) \\
+(b_0,b_1) &= \arg \min_{\text{int},\text{slope}} \sum_{i=1}^N \left[y_i - \left(\text{int} + \text{slope } x_i\right)\right]^2 \label{eq:ols-min}
+\end{align}
 
 \begin{warning}
-The best line minimizes the sum of \textbf{squared residuals}, i.e.~it
-minimizes the SSR:
-\[ \varepsilon_1^2 + \dots + \varepsilon_N^2 = \sum_{i=1}^N \varepsilon_i^2 \equiv \text{SSR}\]
+The best line chooses \(b_0\) and \(b_1\) so as to minimize the sum of
+\textbf{squared residuals} (SSR).
 \end{warning}
 
  Wait a moment, why \emph{squared} residuals? This is easy to
@@ -4160,13 +4226,7 @@ is, no squares). Choosing our line to make this number small would not
 give a particularly good representation of the data -- given that errors
 of opposite sign and equal magnitude offset, we could have very long
 arrows (but of opposite signs), and a poor resulting line. Squaring each
-error avoids this (because now negative errors get positive values!) We
-illustrate this in figure \ref{fig:line-squares}. This is the same data
-as in figure \ref{fig:line-arrows}, but instead of arrows of length
-\(\varepsilon_i\) for each observation \(i\), now we draw a square with
-side \(\varepsilon_i\), i.e.~an area of \(\varepsilon_i^2\). You will
-see in the practical sessions that choosing a different line to this one
-will increase the sum of squares.
+error avoids this (because now negative errors get positive values!)
 
 \begin{figure}
 
@@ -4177,27 +4237,267 @@ will increase the sum of squares.
 \caption{The best line and its SQUARED errors}\label{fig:line-squares}
 \end{figure}
 
+We illustrate this in figure \ref{fig:line-squares}. This is the same
+data as in figure \ref{fig:line-arrows}, but instead of arrows of length
+\(e_i\) for each observation \(i\), now we draw a square with side
+\(e_i\), i.e.~an area of \(e_i^2\). We have two apps for you at this
+point, one where you have to try and find the best line by choosing
+\(b_0\) and \(b_1\), only focusing on the sum of errors (and not their
+square), and a second one focusing on squared errors:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple_arrows"}\NormalTok{)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple"}\NormalTok{) }\CommentTok{# with squared errors}
+\end{Highlighting}
+\end{Shaded}
+
 \subsection{Ordinary Least Squares (OLS)
-Coefficients}\label{ordinary-least-squares-ols-coefficients}
+Estimator}\label{ordinary-least-squares-ols-estimator}
 
-The method to estimate \(\beta_0\) and \(\beta_1\) we illustrated above
-is called \emph{Ordinary Least Squares}, or OLS. There is a connection
-between the estimate for \(\beta_1\) - denoted \(\hat{\beta}_1\) - in
-equation \eqref{eq:abline} and the \emph{covariance} of \(y\) and \(x\) -
-remember how we defined this in section \ref{summarize-two}. In the
-simple case shown in equation \eqref{eq:abline}, the relationship is
+The method to compute (or \emph{estimate}) \(b_0\) and \(b_1\) we
+illustrated above is called \emph{Ordinary Least Squares}, or OLS.
+\(b_0\) and \(b_1\) are also often called the \emph{OLS coefficients}.
+By solving problem \eqref{eq:ols-min} one can derive an explicit formula
+for them:
 
 \[
-\hat{\beta}_1 = \frac{cov(x,y)}{var(x)}.  \label{eq:beta1hat}
+b_1 = \frac{cov(x,y)}{var(x)},  \label{eq:beta1hat}
 \] i.e.~the estimate of the slope coefficient is the covariance between
-\(x\) and \(y\) divided by the variance of \(x\). Similarly, the
-estimate for the intercept is given by
+\(x\) and \(y\) divided by the variance of \(x\), both computed from our
+sample of data. With \(b_1\) in hand, we can get the estimate for the
+intercept as
 
 \[
-\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}.  \label{eq:beta0hat}
+b_0 = \bar{y} - b_1 \bar{x}.  \label{eq:beta0hat}
 \]
 
-where \(\bar{z}\) denotes the sample mean of variable \(z\).
+where \(\bar{z}\) denotes the sample mean of variable \(z\). The
+interpretation of the OLS slope coefficient \(b_1\) is as follows. Given
+a line as in \(y = b_0 + b_1 x\),
+
+\begin{itemize}
+\tightlist
+\item
+  \(b_1 = \frac{d y}{d x}\) measures the change in \(y\) resulting from
+  a one unit change in \(x\)
+\item
+  For example, if \(y\) is wage and \(x\) is years of education, \(b_1\)
+  would measure the effect of an additional year of education on wages.
+\end{itemize}
+
+\subsection{Particular Cases of Linear
+Regression}\label{particular-cases-of-linear-regression}
+
+\subsubsection{No Regressor}\label{no-regressor}
+
+There are several important special cases for the linear regression
+introduced above. Let's start with the most obvious one: What is the
+meaning of running a regression \emph{without any regressor},
+i.e.~without a \(x\)? Our line becomes very simple. Instead of
+\eqref{eq:bline}, we get
+
+\[
+y = b_0. \label{eq:b0line}
+\] This means that our minization problem in \eqref{eq:ols-min}
+\emph{also} becomes very simple: We only have to choose \(b_0\)! We have
+
+\[
+b_0 = \arg\min_{\text{int}} \sum_{i=1}^N \left[y_i - \text{int}\right]^2,
+\] which is a quadratic equation with a unique optimum such that \[
+b_0 = \frac{1}{N} \sum_{i=1}^N y_i = \overline{y}.
+\]
+
+\begin{tip}
+Least Squares \textbf{without regressor} \(x\) estimates the sample mean
+of the outcome variable \(y\), i.e.~it produces \(\overline{y}\).
+\end{tip}
+
+\subsubsection{No Intercept}\label{no-intercept}
+
+We follow the same logic here, just that we miss another bit from our
+initial equation and the minimisation problem in \eqref{eq:ols-min} now
+becomes:
+
+\begin{align}
+b_1 &= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right]^2\\
+\mapsto b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2} = \frac{\bar{x} \bar{y}}{\overline{x^2}} \label{eq:b1line}
+\end{align}
+
+\begin{tip}
+Least Squares \textbf{without intercept} (i.e.~with \(b_0=0\)) is a line
+that passes through the origin.
+\end{tip}
+
+In this case we only get to choose the slope \(b_1\) of this anchored
+line.\footnote{This slope is related to the angle between vectors
+  \(\mathbf{a} = (\overline{x},\overline{y})\), and
+  \(\mathbf{b} = (\overline{x},0)\). Hence, it's related to the
+  \href{https://en.wikipedia.org/wiki/Scalar_projection}{scalar
+  projection} of \(\mathbf{a}\) on \(\mathbf{b}\).} You should now try
+out both of those restrictions on our linear model by spending some with
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_constrained"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Centering A Regression}\label{centering-a-regression}
+
+By \emph{centering} or \emph{demeaning} a regression, we mean to
+substract from both \(y\) and \(x\) their respective averages to obtain
+\(\tilde{y}_i = y_i - \bar{y}\) and \(\tilde{x}_i = x_i - \bar{x}\). We
+then run a regression \emph{without intercept} as above. That is, we use
+\(\tilde{x}_i,\tilde{y}_i\) instead of \(x_i,y_i\) in \eqref{eq:b1line} to
+obtain our slope estimate \(b_1\):
+
+\begin{align}
+b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i^2}\\
+    &= \frac{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x})^2}  \label{eq:bline-centered}
+\end{align}
+
+From this, you can see the following:
+
+\begin{tip}
+Adding a constant to a regression produces the same result as centering
+all variables. So, unless all variables are centered, \textbf{always}
+include an intercept in the regression.
+\end{tip}
+
+ To get a better feel for what is going on here, you can try this out
+now by yourself by typing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"demeaned_reg"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Standardizing A
+Regression}\label{standardizing-a-regression}
+
+\emph{Standardizing} a variable \(z\) means to demean as above, but in
+addition to divide the demeaned value by its own standard deviation.
+Similarly to what we did above for \emph{centering}, we define
+transformed variables \(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\) and
+\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\) where \(\sigma_z\) is the
+standard deviation of variable \(z\). From here on, you should by now be
+used to what comes next! As above, we use \(\breve{x}_i,\breve{y}_i\)
+instead of \(x_i,y_i\) in \eqref{eq:b1line} to this time obtain:
+
+\begin{align}
+b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \breve{x}_i \breve{y}_i}{\frac{1}{N}\sum_{i=1}^N \breve{x}_i^2}\\
+    &= \frac{\frac{1}{N}\sum_{i=1}^N \frac{x_i - \bar{x}}{\sigma_x} \frac{y_i - \bar{y}}{\sigma_y}}{\frac{1}{N}\sum_{i=1}^N \left(\frac{x_i - \bar{x}}{\sigma_x}\right)^2} \\
+    &= \frac{Cov(x,y)}{\sigma_x \sigma_y} \\
+    &= Corr(x,y)  \label{eq:bline-standardized}
+\end{align}
+
+\begin{tip}
+After we standardize both \(y\) and \(x\), the slope coefficient \(b_1\)
+in the regression without intercept is equal to the \textbf{correlation
+coefficient}.
+\end{tip}
+
+ And also for this case we have a practical application for you. Just
+type this and play around with the app for a little while!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_standardized"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Predictions and Residuals}\label{predictions-and-residuals}
+
+Now we want to ask how our residuals \(e_i\) relate to the prediction
+\(\hat{y_i}\). Let us first think about the average of all predictions
+\(\hat{y_i}\), i.e.~the number \(\frac{1}{N} \sum_{i=1}^N \hat{y_i}\).
+Let's just take \eqref{eq:abline-pred} and plug this into this average, so
+that we get
+
+\begin{align}
+\frac{1}{N} \sum_{i=1}^N \hat{y_i} &= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\
+&= b_0 + b_1  \frac{1}{N} \sum_{i=1}^N x_i \\
+&= b_0 + b_1  \bar{x} \\
+\end{align}
+
+But that last line is just equal to the formula for the OLS intercept
+\eqref{eq:beta0hat}, \(b_0 = \bar{y} - b_1 \bar{x}\)! That means of course
+that
+
+\[
+\frac{1}{N} \sum_{i=1}^N \hat{y_i}  = b_0 + b_1  \bar{x} = \bar{y}
+\] in other words:
+
+\begin{tip}
+The average of our predictions \(\hat{y_i}\) is identically equal to the
+mean of the outcome \(y\). This implies that the average of the
+residuals is equal to zero.
+\end{tip}
+
+Related to this result, we can show that the prediction \(\hat{y}\) and
+the residuals are \emph{uncorrelated}, something that is often called
+\textbf{orthogonality} between \(\hat{y}_i\) and \(e_i\). We would write
+
+\begin{align}
+Cov(\hat{y},e) &=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =   \frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})e_i \\
+&=  \frac{1}{N} \sum_{i=1}^N \hat{y}_i e_i-\bar{y} \frac{1}{N} \sum_{i=1}^N e_i = 0
+\end{align}
+
+It's useful to bring back the sample data which generate figure
+\ref{fig:line-arrows} at this point in order to verify these claims:
+
+\begin{verbatim}
+#OUT>       y y_hat error
+#OUT> 1  2.09  2.57 -0.48
+#OUT> 2  2.79  3.41 -0.62
+#OUT> 3  6.49  4.25  2.24
+#OUT> 4  1.71  5.10 -3.39
+#OUT> 5  9.89  5.94  3.95
+#OUT> 6  7.62  6.78  0.83
+#OUT> 7  4.86  7.63 -2.77
+#OUT> 8  7.38  8.47 -1.09
+#OUT> 9 10.63  9.31  1.32
+\end{verbatim}
+
+Let's check that these things are true in this sample of data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all.equal}\NormalTok{(}\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{error), }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all.equal}\NormalTok{(}\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{y_hat), }\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all.equal}\NormalTok{(}\KeywordTok{cov}\NormalTok{(ss}\OperatorTok{$}\NormalTok{error,ss}\OperatorTok{$}\NormalTok{y_hat), }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> [1] TRUE
+\end{verbatim}
+
+So indeed we can confirm this result with our test dataset. Great!
 
 \subsection{Correlation, Covariance and
 Linearity}\label{correlation-covariance-and-linearity}
@@ -4212,7 +4512,7 @@ constructing 4 different datasets which all have identical
 line \emph{are identical}. However, the usefulness of the statistics to
 describe the relationship in the data is not clear.
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 The important lesson from this example is the following:
 
@@ -4231,8 +4531,7 @@ Suppose our data now looks like this:
 \includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-1.pdf}
 
 Putting our previous \emph{best line} defined in equation
-\eqref{eq:abline} as \(y = \beta_0 + \beta_1 x + u\), we get something
-like this:
+\eqref{eq:abline} as \(y = b_0 + b_1 x + e\), we get something like this:
 
 \begin{figure}
 
@@ -4251,7 +4550,7 @@ shortcoming by including \emph{higher order terms} of an explanatory
 variable. We would modify \eqref{eq:abline} to read now
 
 \[
-y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i \label{eq:abline2}
+y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \label{eq:abline2}
 \]
 
 This is a special case of \emph{multiple regression}, which we will talk
@@ -4268,23 +4567,6 @@ performs:
 \caption{Better line with non-linear data!}\label{fig:non-line-cars-ols2}
 \end{figure}
 
-\section{DGP and Models}\label{dgp-and-models}
-
-When we talk about a \textbf{model} in econometrics, we are making
-assumptions about how \(y\) and \(x\) are related in the data. For
-example, we have repeatedly seen the following equation,
-
-\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
-\]
-
-which is a particular kind of model. What \emph{generated} our data, on
-the other hand, is an unknown mechanism that we want to investigate:
-it's the \textbf{data generating process} (GDP), and our model is our
-assumption about how we think the GDP could look like. A natural
-question that comes to mind here, is \emph{how to discriminate between
-models}, or in other words: which model to choose?
-
 \subsection{\texorpdfstring{Assessing the \emph{Goodness of
 Fit}}{Assessing the Goodness of Fit}}\label{assessing-the-goodness-of-fit}
 
@@ -4296,22 +4578,22 @@ which to compare any given model we may have in mind. Suppose we posit
 our standard representation of the best line:
 
 \[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:ssr-mod} 
+y_i = b_0 + b_1 x_i + e_i \label{eq:ssr-mod} 
 \]
 
 and let us write down the benchmark model as follows:
 
 \[
-y_i = \beta_0 + \varepsilon_i \label{eq:ssr-bench}
+y_i = b_0 + e_i \label{eq:ssr-bench}
 \]
 
 As you can see, the benchmark model in \eqref{eq:ssr-bench} is a model
-with an intercept only. You will see in one of our \texttt{apps} that
-this delivers an estimate of the mean of \(y\). It is a benchmark
-because it does not include \emph{any} explanatory variables, so we can
-compare against this other models which do in fact contain some \(x\)'s.
-Back to our \(R^2\) statistic: there are several equivalent definitions,
-and for our present case we will use the following.
+with an intercept only. We just saw that this delivers an estimate of
+the mean of \(y\). It is a benchmark because it does not include
+\emph{any} explanatory variables, so we can compare against this other
+models which do in fact contain some \(x\)'s. Back to our \(R^2\)
+statistic: there are several equivalent definitions, and for our present
+case we will use the following.
 
 \begin{tip}
 The \textbf{coefficient of determination} (\emph{R squared}) is defined
@@ -4326,10 +4608,10 @@ for by explanatory variable \(x\).
  The workings of this statistic are illustrated in the following figure
 \ref{fig:r-squared}. There, the left panel is our well-known depiction
 of the sum of squared residuals (SSR) of our model
-\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\). The right panel shows
-the SSR of \(y_i = \beta_0 + \varepsilon_i\). Ideally, each red square
-would be small relative to its blue counterpart, indicating that our
-model has a small residual at a given observation.
+\(y_i = b_0 + b_1 x_i + e_i\). The right panel shows the SSR of
+\(y_i = b_0 + e_i\). Ideally, each red square would be small relative to
+its blue counterpart, indicating that our model has a small residual at
+a given observation.
 
 \begin{figure}
 
@@ -4395,12 +4677,12 @@ obtained by calling \texttt{summary()}
 
 Suppose a policymaker is interested in the following linear model:
 
-\[testscr_i = \beta_0 + \beta_1 \times str_i + \epsilon_i\] Where
-\((testscr)_i\) is the \emph{average test score} for a given school
-\(i\) and \((str)_i\) is the \emph{Student/Teacher Ratio} (i.e.~the
-average number of students per teacher) in the same school \(i\). We can
-think of \(\beta_0\) and \(\beta_1\) as the intercept and the slope of
-the regression line.
+\[\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i\] Where
+\(\text{testscr}_i\) is the \emph{average test score} for a given school
+\(i\) and \(\text{str}_i\) is the \emph{Student/Teacher Ratio} (i.e.~the
+average number of students per teacher) in the same school \(i\). Again,
+\(b_0\) and \(b_1\) are the intercept and the slope of the regression
+line.
 
 The subscript \(i\) indexes all unique elementary schools
 (\(i \in \{1, 2, 3, \dots 420\}\)) and \(\epsilon_i\) is the error, or
@@ -4447,10 +4729,10 @@ ask \texttt{R}!
 function}{The lm() function}}\label{the-lm-function}
 
 We will use the built-in \texttt{lm()} function to estimate the
-coefficients \(\beta_0\) and \(\beta_1\) using the data at hand.
-\texttt{lm} stands for \emph{linear model}, which is what our
-representation in \eqref{eq:abline} amounts to. This function typically
-only takes 2 arguments, \texttt{formula} and \texttt{data}:
+coefficients \(b_0\) and \(b_1\) using the data at hand. \texttt{lm}
+stands for \emph{linear model}, which is what our representation in
+\eqref{eq:abline} amounts to. This function typically only takes 2
+arguments, \texttt{formula} and \texttt{data}:
 
 \texttt{lm(formula,\ data)}
 
@@ -4463,12 +4745,12 @@ only takes 2 arguments, \texttt{formula} and \texttt{data}:
   You can think of the tilda operator \texttt{\textasciitilde{}} as the
   equal sign in your model equation. An intercept is included by default
   and so you do not have to ask for it in \texttt{formula}. For example,
-  the simple model \(income = \beta_0 + \beta_1 \cdot age\) can be
-  written as \texttt{income\ \textasciitilde{}\ age}. You can also ask
-  \texttt{R} to estimate a multivariate regression such as
-  \(income = \beta_0 + \beta_1 \cdot age + \beta_2 \cdot isWoman\) by
-  simply separating all variables on the right-hand side of the equation
-  with the \texttt{+} operator, like this :
+  the simple model \(income = b_0 + b_1 \cdot age\) can be written as
+  \texttt{income\ \textasciitilde{}\ age}. You can also ask \texttt{R}
+  to estimate a multivariate regression such as
+  \(income = b_0 + b_1 \cdot age + b_2 \cdot isWoman\) by simply
+  separating all variables on the right-hand side of the equation with
+  the \texttt{+} operator, like this :
   \texttt{income\ \textasciitilde{}\ age\ +\ isWoman}. A
   \texttt{formula} can sometimes be written between quotation marks:
   \texttt{"X\ \textasciitilde{}\ Y"}.
@@ -4496,9 +4778,9 @@ In the context of our example, the function call is therefore:
 \end{verbatim}
 
 As we can see, \texttt{R} returns its estimates for the Intercept and
-Slope coefficients, \(\hat{\beta_0} =\) 698.93 and \(\hat{\beta_1} =\)
--2.28. The estimated relationship between a school's Student/Teacher
-Ratio and its average test results is \textbf{negative}.
+Slope coefficients, \(b_0 =\) 698.93 and \(b_1 =\) -2.28. The estimated
+relationship between a school's Student/Teacher Ratio and its average
+test results is \textbf{negative}.
 
 Running a linear regression in \texttt{R} is typically a two-steps
 process. You first assign the output of the \texttt{lm()} call to an
@@ -4587,7 +4869,7 @@ how you could use \texttt{ggplot}:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-120-1} \end{center}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-131-1} \end{center}
 
 The shaded area around the red line shows the width of the 95\%
 confidence interval around our estimate of the slope coefficient
@@ -4924,7 +5206,7 @@ How \emph{confident} should we be about the estimated values
 of the example at the end of chapter \ref{linreg}. There we introduced
 the term \emph{confidence interval}, shown here as the shaded area:
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-126-1} \end{center}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-137-1} \end{center}
 
 The shaded area shows us the region within which the \textbf{true} red
 line will lie with 95\% probability. The fact that there is unknown true
@@ -5188,11 +5470,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-132-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-143-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-132}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-143}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
