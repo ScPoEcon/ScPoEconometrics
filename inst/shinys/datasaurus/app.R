@@ -14,10 +14,10 @@ server <- function(input, output){
 
     plot_dino <- function(i){
       plot(y~x, dz[dz$dataset == unique(dz$dataset)[i], ],
-           col = "royalblue", pch = 21, bg = "blue", cex = 1, asp=1,
-           ylim = c(0, 100), xlim = c(-100, 200),
+           pch = 21, bg = "blue", cex = 1,asp=1,
+           ylim = c(0, 100),
            main = paste0('DataSet ', i))
-      abline(lm(formula = y~x, data = dz[dz$dataset == "dino", ]), col = 'green')
+      abline(lm(formula = y~x, data = dz[dz$dataset == "dino", ]), col = 'red',lw=2)
       text("cor(x, y) = -0.06412835", x = 0, y = 0)
     }
 

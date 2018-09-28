@@ -18,11 +18,11 @@ When studying the association between two (or more) variables, scientists are of
 
 As you know from high-school maths, the equation of a line in 2 dimentions can be written as:
 
-$$y = \alpha + \beta x$$
+$$y = b_0 + b_1 x$$
 
-Where $\alpha$ (the intercept) and $\beta$ (the slope) are fixed coefficients.
+Where $b_0$ (the intercept) and $b_1$ (the slope) are fixed coefficients.
 
-The goal of OLS is to determine values for $\alpha$ and $\beta$ such that the resulting line is the *best possible line* to predict the dependent variable $y$ given the independent variable $x$. In that sense, it is the line that "best fits" the observed data collected in a sample.
+The goal of OLS is to determine values for $b_0$ and $b_1$ such that the resulting line is the *best possible line* to predict the dependent variable $y$ given the independent variable $x$. In that sense, it is the line that "best fits" the observed data collected in a sample.
 
 This notion of "best fit" is encapsulated by the minimizing of the total sum of squared errors (SSR) which is defined as follows:
 
@@ -33,9 +33,9 @@ We usually write our predicted value of $y$ as $\hat{y}$ ("y-hat") and thus the 
 $$SSR = \sum_{i = 1}^{N}(y_i - \hat{y_i})^2$$
 
 
-(Note that, by definition, $\hat{y_i} = \hat\alpha + \hat\beta x_i$, where $\hat\alpha$ and $\hat\beta$ are your guesses for the best intercept and slope, and so:
+(Note that, by definition, $\hat{y_i} = b_0 + b_1 x_i$, and so:
 
-$$SSR = \sum_{i = 1}^{N}(y_i - \hat\alpha - \hat\beta x_i)^2$$)
+$$SSR = \sum_{i = 1}^{N}(y_i - b_0 - b_1 x_i)^2$$
 
 
 
@@ -49,32 +49,3 @@ $$SSR = \sum_{i = 1}^{N}(y_i - \hat\alpha - \hat\beta x_i)^2$$)
 + Can you find an example of when you could observe such data in real life?
 + Bonus: if we instead plotted $x$ against $y$ (i.e. switched the axes), how would your best-fit line change?
 
-
-
-### Math Appendix (Optional)
-
-#### yet another formulation of the Ordinary Least Squares (OLS) model
-
-The OLS model assumes that the relationship between two variables $x$ and $y$ can be expressed as:
-
-$$y_i = \alpha + \beta x_i + \epsilon_i \quad \forall i \in \{1, \dots, N\}$$
-Where $\alpha$ and $\beta$ are fixed coefficients we wish to estimate, and $\epsilon_i$ is the prediction error of the regression line.
-
-The goals of OLS is to estimate $\alpha$ and $\beta$ by minimizing the sum of all squared errors, i.e.
-
-\DeclareMathOperator*{\argmin}{arg\,min}
-
-$$(\hat\alpha, \hat\beta) = \argmin_{\hat\alpha, \hat\beta} \sum_{i = 1}^N \epsilon_i$$
-
-which can be rewritten as:
-
-$$(\hat\alpha, \hat\beta) = \argmin_{\hat\alpha, \hat\beta} \sum_{i = 1}^N(y_i - \hat\alpha - \hat\beta x_i)^2$$
-
-Which, after a bit of maths, yields:
-
-$$\hat\beta = \frac{\sum_{i = 1}^N (x_i - \bar x)(y_i - \bar y)}{\sum_{i = 1}^N (x_i - \bar x)^2} = \frac{cov(x, y)}{var(x)}$$ and 
-
-$$\hat\alpha = \bar y - \hat\beta \bar x$$
-
-
----
