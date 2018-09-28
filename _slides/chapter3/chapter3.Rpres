@@ -69,7 +69,29 @@ abline(a = 0,b = 5,lw=3)
 * **That** one?
 * Slightly better. Has a *slope* and an *intercept*.
 
-The Best Line
+Writing Down A Line
+=============
+incremental:true
+
+* We observe $(y_i,x_i)$ in the data.
+* Here is a formula that describes their relationship:
+$$
+y_i = b_0 + b_1 x_i + e_i
+$$
+* How to choose $b_0$ and $b_1$ s.t. this is **best** line?
+
+Prediction and Errors
+===============
+incremental:true
+
+* We need to denote the *output* of the line.
+* We call the value $\widehat{y}_i$ the *predicted value*, after we choose values for $b_0,b_1$ and $x$.
+$$
+\widehat{y}_i = b_0 + b_1 x_i
+$$
+* In general, we **expect** to make errors!
+
+Towards The Best Line
 ======================
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
@@ -172,34 +194,24 @@ plot_data = generate_data(sigma = 2)
 plot_unexp_dev(plot_data)
 ```
 
-* Red Arrows are *errors* or *residuals* (often $\varepsilon$ or $u$)
+* Red Arrows are *errors* or *residuals* (often $u$ or $e$)
 
-
-Writing Down A Line
-=============
-incremental:true
-
-* We observe $(y_i,x_i)$ in the data.
-* Here is a formula that describes their relationship:
-$$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
-$$
-* How to choose $\beta_0$ and $\beta_1$ s.t. this is **best** line?
 
 App Time!
 =========
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoEconometrics) # load our library
 launchApp('reg_simple_arrows')
+aboutApp('reg_simple_arrows')
 ```
 
 Writing Down The Best Line
 =============
 incremental:true
 
-* choose $(\beta_0,\beta_1)$ s.t. the sum $\varepsilon_1^2 + \dots + \varepsilon_N^2$ is **as small as possible**
-* $\varepsilon_1^2 + \dots + \varepsilon_N^2$ is the *sum of squared residuals*, or SSR.
+* choose $(b_0,b_1)$ s.t. the sum $e_1^2 + \dots + e_N^2$ is **as small as possible**
+* $e_1^2 + \dots + e_N^2$ is the *sum of squared residuals*, or SSR.
 * Wait a moment... Why *squared* residuals?!
 
 Minimizing Squared Residuals
@@ -208,7 +220,7 @@ incremental:true
 
 * In previous plot, errors of different sign ($+/-$) cancel out!
 * The line with minimal SSR need not be a *very good* summary of our data.
-* Squaring each $\varepsilon_i$ solves that issue as $\varepsilon_i \geq 0, \forall i$
+* Squaring each $e_i$ solves that issue as $e_i^2 \geq 0, \forall i$
 
 Best Line and Squared Errors
 =============
@@ -222,8 +234,8 @@ App Time!
 =========
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
 launchApp('reg_simple')
+aboutApp('reg_simple')
 ```
 
 Ordinary Least Squares (OLS)
@@ -233,21 +245,19 @@ incremental:true
 * OLS estimates the best line for us.
 * In our single regressor case, there is a simple formula for the slope:
   $$
-  \hat{\beta_1} = \frac{cov(x,y)}{var(x)}
+  b_1 = \frac{cov(x,y)}{var(x)}
   $$
 * and for the intercept
   $$
-  \hat{\beta_0} = \bar{y} - \hat{\beta_1} \bar{x}
+  b_0 = \bar{y} - b_1\bar{x}
   $$
-* The *hat* $\hat{x}$ means *estimate of* $x$.
 
 App Time!
 =========
 
-How does OLS actually work?
+How does OLS actually perform the minimization problem?
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
 launchApp('SSR_cone')
 aboutApp('SSR_cone')  # after
 ```
@@ -258,7 +268,6 @@ App Time!
 Let's do some more OLS!
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
 launchApp('reg_full')
 aboutApp('reg_full')  # after
 ```
@@ -270,25 +279,229 @@ incremental:true
 * There are some common *flavors* of OLS.
 * We will go through some of them.
 * E.g. what happens without an intercept?
-* Or, what happens if we *demean* boty $y$ and $x$?
+* Or, what happens if we *demean* both $y$ and $x$?
+
+OLS without any Regressor
+===============
+incremental: true
+
+* Our line is flat at level $b_0$:
+  $$
+  y = b_0
+  $$
+* Our optimization problem is now
+  $$
+  b_0 = \arg\min_{\text{int}} \sum_{i=1}^N \left[y_i - \text{int}\right]^2,
+  $$
+* With solution
+  $$
+  b_0 = \frac{1}{N} \sum_{i=1}^N y_i = \overline{y}.
+  $$
+
+
+Regression without Intercept
+=============
+incremental: true
+
+* Now we have a line anchored at the origin.
+* The OLS slope estimate becomes
+    $$
+    \begin{align}
+    b_1 &= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right]^2\\
+    \mapsto b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2} = \frac{\bar{x}     \bar{y}}{\overline{x^2}}
+    \end{align}
+    $$
+
+App: Regressions w/o Slope or Intercept
+=========
+
+```{r,eval=FALSE}
+launchApp('reg_constrained')
+```
+
+Centering a Regression
+============
+incremental: true
+
+* *centering* or *demeaning* means to substract the mean.
+* We get $\widetilde{y}_i = y_i - \bar{y}$.
+* Let's run a regression *without* intercept as above using $\widetilde{y}_i,\widetilde{x}_i$
+* We get
+    $$
+    \begin{align}
+    b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \widetilde{x}_i \widetilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \widetilde{x}_i^2}\\
+        &= \frac{cov(x,y)}{var(x)}
+    \end{align}
+    $$
 
 App: demeaned regression
 =========
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
 launchApp('demeaned_reg')
 ```
 
-App: constrained regression
+Standardizing a Regression
+============
+incremental: true
+
+* To standardize $z$ means to do $\breve{z}=\frac{z-\bar{z}}{sd(z)}$
+* I.e. substract the variable's mean and divide by its standard deviation.
+* Proceed as above, but with $\breve{y}_i,\breve{x}_i$
+* We get
+    $$
+    \begin{align}
+    b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \breve{x}_i \breve{y}_i}{\frac{1}{N}\sum_{i=1}^N \breve{x}_i^2}\\
+        &= \frac{Cov(x,y)}{\sigma_x \sigma_y}=Corr(x,y)
+    \end{align}
+    $$
+
+App: Standardized regression
 =========
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
-launchApp('reg_constrained')
+launchApp('reg_standardized')
 ```
 
-Rescaling Regressions
+
+Predictions and Residuals
+=====================
+incremental: true
+
+1. The error is $e_i = y_i - \widehat{y}_i$
+1. The average of $\widehat{y}_i$ is equal to $\bar{y}$.
+    $$
+    \begin{align}
+    \frac{1}{N} \sum_{i=1}^N \widehat{y}_i &= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\
+    &= b_0 + b_1  \bar{x}  = \bar{y}\\
+    \end{align}
+    $$
+1. Then,
+    $$\frac{1}{N} \sum_{i=1}^N e_i = \bar{y} - \frac{1}{N} \sum_{i=1}^N \widehat{y}_i = 0$$
+    i.e. the average of errors is zero.
+
+
+
+Prediction and Errors are Orthogonal
+======================================
+class: small-code
+incremental:true
+
+* This is the data of the above plots (arrows and squares):
+```{r,echo=FALSE}
+ss = subset(plot_data,select=c(x,y,y_hat,error))
+round(ss,2)
+```
+
+1. The average of $\widehat{y}_i$ is the same as the mean of $y$.
+2. The average of the errors should be zero.
+3. Prediction and errors should be *uncorrelated* (i.e. orthogonal).
+
+Prediction and Errors are Orthogonal
+======================================
+class: small-code
+incremental:true
+
+```{r}
+# 1.
+all.equal(mean(ss$error), 0)
+# 2.
+all.equal(mean(ss$y_hat), mean(ss$y))
+# 3.
+all.equal(cov(ss$error,ss$y_hat), 0)
+```
+
+Linear Statistics
+=====================
+incremental: true
+
+* It's important to keep in mind that Var, Cov, Corr and Regression measure **linear relationships** between two variables.
+* Two datasets with *identical* correlations could look *vastly* different.
+* They would have the same regression line.
+* Same correlation coefficient.
+* Is that even possible?
+
+Linear Statistics: Anscombe
+=====================
+incremental: true
+
+* Francis Anscombe (1973) comes up with 4 datasets with identical stats. But look!
+
+    ```{r,echo=FALSE}
+    ##-- now some "magic" to do the 4 regressions in a loop:
+    ff <- y ~ x
+    mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+    for(i in 1:4) {
+      ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+      ## or   ff[[2]] <- as.name(paste0("y", i))
+      ##      ff[[3]] <- as.name(paste0("x", i))
+      mods[[i]] <- lmi <- lm(ff, data = anscombe)
+    }
+
+    op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+    for(i in 1:4) {
+      ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+      plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+           xlim = c(3, 19), ylim = c(3, 13),main=paste("dataset",i))
+      abline(mods[[i]], col = "blue")
+    }
+    par(op)
+    ```
+
+Dinosaurs in your Data?
+=====================
+incremental: true
+
+* So, be wary of only looking a linear summary stats.
+* Also look at plots.
+* Dinosaurs?
+    ```{r,eval=FALSE}
+    launchApp("datasaurus")
+    aboutApp("datasaurus")
+    ```
+
+
+Nonlinear Relationships in Data?
+=====================
+incremental: true
+
+* We can accomodate non-linear relationships in regressions.
+* We'd just add a higher order term like this:
+    $$
+    y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i
+    $$
+* This is *multiple regression* (next chapter!)
+
+Nonlinear Relationships in Data?
+=====================
+incremental:true
+
+* For example, suppose we had this data and fit the above regression:
+    ```{r non-line-cars-ols2,echo=FALSE,fig.align="center",fig.cap="Better line with non-linear data!",echo=FALSE}
+    l1 = lm(mpg~hp+I(hp^2),data=mtcars)
+    newdata=data.frame(hp=seq(from=min(mtcars$hp),to=max(mtcars$hp),length.out=100))
+    newdata$y = predict(l1,newdata=newdata)
+    plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
+    lines(newdata$hp,newdata$y,lw=2)
+    ```
+
+Assessing the Goodness of Fit
+=====================
+incremental: true
+
+* The $R^2$ measures how good the model fits the data.
+* $R^2=1$ is very good, $R^2=0$ is very poorly.
+* We compare the performance of our model vs a baseline without regressor:
+    $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
+* The SSR being a measure of *how large* our errors are, you see that smaller SSR improves our $R^2$.
+
+An Example - California Test Scores
+=====================
+incremental: true
+
+
+
+Appendix: Rescaling Regressions
 =====================
 incremental: true
 

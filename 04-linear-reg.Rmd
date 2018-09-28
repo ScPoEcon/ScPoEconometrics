@@ -2,8 +2,9 @@
 
 In this chapter we will learn an additional way how one can represent the relationship between *outcome*, or *dependent* variable variable $y$ and an *explanatory* or *independent* variable $x$. We will refer throughout to the graphical representation of a collection of independent observations on $x$ and $y$, i.e., a *dataset*. 
 
+## How are `x` and `y` related?
     
-## Data on Cars
+### Data on Cars
 
 We will look at the built-in `cars` dataset. Let's get a view of this by just typing `View(cars)` in Rstudio. You can see something like this:
 
@@ -238,7 +239,7 @@ aboutApp("reg_simple")
 aboutApp("SSR_cone") 
 ```
 
-### Ordinary Least Squares (OLS) Estimator
+## Ordinary Least Squares (OLS) Estimator{#OLS}
 
 The method to compute (or *estimate*) $b_0$ and $b_1$ we illustrated above is called *Ordinary Least Squares*, or OLS. $b_0$ and $b_1$ are therefore also often called the *OLS coefficients*. By solving problem \@ref(eq:ols-min) one can derive an explicit formula for them:
 
@@ -256,9 +257,7 @@ where $\bar{z}$ denotes the sample mean of variable $z$. The interpretation of t
 * $b_1 = \frac{d y}{d x}$ measures the change in $y$ resulting from a one unit change in $x$
 * For example, if $y$ is wage and $x$ is years of education, $b_1$ would measure the effect of an additional year of education on wages.
 
-### Particular Cases of Linear Regression
-
-#### No Regressor
+### Linear Regression without Regressor
 
 There are several important special cases for the linear regression introduced above. Let's start with the most obvious one: What is the meaning of running a regression *without any regressor*, i.e. without a $x$? Our line becomes very simple. Instead of \@ref(eq:bline), we get
 
@@ -280,7 +279,7 @@ Least Squares **without regressor** $x$ estimates the sample mean of the outcome
 ```
 
 
-#### No Intercept
+### Regression without an Intercept
 
 We follow the same logic here, just that we miss another bit from our initial equation and the minimisation problem in \@ref(eq:ols-min) now becomes:
 
@@ -300,7 +299,7 @@ In this case we only get to choose the slope $b_1$ of this anchored line.^[ This
 launchApp("reg_constrained")
 ```
 
-#### Centering A Regression
+### Centering A Regression
 
 By *centering* or *demeaning* a regression, we mean to substract from both $y$ and $x$ their respective averages to obtain $\tilde{y}_i = y_i - \bar{y}$ and $\tilde{x}_i = x_i - \bar{x}$. We then run a regression *without intercept* as above. That is, we use $\tilde{x}_i,\tilde{y}_i$ instead of $x_i,y_i$ in \@ref(eq:b1line) to obtain our slope estimate $b_1$:
 
@@ -323,7 +322,7 @@ To get a better feel for what is going on here, you can try this out now by your
 launchApp("demeaned_reg")
 ```
 
-#### Standardizing A Regression
+### Standardizing A Regression
 
 *Standardizing* a variable $z$ means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for *centering*, we define transformed variables $\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}$ and $\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}$ where $\sigma_z$ is the standard deviation of variable $z$. From here on, you should by now be used to what comes next! As above, we use $\breve{x}_i,\breve{y}_i$ instead of $x_i,y_i$ in \@ref(eq:b1line) to this time obtain:
 
@@ -345,7 +344,7 @@ launchApp("reg_standardized")
 ```
 
 
-### Predictions and Residuals
+## Predictions and Residuals
 
 Now we want to ask how our residuals $e_i$ relate to the prediction $\hat{y_i}$. Let us first think about the average of all predictions $\hat{y_i}$, i.e. the number $\frac{1}{N} \sum_{i=1}^N \hat{y_i}$. Let's just take \@ref(eq:abline-pred) and plug this into this average, so that we get
 
@@ -382,7 +381,7 @@ round(ss,2)
 
 Let's check that these claims are true in this sample of data. We want that
 
-1. The average of $\hat{y_i}$ to be the same as the mean of $y$
+1. The average of $\hat{y}_i$ to be the same as the mean of $y$
 2. The average of the errors should be zero.
 3. Prediction and errors should be uncorrelated.
 
@@ -397,7 +396,7 @@ all.equal(cov(ss$error,ss$y_hat), 0)
 
 So indeed we can confirm this result with our test dataset. Great! 
 
-### Correlation, Covariance and Linearity
+## Correlation, Covariance and Linearity
 
 It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. 
 A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line *are identical*. However, the usefulness of the statistics to describe the relationship in the data is not clear.
@@ -469,7 +468,7 @@ plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 lines(newdata$hp,newdata$y,lw=2)
 ```
 
-### Assessing the *Goodness of Fit*
+## Assessing the *Goodness of Fit*
 
 In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:
 
@@ -503,7 +502,6 @@ plot_total_dev(plot_data,title="SSR of benchmark")
 par(op)
 ```
 
- 
 
 ## An Example: California Student Test Scores {#lm-example1}
 
@@ -552,7 +550,7 @@ plot(formula = testscr ~ str,
 
 Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let's ask `R`!
 
-## The `lm()` function
+### The `lm()` function
 
 We will use the built-in `lm()` function to estimate the coefficients $b_0$ and $b_1$ using the data at hand. `lm` stands for *linear model*, which is what our representation in \@ref(eq:abline) amounts to. This function typically only takes 2 arguments, `formula` and `data`:
 
