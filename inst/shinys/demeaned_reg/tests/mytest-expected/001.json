@@ -6,7 +6,7 @@
   },
   "output": {
     "regPlot_dm": {
-      "src": "[image data sha1: 3613e706fe504a1e25a2493ba2c3006169ffe746]",
+      "src": "[image data sha1: f65e9ad196fbb82a65d5fe23ec51a9f456efea7e]",
       "width": 611,
       "height": 400,
       "coordmap": [
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "userguess_dm": "Your guess:\n y = 0.5 + 0.1x"
+    "userguess_dm": "Your guess:\n y = 0.5 + 0.1x. SSR = 20.29"
   },
   "export": {
 

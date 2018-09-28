@@ -5,16 +5,17 @@ ui <- fluidPage(
   br(),
   br(),
   sidebarPanel(sliderInput("i_simple", "Intercept", min = -4,
-                           max = 4, step = .5, value = .5),
+                           max = 4, step = .1, value = .5),
                sliderInput("s_simple", "Slope", min = -2,
-                           max = 2, step = .5, value = -1),
+                           max = 2, step = .1, value = -1),
                br(),
                br(),
 
                textOutput("userguess_simple")),
 
   mainPanel(
-    plotOutput("regPlot_simple")))
+    plotOutput("regPlot_simple")),
+    textOutput("MSE2"))
 
 
 server <- function(input,output){
@@ -68,6 +69,32 @@ server <- function(input,output){
            xright = x + abs(errors), ytop = y + errors, density = -1,
            col = rgb(red = 1, green = 0, blue = 0, alpha = 0.05), border = NA)
     }
+
+  })
+
+  output$MSE2 <- renderText({
+    set.seed(19)
+
+    # Generate Random Data
+    x <- rnorm(n = 20, mean = 2, sd = 4)
+
+    a_true <- -2
+    b_true <- 1.5
+    y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+    # True DGP: y = -2 + 1.5 * x + u
+
+
+
+    # a = intercept, b = slope (user input)
+    a <- input$i_simple
+    b <- input$s_simple
+
+
+    # plot
+    expr <- function(x) a + b*x
+    errors <- (a + b*x) - y
+
+    paste0("Total Sum of Squared Errors = ", round(sum(errors^2),2))
 
   })
 

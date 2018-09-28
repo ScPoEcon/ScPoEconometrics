@@ -1,12 +1,12 @@
 {
   "input": {
-    "i_std": -0.5,
-    "s_std": 2,
-    "std": true
+    "dm": true,
+    "i_dm": 0,
+    "s_dm": 1.2
   },
   "output": {
-    "regPlot_std": {
-      "src": "[image data sha1: e438e1c538625ebcd07f794b5ed015b2ac67d640]",
+    "regPlot_dm": {
+      "src": "[image data sha1: 1cc189c852985d243970c1fed641b72888910c35]",
       "width": 611,
       "height": 400,
       "coordmap": [
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "userguess_std": "Your guess:\n [y / SD(y)] = -0.5 + 2[x / SD(x)]"
+    "userguess_dm": "Your guess:\n [y - mean(y)] = 0 + 1.2 [x - mean(x)]. SSR = 8.28"
   },
   "export": {
 

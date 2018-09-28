@@ -18,3 +18,4 @@ In this app we study what happens if we try to minimize the sum of errors only, 
 * Try to find the true line!
 * It's at $a=1.5,b=-0.5$
 * Compare the sum of errors at the true line to the sum of errors when you set $b=-0.51$! Which error is smaller?
+* How is the same comparison for sum of the absolute values of the errors? Any Better?

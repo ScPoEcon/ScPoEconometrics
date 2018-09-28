@@ -1,20 +1,25 @@
 {
   "input": {
-    "i_simple": -1.5,
-    "s_simple": 1
+    "const": "3",
+    "ex2": 1,
+    "i2": -2,
+    "ib": -2,
+    "s2": -2,
+    "sb": -1
   },
   "output": {
-    "regPlot_simple": {
-      "src": "[image data sha1: 70b4632fa9a402746eeda187cff3f8fa45bf85be]",
+    "MSE2": "Total Sum of Squared Errors = 1564.08",
+    "regPlot2": {
+      "src": "[image data sha1: 69d834fee441bfe522b2d2e06060df09a9824dad]",
       "width": 611,
       "height": 400,
       "coordmap": [
         {
           "domain": {
-            "left": -13.6446814479163,
-            "right": 16.5576160830725,
-            "bottom": -6.28688029751249,
-            "top": 9.19981493266872
+            "left": -19.8156609475305,
+            "right": 22.30886058357,
+            "bottom": -10.8,
+            "top": 10.8
           },
           "range": {
             "left": 59.04,
@@ -32,7 +37,7 @@
         }
       ]
     },
-    "userguess_simple": "Your guess:\n y = -1.5 + 1x"
+    "userguess2": "Your guess:\n y = -2 + -1x"
   },
   "export": {
 

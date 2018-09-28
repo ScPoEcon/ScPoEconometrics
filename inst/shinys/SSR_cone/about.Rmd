@@ -16,15 +16,16 @@ This app provides you with the visual intuition behind the minimization problem 
 
 As you saw in `aboutApp("reg_simple")`, OLS tries to minimize the **total sum of squared errors** (SSR):
 
-$$SSR = \sum_{i = 1}^{N}(\text{observed value of }y_i - \text{predicted value of }y_i)^2$$
-Over two values, the intercept ($\alpha$) and the slope ($\beta$) coefficients of the regression line. In equations:
+\begin{align}
+SSR(b_0,b_1) &= \sum_{i = 1}^{N}(\text{observed value of }y_i - \text{predicted value of }y_i)^2 \\
+&=\sum_{i = 1}^{N}(y_i - (b_0 + b_1 x_i))^2
+\end{align}
 
-$$(\hat\alpha, \hat\beta) = \arg \min_{\hat{\alpha}, \hat{\beta}} \text{SSR}(\hat{\alpha}, \hat{\beta})$$
-or more explicitly:
+Given a set of data $(x,y)$, the value of SSR is a function of $b_0,b_1$. That means, for each value of $b_0,b_1$ you choose, the output of function SSR will change. We want to find the two values for which SSR is smallest:
 
-$$(\hat\alpha, \hat\beta) = \arg \min_{\hat{\alpha}, \hat{\beta}} \sum_{i = 1}^N(y_i -\hat{\alpha} - \hat{\beta} x_i)^2$$
+$$(b_0,b_1) = \arg \min_{j, s} \text{SSR}(j, s)$$
 
-This minimization problem can be vizualized in three-dimentions by plotting the SSR as a function of $\hat{\alpha}$ and $\hat{\beta}$. The resulting figure is called the **SSR cone** because, well, it is shaped like a cone.
+This minimization problem can be vizualized in three-dimentions by plotting the SSR as a function of $b_0$ and $b_1$. The resulting figure is called the **SSR cone** because, well, it is shaped like a cone that stands on its head. This also called a *convex* cone.
 
 
 ### Observe
@@ -33,7 +34,7 @@ This minimization problem can be vizualized in three-dimentions by plotting the 
 
 + Try and move one slider. How does your current SSR value moves along the cone?
 
-+ Find the best values for $\hat{\alpha}$ and $\hat{\beta}$ (the plot should turn green) and check that you are indeed at the very bottom of the SSR cone.
++ Find the best values for $b_0$ and $b_1$ (the plot should turn green) and check that you are indeed at the very bottom of the SSR cone.
 
 + Does this minimization problem only have one unique solution? In general, does this have to be the case?
 
