@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-27}
+    \date{2018-09-28}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4131,7 +4131,7 @@ is the \textbf{good} line?
 In order to be able to reason about good or bad line, we need to denote
 the \emph{output} of equation \eqref{eq:bline}. We call the value
 \(\hat{y}_i\) the \emph{predicted value} for obseration \(i\), after
-having chosen values \(b_0\) and \(b_1\):
+having chosen some particular values \(b_0\) and \(b_1\):
 
 \[
 \hat{y}_i = b_0 + b_1 x_i \label{eq:abline-pred}
@@ -4173,27 +4173,27 @@ on top of the line \(b_0 + b_1 x_i\), hence, it's a residual to explain
 \(y_i\). Here are \(y,\hat{y}\) and the resulting \(e\) which are
 plotted in figure \ref{fig:line-arrows}:
 
-\begin{tabular}{c|c|c}
+\begin{tabular}{c|c|c|c}
 \hline
-y & y\_hat & error\\
+x & y & y\_hat & error\\
 \hline
-2.09 & 2.57 & -0.48\\
+0.00 & 2.09 & 2.57 & -0.48\\
 \hline
-2.79 & 3.41 & -0.62\\
+1.25 & 2.79 & 3.41 & -0.62\\
 \hline
-6.49 & 4.25 & 2.24\\
+2.50 & 6.49 & 4.25 & 2.24\\
 \hline
-1.71 & 5.10 & -3.39\\
+3.75 & 1.71 & 5.10 & -3.39\\
 \hline
-9.89 & 5.94 & 3.95\\
+5.00 & 9.89 & 5.94 & 3.95\\
 \hline
-7.62 & 6.78 & 0.83\\
+6.25 & 7.62 & 6.78 & 0.83\\
 \hline
-4.86 & 7.63 & -2.77\\
+7.50 & 4.86 & 7.63 & -2.77\\
 \hline
-7.38 & 8.47 & -1.09\\
+8.75 & 7.38 & 8.47 & -1.09\\
 \hline
-10.63 & 9.31 & 1.32\\
+10.00 & 10.63 & 9.31 & 1.32\\
 \hline
 \end{tabular}
 
@@ -4209,7 +4209,7 @@ Keeping in mind that each residual \(e_i\) is \(y_i - \hat{y}_i\), we
 have the following minization problem to solve:
 
 \begin{align}
-e_i & = y_i - \hat{y}_i = y_i - \left(b_0 + b_1 x_i\right)\\
+e_i & = y_i - \hat{y}_i = y_i - \underbrace{\left(b_0 + b_1 x_i\right)}_\text{prediction}\\
 e_1^2 + \dots + e_N^2 &= \sum_{i=1}^N e_i^2 \equiv \text{SSR}(b_0,b_1) \\
 (b_0,b_1) &= \arg \min_{\text{int},\text{slope}} \sum_{i=1}^N \left[y_i - \left(\text{int} + \text{slope } x_i\right)\right]^2 \label{eq:ols-min}
 \end{align}
@@ -4250,6 +4250,20 @@ square), and a second one focusing on squared errors:
 \KeywordTok{library}\NormalTok{(ScPoEconometrics)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple_arrows"}\NormalTok{)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple"}\NormalTok{) }\CommentTok{# with squared errors}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"SSR_cone"}\NormalTok{) }\CommentTok{# visualize the minimzation problem from above!}
+\end{Highlighting}
+\end{Shaded}
+
+Most of our \texttt{apps} have an associated \texttt{about} document,
+which gives extra information and explanations. After you have looked at
+all three apps, we invite you thus to have a look at the associated
+explainers by typing
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aboutApp}\NormalTok{(}\StringTok{"reg_simple_arrows"}\NormalTok{)}
+\KeywordTok{aboutApp}\NormalTok{(}\StringTok{"reg_simple"}\NormalTok{) }
+\KeywordTok{aboutApp}\NormalTok{(}\StringTok{"SSR_cone"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -4258,9 +4272,9 @@ Estimator}\label{ordinary-least-squares-ols-estimator}
 
 The method to compute (or \emph{estimate}) \(b_0\) and \(b_1\) we
 illustrated above is called \emph{Ordinary Least Squares}, or OLS.
-\(b_0\) and \(b_1\) are also often called the \emph{OLS coefficients}.
-By solving problem \eqref{eq:ols-min} one can derive an explicit formula
-for them:
+\(b_0\) and \(b_1\) are therefore also often called the \emph{OLS
+coefficients}. By solving problem \eqref{eq:ols-min} one can derive an
+explicit formula for them:
 
 \[
 b_1 = \frac{cov(x,y)}{var(x)},  \label{eq:beta1hat}
@@ -4336,11 +4350,11 @@ line.\footnote{This slope is related to the angle between vectors
   \(\mathbf{b} = (\overline{x},0)\). Hence, it's related to the
   \href{https://en.wikipedia.org/wiki/Scalar_projection}{scalar
   projection} of \(\mathbf{a}\) on \(\mathbf{b}\).} You should now try
-out both of those restrictions on our linear model by spending some with
+out both of those restrictions on our linear model by spending some time
+with
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_constrained"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4356,15 +4370,19 @@ obtain our slope estimate \(b_1\):
 
 \begin{align}
 b_1 &= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i^2}\\
-    &= \frac{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x})^2}  \label{eq:bline-centered}
+    &= \frac{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x})^2} \\
+    &= \frac{cov(x,y)}{var(x)}
+    \label{eq:bline-centered}
 \end{align}
 
-From this, you can see the following:
+This last expression is \emph{identical} to the one in
+\eqref{eq:beta1hat}! It's the standard OLS estimate for the slope
+coefficient. We note the following:
 
 \begin{tip}
 Adding a constant to a regression produces the same result as centering
-all variables. So, unless all variables are centered, \textbf{always}
-include an intercept in the regression.
+all variables and estimating without intercept. So, unless all variables
+are centered, \textbf{always} include an intercept in the regression.
 \end{tip}
 
  To get a better feel for what is going on here, you can try this out
@@ -4372,7 +4390,6 @@ now by yourself by typing:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"demeaned_reg"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4407,7 +4424,6 @@ type this and play around with the app for a little while!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_standardized"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4440,9 +4456,10 @@ mean of the outcome \(y\). This implies that the average of the
 residuals is equal to zero.
 \end{tip}
 
-Related to this result, we can show that the prediction \(\hat{y}\) and
+ Related to this result, we can show that the prediction \(\hat{y}\) and
 the residuals are \emph{uncorrelated}, something that is often called
 \textbf{orthogonality} between \(\hat{y}_i\) and \(e_i\). We would write
+this as
 
 \begin{align}
 Cov(\hat{y},e) &=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =   \frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})e_i \\
@@ -4465,10 +4482,23 @@ It's useful to bring back the sample data which generate figure
 #OUT> 9 10.63  9.31  1.32
 \end{verbatim}
 
-Let's check that these things are true in this sample of data:
+Let's check that these claims are true in this sample of data. We want
+that
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The average of \(\hat{y_i}\) to be the same as the mean of \(y\)
+\item
+  The average of the errors should be zero.
+\item
+  Prediction and errors should be uncorrelated.
+\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# 1.}
 \KeywordTok{all.equal}\NormalTok{(}\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{error), }\DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4479,6 +4509,7 @@ Let's check that these things are true in this sample of data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# 2.}
 \KeywordTok{all.equal}\NormalTok{(}\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{y_hat), }\KeywordTok{mean}\NormalTok{(ss}\OperatorTok{$}\NormalTok{y))}
 \end{Highlighting}
 \end{Shaded}
@@ -4489,6 +4520,7 @@ Let's check that these things are true in this sample of data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# 3.}
 \KeywordTok{all.equal}\NormalTok{(}\KeywordTok{cov}\NormalTok{(ss}\OperatorTok{$}\NormalTok{error,ss}\OperatorTok{$}\NormalTok{y_hat), }\DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4512,7 +4544,7 @@ constructing 4 different datasets which all have identical
 line \emph{are identical}. However, the usefulness of the statistics to
 describe the relationship in the data is not clear.
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 The important lesson from this example is the following:
 
@@ -4522,6 +4554,20 @@ on summary statistics like \emph{mean, variance, correlation and
 regression line}. All of those assume a \textbf{linear} relationship
 between the variables in your data.
 \end{warning}
+
+ The mission of Anscombe has been continued recently. As a result of
+this we can have a look at the \texttt{datasauRus} package, which
+pursues Anscbombe's idea through a multitude of funny data sets, all
+with the same linear statistics. Don't just compute the covariance, or
+you might actually end up looking at a Dinosaur! What? Type this to find
+out:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"datasaurus"}\NormalTok{)}
+\KeywordTok{aboutApp}\NormalTok{(}\StringTok{"datasaurus"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \subsection{Non-Linear Relationships in
 Data}\label{non-linear-relationships-in-data}
@@ -4643,7 +4689,7 @@ We can explore which variables are included in the dataset using the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(}\StringTok{"Ecdat"}\NormalTok{) }\CommentTok{# Attach the Ecdat library}
+\KeywordTok{library}\NormalTok{(}\StringTok{"Ecdat"}\NormalTok{) }\CommentTok{# Load the Ecdat library}
 \KeywordTok{names}\NormalTok{(Caschool) }\CommentTok{# Display the variables of the Caschool dataset}
 \end{Highlighting}
 \end{Shaded}
@@ -4685,7 +4731,7 @@ average number of students per teacher) in the same school \(i\). Again,
 line.
 
 The subscript \(i\) indexes all unique elementary schools
-(\(i \in \{1, 2, 3, \dots 420\}\)) and \(\epsilon_i\) is the error, or
+(\(i \in \{1, 2, 3, \dots 420\}\)) and \(e_i\) is the error, or
 \emph{residual}, of the regression. (Remember that our procedure for
 finding the line of best fit is to minimize the \emph{sum of squared
 residuals} (SSR)).
@@ -4763,38 +4809,11 @@ In the context of our example, the function call is therefore:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str, }\DataTypeTok{data =}\NormalTok{ Caschool)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = testscr ~ str, data = Caschool)
-#OUT> 
-#OUT> Coefficients:
-#OUT> (Intercept)          str  
-#OUT>      698.93        -2.28
-\end{verbatim}
-
-As we can see, \texttt{R} returns its estimates for the Intercept and
-Slope coefficients, \(b_0 =\) 698.93 and \(b_1 =\) -2.28. The estimated
-relationship between a school's Student/Teacher Ratio and its average
-test results is \textbf{negative}.
-
-Running a linear regression in \texttt{R} is typically a two-steps
-process. You first assign the output of the \texttt{lm()} call to an
-object and \textbf{then} call a second function (for our purpose, mainly
-\texttt{summary()}) on the resulting object. In practice, this looks
-like this :
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# assign lm() output to some object `fit_california`}
-\NormalTok{fit_california <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str, }\DataTypeTok{data =}\NormalTok{ Caschool)}
+\CommentTok{# assign lm() output to some object `fit_cal`}
+\NormalTok{fit_cal <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str, }\DataTypeTok{data =}\NormalTok{ Caschool)}
 
 \CommentTok{# ask R for the regression summary}
-\KeywordTok{summary}\NormalTok{(fit_california) }
+\KeywordTok{summary}\NormalTok{(fit_cal) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -4819,12 +4838,16 @@ like this :
 #OUT> F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06
 \end{verbatim}
 
-Again, we recognize our intercept and slope estimates from before,
-alongside some other numbers and indications. This output is called a
-\emph{regression table}, and you will be able to decypher it by the end
-of this course. You should be able to find an interpret the \(R^2\)
-though: Are we explaining a lot of the variance in \texttt{testscr} with
-this simple model, or not?
+As we can see, \texttt{R} returns its estimates for the Intercept and
+Slope coefficients, \(b_0 =\) 698.93 and \(b_1 =\) -2.28. The estimated
+relationship between a school's Student/Teacher Ratio and its average
+test results is \textbf{negative}.
+
+The output of the \texttt{summary} method for an \texttt{lm} object is
+commonly called a \emph{regression table}, and you will be able to
+decypher it by the end of this course. You should be able to find an
+interpret the \(R^2\) though: Are we explaining a lot of the variance in
+\texttt{testscr} with this simple model, or are we not?
 
 \subsection{Plotting the regression
 line}\label{plotting-the-regression-line}
@@ -4838,7 +4861,7 @@ of our initial scatterplot, using the following syntax:
      \DataTypeTok{data =}\NormalTok{ Caschool,}
      \DataTypeTok{xlab =} \StringTok{"Student/Teacher Ratio"}\NormalTok{,}
      \DataTypeTok{ylab =} \StringTok{"Average Test Score"}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{21}\NormalTok{, }\DataTypeTok{col =} \StringTok{'blue'}\NormalTok{)}\CommentTok{# same plot as before}
-\KeywordTok{abline}\NormalTok{(fit_california, }\DataTypeTok{col =} \StringTok{'red'}\NormalTok{) }\CommentTok{# add regression line}
+\KeywordTok{abline}\NormalTok{(fit_cal, }\DataTypeTok{col =} \StringTok{'red'}\NormalTok{) }\CommentTok{# add regression line}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4869,7 +4892,7 @@ how you could use \texttt{ggplot}:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-131-1} \end{center}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-133-1} \end{center}
 
 The shaded area around the red line shows the width of the 95\%
 confidence interval around our estimate of the slope coefficient
@@ -5206,7 +5229,7 @@ How \emph{confident} should we be about the estimated values
 of the example at the end of chapter \ref{linreg}. There we introduced
 the term \emph{confidence interval}, shown here as the shaded area:
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-137-1} \end{center}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-139-1} \end{center}
 
 The shaded area shows us the region within which the \textbf{true} red
 line will lie with 95\% probability. The fact that there is unknown true
@@ -5470,11 +5493,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-143-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-145-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-143}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-145}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively

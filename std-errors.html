@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-09-27">
+<meta name="date" content="2018-09-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,7 +208,7 @@ How <em>confident</em> should we be about the estimated values <span class="math
 </center>
 </div>
 <p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown here as the shaded area:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-137-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-139-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
 <div id="what-is-true" class="section level2">
 <h2><span class="header-section-number">5.1</span> What is <em>true</em>?</h2>
@@ -331,8 +331,8 @@ Keeping everything else fixed at the current value, what is the impact of <span 
 #OUT&gt; Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
 #OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-143-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-145-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 5.1: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
