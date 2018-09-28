@@ -140,9 +140,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
-<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#data-on-cars"><i class="fa fa-check"></i><b>3.1</b> Data on Cars</a></li>
-<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.2</b> An Example: California Student Test Scores</a></li>
-<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#the-lm-function"><i class="fa fa-check"></i><b>3.3</b> The <code>lm()</code> function</a></li>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#predictions-and-residuals"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.5</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.6</b> An Example: California Student Test Scores</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
@@ -202,8 +205,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="linreg" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Linear Regression</h1>
 <p>In this chapter we will learn an additional way how one can represent the relationship between <em>outcome</em>, or <em>dependent</em> variable variable <span class="math inline">\(y\)</span> and an <em>explanatory</em> or <em>independent</em> variable <span class="math inline">\(x\)</span>. We will refer throughout to the graphical representation of a collection of independent observations on <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, i.e., a <em>dataset</em>.</p>
-<div id="data-on-cars" class="section level2">
-<h2><span class="header-section-number">3.1</span> Data on Cars</h2>
+<div id="how-are-x-and-y-related" class="section level2">
+<h2><span class="header-section-number">3.1</span> How are <code>x</code> and <code>y</code> related?</h2>
+<div id="data-on-cars" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Data on Cars</h3>
 <p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
 <pre><code>#OUT&gt;   speed dist
 #OUT&gt; 1     4    2
@@ -220,8 +225,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cars)</code></pre></div>
 <pre><code>#OUT&gt; [1] 50  2</code></pre>
 <p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
+</div>
 <div id="how-are-speed-and-dist-related" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> How are <code>speed</code> and <code>dist</code> related?</h3>
+<h3><span class="header-section-number">3.1.2</span> How are <code>speed</code> and <code>dist</code> related?</h3>
 <p>The simplest way to start is to plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph <code>speed</code>, and the other one <code>dist</code>, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In <code>R</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
      <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
@@ -255,7 +261,7 @@ z = b_0 + b_1 x \tag{3.1}
 \]</span> Here <span class="math inline">\(b_0\)</span> represents the value of the intercept (i.e. <span class="math inline">\(z\)</span> when <span class="math inline">\(x=0\)</span>), and <span class="math inline">\(b_1\)</span> is the value of the slope. The question for us is now: How to choose the number <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> such that the result is the <strong>good</strong> line?</p>
 </div>
 <div id="choosing-the-best-line" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Choosing the Best Line</h3>
+<h3><span class="header-section-number">3.1.3</span> Choosing the Best Line</h3>
 <p>In order to be able to reason about good or bad line, we need to denote the <em>output</em> of equation <a href="linreg.html#eq:bline">(3.1)</a>. We call the value <span class="math inline">\(\hat{y}_i\)</span> the <em>predicted value</em> for obseration <span class="math inline">\(i\)</span>, after having chosen some particular values <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>:</p>
 <p><span class="math display" id="eq:abline-pred">\[
 \hat{y}_i = b_0 + b_1 x_i \tag{3.2}
@@ -366,8 +372,9 @@ Figure 3.2: The best line and its SQUARED errors
 <span class="kw">aboutApp</span>(<span class="st">&quot;reg_simple&quot;</span>) 
 <span class="kw">aboutApp</span>(<span class="st">&quot;SSR_cone&quot;</span>) </code></pre></div>
 </div>
-<div id="ordinary-least-squares-ols-estimator" class="section level3">
-<h3><span class="header-section-number">3.1.3</span> Ordinary Least Squares (OLS) Estimator</h3>
+</div>
+<div id="OLS" class="section level2">
+<h2><span class="header-section-number">3.2</span> Ordinary Least Squares (OLS) Estimator</h2>
 <p>The method to compute (or <em>estimate</em>) <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> we illustrated above is called <em>Ordinary Least Squares</em>, or OLS. <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are therefore also often called the <em>OLS coefficients</em>. By solving problem <a href="linreg.html#eq:ols-min">(3.4)</a> one can derive an explicit formula for them:</p>
 <p><span class="math display" id="eq:beta1hat">\[
 b_1 = \frac{cov(x,y)}{var(x)},  \tag{3.5}
@@ -380,11 +387,8 @@ b_0 = \bar{y} - b_1 \bar{x}.  \tag{3.6}
 <li><span class="math inline">\(b_1 = \frac{d y}{d x}\)</span> measures the change in <span class="math inline">\(y\)</span> resulting from a one unit change in <span class="math inline">\(x\)</span></li>
 <li>For example, if <span class="math inline">\(y\)</span> is wage and <span class="math inline">\(x\)</span> is years of education, <span class="math inline">\(b_1\)</span> would measure the effect of an additional year of education on wages.</li>
 </ul>
-</div>
-<div id="particular-cases-of-linear-regression" class="section level3">
-<h3><span class="header-section-number">3.1.4</span> Particular Cases of Linear Regression</h3>
-<div id="no-regressor" class="section level4">
-<h4><span class="header-section-number">3.1.4.1</span> No Regressor</h4>
+<div id="linear-regression-without-regressor" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Linear Regression without Regressor</h3>
 <p>There are several important special cases for the linear regression introduced above. Let’s start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
 <p><span class="math display" id="eq:b0line">\[
 y = b_0. \tag{3.7}
@@ -400,8 +404,8 @@ Least Squares <strong>without regressor</strong> <span class="math inline"><span
 </p>
 </div>
 </div>
-<div id="no-intercept" class="section level4">
-<h4><span class="header-section-number">3.1.4.2</span> No Intercept</h4>
+<div id="regression-without-an-intercept" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Regression without an Intercept</h3>
 <p>We follow the same logic here, just that we miss another bit from our initial equation and the minimisation problem in <a href="linreg.html#eq:ols-min">(3.4)</a> now becomes:</p>
 <span class="math display" id="eq:b1line">\[\begin{align}
 b_1 &amp;= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right]^2\\
@@ -416,8 +420,8 @@ Least Squares <strong>without intercept</strong> (i.e. with <span class="math i
 <p>In this case we only get to choose the slope <span class="math inline">\(b_1\)</span> of this anchored line.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> You should now try out both of those restrictions on our linear model by spending some time with</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;reg_constrained&quot;</span>)</code></pre></div>
 </div>
-<div id="centering-a-regression" class="section level4">
-<h4><span class="header-section-number">3.1.4.3</span> Centering A Regression</h4>
+<div id="centering-a-regression" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Centering A Regression</h3>
 <p>By <em>centering</em> or <em>demeaning</em> a regression, we mean to substract from both <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> their respective averages to obtain <span class="math inline">\(\tilde{y}_i = y_i - \bar{y}\)</span> and <span class="math inline">\(\tilde{x}_i = x_i - \bar{x}\)</span>. We then run a regression <em>without intercept</em> as above. That is, we use <span class="math inline">\(\tilde{x}_i,\tilde{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.8)</a> to obtain our slope estimate <span class="math inline">\(b_1\)</span>:</p>
 <span class="math display" id="eq:bline-centered">\[\begin{align}
 b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i^2}\\
@@ -434,8 +438,8 @@ Adding a constant to a regression produces the same result as centering all vari
 <p><br> To get a better feel for what is going on here, you can try this out now by yourself by typing:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;demeaned_reg&quot;</span>)</code></pre></div>
 </div>
-<div id="standardizing-a-regression" class="section level4">
-<h4><span class="header-section-number">3.1.4.4</span> Standardizing A Regression</h4>
+<div id="standardizing-a-regression" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Standardizing A Regression</h3>
 <p><em>Standardizing</em> a variable <span class="math inline">\(z\)</span> means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for <em>centering</em>, we define transformed variables <span class="math inline">\(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\)</span> and <span class="math inline">\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\)</span> where <span class="math inline">\(\sigma_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. From here on, you should by now be used to what comes next! As above, we use <span class="math inline">\(\breve{x}_i,\breve{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.8)</a> to this time obtain:</p>
 <span class="math display" id="eq:bline-standardized">\[\begin{align}
 b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \breve{x}_i \breve{y}_i}{\frac{1}{N}\sum_{i=1}^N \breve{x}_i^2}\\
@@ -452,8 +456,8 @@ After we standardize both <span class="math inline"><span class="math inline">\(
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;reg_standardized&quot;</span>)</code></pre></div>
 </div>
 </div>
-<div id="predictions-and-residuals" class="section level3">
-<h3><span class="header-section-number">3.1.5</span> Predictions and Residuals</h3>
+<div id="predictions-and-residuals" class="section level2">
+<h2><span class="header-section-number">3.3</span> Predictions and Residuals</h2>
 <p>Now we want to ask how our residuals <span class="math inline">\(e_i\)</span> relate to the prediction <span class="math inline">\(\hat{y_i}\)</span>. Let us first think about the average of all predictions <span class="math inline">\(\hat{y_i}\)</span>, i.e. the number <span class="math inline">\(\frac{1}{N} \sum_{i=1}^N \hat{y_i}\)</span>. Let’s just take <a href="linreg.html#eq:abline-pred">(3.2)</a> and plug this into this average, so that we get</p>
 <span class="math display">\[\begin{align}
 \frac{1}{N} \sum_{i=1}^N \hat{y_i} &amp;= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\
@@ -487,7 +491,7 @@ Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =
 #OUT&gt; 9 10.63  9.31  1.32</code></pre>
 <p>Let’s check that these claims are true in this sample of data. We want that</p>
 <ol style="list-style-type: decimal">
-<li>The average of <span class="math inline">\(\hat{y_i}\)</span> to be the same as the mean of <span class="math inline">\(y\)</span></li>
+<li>The average of <span class="math inline">\(\hat{y}_i\)</span> to be the same as the mean of <span class="math inline">\(y\)</span></li>
 <li>The average of the errors should be zero.</li>
 <li>Prediction and errors should be uncorrelated.</li>
 </ol>
@@ -502,8 +506,8 @@ Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
 <p>So indeed we can confirm this result with our test dataset. Great!</p>
 </div>
-<div id="correlation-covariance-and-linearity" class="section level3">
-<h3><span class="header-section-number">3.1.6</span> Correlation, Covariance and Linearity</h3>
+<div id="correlation-covariance-and-linearity" class="section level2">
+<h2><span class="header-section-number">3.4</span> Correlation, Covariance and Linearity</h2>
 <p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
 <p>The important lesson from this example is the following:</p>
@@ -515,9 +519,8 @@ Always <strong>visually inspect</strong> your data, and don’t rely exclusively
 <p><br> The mission of Anscombe has been continued recently. As a result of this we can have a look at the <code>datasauRus</code> package, which pursues Anscbombe’s idea through a multitude of funny data sets, all with the same linear statistics. Don’t just compute the covariance, or you might actually end up looking at a Dinosaur! What? Type this to find out:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;datasaurus&quot;</span>)
 <span class="kw">aboutApp</span>(<span class="st">&quot;datasaurus&quot;</span>)</code></pre></div>
-</div>
 <div id="non-linear-relationships-in-data" class="section level3">
-<h3><span class="header-section-number">3.1.7</span> Non-Linear Relationships in Data</h3>
+<h3><span class="header-section-number">3.4.1</span> Non-Linear Relationships in Data</h3>
 <p>Suppose our data now looks like this:</p>
 <p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" /></p>
 <p>Putting our previous <em>best line</em> defined in equation <a href="linreg.html#eq:abline">(3.3)</a> as <span class="math inline">\(y = b_0 + b_1 x + e\)</span>, we get something like this:</p>
@@ -539,8 +542,9 @@ Figure 3.4: Better line with non-linear data!
 </p>
 </div>
 </div>
-<div id="assessing-the-goodness-of-fit" class="section level3">
-<h3><span class="header-section-number">3.1.8</span> Assessing the <em>Goodness of Fit</em></h3>
+</div>
+<div id="assessing-the-goodness-of-fit" class="section level2">
+<h2><span class="header-section-number">3.5</span> Assessing the <em>Goodness of Fit</em></h2>
 <p>In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called <span class="math inline">\(R^2\)</span> (<em>R squared</em>), also called the <em>coefficient of determination</em>. It is a statistic that makes use of a <em>benchmark</em> model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:</p>
 <p><span class="math display" id="eq:ssr-mod">\[
 y_i = b_0 + b_1 x_i + e_i \tag{3.12} 
@@ -563,13 +567,12 @@ Figure 3.5: Left panel: SSR from our model. Right panel: SSR from benchmark (mea
 </p>
 </div>
 </div>
-</div>
 <div id="lm-example1" class="section level2">
-<h2><span class="header-section-number">3.2</span> An Example: California Student Test Scores</h2>
+<h2><span class="header-section-number">3.6</span> An Example: California Student Test Scores</h2>
 <p>Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our <code>apps</code>. As it turns out, <code>R</code> can do this much more precisely, and very fast!</p>
 <p>Let’s explore how to do this, using a real life dataset taken from the <code>Ecdat</code> package which includes many economics-related dataset. In this example, we will use the <code>Caschool</code>dataset which contains the average test scores of 420 elementary schools in California along with some additional information.</p>
 <div id="loading-and-exploring-data" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Loading and exploring Data</h3>
+<h3><span class="header-section-number">3.6.1</span> Loading and exploring Data</h3>
 <p>We can explore which variables are included in the dataset using the <code>names()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Ecdat&quot;</span>) <span class="co"># Load the Ecdat library</span>
 <span class="kw">names</span>(Caschool) <span class="co"># Display the variables of the Caschool dataset</span></code></pre></div>
@@ -587,7 +590,7 @@ Figure 3.5: Left panel: SSR from our model. Right panel: SSR from benchmark (mea
 #OUT&gt;  Max.   :706.8   Max.   :25.80   Max.   :55.328</code></pre>
 </div>
 <div id="fitting-a-linear-model" class="section level3">
-<h3><span class="header-section-number">3.2.2</span> Fitting a linear model</h3>
+<h3><span class="header-section-number">3.6.2</span> Fitting a linear model</h3>
 <p>Suppose a policymaker is interested in the following linear model:</p>
 <p><span class="math display">\[\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i\]</span> Where <span class="math inline">\(\text{testscr}_i\)</span> is the <em>average test score</em> for a given school <span class="math inline">\(i\)</span> and <span class="math inline">\(\text{str}_i\)</span> is the <em>Student/Teacher Ratio</em> (i.e. the average number of students per teacher) in the same school <span class="math inline">\(i\)</span>. Again, <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are the intercept and the slope of the regression line.</p>
 <p>The subscript <span class="math inline">\(i\)</span> indexes all unique elementary schools (<span class="math inline">\(i \in \{1, 2, 3, \dots 420\}\)</span>) and <span class="math inline">\(e_i\)</span> is the error, or <em>residual</em>, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the <em>sum of squared residuals</em> (SSR)).</p>
@@ -606,9 +609,8 @@ Figure 3.6: Student Teacher Ratio vs Test Scores
 </div>
 <p>Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let’s ask <code>R</code>!</p>
 </div>
-</div>
-<div id="the-lm-function" class="section level2">
-<h2><span class="header-section-number">3.3</span> The <code>lm()</code> function</h2>
+<div id="the-lm-function" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> The <code>lm()</code> function</h3>
 <p>We will use the built-in <code>lm()</code> function to estimate the coefficients <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> using the data at hand. <code>lm</code> stands for <em>linear model</em>, which is what our representation in <a href="linreg.html#eq:abline">(3.3)</a> amounts to. This function typically only takes 2 arguments, <code>formula</code> and <code>data</code>:</p>
 <p><code>lm(formula, data)</code></p>
 <ul>
@@ -641,8 +643,9 @@ fit_cal &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt
 #OUT&gt; F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06</code></pre>
 <p>As we can see, <code>R</code> returns its estimates for the Intercept and Slope coefficients, <span class="math inline">\(b_0 =\)</span> 698.93 and <span class="math inline">\(b_1 =\)</span> -2.28. The estimated relationship between a school’s Student/Teacher Ratio and its average test results is <strong>negative</strong>.</p>
 <p>The output of the <code>summary</code> method for an <code>lm</code> object is commonly called a <em>regression table</em>, and you will be able to decypher it by the end of this course. You should be able to find an interpret the <span class="math inline">\(R^2\)</span> though: Are we explaining a lot of the variance in <code>testscr</code> with this simple model, or are we not?</p>
+</div>
 <div id="plotting-the-regression-line" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Plotting the regression line</h3>
+<h3><span class="header-section-number">3.6.4</span> Plotting the regression line</h3>
 <p>We can also use our <code>lm</code> fit to draw the regression line on top of our initial scatterplot, using the following syntax:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">formula =</span> testscr <span class="op">~</span><span class="st"> </span>str,
      <span class="dt">data =</span> Caschool,
