@@ -344,7 +344,7 @@ launchApp("reg_standardized")
 ```
 
 
-## Predictions and Residuals
+## Predictions and Residuals {#pred-resids}
 
 Now we want to ask how our residuals $e_i$ relate to the prediction $\hat{y_i}$. Let us first think about the average of all predictions $\hat{y_i}$, i.e. the number $\frac{1}{N} \sum_{i=1}^N \hat{y_i}$. Let's just take \@ref(eq:abline-pred) and plug this into this average, so that we get
 
@@ -468,39 +468,41 @@ plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 lines(newdata$hp,newdata$y,lw=2)
 ```
 
+## Analysing $Var(y)$
+
+Analysis of Variance (ANOVA) refers to a method to decompose variation in one variable as a function of several others. We can use this idea on our outcome $y$. Suppose we wanted to know the variance of $y$, keeping in mind that, by definition, $y_i = \hat{y}_i + e_i$. We would write
+
+\begin{align}
+Var(y) &= Var(\hat{y} + e)\\
+ &= Var(\hat{y}) + Var(e) + 2 Cov(\hat{y},e)\\
+ &= Var(\hat{y}) + Var(e) (#eq:anova)
+\end{align}
+
+We have seen above in \@ref(pred-resids) that the covariance between prediction $\hat{y}$ and error $e$ is zero, that's why we have $Cov(\hat{y},e)=0$ in \@ref(eq:anova).
+What this tells us in words is that we can decompose the variance in the observed outcome $y$ into a part that relates to variance as *explained by the model* and a part that comes from unexplained variation. Finally, we know the definition of *variance*, and can thus write down the respective formulae for each part:
+
+* $Var(y) = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{y})^2$
+* $Var(\hat{y}) = \frac{1}{N}\sum_{i=1}^N (\hat{y_i} - \bar{y})^2$, because the mean of $\hat{y}$ is $\bar{y}$ as we know. Finally,
+* $Var(e) = \frac{1}{N}\sum_{i=1}^N e_i^2$, because the mean of $e$ is zero.
+
+We can thus formulate how the total variation in outcome $y$ is aportioned between model and unexplained variation:
+
+```{block, type="tip"}
+The total variation in outcome $y$ (often called SST, or *total sum of squares*) is equal to the sum of explained squares (SSE) plus the sum of residuals (SSR). We have thus **SST = SSE + SSR**.
+```
+
+
+
 ## Assessing the *Goodness of Fit*
 
-In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:
+In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. We make use of the just introduced decomposition of variance, and write the formula as
 
 $$
-y_i = b_0 + b_1 x_i + e_i (\#eq:ssr-mod) 
-$$
- 
-and let us write down the benchmark model as follows:
-
-$$
-y_i = b_0 + e_i (\#eq:ssr-bench)
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (#eq:Rsquared)
 $$
 
-As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. We just saw that this delivers an estimate of the mean of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
+It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.
 
-```{block,type="tip"}
-The **coefficient of determination** (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
-In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would indicate that our model is a **very good** fit to the data, and vice versa for $R^2 = 0$. You can interpret the value of $R^2$ as the fraction of variation in outcome $y$ that is accounted for by explanatory variable $x$.
-```
-<br>
-The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared). There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = b_0 + b_1 x_i + e_i$. The right panel shows the SSR of $y_i = b_0 + e_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.
-
-```{r r-squared,echo=FALSE,fig.align='center',fig.cap='Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.'}
-plot_data = generate_data(sigma = 2,n=4)
-# op <- par(mfrow=c(1,2),pin=c(2.8,2.5))
-# op <- par(mfrow=c(1,2),cex=2, cex.lab=0.5, cex.axis=0.5, cex.main=1, mgp=c(2, 
-# 1, 0), omi=c(0.5,0.25,0.25, 0.25))
-op <- par(mfrow=c(1,2))
-plot_unexp_SSR(plot_data,title="SSR our model")
-plot_total_dev(plot_data,title="SSR of benchmark")
-par(op)
-```
 
 
 ## An Example: California Student Test Scores {#lm-example1}
