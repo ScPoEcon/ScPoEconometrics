@@ -1,0 +1,289 @@
+# Categorial Variables {#categorical-vars}
+
+
+Up until now, we have encountered only examples with *continuous* variables $x$ and $y$, that is, $x,y \in \mathbb{R}$, so that a typical observation could have been $(y_i,x_i) = (1.5,5.62)$. There are many situations where it makes sense to think about the data in terms of *categories*, rather than continuous numbers. For example, whether an observation $i$ is *male* or *female*, whether a pixel on a screen is *black* or *white*, and whether a good was produced in *France*, *Germany*, *Italy*, *China* or *Spain* are all categorical classifications of data. 
+
+Probably the simplest type of categorical variable is the *binary*, *boolean*, or just *dummy* variable. As the name suggests, it can take on only two values, `0` and `1`, or `TRUE` and `FALSE`. 
+
+
+Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation $i$ **is a member** of a certain category $j$. For example, let's imagine we have income data on males and females, and we would create a variable called `is.male` that is `TRUE` whenever $i$ is male, `FALSE` otherwise, and similarly for women. For example, to encode whether subject $i$ is male, one could do this:
+
+\begin{align*}
+\text{is.male}_i &=  \begin{cases}
+                    1 & \text{if }i\text{ is male} \\
+                    0 & \text{if }i\text{ is not male}. \\
+                 \end{cases}, \\
+\end{align*}
+
+and similarly for females, we'd have
+
+\begin{align*}
+\text{is.female}_i &=  \begin{cases}
+                    1 & \text{if }i\text{ is female} \\
+                    0 & \text{if }i\text{ is not female}. \\
+                 \end{cases} \\
+\end{align*}
+
+By definition, we have just introduced a linear dependence into our dataset. It will always be true that $\text{is.male}_i + \text{is.female}_i = 1$. This is because dummy variables are based on data being mutually exclusively categorized - here, you are either male or female.^[There are [transgender](https://en.wikipedia.org/wiki/Transgender) individuals where this example will not apply.] This should immediately remind you of section \@ref(multicol) where we introduced *multicolinearity*. A regression of income on both of our variables like this
+
+$$
+y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{is.male}_i + e_i
+$$
+would be invalid because of perfect colinearity between $\text{is.female}_i$ and $\text{is.male}_i$. The solution to this is pragmatic and simple: 
+
+```{block, type="tip"}
+In dummy variable regressions, we remove one category from the regression (for example here: `is.male`) and call it the *reference category*. The effect of being *male* is absorbed in the intercept. The coefficient on the remaining categories measures the *difference* in mean outcome with respect to the reference category.
+```
+<br>
+
+Now let's try this out. We start by creating the female indicator as above,
+
+$$
+\text{is.female}_i = \begin{cases}
+          1 & \text{if }i\text{ is female} \\
+            0 & \text{if }i\text{ is not female}. \\
+   \end{cases}
+$$
+and let's suppose that $y_i$ is a measure of $i$'s annual labor income. Our model is
+
+$$
+y_i = b_0 + b_1 \text{is.female}_i + e_i (\#eq:dummy-reg)
+$$
+
+and here is how we estimate this in `R`:
+
+```{r, echo=FALSE}
+set.seed(19)
+n = 50
+b0 = 2
+b1 = -3
+x = sample(x = c(0, 1), size = n, replace = T)
+y = b0 + b1 * x + rnorm(n)
+dta = data.frame(x,y)
+zero_one = lm(y~x,dta)
+```
+
+```{r, dummy-reg}
+# x = sample(x = c(0, 1), size = n, replace = T)
+dta$is.female = factor(x)  # convert x to factor
+dummy_reg = lm(y~is.female,dta)
+summary(dummy_reg)
+```
+
+Notice that `R` displays the *level* of the factor to which coefficient $b_1$ belongs here, i.e. `is.female1` means this coefficient is on level `is.female = 1` - the reference level is `is.female = 0`, and it has no separate coefficient. Also interesting is that $b_1$ is equal to the difference in conditional means between male and female
+
+$$E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=`r round(mean(dta[dta$x == 1, "y"]) - mean(dta[dta$x == 0, "y"]),4)`.$$ 
+
+```{block,type="note"}
+A dummy variable measures the difference or the *offset* in the mean of the response variable, $E[y]$, **conditional** on $x$ belonging to some category - relative to a baseline category. In our artificial example, the coefficient $b_1$ informs us that women earn on average 3.756 units less than men.
+```
+<br>
+
+It is instructive to reconsider this example graphically:
+
+```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $\\text{is.female}_i \\in \\{0,1\\}$. The blue line is $E[y]$, the red arrow is the size of $\\alpha$. Which is the same as the slope of the regression line in this case and the difference in conditional means!',echo=FALSE}
+
+a <- coef(zero_one)[1]
+b <- coef(zero_one)[2]
+
+# plot
+expr <- function(x) a + b*x
+errors <- (a + b*x) - y
+
+plot(x, y, type = "p", pch = 21, col = "blue", bg = "royalblue", asp=.25,
+   xlim = c(-.1, 1.1),
+   ylim = c(min(y)-.1, max(y)+.1),
+   frame.plot = T,
+   cex = 1.2)
+
+points(0, mean(dta[dta$x == 0, "y"]), col = 'orange',
+       cex = 3, pch = 15)
+text(0.05, mean(dta[dta$x == 0, "y"]), "E[Y | is.female = 0]", pos = 4)
+
+points(1, mean(dta[dta$x == 1, "y"]), col = 'orange',
+       cex = 3, pch = 15)
+text(1.05, mean(dta[dta$x == 1, "y"]), "E[Y | is.female = 1]", pos = 4)
+curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
+segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
+arrows(x0 =-1, y0 = mean(dta[dta$x == 0, "y"]), x1 = -1, y1 = mean(dta[dta$x == 1, "y"]),col="red",lw=3,code=3,length=0.1)
+# dashes
+segments(x0=-1,y0 = mean(dta[dta$x == 0, "y"]),x1=0,y1 = mean(dta[dta$x == 0, "y"]),col="red",lty="dashed")
+segments(x0=-1,y0 = mean(dta[dta$x == 1, "y"]),x1=1,y1 = mean(dta[dta$x == 1, "y"]),col="red",lty="dashed")
+
+text(-1, mean(y)+1, paste("alpha=",round(b,2)), pos = 4,col="red")
+abline(a=mean(dta$y),b=0,col="blue",lw=2)
+```
+
+In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $\alpha$, is equal to the difference in conditional means for both groups.
+
+
+
+
+## Categorical Variables in `R`: `factor`
+
+`R` has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called `factor`. We encountered them as basic data types in section \@ref(data-types) already, but it is worth repeating this here. We have seen that a factor *categorizes* a usually small number of numeric values by *labels*, as in this example which is similar to what I used to create regressor `is.female` for the above regression:
+
+```{r factors}
+is.female = factor(x = c(0,1,1,0), labels = c(FALSE,TRUE))
+is.female
+```
+
+You can see the result is a vector object of type `factor` with 4 entries, whereby `0` is represented as `FALSE` and `1` as `TRUE`. An other example could be if we wanted to record a variable *sex* instead, and we could do 
+
+```{r}
+sex = factor(x = c(0,1,1,0), labels = c("male","female"))
+sex
+```
+
+You can see that this is almost identical, just the *labels* are different.
+
+
+### More Levels
+
+We can go beyond *binary* categorical variables such as `TRUE` vs `FALSE`. For example, suppose that $x$ measures educational attainment, i.e. it is now something like $x_i \in \{\text{high school,some college,BA,MSc}\}$. In `R` parlance, *high school, some college, BA, MSc* are the **levels of factor $x$**. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like 
+
+\begin{align*}
+\text{has.HS}_i &= \mathbf{1}[x_i==\text{high school}] \\
+\text{has.someCol}_i &= \mathbf{1}[x_i==\text{some college}] \\
+\text{has.BA}_i &= \mathbf{1}[x_i==\text{BA}] \\
+\text{has.MSc}_i &= \mathbf{1}[x_i==\text{MSc}] 
+\end{align*}
+
+but you can see that this is cumbersome. There is a better solution for us available:
+
+```{r}
+factor(x = c(1,1,2,4,3,4),labels = c("HS","someCol","BA","MSc"))
+```
+
+Notice here that `R` will apply the labels in increasing order the way you supplied it (i.e. a numerical value `4` will correspond to "MSc", no matter the ordering in `x`.)
+
+### `factor` and `lm()`
+
+The above developed `factor` terminology fits neatly into `R`'s linear model fitting framework. Let us illustrate the simplest use by way of example.
+
+```{r,warning=FALSE,message=FALSE}
+library(Ecdat)  # need to load this library
+data("Wages")   # from Ecdat
+str(Wages)   # let's examine this dataset!
+```
+
+Notice here that, conveniently, `sex` is already coded as type `factor`. Now assume that this is a single cross section for wages of US workers. The main outcome variable is `lwage` which stands for *logarithm of wage*. 
+
+### Log Transformations
+
+It is quite common to transform either outcome or explanatory or both variables by the natural logarithm. The primary motivation of this is to make the regression scale invariant. Suppose that factor $\alpha$ represented the *scale* of measurement of income, so that $\alpha=1$ if we measure in Euros, or $\alpha=1000$ if in thousands of Euros. With log-transforming regressor $x$, our equation would look like
+
+$$
+y = b_0 + b_1 \log(\alpha x) = b_0 + \log \alpha  + b_1 \log x 
+$$
+where the *scale* $\alpha$ moves into the intercept, and our slope coefficient becomes invariant to it. If both outcome and regressor are transformed, we have 
+
+$$
+\log y = b_0 + b_1 \log x
+$$
+and the slope coefficient is
+
+$$
+b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
+$$
+which represents the **elasticity** of $y$ with respect to $x$: what is the percentage change in $y$ if $x$ changes by one percent?
+
+Finally, if *only the outcome* is log transformed, but not the regressor, we have a *semi-elasticity* formulation. 
+$$
+\log y = b_0 + b_1 x
+$$
+and the slope coefficient becomes
+
+$$
+b_1 = \frac{d\log y}{d x}
+$$
+This means a one-unit change in $x$ increases the logarithm of the outcome by $b_1$ units. For small changes in $x$, we can just exponentiate $b_1$ to get the effect of $x$ the *level* of $y$.
+
+Going back to our example, let's say that a workers wage depends only on his *experience*, measured in the number of years he/she worked full-time:
+
+$$
+\ln w_i = b_0 + b_1 exp_i + e_i (\#eq:wage-exp)
+$$
+
+
+```{r}
+lm_w = lm(lwage ~ exp, data = Wages)
+summary(lm_w)
+```
+
+We see from this that an additional year of full-time work experience will increase the mean of $\ln w$ by 0.0088. Given the log transformation on wages, we can just exponentiate that to get an estimated effect on the (geometric!) mean of wages as $\exp(\hat{b}_1) = `r exp(coef(lm_w)[2])`$. This means that hourly wages increase by roughly $100 * (\exp(b_1)-1) = `r round((exp(coef(lm_w)[2]) -1) * 100,2)`$ percent with an additional year of experience. We can verify the positive relationship in figure \@ref(fig:wage-plot).
+
+```{r wage-plot,fig.align='center',echo=FALSE,fig.cap='log wage vs experience. Red line shows the regression.',message=FALSE,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+ggplot(mapping = aes(y=lwage,x=exp), data=Wages) + geom_point(shape=1,alpha=0.6) + geom_smooth(method="lm",col="red",se=FALSE) + theme_bw()
+
+```
+
+Now let's investigate whether this relationship is different for men and women. We can do this by just including the `factor` variable `sex`:
+
+$$
+\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i (\#eq:wage-sex)
+$$
+
+In `R` we can do this easily by using the `update` function as follows:
+
+```{r}
+lm_sex = update(lm_w, . ~ . + sex)  # update lm_w with same LHS, same RHS, but add sex to it
+summary(lm_sex)
+```
+
+
+What's going on here? Remember from above that `sex` is a `factor` with 2 levels *female* and *male*. We see in the above output that `R` included a regressor called `sexmale` $=\mathbf{1}[sex_i=="male"]$. This is a combination of the variable name `sex` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `sex=="female"`. The interpretation is that $b_2$ measures the effect of being male *relative* to being female. `R` automatically creates a dummy variable for each potential level, excluding the first category. In particular, if `sex` had a third category `dont want to say`, there would be an additional regressor called `sexdontwanttosay`.
+
+```{r wage-plot2,fig.align='center',echo=FALSE,fig.cap='log wage vs experience with different intercepts by sex'}
+
+p_sex = cbind(Wages,pred=predict(lm_sex))
+p_sex = sample_n(p_sex,2500)
+p <- ggplot(data=p_sex,mapping=aes(x=exp,y=lwage,color=sex)) 
+p + geom_jitter(shape=1,alpha=0.6,width=0.1) + geom_line(mapping = aes(y=pred), size=1) + theme_bw()
+# plot(lwage ~ exp, data=Wages)
+# abline(a=co[1],b=co[2],col="red",lw=2)
+# abline(a=co[1]+co[3],b=co[2],col="blue",lw=2)
+# legend("topright",c("Female","Male"),col=c("red","blue"),lw=c(2,2),lty=c(1,1))
+```
+
+
+Figure \@ref(fig:wage-plot2) illustrates this. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of $b_2 = `r round(coef(lm_sex)[3],2)`$ is the size of the downward shift. 
+
+
+## Saturated Models: Main Effects and Interactions
+
+You can see above that we *restricted* male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. As already introduced in chapter \@ref(mreg-interactions), interactions allow that the *ceteris paribus* effect of a certain regressor, `exp` say, depends also on the value of yet another regressor, `sex` for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to `exp` in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
+
+$$
+\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i (\#eq:wage-sex-inter)
+$$
+
+The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`. This is easy to see if we take the partial derivative of \@ref(eq:wage-sex-inter) with respect to `sex`:
+
+$$
+\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i (\#eq:wage-sex-inter-deriv)
+$$
+
+Back in our `R` session, we can run the full interactions model like this:
+
+```{r}
+lm_inter = lm(lwage ~ exp*sex, data = Wages)
+summary(lm_inter)
+```
+
+You can see here that `R` automatically expands `exp*sex` to include both *main effects*, i.e. `exp` and `sex` as single regressors as before, and their interaction, denoted by `exp:sexmale`. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that $b_3 = 0$. (If, for some reason, you wanted to include only the interaction, you could supply directly `formula = lwage ~ exp:sex` to `lm`, although this would be a rather difficult to interpret model.)
+
+We call a model like \@ref(eq:wage-sex-inter) a *saturated model*, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.
+
+To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for `sex`, `smsa`, `union` and `bluecol`, including all main and all interaction effects:
+
+```{r}
+lm_full = lm(lwage ~ sex*smsa*union*bluecol,data=Wages)
+summary(lm_full)
+```
+
+The main effects remain clear to interpret: being a blue collar worker, for example, reduces average wages by 34% relative to white collar workers. One-way interactions are still ok to interpret as well: `sexmale:bluecolyes` indicates in addition to a wage premium over females of `r round(coef(lm_full)[2],2)`, and a penalty of being blue collar of `r round(coef(lm_full)[5],2)`, **male** blue collar workers suffer an additional wage loss of `r round(coef(lm_full)[9],2)`. All of this is relative to the base category, which are female white collar workers who don't live in an smsa and are not union members. If we now add a third or even a fourth interaction, this becomes much harder to interpret, and in fact we rarely see such interactions in applied work.
+
+

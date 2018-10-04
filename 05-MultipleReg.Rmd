@@ -6,7 +6,7 @@ We can extend the discussion from chapter \@ref(linreg) to more than one explana
 As an example, suppose we wanted to explain how many *miles per gallon* (`mpg`) a car can travel as a function of its *horse power* (`hp`) and its *weight* (`wt`). In other words we want to estimate the equation
 
 $$
-mpg_i = \beta_0 + \beta_1 hp_i + \beta_2 wt_i + \varepsilon_i (\#eq:abline2d)
+mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i (\#eq:abline2d)
 $$
 on our built-in dataset of cars (`mtcars`):
 
@@ -14,7 +14,7 @@ on our built-in dataset of cars (`mtcars`):
 subset(mtcars, select = c(mpg,hp,wt))
 ```
 
-How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $\beta_1$ and $\beta_2$ to be? 
+How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $b_1$ and $b_2$ to be? 
 
 
 With two explanatory variables as here, it is still possible to visualize the regression plane, so let's start with this as an answer. The OLS regression plane through this dataset looks like in figure \@ref(fig:plane3D-reg):
@@ -27,34 +27,6 @@ data(mtcars)
 # linear fit
 fit <- lm(mpg ~ wt+hp,data=mtcars)
  
-# library(plot3D)
-# predict on x-y grid, for surface
-# wt.pred <- seq(1.5, 5.5, length.out = 30)
-# disp.pred <- seq(52, 335, length.out = 30)
-# xy <- expand.grid(wt = wt.pred, 
-#                  hp = disp.pred)
-#  
-# mpg.pred <- matrix (nrow = 30, ncol = 30, 
-#   data = predict(fit, newdata = data.frame(xy), interval = "prediction"))
-#  
-# predicted z-values, fitted points for droplines to surface
-# fitpoints <- predict(fit) 
-# scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$disp, pch = 20, cex = 1.5, 
-#       theta = 40, phi = 15, ticktype = "detailed",col="red",
-#       xlab = "wt", ylab = "disp", zlab = "mpg", clab = "mpg",
-#       surf = NULL,
-#       colkey = FALSE,#list(length = 0.8, width = 0.4),            
-#       main = "mtcars")
-# scatter3D(z = mtcars$mpg, x = mtcars$wt, y = mtcars$hp, pch = 20, cex = 1.5,
-#       theta = 40, phi = 15, ticktype = "detailed",col="red",
-#       xlab = "weight", ylab = "horse power", zlab = "mpg", clab = "mpg",
-#       surf = list(x = wt.pred, y = disp.pred, z = mpg.pred,
-#                   facets = NA, fit = fitpoints,col="grey"),
-#       colkey = FALSE,#list(length = 0.8, width = 0.4),
-#       main = "mtcars")
-
-
-
 to_plot_x <- range(mtcars$wt)
 to_plot_y <- range(mtcars$hp)
 
@@ -67,12 +39,21 @@ surf <- acast(df, wt ~ hp)
 color <- rep(0, length(df))
 mtcars %>%
   plot_ly(colors = "grey") %>%
-  add_markers(x = ~wt, y = ~hp, z = ~mpg,name = "data",opacity = .8, marker=list(color = 'black', size = 5, hoverinfo="skip")) %>%
+  add_markers(x = ~wt, y = ~hp, z = ~mpg,name = "data",opacity = .8, marker=list(color = 'red', size = 5, hoverinfo="skip")) %>%
   add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Mtcars 3D", opacity = .75, cauto = F, surfacecolor = color) %>%
   hide_colorbar()
 ```
 
-This visualization shows a couple of things: the data are shown with red points, the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d), and the red lines show the size of the error between estimated plane and observed data. You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
+This visualization shows a couple of things: the data are shown with red points and the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d). You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
+
+Furthermore, *multiple* regression refers the fact that there could be *more* than two regressors. In fact, you could in principle have $K$ regressors, and our theory developed so far would still be valid:
+
+\begin{align}
+\hat{y}_i &= b_0 + b_1 x_{1i} +   b_2 x_{2i} + \dots + b_K x_{Ki}\\
+e_i &= y_i - \hat{y}_i (\#eq:multiple-reg)
+\end{align}
+
+Just as before, the least squares method chooses numbers $(b_0,b_1,\dots,b_K)$ to as to minimize SSR, exactly as in the minimization problem for the one regressor case seen in \@ref(eq:ols-min).
 
 ## All Else Equal {#ceteris}
 
@@ -89,9 +70,9 @@ We ask this kind of question all the time in econometrics. In figure \@ref(fig:p
 As a matter of fact, the kind of question asked here is so common that it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. In terms of our model in \@ref(eq:abline2d), we want to know the following quantity:
 
 $$
-\frac{\partial mpg_i}{\partial hp_i} = \beta_1 (\#eq:abline2d-deriv)
+\frac{\partial mpg_i}{\partial hp_i} = b_1 (\#eq:abline2d-deriv)
 $$
-This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $\beta_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
+This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
 <br>
 
 ```{r,echo=FALSE}
@@ -104,12 +85,35 @@ From this table you see that the coefficient on `wt` has value `r round(coef(fit
 Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $hp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
 ```
 
+
+## Multicolinearity {#multicol}
+
+One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wt_plus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wt_plus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
+
+\begin{align}
+y &= b_0 + b_1 \text{wt} + b_2 \text{wt_plus} + e \\
+  &= b_0 + b_1 \text{wt} + b_2 (\text{wt} + 1) + e \\
+  &= (b_0 + b_2) + \text{wt} (b_1 + b_2) + e \\
+\end{align}
+
+This shows that we cannot *identify* the regression coefficients in case of linearly dependent data. Variation in the variable `wt` identifies a different coefficient, say $\gamma = b_1 + b_2$, from what we actually wanted: separate estimates for $b_1,b_2$.
+
+```{block, type="note"}
+All variables in a multiple regression should be *linearly independent*, or *not* colinear. This is known as the **rank condition**. In particular, this condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. 
+
+```
+
+
+
+
+
+
 ## California Test Scores 2
 
 Let us extend our example of student test scores from chapter \@ref(linreg) by adding families' average income to our previous model:
 
 $$
-\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \epsilon_i
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + \epsilon_i
 $$
 
 We can incoporate this new variable to our model by simply adding it to our `formula`:
@@ -148,19 +152,18 @@ While you explore this plot, ask yourself the following question: if you could o
 
 ## Interactions {#mreg-interactions}
 
-Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. To measure such an effect, we would reformulate our model like this:
+Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether the average income in an ares is high or low? Notice that `str` and `avginc` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
 
 
 $$
-\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \beta_3 (\text{str}_i \times  \text{avginc}_i)+ \epsilon_i (\#eq:caschool-inter)
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i (\#eq:caschool-inter)
 $$
-
 
 
 The inclusion of the *product* of `str` and `avginc` amounts to having different slopes with respect to `str` for different values of  `avginc` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
 
 $$
-\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = \beta_1 + \beta_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
+\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
 $$
 
 
@@ -177,7 +180,7 @@ lm_inter = lm(formula = testscr ~ str + avginc + str*avginc, data = Caschool)
 summary(lm_inter)
 ```
 
-We see here that the regression now estimates and additional coefficient $\beta_3$ for us. We observe also that the estimate of $\beta_2$ changes signs and becomes negative, while the interaction effect $\beta_3$ is positive. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an increase in average district income in isolation actually reduces scores; and that the interaction of both increases scores (more students per teacher are actually a good thing for student performance in richer areas).
+We see here that the regression now estimates and additional coefficient $b_3$ for us. We observe also that the estimate of $b_2$ changes signs and becomes negative, while the interaction effect $b_3$ is positive. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an increase in average district income in isolation actually reduces scores; and that the interaction of both increases scores (more students per teacher are actually a good thing for student performance in richer areas).
 
 Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? Discuss with your neighbor and give some reasons for your choice (other than "\@ref(fig:3D-Plotly-inter) looks nicer" ;-) ). In particular, comparing both visualizations, can you explain why we observe this strange inversion of coefficient signs?
 
