@@ -25,15 +25,15 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-09-28">
+<meta name="date" content="2018-10-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
-<link rel="prev" href="multiple-reg.html">
-<link rel="next" href="categorical-vars.html">
+<link rel="prev" href="categorical-vars.html">
+<link rel="next" href="quantreg.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -142,24 +142,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
-<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#predictions-and-residuals"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
 <li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
-<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.5</b> Assessing the <em>Goodness of Fit</em></a></li>
-<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.6</b> An Example: California Student Test Scores</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.7</b> An Example: California Student Test Scores</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
-<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#california-test-scores-2"><i class="fa fa-check"></i><b>4.2</b> California Test Scores 2</a></li>
-<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.3</b> Interactions</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#california-test-scores-2"><i class="fa fa-check"></i><b>4.3</b> California Test Scores 2</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>5</b> Standard Errors</a><ul>
-<li class="chapter" data-level="5.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true"><i class="fa fa-check"></i><b>5.1</b> What is <em>true</em>?</a></li>
-<li class="chapter" data-level="5.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>5.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="5.3" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>5.3</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.2</b> Saturated Models: Main Effects and Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>6</b> Categorial Variables</a><ul>
-<li class="chapter" data-level="6.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>6.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="6.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>6.2</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.3</b> What’s in my model? (And what is not?)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>7</b> Quantile Regression</a></li>
 <li class="chapter" data-level="8" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>8</b> Panel Data</a><ul>
@@ -203,29 +205,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="std-errors" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Standard Errors</h1>
-<p>In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> are <em>estimates</em> of some unkown <em>population parameters</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates.</p>
+<h1><span class="header-section-number">Chapter 6</span> Standard Errors</h1>
+<p>In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> are <em>estimates</em> of some unkown <em>population parameters</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates.</p>
 <div class="note">
 <center>
-How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(\hat{\beta}\)</span></span>?
+How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(b\)</span></span>?
 </center>
 </div>
 <p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown here as the shaded area:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-139-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
-<div id="what-is-true" class="section level2">
-<h2><span class="header-section-number">5.1</span> What is <em>true</em>?</h2>
-<p>We have a true data-generating process in mind. Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a>:</p>
-<p><span class="math display" id="eq:abline-5">\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{5.1}
-\]</span></p>
-<p>First, we <em>assume</em> that this is the correct represenation of the DGP, which looks like the above equation. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice, that both <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> do <strong>not</strong> have a “hat”, which is widely used to indicate an estimate. Now, the fact that our data <span class="math inline">\((y_i,x_i)\)</span> are a sample from a larger population means that there will be <em>sampling variation</em> in our estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> - exactly like in the case of the sample mean estimating the population average as mentioned above. In general, the more observations we have the greater the precision of our estimates.</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-150-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
+<div id="what-is-true-what-are-statistical-models" class="section level2">
+<h2><span class="header-section-number">6.1</span> What is <em>true</em>? What are Statistical Models?</h2>
+<p>A <strong>statistical model</strong> is simply a set of assumptions about how some data have been generated. As such, it models the data-generating process (DGP), as we have it in mind. Once we define a DGP, we could simulate data from it and see how this compares to the data we observe in the real world. Or, we could change the parameters of the DGP so as to understand how the real world data <em>would</em> change, could we (or some policy) change the corresponding parameters in reality. Let us now consider one particular statistical model, which in fact we have seen so many times already.</p>
 </div>
 <div id="class-reg" class="section level2">
-<h2><span class="header-section-number">5.2</span> The Classical Regression Model</h2>
-<p>The smallest set of assumptions used to define the <em>classical regression model</em> are the following:</p>
+<h2><span class="header-section-number">6.2</span> The Classical Regression Model</h2>
+<p>Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
+<p><span class="math display" id="eq:abline-5">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
+\]</span> The smallest set of assumptions used to define the <em>classical regression model</em> as in <a href="std-errors.html#eq:abline-5">(6.1)</a> are the following:</p>
 <ol style="list-style-type: decimal">
-<li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. For example, suppose we have two variables for each individual, <span class="math inline">\(x_1,x_2\)</span> which determine an outcome <span class="math inline">\(y\)</span>. If <span class="math inline">\(x_{2} = 2x_{1}\)</span>, then <span class="math inline">\(x_2\)</span> provides no new information. It’s enough to know <span class="math inline">\(x_1\)</span>, and multiply it by 2. In this sense, <span class="math inline">\(x_2\)</span> is a redundant variable and should not be included in the model.</li>
+<li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section <a href="multiple-reg.html#multicol">4.2</a>. In the particular case of one regressor, as here, we require that <span class="math inline">\(x\)</span> exhibit some variation in the data, i.e. <span class="math inline">\(Var(x)\neq 0\)</span>.</li>
 <li>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Notice that this also means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. It is said that <span class="math inline">\(x\)</span> should be <strong>strictly exogenous</strong> to the model.</li>
 </ol>
 <p>These assumptions are necessary to successfully (and correctly!) run an OLS regression. They are often supplemented with an additional set of assumptions, which help with certain aspects of the exposition, but are not strictly necessary:</p>
@@ -233,22 +234,28 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{5.1}
 <li>The data are drawn from a <strong>random sample</strong> of size <span class="math inline">\(n\)</span>: observation <span class="math inline">\((x_i,y_i)\)</span> comes from the exact same distribution, and is independent of observation <span class="math inline">\((x_j,y_j)\)</span>, for all <span class="math inline">\(i\neq j\)</span>.</li>
 <li>The variance of the error term <span class="math inline">\(\varepsilon\)</span> is the same for each value of <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(\varepsilon|x) = \sigma^2\)</span>. This property is called <strong>homoskedasticity</strong>.</li>
 </ol>
+<p>Let’s talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> and intercept and slope parameters</li>
+<li><span class="math inline">\(\varepsilon\)</span> is the error term.</li>
+</ul>
+<p>First, we <em>assumed</em> that <a href="std-errors.html#eq:abline-5">(6.1)</a> is the correct represenation of the DGP. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice that <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are potentially different from <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in <a href="linreg.html#eq:abline">(3.3)</a> for a given sample of data - they could in practice be very close to each other, but <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are <em>estimates</em> of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. And, crucially, those estimates are generated from a sample of data. Now, the fact that our data <span class="math inline">\((y_i,x_i)\)</span> are a sample from a larger population, means that there will be <em>sampling variation</em> in our estimates - exactly like in the case of the sample mean estimating the population average as mentioned above. One particular sample of data will generate one particular set of estimates <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, whereas another sample of data will generate estimates which will in general be different - by <em>how much</em> those estimates differ across samples is the question in this chapter. In general, the more observations we have the greater the precision of our estimates, hence, the closer the estimates from different samples will lie together.</p>
 <div id="standard-errors-in-theory" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Standard Errors in Theory</h3>
-<p>Under assumptions 1. through 4. we can define the formula for the standard error of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(5.1)</a> as follows:</p>
+<h3><span class="header-section-number">6.2.1</span> Standard Errors in Theory</h3>
+<p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance. Under assumptions 1. through 4. we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
 <p><span class="math display" id="eq:var-ols">\[
-Var(\beta_1|x_i) = \frac{\sigma^2}{x_1^2 + x_2^2 + \dots + x_n^2}  \tag{5.2}
-\]</span> In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  \tag{6.2}
+\]</span> In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
 <p><span class="math display">\[
-s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - \hat{\beta_0} - \hat{\beta_1}x_i)^2}{n-p}
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
 \]</span> where <span class="math inline">\(n-p\)</span> are the <em>degrees of freedom</em> available in this estimation. <span class="math inline">\(p\)</span> is the number of parameters we wish to estimate (here: 1). So, the variance formula would become</p>
 <p><span class="math display" id="eq:var-ols2">\[
-Var(\beta_1|x_i) = \frac{SSR}{(n-p)(x_1^2 + x_2^2 + \dots + x_n^2)}  \tag{5.3}
+Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  \tag{6.3}
 \]</span></p>
 <p>You can clearly see that, as <span class="math inline">\(n\)</span> increases, the denominator increases, and therefore the variance of the estimate will decrease.</p>
 </div>
 <div id="standard-errors-in-practice" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Standard Errors in Practice</h3>
+<h3><span class="header-section-number">6.2.2</span> Standard Errors in Practice</h3>
 <p>We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps, before going into the associated tutorial:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">launchApp</span>(<span class="st">&quot;sampling&quot;</span>)  
@@ -257,19 +264,22 @@ Var(\beta_1|x_i) = \frac{SSR}{(n-p)(x_1^2 + x_2^2 + \dots + x_n^2)}  \tag{5.3}
 </div>
 </div>
 <div id="whats-in-my-model-and-what-is-not" class="section level2">
-<h2><span class="header-section-number">5.3</span> What’s in my model? (And what is not?)</h2>
-<p>We want to revisit the underlying assumptions of the classical model outlined in <a href="std-errors.html#class-reg">5.2</a>. Right now we to talk a bit more about assumption number 2 of the above definition in <a href="std-errors.html#class-reg">5.2</a>. It said this:</p>
+<h2><span class="header-section-number">6.3</span> What’s in my model? (And what is not?)</h2>
+<p>We want to revisit the underlying assumptions of the classical model outlined in <a href="std-errors.html#class-reg">6.2</a>. Right now we to talk a bit more about assumption number 2 of the above definition in <a href="std-errors.html#class-reg">6.2</a>. It said this:</p>
 <div class="warning">
 <p>
 The mean of the residuals conditional on <span class="math inline"><span class="math inline">\(x\)</span></span> should be zero, <span class="math inline"><span class="math inline">\(E[\varepsilon|x] = 0\)</span></span>. This means that <span class="math inline"><span class="math inline">\(Cov(\varepsilon,x) = 0\)</span></span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. We want <span class="math inline"><span class="math inline">\(x\)</span></span> to be <strong>strictly exogenous</strong> to the model.
 </p>
 </div>
 <p><br> Great. But what does this <em>mean</em>? How could <span class="math inline">\(x\)</span> be correlated with something we don’t even observe?! Good questions - let’s try with an example.</p>
-<p>Imagine that this model</p>
-<p><span class="math display">\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
+<p>Imagine that we assume that</p>
+<p><span class="math display" id="eq:DGP-h">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.4}
 \]</span></p>
-<p>is used to measures the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). You find a positive impact of bathrooms on houses:</p>
+<p>represents the DGP of impact the sales price of houses (<span class="math inline">\(y\)</span>) as a function of number of bathrooms (<span class="math inline">\(x\)</span>). We run OLS as</p>
+<p><span class="math display">\[
+y_i = b_0 + b_1 x_i + e_i 
+\]</span> You find a positive impact of bathrooms on houses:</p>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = price ~ bathrms, data = Housing)
@@ -302,16 +312,19 @@ Housing <span class="op">%&gt;%</span>
 #OUT&gt; 2       2          955.
 #OUT&gt; 3       3       -11195.
 #OUT&gt; 4       4        32298.</code></pre>
-<p>Oh, that doesn’t look good. Even though the unconditional mean <span class="math inline">\(E[\varepsilon] = 0\)</span> is <em>very</em> close to zero (type <code>mean(resid(hlm))</code>!), this doesn’t seem to hold at all by categories of <span class="math inline">\(x\)</span>. This indicates that there is something in the error term <span class="math inline">\(\varepsilon\)</span> which is <em>correlated</em> with <code>bathrms</code>. Going back to our discussion about <em>ceteris paribus</em> in section <a href="multiple-reg.html#ceteris">4.1</a>, we stated that the interpretation of our OLS slope estimate is that</p>
+<p>Oh, that doesn’t look good. Even though the unconditional mean <span class="math inline">\(E[e] = 0\)</span> is <em>very</em> close to zero (type <code>mean(resid(hlm))</code>!), this doesn’t seem to hold at all by categories of <span class="math inline">\(x\)</span>. This indicates that there is something in the error term <span class="math inline">\(e\)</span> which is <em>correlated</em> with <code>bathrms</code>. Going back to our discussion about <em>ceteris paribus</em> in section <a href="multiple-reg.html#ceteris">4.1</a>, we stated that the interpretation of our OLS slope estimate is that</p>
 <div class="tip">
 <p>
-Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span>!
+Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span> (and, hence, <span class="math inline"><span class="math inline">\(e\)</span></span>)!
 </p>
 </div>
-<p><br></p>
-<p>Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
+<p><br> It looks like our DGP in <a href="std-errors.html#eq:DGP-h">(6.4)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this: <span class="math display" id="eq:DGP-h2">\[
+y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{6.5}
+\]</span> This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
+y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
+\]</span> This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
 <div id="omitted-variable-bias" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Omitted Variable Bias</h3>
+<h3><span class="header-section-number">6.3.1</span> Omitted Variable Bias</h3>
 <p>What we are discussing here is called <em>Omitted Variable Bias</em>. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it’s <em>reasonable</em> that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with <code>bathrms</code>?</p>
 <p>Let’s try with <code>lotsize</code>, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let’s check this out:</p>
 <pre><code>#OUT&gt; 
@@ -333,11 +346,12 @@ Keeping everything else fixed at the current value, what is the impact of <span 
 #OUT&gt; Residual standard error: 19580 on 543 degrees of freedom
 #OUT&gt; Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
 #OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-145-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
+<p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-156"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-156-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
-Figure 5.1: Distribution of <code>lotsize</code> by <code>bathrms</code>
+Figure 6.1: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
 </div>
 <p>This shows that lotsize and the number of bathrooms is indeed positively related. Larger lot of the house, more bathrooms. This leads to a general result:</p>
@@ -359,8 +373,8 @@ If there is an omitted variable <span class="math inline"><span class="math inli
           </div>
         </div>
       </div>
-<a href="multiple-reg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="categorical-vars.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="categorical-vars.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="quantreg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -390,7 +404,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/06-StdErrors.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/07-StdErrors.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
