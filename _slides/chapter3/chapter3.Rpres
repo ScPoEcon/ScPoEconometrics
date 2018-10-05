@@ -485,23 +485,45 @@ incremental:true
     lines(newdata$hp,newdata$y,lw=2)
     ```
 
+Analysis of Variance
+=====================
+incremental: true
+
+* Remember that $y_i = \widehat{y}_i + e_i$.
+* We have the following decomposition:
+    $$
+    \begin{align}
+    Var(y) &= Var(\widehat{y} + e)\\
+     &= Var(\widehat{y}) + Var(e) + 2 Cov(\widehat{y},e)\\
+     &= Var(\widehat{y}) + Var(e)
+    \end{align}
+    $$
+* Because: $Cov(\hat{y},e)=0$
+* Total variation (SST) = Model explained (SSE) + Unexplained (SSR)
+
+
+
+
 Assessing the Goodness of Fit
 =====================
 incremental: true
 
 * The $R^2$ measures how good the model fits the data.
 * $R^2=1$ is very good, $R^2=0$ is very poorly.
-* We compare the performance of our model vs a baseline without regressor:
-    $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
-* The SSR being a measure of *how large* our errors are, you see that smaller SSR improves our $R^2$.
+    $$
+    R^2 = \frac{\text{variance explained}}{\text{total variance}} =     \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]
+    $$
+* Small $R^2$ doesn't mean it's a useless model!
+
+
 
 An Example - California Test Scores
 =====================
-incremental: true
+
+* Let's look at [the worked example](https://scpoecon.github.io/ScPoEconometrics/linreg.html#lm-example1) in the book!
 
 
-
-Appendix: Rescaling Regressions
+Rescaling Regressions
 =====================
 incremental: true
 
@@ -513,12 +535,32 @@ incremental: true
 * Assume that $\beta_1 = 2000$, s.t. each additional year of schooling gives 2000 Euros more income.
 * What is $\beta_1$ if we measure $y$ in *thousands of euros* instead?
 
+Rescaling Regressions
+======================
+incremental: true
+
+* The result depends on whether we rescale $y$, $x$ or both.
+* If we have rescale $x$ by $c$ and $y$ by $d$, one can show that
+    $$
+    \begin{align}
+    b_1' &= \frac{Cov(dx,cy)}{Var(dx)}\\
+         &= \frac{d}{c} b
+         \end{align}
+    $$
+* and the intercept
+    $$
+    \begin{align}
+    b_0' &= \mathbb{E}[d\cdot Y] - \frac{Cov(cX, dY)}{Var(cX)} \mathbb{E}[c\cdot X] \\
+    &= d b_0
+    \end{align}
+    $$
+
 App: Rescaling Regressors
 =========
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
-launchApp('rescale')
+launchApp('Rescale')
 ```
 
 

@@ -88,12 +88,12 @@ Holding all other variables fixed at their observed values - or *ceteris paribus
 
 ## Multicolinearity {#multicol}
 
-One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wt_plus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wt_plus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
+One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wtplus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wtplus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
 
 \begin{align}
-y &= b_0 + b_1 \text{wt} + b_2 \text{wt_plus} + e \\
+y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
   &= b_0 + b_1 \text{wt} + b_2 (\text{wt} + 1) + e \\
-  &= (b_0 + b_2) + \text{wt} (b_1 + b_2) + e \\
+  &= (b_0 + b_2) + \text{wt} (b_1 + b_2) + e
 \end{align}
 
 This shows that we cannot *identify* the regression coefficients in case of linearly dependent data. Variation in the variable `wt` identifies a different coefficient, say $\gamma = b_1 + b_2$, from what we actually wanted: separate estimates for $b_1,b_2$.
@@ -113,7 +113,7 @@ All variables in a multiple regression should be *linearly independent*, or *not
 Let us extend our example of student test scores from chapter \@ref(linreg) by adding families' average income to our previous model:
 
 $$
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + \epsilon_i
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
 $$
 
 We can incoporate this new variable to our model by simply adding it to our `formula`:

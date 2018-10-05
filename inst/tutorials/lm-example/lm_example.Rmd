@@ -11,6 +11,8 @@ runtime: shiny_prerendered
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
 data("CPS1988", package = "AER")
+truereg = lm(log(wage)~experience+I(experience^2)+education+ethnicity, data = CPS1988)
+elasreg= lm(log(wage)~log(experience), data = subset(CPS1988,experience>0))
 ```
 
 
@@ -18,7 +20,7 @@ data("CPS1988", package = "AER")
 
 Now it is your turn to fit your very first linear model!
 
-For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. This dataset can be found in the `AER` package. You probably need to install this first with `install.packages("AER")`.
+For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. We used the function `data("CPS1988", package = "AER")` to load this into your current workspace, so the object `CPS1988` holds the data.
 
 
 Let's now explore the data. Use the following cell to print the `summary` of the dataset.
@@ -101,7 +103,7 @@ sum(c(FALSE, FALSE, FALSE, FALSE)) #>   0
 
 Now that we understand our data, let's turn to estimating the following model:
 
-$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2 + \beta_3 education + \beta_4 ethnicity + \epsilon$$
+$$\log(wage) = b_0 + b_1 experience + b_2 (experience)^2 + b_3 education + b_4 ethnicity + \epsilon$$
 
 This model differs in two crucial ways from the ones we have seen so far:
 
@@ -112,15 +114,15 @@ Luckily, we don't have to create these new variables ourselves (although we coul
 
 | Model | `formula` |
 | :-----: | :---------: |
-| $$Y = \beta_0 + \beta_1 X + \beta_2 Z + \epsilon $$ | `Y ~ X + Z` |
-| $$\log(Y) = \beta_0 + \beta_1 X + \beta_2 \log(Z) + \epsilon $$ | `log(Y) ~ X + log(Z)` |
-| $$Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon $$ | `Y ~ X + I(X^2)` |
+| $$Y = b_0 + b_1 X + b_2 Z + \epsilon $$ | `Y ~ X + Z` |
+| $$\log(Y) = b_0 + b_1 X + b_2 \log(Z) + \epsilon $$ | `log(Y) ~ X + log(Z)` |
+| $$Y = b_0 + b_1 X + b_2 X^2 + \epsilon $$ | `Y ~ X + I(X^2)` |
 
 Note: the reason we use the `I()` operator around `X^2` is so that it is not confused with another possible use of `^` in the context of a formula, as we will see later.
 
 Assign the correct formula to `your_formula` so that the following cell returns an estimation for the following model:
 
-$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2$$
+$$\log(wage) = b_0 + b_1 experience + b_2 (experience)^2$$
 
 ```{r reg, exercise=TRUE, exercise.eval=F}
 ## Insert your guess below
@@ -137,7 +139,7 @@ summary(your_fit)
 
 Now you should be ready to run the full regression for the model we were originally concerned with:
 
-$$\log(wage) = \beta_0 + \beta_1 experience + \beta_2 (experience)^2 + \beta_3 education + \beta_4 ethnicity + \epsilon$$
+$$\log(wage) = b_0 + b_1 experience + b_2 (experience)^2 + b_3 education + b_4 ethnicity + \epsilon$$
 Use the following cell to run this regression:
 
 ```{r reg_full, exercise=TRUE, exercise.eval=F}
@@ -149,7 +151,7 @@ Use the following cell to run this regression:
 # is to first create a fit and then call summary() on it
 ```
 
-According to the above estimate, what is your estimated coefficient $\hat{\beta_3}$? Answer the following question:
+According to the above estimate, what is your estimated coefficient $\hat{b_3}$? Answer the following question:
 
 ```{r beta_3_interpretation, echo=FALSE}
 question("A 1 year increase in years of education is associated with an average  0.085673 increase in wage.",
@@ -159,7 +161,30 @@ question("A 1 year increase in years of education is associated with an average 
 ```
 
 
-As it turns out, the regression of a variable $X$ into the *log* of another variable $Y$ gives you **the *percent* increase in $Y$ associated with a *unit* increase in $X$**. So an extra year of education is actually associated with an average 8.5% increase in wage.
+
+As it turns out, the regression of a variable $X$ into the *log* of another variable $Y$ is related **the *percent* increase in $Y$ associated with a *unit* increase in $X$**. As an approximation, you can just take $b_3$, multiply by hundred, and say this is the percentage change in $Y$ (**not** $\log Y$!). Doing so gives you a `r round(100*coef(truereg)[4],2)` percent increase from an additional year of education. This approximation only works well for small changes in $X$, however, and *small* depends on the scale of both $Y$ and $X$. The correct way to compute this effect is to do $100 (\exp(b_3) - 1)$, which yiels a `r round(100*(exp(coef(truereg)[4])-1),2)` percent increase.
 
 
+### Log-Log specification
 
+If we have both the $Y$ and $X$ as log transformations, we estiamte an elasticity of $Y$ wrt $X$: By how many percent does $Y$ change if we change $X$ by 1 percent? This is good to get rid of different scales.
+
+Let's try this out:
+
+$$\log(wage) = b_0 + b_1 \log(experience) + \epsilon$$
+Use the following cell to run this regression:
+
+```{r reg_log, exercise=TRUE, exercise.eval=F}
+#you answer should take two lines of code
+```
+
+```{r loginterpretation, echo=FALSE}
+question(paste("A 1 unit increase in experience is associated with a",round(100*coef(elasreg)[2],2),"increase in wages."),
+  answer("False",correct = TRUE,  message = "b_1 measures the elasticity"),
+  answer("True", message = "b_1 measures the elasticity")
+)
+question(paste("A 1% increase in experience is associated with a",round(coef(elasreg)[2],2)," percent increase in wages."),
+  answer("False",  message = "b_1 is the percent change in y."),
+  answer("True",correct = TRUE, message = "b_1 is the percent change in y.")
+)
+```

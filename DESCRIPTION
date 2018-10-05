@@ -22,7 +22,8 @@ Imports: bookdown,
   webshot,
   Ecdat,
   EnvStats,
-  rmarkdown
+  rmarkdown,
+  AER
 Suggests:
   shinytest,
   testthat
