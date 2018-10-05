@@ -1,0 +1,187 @@
+# Standard Errors {#std-errors}
+
+In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $b_0$, $b_1$ and $b_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
+
+```{block,type="note"}
+<center>
+How *confident* should we be about the estimated values $b$?
+</center>
+```
+<br>
+Let's go back to the regression with one variable and remind ourselves of the example at the end of chapter \@ref(linreg). There we introduced the term *confidence interval*, shown here as the shaded area:
+
+```{r,fig.align="center",message=FALSE,warning=FALSE,echo=FALSE}
+library(ggplot2)
+library(Ecdat)
+p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
+p <- p + geom_point() # add points
+p <- p + geom_smooth(method = "lm", size=1, color="red") # add regression line
+p <- p + scale_y_continuous(name = "Average Test Score") + 
+         scale_x_continuous(name = "Student/Teacher Ratio")
+p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
+```
+  
+The shaded area shows us the region within which the **true** red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a *true* slope coefficient $\beta_1$) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size $N$ increased, our estimate got better and better - fundamentally this is the same idea here.
+
+## What is *true*? What are Statistical Models?
+
+A **statistical model** is simply a set of assumptions about how some data have been generated. As such, it models the  data-generating process (DGP), as we have it in mind. Once we define a DGP, we could simulate data from it and see how this compares to the data we observe in the real world. Or, we could change the parameters of the DGP so as to understand how the real world data *would* change, could we (or some policy) change the corresponding parameters in reality. Let us now consider one particular statistical model, which in fact we have seen so many times already.
+
+ 
+
+
+
+
+## The Classical Regression Model {#class-reg}
+
+Let's bring back our simple model \@ref(eq:abline) to explain this concept.
+
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:abline-5)
+$$
+The smallest set of assumptions used to define the *classical regression model* as in \@ref(eq:abline-5) are the following:
+
+1. The data are **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section \@ref(multicol). In the particular case of one regressor, as here, we require that $x$ exhibit some variation in the data, i.e. $Var(x)\neq 0$.
+1. The mean of the residuals conditional on $x$ should be zero, $E[\varepsilon|x] = 0$. Notice that this also means that $Cov(\varepsilon,x) = 0$, i.e. that the errors and our explanatory variable(s) should be *uncorrelated*. It is said that $x$ should be **strictly exogenous** to the model.
+
+These assumptions are necessary to successfully (and correctly!) run an OLS regression. They are often supplemented with an additional set of assumptions, which help with certain aspects of the exposition, but are not strictly necessary:
+
+3. The data are drawn from a **random sample** of size $n$: observation $(x_i,y_i)$ comes from the exact same distribution, and is independent of observation $(x_j,y_j)$, for all $i\neq j$.
+4. The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
+
+
+Let's talk about the small but important modifications we applied to  model \@ref(eq:abline) to end up at \@ref(eq:abline-5) above:
+
+* $\beta_0$ and $\beta_1$ and intercept and slope parameters
+* $\varepsilon$ is the error term.
+
+First, we *assumed* that \@ref(eq:abline-5) is the correct represenation of the DGP. With that assumption in place, the values $\beta_0$ and $\beta_1$ are the *true parameter values* which generated the data. Notice that $\beta_0$ and $\beta_1$ are potentially different from $b_0$ and $b_1$ in \@ref(eq:abline) for a given sample of data - they could in practice be very close to each other, but $b_0$ and $b_1$ are *estimates* of $\beta_0$ and $\beta_1$. And, crucially, those estimates are generated from a sample of data. Now, the fact that our data $(y_i,x_i)$ are a sample from a larger population, means that there will be *sampling variation* in our estimates - exactly like in the case of the sample mean estimating the population average as mentioned above. One particular sample of data will generate one particular set of estimates $b_0$ and $b_1$, whereas another sample of data will generate estimates which will in general be different - by *how much* those estimates differ across samples is the question in this chapter. In general, the more observations we have the greater the precision of our estimates, hence, the closer the estimates from different samples will lie together.
+
+
+### Standard Errors in Theory
+
+The standard deviation of the OLS parameters is generally called *standard error*. As such, it is just the square root of the parameter's variance.
+Under assumptions 1. through 4. we can define the formula for the variance of our slope coefficient in the context of our single regressor model \@ref(eq:abline-5) as follows: 
+
+$$
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  (\#eq:var-ols)
+$$
+In pratice, we don't know the theoretical variance of $\varepsilon$, i.e. $\sigma^2$, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted $s^2$:
+
+$$
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
+$$
+where $n-p$ are the *degrees of freedom* available in this estimation. $p$ is the number of parameters we wish to estimate (here: 1). So, the variance formula would become
+
+$$
+Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  (\#eq:var-ols2)
+$$
+
+You can clearly see that, as $n$ increases, the denominator increases, and therefore the variance of the estimate will decrease.
+
+### Standard Errors in Practice
+
+We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps, before going into the associated tutorial:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("sampling")  
+launchApp("standard_errors_simple") 
+launchApp("standard_errors_changeN")  # then do that
+```
+
+## What's in my model? (And what is not?)
+
+We want to revisit the underlying assumptions of the classical model outlined in \@ref(class-reg). Right now we to talk a bit more about assumption number 2 of the above definition in \@ref(class-reg). It said this:
+
+```{block type='warning'}
+The mean of the residuals conditional on $x$ should be zero, $E[\varepsilon|x] = 0$. This means that $Cov(\varepsilon,x) = 0$, i.e. that the errors and our explanatory variable(s) should be *uncorrelated*. We want $x$ to be **strictly exogenous** to the model.
+```
+<br>
+Great. But what does this *mean*? How could $x$ be correlated with something we don't even observe?! Good questions - let's try with an example.
+
+Imagine that we assume that 
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:DGP-h)
+$$ 
+
+represents the DGP of  impact  the sales price of houses ($y$) as a function of number of bathrooms ($x$). We run OLS as
+
+$$
+y_i = b_0 + b_1 x_i + e_i 
+$$ 
+You find a positive impact of bathrooms on houses:
+
+```{r housing,echo=FALSE}
+data(Housing, package="Ecdat")
+hlm = lm(price ~ bathrms, data = Housing)
+summary(hlm)
+
+```
+
+In fact, from this you conclude that each additional bathroom increases the sales price of a house by `r options(scipen=999);round(coef(hlm)[2],1)` dollars. Let's see if our assumption $E[\varepsilon|x] = 0$ is satisfied:
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+# add residuals to the data
+Housing$resid <- resid(hlm)
+Housing %>%
+  group_by(bathrms) %>%
+  summarise(mean_of_resid=mean(resid))
+```
+
+Oh, that doesn't look good. Even though the unconditional mean $E[e] = 0$ is *very* close to zero (type `mean(resid(hlm))`!), this doesn't seem to hold at all by categories of $x$. This indicates that there is something in the error term $e$ which is *correlated* with `bathrms`. Going back to our discussion about *ceteris paribus* in section \@ref(ceteris), we stated that the interpretation of our OLS slope estimate is that 
+
+```{block,type="tip"}
+Keeping everything else fixed at the current value, what is the impact of $x$ on $y$? *Everything* also includes things in $\varepsilon$ (and, hence, $e$)!
+```
+<br>
+It looks like our DGP in \@ref(eq:DGP-h) is the *wrong model*. Suppose instead, that in reality sales prices are generated like this:
+$$
+y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i (\#eq:DGP-h2)
+$$ 
+This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this:
+$$
+y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
+$$ 
+This is to say that by *omitting* variable $z$, we relegate it to a new error term, here called $u_i = b_2 z_i + e_i$. Our assumption above states that *all regressors need to be uncorrelated with the error term* - so, if $Corr(x,z)\neq 0$, we have a problem. Let's take this idea to our running example.
+
+
+### Omitted Variable Bias
+
+What we are discussing here is called *Omitted Variable Bias*. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it's *reasonable* that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with `bathrms`? 
+
+Let's try with `lotsize`, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let's check this out:
+
+
+```{r,echo=FALSE}
+options(scipen=0)
+hlm2 = update(hlm, . ~ . + lotsize)
+summary(hlm2)
+options(scipen=999)
+```
+
+Here we see that the estimate for the effect of an additional bathroom *decreased* from `r round(coef(hlm)[2],1)` to `r round(coef(hlm2)[2],1)` by almost 5000 dollars! Well that's the problem then. `r options(scipen=999)`We said above that one more bathroom is worth `r round(coef(hlm)[2],1)` dollars - if **nothing else changes**! But that doesn't seem to hold, because we have seen that as we increase `bathrms` from `1` to `2`, the mean of the resulting residuals changes quite a bit. So there **is something in $\varepsilon$ which does change**, hence, our conclusion that one more bathroom is worth `r round(coef(hlm)[2],1)` dollars is in fact *invalid*! 
+
+The way in which `bathrms` and `lotsize` are correlated is important here, so let's investigate that:
+
+
+```{r, fig.align='center', fig.cap='Distribution of `lotsize` by `bathrms`',echo=FALSE}
+options(scipen=0)
+h = subset(Housing,lotsize<13000 & bathrms<4)
+h$bathrms = factor(h$bathrms)
+ggplot(data=h,aes(x=lotsize,color=bathrms,fill=bathrms)) + geom_density(alpha=0.2,size=1) + theme_bw()
+```
+
+This shows that lotsize and the number of bathrooms is indeed positively related. Larger lot of the house, more bathrooms. This leads to a general result:
+
+```{block type='note'}
+**Direction of Omitted Variable Bias**
+
+If there is an omitted variable $z$ that is *positively* correlated with our explanatory variable $x$, then our estimate of effect of $x$ on $y$ will be too large (or, *biased upwards*). The correlation between $x$ and $z$ means that we attribute part of the impact of $z$ on $y$ mistakenly to $x$! And, of course, vice versa for *negatively* correlated omitted variables.
+```
+<br>
+
+

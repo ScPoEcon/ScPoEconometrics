@@ -344,7 +344,7 @@ launchApp("reg_standardized")
 ```
 
 
-## Predictions and Residuals
+## Predictions and Residuals {#pred-resids}
 
 Now we want to ask how our residuals $e_i$ relate to the prediction $\hat{y_i}$. Let us first think about the average of all predictions $\hat{y_i}$, i.e. the number $\frac{1}{N} \sum_{i=1}^N \hat{y_i}$. Let's just take \@ref(eq:abline-pred) and plug this into this average, so that we get
 
@@ -468,46 +468,48 @@ plot(mtcars$hp,mtcars$mpg,xlab="x",ylab="y")
 lines(newdata$hp,newdata$y,lw=2)
 ```
 
+## Analysing $Var(y)$
+
+Analysis of Variance (ANOVA) refers to a method to decompose variation in one variable as a function of several others. We can use this idea on our outcome $y$. Suppose we wanted to know the variance of $y$, keeping in mind that, by definition, $y_i = \hat{y}_i + e_i$. We would write
+
+\begin{align}
+Var(y) &= Var(\hat{y} + e)\\
+ &= Var(\hat{y}) + Var(e) + 2 Cov(\hat{y},e)\\
+ &= Var(\hat{y}) + Var(e) (\#eq:anova)
+\end{align}
+
+We have seen above in \@ref(pred-resids) that the covariance between prediction $\hat{y}$ and error $e$ is zero, that's why we have $Cov(\hat{y},e)=0$ in \@ref(eq:anova).
+What this tells us in words is that we can decompose the variance in the observed outcome $y$ into a part that relates to variance as *explained by the model* and a part that comes from unexplained variation. Finally, we know the definition of *variance*, and can thus write down the respective formulae for each part:
+
+* $Var(y) = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{y})^2$
+* $Var(\hat{y}) = \frac{1}{N}\sum_{i=1}^N (\hat{y_i} - \bar{y})^2$, because the mean of $\hat{y}$ is $\bar{y}$ as we know. Finally,
+* $Var(e) = \frac{1}{N}\sum_{i=1}^N e_i^2$, because the mean of $e$ is zero.
+
+We can thus formulate how the total variation in outcome $y$ is aportioned between model and unexplained variation:
+
+```{block, type="tip"}
+The total variation in outcome $y$ (often called SST, or *total sum of squares*) is equal to the sum of explained squares (SSE) plus the sum of residuals (SSR). We have thus **SST = SSE + SSR**.
+```
+
+
+
 ## Assessing the *Goodness of Fit*
 
-In our simple setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. It is a statistic that makes use of a *benchmark* model, against which to compare any given model we may have in mind. Suppose we posit our standard representation of the best line:
+In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. We make use of the just introduced decomposition of variance, and write the formula as
 
 $$
-y_i = b_0 + b_1 x_i + e_i (\#eq:ssr-mod) 
-$$
- 
-and let us write down the benchmark model as follows:
-
-$$
-y_i = b_0 + e_i (\#eq:ssr-bench)
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (\#eq:Rsquared)
 $$
 
-As you can see, the benchmark model in \@ref(eq:ssr-bench) is a model with an intercept only. We just saw that this delivers an estimate of the mean of $y$. It is a benchmark because it does not include *any* explanatory variables, so we can compare against this other models which do in fact contain some $x$'s. Back to our $R^2$ statistic: there are several equivalent definitions, and for our present case we will use the following.
+It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.
 
-```{block,type="tip"}
-The **coefficient of determination** (*R squared*) is defined by $$R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.$$
-In the simple linear model, we have that $R^2 \in [0,1]$, where $R^2 = 1$ would indicate that our model is a **very good** fit to the data, and vice versa for $R^2 = 0$. You can interpret the value of $R^2$ as the fraction of variation in outcome $y$ that is accounted for by explanatory variable $x$.
-```
-<br>
-The workings of this statistic are illustrated in the following figure \@ref(fig:r-squared). There, the left panel is our well-known depiction of the sum of squared residuals (SSR) of our model $y_i = b_0 + b_1 x_i + e_i$. The right panel shows the SSR of $y_i = b_0 + e_i$. Ideally, each red square would be small relative to its blue counterpart, indicating that our model has a small residual at a given observation.
-
-```{r r-squared,echo=FALSE,fig.align='center',fig.cap='Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.'}
-plot_data = generate_data(sigma = 2,n=4)
-# op <- par(mfrow=c(1,2),pin=c(2.8,2.5))
-# op <- par(mfrow=c(1,2),cex=2, cex.lab=0.5, cex.axis=0.5, cex.main=1, mgp=c(2, 
-# 1, 0), omi=c(0.5,0.25,0.25, 0.25))
-op <- par(mfrow=c(1,2))
-plot_unexp_SSR(plot_data,title="SSR our model")
-plot_total_dev(plot_data,title="SSR of benchmark")
-par(op)
-```
 
 
 ## An Example: California Student Test Scores {#lm-example1}
 
 Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our `apps`. As it turns out, `R` can do this much more precisely, and very fast!
 
-Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool`dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
+Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool` dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
 
 ### Loading and exploring Data
 
@@ -527,18 +529,16 @@ summary(Caschool[, c("testscr", "str", "avginc")])
 
 ### Fitting a linear model
 
-Suppose a policymaker is interested in the following linear model:
+Suppose we are interested in the following linear model:
 
 $$\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i$$
 Where $\text{testscr}_i$ is the *average test score* for a given school $i$ and $\text{str}_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. Again, $b_0$ and $b_1$ are the intercept and the slope of the regression line.
 
 The subscript $i$ indexes all unique elementary schools ($i \in \{1, 2, 3, \dots 420\}$) and $e_i$ is the error, or *residual*, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the *sum of squared residuals* (SSR)).
 
-----
-
 At this point you should step back and take a second to think about what you believe the relation between a school's test scores and student/teacher ratio will be. Do you believe that, in general, a high student/teacher ratio will be associated with higher-than-average test scores for the school? Do you think that the number of students per teacher will impact results in any way? 
 
-Let's find out! As always, we will start by plotting the data to inspect it visually (don't worry if the syntax doesn't make much sense right now, we will come back to it very soon):
+Let's find out! As always, we will start by plotting the data to inspect it visually:
 
 ```{r first-reg0,fig.align='center',fig.cap='Student Teacher Ratio vs Test Scores'}
 
@@ -557,7 +557,7 @@ We will use the built-in `lm()` function to estimate the coefficients $b_0$ and 
 `lm(formula, data)`
 
 - `formula` is the description of our model which we want `R` to estimate for us. Its syntax is very simple: `Y ~ X` (more generally, `DependentVariable ~ Independent Variables`). You can think of the tilda operator `~` as the equal sign in your model equation. An intercept is included by default and so you do not have to ask for it in `formula`.
-  For example, the simple model $income = b_0 + b_1 \cdot age$ can be written as `income ~ age`. You can also ask `R` to estimate a multivariate regression such as $income = b_0 + b_1 \cdot age + b_2 \cdot isWoman$ by simply separating all variables on the right-hand side of the equation with the `+` operator, like this : `income ~ age + isWoman`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
+  For example, the simple model $income = b_0 + b_1 \cdot age$ can be written as `income ~ age`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
 
 - `data` is simply the `data.frame` containing the variables in the model.
 
@@ -603,4 +603,4 @@ p <- p + scale_y_continuous(name = "Average Test Score") +
 p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
 ```
 
-The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $\beta_1$. We will learn more about it in chapter \@ref(std-errors).
+The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $b_1$. We will learn more about it in chapter \@ref(std-errors).
