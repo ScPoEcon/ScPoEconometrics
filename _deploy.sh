@@ -1,10 +1,10 @@
 #!/bin/sh
 
 set -e
-echo "travis pull request is ${TRAVIS_PULL_REQUEST}"
+
 [ -z "${GH_TOKEN}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
-[ "${TRAVIS_PULL_REQUEST}" == "false" ] && exit 0
+[ "${TRAVIS_PULL_REQUEST}" != "false" ] && exit 0
 
 
 git config --global user.email "florian.oswald@gmail.com"
@@ -16,8 +16,8 @@ cp -r ../_book/* ./
 
 for i in 4 5 6 7 8 9; do
     if [ -d "../_slides/chapter$i" ]; then
-        mkdir -p ./slides/chapter$i
-        cp -r ../_slides/chapter$i ./slides/chapter$i
+        mkdir -p ./slides
+        cp -r ../_slides/chapter$i ./slides
     fi
 done
 git add --all *
