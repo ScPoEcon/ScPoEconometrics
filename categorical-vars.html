@@ -180,10 +180,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
 <li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
-<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
+<li class="chapter" data-level="13" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>13</b> Slides</a></li>
+<li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a><ul>
+<li class="chapter" data-level="14.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>14.1</b> Book usage</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>14</b> Slides</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -240,9 +240,9 @@ In dummy variable regressions, we remove one category from the regression (for e
             0 &amp; \text{if }i\text{ is not female}. \\
    \end{cases}
 \]</span> and let’s suppose that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>’s annual labor income. Our model is</p>
-<p><span class="math display" id="eq:dummy-reg">\[
+<span class="math display" id="eq:dummy-reg">\[\begin{equation}
 y_i = b_0 + b_1 \text{is.female}_i + e_i \tag{5.1}
-\]</span></p>
+\end{equation}\]</span>
 <p>and here is how we estimate this in <code>R</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># x = sample(x = c(0, 1), size = n, replace = T)</span>
 dta<span class="op">$</span>is.female =<span class="st"> </span><span class="kw">factor</span>(x)  <span class="co"># convert x to factor</span>
@@ -350,9 +350,9 @@ b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
 b_1 = \frac{d\log y}{d x}
 \]</span> This means a one-unit change in <span class="math inline">\(x\)</span> increases the logarithm of the outcome by <span class="math inline">\(b_1\)</span> units. For small changes in <span class="math inline">\(x\)</span>, we can just exponentiate <span class="math inline">\(b_1\)</span> to get the effect of <span class="math inline">\(x\)</span> the <em>level</em> of <span class="math inline">\(y\)</span>.</p>
 <p>Going back to our example, let’s say that a workers wage depends only on his <em>experience</em>, measured in the number of years he/she worked full-time:</p>
-<p><span class="math display" id="eq:wage-exp">\[
+<span class="math display" id="eq:wage-exp">\[\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + e_i \tag{5.2}
-\]</span></p>
+\end{equation}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_w =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_w)</code></pre></div>
 <pre><code>#OUT&gt; 
@@ -381,9 +381,9 @@ Figure 5.2: log wage vs experience. Red line shows the regression.
 </p>
 </div>
 <p>Now let’s investigate whether this relationship is different for men and women. We can do this by just including the <code>factor</code> variable <code>sex</code>:</p>
-<p><span class="math display" id="eq:wage-sex">\[
+<span class="math display" id="eq:wage-sex">\[\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i \tag{5.3}
-\]</span></p>
+\end{equation}\]</span>
 <p>In <code>R</code> we can do this easily by using the <code>update</code> function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_sex =<span class="st"> </span><span class="kw">update</span>(lm_w, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>sex)  <span class="co"># update lm_w with same LHS, same RHS, but add sex to it</span>
 <span class="kw">summary</span>(lm_sex)</code></pre></div>
@@ -406,7 +406,7 @@ Figure 5.2: log wage vs experience. Red line shows the regression.
 #OUT&gt; Residual standard error: 0.4286 on 4162 degrees of freedom
 #OUT&gt; Multiple R-squared:  0.1381,  Adjusted R-squared:  0.1377 
 #OUT&gt; F-statistic: 333.4 on 2 and 4162 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>What’s going on here? Remember from above that <code>sex</code> is a <code>factor</code> with 2 levels <em>female</em> and <em>male</em>. We see in the above output that <code>R</code> included a regressor called <code>sexmale</code> <span class="math inline">\(=\mathbf{1}[sex_i==&quot;male&quot;]\)</span>. This is a combination of the variable name <code>sex</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>sex==&quot;female&quot;</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being male <em>relative</em> to being female. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category. In particular, if <code>sex</code> had a third category <code>dont want to say</code>, there would be an additional regressor called <code>sexdontwanttosay</code>.</p>
+<p>What’s going on here? Remember from above that <code>sex</code> is a <code>factor</code> with 2 levels <em>female</em> and <em>male</em>. We see in the above output that <code>R</code> included a regressor called <code>sexmale</code> <span class="math inline">\(=\mathbf{1}[sex_i==male]\)</span>. This is a combination of the variable name <code>sex</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>sex==&quot;female&quot;</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being male <em>relative</em> to being female. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category. In particular, if <code>sex</code> had a third category <code>dont want to say</code>, there would be an additional regressor called <code>sexdontwanttosay</code>.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
 <img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs experience with different intercepts by sex" width="672" />
 <p class="caption">
@@ -419,13 +419,13 @@ Figure 5.3: log wage vs experience with different intercepts by sex
 <div id="saturated-models-main-effects-and-interactions" class="section level2">
 <h2><span class="header-section-number">5.2</span> Saturated Models: Main Effects and Interactions</h2>
 <p>You can see above that we <em>restricted</em> male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called <em>interaction</em> effects. As already introduced in chapter <a href="multiple-reg.html#mreg-interactions">4.4</a>, interactions allow that the <em>ceteris paribus</em> effect of a certain regressor, <code>exp</code> say, depends also on the value of yet another regressor, <code>sex</code> for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to <code>exp</code> in figure <a href="categorical-vars.html#fig:wage-plot2">5.3</a>. Therefore we formulate this version of our model:</p>
-<p><span class="math display" id="eq:wage-sex-inter">\[
+<span class="math display" id="eq:wage-sex-inter">\[\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i \tag{5.4}
-\]</span></p>
+\end{equation}\]</span>
 <p>The inclusion of the <em>product</em> of <code>exp</code> and <code>sex</code> amounts to having different slopes for different categories in <code>sex</code>. This is easy to see if we take the partial derivative of <a href="categorical-vars.html#eq:wage-sex-inter">(5.4)</a> with respect to <code>sex</code>:</p>
-<p><span class="math display" id="eq:wage-sex-inter-deriv">\[
+<span class="math display" id="eq:wage-sex-inter-deriv">\[\begin{equation}
 \frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i \tag{5.5}
-\]</span></p>
+\end{equation}\]</span>
 <p>Back in our <code>R</code> session, we can run the full interactions model like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_inter =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp<span class="op">*</span>sex, <span class="dt">data =</span> Wages)
 <span class="kw">summary</span>(lm_inter)</code></pre></div>
@@ -549,7 +549,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/06-Categorial-Vars.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/05-Categorial-Vars.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],

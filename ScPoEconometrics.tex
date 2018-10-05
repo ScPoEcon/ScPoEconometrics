@@ -659,7 +659,7 @@ library, and check it's current version:
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] '0.1.7'
+#OUT> [1] '0.1.8'
 \end{verbatim}
 
 \section{Data Types}\label{data-types}
@@ -4122,9 +4122,11 @@ i.e.~with two numbers called \emph{intercept} and \emph{slope}. Let's
 write down a simple formula which represents a line where some outcome
 \(z\) is related to a variable \(x\):
 
-\[
+\begin{equation}
 z = b_0 + b_1 x \label{eq:bline}
-\] Here \(b_0\) represents the value of the intercept (i.e. \(z\) when
+\end{equation}
+
+Here \(b_0\) represents the value of the intercept (i.e. \(z\) when
 \(x=0\)), and \(b_1\) is the value of the slope. The question for us is
 now: How to choose the number \(b_0\) and \(b_1\) such that the result
 is the \textbf{good} line?
@@ -4136,9 +4138,11 @@ the \emph{output} of equation \eqref{eq:bline}. We call the value
 \(\hat{y}_i\) the \emph{predicted value} for obseration \(i\), after
 having chosen some particular values \(b_0\) and \(b_1\):
 
-\[
+\begin{equation}
 \hat{y}_i = b_0 + b_1 x_i \label{eq:abline-pred}
-\] In general it is likely that we won't be able to choose \(b_0\) and
+\end{equation}
+
+In general it is likely that we won't be able to choose \(b_0\) and
 \(b_1\) in such as way as to provide a perfect prediction, i.e.~one
 where \(\hat{y}_i = y_i\) for all \(i\). That is, we expect to make an
 \emph{error} in our prediction \(\hat{y}_i\), so let's denote this value
@@ -4167,10 +4171,12 @@ pointing arrows. The erros are also called \emph{residuals}, which comes
 from the way can write the equation for this relationship between two
 particular values \((y_i,x_i)\) belonging to observation \(i\):
 
-\[
+\begin{equation}
 y_i = b_0 + b_1 x_i + e_i \label{eq:abline}
-\] You realize of course that \(\hat{y}_i = y_i - e_i\), which just
-means that our prediction is the observed value \(y_i\) minus any error
+\end{equation}
+
+You realize of course that \(\hat{y}_i = y_i - e_i\), which just means
+that our prediction is the observed value \(y_i\) minus any error
 \(e_i\) we make. In other words, \(e_i\) is what is left to be explained
 on top of the line \(b_0 + b_1 x_i\), hence, it's a residual to explain
 \(y_i\). Here are \(y,\hat{y}\) and the resulting \(e\) which are
@@ -4278,16 +4284,18 @@ illustrated above is called \emph{Ordinary Least Squares}, or OLS.
 coefficients}. By solving problem \eqref{eq:ols-min} one can derive an
 explicit formula for them:
 
-\[
+\begin{equation}
 b_1 = \frac{cov(x,y)}{var(x)},  \label{eq:beta1hat}
-\] i.e.~the estimate of the slope coefficient is the covariance between
+\end{equation}
+
+i.e.~the estimate of the slope coefficient is the covariance between
 \(x\) and \(y\) divided by the variance of \(x\), both computed from our
 sample of data. With \(b_1\) in hand, we can get the estimate for the
 intercept as
 
-\[
+\begin{equation}
 b_0 = \bar{y} - b_1 \bar{x}.  \label{eq:beta0hat}
-\]
+\end{equation}
 
 where \(\bar{z}\) denotes the sample mean of variable \(z\). The
 interpretation of the OLS slope coefficient \(b_1\) is as follows. Given
@@ -4312,10 +4320,12 @@ meaning of running a regression \emph{without any regressor},
 i.e.~without a \(x\)? Our line becomes very simple. Instead of
 \eqref{eq:bline}, we get
 
-\[
+\begin{equation}
 y = b_0. \label{eq:b0line}
-\] This means that our minization problem in \eqref{eq:ols-min}
-\emph{also} becomes very simple: We only have to choose \(b_0\)! We have
+\end{equation}
+
+This means that our minization problem in \eqref{eq:ols-min} \emph{also}
+becomes very simple: We only have to choose \(b_0\)! We have
 
 \[
 b_0 = \arg\min_{\text{int}} \sum_{i=1}^N \left[y_i - \text{int}\right]^2,
@@ -4596,9 +4606,9 @@ and it completely misses the right boundary. It's easy to address this
 shortcoming by including \emph{higher order terms} of an explanatory
 variable. We would modify \eqref{eq:abline} to read now
 
-\[
+\begin{equation}
 y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \label{eq:abline2}
-\]
+\end{equation}
 
 This is a special case of \emph{multiple regression}, which we will talk
 about in chapter \ref{multiple-reg}. You can see that there are
@@ -4668,9 +4678,8 @@ particular statistical model fits the data. It is called \(R^2\)
 We make use of the just introduced decomposition of variance, and write
 the formula as
 
-\[
-R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \label{eq:Rsquared}
-\]
+\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \label{eq:Rsquared}
+\end{equation}
 
 It is easy to see that a \emph{good fit} is one where the sum of
 \emph{explained} squares (SSE) is large relativ to the total variation
@@ -4914,9 +4923,11 @@ suppose we wanted to explain how many \emph{miles per gallon}
 (\texttt{hp}) and its \emph{weight} (\texttt{wt}). In other words we
 want to estimate the equation
 
-\[
+\begin{equation}
 mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i \label{eq:abline2d}
-\] on our built-in dataset of cars (\texttt{mtcars}):
+\end{equation}
+
+on our built-in dataset of cars (\texttt{mtcars}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5028,11 +5039,13 @@ latin and means \emph{the others equal}, i.e.~all other variables fixed.
 In terms of our model in \eqref{eq:abline2d}, we want to know the
 following quantity:
 
-\[
+\begin{equation}
 \frac{\partial mpg_i}{\partial hp_i} = b_1 \label{eq:abline2d-deriv}
-\] This means: \emph{keeping all other variables fixed, what is the
-effect of \texttt{hp} on \texttt{mpg}?}. In calculus, the answer to this
-is provided by the \emph{partial derivative} as shown in
+\end{equation}
+
+This means: \emph{keeping all other variables fixed, what is the effect
+of \texttt{hp} on \texttt{mpg}?}. In calculus, the answer to this is
+provided by the \emph{partial derivative} as shown in
 \eqref{eq:abline2d-deriv}. We call the value of coefficient \(b_1\)
 therefore also the \emph{partial effect} of \texttt{hp} on \texttt{mpg}.
 In terms of our dataset, we use \texttt{R} to run the following
@@ -5177,9 +5190,9 @@ and \texttt{avginc} in isolation cannot answer that question (because
 the value of other variables is assumed \emph{fixed}!). To measure such
 an effect, we would reformulate our model like this:
 
-\[
+\begin{equation}
 \text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i \label{eq:caschool-inter}
-\]
+\end{equation}
 
 The inclusion of the \emph{product} of \texttt{str} and \texttt{avginc}
 amounts to having different slopes with respect to \texttt{str} for
@@ -5187,9 +5200,9 @@ different values of \texttt{avginc} (and vice versa). This is easy to
 see if we take the partial derivative of \eqref{eq:caschool-inter} with
 respect to \texttt{str}:
 
-\[
+\begin{equation}
 \frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i \label{eq:caschool-inter-deriv}
-\]
+\end{equation}
 
 \begin{quote}
 You should go back to equation \eqref{eq:abline2d-deriv} to remind
@@ -5340,9 +5353,9 @@ above,
 \] and let's suppose that \(y_i\) is a measure of \(i\)'s annual labor
 income. Our model is
 
-\[
+\begin{equation}
 y_i = b_0 + b_1 \text{is.female}_i + e_i \label{eq:dummy-reg}
-\]
+\end{equation}
 
 and here is how we estimate this in \texttt{R}:
 
@@ -5573,9 +5586,9 @@ Going back to our example, let's say that a workers wage depends only on
 his \emph{experience}, measured in the number of years he/she worked
 full-time:
 
-\[
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + e_i \label{eq:wage-exp}
-\]
+\end{equation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5627,9 +5640,9 @@ Now let's investigate whether this relationship is different for men and
 women. We can do this by just including the \texttt{factor} variable
 \texttt{sex}:
 
-\[
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i \label{eq:wage-sex}
-\]
+\end{equation}
 
 In \texttt{R} we can do this easily by using the \texttt{update}
 function as follows:
@@ -5666,9 +5679,9 @@ function as follows:
 What's going on here? Remember from above that \texttt{sex} is a
 \texttt{factor} with 2 levels \emph{female} and \emph{male}. We see in
 the above output that \texttt{R} included a regressor called
-\texttt{sexmale} \(=\mathbf{1}[sex_i=="male"]\). This is a combination
-of the variable name \texttt{sex} and the level which was included in
-the regression. In other words, \texttt{R} chooses a \emph{reference
+\texttt{sexmale} \(=\mathbf{1}[sex_i==male]\). This is a combination of
+the variable name \texttt{sex} and the level which was included in the
+regression. In other words, \texttt{R} chooses a \emph{reference
 category} (by default the first of all levels by order of appearance),
 which is excluded - here this is \texttt{sex=="female"}. The
 interpretation is that \(b_2\) measures the effect of being male
@@ -5707,18 +5720,18 @@ whether male and female not only have different intercepts, but also
 different slopes with respect to \texttt{exp} in figure
 \ref{fig:wage-plot2}. Therefore we formulate this version of our model:
 
-\[
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i \label{eq:wage-sex-inter}
-\]
+\end{equation}
 
 The inclusion of the \emph{product} of \texttt{exp} and \texttt{sex}
 amounts to having different slopes for different categories in
 \texttt{sex}. This is easy to see if we take the partial derivative of
 \eqref{eq:wage-sex-inter} with respect to \texttt{sex}:
 
-\[
+\begin{equation}
 \frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i \label{eq:wage-sex-inter-deriv}
-\]
+\end{equation}
 
 Back in our \texttt{R} session, we can run the full interactions model
 like this:
@@ -5894,9 +5907,11 @@ many times already.
 Let's bring back our simple model \eqref{eq:abline} to explain this
 concept.
 
-\[
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
-\] The smallest set of assumptions used to define the \emph{classical
+\end{equation}
+
+The smallest set of assumptions used to define the \emph{classical
 regression model} as in \eqref{eq:abline-5} are the following:
 
 \begin{enumerate}
@@ -5974,12 +5989,14 @@ parameter's variance. Under assumptions 1. through 4. we can define the
 formula for the variance of our slope coefficient in the context of our
 single regressor model \eqref{eq:abline-5} as follows:
 
-\[
+\begin{equation}
 Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  \label{eq:var-ols}
-\] In pratice, we don't know the theoretical variance of
-\(\varepsilon\), i.e. \(\sigma^2\), but we form an estimate about it
-from our sample of data. A widely used estimate uses the already
-encountered SSR (sum of squared residuals), and is denoted \(s^2\):
+\end{equation}
+
+In pratice, we don't know the theoretical variance of \(\varepsilon\),
+i.e. \(\sigma^2\), but we form an estimate about it from our sample of
+data. A widely used estimate uses the already encountered SSR (sum of
+squared residuals), and is denoted \(s^2\):
 
 \[
 s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
@@ -5987,9 +6004,9 @@ s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \fra
 estimation. \(p\) is the number of parameters we wish to estimate (here:
 1). So, the variance formula would become
 
-\[
+\begin{equation}
 Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  \label{eq:var-ols2}
-\]
+\end{equation}
 
 You can clearly see that, as \(n\) increases, the denominator increases,
 and therefore the variance of the estimate will decrease.
@@ -6032,9 +6049,9 @@ an example.
 
 Imagine that we assume that
 
-\[
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:DGP-h}
-\]
+\end{equation}
 
 represents the DGP of impact the sales price of houses (\(y\)) as a
 function of number of bathrooms (\(x\)). We run OLS as
@@ -6105,9 +6122,12 @@ of \(x\) on \(y\)? \emph{Everything} also includes things in
 
  It looks like our DGP in \eqref{eq:DGP-h} is the \emph{wrong model}.
 Suppose instead, that in reality sales prices are generated like this:
-\[
+
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \label{eq:DGP-h2}
-\] This would now mean that by running our regression, informed by the
+\end{equation}
+
+This would now mean that by running our regression, informed by the
 wrong DGP, what we estimate is in fact this: \[
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 \] This is to say that by \emph{omitting} variable \(z\), we relegate it
@@ -6909,6 +6929,20 @@ off-diagonals.
 #OUT> [5,]    0    0    0    0    1
 \end{verbatim}
 
+\chapter{Slides}\label{slides}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-1}{chapter 1}
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-2}{chapter 2}
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-3}{chapter 3}
+\item
+  \href{slides/chapter4/chapter4.html}{chapter 4}
+\end{itemize}
+
 \chapter{Notes}\label{notes}
 
 this creates a library for the used R packages.
@@ -7003,20 +7037,6 @@ Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 You can write citations, too. For example, we are using the
 \textbf{bookdown} package \citep{R-bookdown} in this sample book, which
 was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
-
-\chapter{Slides}\label{slides}
-
-\begin{itemize}
-\tightlist
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-1}{chapter 1}
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-2}{chapter 2}
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-3}{chapter 3}
-\item
-  \href{slides/chapter4/chapter4.html}{chapter 4}
-\end{itemize}
 
 \bibliography{book.bib,packages.bib}
 

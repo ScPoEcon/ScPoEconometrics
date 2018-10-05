@@ -180,10 +180,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
 <li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
-<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
+<li class="chapter" data-level="13" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>13</b> Slides</a></li>
+<li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a><ul>
+<li class="chapter" data-level="14.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>14.1</b> Book usage</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>14</b> Slides</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -259,16 +259,18 @@ How are <code>speed</code> and <code>dist</code> related? How could one best <em
 <p>Now that doesn’t seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it’s too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. Let’s write down a simple formula which represents a line where some outcome <span class="math inline">\(z\)</span> is related to a variable <span class="math inline">\(x\)</span>:</p>
-<p><span class="math display" id="eq:bline">\[
+<span class="math display" id="eq:bline">\[\begin{equation}
 z = b_0 + b_1 x \tag{3.1}
-\]</span> Here <span class="math inline">\(b_0\)</span> represents the value of the intercept (i.e. <span class="math inline">\(z\)</span> when <span class="math inline">\(x=0\)</span>), and <span class="math inline">\(b_1\)</span> is the value of the slope. The question for us is now: How to choose the number <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> such that the result is the <strong>good</strong> line?</p>
+\end{equation}\]</span>
+<p>Here <span class="math inline">\(b_0\)</span> represents the value of the intercept (i.e. <span class="math inline">\(z\)</span> when <span class="math inline">\(x=0\)</span>), and <span class="math inline">\(b_1\)</span> is the value of the slope. The question for us is now: How to choose the number <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> such that the result is the <strong>good</strong> line?</p>
 </div>
 <div id="choosing-the-best-line" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> Choosing the Best Line</h3>
 <p>In order to be able to reason about good or bad line, we need to denote the <em>output</em> of equation <a href="linreg.html#eq:bline">(3.1)</a>. We call the value <span class="math inline">\(\hat{y}_i\)</span> the <em>predicted value</em> for obseration <span class="math inline">\(i\)</span>, after having chosen some particular values <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>:</p>
-<p><span class="math display" id="eq:abline-pred">\[
+<span class="math display" id="eq:abline-pred">\[\begin{equation}
 \hat{y}_i = b_0 + b_1 x_i \tag{3.2}
-\]</span> In general it is likely that we won’t be able to choose <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in such as way as to provide a perfect prediction, i.e. one where <span class="math inline">\(\hat{y}_i = y_i\)</span> for all <span class="math inline">\(i\)</span>. That is, we expect to make an <em>error</em> in our prediction <span class="math inline">\(\hat{y}_i\)</span>, so let’s denote this value <span class="math inline">\(e_i\)</span>. If we acknowlegdge that we will make errors, let’s at least make them as small as possible! Exactly this is going to be our task now.</p>
+\end{equation}\]</span>
+<p>In general it is likely that we won’t be able to choose <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in such as way as to provide a perfect prediction, i.e. one where <span class="math inline">\(\hat{y}_i = y_i\)</span> for all <span class="math inline">\(i\)</span>. That is, we expect to make an <em>error</em> in our prediction <span class="math inline">\(\hat{y}_i\)</span>, so let’s denote this value <span class="math inline">\(e_i\)</span>. If we acknowlegdge that we will make errors, let’s at least make them as small as possible! Exactly this is going to be our task now.</p>
 <p>Suppose we have the following set of 9 observations on <code>x</code> and <code>y</code>, and we put the <em>best</em> straight line into it, that we can think of. It would look like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:line-arrows"></span>
 <img src="ScPoEconometrics_files/figure-html/line-arrows-1.png" alt="The best line and its errors" width="672" />
@@ -277,9 +279,10 @@ Figure 3.1: The best line and its errors
 </p>
 </div>
 <p>Here, the red arrows indicate the <strong>distance</strong> between the prediction (i.e. the black line) to each data point, in other words, each arrow is a particular <span class="math inline">\(e_i\)</span>. An upward pointing arrow indicates a positive value of a particular <span class="math inline">\(e_i\)</span>, and vice versa for downward pointing arrows. The erros are also called <em>residuals</em>, which comes from the way can write the equation for this relationship between two particular values <span class="math inline">\((y_i,x_i)\)</span> belonging to observation <span class="math inline">\(i\)</span>:</p>
-<p><span class="math display" id="eq:abline">\[
+<span class="math display" id="eq:abline">\[\begin{equation}
 y_i = b_0 + b_1 x_i + e_i \tag{3.3}
-\]</span> You realize of course that <span class="math inline">\(\hat{y}_i = y_i - e_i\)</span>, which just means that our prediction is the observed value <span class="math inline">\(y_i\)</span> minus any error <span class="math inline">\(e_i\)</span> we make. In other words, <span class="math inline">\(e_i\)</span> is what is left to be explained on top of the line <span class="math inline">\(b_0 + b_1 x_i\)</span>, hence, it’s a residual to explain <span class="math inline">\(y_i\)</span>. Here are <span class="math inline">\(y,\hat{y}\)</span> and the resulting <span class="math inline">\(e\)</span> which are plotted in figure <a href="linreg.html#fig:line-arrows">3.1</a>:</p>
+\end{equation}\]</span>
+<p>You realize of course that <span class="math inline">\(\hat{y}_i = y_i - e_i\)</span>, which just means that our prediction is the observed value <span class="math inline">\(y_i\)</span> minus any error <span class="math inline">\(e_i\)</span> we make. In other words, <span class="math inline">\(e_i\)</span> is what is left to be explained on top of the line <span class="math inline">\(b_0 + b_1 x_i\)</span>, hence, it’s a residual to explain <span class="math inline">\(y_i\)</span>. Here are <span class="math inline">\(y,\hat{y}\)</span> and the resulting <span class="math inline">\(e\)</span> which are plotted in figure <a href="linreg.html#fig:line-arrows">3.1</a>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -379,12 +382,13 @@ Figure 3.2: The best line and its SQUARED errors
 <div id="OLS" class="section level2">
 <h2><span class="header-section-number">3.2</span> Ordinary Least Squares (OLS) Estimator</h2>
 <p>The method to compute (or <em>estimate</em>) <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> we illustrated above is called <em>Ordinary Least Squares</em>, or OLS. <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are therefore also often called the <em>OLS coefficients</em>. By solving problem <a href="linreg.html#eq:ols-min">(3.4)</a> one can derive an explicit formula for them:</p>
-<p><span class="math display" id="eq:beta1hat">\[
+<span class="math display" id="eq:beta1hat">\[\begin{equation}
 b_1 = \frac{cov(x,y)}{var(x)},  \tag{3.5}
-\]</span> i.e. the estimate of the slope coefficient is the covariance between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> divided by the variance of <span class="math inline">\(x\)</span>, both computed from our sample of data. With <span class="math inline">\(b_1\)</span> in hand, we can get the estimate for the intercept as</p>
-<p><span class="math display" id="eq:beta0hat">\[
+\end{equation}\]</span>
+<p>i.e. the estimate of the slope coefficient is the covariance between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> divided by the variance of <span class="math inline">\(x\)</span>, both computed from our sample of data. With <span class="math inline">\(b_1\)</span> in hand, we can get the estimate for the intercept as</p>
+<span class="math display" id="eq:beta0hat">\[\begin{equation}
 b_0 = \bar{y} - b_1 \bar{x}.  \tag{3.6}
-\]</span></p>
+\end{equation}\]</span>
 <p>where <span class="math inline">\(\bar{z}\)</span> denotes the sample mean of variable <span class="math inline">\(z\)</span>. The interpretation of the OLS slope coefficient <span class="math inline">\(b_1\)</span> is as follows. Given a line as in <span class="math inline">\(y = b_0 + b_1 x\)</span>,</p>
 <ul>
 <li><span class="math inline">\(b_1 = \frac{d y}{d x}\)</span> measures the change in <span class="math inline">\(y\)</span> resulting from a one unit change in <span class="math inline">\(x\)</span></li>
@@ -393,9 +397,10 @@ b_0 = \bar{y} - b_1 \bar{x}.  \tag{3.6}
 <div id="linear-regression-without-regressor" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Linear Regression without Regressor</h3>
 <p>There are several important special cases for the linear regression introduced above. Let’s start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
-<p><span class="math display" id="eq:b0line">\[
+<span class="math display" id="eq:b0line">\[\begin{equation}
 y = b_0. \tag{3.7}
-\]</span> This means that our minization problem in <a href="linreg.html#eq:ols-min">(3.4)</a> <em>also</em> becomes very simple: We only have to choose <span class="math inline">\(b_0\)</span>! We have</p>
+\end{equation}\]</span>
+<p>This means that our minization problem in <a href="linreg.html#eq:ols-min">(3.4)</a> <em>also</em> becomes very simple: We only have to choose <span class="math inline">\(b_0\)</span>! We have</p>
 <p><span class="math display">\[
 b_0 = \arg\min_{\text{int}} \sum_{i=1}^N \left[y_i - \text{int}\right]^2,
 \]</span> which is a quadratic equation with a unique optimum such that <span class="math display">\[
@@ -534,9 +539,9 @@ Figure 3.3: Best line with non-linear data?
 </p>
 </div>
 <p>Somehow when looking at <a href="linreg.html#fig:non-line-cars-ols">3.3</a> one is not totally convinced that the straight line is a good summary of this relationship. For values <span class="math inline">\(x\in[50,120]\)</span> the line seems to low, then again too high, and it completely misses the right boundary. It’s easy to address this shortcoming by including <em>higher order terms</em> of an explanatory variable. We would modify <a href="linreg.html#eq:abline">(3.3)</a> to read now</p>
-<p><span class="math display" id="eq:abline2">\[
+<span class="math display" id="eq:abline2">\[\begin{equation}
 y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \tag{3.11}
-\]</span></p>
+\end{equation}\]</span>
 <p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">4</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let’s just see how this performs:</p>
 <div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols2"></span>
 <img src="ScPoEconometrics_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
@@ -570,9 +575,8 @@ The total variation in outcome <span class="math inline"><span class="math inlin
 <div id="assessing-the-goodness-of-fit" class="section level2">
 <h2><span class="header-section-number">3.6</span> Assessing the <em>Goodness of Fit</em></h2>
 <p>In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called <span class="math inline">\(R^2\)</span> (<em>R squared</em>), also called the <em>coefficient of determination</em>. We make use of the just introduced decomposition of variance, and write the formula as</p>
-<p><span class="math display" id="eq:Rsquared">\[
-R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \tag{3.13}
-\]</span></p>
+<span class="math display" id="eq:Rsquared">\[\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SS\tag{3.13}]  (#eq:Rsquared)
+\end{equation}\]</span>
 <p>It is easy to see that a <em>good fit</em> is one where the sum of <em>explained</em> squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an <span class="math inline">\(R^2\)</span> close to one. In the opposite case, we will see an <span class="math inline">\(R^2\)</span> close to zero. Notice that a small <span class="math inline">\(R^2\)</span> does not imply that the model is useless, just that it explains a small fraction of the observed variation.</p>
 </div>
 <div id="lm-example1" class="section level2">
@@ -722,7 +726,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/04-linear-reg.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/03-linear-reg.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],

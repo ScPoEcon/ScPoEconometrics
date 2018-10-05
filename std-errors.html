@@ -180,10 +180,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
 <li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
-<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
+<li class="chapter" data-level="13" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>13</b> Slides</a></li>
+<li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a><ul>
+<li class="chapter" data-level="14.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>14.1</b> Book usage</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>14</b> Slides</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -223,9 +223,10 @@ How <em>confident</em> should we be about the estimated values <span class="math
 <div id="class-reg" class="section level2">
 <h2><span class="header-section-number">6.2</span> The Classical Regression Model</h2>
 <p>Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
-<p><span class="math display" id="eq:abline-5">\[
+<span class="math display" id="eq:abline-5">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
-\]</span> The smallest set of assumptions used to define the <em>classical regression model</em> as in <a href="std-errors.html#eq:abline-5">(6.1)</a> are the following:</p>
+\end{equation}\]</span>
+<p>The smallest set of assumptions used to define the <em>classical regression model</em> as in <a href="std-errors.html#eq:abline-5">(6.1)</a> are the following:</p>
 <ol style="list-style-type: decimal">
 <li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section <a href="multiple-reg.html#multicol">4.2</a>. In the particular case of one regressor, as here, we require that <span class="math inline">\(x\)</span> exhibit some variation in the data, i.e. <span class="math inline">\(Var(x)\neq 0\)</span>.</li>
 <li>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Notice that this also means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. It is said that <span class="math inline">\(x\)</span> should be <strong>strictly exogenous</strong> to the model.</li>
@@ -244,15 +245,16 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <div id="standard-errors-in-theory" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Standard Errors in Theory</h3>
 <p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance. Under assumptions 1. through 4. we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
-<p><span class="math display" id="eq:var-ols">\[
+<span class="math display" id="eq:var-ols">\[\begin{equation}
 Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  \tag{6.2}
-\]</span> In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
+\end{equation}\]</span>
+<p>In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
 <p><span class="math display">\[
 s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
 \]</span> where <span class="math inline">\(n-p\)</span> are the <em>degrees of freedom</em> available in this estimation. <span class="math inline">\(p\)</span> is the number of parameters we wish to estimate (here: 1). So, the variance formula would become</p>
-<p><span class="math display" id="eq:var-ols2">\[
+<span class="math display" id="eq:var-ols2">\[\begin{equation}
 Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  \tag{6.3}
-\]</span></p>
+\end{equation}\]</span>
 <p>You can clearly see that, as <span class="math inline">\(n\)</span> increases, the denominator increases, and therefore the variance of the estimate will decrease.</p>
 </div>
 <div id="standard-errors-in-practice" class="section level3">
@@ -274,9 +276,9 @@ The mean of the residuals conditional on <span class="math inline"><span class="
 </div>
 <p><br> Great. But what does this <em>mean</em>? How could <span class="math inline">\(x\)</span> be correlated with something we don’t even observe?! Good questions - let’s try with an example.</p>
 <p>Imagine that we assume that</p>
-<p><span class="math display" id="eq:DGP-h">\[
+<span class="math display" id="eq:DGP-h">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.4}
-\]</span></p>
+\end{equation}\]</span>
 <p>represents the DGP of impact the sales price of houses (<span class="math inline">\(y\)</span>) as a function of number of bathrooms (<span class="math inline">\(x\)</span>). We run OLS as</p>
 <p><span class="math display">\[
 y_i = b_0 + b_1 x_i + e_i 
@@ -319,9 +321,11 @@ Housing <span class="op">%&gt;%</span>
 Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span> (and, hence, <span class="math inline"><span class="math inline">\(e\)</span></span>)!
 </p>
 </div>
-<p><br> It looks like our DGP in <a href="std-errors.html#eq:DGP-h">(6.4)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this: <span class="math display" id="eq:DGP-h2">\[
+<p><br> It looks like our DGP in <a href="std-errors.html#eq:DGP-h">(6.4)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this:</p>
+<span class="math display" id="eq:DGP-h2">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{6.5}
-\]</span> This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
+\end{equation}\]</span>
+<p>This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 \]</span> This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
 <div id="omitted-variable-bias" class="section level3">
@@ -405,7 +409,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/07-StdErrors.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/06-StdErrors.Rmd",
 "text": "Edit"
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
