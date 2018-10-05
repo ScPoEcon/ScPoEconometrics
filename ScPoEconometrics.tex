@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-28}
+    \date{2018-10-05}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4429,7 +4429,7 @@ type this and play around with the app for a little while!
 \end{Highlighting}
 \end{Shaded}
 
-\section{Predictions and Residuals}\label{predictions-and-residuals}
+\section{Predictions and Residuals}\label{pred-resids}
 
 Now we want to ask how our residuals \(e_i\) relate to the prediction
 \(\hat{y_i}\). Let us first think about the average of all predictions
@@ -4614,60 +4614,70 @@ performs:
 \caption{Better line with non-linear data!}\label{fig:non-line-cars-ols2}
 \end{figure}
 
+\section{\texorpdfstring{Analysing
+\(Var(y)\)}{Analysing Var(y)}}\label{analysing-vary}
+
+Analysis of Variance (ANOVA) refers to a method to decompose variation
+in one variable as a function of several others. We can use this idea on
+our outcome \(y\). Suppose we wanted to know the variance of \(y\),
+keeping in mind that, by definition, \(y_i = \hat{y}_i + e_i\). We would
+write
+
+\begin{align}
+Var(y) &= Var(\hat{y} + e)\\
+ &= Var(\hat{y}) + Var(e) + 2 Cov(\hat{y},e)\\
+ &= Var(\hat{y}) + Var(e) \label{eq:anova}
+\end{align}
+
+We have seen above in \ref{pred-resids} that the covariance between
+prediction \(\hat{y}\) and error \(e\) is zero, that's why we have
+\(Cov(\hat{y},e)=0\) in \eqref{eq:anova}. What this tells us in words is
+that we can decompose the variance in the observed outcome \(y\) into a
+part that relates to variance as \emph{explained by the model} and a
+part that comes from unexplained variation. Finally, we know the
+definition of \emph{variance}, and can thus write down the respective
+formulae for each part:
+
+\begin{itemize}
+\tightlist
+\item
+  \(Var(y) = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{y})^2\)
+\item
+  \(Var(\hat{y}) = \frac{1}{N}\sum_{i=1}^N (\hat{y_i} - \bar{y})^2\),
+  because the mean of \(\hat{y}\) is \(\bar{y}\) as we know. Finally,
+\item
+  \(Var(e) = \frac{1}{N}\sum_{i=1}^N e_i^2\), because the mean of \(e\)
+  is zero.
+\end{itemize}
+
+We can thus formulate how the total variation in outcome \(y\) is
+aportioned between model and unexplained variation:
+
+\begin{tip}
+The total variation in outcome \(y\) (often called SST, or \emph{total
+sum of squares}) is equal to the sum of explained squares (SSE) plus the
+sum of residuals (SSR). We have thus \textbf{SST = SSE + SSR}.
+\end{tip}
+
 \section{\texorpdfstring{Assessing the \emph{Goodness of
 Fit}}{Assessing the Goodness of Fit}}\label{assessing-the-goodness-of-fit}
 
-In our simple setup, there exists a convenient measure for how good a
+In our setup, there exists a convenient measure for how good a
 particular statistical model fits the data. It is called \(R^2\)
 (\emph{R squared}), also called the \emph{coefficient of determination}.
-It is a statistic that makes use of a \emph{benchmark} model, against
-which to compare any given model we may have in mind. Suppose we posit
-our standard representation of the best line:
+We make use of the just introduced decomposition of variance, and write
+the formula as
 
 \[
-y_i = b_0 + b_1 x_i + e_i \label{eq:ssr-mod} 
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \label{eq:Rsquared}
 \]
 
-and let us write down the benchmark model as follows:
-
-\[
-y_i = b_0 + e_i \label{eq:ssr-bench}
-\]
-
-As you can see, the benchmark model in \eqref{eq:ssr-bench} is a model
-with an intercept only. We just saw that this delivers an estimate of
-the mean of \(y\). It is a benchmark because it does not include
-\emph{any} explanatory variables, so we can compare against this other
-models which do in fact contain some \(x\)'s. Back to our \(R^2\)
-statistic: there are several equivalent definitions, and for our present
-case we will use the following.
-
-\begin{tip}
-The \textbf{coefficient of determination} (\emph{R squared}) is defined
-by \[R^2 = 1 - \frac{\text{SSR our model}}{\text{SSR benchmark}}.\] In
-the simple linear model, we have that \(R^2 \in [0,1]\), where
-\(R^2 = 1\) would indicate that our model is a \textbf{very good} fit to
-the data, and vice versa for \(R^2 = 0\). You can interpret the value of
-\(R^2\) as the fraction of variation in outcome \(y\) that is accounted
-for by explanatory variable \(x\).
-\end{tip}
-
- The workings of this statistic are illustrated in the following figure
-\ref{fig:r-squared}. There, the left panel is our well-known depiction
-of the sum of squared residuals (SSR) of our model
-\(y_i = b_0 + b_1 x_i + e_i\). The right panel shows the SSR of
-\(y_i = b_0 + e_i\). Ideally, each red square would be small relative to
-its blue counterpart, indicating that our model has a small residual at
-a given observation.
-
-\begin{figure}
-
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/r-squared-1} 
-
-}
-
-\caption{Left panel: SSR from our model. Right panel: SSR from benchmark (mean only) model. $R^2$ compares the size of each red square to each blue square.}\label{fig:r-squared}
-\end{figure}
+It is easy to see that a \emph{good fit} is one where the sum of
+\emph{explained} squares (SSE) is large relativ to the total variation
+(SST). In such a case, we observe an \(R^2\) close to one. In the
+opposite case, we will see an \(R^2\) close to zero. Notice that a small
+\(R^2\) does not imply that the model is useless, just that it explains
+a small fraction of the observed variation.
 
 \section{An Example: California Student Test Scores}\label{lm-example1}
 
@@ -4678,7 +4688,7 @@ this much more precisely, and very fast!
 
 Let's explore how to do this, using a real life dataset taken from the
 \texttt{Ecdat} package which includes many economics-related dataset. In
-this example, we will use the \texttt{Caschool}dataset which contains
+this example, we will use the \texttt{Caschool} dataset which contains
 the average test scores of 420 elementary schools in California along
 with some additional information.
 
@@ -4722,7 +4732,7 @@ obtained by calling \texttt{summary()}
 
 \subsection{Fitting a linear model}\label{fitting-a-linear-model}
 
-Suppose a policymaker is interested in the following linear model:
+Suppose we are interested in the following linear model:
 
 \[\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i\] Where
 \(\text{testscr}_i\) is the \emph{average test score} for a given school
@@ -4737,8 +4747,6 @@ The subscript \(i\) indexes all unique elementary schools
 finding the line of best fit is to minimize the \emph{sum of squared
 residuals} (SSR)).
 
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
-
 At this point you should step back and take a second to think about what
 you believe the relation between a school's test scores and
 student/teacher ratio will be. Do you believe that, in general, a high
@@ -4747,8 +4755,7 @@ scores for the school? Do you think that the number of students per
 teacher will impact results in any way?
 
 Let's find out! As always, we will start by plotting the data to inspect
-it visually (don't worry if the syntax doesn't make much sense right
-now, we will come back to it very soon):
+it visually:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4793,13 +4800,8 @@ arguments, \texttt{formula} and \texttt{data}:
   equal sign in your model equation. An intercept is included by default
   and so you do not have to ask for it in \texttt{formula}. For example,
   the simple model \(income = b_0 + b_1 \cdot age\) can be written as
-  \texttt{income\ \textasciitilde{}\ age}. You can also ask \texttt{R}
-  to estimate a multivariate regression such as
-  \(income = b_0 + b_1 \cdot age + b_2 \cdot isWoman\) by simply
-  separating all variables on the right-hand side of the equation with
-  the \texttt{+} operator, like this :
-  \texttt{income\ \textasciitilde{}\ age\ +\ isWoman}. A
-  \texttt{formula} can sometimes be written between quotation marks:
+  \texttt{income\ \textasciitilde{}\ age}. A \texttt{formula} can
+  sometimes be written between quotation marks:
   \texttt{"X\ \textasciitilde{}\ Y"}.
 \item
   \texttt{data} is simply the \texttt{data.frame} containing the
@@ -4897,7 +4899,7 @@ how you could use \texttt{ggplot}:
 
 The shaded area around the red line shows the width of the 95\%
 confidence interval around our estimate of the slope coefficient
-\(\beta_1\). We will learn more about it in chapter \ref{std-errors}.
+\(b_1\). We will learn more about it in chapter \ref{std-errors}.
 
 \chapter{Multiple Regression}\label{multiple-reg}
 
@@ -4913,7 +4915,7 @@ suppose we wanted to explain how many \emph{miles per gallon}
 want to estimate the equation
 
 \[
-mpg_i = \beta_0 + \beta_1 hp_i + \beta_2 wt_i + \varepsilon_i \label{eq:abline2d}
+mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i \label{eq:abline2d}
 \] on our built-in dataset of cars (\texttt{mtcars}):
 
 \begin{Shaded}
@@ -4960,8 +4962,7 @@ mpg_i = \beta_0 + \beta_1 hp_i + \beta_2 wt_i + \varepsilon_i \label{eq:abline2d
 
 How do you think \texttt{hp} and \texttt{wt} will influence how many
 miles per gallon of gasoline each of those cars can travel? In other
-words, what do you expect the signs of \(\beta_1\) and \(\beta_2\) to
-be?
+words, what do you expect the signs of \(b_1\) and \(b_2\) to be?
 
 With two explanatory variables as here, it is still possible to
 visualize the regression plane, so let's start with this as an answer.
@@ -4978,11 +4979,24 @@ The OLS regression plane through this dataset looks like in figure
 \end{figure}
 
 This visualization shows a couple of things: the data are shown with red
-points, the grey plane is the one resulting from OLS estimation of
-equation \eqref{eq:abline2d}, and the red lines show the size of the error
-between estimated plane and observed data. You should realize that this
-is exactly the same story as told in figure \ref{fig:line-arrows} - just
-in three dimensions!
+points and the grey plane is the one resulting from OLS estimation of
+equation \eqref{eq:abline2d}. You should realize that this is exactly the
+same story as told in figure \ref{fig:line-arrows} - just in three
+dimensions!
+
+Furthermore, \emph{multiple} regression refers the fact that there could
+be \emph{more} than two regressors. In fact, you could in principle have
+\(K\) regressors, and our theory developed so far would still be valid:
+
+\begin{align}
+\hat{y}_i &= b_0 + b_1 x_{1i} +   b_2 x_{2i} + \dots + b_K x_{Ki}\\
+e_i &= y_i - \hat{y}_i \label{eq:multiple-reg}
+\end{align}
+
+Just as before, the least squares method chooses numbers
+\((b_0,b_1,\dots,b_K)\) to as to minimize SSR, exactly as in the
+minimization problem for the one regressor case seen in
+\eqref{eq:ols-min}.
 
 \section{All Else Equal}\label{ceteris}
 
@@ -5015,11 +5029,11 @@ In terms of our model in \eqref{eq:abline2d}, we want to know the
 following quantity:
 
 \[
-\frac{\partial mpg_i}{\partial hp_i} = \beta_1 \label{eq:abline2d-deriv}
+\frac{\partial mpg_i}{\partial hp_i} = b_1 \label{eq:abline2d-deriv}
 \] This means: \emph{keeping all other variables fixed, what is the
 effect of \texttt{hp} on \texttt{mpg}?}. In calculus, the answer to this
 is provided by the \emph{partial derivative} as shown in
-\eqref{eq:abline2d-deriv}. We call the value of coefficient \(\beta_1\)
+\eqref{eq:abline2d-deriv}. We call the value of coefficient \(b_1\)
 therefore also the \emph{partial effect} of \texttt{hp} on \texttt{mpg}.
 In terms of our dataset, we use \texttt{R} to run the following
 \textbf{multiple regression}:
@@ -5057,13 +5071,46 @@ implies a change in \(mpg\) of -0.03177 units, \emph{all else (i.e.
 \(wt\)) equal}.
 \end{warning}
 
+\section{Multicolinearity}\label{multicol}
+
+One important requirement for multiple regression is that the data be
+\textbf{not linearly dependent}: Each variable provides new information
+for the outcome, and it cannot be replicated as a linear combination of
+other variables. Suppose that in the example above, we had a variable
+\texttt{wtplus} defined as \texttt{wt\ +\ 1}, and we included this new
+variable together with \texttt{wt} in our regression. In this case,
+\texttt{wtplus} provides no new information. It's enough to know \(wt\),
+and add \(1\) to it. In this sense, \texttt{wt\_plus} is a redundant
+variable and should not be included in the model. Notice that this holds
+only for \emph{linearly} dependent variables - \emph{nonlinear}
+transformations (like for example \(wt^2\)) are exempt from this rule.
+Here is why:
+
+\begin{align}
+y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
+  &= b_0 + b_1 \text{wt} + b_2 (\text{wt} + 1) + e \\
+  &= (b_0 + b_2) + \text{wt} (b_1 + b_2) + e
+\end{align}
+
+This shows that we cannot \emph{identify} the regression coefficients in
+case of linearly dependent data. Variation in the variable \texttt{wt}
+identifies a different coefficient, say \(\gamma = b_1 + b_2\), from
+what we actually wanted: separate estimates for \(b_1,b_2\).
+
+\begin{note}
+All variables in a multiple regression should be \emph{linearly
+independent}, or \emph{not} colinear. This is known as the \textbf{rank
+condition}. In particular, this condition dictates that we need at least
+\(N \geq K+1\), i.e.~more observations than coefficients.
+\end{note}
+
 \section{California Test Scores 2}\label{california-test-scores-2}
 
 Let us extend our example of student test scores from chapter
 \ref{linreg} by adding families' average income to our previous model:
 
 \[
-\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \epsilon_i
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
 \]
 
 We can incoporate this new variable to our model by simply adding it to
@@ -5123,11 +5170,15 @@ this with your classmates.
 
 Interactions allow that the \emph{ceteris paribus} effect of a certain
 regressor, \texttt{str} say, depends also on the value of yet another
-regressor, \texttt{avginc} for example. To measure such an effect, we
-would reformulate our model like this:
+regressor, \texttt{avginc} for example. In other words, do test scores
+depend differentially on the student teacher ratio, depending on wether
+the average income in an ares is high or low? Notice that \texttt{str}
+and \texttt{avginc} in isolation cannot answer that question (because
+the value of other variables is assumed \emph{fixed}!). To measure such
+an effect, we would reformulate our model like this:
 
 \[
-\text{testscr}_i = \beta_0 + \beta_1  \text{str}_i + \beta_2  \text{avginc}_i + \beta_3 (\text{str}_i \times  \text{avginc}_i)+ \epsilon_i \label{eq:caschool-inter}
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i \label{eq:caschool-inter}
 \]
 
 The inclusion of the \emph{product} of \texttt{str} and \texttt{avginc}
@@ -5137,7 +5188,7 @@ see if we take the partial derivative of \eqref{eq:caschool-inter} with
 respect to \texttt{str}:
 
 \[
-\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = \beta_1 + \beta_3 \text{avginc}_i \label{eq:caschool-inter-deriv}
+\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i \label{eq:caschool-inter-deriv}
 \]
 
 \begin{quote}
@@ -5183,14 +5234,14 @@ like this:
 \end{verbatim}
 
 We see here that the regression now estimates and additional coefficient
-\(\beta_3\) for us. We observe also that the estimate of \(\beta_2\)
-changes signs and becomes negative, while the interaction effect
-\(\beta_3\) is positive. This means that an increase in \texttt{str}
-reduces average student scores (more students per teacher make it harder
-to teach effectively); that an increase in average district income in
-isolation actually reduces scores; and that the interaction of both
-increases scores (more students per teacher are actually a good thing
-for student performance in richer areas).
+\(b_3\) for us. We observe also that the estimate of \(b_2\) changes
+signs and becomes negative, while the interaction effect \(b_3\) is
+positive. This means that an increase in \texttt{str} reduces average
+student scores (more students per teacher make it harder to teach
+effectively); that an increase in average district income in isolation
+actually reduces scores; and that the interaction of both increases
+scores (more students per teacher are actually a good thing for student
+performance in richer areas).
 
 Looking at our visualization may help understand this result better.
 Figure \ref{fig:3D-Plotly-inter} shows a plane that is no longer
@@ -5209,316 +5260,7 @@ strange inversion of coefficient signs?
 ratio and avg income plus interaction term}
 \end{figure}
 
-\chapter{Standard Errors}\label{std-errors}
-
-In the previous chapters we have seen how the OLS method can produce
-estimates about intercept and slope coefficients from data. You have
-seen this method at work in \texttt{R} by using the \texttt{lm} function
-as well. It is now time to introduce the notion that given that
-\(\hat{\beta}_0\), \(\hat{\beta}_1\) and \(\hat{\beta}_2\) are
-\emph{estimates} of some unkown \emph{population parameters}, there is
-some degree of \textbf{uncertainty} about their values. An other way to
-say this is that we want some indication about the \emph{precision} of
-those estimates.
-
-\begin{note}
-How \emph{confident} should we be about the estimated values
-\(\hat{\beta}\)?
-\end{note}
-
- Let's go back to the regression with one variable and remind ourselves
-of the example at the end of chapter \ref{linreg}. There we introduced
-the term \emph{confidence interval}, shown here as the shaded area:
-
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-139-1} \end{center}
-
-The shaded area shows us the region within which the \textbf{true} red
-line will lie with 95\% probability. The fact that there is unknown true
-line (i.e.~a \emph{true} slope coefficient \(\beta_1\)) that we wish to
-uncover from a sample of data should remind you immediately of our first
-tutorial. There, we wanted to estimate the true population mean from a
-sample of data, and we saw that as the sample size \(N\) increased, our
-estimate got better and better - fundamentally this is the same idea
-here.
-
-\section{\texorpdfstring{What is
-\emph{true}?}{What is true?}}\label{what-is-true}
-
-We have a true data-generating process in mind. Let's bring back our
-simple model \eqref{eq:abline}:
-
-\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
-\]
-
-First, we \emph{assume} that this is the correct represenation of the
-DGP, which looks like the above equation. With that assumption in place,
-the values \(\beta_0\) and \(\beta_1\) are the \emph{true parameter
-values} which generated the data. Notice, that both \(\beta_0\) and
-\(\beta_1\) do \textbf{not} have a ``hat'', which is widely used to
-indicate an estimate. Now, the fact that our data \((y_i,x_i)\) are a
-sample from a larger population means that there will be \emph{sampling
-variation} in our estimates \(\hat{\beta}_0\) and \(\hat{\beta}_1\) -
-exactly like in the case of the sample mean estimating the population
-average as mentioned above. In general, the more observations we have
-the greater the precision of our estimates.
-
-\section{The Classical Regression Model}\label{class-reg}
-
-The smallest set of assumptions used to define the \emph{classical
-regression model} are the following:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  The data are \textbf{not linearly dependent}: Each variable provides
-  new information for the outcome, and it cannot be replicated as a
-  linear combination of other variables. For example, suppose we have
-  two variables for each individual, \(x_1,x_2\) which determine an
-  outcome \(y\). If \(x_{2} = 2x_{1}\), then \(x_2\) provides no new
-  information. It's enough to know \(x_1\), and multiply it by 2. In
-  this sense, \(x_2\) is a redundant variable and should not be included
-  in the model.
-\item
-  The mean of the residuals conditional on \(x\) should be zero,
-  \(E[\varepsilon|x] = 0\). Notice that this also means that
-  \(Cov(\varepsilon,x) = 0\), i.e.~that the errors and our explanatory
-  variable(s) should be \emph{uncorrelated}. It is said that \(x\)
-  should be \textbf{strictly exogenous} to the model.
-\end{enumerate}
-
-These assumptions are necessary to successfully (and correctly!) run an
-OLS regression. They are often supplemented with an additional set of
-assumptions, which help with certain aspects of the exposition, but are
-not strictly necessary:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  The data are drawn from a \textbf{random sample} of size \(n\):
-  observation \((x_i,y_i)\) comes from the exact same distribution, and
-  is independent of observation \((x_j,y_j)\), for all \(i\neq j\).
-\item
-  The variance of the error term \(\varepsilon\) is the same for each
-  value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
-  called \textbf{homoskedasticity}.
-\end{enumerate}
-
-\subsection{Standard Errors in Theory}\label{standard-errors-in-theory}
-
-Under assumptions 1. through 4. we can define the formula for the
-standard error of our slope coefficient in the context of our single
-regressor model \eqref{eq:abline-5} as follows:
-
-\[
-Var(\beta_1|x_i) = \frac{\sigma^2}{x_1^2 + x_2^2 + \dots + x_n^2}  \label{eq:var-ols}
-\] In pratice, we don't know the theoretical variance of
-\(\varepsilon\), but we form an estimate about it from our sample of
-data. A widely used estimate uses the already encountered SSR (sum of
-squared residuals), and is denoted \(s^2\):
-
-\[
-s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - \hat{\beta_0} - \hat{\beta_1}x_i)^2}{n-p}
-\] where \(n-p\) are the \emph{degrees of freedom} available in this
-estimation. \(p\) is the number of parameters we wish to estimate (here:
-1). So, the variance formula would become
-
-\[
-Var(\beta_1|x_i) = \frac{SSR}{(n-p)(x_1^2 + x_2^2 + \dots + x_n^2)}  \label{eq:var-ols2}
-\]
-
-You can clearly see that, as \(n\) increases, the denominator increases,
-and therefore the variance of the estimate will decrease.
-
-\subsection{Standard Errors in
-Practice}\label{standard-errors-in-practice}
-
-We would like to further make this point in an experiential way, i.e.~we
-want you to experience what is going on. We invite you to spend some
-time with the following apps, before going into the associated tutorial:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{)  }\CommentTok{# then do that}
-\end{Highlighting}
-\end{Shaded}
-
-\section{What's in my model? (And what is
-not?)}\label{whats-in-my-model-and-what-is-not}
-
-We want to revisit the underlying assumptions of the classical model
-outlined in \ref{class-reg}. Right now we to talk a bit more about
-assumption number 2 of the above definition in \ref{class-reg}. It said
-this:
-
-\begin{warning}
-The mean of the residuals conditional on \(x\) should be zero,
-\(E[\varepsilon|x] = 0\). This means that \(Cov(\varepsilon,x) = 0\),
-i.e.~that the errors and our explanatory variable(s) should be
-\emph{uncorrelated}. We want \(x\) to be \textbf{strictly exogenous} to
-the model.
-\end{warning}
-
- Great. But what does this \emph{mean}? How could \(x\) be correlated
-with something we don't even observe?! Good questions - let's try with
-an example.
-
-Imagine that this model
-
-\[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
-\]
-
-is used to measures the impact of number of bathrooms (\(x\)) on the
-sales price of houses (\(y\)). You find a positive impact of bathrooms
-on houses:
-
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = price ~ bathrms, data = Housing)
-#OUT> 
-#OUT> Residuals:
-#OUT>    Min     1Q Median     3Q    Max 
-#OUT> -77225 -15271  -2510  11704 102729 
-#OUT> 
-#OUT> Coefficients:
-#OUT>             Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept)    32794       2694   12.17   <2e-16 ***
-#OUT> bathrms        27477       1952   14.08   <2e-16 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 22880 on 544 degrees of freedom
-#OUT> Multiple R-squared:  0.267,   Adjusted R-squared:  0.2657 
-#OUT> F-statistic: 198.2 on 1 and 544 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-In fact, from this you conclude that each additional bathroom increases
-the sales price of a house by 27477 dollars. Let's see if our assumption
-\(E[\varepsilon|x] = 0\) is satisfied:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\CommentTok{# add residuals to the data}
-\NormalTok{Housing}\OperatorTok{$}\NormalTok{resid <-}\StringTok{ }\KeywordTok{resid}\NormalTok{(hlm)}
-\NormalTok{Housing }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(bathrms) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_of_resid=}\KeywordTok{mean}\NormalTok{(resid))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT> # A tibble: 4 x 2
-#OUT>   bathrms mean_of_resid
-#OUT>     <dbl>         <dbl>
-#OUT> 1       1         -118.
-#OUT> 2       2          955.
-#OUT> 3       3       -11195.
-#OUT> 4       4        32298.
-\end{verbatim}
-
-Oh, that doesn't look good. Even though the unconditional mean
-\(E[\varepsilon] = 0\) is \emph{very} close to zero (type
-\texttt{mean(resid(hlm))}!), this doesn't seem to hold at all by
-categories of \(x\). This indicates that there is something in the error
-term \(\varepsilon\) which is \emph{correlated} with \texttt{bathrms}.
-Going back to our discussion about \emph{ceteris paribus} in section
-\ref{ceteris}, we stated that the interpretation of our OLS slope
-estimate is that
-
-\begin{tip}
-Keeping everything else fixed at the current value, what is the impact
-of \(x\) on \(y\)? \emph{Everything} also includes things in
-\(\varepsilon\)!
-\end{tip}
-
-Well that's the problem then. We said above that one more bathroom is
-worth 27477 dollars - if \textbf{nothing else changes}! But that doesn't
-seem to hold, because we have seen that as we increase \texttt{bathrms}
-from \texttt{1} to \texttt{2}, the mean of the resulting residuals
-changes quite a bit. So there \textbf{is something in \(\varepsilon\)
-which does change}, hence, our conclusion that one more bathroom is
-worth 27477 dollars is in fact \emph{invalid}!
-
-\subsection{Omitted Variable Bias}\label{omitted-variable-bias}
-
-What we are discussing here is called \emph{Omitted Variable Bias}.
-There is a variable which we omitted from our regression, i.e.~we forgot
-to include it. It is often difficult to find out what that variable
-could be, and you can go a long way by just reasoning about the
-data-generating process. In other words, do you think it's
-\emph{reasonable} that price be determined by the number of bathrooms
-only? Or could there be another variable, omitted from our model, that
-is important to explain prices, and at the same time correlated with
-\texttt{bathrms}?
-
-Let's try with \texttt{lotsize}, i.e.~the size of the area on which the
-house stands. Intuitively, larger lots should command a higher price; At
-the same time, however, larger lots imply more space, hence, you can
-also have more bathrooms! Let's check this out:
-
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = price ~ bathrms + lotsize, data = Housing)
-#OUT> 
-#OUT> Residuals:
-#OUT>    Min     1Q Median     3Q    Max 
-#OUT> -60752 -12532  -1674  10514  92931 
-#OUT> 
-#OUT> Coefficients:
-#OUT>              Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
-#OUT> bathrms     2.281e+04  1.703e+03  13.397  < 2e-16 ***
-#OUT> lotsize     5.575e+00  3.944e-01  14.136  < 2e-16 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 19580 on 543 degrees of freedom
-#OUT> Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
-#OUT> F-statistic: 235.2 on 2 and 543 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-Here we see that the estimate for the effect of an additional bathroom
-\emph{decreased} from 27477 to 22811.5 by almost 5000 dollars! The way
-in which \texttt{bathrms} and \texttt{lotsize} are correlated is
-important here, so let's investigate that:
-
-\begin{figure}
-
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-145-1} 
-
-}
-
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-145}
-\end{figure}
-
-This shows that lotsize and the number of bathrooms is indeed positively
-related. Larger lot of the house, more bathrooms. This leads to a
-general result:
-
-\begin{note}
-\textbf{Direction of Omitted Variable Bias}
-
-If there is an omitted variable \(z\) that is \emph{positively}
-correlated with our explanatory variable \(x\), then our estimate of
-effect of \(x\) on \(y\) will be too large (or, \emph{biased upwards}).
-The correlation between \(x\) and \(z\) means that we attribute part of
-the impact of \(z\) on \(y\) mistakenly to \(x\)! And, of course, vice
-versa for \emph{negatively} correlated omitted variables.
-\end{note}
-
 \chapter{Categorial Variables}\label{categorical-vars}
-
-TODO: excluded category vs intercept?
 
 Up until now, we have encountered only examples with \emph{continuous}
 variables \(x\) and \(y\), that is, \(x,y \in \mathbb{R}\), so that a
@@ -5534,104 +5276,124 @@ data.
 Probably the simplest type of categorical variable is the \emph{binary},
 \emph{boolean}, or just \emph{dummy} variable. As the name suggests, it
 can take on only two values, \texttt{0} and \texttt{1}, or \texttt{TRUE}
-and \texttt{FALSE}. Even though this is an extremely parsimonious way of
-encoding that, it is a very powerful tool that allows us to represent
-that a certain observation \(i\) \textbf{is a member} of a certain
-category \(j\). For example, we could have a variable called
-\texttt{is.male} that is \texttt{TRUE} whenever \(i\) is male, and
-\texttt{FALSE} otherwise. A common way to represent this is with the
-so-called \emph{indicator function} \(\mathbf{1}[\text{condition}]\).
-For example, to encode whether subject \(i\) is male or female, one
-could do this:
+and \texttt{FALSE}.
+
+Even though this is an extremely parsimonious way of encoding that, it
+is a very powerful tool that allows us to represent that a certain
+observation \(i\) \textbf{is a member} of a certain category \(j\). For
+example, let's imagine we have income data on males and females, and we
+would create a variable called \texttt{is.male} that is \texttt{TRUE}
+whenever \(i\) is male, \texttt{FALSE} otherwise, and similarly for
+women. For example, to encode whether subject \(i\) is male, one could
+do this:
 
 \begin{align*}
-\text{is.male}_i &= \mathbf{1}[\text{sex}_i==\text{male}], \\
-\end{align*}
-
-which would just mean
-
-\begin{align*}
-\mathbf{1}[\text{sex}_i==\text{male}] &= \begin{cases}
+\text{is.male}_i &=  \begin{cases}
                     1 & \text{if }i\text{ is male} \\
-                    0 & \text{if }i\text{ is female}. \\
-                 \end{cases}
+                    0 & \text{if }i\text{ is not male}. \\
+                 \end{cases}, \\
 \end{align*}
 
-Notice the use of \texttt{x\ ==\ y} to represent the relationship
-\emph{\texttt{x} is equal \texttt{y}}, which is (very!) different from
-\texttt{x\ =\ y} meaning \emph{assign \texttt{y} to \texttt{x}}.
+and similarly for females, we'd have
 
-In terms of a regression formulation, this is our model when our
-regressor is binary:
+\begin{align*}
+\text{is.female}_i &=  \begin{cases}
+                    1 & \text{if }i\text{ is female} \\
+                    0 & \text{if }i\text{ is not female}. \\
+                 \end{cases} \\
+\end{align*}
+
+By definition, we have just introduced a linear dependence into our
+dataset. It will always be true that
+\(\text{is.male}_i + \text{is.female}_i = 1\). This is because dummy
+variables are based on data being mutually exclusively categorized -
+here, you are either male or female.\footnote{There are
+  \href{https://en.wikipedia.org/wiki/Transgender}{transgender}
+  individuals where this example will not apply.} This should
+immediately remind you of section \ref{multicol} where we introduced
+\emph{multicolinearity}. A regression of income on both of our variables
+like this
 
 \[
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,x_i\in\{0,1\} \label{eq:zero-one-reg}
+y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{is.male}_i + e_i
+\] would be invalid because of perfect colinearity between
+\(\text{is.female}_i\) and \(\text{is.male}_i\). The solution to this is
+pragmatic and simple:
+
+\begin{tip}
+In dummy variable regressions, we remove one category from the
+regression (for example here: \texttt{is.male}) and call it the
+\emph{reference category}. The effect of being \emph{male} is absorbed
+in the intercept. The coefficient on the remaining categories measures
+the \emph{difference} in mean outcome with respect to the reference
+category.
+\end{tip}
+
+Now let's try this out. We start by creating the female indicator as
+above,
+
+\[
+\text{is.female}_i = \begin{cases}
+          1 & \text{if }i\text{ is female} \\
+            0 & \text{if }i\text{ is not female}. \\
+   \end{cases}
+\] and let's suppose that \(y_i\) is a measure of \(i\)'s annual labor
+income. Our model is
+
+\[
+y_i = b_0 + b_1 \text{is.female}_i + e_i \label{eq:dummy-reg}
 \]
 
-Let's generate some random data and look at the regression output of
-\eqref{eq:zero-one-reg}:
+and here is how we estimate this in \texttt{R}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{head}\NormalTok{(dta)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT>   x        y
-#OUT> 1 0 2.518630
-#OUT> 2 0 2.883465
-#OUT> 3 1 5.589829
-#OUT> 4 0 1.803295
-#OUT> 5 0 2.659594
-#OUT> 6 0 1.739415
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(zero_one)}
+\CommentTok{# x = sample(x = c(0, 1), size = n, replace = T)}
+\NormalTok{dta}\OperatorTok{$}\NormalTok{is.female =}\StringTok{ }\KeywordTok{factor}\NormalTok{(x)  }\CommentTok{# convert x to factor}
+\NormalTok{dummy_reg =}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{is.female,dta)}
+\KeywordTok{summary}\NormalTok{(dummy_reg)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 #OUT> 
 #OUT> Call:
-#OUT> lm(formula = y ~ x, data = dta)
+#OUT> lm(formula = y ~ is.female, data = dta)
 #OUT> 
 #OUT> Residuals:
-#OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -1.40227 -0.50683 -0.09763  0.66287  1.53463 
+#OUT>     Min      1Q  Median      3Q     Max 
+#OUT> -2.3901 -0.6565  0.1612  0.6846  2.7850 
 #OUT> 
 #OUT> Coefficients:
 #OUT>             Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
-#OUT> x             3.7558     0.3902   9.626 1.60e-08 ***
+#OUT> (Intercept)   2.0847     0.2396   8.700 1.97e-11 ***
+#OUT> is.female1   -3.0631     0.3202  -9.566 1.06e-12 ***
 #OUT> ---
 #OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #OUT> 
-#OUT> Residual standard error: 0.868 on 18 degrees of freedom
-#OUT> Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
-#OUT> F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08
+#OUT> Residual standard error: 1.124 on 48 degrees of freedom
+#OUT> Multiple R-squared:  0.6559,  Adjusted R-squared:  0.6488 
+#OUT> F-statistic:  91.5 on 1 and 48 DF,  p-value: 1.061e-12
 \end{verbatim}
 
-This setup is identical to what we have seen in the \texttt{app}
-launched via
+Notice that \texttt{R} displays the \emph{level} of the factor to which
+coefficient \(b_1\) belongs here, i.e. \texttt{is.female1} means this
+coefficient is on level \texttt{is.female\ =\ 1} - the reference level
+is \texttt{is.female\ =\ 0}, and it has no separate coefficient. Also
+interesting is that \(b_1\) is equal to the difference in conditional
+means between male and female
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_dummy"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\[E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0631.\]
 
-We learned that this regression simplifies to the straight line
-connecting the mean, or the \emph{expected value} of \(y\) when \(x=0\),
-i.e. \(E[y|x=0]\), to the mean when \(x=1\), i.e. \(E[y|x=1]\). It is
-useful to remember that the \emph{unconditional mean} of \(y\), i.e.
-\(E[y]\), is going to be the result of regressing \(y\) only on an
-intercept, illustrated by the red line. The red line will always lie in
-between both conditional means. Let's just refresh our memory by
-replicating the graph from the \texttt{app} here in figure
-\ref{fig:x-zero-one}:
+\begin{note}
+A dummy variable measures the difference or the \emph{offset} in the
+mean of the response variable, \(E[y]\), \textbf{conditional} on \(x\)
+belonging to some category - relative to a baseline category. In our
+artificial example, the coefficient \(b_1\) informs us that women earn
+on average 3.756 units less than men.
+\end{note}
+
+It is instructive to reconsider this example graphically:
 
 \begin{figure}
 
@@ -5639,74 +5401,20 @@ replicating the graph from the \texttt{app} here in figure
 
 }
 
-\caption{regressing $y \in \mathbb{R}$ on $x \in \{0,1\}$. The red line is $E[y]$}\label{fig:x-zero-one}
+\caption{regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $\alpha$. Which is the same as the slope of the regression line in this case and the difference in conditional means!}\label{fig:x-zero-one}
 \end{figure}
 
-Now let's encode \(x\) to represent male and female,
-
-\[
-x_i = \begin{cases}
-          1 & \text{if }i\text{ is male} \\
-            0 & \text{if }i\text{ is female}. \\
-   \end{cases}
-\] and let's suppose that \(y_i\) is a measure of \(i\)'s annual labor
-income. The dummy variable version of the above regression is just
-
-\[
-y_i = \beta_0 + \alpha \text{is.male}_i + \varepsilon_i \label{eq:dummy-reg}
-\] where
-
-\begin{align*}
-\text{is.male}_i &= \mathbf{1}[x_i==1], \\
-\end{align*}
-
-Given our definitions, those two formulations are equivalent. What
-changes, is the representation of \texttt{x} and \texttt{is.male} for
-\texttt{R}. Here is how I ran model \eqref{eq:dummy-reg}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dta}\OperatorTok{$}\NormalTok{is.male =}\StringTok{ }\KeywordTok{factor}\NormalTok{(x)  }\CommentTok{# convert x to factor}
-\NormalTok{dummy_reg =}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{is.male,dta)}
-\end{Highlighting}
-\end{Shaded}
-
-Looking at the output of this, the resulting estimates of \(\beta_1\)
-and \(\alpha\) are of course the same:
-
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = y ~ is.male, data = dta)
-#OUT> 
-#OUT> Residuals:
-#OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -1.40227 -0.50683 -0.09763  0.66287  1.53463 
-#OUT> 
-#OUT> Coefficients:
-#OUT>             Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept)   1.8888     0.2617   7.217 1.03e-06 ***
-#OUT> is.male1      3.7558     0.3902   9.626 1.60e-08 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 0.868 on 18 degrees of freedom
-#OUT> Multiple R-squared:  0.8374,  Adjusted R-squared:  0.8283 
-#OUT> F-statistic: 92.67 on 1 and 18 DF,  p-value: 1.599e-08
-\end{verbatim}
-
-More interesting, however, is that both of them are equal to the
-difference in conditional means:
-
-\[E[y|x=1] - E[y|x=0]=3.7558.\]
-
-\begin{note}
-A dummy variable measures the difference or the \emph{offset} in the
-mean of the response variable, \(E[y]\), \textbf{conditional} on \(x\)
-belonging to some category. In our artificial example, the coefficient
-\(\alpha\) informs us that men earn on average 3.756 units more than
-women.
-\end{note}
+In figure \ref{fig:x-zero-one} we see that this regression simplifies to
+the straight line connecting the mean, or the \emph{expected value} of
+\(y\) when \(\text{is.female}_i = 0\), i.e.
+\(E[y|\text{is.female}_i=0]\), to the mean when
+\(\text{is.female}_i=1\), i.e. \(E[y|\text{is.female}_i=1]\). It is
+useful to remember that the \emph{unconditional mean} of \(y\), i.e.
+\(E[y]\), is going to be the result of regressing \(y\) only on an
+intercept, illustrated by the blue line. This line will always lie in
+between both conditional means. As indicated by the red arrow, the
+estimate of the coefficient on the dummy, \(\alpha\), is equal to the
+difference in conditional means for both groups.
 
 \section{\texorpdfstring{Categorical Variables in \texttt{R}:
 \texttt{factor}}{Categorical Variables in R: factor}}\label{categorical-variables-in-r-factor}
@@ -5717,12 +5425,12 @@ relevant data type representing a categorical variable is called
 \ref{data-types} already, but it is worth repeating this here. We have
 seen that a factor \emph{categorizes} a usually small number of numeric
 values by \emph{labels}, as in this example which is similar to what I
-used to create regressor \texttt{is.male} for the above regression:
+used to create regressor \texttt{is.female} for the above regression:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{is.male =}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{))}
-\NormalTok{is.male}
+\NormalTok{is.female =}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{))}
+\NormalTok{is.female}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5738,14 +5446,14 @@ record a variable \emph{sex} instead, and we could do
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sex =}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"female"}\NormalTok{,}\StringTok{"male"}\NormalTok{))}
+\NormalTok{sex =}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{,}\StringTok{"female"}\NormalTok{))}
 \NormalTok{sex}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] female male   male   female
-#OUT> Levels: female male
+#OUT> [1] male   female female male  
+#OUT> Levels: male female
 \end{verbatim}
 
 You can see that this is almost identical, just the \emph{labels} are
@@ -5818,14 +5526,55 @@ simplest use by way of example.
 #OUT>  $ lwage  : num  5.56 5.72 6 6 6.06 ...
 \end{verbatim}
 
-Assume that this is a single cross section for wages of US workers. The
-main outcome variable is \texttt{lwage} which stands for \emph{logarithm
-of wage}. Let's initially say that a workers wage depends only on his
-\emph{experience}, measured in the number of years he/she worked
+Notice here that, conveniently, \texttt{sex} is already coded as type
+\texttt{factor}. Now assume that this is a single cross section for
+wages of US workers. The main outcome variable is \texttt{lwage} which
+stands for \emph{logarithm of wage}.
+
+\subsection{Log Transformations}\label{log-transformations}
+
+It is quite common to transform either outcome or explanatory or both
+variables by the natural logarithm. The primary motivation of this is to
+make the regression scale invariant. Suppose that factor \(\alpha\)
+represented the \emph{scale} of measurement of income, so that
+\(\alpha=1\) if we measure in Euros, or \(\alpha=1000\) if in thousands
+of Euros. With log-transforming regressor \(x\), our equation would look
+like
+
+\[
+y = b_0 + b_1 \log(\alpha x) = b_0 + \log \alpha  + b_1 \log x 
+\] where the \emph{scale} \(\alpha\) moves into the intercept, and our
+slope coefficient becomes invariant to it. If both outcome and regressor
+are transformed, we have
+
+\[
+\log y = b_0 + b_1 \log x
+\] and the slope coefficient is
+
+\[
+b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
+\] which represents the \textbf{elasticity} of \(y\) with respect to
+\(x\): what is the percentage change in \(y\) if \(x\) changes by one
+percent?
+
+Finally, if \emph{only the outcome} is log transformed, but not the
+regressor, we have a \emph{semi-elasticity} formulation. \[
+\log y = b_0 + b_1 x
+\] and the slope coefficient becomes
+
+\[
+b_1 = \frac{d\log y}{d x}
+\] This means a one-unit change in \(x\) increases the logarithm of the
+outcome by \(b_1\) units. For small changes in \(x\), we can just
+exponentiate \(b_1\) to get the effect of \(x\) the \emph{level} of
+\(y\).
+
+Going back to our example, let's say that a workers wage depends only on
+his \emph{experience}, measured in the number of years he/she worked
 full-time:
 
 \[
-\ln w_i = \beta_0 + \beta_1 exp_i + \varepsilon_i \label{eq:wage-exp}
+\ln w_i = b_0 + b_1 exp_i + e_i \label{eq:wage-exp}
 \]
 
 \begin{Shaded}
@@ -5860,10 +5609,10 @@ We see from this that an additional year of full-time work experience
 will increase the mean of \(\ln w\) by 0.0088. Given the log
 transformation on wages, we can just exponentiate that to get an
 estimated effect on the (geometric!) mean of wages as
-\(\exp(\hat{\beta}_1) = 1.0088491\). This means that hourly wages
-increase by roughly \(100 * (\exp(\hat{\beta}_1)-1) = 0.88\) percent
-with an additional year of experience. We can verify the positive
-relationship in figure \ref{fig:wage-plot}.
+\(\exp(\hat{b}_1) = 1.0088491\). This means that hourly wages increase
+by roughly \(100 * (\exp(b_1)-1) = 0.88\) percent with an additional
+year of experience. We can verify the positive relationship in figure
+\ref{fig:wage-plot}.
 
 \begin{figure}
 
@@ -5874,14 +5623,16 @@ relationship in figure \ref{fig:wage-plot}.
 \caption{log wage vs experience. Red line shows the regression.}\label{fig:wage-plot}
 \end{figure}
 
-Now let's investigate whether this relationship different for men and
-women.
+Now let's investigate whether this relationship is different for men and
+women. We can do this by just including the \texttt{factor} variable
+\texttt{sex}:
 
 \[
-\ln w_i = \beta_0 + \beta_1 exp_i + \beta_2 sex_i + \varepsilon_i \label{eq:wage-sex}
+\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i \label{eq:wage-sex}
 \]
 
-We can do this easily by using the \texttt{update} function as follows:
+In \texttt{R} we can do this easily by using the \texttt{update}
+function as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5920,7 +5671,7 @@ of the variable name \texttt{sex} and the level which was included in
 the regression. In other words, \texttt{R} chooses a \emph{reference
 category} (by default the first of all levels by order of appearance),
 which is excluded - here this is \texttt{sex=="female"}. The
-interpretation is that \(\beta_2\) measures the effect of being male
+interpretation is that \(b_2\) measures the effect of being male
 \emph{relative} to being female. \texttt{R} automatically creates a
 dummy variable for each potential level, excluding the first category.
 In particular, if \texttt{sex} had a third category
@@ -5939,8 +5690,7 @@ called \texttt{sexdontwanttosay}.
 Figure \ref{fig:wage-plot2} illustrates this. You can see that both male
 and female have the same upward sloping regression line. But you can
 also see that there is a parallel downward shift from male to female
-line. The estimate of \(\beta_2 = 0.45\) is the size of the downward
-shift.
+line. The estimate of \(b_2 = 0.45\) is the size of the downward shift.
 
 \section{Saturated Models: Main Effects and
 Interactions}\label{saturated-models-main-effects-and-interactions}
@@ -5958,7 +5708,7 @@ different slopes with respect to \texttt{exp} in figure
 \ref{fig:wage-plot2}. Therefore we formulate this version of our model:
 
 \[
-\ln w_i = \beta_0 + \beta_1 exp_i + \beta_2 sex_i + \beta_3 (sex_i \times exp_i) + \varepsilon_i \label{eq:wage-sex-inter}
+\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i \label{eq:wage-sex-inter}
 \]
 
 The inclusion of the \emph{product} of \texttt{exp} and \texttt{sex}
@@ -5967,7 +5717,7 @@ amounts to having different slopes for different categories in
 \eqref{eq:wage-sex-inter} with respect to \texttt{sex}:
 
 \[
-\frac{\partial \ln w_i}{\partial sex_i} = \beta_2 + \beta_3 exp_i \label{eq:wage-sex-inter-deriv}
+\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i \label{eq:wage-sex-inter-deriv}
 \]
 
 Back in our \texttt{R} session, we can run the full interactions model
@@ -6008,8 +5758,8 @@ to include both \emph{main effects}, i.e. \texttt{exp} and \texttt{sex}
 as single regressors as before, and their interaction, denoted by
 \texttt{exp:sexmale}. It turns out that in this example, the estimate
 for the interaction is not statistically significant, i.e.~we cannot
-reject the null hypothesis that \(\beta_3 = 0\). (If, for some reason,
-you wanted to include only the interaction, you could supply directly
+reject the null hypothesis that \(b_3 = 0\). (If, for some reason, you
+wanted to include only the interaction, you could supply directly
 \texttt{formula\ =\ lwage\ \textasciitilde{}\ exp:sex} to \texttt{lm},
 although this would be a rather difficult to interpret model.)
 
@@ -6095,6 +5845,352 @@ white collar workers who don't live in an smsa and are not union
 members. If we now add a third or even a fourth interaction, this
 becomes much harder to interpret, and in fact we rarely see such
 interactions in applied work.
+
+\chapter{Standard Errors}\label{std-errors}
+
+In the previous chapters we have seen how the OLS method can produce
+estimates about intercept and slope coefficients from data. You have
+seen this method at work in \texttt{R} by using the \texttt{lm} function
+as well. It is now time to introduce the notion that given that \(b_0\),
+\(b_1\) and \(b_2\) are \emph{estimates} of some unkown \emph{population
+parameters}, there is some degree of \textbf{uncertainty} about their
+values. An other way to say this is that we want some indication about
+the \emph{precision} of those estimates.
+
+\begin{note}
+How \emph{confident} should we be about the estimated values \(b\)?
+\end{note}
+
+ Let's go back to the regression with one variable and remind ourselves
+of the example at the end of chapter \ref{linreg}. There we introduced
+the term \emph{confidence interval}, shown here as the shaded area:
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-150-1} \end{center}
+
+The shaded area shows us the region within which the \textbf{true} red
+line will lie with 95\% probability. The fact that there is an unknown
+true line (i.e.~a \emph{true} slope coefficient \(\beta_1\)) that we
+wish to uncover from a sample of data should remind you immediately of
+our first tutorial. There, we wanted to estimate the true population
+mean from a sample of data, and we saw that as the sample size \(N\)
+increased, our estimate got better and better - fundamentally this is
+the same idea here.
+
+\section{\texorpdfstring{What is \emph{true}? What are Statistical
+Models?}{What is true? What are Statistical Models?}}\label{what-is-true-what-are-statistical-models}
+
+A \textbf{statistical model} is simply a set of assumptions about how
+some data have been generated. As such, it models the data-generating
+process (DGP), as we have it in mind. Once we define a DGP, we could
+simulate data from it and see how this compares to the data we observe
+in the real world. Or, we could change the parameters of the DGP so as
+to understand how the real world data \emph{would} change, could we (or
+some policy) change the corresponding parameters in reality. Let us now
+consider one particular statistical model, which in fact we have seen so
+many times already.
+
+\section{The Classical Regression Model}\label{class-reg}
+
+Let's bring back our simple model \eqref{eq:abline} to explain this
+concept.
+
+\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
+\] The smallest set of assumptions used to define the \emph{classical
+regression model} as in \eqref{eq:abline-5} are the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The data are \textbf{not linearly dependent}: Each variable provides
+  new information for the outcome, and it cannot be replicated as a
+  linear combination of other variables. We have seen this in section
+  \ref{multicol}. In the particular case of one regressor, as here, we
+  require that \(x\) exhibit some variation in the data, i.e.
+  \(Var(x)\neq 0\).
+\item
+  The mean of the residuals conditional on \(x\) should be zero,
+  \(E[\varepsilon|x] = 0\). Notice that this also means that
+  \(Cov(\varepsilon,x) = 0\), i.e.~that the errors and our explanatory
+  variable(s) should be \emph{uncorrelated}. It is said that \(x\)
+  should be \textbf{strictly exogenous} to the model.
+\end{enumerate}
+
+These assumptions are necessary to successfully (and correctly!) run an
+OLS regression. They are often supplemented with an additional set of
+assumptions, which help with certain aspects of the exposition, but are
+not strictly necessary:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The data are drawn from a \textbf{random sample} of size \(n\):
+  observation \((x_i,y_i)\) comes from the exact same distribution, and
+  is independent of observation \((x_j,y_j)\), for all \(i\neq j\).
+\item
+  The variance of the error term \(\varepsilon\) is the same for each
+  value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
+  called \textbf{homoskedasticity}.
+\end{enumerate}
+
+Let's talk about the small but important modifications we applied to
+model \eqref{eq:abline} to end up at \eqref{eq:abline-5} above:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\beta_0\) and \(\beta_1\) and intercept and slope parameters
+\item
+  \(\varepsilon\) is the error term.
+\end{itemize}
+
+First, we \emph{assumed} that \eqref{eq:abline-5} is the correct
+represenation of the DGP. With that assumption in place, the values
+\(\beta_0\) and \(\beta_1\) are the \emph{true parameter values} which
+generated the data. Notice that \(\beta_0\) and \(\beta_1\) are
+potentially different from \(b_0\) and \(b_1\) in \eqref{eq:abline} for a
+given sample of data - they could in practice be very close to each
+other, but \(b_0\) and \(b_1\) are \emph{estimates} of \(\beta_0\) and
+\(\beta_1\). And, crucially, those estimates are generated from a sample
+of data. Now, the fact that our data \((y_i,x_i)\) are a sample from a
+larger population, means that there will be \emph{sampling variation} in
+our estimates - exactly like in the case of the sample mean estimating
+the population average as mentioned above. One particular sample of data
+will generate one particular set of estimates \(b_0\) and \(b_1\),
+whereas another sample of data will generate estimates which will in
+general be different - by \emph{how much} those estimates differ across
+samples is the question in this chapter. In general, the more
+observations we have the greater the precision of our estimates, hence,
+the closer the estimates from different samples will lie together.
+
+\subsection{Standard Errors in Theory}\label{standard-errors-in-theory}
+
+The standard deviation of the OLS parameters is generally called
+\emph{standard error}. As such, it is just the square root of the
+parameter's variance. Under assumptions 1. through 4. we can define the
+formula for the variance of our slope coefficient in the context of our
+single regressor model \eqref{eq:abline-5} as follows:
+
+\[
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  \label{eq:var-ols}
+\] In pratice, we don't know the theoretical variance of
+\(\varepsilon\), i.e. \(\sigma^2\), but we form an estimate about it
+from our sample of data. A widely used estimate uses the already
+encountered SSR (sum of squared residuals), and is denoted \(s^2\):
+
+\[
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
+\] where \(n-p\) are the \emph{degrees of freedom} available in this
+estimation. \(p\) is the number of parameters we wish to estimate (here:
+1). So, the variance formula would become
+
+\[
+Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  \label{eq:var-ols2}
+\]
+
+You can clearly see that, as \(n\) increases, the denominator increases,
+and therefore the variance of the estimate will decrease.
+
+\subsection{Standard Errors in
+Practice}\label{standard-errors-in-practice}
+
+We would like to further make this point in an experiential way, i.e.~we
+want you to experience what is going on. We invite you to spend some
+time with the following apps, before going into the associated tutorial:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{)  }\CommentTok{# then do that}
+\end{Highlighting}
+\end{Shaded}
+
+\section{What's in my model? (And what is
+not?)}\label{whats-in-my-model-and-what-is-not}
+
+We want to revisit the underlying assumptions of the classical model
+outlined in \ref{class-reg}. Right now we to talk a bit more about
+assumption number 2 of the above definition in \ref{class-reg}. It said
+this:
+
+\begin{warning}
+The mean of the residuals conditional on \(x\) should be zero,
+\(E[\varepsilon|x] = 0\). This means that \(Cov(\varepsilon,x) = 0\),
+i.e.~that the errors and our explanatory variable(s) should be
+\emph{uncorrelated}. We want \(x\) to be \textbf{strictly exogenous} to
+the model.
+\end{warning}
+
+ Great. But what does this \emph{mean}? How could \(x\) be correlated
+with something we don't even observe?! Good questions - let's try with
+an example.
+
+Imagine that we assume that
+
+\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:DGP-h}
+\]
+
+represents the DGP of impact the sales price of houses (\(y\)) as a
+function of number of bathrooms (\(x\)). We run OLS as
+
+\[
+y_i = b_0 + b_1 x_i + e_i 
+\] You find a positive impact of bathrooms on houses:
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = price ~ bathrms, data = Housing)
+#OUT> 
+#OUT> Residuals:
+#OUT>    Min     1Q Median     3Q    Max 
+#OUT> -77225 -15271  -2510  11704 102729 
+#OUT> 
+#OUT> Coefficients:
+#OUT>             Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept)    32794       2694   12.17   <2e-16 ***
+#OUT> bathrms        27477       1952   14.08   <2e-16 ***
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 22880 on 544 degrees of freedom
+#OUT> Multiple R-squared:  0.267,   Adjusted R-squared:  0.2657 
+#OUT> F-statistic: 198.2 on 1 and 544 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+In fact, from this you conclude that each additional bathroom increases
+the sales price of a house by 27477 dollars. Let's see if our assumption
+\(E[\varepsilon|x] = 0\) is satisfied:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\CommentTok{# add residuals to the data}
+\NormalTok{Housing}\OperatorTok{$}\NormalTok{resid <-}\StringTok{ }\KeywordTok{resid}\NormalTok{(hlm)}
+\NormalTok{Housing }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(bathrms) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_of_resid=}\KeywordTok{mean}\NormalTok{(resid))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> # A tibble: 4 x 2
+#OUT>   bathrms mean_of_resid
+#OUT>     <dbl>         <dbl>
+#OUT> 1       1         -118.
+#OUT> 2       2          955.
+#OUT> 3       3       -11195.
+#OUT> 4       4        32298.
+\end{verbatim}
+
+Oh, that doesn't look good. Even though the unconditional mean
+\(E[e] = 0\) is \emph{very} close to zero (type
+\texttt{mean(resid(hlm))}!), this doesn't seem to hold at all by
+categories of \(x\). This indicates that there is something in the error
+term \(e\) which is \emph{correlated} with \texttt{bathrms}. Going back
+to our discussion about \emph{ceteris paribus} in section \ref{ceteris},
+we stated that the interpretation of our OLS slope estimate is that
+
+\begin{tip}
+Keeping everything else fixed at the current value, what is the impact
+of \(x\) on \(y\)? \emph{Everything} also includes things in
+\(\varepsilon\) (and, hence, \(e\))!
+\end{tip}
+
+ It looks like our DGP in \eqref{eq:DGP-h} is the \emph{wrong model}.
+Suppose instead, that in reality sales prices are generated like this:
+\[
+y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \label{eq:DGP-h2}
+\] This would now mean that by running our regression, informed by the
+wrong DGP, what we estimate is in fact this: \[
+y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
+\] This is to say that by \emph{omitting} variable \(z\), we relegate it
+to a new error term, here called \(u_i = b_2 z_i + e_i\). Our assumption
+above states that \emph{all regressors need to be uncorrelated with the
+error term} - so, if \(Corr(x,z)\neq 0\), we have a problem. Let's take
+this idea to our running example.
+
+\subsection{Omitted Variable Bias}\label{omitted-variable-bias}
+
+What we are discussing here is called \emph{Omitted Variable Bias}.
+There is a variable which we omitted from our regression, i.e.~we forgot
+to include it. It is often difficult to find out what that variable
+could be, and you can go a long way by just reasoning about the
+data-generating process. In other words, do you think it's
+\emph{reasonable} that price be determined by the number of bathrooms
+only? Or could there be another variable, omitted from our model, that
+is important to explain prices, and at the same time correlated with
+\texttt{bathrms}?
+
+Let's try with \texttt{lotsize}, i.e.~the size of the area on which the
+house stands. Intuitively, larger lots should command a higher price; At
+the same time, however, larger lots imply more space, hence, you can
+also have more bathrooms! Let's check this out:
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = price ~ bathrms + lotsize, data = Housing)
+#OUT> 
+#OUT> Residuals:
+#OUT>    Min     1Q Median     3Q    Max 
+#OUT> -60752 -12532  -1674  10514  92931 
+#OUT> 
+#OUT> Coefficients:
+#OUT>              Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
+#OUT> bathrms     2.281e+04  1.703e+03  13.397  < 2e-16 ***
+#OUT> lotsize     5.575e+00  3.944e-01  14.136  < 2e-16 ***
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 19580 on 543 degrees of freedom
+#OUT> Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
+#OUT> F-statistic: 235.2 on 2 and 543 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Here we see that the estimate for the effect of an additional bathroom
+\emph{decreased} from 27477 to 22811.5 by almost 5000 dollars! Well
+that's the problem then. We said above that one more bathroom is worth
+27477 dollars - if \textbf{nothing else changes}! But that doesn't seem
+to hold, because we have seen that as we increase \texttt{bathrms} from
+\texttt{1} to \texttt{2}, the mean of the resulting residuals changes
+quite a bit. So there \textbf{is something in \(\varepsilon\) which does
+change}, hence, our conclusion that one more bathroom is worth 27477
+dollars is in fact \emph{invalid}!
+
+The way in which \texttt{bathrms} and \texttt{lotsize} are correlated is
+important here, so let's investigate that:
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-156-1} 
+
+}
+
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-156}
+\end{figure}
+
+This shows that lotsize and the number of bathrooms is indeed positively
+related. Larger lot of the house, more bathrooms. This leads to a
+general result:
+
+\begin{note}
+\textbf{Direction of Omitted Variable Bias}
+
+If there is an omitted variable \(z\) that is \emph{positively}
+correlated with our explanatory variable \(x\), then our estimate of
+effect of \(x\) on \(y\) will be too large (or, \emph{biased upwards}).
+The correlation between \(x\) and \(z\) means that we attribute part of
+the impact of \(z\) on \(y\) mistakenly to \(x\)! And, of course, vice
+versa for \emph{negatively} correlated omitted variables.
+\end{note}
 
 \chapter{Quantile Regression}\label{quantreg}
 
@@ -6907,6 +7003,20 @@ Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 You can write citations, too. For example, we are using the
 \textbf{bookdown} package \citep{R-bookdown} in this sample book, which
 was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+
+\chapter{Slides}\label{slides}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-1}{chapter 1}
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-2}{chapter 2}
+\item
+  \href{http://rpubs.com/floswald/ScPoMetrics-3}{chapter 3}
+\item
+  \href{slides/chapter4/chapter4.html}{chapter 4}
+\end{itemize}
 
 \bibliography{book.bib,packages.bib}
 
