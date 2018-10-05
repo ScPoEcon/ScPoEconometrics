@@ -14,7 +14,7 @@ git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git boo
 cd book-output
 cp -r ../_book/* ./
 
-for ((i=4; i<=12; i++)); do
+for i in 4 5 6 7 8 9; do
     if [ -d "../_slides/chapter$i" ]; then
         cp -r ../_slides/chapter$i ./slides/chapter$i
     fi
