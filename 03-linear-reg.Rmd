@@ -74,9 +74,10 @@ abline(a = 0,b = 5,lw=3)
 
 That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the *intercept*; and it's too high. We just learned how to represent a *line*, i.e. with two numbers called *intercept* and *slope*. Let's write down a simple formula which represents a line where some outcome $z$ is related to a variable $x$:
 
-$$
+\begin{equation}
 z = b_0 + b_1 x (\#eq:bline)
-$$
+\end{equation}
+
 Here $b_0$ represents the value of the intercept (i.e. $z$ when $x=0$), and $b_1$ is the value of the slope. The question for us is now: How to choose the number $b_0$ and $b_1$ such that the result is the **good** line?
 
 ### Choosing the Best Line
@@ -179,9 +180,10 @@ plot_data = generate_data(sigma = 2)
 
 In order to be able to reason about good or bad line, we need to denote the *output* of equation \@ref(eq:bline). We call the value $\hat{y}_i$ the *predicted value* for obseration $i$, after having chosen some particular values $b_0$ and $b_1$:
 
-$$
+\begin{equation}
 \hat{y}_i = b_0 + b_1 x_i (\#eq:abline-pred)
-$$ 
+\end{equation}
+
 In general it is likely that we won't be able to choose $b_0$ and $b_1$ in such as way as to provide a perfect prediction, i.e. one where $\hat{y}_i = y_i$ for all $i$. That is, we expect to make an *error* in our prediction $\hat{y}_i$, so let's denote this value $e_i$. If we acknowlegdge that we will make errors, let's at least make them as small as possible! Exactly this is going to be our task now.
 
 Suppose we have the following set of `r nrow(plot_data)` observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It would look like this: 
@@ -192,9 +194,10 @@ plot_unexp_dev(plot_data)
 
 Here, the red arrows indicate the **distance** between the prediction (i.e. the black line) to each data point, in other words, each arrow is a particular $e_i$. An upward pointing arrow indicates a positive value of a particular $e_i$, and vice versa for downward pointing arrows. The erros are also called *residuals*, which comes from the way can write the equation for this relationship between two particular values $(y_i,x_i)$ belonging to observation $i$:
 
-$$
+\begin{equation}
 y_i = b_0 + b_1 x_i + e_i (\#eq:abline)
-$$ 
+\end{equation}
+
 You realize of course that $\hat{y}_i = y_i - e_i$, which just means that our prediction is the observed value $y_i$ minus any error $e_i$ we make. In other words, $e_i$ is what is left to be explained on top of the line $b_0 + b_1 x_i$, hence, it's a residual to explain $y_i$. Here are $y,\hat{y}$ and the resulting $e$ which are plotted in figure \@ref(fig:line-arrows):
 
 ```{r,echo=FALSE}
@@ -243,14 +246,15 @@ aboutApp("SSR_cone")
 
 The method to compute (or *estimate*) $b_0$ and $b_1$ we illustrated above is called *Ordinary Least Squares*, or OLS. $b_0$ and $b_1$ are therefore also often called the *OLS coefficients*. By solving problem \@ref(eq:ols-min) one can derive an explicit formula for them:
 
-$$
+\begin{equation}
 b_1 = \frac{cov(x,y)}{var(x)},  (\#eq:beta1hat)
-$$
+\end{equation}
+
 i.e. the estimate of the slope coefficient is the covariance between $x$ and $y$ divided by the variance of $x$, both computed from our sample of data. With $b_1$ in hand, we can get the estimate for the intercept as
 
-$$
+\begin{equation}
 b_0 = \bar{y} - b_1 \bar{x}.  (\#eq:beta0hat)
-$$
+\end{equation}
 
 where $\bar{z}$ denotes the sample mean of variable $z$. The interpretation of the OLS slope coefficient $b_1$ is as follows. Given a line as in $y = b_0 + b_1 x$,
 
@@ -261,9 +265,10 @@ where $\bar{z}$ denotes the sample mean of variable $z$. The interpretation of t
 
 There are several important special cases for the linear regression introduced above. Let's start with the most obvious one: What is the meaning of running a regression *without any regressor*, i.e. without a $x$? Our line becomes very simple. Instead of \@ref(eq:bline), we get
 
-$$
+\begin{equation}
 y = b_0. (\#eq:b0line)
-$$
+\end{equation}
+
 This means that our minization problem in \@ref(eq:ols-min) *also* becomes very simple: We only have to choose $b_0$! We have 
 
 $$
@@ -454,9 +459,9 @@ abline(reg=l1,lw=2)
 
 Somehow when looking at \@ref(fig:non-line-cars-ols) one is not totally convinced that the straight line is a good summary of this relationship. For values $x\in[50,120]$ the line seems to low, then again too high, and it completely misses the right boundary. It's easy to address this shortcoming by including *higher order terms* of an explanatory variable. We would modify \@ref(eq:abline) to read now
 
-$$
+\begin{equation}
 y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i (\#eq:abline2)
-$$ 
+\end{equation}
 
 This is a special case of *multiple regression*, which we will talk about in chapter \@ref(multiple-reg). You can see that there are *multiple* slope coefficients. For now, let's just see how this performs:
 
@@ -497,9 +502,8 @@ The total variation in outcome $y$ (often called SST, or *total sum of squares*)
 
 In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. We make use of the just introduced decomposition of variance, and write the formula as
 
-$$
-R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (\#eq:Rsquared)
-$$
+\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (\#eq:Rsquared)
+\end{equation}
 
 It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.
 

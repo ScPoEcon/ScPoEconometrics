@@ -46,9 +46,9 @@ $$
 $$
 and let's suppose that $y_i$ is a measure of $i$'s annual labor income. Our model is
 
-$$
+\begin{equation}
 y_i = b_0 + b_1 \text{is.female}_i + e_i (\#eq:dummy-reg)
-$$
+\end{equation}
 
 and here is how we estimate this in `R`:
 
@@ -201,9 +201,9 @@ This means a one-unit change in $x$ increases the logarithm of the outcome by $b
 
 Going back to our example, let's say that a workers wage depends only on his *experience*, measured in the number of years he/she worked full-time:
 
-$$
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + e_i (\#eq:wage-exp)
-$$
+\end{equation}
 
 
 ```{r}
@@ -222,9 +222,9 @@ ggplot(mapping = aes(y=lwage,x=exp), data=Wages) + geom_point(shape=1,alpha=0.6)
 
 Now let's investigate whether this relationship is different for men and women. We can do this by just including the `factor` variable `sex`:
 
-$$
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i (\#eq:wage-sex)
-$$
+\end{equation}
 
 In `R` we can do this easily by using the `update` function as follows:
 
@@ -234,7 +234,7 @@ summary(lm_sex)
 ```
 
 
-What's going on here? Remember from above that `sex` is a `factor` with 2 levels *female* and *male*. We see in the above output that `R` included a regressor called `sexmale` $=\mathbf{1}[sex_i=="male"]$. This is a combination of the variable name `sex` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `sex=="female"`. The interpretation is that $b_2$ measures the effect of being male *relative* to being female. `R` automatically creates a dummy variable for each potential level, excluding the first category. In particular, if `sex` had a third category `dont want to say`, there would be an additional regressor called `sexdontwanttosay`.
+What's going on here? Remember from above that `sex` is a `factor` with 2 levels *female* and *male*. We see in the above output that `R` included a regressor called `sexmale` $=\mathbf{1}[sex_i==male]$. This is a combination of the variable name `sex` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `sex=="female"`. The interpretation is that $b_2$ measures the effect of being male *relative* to being female. `R` automatically creates a dummy variable for each potential level, excluding the first category. In particular, if `sex` had a third category `dont want to say`, there would be an additional regressor called `sexdontwanttosay`.
 
 ```{r wage-plot2,fig.align='center',echo=FALSE,fig.cap='log wage vs experience with different intercepts by sex'}
 
@@ -256,15 +256,15 @@ Figure \@ref(fig:wage-plot2) illustrates this. You can see that both male and fe
 
 You can see above that we *restricted* male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. As already introduced in chapter \@ref(mreg-interactions), interactions allow that the *ceteris paribus* effect of a certain regressor, `exp` say, depends also on the value of yet another regressor, `sex` for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to `exp` in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
 
-$$
+\begin{equation}
 \ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i (\#eq:wage-sex-inter)
-$$
+\end{equation}
 
 The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`. This is easy to see if we take the partial derivative of \@ref(eq:wage-sex-inter) with respect to `sex`:
 
-$$
+\begin{equation}
 \frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i (\#eq:wage-sex-inter-deriv)
-$$
+\end{equation}
 
 Back in our `R` session, we can run the full interactions model like this:
 
