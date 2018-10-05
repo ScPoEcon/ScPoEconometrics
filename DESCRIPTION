@@ -1,8 +1,8 @@
 Package: ScPoEconometrics
 Type: Package
 Title: ScPoEconometrics
-Date: 2018-09-22
-Version: 0.1.7
+Date: 2018-10-05
+Version: 0.1.8
 Authors@R: c(
     person("Florian", "Oswald", email = "florian.oswald@sciencespo.fr", role = c("aut","cre")),
     person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"),

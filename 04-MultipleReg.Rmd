@@ -5,9 +5,10 @@
 We can extend the discussion from chapter \@ref(linreg) to more than one explanatory variable. For example, suppose that instead of only $x$ we now had $x_1$ and $x_2$ in order to explain $y$. Everything we've learned for the single variable case applies here as well. Instead of a regression *line*, we now get a regression *plane*, i.e. an object representable in 3 dimenions: $(x_1,x_2,y)$.
 As an example, suppose we wanted to explain how many *miles per gallon* (`mpg`) a car can travel as a function of its *horse power* (`hp`) and its *weight* (`wt`). In other words we want to estimate the equation
 
-$$
+\begin{equation}
 mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i (\#eq:abline2d)
-$$
+\end{equation}
+
 on our built-in dataset of cars (`mtcars`):
 
 ```{r mtcarsdata}
@@ -69,9 +70,10 @@ We ask this kind of question all the time in econometrics. In figure \@ref(fig:p
 
 As a matter of fact, the kind of question asked here is so common that it has got its own name: we'd say "*ceteris paribus*, what is the impact of `hp` on `mpg`?". *ceteris paribus* is latin and means *the others equal*, i.e. all other variables fixed. In terms of our model in \@ref(eq:abline2d), we want to know the following quantity:
 
-$$
+\begin{equation}
 \frac{\partial mpg_i}{\partial hp_i} = b_1 (\#eq:abline2d-deriv)
-$$
+\end{equation}
+
 This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
 <br>
 
@@ -155,16 +157,16 @@ While you explore this plot, ask yourself the following question: if you could o
 Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether the average income in an ares is high or low? Notice that `str` and `avginc` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
 
 
-$$
+\begin{equation}
 \text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i (\#eq:caschool-inter)
-$$
+\end{equation}
 
 
 The inclusion of the *product* of `str` and `avginc` amounts to having different slopes with respect to `str` for different values of  `avginc` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
 
-$$
+\begin{equation}
 \frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
-$$
+\end{equation}
 
 
 >You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.

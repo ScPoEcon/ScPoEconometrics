@@ -37,9 +37,10 @@ A **statistical model** is simply a set of assumptions about how some data have 
 Let's bring back our simple model \@ref(eq:abline) to explain this concept.
 
 
-$$
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:abline-5)
-$$
+\end{equation}
+
 The smallest set of assumptions used to define the *classical regression model* as in \@ref(eq:abline-5) are the following:
 
 1. The data are **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section \@ref(multicol). In the particular case of one regressor, as here, we require that $x$ exhibit some variation in the data, i.e. $Var(x)\neq 0$.
@@ -64,9 +65,10 @@ First, we *assumed* that \@ref(eq:abline-5) is the correct represenation of the 
 The standard deviation of the OLS parameters is generally called *standard error*. As such, it is just the square root of the parameter's variance.
 Under assumptions 1. through 4. we can define the formula for the variance of our slope coefficient in the context of our single regressor model \@ref(eq:abline-5) as follows: 
 
-$$
+\begin{equation}
 Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  (\#eq:var-ols)
-$$
+\end{equation}
+
 In pratice, we don't know the theoretical variance of $\varepsilon$, i.e. $\sigma^2$, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted $s^2$:
 
 $$
@@ -74,9 +76,9 @@ s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \fra
 $$
 where $n-p$ are the *degrees of freedom* available in this estimation. $p$ is the number of parameters we wish to estimate (here: 1). So, the variance formula would become
 
-$$
+\begin{equation}
 Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  (\#eq:var-ols2)
-$$
+\end{equation}
 
 You can clearly see that, as $n$ increases, the denominator increases, and therefore the variance of the estimate will decrease.
 
@@ -103,9 +105,9 @@ Great. But what does this *mean*? How could $x$ be correlated with something we 
 
 Imagine that we assume that 
 
-$$
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:DGP-h)
-$$ 
+\end{equation}
 
 represents the DGP of  impact  the sales price of houses ($y$) as a function of number of bathrooms ($x$). We run OLS as
 
@@ -139,9 +141,11 @@ Keeping everything else fixed at the current value, what is the impact of $x$ on
 ```
 <br>
 It looks like our DGP in \@ref(eq:DGP-h) is the *wrong model*. Suppose instead, that in reality sales prices are generated like this:
-$$
+
+\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i (\#eq:DGP-h2)
-$$ 
+\end{equation}
+
 This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this:
 $$
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
