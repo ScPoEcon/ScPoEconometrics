@@ -5,13 +5,13 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: ["packages.bib","book.bib"]
 biblio-style: apalike
 link-citations: yes
 url: 'https\://scpoecon.github.io/ScPoEconometrics/'
 favicon: "favicon.gif"
 github-repo: ScPoEcon/ScPoEconometrics
-description: "SciencesPo UG Econometrics online textbook. No Maths."
+description: "SciencesPo UG Econometrics online textbook. Almost no Maths."
 ---
 
 ```{r, setup, include=FALSE}
