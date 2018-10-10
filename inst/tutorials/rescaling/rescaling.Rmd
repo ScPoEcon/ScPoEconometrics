@@ -16,6 +16,16 @@ rescale_xy <- function(rescale_X, rescale_Y){
                       y = y * rescale_Y)
   return(dta_new)
 }
+
+# also the data!
+set.seed(42) #this ensures that you get the same "random" data each time.
+
+# We'll use a sample size of n = 200
+
+x <- rnorm(n = 200, mean = 2, sd = 5) 
+# X is normally distributed w/ mean = 2 and sd = 5
+
+y <- 15 + 7*x + rnorm(n = 200, mean = 0, sd = 10)
 ```
 
 ## Tutorial: Rescaling
@@ -30,7 +40,7 @@ $Y = 15 + 7X + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 10^2)$
 
 This can be done using the following code:
 
-```{r dgp-setup}
+```{r dgp,eval=FALSE}
 
 set.seed(42) #this ensures that you get the same "random" data each time.
 
@@ -41,7 +51,11 @@ x <- rnorm(n = 200, mean = 2, sd = 5)
 
 y <- 15 + 7*x + rnorm(n = 200, mean = 0, sd = 10)
 # the last term is the simulation of epsilon (added random noise)
+```
 
+We can then store the data in a `data.frame` and plot it:
+
+```{r}
 # store data in a data.frame
 dta <- data.frame(x = x, 
                   y = y)
@@ -101,20 +115,9 @@ dta_new <- data.frame(x = x * rescale_X,
 
 ```
 
-The following function generates a rescaled version of the original data and takes two arguments: by how much you want to rescale X and Y, respectively.
+The function `rescale_xy(rx,ry)` generates a rescaled version of the original data. You rescale `x` by `rx` and `y` by `ry`. Use the following cell to obtain summary statistics for both $X$ and $Y$:
 
-```{r rescale_function,eval=FALSE}
-rescale_xy <- function(rescale_X, rescale_Y){
-  dta_new <- data.frame(x = x * rescale_X,
-                      y = y * rescale_Y)
-  return(dta_new)
-}
-```
-
-
-Now, use the following cell to obtain summary statistics for both $X$ and $Y$:
-
-```{r summary_exo, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
+```{r summary_exo, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
 
 ## Summary Statistics
@@ -161,7 +164,7 @@ answer("Both divided by 10."), allow_retry = T
 
 Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo, exercise=TRUE, exercise.eval=TRUE,exercise.setup="dgp-setup"}
+```{r reg_exo, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 10, rescale_Y = 1) # change this (or not)
 
 # Fit a linear model to the data using `lm`
@@ -179,7 +182,7 @@ To answer the following question, rescale $Y$ by multiplying it by 2 and leave $
 
 Let's start by plotting the data.
 
-```{r plot_exo_y, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
+```{r plot_exo_y, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
 
 plot(y~x, dta_new)
@@ -202,7 +205,7 @@ answer("Both divided by 2."), allow_retry = T
 
 Let's verify that! Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo_y, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
+```{r reg_exo_y, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 1, rescale_Y = 2) # change this (or not)
 
 # Fit a linear model to the data using `lm`
@@ -220,7 +223,7 @@ To answer the following question, rescale $Y$ by multiplying it by 10 and rescal
 
 Let's start by plotting the data.
 
-```{r plot_exo_yx, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
+```{r plot_exo_yx, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
 
 plot(y~x, dta_new)
@@ -251,7 +254,7 @@ answer("Divided by 5"), allow_retry = T
 
 Use the following cell to get an estimate of the intercept and slope coefficients.
 
-```{r reg_exo_yx, exercise=TRUE, exercise.eval=TRUE, exercise.setup="dgp-setup"}
+```{r reg_exo_yx, exercise=TRUE, exercise.eval=TRUE}
 dta_new <- rescale_xy(rescale_X = 2, rescale_Y = 10) # change this (or not)
 
 # Fit a linear model to the data using `lm`
@@ -286,7 +289,7 @@ Multiplying $X$ by $c$ and $Y$ by $d$:
 $$NewSlope = \frac{Cov(cX, dY)}{Var(cX)} \\
 = \frac{c\cdot d}{c^2} \frac{Cov(X, Y)}{Var(X)} \\
 = \frac{d}{c} \frac{Cov(X, Y)}{Var(X)} \\
-= \frac{d}{c} Slope  \\$$
+= \frac{d}{c} Slope$$
 
 
 and
