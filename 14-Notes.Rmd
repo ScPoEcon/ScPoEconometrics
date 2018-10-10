@@ -6,7 +6,7 @@ this creates a library for the used R packages.
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown','ScPoEconometrics'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown','ScPoEconometrics','shiny','learnr','datasauRus','webshot','AER'
 ), 'packages.bib')
 ```
 
@@ -25,6 +25,11 @@ install_github("floswald/ScPoEconometrics")
 Packages used:
 
 * **bookdown** [@R-bookdown]
+* **shiny** [@R-shiny]
+* **learnr** [@R-learnr]
+* **datasauRus** [@R-datasauRus]
+* **webshot** [@R-webshot]
+* **AER** [@R-AER]
 * **knitr** [@xie2015]
 * **ScPoEconometrics** [@R-ScPoEconometrics]
 * **Ecdat** [@R-Ecdat]
