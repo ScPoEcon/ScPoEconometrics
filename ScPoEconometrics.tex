@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-10-05}
+    \date{2018-10-10}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -6959,86 +6959,45 @@ In order to install that package, you need to do
 \end{Highlighting}
 \end{Shaded}
 
-\section{Book usage}\label{book-usage}
+Packages used:
 
-You can label chapter and section titles using \texttt{\{\#label\}}
-after them, e.g., we can reference Chapter \ref{intro}. If you do not
-manually label them, there will be automatic labels anyway, e.g.,
-Chapter \ref{linreg}.
+\begin{itemize}
+\tightlist
+\item
+  \textbf{bookdown} \citep{R-bookdown}
+\item
+  \textbf{knitr} \citep{xie2015}
+\item
+  \textbf{ScPoEconometrics} \citep{R-ScPoEconometrics}
+\item
+  \textbf{Ecdat} \citep{R-Ecdat}
+\item
+  \textbf{Ecfun} \citep{R-Ecfun}
+\item
+  \textbf{R} \citep{R-base}
+\item
+  \textbf{dplyr} \citep{R-dplyr}
+\item
+  \textbf{ggplot2} \citep{R-ggplot2}
+\item
+  \textbf{reshape2} \citep{R-reshape2}
+\item
+  \textbf{bindrcpp} \citep{R-bindrcpp}
+\item
+  \textbf{mvtnorm} \citep{R-mvtnorm}
+\item
+  \textbf{plotly} \citep{R-plotly}
+\item
+  \textbf{readr} \citep{R-readr}
+\item
+  \textbf{readxl} \citep{R-readxl}
+\item
+  \textbf{tidyr} \citep{R-tidyr}
+\item
+  \textbf{readr} \citep{R-readr}
+\end{itemize}
 
-Figures and tables with captions will be placed in \texttt{figure} and
-\texttt{table} environments, respectively.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{))}
-\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{ScPoEconometrics_files/figure-latex/nice-fig-1} 
-
-}
-
-\caption{Here is a nice figure!}\label{fig:nice-fig}
-\end{figure}
-
-Reference a figure by its code chunk label with the \texttt{fig:}
-prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can
-reference tables generated from \texttt{knitr::kable()}, e.g., see Table
-\ref{tab:nice-tab}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
-  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
-  \DataTypeTok{booktabs =} \OtherTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:nice-tab}Here is a nice table!}
-\centering
-\begin{tabular}[t]{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.1 & 3.5 & 1.4 & 0.2 & setosa\\
-4.9 & 3.0 & 1.4 & 0.2 & setosa\\
-4.7 & 3.2 & 1.3 & 0.2 & setosa\\
-4.6 & 3.1 & 1.5 & 0.2 & setosa\\
-5.0 & 3.6 & 1.4 & 0.2 & setosa\\
-\addlinespace
-5.4 & 3.9 & 1.7 & 0.4 & setosa\\
-4.6 & 3.4 & 1.4 & 0.3 & setosa\\
-5.0 & 3.4 & 1.5 & 0.2 & setosa\\
-4.4 & 2.9 & 1.4 & 0.2 & setosa\\
-4.9 & 3.1 & 1.5 & 0.1 & setosa\\
-\addlinespace
-5.4 & 3.7 & 1.5 & 0.2 & setosa\\
-4.8 & 3.4 & 1.6 & 0.2 & setosa\\
-4.8 & 3.0 & 1.4 & 0.1 & setosa\\
-4.3 & 3.0 & 1.1 & 0.1 & setosa\\
-5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-\addlinespace
-5.7 & 4.4 & 1.5 & 0.4 & setosa\\
-5.4 & 3.9 & 1.3 & 0.4 & setosa\\
-5.1 & 3.5 & 1.4 & 0.3 & setosa\\
-5.7 & 3.8 & 1.7 & 0.3 & setosa\\
-5.1 & 3.8 & 1.5 & 0.3 & setosa\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-You can write citations, too. For example, we are using the
-\textbf{bookdown} package \citep{R-bookdown} in this sample book, which
-was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
-
-\bibliography{book.bib,packages.bib}
+\bibliography{packages.bib,book.bib}
 
 
 \end{document}
