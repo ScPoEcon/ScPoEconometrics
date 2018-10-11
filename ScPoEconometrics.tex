@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-10-10}
+    \date{2018-10-11}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -5114,7 +5114,10 @@ what we actually wanted: separate estimates for \(b_1,b_2\).
 All variables in a multiple regression should be \emph{linearly
 independent}, or \emph{not} colinear. This is known as the \textbf{rank
 condition}. In particular, this condition dictates that we need at least
-\(N \geq K+1\), i.e.~more observations than coefficients.
+\(N \geq K+1\), i.e.~more observations than coefficients. The greater
+the degree of linear dependence amongst our explanatory variables, the
+less information we can get from them, and our estimates becomes
+\emph{less precise}.
 \end{note}
 
 \section{California Test Scores 2}\label{california-test-scores-2}
@@ -5291,6 +5294,8 @@ Probably the simplest type of categorical variable is the \emph{binary},
 can take on only two values, \texttt{0} and \texttt{1}, or \texttt{TRUE}
 and \texttt{FALSE}.
 
+\section{The Binary Regressor Case}\label{the-binary-regressor-case}
+
 Even though this is an extremely parsimonious way of encoding that, it
 is a very powerful tool that allows us to represent that a certain
 observation \(i\) \textbf{is a member} of a certain category \(j\). For
@@ -5427,7 +5432,47 @@ useful to remember that the \emph{unconditional mean} of \(y\), i.e.
 intercept, illustrated by the blue line. This line will always lie in
 between both conditional means. As indicated by the red arrow, the
 estimate of the coefficient on the dummy, \(\alpha\), is equal to the
-difference in conditional means for both groups.
+difference in conditional means for both groups. You should look at our
+app now to deepen your understanding of what's going on here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_dummy"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Dummy and Continuous
+Variables}\label{dummy-and-continuous-variables}
+
+What happens if there are more predictors than just the dummy variable
+in a regression? For example, what if instead we had
+
+\begin{equation}
+y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{exper}_i + e_i \label{eq:dummy-reg2}
+\end{equation}
+
+where \(\text{exper}_i\) would measure years of experience in the labor
+market? As above, the dummy variable acts as an intercept shifter. We
+have
+
+\begin{equation}
+y_i =  \begin{cases}
+b_0 + b_1 + b_2 \text{exper}_i + e_i & \text{if is.female=1} \\
+b_0  + b_2 \text{exper}_i + e_i & \text{if is.female=0}
+\end{cases}
+\end{equation}
+
+so that the intercept is \(b_0 + b_1\) for women but \(b_0\) for men. We
+will see this in the real-world example below, but for now let's see the
+effect of switching the dummy \emph{on} and \emph{off} in this app:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_dummy_example"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \section{\texorpdfstring{Categorical Variables in \texttt{R}:
 \texttt{factor}}{Categorical Variables in R: factor}}\label{categorical-variables-in-r-factor}
@@ -5878,7 +5923,7 @@ How \emph{confident} should we be about the estimated values \(b\)?
 of the example at the end of chapter \ref{linreg}. There we introduced
 the term \emph{confidence interval}, shown here as the shaded area:
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-150-1} \end{center}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-152-1} \end{center}
 
 The shaded area shows us the region within which the \textbf{true} red
 line will lie with 95\% probability. The fact that there is an unknown
@@ -6190,11 +6235,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-156-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-158-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-156}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-158}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
@@ -6941,6 +6986,8 @@ off-diagonals.
   \href{http://rpubs.com/floswald/ScPoMetrics-3}{chapter 3}
 \item
   \href{slides/chapter4/chapter4.html}{chapter 4}
+\item
+  \href{slides/chapter4/chapter5.html}{chapter 5}
 \end{itemize}
 
 \chapter{Notes}\label{notes}
@@ -6965,6 +7012,16 @@ Packages used:
 \tightlist
 \item
   \textbf{bookdown} \citep{R-bookdown}
+\item
+  \textbf{shiny} \citep{R-shiny}
+\item
+  \textbf{learnr} \citep{R-learnr}
+\item
+  \textbf{datasauRus} \citep{R-datasauRus}
+\item
+  \textbf{webshot} \citep{R-webshot}
+\item
+  \textbf{AER} \citep{R-AER}
 \item
   \textbf{knitr} \citep{xie2015}
 \item

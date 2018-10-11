@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-10-10">
+<meta name="date" content="2018-10-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,8 +155,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
-<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.2</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
@@ -212,7 +214,7 @@ How <em>confident</em> should we be about the estimated values <span class="math
 </center>
 </div>
 <p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown here as the shaded area:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-150-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-152-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
 <div id="what-is-true-what-are-statistical-models" class="section level2">
 <h2><span class="header-section-number">6.1</span> What is <em>true</em>? What are Statistical Models?</h2>
@@ -351,8 +353,8 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 #OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
 <p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-156"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-156-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-158"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-158-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 6.1: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>

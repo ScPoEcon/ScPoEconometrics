@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-10-10">
+<meta name="date" content="2018-10-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,8 +155,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
-<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.2</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
@@ -215,6 +217,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Packages used:</p>
 <ul>
 <li><strong>bookdown</strong> <span class="citation">(Xie <a href="#ref-R-bookdown">2018</a>)</span></li>
+<li><strong>shiny</strong> <span class="citation">(Chang et al. <a href="#ref-R-shiny">2018</a>)</span></li>
+<li><strong>learnr</strong> <span class="citation">(Schloerke, Allaire, and Borges <a href="#ref-R-learnr">2018</a>)</span></li>
+<li><strong>datasauRus</strong> <span class="citation">(Locke and D’Agostino McGowan <a href="#ref-R-datasauRus">2018</a>)</span></li>
+<li><strong>webshot</strong> <span class="citation">(Chang <a href="#ref-R-webshot">2018</a>)</span></li>
+<li><strong>AER</strong> <span class="citation">(Kleiber and Zeileis <a href="#ref-R-AER">2017</a>)</span></li>
 <li><strong>knitr</strong> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span></li>
 <li><strong>ScPoEconometrics</strong> <span class="citation">(Oswald <a href="#ref-R-ScPoEconometrics">2018</a>)</span></li>
 <li><strong>Ecdat</strong> <span class="citation">(Croissant <a href="#ref-R-Ecdat">2016</a>)</span></li>
@@ -237,6 +244,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="refs" class="references">
 <div id="ref-R-bookdown">
 <p>Xie, Yihui. 2018. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</p>
+</div>
+<div id="ref-R-shiny">
+<p>Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2018. <em>Shiny: Web Application Framework for R</em>. <a href="https://CRAN.R-project.org/package=shiny" class="uri">https://CRAN.R-project.org/package=shiny</a>.</p>
+</div>
+<div id="ref-R-learnr">
+<p>Schloerke, Barret, JJ Allaire, and Barbara Borges. 2018. <em>Learnr: Interactive Tutorials for R</em>. <a href="https://rstudio.github.io/learnr/" class="uri">https://rstudio.github.io/learnr/</a>.</p>
+</div>
+<div id="ref-R-datasauRus">
+<p>Locke, Steph, and Lucy D’Agostino McGowan. 2018. <em>DatasauRus: Datasets from the Datasaurus Dozen</em>. <a href="https://CRAN.R-project.org/package=datasauRus" class="uri">https://CRAN.R-project.org/package=datasauRus</a>.</p>
+</div>
+<div id="ref-R-webshot">
+<p>Chang, Winston. 2018. <em>Webshot: Take Screenshots of Web Pages</em>. <a href="https://CRAN.R-project.org/package=webshot" class="uri">https://CRAN.R-project.org/package=webshot</a>.</p>
+</div>
+<div id="ref-R-AER">
+<p>Kleiber, Christian, and Achim Zeileis. 2017. <em>AER: Applied Econometrics with R</em>. <a href="https://CRAN.R-project.org/package=AER" class="uri">https://CRAN.R-project.org/package=AER</a>.</p>
 </div>
 <div id="ref-xie2015">
 <p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>

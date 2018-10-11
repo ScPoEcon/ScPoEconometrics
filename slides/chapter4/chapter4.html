@@ -10,7 +10,7 @@
 
 
 
-  <meta name="date" content="2018-10-10" />
+  <meta name="date" content="2018-10-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -111,7 +111,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2018-10-10</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2018-10-11</p>
           </hgroup>
   </slide>
 
@@ -161,15 +161,33 @@ e_i &amp;= y_i - \widehat{y}_i
 <pre class = 'prettyprint lang-r'>lm(formula = mpg ~ wt + hp, data = mtcars)</pre></li>
 </ul>
 
+</article></slide><slide class=""><hgroup><h2>Let&#39;s find the best fit in 3D!</h2></hgroup><article  id="lets-find-the-best-fit-in-3d">
+
+<ul>
+<li>We have done this before in two dimensions.</li>
+<li>Now, we have to choose not only \(b_0,b_1\), but also \(b_2\)!</li>
+<li>Let&#39;s do it!</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>launchApp(&quot;reg_multivariate&quot;)</pre>
+
 </article></slide><slide class=""><hgroup><h2>Multicolinearity</h2></hgroup><article  id="multicolinearity">
 
 <ul class = 'build'>
 <li>Multiple regression requires that variables are <strong>linearly independent</strong>.</li>
-<li>Imagine we had <code>wt_plus</code> defined as <code>wt + 1</code> above.</li>
-<li><code>wt_plus</code> wouldn&#39;t add any information - hence it&#39;s redundant</li>
+<li>Imagine we had this instead to our initial equation: \[
+mpg_i = b_0 + b_1 wt_i + b_2 wtplus1_i + e_i
+\] where <code>wtplus1 = wt + 1</code>.</li>
+<li><code>wtplus1</code> wouldn&#39;t add any information - it&#39;s redundant</li>
 <li>If we only have one <code>x</code>, this translates into \(Var(x)\neq0\).</li>
 <li>Gives rise to the <em>rank condition</em>, i.e. that \(N\geq K+1\)</li>
+<li>The higher the <em>linear dependence</em> amongst our explanatory variable, the less information we can extract from them: Our estimtes <strong>become less precise</strong> as a result!</li>
 </ul>
+
+</article></slide><slide class=""><hgroup><h2>Multicolinearity App!</h2></hgroup><article  id="multicolinearity-app">
+
+<pre class = 'prettyprint lang-r'>library(ScPoEconometrics)
+launchApp(&quot;multicolinearity&quot;)</pre>
 
 </article></slide><slide class=""><hgroup><h2>California Test Scores 2</h2></hgroup><article  id="california-test-scores-2">
 
@@ -181,7 +199,9 @@ e_i &amp;= y_i - \widehat{y}_i
 <li>We simply add <code>avginc</code> to our <code>formula</code>:</li>
 </ul>
 
-<p><code>r   library(&quot;Ecdat&quot;) # reload the data   fit_multivariate &lt;- lm(formula = &quot;testscr ~ str + avginc&quot;, data = Caschool)   summary(fit_multivariate)</code></p>
+<pre class = 'prettyprint lang-r'>library(&quot;Ecdat&quot;) # reload the data
+fit_multivariate &lt;- lm(formula = &quot;testscr ~ str + avginc&quot;, data = Caschool)
+summary(fit_multivariate)</pre>
 
 </article></slide><slide class=""><hgroup><h2>Visualizing California Test Scores 2</h2></hgroup><article  id="visualizing-california-test-scores-2">
 
