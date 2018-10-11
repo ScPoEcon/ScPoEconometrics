@@ -5,6 +5,7 @@ Up until now, we have encountered only examples with *continuous* variables $x$ 
 
 Probably the simplest type of categorical variable is the *binary*, *boolean*, or just *dummy* variable. As the name suggests, it can take on only two values, `0` and `1`, or `TRUE` and `FALSE`. 
 
+## The Binary Regressor Case
 
 Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation $i$ **is a member** of a certain category $j$. For example, let's imagine we have income data on males and females, and we would create a variable called `is.male` that is `TRUE` whenever $i$ is male, `FALSE` otherwise, and similarly for women. For example, to encode whether subject $i$ is male, one could do this:
 
@@ -114,7 +115,37 @@ text(-1, mean(y)+1, paste("alpha=",round(b,2)), pos = 4,col="red")
 abline(a=mean(dta$y),b=0,col="blue",lw=2)
 ```
 
-In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $\alpha$, is equal to the difference in conditional means for both groups.
+In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $\alpha$, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_dummy")
+```
+
+
+## Dummy and Continuous Variables
+
+What happens if there are more predictors than just the dummy variable in a regression? For example, what if instead we had
+
+\begin{equation}
+y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{exper}_i + e_i (\#eq:dummy-reg2)
+\end{equation}
+
+where $\text{exper}_i$ would measure years of experience in the labor market? As above, the dummy variable acts as an intercept shifter. We have
+
+\begin{equation}
+y_i =  \begin{cases}
+b_0 + b_1 + b_2 \text{exper}_i + e_i & \text{if is.female=1} \\
+b_0  + b_2 \text{exper}_i + e_i & \text{if is.female=0}
+\end{cases}
+\end{equation}
+
+so that the intercept is $b_0 + b_1$ for women but $b_0$ for men. We will see this in the real-world example below, but for now let's see the effect of switching the dummy *on* and *off* in this app:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp("reg_dummy_example")
+```
 
 
 

@@ -18,7 +18,7 @@ elasreg= lm(log(wage)~log(experience), data = subset(CPS1988,experience>0))
 
 ## Loading and exploring Data
 
-Now it is your turn to fit your very first linear model!
+Now it is your turn to try out multiple regression!
 
 For this tutorial, we will use the `CPS1988` data frame collected in the March 1988 Current Population Survey (CPS) by the US Census Bureau. We used the function `data("CPS1988", package = "AER")` to load this into your current workspace, so the object `CPS1988` holds the data.
 
@@ -67,10 +67,10 @@ question("What is the type of `region`?",
 )
 ```
 ```{r types_ethnicity, echo=FALSE}
-question("What is the type of `ethnicity`? (two answers)",
+question("What is the type of `ethnicity`?",
   answer("Continuous"),
   answer("Discrete"),
-  answer("Binary", correct = TRUE, message = "Ethnicity can be encoded as 1 or 0. It is a special case of a categorical variable."),
+  answer("Binary"),
   answer("Categorical", correct = TRUE), allow_retry = T
 )
 ```
@@ -125,10 +125,9 @@ Assign the correct formula to `your_formula` so that the following cell returns 
 $$\log(wage) = b_0 + b_1 experience + b_2 (experience)^2$$
 
 ```{r reg, exercise=TRUE, exercise.eval=F}
-## Insert your guess below
-your_formula <- # your formula
-##
-your_fit <- lm(formula = your_formula, data = CPS1988)
+## Insert your formula below after formula = 
+
+your_fit <- lm(formula = , data = CPS1988)
 summary(your_fit)
 ```
 
@@ -143,7 +142,7 @@ $$\log(wage) = b_0 + b_1 experience + b_2 (experience)^2 + b_3 education + b_4 e
 Use the following cell to run this regression:
 
 ```{r reg_full, exercise=TRUE, exercise.eval=F}
-#you answer should take two lines of code
+#your answer should include the `summary` method
 ```
 
 ```{r reg_full-hint}
@@ -175,7 +174,8 @@ $$\log(wage) = b_0 + b_1 \log(experience) + \epsilon$$
 Use the following cell to run this regression:
 
 ```{r reg_log, exercise=TRUE, exercise.eval=F}
-#you answer should take two lines of code
+#you answer should make use of the `summary` method.
+# be careful! remember that there were negative value in experience?
 ```
 
 ```{r loginterpretation, echo=FALSE}

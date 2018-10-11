@@ -101,8 +101,7 @@ y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
 This shows that we cannot *identify* the regression coefficients in case of linearly dependent data. Variation in the variable `wt` identifies a different coefficient, say $\gamma = b_1 + b_2$, from what we actually wanted: separate estimates for $b_1,b_2$.
 
 ```{block, type="note"}
-All variables in a multiple regression should be *linearly independent*, or *not* colinear. This is known as the **rank condition**. In particular, this condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. 
-
+All variables in a multiple regression should be *linearly independent*, or *not* colinear. This is known as the **rank condition**. In particular, this condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can get from them, and our estimates becomes *less precise*.
 ```
 
 
