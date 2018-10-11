@@ -58,6 +58,8 @@ server <- function(input,output){
     surf <- cbind(surf, mapply(function(x_, x__){a + b1*x_ + b2 * x__}, surf$a, surf$b))#compute surface
     surf_matrix <- acast(surf, formula = a ~ b) #make matrix for surface
 
+    errors = sum((y - (a + b1*x1 + b2*x2))^2)
+
 
     #plot
 
@@ -89,7 +91,7 @@ server <- function(input,output){
         add_markers(x = x2, y = x1, z = y, data = df,
                     name = "Observed Data", hoverinfo = 'name', inherit = FALSE,
                     marker = list(color = 'lightgreen', size = 5), opacity = .5) %>%
-        layout(title = "Multivariate Regression", scene = scene)
+        layout(title = paste("Multivariate Regression.\n SSR=",round(errors,2)), scene = scene)
     } else {
       plot_ly(x = possible_x1, y = possible_x2, z = surf_matrix)  %>%
         add_surface(name = "Regression Plane", hoverinfo = 'name', opacity = .5, surfacecolor = rep('red', length(possible_x1))) %>%
@@ -97,7 +99,7 @@ server <- function(input,output){
         add_markers(x = x2, y = x1, z = y, data = df,
                     name = "Observed Data", hoverinfo = 'name',
                     marker = list(color = 'red', size = 5), opacity = .5) %>%
-        layout(title = "\nMultivariate Regression", scene = scene)
+        layout(title = paste("Multivariate Regression.\n SSR=",round(errors,2)), scene = scene)
     }
 
   })

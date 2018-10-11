@@ -5,4 +5,6 @@
 * [chapter 2](http://rpubs.com/floswald/ScPoMetrics-2)
 * [chapter 3](http://rpubs.com/floswald/ScPoMetrics-3)
 * [chapter 4](slides/chapter4/chapter4.html)
+* [chapter 5](slides/chapter4/chapter5.html)
+
 
