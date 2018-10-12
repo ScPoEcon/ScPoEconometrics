@@ -111,11 +111,11 @@ arrows(x0 =-1, y0 = mean(dta[dta$x == 0, "y"]), x1 = -1, y1 = mean(dta[dta$x == 
 segments(x0=-1,y0 = mean(dta[dta$x == 0, "y"]),x1=0,y1 = mean(dta[dta$x == 0, "y"]),col="red",lty="dashed")
 segments(x0=-1,y0 = mean(dta[dta$x == 1, "y"]),x1=1,y1 = mean(dta[dta$x == 1, "y"]),col="red",lty="dashed")
 
-text(-1, mean(y)+1, paste("alpha=",round(b,2)), pos = 4,col="red")
+text(-1, mean(y)+1, paste("b1=",round(b,2)), pos = 4,col="red")
 abline(a=mean(dta$y),b=0,col="blue",lw=2)
 ```
 
-In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $\alpha$, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:
+In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $b_1$, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
