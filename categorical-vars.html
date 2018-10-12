@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-10-11">
+<meta name="date" content="2018-10-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -269,7 +269,7 @@ dummy_reg =<span class="st"> </span><span class="kw">lm</span>(y<span class="op"
 #OUT&gt; Multiple R-squared:  0.6559,  Adjusted R-squared:  0.6488 
 #OUT&gt; F-statistic:  91.5 on 1 and 48 DF,  p-value: 1.061e-12</code></pre>
 <p>Notice that <code>R</code> displays the <em>level</em> of the factor to which coefficient <span class="math inline">\(b_1\)</span> belongs here, i.e. <code>is.female1</code> means this coefficient is on level <code>is.female = 1</code> - the reference level is <code>is.female = 0</code>, and it has no separate coefficient. Also interesting is that <span class="math inline">\(b_1\)</span> is equal to the difference in conditional means between male and female</p>
-<p><span class="math display">\[E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0631.\]</span></p>
+<p><span class="math display">\[b_1 = E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0631.\]</span></p>
 <div class="note">
 <p>
 A dummy variable measures the difference or the <em>offset</em> in the mean of the response variable, <span class="math inline"><span class="math inline">\(E[y]\)</span></span>, <strong>conditional</strong> on <span class="math inline"><span class="math inline">\(x\)</span></span> belonging to some category - relative to a baseline category. In our artificial example, the coefficient <span class="math inline"><span class="math inline">\(b_1\)</span></span> informs us that women earn on average 3.756 units less than men.
@@ -278,9 +278,9 @@ A dummy variable measures the difference or the <em>offset</em> in the mean of t
 <p><br></p>
 <p>It is instructive to reconsider this example graphically:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-zero-one"></span>
-<img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $\alpha$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
+<img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
 <p class="caption">
-Figure 5.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(\text{is.female}_i \in \{0,1\}\)</span>. The blue line is <span class="math inline">\(E[y]\)</span>, the red arrow is the size of <span class="math inline">\(\alpha\)</span>. Which is the same as the slope of the regression line in this case and the difference in conditional means!
+Figure 5.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(\text{is.female}_i \in \{0,1\}\)</span>. The blue line is <span class="math inline">\(E[y]\)</span>, the red arrow is the size of <span class="math inline">\(b_1\)</span>. Which is the same as the slope of the regression line in this case and the difference in conditional means!
 </p>
 </div>
 <p>In figure <a href="categorical-vars.html#fig:x-zero-one">5.1</a> we see that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(\text{is.female}_i = 0\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=0]\)</span>, to the mean when <span class="math inline">\(\text{is.female}_i=1\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, <span class="math inline">\(\alpha\)</span>, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what’s going on here:</p>
@@ -296,8 +296,8 @@ y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{exper}_i + e_i \tag{5.2}
 <p>where <span class="math inline">\(\text{exper}_i\)</span> would measure years of experience in the labor market? As above, the dummy variable acts as an intercept shifter. We have</p>
 <span class="math display">\[\begin{equation}
 y_i =  \begin{cases}
-b_0 + b_1 + b_2 \text{exper}_i + e_i &amp; \text{if is.female=1} \\
-b_0  + b_2 \text{exper}_i + e_i &amp; \text{if is.female=0}
+b_0 + b_1 + b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=1} \\
+b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=0}
 \end{cases}
 \end{equation}\]</span>
 <p>so that the intercept is <span class="math inline">\(b_0 + b_1\)</span> for women but <span class="math inline">\(b_0\)</span> for men. We will see this in the real-world example below, but for now let’s see the effect of switching the dummy <em>on</em> and <em>off</em> in this app:</p>

@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-10-11}
+    \date{2018-10-12}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -5401,7 +5401,7 @@ is \texttt{is.female\ =\ 0}, and it has no separate coefficient. Also
 interesting is that \(b_1\) is equal to the difference in conditional
 means between male and female
 
-\[E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0631.\]
+\[b_1 = E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0631.\]
 
 \begin{note}
 A dummy variable measures the difference or the \emph{offset} in the
@@ -5419,7 +5419,7 @@ It is instructive to reconsider this example graphically:
 
 }
 
-\caption{regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $\alpha$. Which is the same as the slope of the regression line in this case and the difference in conditional means!}\label{fig:x-zero-one}
+\caption{regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!}\label{fig:x-zero-one}
 \end{figure}
 
 In figure \ref{fig:x-zero-one} we see that this regression simplifies to
@@ -5458,8 +5458,8 @@ have
 
 \begin{equation}
 y_i =  \begin{cases}
-b_0 + b_1 + b_2 \text{exper}_i + e_i & \text{if is.female=1} \\
-b_0  + b_2 \text{exper}_i + e_i & \text{if is.female=0}
+b_0 + b_1 + b_2 \times \text{exper}_i + e_i & \text{if is.female=1} \\
+b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i & \text{if is.female=0}
 \end{cases}
 \end{equation}
 

@@ -10,7 +10,7 @@
 
 
 
-  <meta name="date" content="2018-10-11" />
+  <meta name="date" content="2018-10-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -111,7 +111,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2018-10-11</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2018-10-12</p>
           </hgroup>
   </slide>
 
@@ -274,7 +274,7 @@ y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{exper}_i + e_i
 <li>As before, dummy acts as intercept shifter. We have \[
 y_i =  \begin{cases}
 b_0 + b_1 + b_2 \text{exper}_i + e_i &amp; \text{if is.female=1} \\
-b_0  + b_2 \text{exper}_i + e_i &amp; \text{if is.female=0}
+b_0 + \hphantom{b_1} + b_2 \text{exper}_i + e_i &amp; \text{if is.female=0}
 \end{cases}
 \]</li>
 <li>intercept is \(b_0 + b_1\) for women but \(b_0\) for men</li>
