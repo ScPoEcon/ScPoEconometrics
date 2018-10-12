@@ -73,7 +73,7 @@ summary(dummy_reg)
 
 Notice that `R` displays the *level* of the factor to which coefficient $b_1$ belongs here, i.e. `is.female1` means this coefficient is on level `is.female = 1` - the reference level is `is.female = 0`, and it has no separate coefficient. Also interesting is that $b_1$ is equal to the difference in conditional means between male and female
 
-$$E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=`r round(mean(dta[dta$x == 1, "y"]) - mean(dta[dta$x == 0, "y"]),4)`.$$ 
+$$b_1 = E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=`r round(mean(dta[dta$x == 1, "y"]) - mean(dta[dta$x == 0, "y"]),4)`.$$ 
 
 ```{block,type="note"}
 A dummy variable measures the difference or the *offset* in the mean of the response variable, $E[y]$, **conditional** on $x$ belonging to some category - relative to a baseline category. In our artificial example, the coefficient $b_1$ informs us that women earn on average 3.756 units less than men.
@@ -82,7 +82,7 @@ A dummy variable measures the difference or the *offset* in the mean of the resp
 
 It is instructive to reconsider this example graphically:
 
-```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $\\text{is.female}_i \\in \\{0,1\\}$. The blue line is $E[y]$, the red arrow is the size of $\\alpha$. Which is the same as the slope of the regression line in this case and the difference in conditional means!',echo=FALSE}
+```{r x-zero-one,fig.align='center',fig.cap='regressing $y \\in \\mathbb{R}$ on $\\text{is.female}_i \\in \\{0,1\\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!',echo=FALSE}
 
 a <- coef(zero_one)[1]
 b <- coef(zero_one)[2]
@@ -135,8 +135,8 @@ where $\text{exper}_i$ would measure years of experience in the labor market? As
 
 \begin{equation}
 y_i =  \begin{cases}
-b_0 + b_1 + b_2 \text{exper}_i + e_i & \text{if is.female=1} \\
-b_0  + b_2 \text{exper}_i + e_i & \text{if is.female=0}
+b_0 + b_1 + b_2 \times \text{exper}_i + e_i & \text{if is.female=1} \\
+b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i & \text{if is.female=0}
 \end{cases}
 \end{equation}
 

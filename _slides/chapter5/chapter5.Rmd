@@ -203,7 +203,7 @@ launchApp("reg_dummy")
     $$
     y_i =  \begin{cases}
     b_0 + b_1 + b_2 \text{exper}_i + e_i & \text{if is.female=1} \\
-    b_0  + b_2 \text{exper}_i + e_i & \text{if is.female=0}
+    b_0 + \hphantom{b_1} + b_2 \text{exper}_i + e_i & \text{if is.female=0}
     \end{cases}
     $$
 > * intercept is $b_0 + b_1$ for women but $b_0$ for men
