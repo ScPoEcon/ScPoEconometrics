@@ -1,0 +1,39 @@
+{
+  "input": {
+    "ssize": 241
+  },
+  "output": {
+    "distPlot3": {
+      "src": "[image data sha1: 33ce0d1abc4e797a2e4fd55159e19a5dec1f4fa3]",
+      "width": 631,
+      "height": 400,
+      "coordmap": [
+        {
+          "domain": {
+            "left": 2.84,
+            "right": 7.16,
+            "bottom": -0.131986026888944,
+            "top": 3.45990022473166
+          },
+          "range": {
+            "left": 59.04,
+            "right": 600.76,
+            "bottom": 325.56,
+            "top": 58.04
+          },
+          "log": {
+            "x": null,
+            "y": null
+          },
+          "mapping": {
+
+          }
+        }
+      ]
+    },
+    "estTable": "<table  class = 'table shiny-table table-striped spacing-s' style = 'width:auto;'>\n<thead> <tr> <th style='text-align: left;'> parameter <\/th> <th style='text-align: left;'> estimate <\/th>  <\/tr> <\/thead> <tbody>\n  <tr> <td> Median <\/td> <td> 5.0256 <\/td> <\/tr>\n  <tr> <td> SD <\/td> <td> 0.1362 <\/td> <\/tr>\n  <tr> <td> Range <\/td> <td> 4.6593,5.3375 <\/td> <\/tr>\n   <\/tbody> <\/table>"
+  },
+  "export": {
+
+  }
+}

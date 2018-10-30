@@ -1,0 +1,38 @@
+---
+title: "ScPoEconometrics6"
+author: "Florian Oswald"
+date: "`r Sys.Date()`"
+output: 
+    ioslides_presentation:
+        highlight: textmate
+        widescreen: true
+        logo: ../../images/ScPo.png
+        self_contained: false
+---
+
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Talking about Stars: What's the `***`?
+
+## What's the meaning of the Stars?  {.smaller}
+
+```{r t1, echo=FALSE}
+summary(lm(mpg ~ wt + hp, mtcars))
+```
+
+Today we'll finally find out.
+
+
+## $b_0$ and $b_1$ are *Estimates*
+
+>* We repeatedly saw 
+    $$ y_i = b_0 + b_1 x_i + e_i $$
+>* `R` reports *estimates* $b_0$ and $b_1$. Both estimate underlying *population parameters* $\beta_0$ and $\beta_1$
+>* Estimates **always** come with some degree of uncertainty.
+>* For example, increasing sample size $N$ to estimate the mean implies smaller and smaller variance of the estimate.
