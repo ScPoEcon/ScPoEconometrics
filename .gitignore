@@ -12,3 +12,5 @@ rsconnect
 inst/tutorials/chapter2/chapter2_files/
 _slides/chapter1/chapter1-*
 _slides/chapter2/chapter2-*
+_slides/chapter6/chapter6_files/
+_slides/**/*.html

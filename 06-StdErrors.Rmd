@@ -88,6 +88,7 @@ We would like to further make this point in an experiential way, i.e. we want yo
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
+launchApp("estimate")
 launchApp("sampling")  
 launchApp("standard_errors_simple") 
 launchApp("standard_errors_changeN")  # then do that
