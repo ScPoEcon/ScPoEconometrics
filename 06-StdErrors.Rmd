@@ -259,7 +259,7 @@ where $s_k$ is the estimated standard error as introduced in \@ref(se-theory). W
 
 \begin{align}
 H_0:& \beta_{wt} = 0\\
-H_1:& \beta_{wt} \neq 0(\#eq:mtcars_wt)
+H_1:& \beta_{wt} \neq 0 (\#eq:mtcarswt)
 \end{align}
 
 We just take the `t value` entry, and see whether it lies above or below either critical value: Indeed, we see that $-4.053 < `r round(qt(0.025,df=28),3)`$, and we are happy to reject $H_0$.
@@ -268,7 +268,7 @@ On the other hand, for `drat` that does not seem to be the case:
 
 \begin{align}
 H_0:& \beta_{drat} = 0\\
-H_1:& \beta_{drat} \neq 0(\#eq:mtcars_drat)
+H_1:& \beta_{drat} \neq 0 (\#eq:mtcarsdrat)
 \end{align}
 
 Here we find that $1.316 \in [`r round(qt(0.025,df=28),3)`,`r round(qt(0.975,df=28),3)`]$, hence it does not lie in any rejection region, and we can *not* reject $H_0$.
