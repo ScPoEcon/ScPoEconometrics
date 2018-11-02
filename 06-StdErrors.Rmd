@@ -255,7 +255,7 @@ The column `t value` is just `Estimate` divided by `Std. Error`. That is, `R` re
 \text{t value} = \frac{b_k}{s_k}  (\#eq:tstat)
 \end{equation}
 
-where $s_k$ is the estimated standard error as introduced in \@ref(se-theory). We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, `qnorm(0.975)` `round(r qnorm(0.975),2)` in this case. This is fine for sample sizes greater than 100, say. Here, we only have 28 degrees of freedom, so we better choose the critical value from the *t* distribution as above. We get $t_{down} = `r round(qt(0.025,df=28),3)`$ and $t_{up} = `r round(qt(0.975,df=28),3)`$ as critical values. Let's test 
+where $s_k$ is the estimated standard error as introduced in \@ref(se-theory). We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, `qnorm(0.975)` `r round(qnorm(0.975),2)` in this case. This is fine for sample sizes greater than 100, say. Here, we only have 28 degrees of freedom, so we better choose the critical value from the *t* distribution as above. We get $t_{down} = `r round(qt(0.025,df=28),3)`$ and $t_{up} = `r round(qt(0.975,df=28),3)`$ as critical values. Let's test 
 
 \begin{align}
 H_0:& \beta_{wt} = 0\\
@@ -283,7 +283,7 @@ We define the p-value as the sum of rejection areas for a given test statistic $
 \alpha^* = 2 \Pr(T > |t^*|) 
 \end{align}
 
-The stars in the final column are a visualization of this information. They show a quick summary of the magnitude of each p-value. Commonly, `***` mean an extremely small reference significance level $\alpha^*=0$ (almost zero), `**` means $\alpha^*=0.001$, etc. In that case, up to a significance level of 0.1%, all $H_0$ would be rejected. You clearly see that all columns `Std. Error`, `t value` and `Pr(>|t|)` give a different type of the same information.
+The stars in the final column are a visualization of this information. They show a quick summary of the magnitude of each p-value. Commonly, `***` means an extremely small reference significance level $\alpha^*=0$ (almost zero), `**` means $\alpha^*=0.001$, etc. In that case, up to a significance level of 0.1%, all $H_0$ would be rejected. You clearly see that all columns `Std. Error`, `t value` and `Pr(>|t|)` give a different type of the same information.
 
 
 ## What's in my model? (And what is not?)
