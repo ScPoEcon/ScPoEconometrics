@@ -125,14 +125,14 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-10-12}
+    \date{2018-11-02}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
 \usepackage{tcolorbox}
-\newenvironment{note}{\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{Note:}]}{\end{tcolorbox}}
-\newenvironment{warning}{\begin{tcolorbox}[colback=orange!5!white,colframe=orange,title=\textbf{Warning!}]}{\end{tcolorbox}}
-\newenvironment{tip}{\begin{tcolorbox}[colback=green!5!white,colframe=green,title=\textbf{Tip:}]}{\end{tcolorbox}}
+\newenvironment{note}{\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black]}{\end{tcolorbox}}
+\newenvironment{warning}{\begin{tcolorbox}[colback=orange!5!white,colframe=orange]}{\end{tcolorbox}}
+\newenvironment{tip}{\begin{tcolorbox}[colback=green!5!white,colframe=green]}{\end{tcolorbox}}
 
 \makeatletter
 \def\thm@space@setup{%
@@ -5996,6 +5996,9 @@ not strictly necessary:
   called \textbf{homoskedasticity}.
 \end{enumerate}
 
+\subsection{\texorpdfstring{\(b\) is not
+\(\beta\)!}{b is not \textbackslash{}beta!}}\label{b-is-not-beta}
+
 Let's talk about the small but important modifications we applied to
 model \eqref{eq:abline} to end up at \eqref{eq:abline-5} above:
 
@@ -6026,7 +6029,7 @@ samples is the question in this chapter. In general, the more
 observations we have the greater the precision of our estimates, hence,
 the closer the estimates from different samples will lie together.
 
-\subsection{Standard Errors in Theory}\label{standard-errors-in-theory}
+\subsection{Standard Errors in Theory}\label{se-theory}
 
 The standard deviation of the OLS parameters is generally called
 \emph{standard error}. As such, it is just the square root of the
@@ -6061,16 +6064,316 @@ Practice}\label{standard-errors-in-practice}
 
 We would like to further make this point in an experiential way, i.e.~we
 want you to experience what is going on. We invite you to spend some
-time with the following apps, before going into the associated tutorial:
+time with the following apps. In particular, make sure you have a
+thorough understandign of \texttt{launchApp("estimate")}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"estimate"}\NormalTok{)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{)  }\CommentTok{# then do that}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
+
+\section{Hypothesis Testing}\label{hypothesis-testing}
+
+Now we know how the standard errors of an OLS estimate are computed, and
+what they stand for. We can now briefly\footnote{We will not go into
+  great detail here. Please refer back to your first year statistics
+  course or the short note I \href{images/hypothesis.pdf}{wrote while
+  ago}} discuss a very common usage of this information, in relation to
+which variables we should include in our regression. There is a
+statistical proceedure called \emph{hypothesis testing} which helps us
+to make such decisions. In
+\href{https://en.wikipedia.org/wiki/Statistical_hypothesis_testing}{hypothesis
+testing}, we have a baseline, or \emph{null} hypothesis \(H_0\), which
+we want to confront with a competing \emph{alternative} hypthesis
+\(H_1\). An example concerning the mean height of SciencesPo students
+(\(\mu\)) could be
+
+\begin{align}
+H_0:& \mu = 167\\
+H_1:& \mu \neq 167
+\end{align}
+
+This would be called a \emph{two-sided} test, because it tests
+deviations from \(H_0\) below as well as above. An alternative
+formulation could use the \emph{one-sided} test that
+
+\begin{align}
+H_0:& \mu = 167\\
+H_1:& \mu > 167.
+\end{align}
+
+which would mean: under the null hypothesis, the average of all ScPo
+students' body height is 167cm. Under the alternative, it is larger.
+
+At this point you may want to ask: Why bother with this, and not just
+measure all students' height, compute \(\mu\), and that's it? That's a
+good question! In most cases, we cannot do this, either because we do
+not have access to the entire population (think of computing the mean
+height of all Europeans!), or it's too costly to measure everyone, or
+it's impractical. That's why we take \emph{samples} from the wider
+population, to make inference. In our example, suppose we'd randomly
+measure students coming out of the SciencesPo building until we have
+\(50\) measurements. The hypothesis testing methodology is useful to
+make probabilistic statements about true value of \(\mu\) upon observing
+our sample data. Here, we would compute the sample mean \(\bar{x}\) of
+all height measurements, and ask how informative this is with regards to
+the above competing hypothesis. Suppose we found that
+\(\bar{x} = 168.5\), and that the sample standard deviation is \(s=10\).
+Would you regard this as strong or weak evidence against \(H_0\) and in
+favor of \(H_1\)?
+
+You should now remember what you just saw when you did
+\texttt{launchApp("estimate")}. Look again at this app and set the
+slider to a sample size of \(50\), just as in our running example. You
+can see that the app draws one hundred (100) samples for you, locates
+their sample mean on the x-axis, and estimates the red density. In
+reality, you only get to draw one (1!) sample! Let's continue with
+assuming that our particular samples yields \(\bar{x} = 168.5\).
+
+\begin{note}
+As a result of the powerful
+\href{https://en.wikipedia.org/wiki/Law_of_large_numbers}{Law of Large
+Numbers}, we know the (approximate) sampling distribution of our
+test-statistic \(\bar{x}\)! As \(n\to\infty\), it converges to the
+normal distribution with mean \(\mu\) (i.e.~the \textbf{truth}). We say
+the sample mean is an \emph{unbiased estimator for the population mean}.
+In the app, the red density approximates this distribution.
+\end{note}
+
+ Our task then is to decide if given that particular sampling
+distribution, given our estimate \(\bar{x}\) and given an observed
+sample variance \(s^2\), whether \(\bar{x} = 168.5\) is \emph{far away}
+from \(\bar{x} = 167\), or not. The way to proceed is by computing a
+\emph{test statistic}, which is to be compared to a critical value: if
+the test statistic exceeds that value, we reject \(H_0\), otherwise we
+cannot.
+
+\subsection{Making Errors}\label{making-errors}
+
+There are two types of error one can make when deploying such a test:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We might reject \(H_0\), when in fact it is true! Here, upon observing
+  \(\bar{x} = 168.5\) we might conclude that indeed \(\mu > 167\) and
+  thus we'd reject. But we might have gotten unlucky and by chance have
+  obtained an unusually tall sample of students. This is called
+  \textbf{type one error}.
+\item
+  We might \emph{fail} to reject \(H_0\) when in fact \(H_1\) is true.
+  This is called the \textbf{type two error}.
+\end{enumerate}
+
+We design a test with a certain probability of \emph{type one error}
+\(\alpha\) in mind. In other words, we choose with which probability
+\(\alpha\) we are willing to make a type one error. (Notice that the
+best tests also avoid making type two errors! The number
+\(1-\Pr(\text{type 2 error})\) is called \emph{power}, hence we prefer
+tests with \emph{high power}). A typical choice for \(\alpha\) is 0.05,
+i.e.~we are willing to make a type one error with probability 5\%.
+\(\alpha\) is commonly called the \emph{level of significance} of a
+test.
+
+\subsection{Performing the Test}\label{performing-the-test}
+
+We can stick to the following cookbook procedure, which is illustrated
+in figure \ref{fig:testfig}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set up hypothesis and significance level:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \(H_0: \mu = 167\)
+  \item
+    \(H_1: \mu > 167\)
+  \item
+    \(\alpha = 0.05\)
+  \end{enumerate}
+\item
+  Test Statistic and test distribution:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We don't know the true population variance \(\sigma^2\), hence we
+    estimate it via \(s^2\) from our sample.
+  \item
+    The corresponding test statistic is the \emph{t-statistic}, which
+    follows the
+    \href{https://en.wikipedia.org/wiki/Student's_t-distribution}{Student's
+    T} distribution.
+  \item
+    That is, our statistic is
+    \(T=\frac{\bar{x} - \mu}{s/\sqrt{n}} \sim t_{50}\), where 50 is
+    equal to our sample size, hence, the \emph{degrees of freedom} in
+    this case.
+  \end{itemize}
+\item
+  Rejection Region: We perform a one-sided test. We said we are happy
+  with a 5\% significance level, i.e.~we are looking for the \(t\) value
+  which corresponds \emph{just} to \(1-0.05 = 0.95\) mass under the pdf
+  of the \(t\) distribution. More precisely, we are looking for the
+  \(1-0.05 = 0.95\) quantile of the \(t_{50}\) distribution.\footnote{See
+    the previous footnote for an explanation of this!} This implies a
+  critical value \(c = 1.676\), which you can verify by typing
+  \texttt{qt(0.95,df=50)} in \texttt{R}.
+\item
+  Calculate our test statistic:
+  \(\frac{\bar{x} - \mu}{s/sqrt{n}} = \frac{168.5 - 167}{20/\sqrt{50}} = 1.061\)
+\item
+  Decide: We find that \(1.061 < 1.676\). Hence, we cannot reject
+  \(H_0\), because we only found weak evidence against it in our sample
+  of data.
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{ScPoEconometrics_files/figure-latex/testfig-1} 
+
+}
+
+\caption{Cookbook Testing Proceedure. Subscripts $c$ indicate *critical value*. There are two x-axis: one for values of $\bar{x}$, and one for the corresponding $t$ statistic. The red area is the rejection area. If we observe a test statistic such that $t>t_c$, we feel reassured that our $\bar{x}$ is *sufficiently far away* from the hypothesized value $\mu$, such that we feel comfortable with rejecting $H_0$. And vice versa: If our test statistic falls below $t_c$, we will not reject $H_0$}\label{fig:testfig}
+\end{figure}
+
+\subsection{Testing Regression
+Coefficients}\label{testing-regression-coefficients}
+
+In Regression Analysis, we often want to test a very specific
+alternative hypothesis: We want to have a quick way to tell us whether a
+certain variable \(x_k\) is \emph{relevant} in our statistical model or
+not. In hypothesis testing language, that would be
+
+\begin{align}
+H_0:& \beta_k = 0\\
+H_1:& \beta_k \neq 0.\label{eq:H0}
+\end{align}
+
+Clearly, if in the \textbf{true} regression model, \(\beta_k=0\), this
+means that \(x_k\) has a zero partial effect on the outcome, hence it
+should be excluded from the regression. Notice that we are interested in
+\(\beta_k\), not in \(b_k\), which is the estimator that we compute from
+our sample (similarly to \(\bar{x}\), which estimates \(\mu\) above).
+
+As such, this is a \emph{two-sided test}. We can again illustrate this
+in figure \ref{fig:testfig2}. Notice how we now have two rejection
+areas.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{ScPoEconometrics_files/figure-latex/testfig2-1} 
+
+}
+
+\caption{Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\beta_k=0$.}\label{fig:testfig2}
+\end{figure}
+
+The relevant test statistic for a regression coefficient is again the
+\emph{t} distribution. In fact, this particular test is so important
+that all statistical packages report the \emph{t} statistic
+corresponding to \eqref{eq:H0} automatically. Let's look at an example:
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = mpg ~ wt + hp + drat, data = mtcars)
+#OUT> 
+#OUT> Residuals:
+#OUT>     Min      1Q  Median      3Q     Max 
+#OUT> -3.3598 -1.8374 -0.5099  0.9681  5.7078 
+#OUT> 
+#OUT> Coefficients:
+#OUT>              Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept) 29.394934   6.156303   4.775 5.13e-05 ***
+#OUT> wt          -3.227954   0.796398  -4.053 0.000364 ***
+#OUT> hp          -0.032230   0.008925  -3.611 0.001178 ** 
+#OUT> drat         1.615049   1.226983   1.316 0.198755    
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 2.561 on 28 degrees of freedom
+#OUT> Multiple R-squared:  0.8369,  Adjusted R-squared:  0.8194 
+#OUT> F-statistic: 47.88 on 3 and 28 DF,  p-value: 3.768e-11
+\end{verbatim}
+
+The column \texttt{t\ value} is just \texttt{Estimate} divided by
+\texttt{Std.\ Error}. That is, \texttt{R} reports in the column
+\texttt{t\ value} the following number for us:
+
+\begin{equation}
+\text{t value} = \frac{b_k}{s_k}  \label{eq:tstat}
+\end{equation}
+
+where \(s_k\) is the estimated standard error as introduced in
+\ref{se-theory}. We have to choose a critical value ourselves here. Many
+people automatically choose the 0.975 quantile of the standard normal
+distribution, \texttt{qnorm(0.975)} \texttt{round(r\ qnorm(0.975),2)} in
+this case. This is fine for sample sizes greater than 100, say. Here, we
+only have 28 degrees of freedom, so we better choose the critical value
+from the \emph{t} distribution as above. We get \(t_{down} = -2.048\)
+and \(t_{up} = 2.048\) as critical values. Let's test
+
+\begin{align}
+H_0:& \beta_{wt} = 0\\
+H_1:& \beta_{wt} \neq 0 \label{eq:mtcarswt}
+\end{align}
+
+We just take the \texttt{t\ value} entry, and see whether it lies above
+or below either critical value: Indeed, we see that \(-4.053 < -2.048\),
+and we are happy to reject \(H_0\).
+
+On the other hand, for \texttt{drat} that does not seem to be the case:
+
+\begin{align}
+H_0:& \beta_{drat} = 0\\
+H_1:& \beta_{drat} \neq 0 \label{eq:mtcarsdrat}
+\end{align}
+
+Here we find that \(1.316 \in [-2.048,2.048]\), hence it does not lie in
+any rejection region, and we can \emph{not} reject \(H_0\).
+
+\subsection{P-Values and Stars}\label{p-values-and-stars}
+
+\texttt{R} also reports two additional columns in its regression output.
+The so-called \emph{p-value} in column
+\texttt{Pr(\textgreater{}\textbar{}t\textbar{})} and a column with
+stars. P-values are an improvement over the dichotomy introduced in the
+standard reject/accept framework above. We never know if we
+\emph{narrowly} rejected a \(H_0\), or not. The p-value is defined as
+the particular level of significance \(\alpha^*\), up to which
+\emph{all} \(H_0\)'s would be rejected. If this is a very small number,
+we have overwhelming support to reject the null. If, on the contrary,
+\(\alpha^*\) turns out to be rather large, we only found weak evidence
+against \(H_0\).
+
+We define the p-value as the sum of rejection areas for a given test
+statistic \(t^*\). Notice that the symmetry of the \(t\) distribution
+implies that we multiply by two each of the two tail probabilities:
+
+\begin{align}
+\alpha^* = 2 \Pr(T > |t^*|) 
+\end{align}
+
+The stars in the final column are a visualization of this information.
+They show a quick summary of the magnitude of each p-value. Commonly,
+\texttt{***} mean an extremely small reference significance level
+\(\alpha^*=0\) (almost zero), \texttt{**} means \(\alpha^*=0.001\), etc.
+In that case, up to a significance level of 0.1\%, all \(H_0\) would be
+rejected. You clearly see that all columns \texttt{Std.\ Error},
+\texttt{t\ value} and \texttt{Pr(\textgreater{}\textbar{}t\textbar{})}
+give a different type of the same information.
 
 \section{What's in my model? (And what is
 not?)}\label{whats-in-my-model-and-what-is-not}
@@ -6235,11 +6538,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-158-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-160-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-158}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-160}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
