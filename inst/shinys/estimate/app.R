@@ -56,7 +56,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   x <- reactive({
     set.seed(2)
-    s = replicate(n = 100,rnorm(n=input$ssize,mean=5,sd=2))
+    s = replicate(n = 100,rnorm(n=input$ssize,mean=170,sd=20))
     colMeans(s)
   }
   )
@@ -64,7 +64,7 @@ server <- function(input, output) {
   output$distPlot3 <- renderPlot({
     d = x()
     # hist(d,col = 'darkgray', border = 'white',freq=FALSE,main=paste0("Mean Estimates with N = ",input$ssize),xlim=c(3,7),breaks=20)
-    plot(density(d),col="red",xlim=c(3,7),main=paste0("Mean Estimates with N = ",input$ssize),xlab="location of mean estimates",lwd=3)
+    plot(density(d),col="red",xlim=c(140,200),main=paste0("Mean Estimates with N = ",input$ssize),xlab="location of mean estimates",lwd=3)
     rug(d)
 
   })

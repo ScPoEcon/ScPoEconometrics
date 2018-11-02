@@ -92,7 +92,7 @@ A Statistical Model is a set of assumptions about how the data have been **gener
 >* `R` reports *estimates* $b_0$ and $b_1$. Both estimate underlying *population parameters* $\beta_0$ and $\beta_1$
 >* Estimates **always** come with some degree of uncertainty.
 >* $Var(b_1|x_i)$ measures how much uncertainty.
->* `r emo::ji("bulb")` For each sample $\{x_i,y_i\}_{i=1}^n$ we'll get a different $b_1$!
+>* `r emo::ji("bulb")` For each different sample $\{x_i,y_i\}_{i=1}^n$ we'll get a different $b_1$!
 
 ## App!
 
@@ -121,3 +121,24 @@ launchApp("standard_errors_simple")
 library(ScPoEconometrics)
 launchApp("standard_errors_changeN") 
 ```
+
+
+# Finally: `***` Stars!
+
+## Regression Output {.smaller}
+
+1. Now we know what `Std. Error` means.
+2. What about the rest?
+
+```{r t2, echo=FALSE}
+l1 = lm(mpg ~ wt + hp, mtcars)
+summary(l1)
+```
+
+
+## Student's T-Distribution and Testing
+
+>* Similar in shape to the Normal Distribution (in large samples: identical)
+>* If $\varepsilon \sim \mathcal{N}(0,\sigma^2)$, then $b_k / sd(b_k)$ follows the T distribution with $N-K$ degrees of freedom.
+>* This is used to test the **hypothesis** that true value in the population is $\beta_k = 0$.
+>* If we cannot *reject* $\beta_k = 0$, we cannot be sure that $x_k$ should even be included in our regression.
