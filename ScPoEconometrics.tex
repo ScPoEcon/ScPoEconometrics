@@ -659,7 +659,7 @@ library, and check it's current version:
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] '0.1.8'
+#OUT> [1] '0.1.9'
 \end{verbatim}
 
 \section{Data Types}\label{data-types}
@@ -6319,11 +6319,11 @@ The column \texttt{t\ value} is just \texttt{Estimate} divided by
 where \(s_k\) is the estimated standard error as introduced in
 \ref{se-theory}. We have to choose a critical value ourselves here. Many
 people automatically choose the 0.975 quantile of the standard normal
-distribution, \texttt{qnorm(0.975)} \texttt{round(r\ qnorm(0.975),2)} in
-this case. This is fine for sample sizes greater than 100, say. Here, we
-only have 28 degrees of freedom, so we better choose the critical value
-from the \emph{t} distribution as above. We get \(t_{down} = -2.048\)
-and \(t_{up} = 2.048\) as critical values. Let's test
+distribution, \texttt{qnorm(0.975)} 1.96 in this case. This is fine for
+sample sizes greater than 100, say. Here, we only have 28 degrees of
+freedom, so we better choose the critical value from the \emph{t}
+distribution as above. We get \(t_{down} = -2.048\) and
+\(t_{up} = 2.048\) as critical values. Let's test
 
 \begin{align}
 H_0:& \beta_{wt} = 0\\
@@ -6368,7 +6368,7 @@ implies that we multiply by two each of the two tail probabilities:
 
 The stars in the final column are a visualization of this information.
 They show a quick summary of the magnitude of each p-value. Commonly,
-\texttt{***} mean an extremely small reference significance level
+\texttt{***} means an extremely small reference significance level
 \(\alpha^*=0\) (almost zero), \texttt{**} means \(\alpha^*=0.001\), etc.
 In that case, up to a significance level of 0.1\%, all \(H_0\) would be
 rejected. You clearly see that all columns \texttt{Std.\ Error},

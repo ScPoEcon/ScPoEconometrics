@@ -368,7 +368,7 @@ Figure 6.2: Testing whether coefficient <span class="math inline">\(b_k\)</span>
 <span class="math display" id="eq:tstat">\[\begin{equation}
 \text{t value} = \frac{b_k}{s_k}  \tag{6.5}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>. We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code> <code>round(r qnorm(0.975),2)</code> in this case. This is fine for sample sizes greater than 100, say. Here, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test</p>
+<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>. We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code> 1.96 in this case. This is fine for sample sizes greater than 100, say. Here, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test</p>
 <span class="math display" id="eq:mtcarswt">\[\begin{align}
 H_0:&amp; \beta_{wt} = 0\\
 H_1:&amp; \beta_{wt} \neq 0 \tag{6.6}
@@ -388,7 +388,7 @@ H_1:&amp; \beta_{drat} \neq 0 \tag{6.7}
 <span class="math display">\[\begin{align}
 \alpha^* = 2 \Pr(T &gt; |t^*|) 
 \end{align}\]</span>
-<p>The stars in the final column are a visualization of this information. They show a quick summary of the magnitude of each p-value. Commonly, <code>***</code> mean an extremely small reference significance level <span class="math inline">\(\alpha^*=0\)</span> (almost zero), <code>**</code> means <span class="math inline">\(\alpha^*=0.001\)</span>, etc. In that case, up to a significance level of 0.1%, all <span class="math inline">\(H_0\)</span> would be rejected. You clearly see that all columns <code>Std. Error</code>, <code>t value</code> and <code>Pr(&gt;|t|)</code> give a different type of the same information.</p>
+<p>The stars in the final column are a visualization of this information. They show a quick summary of the magnitude of each p-value. Commonly, <code>***</code> means an extremely small reference significance level <span class="math inline">\(\alpha^*=0\)</span> (almost zero), <code>**</code> means <span class="math inline">\(\alpha^*=0.001\)</span>, etc. In that case, up to a significance level of 0.1%, all <span class="math inline">\(H_0\)</span> would be rejected. You clearly see that all columns <code>Std. Error</code>, <code>t value</code> and <code>Pr(&gt;|t|)</code> give a different type of the same information.</p>
 </div>
 </div>
 <div id="whats-in-my-model-and-what-is-not" class="section level2">
