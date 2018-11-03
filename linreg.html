@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-02">
+<meta name="date" content="2018-11-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -163,8 +163,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.3</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.4</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#back-to-sampling"><i class="fa fa-check"></i><b>6.3</b> Back to Sampling</a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.4</b> Hypothesis Testing</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.5</b> What’s in my model? (And what is not?)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>7</b> Quantile Regression</a></li>
 <li class="chapter" data-level="8" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>8</b> Panel Data</a><ul>
@@ -447,7 +448,7 @@ Adding a constant to a regression produces the same result as centering all vari
 <p><br> To get a better feel for what is going on here, you can try this out now by yourself by typing:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;demeaned_reg&quot;</span>)</code></pre></div>
 </div>
-<div id="standardizing-a-regression" class="section level3">
+<div id="reg-standard" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Standardizing A Regression</h3>
 <p><em>Standardizing</em> a variable <span class="math inline">\(z\)</span> means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for <em>centering</em>, we define transformed variables <span class="math inline">\(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\)</span> and <span class="math inline">\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\)</span> where <span class="math inline">\(\sigma_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. From here on, you should by now be used to what comes next! As above, we use <span class="math inline">\(\breve{x}_i,\breve{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.8)</a> to this time obtain:</p>
 <span class="math display" id="eq:bline-standardized">\[\begin{align}
