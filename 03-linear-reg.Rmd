@@ -327,7 +327,7 @@ To get a better feel for what is going on here, you can try this out now by your
 launchApp("demeaned_reg")
 ```
 
-### Standardizing A Regression
+### Standardizing A Regression {#reg-standard}
 
 *Standardizing* a variable $z$ means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for *centering*, we define transformed variables $\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}$ and $\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}$ where $\sigma_z$ is the standard deviation of variable $z$. From here on, you should by now be used to what comes next! As above, we use $\breve{x}_i,\breve{y}_i$ instead of $x_i,y_i$ in \@ref(eq:b1line) to this time obtain:
 

@@ -97,7 +97,7 @@ status open
 
 
 \backslash
-input{two-sided-beta.tex}
+input{ci.tex}
 \end_layout
 
 \end_inset
