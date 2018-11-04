@@ -48,6 +48,8 @@ These assumptions are necessary to successfully (and correctly!) run an OLS regr
 3. The data are drawn from a **random sample** of size $n$: observation $(x_i,y_i)$ comes from the exact same distribution, and is independent of observation $(x_j,y_j)$, for all $i\neq j$.
 4. The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
 
+Invoking assumption 4. in particular defines what is commonly called the *normal* linear regression model.
+
 
 ### $b$ is not $\beta$!
 
@@ -377,7 +379,9 @@ The column `t value` is just `Estimate` divided by `Std. Error`. That is, `R` re
 \text{t value} = \frac{b_k-0}{s_k}  (\#eq:tstat)
 \end{equation}
 
-where $s_k$ is the estimated standard error as introduced in \@ref(se-theory), and where we test $H_0:\beta_k = 0$. We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, `qnorm(0.975)`, `r round(qnorm(0.975),2)` in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the *t* distribution as above. We get $t_{down} = `r round(qt(0.025,df=28),3)`$ and $t_{up} = `r round(qt(0.975,df=28),3)`$ as critical values. Let's test whether the coefficient on `wt` is statistically different from zero:
+where $s_k$ is the estimated standard error as introduced in \@ref(se-theory), and where we test $H_0:\beta_k = 0$. Notice that this particular *t* statistic is different from our previous formulation in \@ref(eq:tscore): we don't have to scale by $\sqrt{n}$! This is so because `R` and other statistical software assumes the *normal* linear regression model (see \@ref(classical-reg)). Normality of the regression error $\varepsilon$ implies that the *t* statistic looks like in \@ref(eq:tstat).
+
+We have to choose a critical value for this test. Many people automatically choose the 0.975 quantile of the standard normal distribution, `qnorm(0.975)`, `r round(qnorm(0.975),2)` in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the *t* distribution as above. We get $t_{down} = `r round(qt(0.025,df=28),3)`$ and $t_{up} = `r round(qt(0.975,df=28),3)`$ as critical values. Let's test whether the coefficient on `wt` is statistically different from zero:
 
 \begin{align}
 H_0:& \beta_{wt} = 0\\
