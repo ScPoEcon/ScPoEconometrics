@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-03">
+<meta name="date" content="2018-11-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -238,6 +238,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <li>The data are drawn from a <strong>random sample</strong> of size <span class="math inline">\(n\)</span>: observation <span class="math inline">\((x_i,y_i)\)</span> comes from the exact same distribution, and is independent of observation <span class="math inline">\((x_j,y_j)\)</span>, for all <span class="math inline">\(i\neq j\)</span>.</li>
 <li>The variance of the error term <span class="math inline">\(\varepsilon\)</span> is the same for each value of <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(\varepsilon|x) = \sigma^2\)</span>. This property is called <strong>homoskedasticity</strong>.</li>
 </ol>
+<p>Invoking assumption 4. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
 <div id="b-is-not-beta" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> <span class="math inline">\(b\)</span> is not <span class="math inline">\(\beta\)</span>!</h3>
 <p>Let’s talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
@@ -433,7 +434,8 @@ Figure 6.4: Testing whether coefficient <span class="math inline">\(b_k\)</span>
 <span class="math display" id="eq:tstat">\[\begin{equation}
 \text{t value} = \frac{b_k-0}{s_k}  \tag{6.10}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. We have to choose a critical value ourselves here. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code>, 1.96 in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test whether the coefficient on <code>wt</code> is statistically different from zero:</p>
+<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. Notice that this particular <em>t</em> statistic is different from our previous formulation in <a href="std-errors.html#eq:tscore">(6.5)</a>: we don’t have to scale by <span class="math inline">\(\sqrt{n}\)</span>! This is so because <code>R</code> and other statistical software assumes the <em>normal</em> linear regression model (see <a href="#classical-reg"><strong>??</strong></a>). Normality of the regression error <span class="math inline">\(\varepsilon\)</span> implies that the <em>t</em> statistic looks like in <a href="std-errors.html#eq:tstat">(6.10)</a>.</p>
+<p>We have to choose a critical value for this test. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code>, 1.96 in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test whether the coefficient on <code>wt</code> is statistically different from zero:</p>
 <span class="math display" id="eq:mtcarswt">\[\begin{align}
 H_0:&amp; \beta_{wt} = 0\\
 H_1:&amp; \beta_{wt} \neq 0 \tag{6.11}
