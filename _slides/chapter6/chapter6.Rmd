@@ -57,22 +57,35 @@ A Statistical Model is a set of assumptions about how the data have been **gener
 
 * The data are **not linearly dependent**. $\Rightarrow$ *Rank condition*!
 * $x$ should be **strictly exogenous** to the model. $E[\varepsilon|x] = 0$
-* This implies $Cov(x,\varepsilon)=0$.
+    * This implies $Cov(x,\varepsilon)=0$.
 
 ## Additional Assumptions
 
 * The data are drawn from a **random sample** of size $n$.
 * The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
 
+<div class="centered">
+<div class="red">
+Minimal Requirements + Additional Assumptions => NORMAL Linear Regression Model.
+</div>
+</div>
+
+## $b_1$ is not $\beta_1$!
+
+>* $b_1$ *estimates* $\beta_1$. All estimates involve **uncertainty**.
+>* Ideally, $b_1$ should be close to $\beta_1$.
+>* `r emo::ji("bulb")` For each different sample $\{x_i,y_i\}_{i=1}^N$ we'll get a different $b_1$!
+>* In general, the greater $N$, the greater the precision of $b_1$.
+
 ## Standard Error of $b_1$
 
 >* Under the previous assumptions, we have
     $$
-    Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} =     \frac{\sigma^2}{Var(x)}
+    Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} 
     $$
 >* In practice we don't know $\sigma^2$ and *estimate* it with residuals $e_i$:
     $$
-    s^2 = \frac{SSR}{n} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n} =  \frac{\sum_{i=1}^n e_i^2}{n}
+    s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
     $$
     ($n-p$ in small samples). $s^2$ is the *mean squared error*.
 
@@ -80,19 +93,14 @@ A Statistical Model is a set of assumptions about how the data have been **gener
 
 >* Variance is thus
     $$
-    Var(b_1|x_i) = \frac{1}{n}\frac{SSR}{Var(x)}
+    Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2} 
     $$
+>* Standard Error (SE):
+    $$
+    SE(b_1) = \sqrt{Var(b_1|x_i)}
+    $$    
 >* You clearly see that the variance shrinks as $n\to\infty$.
 
-
-## $b_0$ and $b_1$ are *Estimates*
-
->* Previously, we repeatedly saw 
-    $$ y_i = b_0 + b_1 x_i + e_i $$
->* `R` reports *estimates* $b_0$ and $b_1$. Both estimate underlying *population parameters* $\beta_0$ and $\beta_1$
->* Estimates **always** come with some degree of uncertainty.
->* $Var(b_1|x_i)$ measures how much uncertainty.
->* `r emo::ji("bulb")` For each different sample $\{x_i,y_i\}_{i=1}^n$ we'll get a different $b_1$!
 
 ## App!
 
@@ -122,23 +130,15 @@ library(ScPoEconometrics)
 launchApp("standard_errors_changeN") 
 ```
 
+# Detour: Sampling
+
+## Tasked by Monsieur le Directeur
+
+# Confidence Intervals
+
+# Hypothesis Testing
+
+
 
 # Finally: `***` Stars!
 
-## Regression Output {.smaller}
-
-1. Now we know what `Std. Error` means.
-2. What about the rest?
-
-```{r t2, echo=FALSE}
-l1 = lm(mpg ~ wt + hp, mtcars)
-summary(l1)
-```
-
-
-## Student's T-Distribution and Testing
-
->* Similar in shape to the Normal Distribution (in large samples: identical)
->* If $\varepsilon \sim \mathcal{N}(0,\sigma^2)$, then $b_k / sd(b_k)$ follows the T distribution with $N-K$ degrees of freedom.
->* This is used to test the **hypothesis** that true value in the population is $\beta_k = 0$.
->* If we cannot *reject* $\beta_k = 0$, we cannot be sure that $x_k$ should even be included in our regression.
