@@ -48,8 +48,9 @@ These assumptions are necessary to successfully (and correctly!) run an OLS regr
 
 3. The data are drawn from a **random sample** of size $n$: observation $(x_i,y_i)$ comes from the exact same distribution, and is independent of observation $(x_j,y_j)$, for all $i\neq j$.
 4. The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
+5. The error is normally distributed, i.e. $\varepsilon \sim \mathcal{N}(0,\sigma^2)$
 
-Invoking assumption 4. in particular defines what is commonly called the *normal* linear regression model.
+Invoking assumption 5. in particular defines what is commonly called the *normal* linear regression model.
 
 
 ### $b$ is not $\beta$!
@@ -92,7 +93,7 @@ You can clearly see that, as $n$ increases, the denominator increases, and there
 
 ### Standard Errors in Practice
 
-We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps. In particular, make sure you have a thorough understandign of `launchApp("estimate")`.
+We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps. In particular, make sure you have a thorough understanding of `launchApp("estimate")`.
 
 ```{r,eval=FALSE}
 library(ScPoEconometrics)
