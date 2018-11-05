@@ -1,38 +1,44 @@
 {
   "input": {
-    "scale_x": 1,
-    "scale_y": 1
+    "scale_x": 0.5,
+    "scale_y": -3.5
   },
   "output": {
-    "best_fit": "Original Slope: 3\nOriginal Intercept: 10\nCurrent Slope: 3\nCurrent Intercept: 10",
+    "best_fit": "Original Slope: 3\nOriginal Intercept: 10\nCurrent Slope: -21\nCurrent Intercept: -35",
     "DGP": "Data Generating Process: Y = 10 + 3X + error\nSample Size N = 100",
     "regPlot_rescale": {
-      "src": "[image data sha1: d7b875c3cd31c0c6b867142ca14b56a98dac8d67]",
+      "src": "[image data sha1: 1d069b300188fa630f19f995dbe8a25e6901efa0]",
       "width": 611,
       "height": 400,
-      "coordmap": [
-        {
-          "domain": {
-            "left": -54,
-            "right": 54,
-            "bottom": -220,
-            "top": 320
-          },
-          "range": {
-            "left": 59.04,
-            "right": 580.76,
-            "bottom": 325.56,
-            "top": 58.04
-          },
-          "log": {
-            "x": null,
-            "y": null
-          },
-          "mapping": {
+      "coordmap": {
+        "panels": [
+          {
+            "domain": {
+              "left": -54,
+              "right": 54,
+              "bottom": -220,
+              "top": 320
+            },
+            "range": {
+              "left": 59.04,
+              "right": 580.76,
+              "bottom": 325.56,
+              "top": 58.04
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "mapping": {
 
+            }
           }
+        ],
+        "dims": {
+          "width": 611,
+          "height": 400
         }
-      ]
+      }
     }
   },
   "export": {

@@ -13,29 +13,35 @@
       "src": "[image data sha1: 69d834fee441bfe522b2d2e06060df09a9824dad]",
       "width": 611,
       "height": 400,
-      "coordmap": [
-        {
-          "domain": {
-            "left": -19.8156609475305,
-            "right": 22.30886058357,
-            "bottom": -10.8,
-            "top": 10.8
-          },
-          "range": {
-            "left": 59.04,
-            "right": 580.76,
-            "bottom": 325.56,
-            "top": 58.04
-          },
-          "log": {
-            "x": null,
-            "y": null
-          },
-          "mapping": {
+      "coordmap": {
+        "panels": [
+          {
+            "domain": {
+              "left": -19.8156609475305,
+              "right": 22.30886058357,
+              "bottom": -10.8,
+              "top": 10.8
+            },
+            "range": {
+              "left": 59.04,
+              "right": 580.76,
+              "bottom": 325.56,
+              "top": 58.04
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "mapping": {
 
+            }
           }
+        ],
+        "dims": {
+          "width": 611,
+          "height": 400
         }
-      ]
+      }
     },
     "userguess2": "Your guess:\n y = -2 + -1x"
   },

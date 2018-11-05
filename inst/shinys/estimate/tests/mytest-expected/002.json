@@ -1,37 +1,43 @@
 {
   "input": {
-    "ssize": 135
+    "ssize": 44
   },
   "output": {
     "distPlot3": {
-      "src": "[image data sha1: dd6829be1f869c8378b21eb37f1bac6be8bf6608]",
+      "src": "[image data sha1: dfa5f5780de1b55657072ad499549cd01c951add]",
       "width": 631,
       "height": 400,
-      "coordmap": [
-        {
-          "domain": {
-            "left": 137.6,
-            "right": 202.4,
-            "bottom": -0.00762135195339818,
-            "top": 0.200100828142854
-          },
-          "range": {
-            "left": 59.04,
-            "right": 600.76,
-            "bottom": 325.56,
-            "top": 58.04
-          },
-          "log": {
-            "x": null,
-            "y": null
-          },
-          "mapping": {
+      "coordmap": {
+        "panels": [
+          {
+            "domain": {
+              "left": 137.6,
+              "right": 202.4,
+              "bottom": -0.0045625535624431,
+              "top": 0.119652846512487
+            },
+            "range": {
+              "left": 59.04,
+              "right": 600.76,
+              "bottom": 325.56,
+              "top": 58.04
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "mapping": {
 
+            }
           }
+        ],
+        "dims": {
+          "width": 631,
+          "height": 400
         }
-      ]
+      }
     },
-    "estTable": "<table  class = 'table shiny-table table-striped spacing-s' style = 'width:auto;'>\n<thead> <tr> <th style='text-align: left;'> parameter <\/th> <th style='text-align: left;'> estimate <\/th>  <\/tr> <\/thead> <tbody>\n  <tr> <td> Median <\/td> <td> 170.247 <\/td> <\/tr>\n  <tr> <td> SD <\/td> <td> 1.8213 <\/td> <\/tr>\n  <tr> <td> Range <\/td> <td> 166.106,174.6642 <\/td> <\/tr>\n   <\/tbody> <\/table>"
+    "estTable": "<table  class = 'table shiny-table table-striped spacing-s' style = 'width:auto;'>\n<thead> <tr> <th style='text-align: left;'> parameter <\/th> <th style='text-align: left;'> estimate <\/th>  <\/tr> <\/thead> <tbody>\n  <tr> <td> Median <\/td> <td> 170.8629 <\/td> <\/tr>\n  <tr> <td> SD <\/td> <td> 3.2986 <\/td> <\/tr>\n  <tr> <td> Range <\/td> <td> 162.8211,180.9555 <\/td> <\/tr>\n   <\/tbody> <\/table>"
   },
   "export": {
 

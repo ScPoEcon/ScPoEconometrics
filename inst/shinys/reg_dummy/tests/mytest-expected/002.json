@@ -1,41 +1,47 @@
 {
   "input": {
-    "i_dummy": 2,
-    "meany": false,
-    "meany_x0": false,
+    "i_dummy": 1.75,
+    "meany": true,
+    "meany_x0": true,
     "meany_x1": true,
-    "s_dummy": 3.75
+    "s_dummy": 3
   },
   "output": {
     "regPlot_dummy": {
-      "src": "[image data sha1: 318be4f1573f91dd53e0873cc1dd364a633a2c8c]",
+      "src": "[image data sha1: 7738500102fc5b1ac37da4236eaba7582d8415a7]",
       "width": 611,
       "height": 400,
-      "coordmap": [
-        {
-          "domain": {
-            "left": -1.29892221101963,
-            "right": 2.29892221101963,
-            "bottom": 0.11321295880197,
-            "top": 7.49261447520114
-          },
-          "range": {
-            "left": 59.04,
-            "right": 580.76,
-            "bottom": 325.56,
-            "top": 58.04
-          },
-          "log": {
-            "x": null,
-            "y": null
-          },
-          "mapping": {
+      "coordmap": {
+        "panels": [
+          {
+            "domain": {
+              "left": -1.29892221101963,
+              "right": 2.29892221101963,
+              "bottom": 0.11321295880197,
+              "top": 7.49261447520114
+            },
+            "range": {
+              "left": 59.04,
+              "right": 580.76,
+              "bottom": 325.56,
+              "top": 58.04
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "mapping": {
 
+            }
           }
+        ],
+        "dims": {
+          "width": 611,
+          "height": 400
         }
-      ]
+      }
     },
-    "userguess_dummy": "Your guess:\n y = 2 + 3.75x"
+    "userguess_dummy": "Your guess:\n y = 1.75 + 3x"
   },
   "export": {
 

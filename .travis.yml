@@ -21,4 +21,6 @@ script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - if [ $TRAVIS_OS_NAME = osx ]; then R CMD check *tar.gz ; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then R CMD check *tar.gz; if [[ $TRAVIS_COMMIT_MESSAGE != *"[nobook]"* ]]; then ./_build.sh && ./_deploy.sh; fi; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then R CMD check *tar.gz; fi
+  - if [ $TRAVIS_OS_NAME = linux ] && [[ $TRAVIS_COMMIT_MESSAGE != *"[nobook]"* ]]; then ./_build.sh && ./_deploy.sh; fi
+

@@ -1,26 +1,24 @@
 {
   "input": {
-    "dm": false,
-    "i_dm": 1.5,
-    "s_dm": -0.5
+    "c": 1
   },
   "output": {
-    "regPlot_dm": {
-      "src": "[image data sha1: 2d5804cd1bf330b2ec3159a580902a2b9459eba1]",
-      "width": 611,
+    "corrPlot": {
+      "src": "[image data sha1: 29fed6497c53246fd656e0671ace1e4dc579c756]",
+      "width": 962,
       "height": 400,
       "coordmap": {
         "panels": [
           {
             "domain": {
-              "left": -10.7966955741627,
-              "right": 20.7966955741627,
-              "bottom": -5.6,
-              "top": 10.6
+              "left": -4.32,
+              "right": 4.32,
+              "bottom": -4.32,
+              "top": 4.32
             },
             "range": {
-              "left": 59.04,
-              "right": 580.76,
+              "left": 361.64,
+              "right": 629.16,
               "bottom": 325.56,
               "top": 58.04
             },
@@ -34,12 +32,11 @@
           }
         ],
         "dims": {
-          "width": 611,
+          "width": 962,
           "height": 400
         }
       }
-    },
-    "userguess_dm": "Your guess:\n y = 1.5 + -0.5x. SSR = 24.58"
+    }
   },
   "export": {
 

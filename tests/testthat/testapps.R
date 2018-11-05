@@ -104,7 +104,7 @@ test_that("reg_dummy app works", {
   expect_pass(testApp(appdir, compareImages = FALSE))
 })
 
-test_that("reg_dummy app works", {
+test_that("estimate app works", {
   # Don't run these tests on the CRAN build servers
   skip_on_cran()
 
