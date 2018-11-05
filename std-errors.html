@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-04">
+<meta name="date" content="2018-11-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -215,8 +215,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(b\)</span></span>?
 </center>
 </div>
-<p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown here as the shaded area:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-152-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown as the shaded area in figure <a href="#fig:confint"><strong>??</strong></a>:</p>
+<p><img src="ScPoEconometrics_files/figure-html/confint-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
 <div id="what-is-true-what-are-statistical-models" class="section level2">
 <h2><span class="header-section-number">6.1</span> What is <em>true</em>? What are Statistical Models?</h2>
@@ -246,7 +246,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <li><span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> and intercept and slope parameters</li>
 <li><span class="math inline">\(\varepsilon\)</span> is the error term.</li>
 </ul>
-<p>First, we <em>assumed</em> that <a href="std-errors.html#eq:abline-5">(6.1)</a> is the correct represenation of the DGP. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice that <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are potentially different from <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in <a href="linreg.html#eq:abline">(3.3)</a> for a given sample of data - they could in practice be very close to each other, but <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are <em>estimates</em> of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. And, crucially, those estimates are generated from a sample of data. Now, the fact that our data <span class="math inline">\((y_i,x_i)\)</span> are a sample from a larger population, means that there will be <em>sampling variation</em> in our estimates - exactly like in the case of the sample mean estimating the population average as mentioned above. One particular sample of data will generate one particular set of estimates <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, whereas another sample of data will generate estimates which will in general be different - by <em>how much</em> those estimates differ across samples is the question in this chapter. In general, the more observations we have the greater the precision of our estimates, hence, the closer the estimates from different samples will lie together.</p>
+<p>First, we <em>assumed</em> that <a href="std-errors.html#eq:abline-5">(6.1)</a> is the correct represenation of the DGP. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice that <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are potentially different from <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in <a href="linreg.html#eq:abline">(3.3)</a> for a given sample of data - they could in practice be very close to each other, but <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are <em>estimates</em> of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. And, crucially, those estimates are generated from a sample of data. Now, the fact that our data <span class="math inline">\(\{y_i,x_i\}_{i=1}^N\)</span> are a sample from a larger population, means that there will be <em>sampling variation</em> in our estimates - exactly like in the case of the sample mean estimating the population average as mentioned above. One particular sample of data will generate one particular set of estimates <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, whereas another sample of data will generate estimates which will in general be different - by <em>how much</em> those estimates differ across samples is the question in this chapter. In general, the more observations we have the greater the precision of our estimates, hence, the closer the estimates from different samples will lie together.</p>
 </div>
 <div id="se-theory" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Standard Errors in Theory</h3>
@@ -261,7 +261,11 @@ s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \fra
 <span class="math display" id="eq:var-ols2">\[\begin{equation}
 Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}  \tag{6.3}
 \end{equation}\]</span>
-<p>You can clearly see that, as <span class="math inline">\(n\)</span> increases, the denominator increases, and therefore the variance of the estimate will decrease.</p>
+<p>We most of the time work directly with the <em>standard error</em> of a coefficient, hence we define</p>
+<span class="math display" id="eq:SE-ols2">\[\begin{equation}
+SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}}  \tag{6.4}
+\end{equation}\]</span>
+<p>You can clearly see that, as <span class="math inline">\(n\)</span> increases, the denominator increases, and therefore variance and standard error of the estimate will decrease.</p>
 </div>
 <div id="standard-errors-in-practice" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Standard Errors in Practice</h3>
@@ -289,12 +293,12 @@ Figure 6.1: Our ficitious sample of SciencesPo students’ body height. The smal
 <p>We have encountered many statistics already: think of the sample mean, or the standard deviation. Statistics are just functions of data. <em>Test</em> statistics are used to perform statistical tests.</p>
 <p>Many test statistics rely on some notion of <em>standardizing</em> the sample data so that it becomes comparable to a theoretical distribution. We encountered this idea already in section <a href="linreg.html#reg-standard">3.2.4</a>, where we talked about a standardized regression. The most common standardization is the so-called <em>z-score</em>, which says that</p>
 <span class="math display" id="eq:zscore">\[\begin{equation}
-\frac{x - \mu}{\sigma}\equiv z\sim \mathcal{N}(0,1), \tag{6.4}
+\frac{x - \mu}{\sigma}\equiv z\sim \mathcal{N}(0,1), \tag{6.5}
 \end{equation}\]</span>
 <p>in other words, substracting the population mean from random variable <span class="math inline">\(x\)</span> and dividing by it’s population standard deviation yields a standard normally distributed random variable, commonly called <span class="math inline">\(z\)</span>.</p>
-<p>A very similar idea applies if we <em>don’t know</em> the population variance (which is our case here!). The corresponding standardization gives rise to the <em>t-statistic</em>, and it looks very similar to <a href="std-errors.html#eq:zscore">(6.4)</a>:</p>
+<p>A very similar idea applies if we <em>don’t know</em> the population variance (which is our case here!). The corresponding standardization gives rise to the <em>t-statistic</em>, and it looks very similar to <a href="std-errors.html#eq:zscore">(6.5)</a>:</p>
 <span class="math display" id="eq:tscore">\[\begin{equation}
-\sqrt{n} \frac{\bar{x} - \mu}{s} \equiv T \sim t_{n-1} \tag{6.5}
+\sqrt{n} \frac{\bar{x} - \mu}{s} \equiv T \sim t_{n-1} \tag{6.6}
 \end{equation}\]</span>
 <p>Several things to note:</p>
 <ul>
@@ -304,12 +308,12 @@ Figure 6.1: Our ficitious sample of SciencesPo students’ body height. The smal
 <li><span class="math inline">\(t_{n-1}\)</span> is the <a href="https://en.wikipedia.org/wiki/Student&#39;s_t-distribution">Student’s T</a> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. We don’t have <span class="math inline">\(n\)</span> degrees of freedom because we already had to estimate one statistic (<span class="math inline">\(\bar{x}\)</span>) in order to construct <span class="math inline">\(T\)</span>.</li>
 </ul>
 </div>
-<div id="confidence-intervals" class="section level3">
+<div id="CI" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Confidence Intervals</h3>
 <p>Back to our example now! We are clearly in need of some measure of <em>confidence</em> about our sample statistic <span class="math inline">\(\bar{x} = 168.5\)</span> before we communicate our result. It seems reasonable to inform the Director about <span class="math inline">\(\bar{x}\)</span>, but surely we also need to tell him that there was considerable <em>dispersion</em> in the data: Some people were as short as 143.98cm, while others were as tall as 189.41cm!</p>
-<p>The way to proceed is to construct a <em>confidence interval</em> about the true population mean <span class="math inline">\(\mu\)</span>, based on <span class="math inline">\(\bar{x}\)</span>, which will take this uncertainty into account. We will use the <em>t</em> statistic from above. We want to have a <em>symmetric interval</em> around <span class="math inline">\(\bar{x}\)</span> which contains the true value <span class="math inline">\(\mu\)</span> with probability <span class="math inline">\(1-\alpha\)</span>. One very popular choice of <span class="math inline">\(\alpha\)</span> is <span class="math inline">\(0.05\)</span>, hence we cover <span class="math inline">\(\mu\)</span> with 95% probability. After computing our statistic <span class="math inline">\(T\)</span> as defind in <a href="std-errors.html#eq:tscore">(6.5)</a>, this interval is defined as follows:</p>
+<p>The way to proceed is to construct a <em>confidence interval</em> about the true population mean <span class="math inline">\(\mu\)</span>, based on <span class="math inline">\(\bar{x}\)</span>, which will take this uncertainty into account. We will use the <em>t</em> statistic from above. We want to have a <em>symmetric interval</em> around <span class="math inline">\(\bar{x}\)</span> which contains the true value <span class="math inline">\(\mu\)</span> with probability <span class="math inline">\(1-\alpha\)</span>. One very popular choice of <span class="math inline">\(\alpha\)</span> is <span class="math inline">\(0.05\)</span>, hence we cover <span class="math inline">\(\mu\)</span> with 95% probability. After computing our statistic <span class="math inline">\(T\)</span> as defind in <a href="std-errors.html#eq:tscore">(6.6)</a>, this interval is defined as follows:</p>
 <span class="math display" id="eq:ci">\[\begin{align}
-\Pr \left(-c \leq T \leq c \right) = 1-\alpha \tag{6.6}
+\Pr \left(-c \leq T \leq c \right) = 1-\alpha \tag{6.7}
 \end{align}\]</span>
 <p>where <span class="math inline">\(c\)</span> stands for <em>critical value</em>, which we need to choose. This is illustrated in figure <a href="std-errors.html#fig:cifig">6.2</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:cifig"></span>
@@ -320,12 +324,12 @@ Figure 6.2: Confidence Interval Construction. The blue area is called <em>covera
 </div>
 <p>Given the symmetry of the <em>t</em> distribution it’s enough to find <span class="math inline">\(c\)</span> at the upper tail: the point above which <span class="math inline">\(\frac{\alpha}{2}\)</span> of all probability mass of the <span class="math inline">\(t_{df}\)</span> distribution comes to lie. In other words, if <span class="math inline">\(\mathcal{T}_{df}\)</span> is the CDF of the <em>t</em> distribution with <em>df</em> degrees of freedom, we find <span class="math inline">\(c\)</span> as</p>
 <span class="math display" id="eq:ci1">\[\begin{align}
-\mathcal{T}_{df}(c)\equiv&amp; \Pr \left( T &lt; c \right)  = 1-\frac{\alpha}{2} = 0.975 \\\tag{6.7}
+\mathcal{T}_{df}(c)\equiv&amp; \Pr \left( T &lt; c \right)  = 1-\frac{\alpha}{2} = 0.975 \\\tag{6.8}
 c =&amp; \mathcal{T}_{df}^{-1}(\mathcal{T}_{df}(c)) = \mathcal{T}_{df}^{-1}(0.975)
 \end{align}\]</span>
-<p>Here <span class="math inline">\(\mathcal{T}_{df}^{-1}\)</span> stands for the <em>quantile function</em>, i.e. the inverse of the CDF. In our example with <span class="math inline">\(df = 49\)</span>, you can find thus that <span class="math inline">\(c = 2.01\)</span> by typing <code>qt(0.975,df=49)</code> into your <code>R</code> session.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Now we only have to expand the definition of the <em>T</em> statistic from <a href="std-errors.html#eq:tscore">(6.5)</a> inside <a href="std-errors.html#eq:ci">(6.6)</a> to obtain</p>
+<p>Here <span class="math inline">\(\mathcal{T}_{df}^{-1}\)</span> stands for the <em>quantile function</em>, i.e. the inverse of the CDF. In our example with <span class="math inline">\(df = 49\)</span>, you can find thus that <span class="math inline">\(c = 2.01\)</span> by typing <code>qt(0.975,df=49)</code> into your <code>R</code> session.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Now we only have to expand the definition of the <em>T</em> statistic from <a href="std-errors.html#eq:tscore">(6.6)</a> inside <a href="std-errors.html#eq:ci">(6.7)</a> to obtain</p>
 <span class="math display" id="eq:ci2">\[\begin{align}
-0.95 = 1-\alpha &amp;= \Pr \left(-c \leq T \leq c \right) \\\tag{6.8}
+0.95 = 1-\alpha &amp;= \Pr \left(-c \leq T \leq c \right) \\\tag{6.9}
                 &amp;= \Pr \left(-2.01 \leq \sqrt{n} \frac{\bar{x} - \mu}{s} \leq 2.01 \right) \\
                  &amp;= \Pr \left(\bar{x} -2.01 \frac{s}{\sqrt{n}} \leq \mu \leq \bar{x} + 2.01 \frac{s}{\sqrt{n}} \right) 
 \end{align}\]</span>
@@ -334,6 +338,7 @@ c =&amp; \mathcal{T}_{df}^{-1}(\mathcal{T}_{df}(c)) = \mathcal{T}_{df}^{-1}(0.97
 CI = \left[165.658 , 171.342 \right]
 \end{equation}\]</span>
 <p>We would tell the director that with 95% probability, the true average height of all students comes to lie within those two bounds.</p>
+<p>Finally, looking back at figure <a href="#fig:confint"><strong>??</strong></a> above, the shaded area is just the 95% confidence interval <em>about the true value <span class="math inline">\(\beta_1\)</span></em>. We would say that <em>the true regression line</em> is contained within the shaded region with 95% probability. Very similarly to our example of <span class="math inline">\(\bar{x}\)</span>, in that picture we have instead an estimate <span class="math inline">\(b_1\)</span>, with an associated standard error <span class="math inline">\(SE(b_1)\)</span>. The shaded area is called <em>confidence band</em>, and it is just plotting the confidence interval <em>for each value <span class="math inline">\(x\)</span></em> in the data. You can see how the band becomes narrower (i.e. the estimate becomes more precise) if there is more data associated to a certain <span class="math inline">\(x\)</span>.</p>
 </div>
 </div>
 <div id="hypothesis-testing" class="section level2">
@@ -399,7 +404,7 @@ Figure 6.3: Cookbook Testing Proceedure. Subscripts <span class="math inline">\(
 <p>In Regression Analysis, we often want to test a very specific alternative hypothesis: We want to have a quick way to tell us whether a certain variable <span class="math inline">\(x_k\)</span> is <em>relevant</em> in our statistical model or not. In hypothesis testing language, that would be</p>
 <span class="math display" id="eq:H0">\[\begin{align}
 H_0:&amp; \beta_k = 0\\
-H_1:&amp; \beta_k \neq 0.\tag{6.9}
+H_1:&amp; \beta_k \neq 0.\tag{6.10}
 \end{align}\]</span>
 <p>Clearly, if in the <strong>true</strong> regression model we find <span class="math inline">\(\beta_k=0\)</span>, this means that <span class="math inline">\(x_k\)</span> has a zero partial effect on the outcome, hence it should be excluded from the regression. Notice that we are interested in <span class="math inline">\(\beta_k\)</span>, not in <span class="math inline">\(b_k\)</span>, which is the estimator that we compute from our sample (similarly to <span class="math inline">\(\bar{x}\)</span>, which estimates <span class="math inline">\(\mu\)</span> above).</p>
 <p>As such, this is a <em>two-sided test</em>. We can again illustrate this in figure <a href="std-errors.html#fig:testfig2">6.4</a>. Notice how we now have two rejection areas.</p>
@@ -409,7 +414,7 @@ H_1:&amp; \beta_k \neq 0.\tag{6.9}
 Figure 6.4: Testing whether coefficient <span class="math inline">\(b_k\)</span> is <em>statistically significantly different</em> from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under <span class="math inline">\(H_0\)</span> is <span class="math inline">\(\beta_k=0\)</span>.
 </p>
 </div>
-<p>The relevant test statistic for a regression coefficient is again the <em>t</em> distribution. In fact, this particular test is so important that all statistical packages report the <em>t</em> statistic corresponding to <a href="std-errors.html#eq:H0">(6.9)</a> automatically. Let’s look at an example:</p>
+<p>The relevant test statistic for a regression coefficient is again the <em>t</em> distribution. In fact, this particular test is so important that all statistical packages report the <em>t</em> statistic corresponding to <a href="std-errors.html#eq:H0">(6.10)</a> automatically. Let’s look at an example:</p>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = mpg ~ wt + hp + drat, data = mtcars)
@@ -432,19 +437,19 @@ Figure 6.4: Testing whether coefficient <span class="math inline">\(b_k\)</span>
 #OUT&gt; F-statistic: 47.88 on 3 and 28 DF,  p-value: 3.768e-11</code></pre>
 <p>The column <code>t value</code> is just <code>Estimate</code> divided by <code>Std. Error</code>. That is, <code>R</code> reports in the column <code>t value</code> the following number for us:</p>
 <span class="math display" id="eq:tstat">\[\begin{equation}
-\text{t value} = \frac{b_k-0}{s_k}  \tag{6.10}
+\text{t value} = \frac{b_k-0}{s_k}  \tag{6.11}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. Notice that this particular <em>t</em> statistic is different from our previous formulation in <a href="std-errors.html#eq:tscore">(6.5)</a>: we don’t have to scale by <span class="math inline">\(\sqrt{n}\)</span>! This is so because <code>R</code> and other statistical software assumes the <em>normal</em> linear regression model (see <a href="#classical-reg"><strong>??</strong></a>). Normality of the regression error <span class="math inline">\(\varepsilon\)</span> implies that the <em>t</em> statistic looks like in <a href="std-errors.html#eq:tstat">(6.10)</a>.</p>
+<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. Notice that this particular <em>t</em> statistic is different from our previous formulation in <a href="std-errors.html#eq:tscore">(6.6)</a>: we don’t have to scale by <span class="math inline">\(\sqrt{n}\)</span>! This is so because <code>R</code> and other statistical software assumes the <em>normal</em> linear regression model (see <a href="#classical-reg"><strong>??</strong></a>). Normality of the regression error <span class="math inline">\(\varepsilon\)</span> implies that the <em>t</em> statistic looks like in <a href="std-errors.html#eq:tstat">(6.11)</a>.</p>
 <p>We have to choose a critical value for this test. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code>, 1.96 in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test whether the coefficient on <code>wt</code> is statistically different from zero:</p>
 <span class="math display" id="eq:mtcarswt">\[\begin{align}
 H_0:&amp; \beta_{wt} = 0\\
-H_1:&amp; \beta_{wt} \neq 0 \tag{6.11}
+H_1:&amp; \beta_{wt} \neq 0 \tag{6.12}
 \end{align}\]</span>
 <p>We just take the <code>t value</code> entry, and see whether it lies above or below either critical value: Indeed, we see that <span class="math inline">\(-4.053 &lt; -2.048\)</span>, and we are happy to reject <span class="math inline">\(H_0\)</span>.</p>
 <p>On the other hand, when testing for statistical significance of <code>drat</code> that does not seem to be the case:</p>
 <span class="math display" id="eq:mtcarsdrat">\[\begin{align}
 H_0:&amp; \beta_{drat} = 0\\
-H_1:&amp; \beta_{drat} \neq 0 \tag{6.12}
+H_1:&amp; \beta_{drat} \neq 0 \tag{6.13}
 \end{align}\]</span>
 <p>Here we find that <span class="math inline">\(1.316 \in [-2.048,2.048]\)</span>, hence it does not lie in any rejection region, and we can <em>not</em> reject <span class="math inline">\(H_0\)</span>. We would say that <em>coefficient <span class="math inline">\(\beta_{drat}\)</span> is not statistically significant at the 5% level</em>. As such, we should not include it in our regression.</p>
 </div>
@@ -469,7 +474,7 @@ The mean of the residuals conditional on <span class="math inline"><span class="
 <p><br> Great. But what does this <em>mean</em>? How could <span class="math inline">\(x\)</span> be correlated with something we don’t even observe?! Good questions - let’s try with an example.</p>
 <p>Imagine that we assume that</p>
 <span class="math display" id="eq:DGP-h">\[\begin{equation}
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.13}
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.14}
 \end{equation}\]</span>
 <p>represents the DGP of impact the sales price of houses (<span class="math inline">\(y\)</span>) as a function of number of bathrooms (<span class="math inline">\(x\)</span>). We run OLS as</p>
 <p><span class="math display">\[
@@ -513,9 +518,9 @@ Housing <span class="op">%&gt;%</span>
 Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span> (and, hence, <span class="math inline"><span class="math inline">\(e\)</span></span>)!
 </p>
 </div>
-<p><br> It looks like our DGP in <a href="std-errors.html#eq:DGP-h">(6.13)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this:</p>
+<p><br> It looks like our DGP in <a href="std-errors.html#eq:DGP-h">(6.14)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this:</p>
 <span class="math display" id="eq:DGP-h2">\[\begin{equation}
-y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{6.14}
+y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{6.15}
 \end{equation}\]</span>
 <p>This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
@@ -545,8 +550,8 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 #OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
 <p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-160"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-160-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-159"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-159-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 6.5: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>

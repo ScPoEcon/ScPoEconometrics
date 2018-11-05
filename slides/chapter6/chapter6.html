@@ -10,7 +10,7 @@
 
 
 
-  <meta name="date" content="2018-11-04" />
+  <meta name="date" content="2018-11-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,7 +112,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2018-11-04</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2018-11-05</p>
           </hgroup>
   </slide>
 
@@ -179,8 +179,11 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
 
 <ul>
 <li>The data are <strong>not linearly dependent</strong>. \(\Rightarrow\) <em>Rank condition</em>!</li>
-<li>\(x\) should be <strong>strictly exogenous</strong> to the model. \(E[\varepsilon|x] = 0\)</li>
+<li>\(x\) should be <strong>strictly exogenous</strong> to the model. \(E[\varepsilon|x] = 0\)
+
+<ul>
 <li>This implies \(Cov(x,\varepsilon)=0\).</li>
+</ul></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Additional Assumptions</h2></hgroup><article  id="additional-assumptions">
@@ -190,14 +193,27 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
 <li>The variance of the error term \(\varepsilon\) is the same for each value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is called <strong>homoskedasticity</strong>.</li>
 </ul>
 
+<div class="centered">
+<div class="red">
+<p>Minimal Requirements + Additional Assumptions =&gt; NORMAL Linear Regression Model.</p></div></div>
+
+</article></slide><slide class=""><hgroup><h2>\(b_1\) is not \(\beta_1\)!</h2></hgroup><article  id="b_1-is-not-beta_1">
+
+<ul class = 'build'>
+<li>\(b_1\) <em>estimates</em> \(\beta_1\). All estimates involve <strong>uncertainty</strong>.</li>
+<li>Ideally, \(b_1\) should be close to \(\beta_1\).</li>
+<li>💡 For each different sample \(\{x_i,y_i\}_{i=1}^N\) we&#39;ll get a different \(b_1\)!</li>
+<li>In general, the greater \(N\), the greater the precision of \(b_1\).</li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>Standard Error of \(b_1\)</h2></hgroup><article  id="standard-error-of-b_1">
 
 <ul class = 'build'>
 <li>Under the previous assumptions, we have \[
-Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} =     \frac{\sigma^2}{Var(x)}
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} 
 \]</li>
 <li>In practice we don&#39;t know \(\sigma^2\) and <em>estimate</em> it with residuals \(e_i\): \[
-s^2 = \frac{SSR}{n} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n} =  \frac{\sum_{i=1}^n e_i^2}{n}
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
 \] (\(n-p\) in small samples). \(s^2\) is the <em>mean squared error</em>.</li>
 </ul>
 
@@ -205,19 +221,12 @@ s^2 = \frac{SSR}{n} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n} =  \frac{\s
 
 <ul class = 'build'>
 <li>Variance is thus \[
-Var(b_1|x_i) = \frac{1}{n}\frac{SSR}{Var(x)}
+Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2} 
 \]</li>
+<li>Standard Error (SE): \[
+SE(b_1) = \sqrt{Var(b_1|x_i)}
+\]<br/></li>
 <li>You clearly see that the variance shrinks as \(n\to\infty\).</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>\(b_0\) and \(b_1\) are <em>Estimates</em></h2></hgroup><article  id="b_0-and-b_1-are-estimates">
-
-<ul class = 'build'>
-<li>Previously, we repeatedly saw \[ y_i = b_0 + b_1 x_i + e_i \]</li>
-<li><code>R</code> reports <em>estimates</em> \(b_0\) and \(b_1\). Both estimate underlying <em>population parameters</em> \(\beta_0\) and \(\beta_1\)</li>
-<li>Estimates <strong>always</strong> come with some degree of uncertainty.</li>
-<li>\(Var(b_1|x_i)\) measures how much uncertainty.</li>
-<li>💡 For each different sample \(\{x_i,y_i\}_{i=1}^n\) we&#39;ll get a different \(b_1\)!</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>App!</h2></hgroup><article  id="app">
@@ -243,43 +252,15 @@ launchApp(&quot;standard_errors_simple&quot;) </pre>
 <pre class = 'prettyprint lang-r'>library(ScPoEconometrics)
 launchApp(&quot;standard_errors_changeN&quot;) </pre>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Finally: <code>***</code> Stars!</h2></hgroup><article  id="finally-stars">
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Detour: Sampling</h2></hgroup><article  id="detour-sampling">
 
-</article></slide><slide class=""><hgroup><h2>Regression Output</h2></hgroup><article  id="regression-output" class="smaller">
+</article></slide><slide class=""><hgroup><h2>Tasked by Monsieur le Directeur</h2></hgroup><article  id="tasked-by-monsieur-le-directeur">
 
-<ol>
-<li>Now we know what <code>Std. Error</code> means.</li>
-<li>What about the rest?</li>
-</ol>
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Confidence Intervals</h2></hgroup><article  id="confidence-intervals">
 
-<pre >## 
-## Call:
-## lm(formula = mpg ~ wt + hp, data = mtcars)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -3.941 -1.600 -0.182  1.050  5.854 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-## wt          -3.87783    0.63273  -6.129 1.12e-06 ***
-## hp          -0.03177    0.00903  -3.519  0.00145 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 2.593 on 29 degrees of freedom
-## Multiple R-squared:  0.8268, Adjusted R-squared:  0.8148 
-## F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</pre>
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Hypothesis Testing</h2></hgroup><article  id="hypothesis-testing">
 
-</article></slide><slide class=""><hgroup><h2>Student&#39;s T-Distribution and Testing</h2></hgroup><article  id="students-t-distribution-and-testing">
-
-<ul class = 'build'>
-<li>Similar in shape to the Normal Distribution (in large samples: identical)</li>
-<li>If \(\varepsilon \sim \mathcal{N}(0,\sigma^2)\), then \(b_k / sd(b_k)\) follows the T distribution with \(N-K\) degrees of freedom.</li>
-<li>This is used to test the <strong>hypothesis</strong> that true value in the population is \(\beta_k = 0\).</li>
-<li>If we cannot <em>reject</em> \(\beta_k = 0\), we cannot be sure that \(x_k\) should even be included in our regression.</li>
-</ul></article></slide>
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Finally: <code>***</code> Stars!</h2></hgroup><article  id="finally-stars"></article></slide>
 
 
   <slide class="backdrop"></slide>
