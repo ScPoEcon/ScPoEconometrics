@@ -242,8 +242,9 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <ol start="3" style="list-style-type: decimal">
 <li>The data are drawn from a <strong>random sample</strong> of size <span class="math inline">\(n\)</span>: observation <span class="math inline">\((x_i,y_i)\)</span> comes from the exact same distribution, and is independent of observation <span class="math inline">\((x_j,y_j)\)</span>, for all <span class="math inline">\(i\neq j\)</span>.</li>
 <li>The variance of the error term <span class="math inline">\(\varepsilon\)</span> is the same for each value of <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(\varepsilon|x) = \sigma^2\)</span>. This property is called <strong>homoskedasticity</strong>.</li>
+<li>The error is normally distributed, i.e. <span class="math inline">\(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)</span></li>
 </ol>
-<p>Invoking assumption 4. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
+<p>Invoking assumption 5. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
 <div id="b-is-not-beta" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> <span class="math inline">\(b\)</span> is not <span class="math inline">\(\beta\)</span>!</h3>
 <p>Let’s talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
@@ -274,7 +275,7 @@ SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2
 </div>
 <div id="standard-errors-in-practice" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Standard Errors in Practice</h3>
-<p>We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps. In particular, make sure you have a thorough understandign of <code>launchApp(&quot;estimate&quot;)</code>.</p>
+<p>We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps. In particular, make sure you have a thorough understanding of <code>launchApp(&quot;estimate&quot;)</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">launchApp</span>(<span class="st">&quot;estimate&quot;</span>)
 <span class="kw">launchApp</span>(<span class="st">&quot;sampling&quot;</span>)  

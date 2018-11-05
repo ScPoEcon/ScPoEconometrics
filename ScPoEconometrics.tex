@@ -659,7 +659,7 @@ library, and check it's current version:
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> [1] '0.1.9'
+#OUT> [1] '0.2.0'
 \end{verbatim}
 
 \section{Data Types}\label{data-types}
@@ -6001,9 +6001,12 @@ not strictly necessary:
   The variance of the error term \(\varepsilon\) is the same for each
   value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
   called \textbf{homoskedasticity}.
+\item
+  The error is normally distributed, i.e.
+  \(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)
 \end{enumerate}
 
-Invoking assumption 4. in particular defines what is commonly called the
+Invoking assumption 5. in particular defines what is commonly called the
 \emph{normal} linear regression model.
 
 \subsection{\texorpdfstring{\(b\) is not
@@ -6083,7 +6086,7 @@ Practice}\label{standard-errors-in-practice}
 We would like to further make this point in an experiential way, i.e.~we
 want you to experience what is going on. We invite you to spend some
 time with the following apps. In particular, make sure you have a
-thorough understandign of \texttt{launchApp("estimate")}.
+thorough understanding of \texttt{launchApp("estimate")}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
