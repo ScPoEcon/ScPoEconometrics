@@ -215,8 +215,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 How <em>confident</em> should we be about the estimated values <span class="math inline"><span class="math inline">\(b\)</span></span>?
 </center>
 </div>
-<p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown as the shaded area in figure <a href="#fig:confint"><strong>??</strong></a>:</p>
-<p><img src="ScPoEconometrics_files/figure-html/confint-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br> Let’s go back to the regression with one variable and remind ourselves of the example at the end of chapter <a href="linreg.html#linreg">3</a>. There we introduced the term <em>confidence interval</em>, shown as the shaded area in figure <a href="std-errors.html#fig:confint">6.1</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:confint"></span>
+<img src="ScPoEconometrics_files/figure-html/confint-1.png" alt="Confidence bands around a regression line." width="672" />
+<p class="caption">
+Figure 6.1: Confidence bands around a regression line.
+</p>
+</div>
 <p>The shaded area shows us the region within which the <strong>true</strong> red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a <em>true</em> slope coefficient <span class="math inline">\(\beta_1\)</span>) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size <span class="math inline">\(N\)</span> increased, our estimate got better and better - fundamentally this is the same idea here.</p>
 <div id="what-is-true-what-are-statistical-models" class="section level2">
 <h2><span class="header-section-number">6.1</span> What is <em>true</em>? What are Statistical Models?</h2>
@@ -280,14 +285,14 @@ SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2
 <div id="back-to-sampling" class="section level2">
 <h2><span class="header-section-number">6.3</span> Back to Sampling</h2>
 <p>Imagine we were tasked by the Director of our school to provide him with our best guess of the <em>mean body height</em> <span class="math inline">\(\mu\)</span> amongst all SciencesPo students in order to assess which height the new desks should have. Of course, we are econometricians and don’t <em>guess</em> things: we <strong>estimate</strong> them! How would we go about this task and estimate <span class="math inline">\(\mu\)</span>?</p>
-<p>You may want to ask: Why bother with this estimation business at all, and not just measure all students’ height, compute <span class="math inline">\(\mu\)</span>, and that’s it? That’s a good question! In most cases, we cannot do this, either because we do not have access to the entire population (think of computing the mean height of all Europeans!), or it’s too costly to measure everyone, or it’s impractical. That’s why we take <em>samples</em> from the wider population, to make inference. In our example, suppose we’d randomly measure students coming out of the SciencesPo building at 27 Rue Saint Guillaume until we have <span class="math inline">\(50\)</span> measurements on any given Monday. Suppose further that we found a sample mean height <span class="math inline">\(\bar{x} = 168.5\)</span>, and that the sample standard deviation was <span class="math inline">\(s=10\)</span>. In short, we found the data summarized in figure <a href="std-errors.html#fig:heightdata">6.1</a></p>
+<p>You may want to ask: Why bother with this estimation business at all, and not just measure all students’ height, compute <span class="math inline">\(\mu\)</span>, and that’s it? That’s a good question! In most cases, we cannot do this, either because we do not have access to the entire population (think of computing the mean height of all Europeans!), or it’s too costly to measure everyone, or it’s impractical. That’s why we take <em>samples</em> from the wider population, to make inference. In our example, suppose we’d randomly measure students coming out of the SciencesPo building at 27 Rue Saint Guillaume until we have <span class="math inline">\(50\)</span> measurements on any given Monday. Suppose further that we found a sample mean height <span class="math inline">\(\bar{x} = 168.5\)</span>, and that the sample standard deviation was <span class="math inline">\(s=10\)</span>. In short, we found the data summarized in figure <a href="std-errors.html#fig:heightdata">6.2</a></p>
 <div class="figure" style="text-align: center"><span id="fig:heightdata"></span>
 <img src="ScPoEconometrics_files/figure-html/heightdata-1.png" alt="Our ficitious sample of SciencesPo students' body height. The small ticks indicate the location of each measurement." width="672" />
 <p class="caption">
-Figure 6.1: Our ficitious sample of SciencesPo students’ body height. The small ticks indicate the location of each measurement.
+Figure 6.2: Our ficitious sample of SciencesPo students’ body height. The small ticks indicate the location of each measurement.
 </p>
 </div>
-<p>What are we going to tell <em>Monsieur le Directeur</em> now, with those two numbers and figure <a href="std-errors.html#fig:heightdata">6.1</a> in hand? Before we address this issue, we need to make a short detour into <em>test statistics</em>.</p>
+<p>What are we going to tell <em>Monsieur le Directeur</em> now, with those two numbers and figure <a href="std-errors.html#fig:heightdata">6.2</a> in hand? Before we address this issue, we need to make a short detour into <em>test statistics</em>.</p>
 <div id="test-statistics" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Test Statistics</h3>
 <p>We have encountered many statistics already: think of the sample mean, or the standard deviation. Statistics are just functions of data. <em>Test</em> statistics are used to perform statistical tests.</p>
@@ -315,11 +320,11 @@ Figure 6.1: Our ficitious sample of SciencesPo students’ body height. The smal
 <span class="math display" id="eq:ci">\[\begin{align}
 \Pr \left(-c \leq T \leq c \right) = 1-\alpha \tag{6.7}
 \end{align}\]</span>
-<p>where <span class="math inline">\(c\)</span> stands for <em>critical value</em>, which we need to choose. This is illustrated in figure <a href="std-errors.html#fig:cifig">6.2</a>.</p>
+<p>where <span class="math inline">\(c\)</span> stands for <em>critical value</em>, which we need to choose. This is illustrated in figure <a href="std-errors.html#fig:cifig">6.3</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:cifig"></span>
 <img src="ScPoEconometrics_files/figure-html/cifig-1.png" alt="Confidence Interval Construction. The blue area is called *coverage region* which contains the true $\mu$ with probability $1-\alpha$." width="90%" />
 <p class="caption">
-Figure 6.2: Confidence Interval Construction. The blue area is called <em>coverage region</em> which contains the true <span class="math inline">\(\mu\)</span> with probability <span class="math inline">\(1-\alpha\)</span>.
+Figure 6.3: Confidence Interval Construction. The blue area is called <em>coverage region</em> which contains the true <span class="math inline">\(\mu\)</span> with probability <span class="math inline">\(1-\alpha\)</span>.
 </p>
 </div>
 <p>Given the symmetry of the <em>t</em> distribution it’s enough to find <span class="math inline">\(c\)</span> at the upper tail: the point above which <span class="math inline">\(\frac{\alpha}{2}\)</span> of all probability mass of the <span class="math inline">\(t_{df}\)</span> distribution comes to lie. In other words, if <span class="math inline">\(\mathcal{T}_{df}\)</span> is the CDF of the <em>t</em> distribution with <em>df</em> degrees of freedom, we find <span class="math inline">\(c\)</span> as</p>
@@ -338,7 +343,7 @@ c =&amp; \mathcal{T}_{df}^{-1}(\mathcal{T}_{df}(c)) = \mathcal{T}_{df}^{-1}(0.97
 CI = \left[165.658 , 171.342 \right]
 \end{equation}\]</span>
 <p>We would tell the director that with 95% probability, the true average height of all students comes to lie within those two bounds.</p>
-<p>Finally, looking back at figure <a href="#fig:confint"><strong>??</strong></a> above, the shaded area is just the 95% confidence interval <em>about the true value <span class="math inline">\(\beta_1\)</span></em>. We would say that <em>the true regression line</em> is contained within the shaded region with 95% probability. Very similarly to our example of <span class="math inline">\(\bar{x}\)</span>, in that picture we have instead an estimate <span class="math inline">\(b_1\)</span>, with an associated standard error <span class="math inline">\(SE(b_1)\)</span>. The shaded area is called <em>confidence band</em>, and it is just plotting the confidence interval <em>for each value <span class="math inline">\(x\)</span></em> in the data. You can see how the band becomes narrower (i.e. the estimate becomes more precise) if there is more data associated to a certain <span class="math inline">\(x\)</span>.</p>
+<p>Finally, looking back at figure <a href="std-errors.html#fig:confint">6.1</a> above, the shaded area is just the 95% confidence interval <em>about the true value <span class="math inline">\(\beta_1\)</span></em>. We would say that <em>the true regression line</em> is contained within the shaded region with 95% probability. Very similarly to our example of <span class="math inline">\(\bar{x}\)</span>, in that picture we have instead an estimate <span class="math inline">\(b_1\)</span>, with an associated standard error <span class="math inline">\(SE(b_1)\)</span>. The shaded area is called <em>confidence band</em>, and it is just plotting the confidence interval <em>for each value <span class="math inline">\(x\)</span></em> in the data. You can see how the band becomes narrower (i.e. the estimate becomes more precise) if there is more data associated to a certain <span class="math inline">\(x\)</span>.</p>
 </div>
 </div>
 <div id="hypothesis-testing" class="section level2">
@@ -348,7 +353,7 @@ CI = \left[165.658 , 171.342 \right]
 H_0:&amp; \mu = 167\\
 H_1:&amp; \mu \neq 167
 \end{align}\]</span>
-<p>Here we state that under the null hypthesis, = 167, and under the alternative, it’s not equal to that value. This would be called a <em>two-sided</em> test, because it tests deviations from <span class="math inline">\(H_0\)</span> below as well as above. An alternative formulation could use the <em>one-sided</em> test that</p>
+<p>Here we state that under the null hypthesis, <span class="math inline">\(\mu = 167\)</span>, and under the alternative, it’s not equal to that value. This would be called a <em>two-sided</em> test, because it tests deviations from <span class="math inline">\(H_0\)</span> below as well as above. An alternative formulation could use the <em>one-sided</em> test that</p>
 <span class="math display">\[\begin{align}
 H_0:&amp; \mu = 167\\
 H_1:&amp; \mu &gt; 167.
@@ -374,7 +379,7 @@ The crucial thing to note here is that, given we are working with a <strong>rand
 </div>
 <div id="performing-the-test" class="section level3">
 <h3><span class="header-section-number">6.4.2</span> Performing the Test</h3>
-<p>We can stick to the following cookbook procedure, which is illustrated in figure <a href="std-errors.html#fig:testfig">6.3</a>.</p>
+<p>We can stick to the following cookbook procedure, which is illustrated in figure <a href="std-errors.html#fig:testfig">6.4</a>.</p>
 <ol style="list-style-type: decimal">
 <li>Set up hypothesis and significance level:
 <ol style="list-style-type: decimal">
@@ -395,7 +400,7 @@ The crucial thing to note here is that, given we are working with a <strong>rand
 <div class="figure" style="text-align: center"><span id="fig:testfig"></span>
 <img src="ScPoEconometrics_files/figure-html/testfig-1.png" alt="Cookbook Testing Proceedure. Subscripts $c$ indicate *critical value*. There are two x-axis: one for values of $\bar{x}$, and one for the corresponding $t$ statistic. The red area is the rejection area. If we observe a test statistic such that $t&gt;t_c$, we feel reassured that our $\bar{x}$ is *sufficiently far away* from the hypothesized value $\mu$, such that we feel comfortable with rejecting $H_0$. And vice versa: If our test statistic falls below $t_c$, we will not reject $H_0$" width="90%" />
 <p class="caption">
-Figure 6.3: Cookbook Testing Proceedure. Subscripts <span class="math inline">\(c\)</span> indicate <em>critical value</em>. There are two x-axis: one for values of <span class="math inline">\(\bar{x}\)</span>, and one for the corresponding <span class="math inline">\(t\)</span> statistic. The red area is the rejection area. If we observe a test statistic such that <span class="math inline">\(t&gt;t_c\)</span>, we feel reassured that our <span class="math inline">\(\bar{x}\)</span> is <em>sufficiently far away</em> from the hypothesized value <span class="math inline">\(\mu\)</span>, such that we feel comfortable with rejecting <span class="math inline">\(H_0\)</span>. And vice versa: If our test statistic falls below <span class="math inline">\(t_c\)</span>, we will not reject <span class="math inline">\(H_0\)</span>
+Figure 6.4: Cookbook Testing Proceedure. Subscripts <span class="math inline">\(c\)</span> indicate <em>critical value</em>. There are two x-axis: one for values of <span class="math inline">\(\bar{x}\)</span>, and one for the corresponding <span class="math inline">\(t\)</span> statistic. The red area is the rejection area. If we observe a test statistic such that <span class="math inline">\(t&gt;t_c\)</span>, we feel reassured that our <span class="math inline">\(\bar{x}\)</span> is <em>sufficiently far away</em> from the hypothesized value <span class="math inline">\(\mu\)</span>, such that we feel comfortable with rejecting <span class="math inline">\(H_0\)</span>. And vice versa: If our test statistic falls below <span class="math inline">\(t_c\)</span>, we will not reject <span class="math inline">\(H_0\)</span>
 </p>
 </div>
 </div>
@@ -407,11 +412,11 @@ H_0:&amp; \beta_k = 0\\
 H_1:&amp; \beta_k \neq 0.\tag{6.10}
 \end{align}\]</span>
 <p>Clearly, if in the <strong>true</strong> regression model we find <span class="math inline">\(\beta_k=0\)</span>, this means that <span class="math inline">\(x_k\)</span> has a zero partial effect on the outcome, hence it should be excluded from the regression. Notice that we are interested in <span class="math inline">\(\beta_k\)</span>, not in <span class="math inline">\(b_k\)</span>, which is the estimator that we compute from our sample (similarly to <span class="math inline">\(\bar{x}\)</span>, which estimates <span class="math inline">\(\mu\)</span> above).</p>
-<p>As such, this is a <em>two-sided test</em>. We can again illustrate this in figure <a href="std-errors.html#fig:testfig2">6.4</a>. Notice how we now have two rejection areas.</p>
+<p>As such, this is a <em>two-sided test</em>. We can again illustrate this in figure <a href="std-errors.html#fig:testfig2">6.5</a>. Notice how we now have two rejection areas.</p>
 <div class="figure" style="text-align: center"><span id="fig:testfig2"></span>
 <img src="ScPoEconometrics_files/figure-html/testfig2-1.png" alt="Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\beta_k=0$. " width="90%" />
 <p class="caption">
-Figure 6.4: Testing whether coefficient <span class="math inline">\(b_k\)</span> is <em>statistically significantly different</em> from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under <span class="math inline">\(H_0\)</span> is <span class="math inline">\(\beta_k=0\)</span>.
+Figure 6.5: Testing whether coefficient <span class="math inline">\(b_k\)</span> is <em>statistically significantly different</em> from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under <span class="math inline">\(H_0\)</span> is <span class="math inline">\(\beta_k=0\)</span>.
 </p>
 </div>
 <p>The relevant test statistic for a regression coefficient is again the <em>t</em> distribution. In fact, this particular test is so important that all statistical packages report the <em>t</em> statistic corresponding to <a href="std-errors.html#eq:H0">(6.10)</a> automatically. Let’s look at an example:</p>
@@ -439,7 +444,7 @@ Figure 6.4: Testing whether coefficient <span class="math inline">\(b_k\)</span>
 <span class="math display" id="eq:tstat">\[\begin{equation}
 \text{t value} = \frac{b_k-0}{s_k}  \tag{6.11}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. Notice that this particular <em>t</em> statistic is different from our previous formulation in <a href="std-errors.html#eq:tscore">(6.6)</a>: we don’t have to scale by <span class="math inline">\(\sqrt{n}\)</span>! This is so because <code>R</code> and other statistical software assumes the <em>normal</em> linear regression model (see <a href="#classical-reg"><strong>??</strong></a>). Normality of the regression error <span class="math inline">\(\varepsilon\)</span> implies that the <em>t</em> statistic looks like in <a href="std-errors.html#eq:tstat">(6.11)</a>.</p>
+<p>where <span class="math inline">\(s_k\)</span> is the estimated standard error as introduced in <a href="std-errors.html#se-theory">6.2.2</a>, and where we test <span class="math inline">\(H_0:\beta_k = 0\)</span>. Notice that this particular <em>t</em> statistic is different from our previous formulation in <a href="std-errors.html#eq:tscore">(6.6)</a>: we don’t have to scale by <span class="math inline">\(\sqrt{n}\)</span>! This is so because <code>R</code> and other statistical software assumes the <em>normal</em> linear regression model (see <a href="std-errors.html#class-reg">6.2</a>). Normality of the regression error <span class="math inline">\(\varepsilon\)</span> implies that the <em>t</em> statistic looks like in <a href="std-errors.html#eq:tstat">(6.11)</a>.</p>
 <p>We have to choose a critical value for this test. Many people automatically choose the 0.975 quantile of the standard normal distribution, <code>qnorm(0.975)</code>, 1.96 in this case. This is fine for sample sizes greater than 100, say. In this regression, we only have 28 degrees of freedom, so we better choose the critical value from the <em>t</em> distribution as above. We get <span class="math inline">\(t_{down} = -2.048\)</span> and <span class="math inline">\(t_{up} = 2.048\)</span> as critical values. Let’s test whether the coefficient on <code>wt</code> is statistically different from zero:</p>
 <span class="math display" id="eq:mtcarswt">\[\begin{align}
 H_0:&amp; \beta_{wt} = 0\\
@@ -553,7 +558,7 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-159"></span>
 <img src="ScPoEconometrics_files/figure-html/unnamed-chunk-159-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
-Figure 6.5: Distribution of <code>lotsize</code> by <code>bathrms</code>
+Figure 6.6: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
 </div>
 <p>This shows that lotsize and the number of bathrooms is indeed positively related. Larger lot of the house, more bathrooms. This leads to a general result:</p>

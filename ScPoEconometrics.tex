@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-11-02}
+    \date{2018-11-05}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4405,8 +4405,7 @@ now by yourself by typing:
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Standardizing A
-Regression}\label{standardizing-a-regression}
+\subsection{Standardizing A Regression}\label{reg-standard}
 
 \emph{Standardizing} a variable \(z\) means to demean as above, but in
 addition to divide the demeaned value by its own standard deviation.
@@ -5921,9 +5920,17 @@ How \emph{confident} should we be about the estimated values \(b\)?
 
  Let's go back to the regression with one variable and remind ourselves
 of the example at the end of chapter \ref{linreg}. There we introduced
-the term \emph{confidence interval}, shown here as the shaded area:
+the term \emph{confidence interval}, shown as the shaded area in figure
+\ref{fig:confint}:
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-152-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/confint-1} 
+
+}
+
+\caption{Confidence bands around a regression line.}\label{fig:confint}
+\end{figure}
 
 The shaded area shows us the region within which the \textbf{true} red
 line will lie with 95\% probability. The fact that there is an unknown
@@ -5996,6 +6003,9 @@ not strictly necessary:
   called \textbf{homoskedasticity}.
 \end{enumerate}
 
+Invoking assumption 4. in particular defines what is commonly called the
+\emph{normal} linear regression model.
+
 \subsection{\texorpdfstring{\(b\) is not
 \(\beta\)!}{b is not \textbackslash{}beta!}}\label{b-is-not-beta}
 
@@ -6018,16 +6028,17 @@ potentially different from \(b_0\) and \(b_1\) in \eqref{eq:abline} for a
 given sample of data - they could in practice be very close to each
 other, but \(b_0\) and \(b_1\) are \emph{estimates} of \(\beta_0\) and
 \(\beta_1\). And, crucially, those estimates are generated from a sample
-of data. Now, the fact that our data \((y_i,x_i)\) are a sample from a
-larger population, means that there will be \emph{sampling variation} in
-our estimates - exactly like in the case of the sample mean estimating
-the population average as mentioned above. One particular sample of data
-will generate one particular set of estimates \(b_0\) and \(b_1\),
-whereas another sample of data will generate estimates which will in
-general be different - by \emph{how much} those estimates differ across
-samples is the question in this chapter. In general, the more
-observations we have the greater the precision of our estimates, hence,
-the closer the estimates from different samples will lie together.
+of data. Now, the fact that our data \(\{y_i,x_i\}_{i=1}^N\) are a
+sample from a larger population, means that there will be \emph{sampling
+variation} in our estimates - exactly like in the case of the sample
+mean estimating the population average as mentioned above. One
+particular sample of data will generate one particular set of estimates
+\(b_0\) and \(b_1\), whereas another sample of data will generate
+estimates which will in general be different - by \emph{how much} those
+estimates differ across samples is the question in this chapter. In
+general, the more observations we have the greater the precision of our
+estimates, hence, the closer the estimates from different samples will
+lie together.
 
 \subsection{Standard Errors in Theory}\label{se-theory}
 
@@ -6038,7 +6049,7 @@ formula for the variance of our slope coefficient in the context of our
 single regressor model \eqref{eq:abline-5} as follows:
 
 \begin{equation}
-Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2} = \frac{\sigma^2}{Var(x)}  \label{eq:var-ols}
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols}
 \end{equation}
 
 In pratice, we don't know the theoretical variance of \(\varepsilon\),
@@ -6053,11 +6064,18 @@ estimation. \(p\) is the number of parameters we wish to estimate (here:
 1). So, the variance formula would become
 
 \begin{equation}
-Var(b_1|x_i) = \frac{SSR}{(n-p)Var(x)}  \label{eq:var-ols2}
+Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols2}
+\end{equation}
+
+We most of the time work directly with the \emph{standard error} of a
+coefficient, hence we define
+
+\begin{equation}
+SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}}  \label{eq:SE-ols2}
 \end{equation}
 
 You can clearly see that, as \(n\) increases, the denominator increases,
-and therefore the variance of the estimate will decrease.
+and therefore variance and standard error of the estimate will decrease.
 
 \subsection{Standard Errors in
 Practice}\label{standard-errors-in-practice}
@@ -6077,30 +6095,202 @@ thorough understandign of \texttt{launchApp("estimate")}.
 \end{Highlighting}
 \end{Shaded}
 
+\section{Back to Sampling}\label{back-to-sampling}
+
+Imagine we were tasked by the Director of our school to provide him with
+our best guess of the \emph{mean body height} \(\mu\) amongst all
+SciencesPo students in order to assess which height the new desks should
+have. Of course, we are econometricians and don't \emph{guess} things:
+we \textbf{estimate} them! How would we go about this task and estimate
+\(\mu\)?
+
+You may want to ask: Why bother with this estimation business at all,
+and not just measure all students' height, compute \(\mu\), and that's
+it? That's a good question! In most cases, we cannot do this, either
+because we do not have access to the entire population (think of
+computing the mean height of all Europeans!), or it's too costly to
+measure everyone, or it's impractical. That's why we take \emph{samples}
+from the wider population, to make inference. In our example, suppose
+we'd randomly measure students coming out of the SciencesPo building at
+27 Rue Saint Guillaume until we have \(50\) measurements on any given
+Monday. Suppose further that we found a sample mean height
+\(\bar{x} = 168.5\), and that the sample standard deviation was
+\(s=10\). In short, we found the data summarized in figure
+\ref{fig:heightdata}
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/heightdata-1} 
+
+}
+
+\caption{Our ficitious sample of SciencesPo students' body height. The small ticks indicate the location of each measurement.}\label{fig:heightdata}
+\end{figure}
+
+What are we going to tell \emph{Monsieur le Directeur} now, with those
+two numbers and figure \ref{fig:heightdata} in hand? Before we address
+this issue, we need to make a short detour into \emph{test statistics}.
+
+\subsection{Test Statistics}\label{test-statistics}
+
+We have encountered many statistics already: think of the sample mean,
+or the standard deviation. Statistics are just functions of data.
+\emph{Test} statistics are used to perform statistical tests.
+
+Many test statistics rely on some notion of \emph{standardizing} the
+sample data so that it becomes comparable to a theoretical distribution.
+We encountered this idea already in section \ref{reg-standard}, where we
+talked about a standardized regression. The most common standardization
+is the so-called \emph{z-score}, which says that
+
+\begin{equation}
+\frac{x - \mu}{\sigma}\equiv z\sim \mathcal{N}(0,1), \label{eq:zscore}
+\end{equation}
+
+in other words, substracting the population mean from random variable
+\(x\) and dividing by it's population standard deviation yields a
+standard normally distributed random variable, commonly called \(z\).
+
+A very similar idea applies if we \emph{don't know} the population
+variance (which is our case here!). The corresponding standardization
+gives rise to the \emph{t-statistic}, and it looks very similar to
+\eqref{eq:zscore}:
+
+\begin{equation}
+\sqrt{n} \frac{\bar{x} - \mu}{s} \equiv T \sim t_{n-1} \label{eq:tscore}
+\end{equation}
+
+Several things to note:
+
+\begin{itemize}
+\tightlist
+\item
+  We observe the same standardization as above: dividing by the sample
+  standard deviation \(s\) brings \(\bar{x} - \mu\) to a \emph{unit
+  free} scale.
+\item
+  We use \(\bar{x}\) and \(s\) instead of \(x\) and \(\sigma\)
+\item
+  We multiply by \(\sqrt{n}\) because we expect \(\bar{x} - \mu\) to be
+  a small number: we need to \emph{rescale} it again to make it
+  compatible with the \(t_{n-1}\) distribution.
+\item
+  \(t_{n-1}\) is the
+  \href{https://en.wikipedia.org/wiki/Student's_t-distribution}{Student's
+  T} distribution with \(n-1\) degrees of freedom. We don't have \(n\)
+  degrees of freedom because we already had to estimate one statistic
+  (\(\bar{x}\)) in order to construct \(T\).
+\end{itemize}
+
+\subsection{Confidence Intervals}\label{CI}
+
+Back to our example now! We are clearly in need of some measure of
+\emph{confidence} about our sample statistic \(\bar{x} = 168.5\) before
+we communicate our result. It seems reasonable to inform the Director
+about \(\bar{x}\), but surely we also need to tell him that there was
+considerable \emph{dispersion} in the data: Some people were as short as
+143.98cm, while others were as tall as 189.41cm!
+
+The way to proceed is to construct a \emph{confidence interval} about
+the true population mean \(\mu\), based on \(\bar{x}\), which will take
+this uncertainty into account. We will use the \emph{t} statistic from
+above. We want to have a \emph{symmetric interval} around \(\bar{x}\)
+which contains the true value \(\mu\) with probability \(1-\alpha\). One
+very popular choice of \(\alpha\) is \(0.05\), hence we cover \(\mu\)
+with 95\% probability. After computing our statistic \(T\) as defind in
+\eqref{eq:tscore}, this interval is defined as follows:
+
+\begin{align}
+\Pr \left(-c \leq T \leq c \right) = 1-\alpha \label{eq:ci}
+\end{align}
+
+where \(c\) stands for \emph{critical value}, which we need to choose.
+This is illustrated in figure \ref{fig:cifig}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{ScPoEconometrics_files/figure-latex/cifig-1} 
+
+}
+
+\caption{Confidence Interval Construction. The blue area is called *coverage region* which contains the true $\mu$ with probability $1-\alpha$.}\label{fig:cifig}
+\end{figure}
+
+Given the symmetry of the \emph{t} distribution it's enough to find
+\(c\) at the upper tail: the point above which \(\frac{\alpha}{2}\) of
+all probability mass of the \(t_{df}\) distribution comes to lie. In
+other words, if \(\mathcal{T}_{df}\) is the CDF of the \emph{t}
+distribution with \emph{df} degrees of freedom, we find \(c\) as
+
+\begin{align}
+\mathcal{T}_{df}(c)\equiv& \Pr \left( T < c \right)  = 1-\frac{\alpha}{2} = 0.975 \\\label{eq:ci1}
+c =& \mathcal{T}_{df}^{-1}(\mathcal{T}_{df}(c)) = \mathcal{T}_{df}^{-1}(0.975)
+\end{align}
+
+Here \(\mathcal{T}_{df}^{-1}\) stands for the \emph{quantile function},
+i.e.~the inverse of the CDF. In our example with \(df = 49\), you can
+find thus that \(c = 2.01\) by typing \texttt{qt(0.975,df=49)} into your
+\texttt{R} session.\footnote{You often will see \(c=1.96\), which comes
+  from the fact that one relies on the \emph{t} distribution converging
+  to the normal distribution with large \(n\). Type
+  \texttt{qnorm(0.975)} to confirm!} Now we only have to expand the
+definition of the \emph{T} statistic from \eqref{eq:tscore} inside
+\eqref{eq:ci} to obtain
+
+\begin{align}
+0.95 = 1-\alpha &= \Pr \left(-c \leq T \leq c \right) \\\label{eq:ci2}
+                &= \Pr \left(-2.01 \leq \sqrt{n} \frac{\bar{x} - \mu}{s} \leq 2.01 \right) \\
+                 &= \Pr \left(\bar{x} -2.01 \frac{s}{\sqrt{n}} \leq \mu \leq \bar{x} + 2.01 \frac{s}{\sqrt{n}} \right) 
+\end{align}
+
+Finally, filling in our numbers for \(s\) etc, this implies that a 95\%
+confidence interval about the location of the true average height of all
+SciencesPo students, \(\mu\), is given by:
+
+\begin{equation}
+CI = \left[165.658 , 171.342 \right]
+\end{equation}
+
+We would tell the director that with 95\% probability, the true average
+height of all students comes to lie within those two bounds.
+
+Finally, looking back at figure \ref{fig:confint} above, the shaded area
+is just the 95\% confidence interval \emph{about the true value
+\(\beta_1\)}. We would say that \emph{the true regression line} is
+contained within the shaded region with 95\% probability. Very similarly
+to our example of \(\bar{x}\), in that picture we have instead an
+estimate \(b_1\), with an associated standard error \(SE(b_1)\). The
+shaded area is called \emph{confidence band}, and it is just plotting
+the confidence interval \emph{for each value \(x\)} in the data. You can
+see how the band becomes narrower (i.e.~the estimate becomes more
+precise) if there is more data associated to a certain \(x\).
+
 \section{Hypothesis Testing}\label{hypothesis-testing}
 
-Now we know how the standard errors of an OLS estimate are computed, and
-what they stand for. We can now briefly\footnote{We will not go into
-  great detail here. Please refer back to your first year statistics
-  course or the short note I \href{images/hypothesis.pdf}{wrote while
-  ago}} discuss a very common usage of this information, in relation to
-which variables we should include in our regression. There is a
-statistical proceedure called \emph{hypothesis testing} which helps us
-to make such decisions. In
+Now know by now how the standard errors of an OLS estimate are computed,
+and what they stand for. We can now briefly\footnote{We will not go into
+  great detail here. Please refer back to your statistics course from
+  last spring semester (chapters 8 and 9), or the short note I
+  \href{images/hypothesis.pdf}{wrote while ago}} discuss a very common
+usage of this information, in relation to which variables we should
+include in our regression. There is a statistical proceedure called
+\emph{hypothesis testing} which helps us to make such decisions. In
 \href{https://en.wikipedia.org/wiki/Statistical_hypothesis_testing}{hypothesis
 testing}, we have a baseline, or \emph{null} hypothesis \(H_0\), which
 we want to confront with a competing \emph{alternative} hypthesis
-\(H_1\). An example concerning the mean height of SciencesPo students
-(\(\mu\)) could be
+\(H_1\). Continuing with our example of the mean height of SciencesPo
+students (\(\mu\)), one potential hypothesis could be
 
 \begin{align}
 H_0:& \mu = 167\\
 H_1:& \mu \neq 167
 \end{align}
 
-This would be called a \emph{two-sided} test, because it tests
-deviations from \(H_0\) below as well as above. An alternative
-formulation could use the \emph{one-sided} test that
+Here we state that under the null hypthesis, \(\mu = 167\), and under
+the alternative, it's not equal to that value. This would be called a
+\emph{two-sided} test, because it tests deviations from \(H_0\) below as
+well as above. An alternative formulation could use the \emph{one-sided}
+test that
 
 \begin{align}
 H_0:& \mu = 167\\
@@ -6108,50 +6298,39 @@ H_1:& \mu > 167.
 \end{align}
 
 which would mean: under the null hypothesis, the average of all ScPo
-students' body height is 167cm. Under the alternative, it is larger.
+students' body height is 167cm. Under the alternative, it is larger. You
+can immediately see that this is very similar to confidence interval
+construction.
 
-At this point you may want to ask: Why bother with this, and not just
-measure all students' height, compute \(\mu\), and that's it? That's a
-good question! In most cases, we cannot do this, either because we do
-not have access to the entire population (think of computing the mean
-height of all Europeans!), or it's too costly to measure everyone, or
-it's impractical. That's why we take \emph{samples} from the wider
-population, to make inference. In our example, suppose we'd randomly
-measure students coming out of the SciencesPo building until we have
-\(50\) measurements. The hypothesis testing methodology is useful to
-make probabilistic statements about true value of \(\mu\) upon observing
-our sample data. Here, we would compute the sample mean \(\bar{x}\) of
-all height measurements, and ask how informative this is with regards to
-the above competing hypothesis. Suppose we found that
-\(\bar{x} = 168.5\), and that the sample standard deviation is \(s=10\).
-Would you regard this as strong or weak evidence against \(H_0\) and in
-favor of \(H_1\)?
+Suppose as above that we found \(\bar{x} = 168.5\), and that the sample
+standard deviation is still \(s=10\). Would you regard this as strong or
+weak evidence against \(H_0\) and in favor of \(H_1\)?
 
-You should now remember what you just saw when you did
+You should now remember what you saw when you did
 \texttt{launchApp("estimate")}. Look again at this app and set the
 slider to a sample size of \(50\), just as in our running example. You
 can see that the app draws one hundred (100) samples for you, locates
-their sample mean on the x-axis, and estimates the red density. In
-reality, you only get to draw one (1!) sample! Let's continue with
-assuming that our particular samples yields \(\bar{x} = 168.5\).
+their sample mean on the x-axis, and estimates the red density.
 
 \begin{note}
-As a result of the powerful
-\href{https://en.wikipedia.org/wiki/Law_of_large_numbers}{Law of Large
-Numbers}, we know the (approximate) sampling distribution of our
-test-statistic \(\bar{x}\)! As \(n\to\infty\), it converges to the
-normal distribution with mean \(\mu\) (i.e.~the \textbf{truth}). We say
-the sample mean is an \emph{unbiased estimator for the population mean}.
-In the app, the red density approximates this distribution.
+The crucial thing to note here is that, given we are working with a
+\textbf{random sample} from a population with a certain distribution of
+\emph{height}, our sample statistic \(\bar{x}\) is \textbf{also a random
+variable}. Every new set of randomly drawn students would yield a
+different \(\bar{x}\), and all of them together would follow the red
+density in the app. In reality we often only get to draw one single
+sample, and we can use knowledge about the sampling distribution to make
+inference.
 \end{note}
 
- Our task then is to decide if given that particular sampling
+Our task is now to decide if given that particular sampling
 distribution, given our estimate \(\bar{x}\) and given an observed
 sample variance \(s^2\), whether \(\bar{x} = 168.5\) is \emph{far away}
 from \(\bar{x} = 167\), or not. The way to proceed is by computing a
-\emph{test statistic}, which is to be compared to a critical value: if
-the test statistic exceeds that value, we reject \(H_0\), otherwise we
-cannot.
+\emph{test statistic}, which is to be compared to a \emph{critical
+value}: if the test statistic exceeds that value, we reject \(H_0\),
+otherwise we cannot. The critical value depends on the sampling
+distribution, and the size of the test. We talk about this next.
 
 \subsection{Making Errors}\label{making-errors}
 
@@ -6178,8 +6357,8 @@ best tests also avoid making type two errors! The number
 \(1-\Pr(\text{type 2 error})\) is called \emph{power}, hence we prefer
 tests with \emph{high power}). A typical choice for \(\alpha\) is 0.05,
 i.e.~we are willing to make a type one error with probability 5\%.
-\(\alpha\) is commonly called the \emph{level of significance} of a
-test.
+\(\alpha\) is commonly called the \textbf{level of significance} or the
+\textbf{size} of a test.
 
 \subsection{Performing the Test}\label{performing-the-test}
 
@@ -6217,9 +6396,8 @@ in figure \ref{fig:testfig}.
     T} distribution.
   \item
     That is, our statistic is
-    \(T=\frac{\bar{x} - \mu}{s/\sqrt{n}} \sim t_{50}\), where 50 is
-    equal to our sample size, hence, the \emph{degrees of freedom} in
-    this case.
+    \(T=\frac{\bar{x} - \mu}{s/\sqrt{n}} \sim t_{49}\), where 49 is
+    equal to the \emph{degrees of freedom} in this case.
   \end{itemize}
 \item
   Rejection Region: We perform a one-sided test. We said we are happy
@@ -6232,7 +6410,7 @@ in figure \ref{fig:testfig}.
   \texttt{qt(0.95,df=50)} in \texttt{R}.
 \item
   Calculate our test statistic:
-  \(\frac{\bar{x} - \mu}{s/sqrt{n}} = \frac{168.5 - 167}{20/\sqrt{50}} = 1.061\)
+  \(\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{20/\sqrt{50}} = 1.061\)
 \item
   Decide: We find that \(1.061 < 1.676\). Hence, we cannot reject
   \(H_0\), because we only found weak evidence against it in our sample
@@ -6261,11 +6439,12 @@ H_0:& \beta_k = 0\\
 H_1:& \beta_k \neq 0.\label{eq:H0}
 \end{align}
 
-Clearly, if in the \textbf{true} regression model, \(\beta_k=0\), this
-means that \(x_k\) has a zero partial effect on the outcome, hence it
-should be excluded from the regression. Notice that we are interested in
-\(\beta_k\), not in \(b_k\), which is the estimator that we compute from
-our sample (similarly to \(\bar{x}\), which estimates \(\mu\) above).
+Clearly, if in the \textbf{true} regression model we find \(\beta_k=0\),
+this means that \(x_k\) has a zero partial effect on the outcome, hence
+it should be excluded from the regression. Notice that we are interested
+in \(\beta_k\), not in \(b_k\), which is the estimator that we compute
+from our sample (similarly to \(\bar{x}\), which estimates \(\mu\)
+above).
 
 As such, this is a \emph{two-sided test}. We can again illustrate this
 in figure \ref{fig:testfig2}. Notice how we now have two rejection
@@ -6277,7 +6456,7 @@ areas.
 
 }
 
-\caption{Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\beta_k=0$.}\label{fig:testfig2}
+\caption{Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\beta_k=0$. }\label{fig:testfig2}
 \end{figure}
 
 The relevant test statistic for a regression coefficient is again the
@@ -6313,17 +6492,26 @@ The column \texttt{t\ value} is just \texttt{Estimate} divided by
 \texttt{t\ value} the following number for us:
 
 \begin{equation}
-\text{t value} = \frac{b_k}{s_k}  \label{eq:tstat}
+\text{t value} = \frac{b_k-0}{s_k}  \label{eq:tstat}
 \end{equation}
 
 where \(s_k\) is the estimated standard error as introduced in
-\ref{se-theory}. We have to choose a critical value ourselves here. Many
-people automatically choose the 0.975 quantile of the standard normal
-distribution, \texttt{qnorm(0.975)} 1.96 in this case. This is fine for
-sample sizes greater than 100, say. Here, we only have 28 degrees of
-freedom, so we better choose the critical value from the \emph{t}
-distribution as above. We get \(t_{down} = -2.048\) and
-\(t_{up} = 2.048\) as critical values. Let's test
+\ref{se-theory}, and where we test \(H_0:\beta_k = 0\). Notice that this
+particular \emph{t} statistic is different from our previous formulation
+in \eqref{eq:tscore}: we don't have to scale by \(\sqrt{n}\)! This is so
+because \texttt{R} and other statistical software assumes the
+\emph{normal} linear regression model (see \ref{class-reg}). Normality
+of the regression error \(\varepsilon\) implies that the \emph{t}
+statistic looks like in \eqref{eq:tstat}.
+
+We have to choose a critical value for this test. Many people
+automatically choose the 0.975 quantile of the standard normal
+distribution, \texttt{qnorm(0.975)}, 1.96 in this case. This is fine for
+sample sizes greater than 100, say. In this regression, we only have 28
+degrees of freedom, so we better choose the critical value from the
+\emph{t} distribution as above. We get \(t_{down} = -2.048\) and
+\(t_{up} = 2.048\) as critical values. Let's test whether the
+coefficient on \texttt{wt} is statistically different from zero:
 
 \begin{align}
 H_0:& \beta_{wt} = 0\\
@@ -6334,7 +6522,8 @@ We just take the \texttt{t\ value} entry, and see whether it lies above
 or below either critical value: Indeed, we see that \(-4.053 < -2.048\),
 and we are happy to reject \(H_0\).
 
-On the other hand, for \texttt{drat} that does not seem to be the case:
+On the other hand, when testing for statistical significance of
+\texttt{drat} that does not seem to be the case:
 
 \begin{align}
 H_0:& \beta_{drat} = 0\\
@@ -6342,7 +6531,9 @@ H_1:& \beta_{drat} \neq 0 \label{eq:mtcarsdrat}
 \end{align}
 
 Here we find that \(1.316 \in [-2.048,2.048]\), hence it does not lie in
-any rejection region, and we can \emph{not} reject \(H_0\).
+any rejection region, and we can \emph{not} reject \(H_0\). We would say
+that \emph{coefficient \(\beta_{drat}\) is not statistically significant
+at the 5\% level}. As such, we should not include it in our regression.
 
 \subsection{P-Values and Stars}\label{p-values-and-stars}
 
@@ -6359,11 +6550,11 @@ we have overwhelming support to reject the null. If, on the contrary,
 against \(H_0\).
 
 We define the p-value as the sum of rejection areas for a given test
-statistic \(t^*\). Notice that the symmetry of the \(t\) distribution
+statistic \(T^*\). Notice that the symmetry of the \(t\) distribution
 implies that we multiply by two each of the two tail probabilities:
 
 \begin{align}
-\alpha^* = 2 \Pr(T > |t^*|) 
+\alpha^* = 2 \Pr(t > |T^*|) 
 \end{align}
 
 The stars in the final column are a visualization of this information.
@@ -6538,11 +6729,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-160-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-159-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-160}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-159}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
@@ -7291,6 +7482,8 @@ off-diagonals.
   \href{slides/chapter4/chapter4.html}{chapter 4}
 \item
   \href{slides/chapter5/chapter5.html}{chapter 5}
+\item
+  \href{slides/chapter6/chapter6.html}{chapter 6}
 \end{itemize}
 
 \chapter{Notes}\label{notes}
