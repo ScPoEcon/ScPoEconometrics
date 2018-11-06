@@ -222,7 +222,7 @@ Note that $x,y$ being drawn from a *continuous distribution* (they are joint nor
 
 Sometimes it is useful to estimate the standard deviation of some data *without* the help of a computer (for example during an exam ;-) ). If $x$ is approximately normally distributed, 95% of its observations will lie within a range of $\bar{x}\pm$ two standard deviations of $x$. That is to say, *four* standard deviations of $x$ cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of $x$, and simply divide that number by four. 
  
-```{r vis,fig.cap='visual estimation on $\\sigma$. The x-axis labels min and max as well as mean of $x$.'}
+```{r vis,fig.cap='visual estimation on $\\sigma$. The x-axis labels min and max as well as mean of $x$.',echo=FALSE}
 sdd = 3
 md = 3
 dta = rnorm(50,mean=md,sd=sdd)
