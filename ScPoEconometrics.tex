@@ -3101,16 +3101,6 @@ will lie within a range of \(\bar{x}\pm\) two standard deviations of
 deviation for a variable is to look at the range of \(x\), and simply
 divide that number by four.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sdd =}\StringTok{ }\DecValTok{3}
-\NormalTok{md =}\StringTok{ }\DecValTok{3}
-\NormalTok{dta =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{50}\NormalTok{,}\DataTypeTok{mean=}\NormalTok{md,}\DataTypeTok{sd=}\NormalTok{sdd)}
-\KeywordTok{plot}\NormalTok{(dta,}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{50}\NormalTok{),}\DataTypeTok{pch=}\DecValTok{3}\NormalTok{,}\DataTypeTok{yaxt=}\StringTok{"n"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{""}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"x"}\NormalTok{,}\DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{)}
-\KeywordTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DataTypeTok{at=}\KeywordTok{round}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(dta),md,}\KeywordTok{max}\NormalTok{(dta)),}\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{figure}
 
 {\centering \includegraphics{ScPoEconometrics_files/figure-latex/vis-1} 

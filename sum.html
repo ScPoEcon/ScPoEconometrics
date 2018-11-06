@@ -424,11 +424,6 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 <div id="visually-estimating-sigma" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Visually estimating <span class="math inline">\(\sigma\)</span></h3>
 <p>Sometimes it is useful to estimate the standard deviation of some data <em>without</em> the help of a computer (for example during an exam ;-) ). If <span class="math inline">\(x\)</span> is approximately normally distributed, 95% of its observations will lie within a range of <span class="math inline">\(\bar{x}\pm\)</span> two standard deviations of <span class="math inline">\(x\)</span>. That is to say, <em>four</em> standard deviations of <span class="math inline">\(x\)</span> cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of <span class="math inline">\(x\)</span>, and simply divide that number by four.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sdd =<span class="st"> </span><span class="dv">3</span>
-md =<span class="st"> </span><span class="dv">3</span>
-dta =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>,<span class="dt">mean=</span>md,<span class="dt">sd=</span>sdd)
-<span class="kw">plot</span>(dta,<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">50</span>),<span class="dt">pch=</span><span class="dv">3</span>,<span class="dt">yaxt=</span><span class="st">&quot;n&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;x&quot;</span>,<span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>)
-<span class="kw">axis</span>(<span class="dv">1</span>,<span class="dt">at=</span><span class="kw">round</span>(<span class="kw">c</span>(<span class="kw">min</span>(dta),md,<span class="kw">max</span>(dta)),<span class="dv">2</span>))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:vis"></span>
 <img src="ScPoEconometrics_files/figure-html/vis-1.png" alt="visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$." width="672" />
 <p class="caption">
