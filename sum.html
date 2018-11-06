@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-05">
+<meta name="date" content="2018-11-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -312,7 +312,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">2.2.1</span> Histograms</h3>
 <p>When visualizing a single numerical variable, a <strong>histogram</strong> is useful. It summarizes the <em>distribution</em> of values in a vector. In <code>R</code> you create one using the <code>hist()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg<span class="op">$</span>cty)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-76-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg<span class="op">$</span>cty,
      <span class="dt">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,
@@ -320,21 +320,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">breaks =</span> <span class="dv">12</span>,   <span class="co"># how many breaks?</span>
      <span class="dt">col    =</span> <span class="st">&quot;red&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-77-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
 </div>
 <div id="barplots" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Barplots</h3>
 <p>Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv))</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv),
         <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
         <span class="dt">ylab   =</span> <span class="st">&quot;Frequency&quot;</span>,
         <span class="dt">main   =</span> <span class="st">&quot;Drivetrains&quot;</span>,
         <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
         <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-79-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="boxplots" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Boxplots</h3>
@@ -343,10 +343,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>#OUT&gt; [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
 <p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function. The box shows the <em>interquartile range</em>, the solid line in the middle is the value of the median, the wiskers show 1.5 times the interquartile range, and the dots are outliers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mpg<span class="op">$</span>hwy)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-82-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg,
      <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
@@ -356,14 +356,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">cex    =</span> <span class="dv">2</span>,
      <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
 </div>
 <div id="scatterplots" class="section level3">
 <h3><span class="header-section-number">2.2.4</span> Scatterplots</h3>
 <p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg,
      <span class="dt">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,
@@ -371,13 +371,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ggplot" class="section level3">
 <h3><span class="header-section-number">2.2.5</span> <code>ggplot</code></h3>
 <p>All of the above plots could also have been generated using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><code>ggplot</code> is impossible to describe in brief terms, so please look at <a href="http://ggplot2.tidyverse.org">the package’s website</a> which provides excellent guidance. We will from time to time use ggplot in this book, so you could familiarize yourself with it. Let’s quickly demonstrate how one could further customize that first plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st">   </span><span class="co"># ggplot() makes base plot</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st">     </span><span class="co"># how to show x and y?</span>
@@ -385,7 +385,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Engine Displacement (in Liters)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># x axis</span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st">    </span><span class="co"># change the background</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>)   <span class="co"># add a title</span></code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>If you want to see <code>ggplot</code> in action, you could start with <a href="http://jcyhong.github.io/ggplot_demo.html">this</a> and then look at that <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">very nice tutorial</a>? It’s fun!</p>
 </div>
 </div>
@@ -421,6 +421,22 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 <pre><code>#OUT&gt; [1] 0.9142495</code></pre>
 <p>Now this is better. Given that the correlation has to lie in <span class="math inline">\([-1,1]\)</span>, a value of 0.91 is indicative of a rather strong positive relationship for the data in figure <a href="sum.html#fig:x-y-corr">2.1</a></p>
 <p>Note that <span class="math inline">\(x,y\)</span> being drawn from a <em>continuous distribution</em> (they are joint normally distributed) had no implication for covariance and correlation: We can compute those measures also for discrete random variables (like the throws of two dice, as you will see in one of our tutorials).</p>
+<div id="visually-estimating-sigma" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Visually estimating <span class="math inline">\(\sigma\)</span></h3>
+<p>Sometimes it is useful to estimate the standard deviation of some data <em>without</em> the help of a computer (for example during an exam ;-) ). If <span class="math inline">\(x\)</span> is approximately normally distributed, 95% of its observations will lie within a range of <span class="math inline">\(\bar{x}\pm\)</span> two standard deviations of <span class="math inline">\(x\)</span>. That is to say, <em>four</em> standard deviations of <span class="math inline">\(x\)</span> cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of <span class="math inline">\(x\)</span>, and simply divide that number by four.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sdd =<span class="st"> </span><span class="dv">3</span>
+md =<span class="st"> </span><span class="dv">3</span>
+dta =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>,<span class="dt">mean=</span>md,<span class="dt">sd=</span>sdd)
+<span class="kw">plot</span>(dta,<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">50</span>),<span class="dt">pch=</span><span class="dv">3</span>,<span class="dt">yaxt=</span><span class="st">&quot;n&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;x&quot;</span>,<span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>)
+<span class="kw">axis</span>(<span class="dv">1</span>,<span class="dt">at=</span><span class="kw">round</span>(<span class="kw">c</span>(<span class="kw">min</span>(dta),md,<span class="kw">max</span>(dta)),<span class="dv">2</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:vis"></span>
+<img src="ScPoEconometrics_files/figure-html/vis-1.png" alt="visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$." width="672" />
+<p class="caption">
+Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. The x-axis labels min and max as well as mean of <span class="math inline">\(x\)</span>.
+</p>
+</div>
+<p>This is illustrated in figure <a href="sum.html#fig:vis">2.2</a>. Here we see that <code>range(x)/4</code> gives 3.16 which compares favourably to the actual standard deviation 3.</p>
+</div>
 </div>
 <div id="the-tidyverse" class="section level2">
 <h2><span class="header-section-number">2.4</span> The <code>tidyverse</code></h2>
@@ -698,7 +714,7 @@ tot_pop <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="co"># 4. pipe the result into ggplot to make a plot</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="arrange-a-tibble" class="section level4 unnumbered">
 <h4>Arrange a <code>tibble</code></h4>
@@ -890,7 +906,7 @@ sexes</code></pre></div>
 <span class="st">      </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">name =</span> <span class="st">&quot;year&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># rename x axis</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>sex)   <span class="co"># make two panels, splitting by groups `sex`</span></code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/psexes-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/psexes-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="always-compare-to-germany--" class="section level4 unnumbered">
 <h4>Always Compare to Germany :-)</h4>
@@ -944,7 +960,7 @@ merge_GER <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;percent of German population&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()  <span class="co"># new theme for a change?</span></code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-107-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

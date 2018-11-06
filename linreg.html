@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-05">
+<meta name="date" content="2018-11-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -241,7 +241,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here, each dot represents one observation. In this case, one particular measurement <code>speed</code> and <code>dist</code> for a car. Now, again:</p>
 <div class="note">
 <p>
@@ -257,9 +257,9 @@ How are <code>speed</code> and <code>dist</code> related? How could one best <em
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">60</span>,<span class="dt">b =</span> <span class="dv">0</span>,<span class="dt">lw=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now that doesn’t seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it’s too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. Let’s write down a simple formula which represents a line where some outcome <span class="math inline">\(z\)</span> is related to a variable <span class="math inline">\(x\)</span>:</p>
 <span class="math display" id="eq:bline">\[\begin{equation}
 z = b_0 + b_1 x \tag{3.1}
@@ -396,11 +396,18 @@ b_0 = \bar{y} - b_1 \bar{x}.  \tag{3.6}
 <li><span class="math inline">\(b_1 = \frac{d y}{d x}\)</span> measures the change in <span class="math inline">\(y\)</span> resulting from a one unit change in <span class="math inline">\(x\)</span></li>
 <li>For example, if <span class="math inline">\(y\)</span> is wage and <span class="math inline">\(x\)</span> is years of education, <span class="math inline">\(b_1\)</span> would measure the effect of an additional year of education on wages.</li>
 </ul>
+<p>There is an alternative representation for the OLS slope coefficient which relates to the <em>correlation coefficient</em> <span class="math inline">\(r\)</span>. Remember from section <a href="sum.html#summarize-two">2.3</a> that <span class="math inline">\(r = \frac{cov(x,y)}{s_x s_y}\)</span>, where <span class="math inline">\(s_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. With this in hand, we can derive the OLS slope coefficient as</p>
+<span class="math display" id="eq:beta1-r">\[\begin{align}
+b_1 &amp;= \frac{cov(x,y)}{var(x)}\\
+    &amp;= \frac{cov(x,y)}{s_x s_x} \\
+    &amp;= r\frac{s_y}{s_x} \tag{3.7}
+\end{align}\]</span>
+<p>In other words, the slope coefficient is equal to the correlation coefficient <span class="math inline">\(r\)</span> times the ratio of standard deviations of <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p>
 <div id="linear-regression-without-regressor" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Linear Regression without Regressor</h3>
 <p>There are several important special cases for the linear regression introduced above. Let’s start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
 <span class="math display" id="eq:b0line">\[\begin{equation}
-y = b_0. \tag{3.7}
+y = b_0. \tag{3.8}
 \end{equation}\]</span>
 <p>This means that our minization problem in <a href="linreg.html#eq:ols-min">(3.4)</a> <em>also</em> becomes very simple: We only have to choose <span class="math inline">\(b_0\)</span>! We have</p>
 <p><span class="math display">\[
@@ -419,7 +426,7 @@ Least Squares <strong>without regressor</strong> <span class="math inline"><span
 <p>We follow the same logic here, just that we miss another bit from our initial equation and the minimisation problem in <a href="linreg.html#eq:ols-min">(3.4)</a> now becomes:</p>
 <span class="math display" id="eq:b1line">\[\begin{align}
 b_1 &amp;= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right]^2\\
-\mapsto b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2} = \frac{\bar{x} \bar{y}}{\overline{x^2}} \tag{3.8}
+\mapsto b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2} = \frac{\bar{x} \bar{y}}{\overline{x^2}} \tag{3.9}
 \end{align}\]</span>
 <div class="tip">
 <p>
@@ -432,12 +439,12 @@ Least Squares <strong>without intercept</strong> (i.e. with <span class="math i
 </div>
 <div id="centering-a-regression" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Centering A Regression</h3>
-<p>By <em>centering</em> or <em>demeaning</em> a regression, we mean to substract from both <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> their respective averages to obtain <span class="math inline">\(\tilde{y}_i = y_i - \bar{y}\)</span> and <span class="math inline">\(\tilde{x}_i = x_i - \bar{x}\)</span>. We then run a regression <em>without intercept</em> as above. That is, we use <span class="math inline">\(\tilde{x}_i,\tilde{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.8)</a> to obtain our slope estimate <span class="math inline">\(b_1\)</span>:</p>
+<p>By <em>centering</em> or <em>demeaning</em> a regression, we mean to substract from both <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> their respective averages to obtain <span class="math inline">\(\tilde{y}_i = y_i - \bar{y}\)</span> and <span class="math inline">\(\tilde{x}_i = x_i - \bar{x}\)</span>. We then run a regression <em>without intercept</em> as above. That is, we use <span class="math inline">\(\tilde{x}_i,\tilde{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.9)</a> to obtain our slope estimate <span class="math inline">\(b_1\)</span>:</p>
 <span class="math display" id="eq:bline-centered">\[\begin{align}
 b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i^2}\\
     &amp;= \frac{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x}) (y_i - \bar{y})}{\frac{1}{N}\sum_{i=1}^N (x_i - \bar{x})^2} \\
     &amp;= \frac{cov(x,y)}{var(x)}
-    \tag{3.9}
+    \tag{3.10}
 \end{align}\]</span>
 <p>This last expression is <em>identical</em> to the one in <a href="linreg.html#eq:beta1hat">(3.5)</a>! It’s the standard OLS estimate for the slope coefficient. We note the following:</p>
 <div class="tip">
@@ -450,12 +457,12 @@ Adding a constant to a regression produces the same result as centering all vari
 </div>
 <div id="reg-standard" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Standardizing A Regression</h3>
-<p><em>Standardizing</em> a variable <span class="math inline">\(z\)</span> means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for <em>centering</em>, we define transformed variables <span class="math inline">\(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\)</span> and <span class="math inline">\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\)</span> where <span class="math inline">\(\sigma_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. From here on, you should by now be used to what comes next! As above, we use <span class="math inline">\(\breve{x}_i,\breve{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.8)</a> to this time obtain:</p>
+<p><em>Standardizing</em> a variable <span class="math inline">\(z\)</span> means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for <em>centering</em>, we define transformed variables <span class="math inline">\(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\)</span> and <span class="math inline">\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\)</span> where <span class="math inline">\(\sigma_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. From here on, you should by now be used to what comes next! As above, we use <span class="math inline">\(\breve{x}_i,\breve{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.9)</a> to this time obtain:</p>
 <span class="math display" id="eq:bline-standardized">\[\begin{align}
 b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \breve{x}_i \breve{y}_i}{\frac{1}{N}\sum_{i=1}^N \breve{x}_i^2}\\
     &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \frac{x_i - \bar{x}}{\sigma_x} \frac{y_i - \bar{y}}{\sigma_y}}{\frac{1}{N}\sum_{i=1}^N \left(\frac{x_i - \bar{x}}{\sigma_x}\right)^2} \\
     &amp;= \frac{Cov(x,y)}{\sigma_x \sigma_y} \\
-    &amp;= Corr(x,y)  \tag{3.10}
+    &amp;= Corr(x,y)  \tag{3.11}
 \end{align}\]</span>
 <div class="tip">
 <p>
@@ -519,7 +526,7 @@ Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =
 <div id="correlation-covariance-and-linearity" class="section level2">
 <h2><span class="header-section-number">3.4</span> Correlation, Covariance and Linearity</h2>
 <p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-129-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The important lesson from this example is the following:</p>
 <div class="warning">
 <p>
@@ -532,7 +539,7 @@ Always <strong>visually inspect</strong> your data, and don’t rely exclusively
 <div id="non-linear-relationships-in-data" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Non-Linear Relationships in Data</h3>
 <p>Suppose our data now looks like this:</p>
-<p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Putting our previous <em>best line</em> defined in equation <a href="linreg.html#eq:abline">(3.3)</a> as <span class="math inline">\(y = b_0 + b_1 x + e\)</span>, we get something like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols"></span>
 <img src="ScPoEconometrics_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
@@ -542,7 +549,7 @@ Figure 3.3: Best line with non-linear data?
 </div>
 <p>Somehow when looking at <a href="linreg.html#fig:non-line-cars-ols">3.3</a> one is not totally convinced that the straight line is a good summary of this relationship. For values <span class="math inline">\(x\in[50,120]\)</span> the line seems to low, then again too high, and it completely misses the right boundary. It’s easy to address this shortcoming by including <em>higher order terms</em> of an explanatory variable. We would modify <a href="linreg.html#eq:abline">(3.3)</a> to read now</p>
 <span class="math display" id="eq:abline2">\[\begin{equation}
-y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \tag{3.11}
+y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \tag{3.12}
 \end{equation}\]</span>
 <p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">4</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let’s just see how this performs:</p>
 <div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols2"></span>
@@ -559,9 +566,9 @@ Figure 3.4: Better line with non-linear data!
 <span class="math display" id="eq:anova">\[\begin{align}
 Var(y) &amp;= Var(\hat{y} + e)\\
  &amp;= Var(\hat{y}) + Var(e) + 2 Cov(\hat{y},e)\\
- &amp;= Var(\hat{y}) + Var(e) \tag{3.12}
+ &amp;= Var(\hat{y}) + Var(e) \tag{3.13}
 \end{align}\]</span>
-<p>We have seen above in <a href="linreg.html#pred-resids">3.3</a> that the covariance between prediction <span class="math inline">\(\hat{y}\)</span> and error <span class="math inline">\(e\)</span> is zero, that’s why we have <span class="math inline">\(Cov(\hat{y},e)=0\)</span> in <a href="linreg.html#eq:anova">(3.12)</a>. What this tells us in words is that we can decompose the variance in the observed outcome <span class="math inline">\(y\)</span> into a part that relates to variance as <em>explained by the model</em> and a part that comes from unexplained variation. Finally, we know the definition of <em>variance</em>, and can thus write down the respective formulae for each part:</p>
+<p>We have seen above in <a href="linreg.html#pred-resids">3.3</a> that the covariance between prediction <span class="math inline">\(\hat{y}\)</span> and error <span class="math inline">\(e\)</span> is zero, that’s why we have <span class="math inline">\(Cov(\hat{y},e)=0\)</span> in <a href="linreg.html#eq:anova">(3.13)</a>. What this tells us in words is that we can decompose the variance in the observed outcome <span class="math inline">\(y\)</span> into a part that relates to variance as <em>explained by the model</em> and a part that comes from unexplained variation. Finally, we know the definition of <em>variance</em>, and can thus write down the respective formulae for each part:</p>
 <ul>
 <li><span class="math inline">\(Var(y) = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{y})^2\)</span></li>
 <li><span class="math inline">\(Var(\hat{y}) = \frac{1}{N}\sum_{i=1}^N (\hat{y_i} - \bar{y})^2\)</span>, because the mean of <span class="math inline">\(\hat{y}\)</span> is <span class="math inline">\(\bar{y}\)</span> as we know. Finally,</li>
@@ -577,7 +584,8 @@ The total variation in outcome <span class="math inline"><span class="math inlin
 <div id="assessing-the-goodness-of-fit" class="section level2">
 <h2><span class="header-section-number">3.6</span> Assessing the <em>Goodness of Fit</em></h2>
 <p>In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called <span class="math inline">\(R^2\)</span> (<em>R squared</em>), also called the <em>coefficient of determination</em>. We make use of the just introduced decomposition of variance, and write the formula as</p>
-<span class="math display" id="eq:Rsquared">\[\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SS\tag{3.13}]  (#eq:Rsquared)
+<span class="math display" id="eq:Rsquared">\[\begin{equation}
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \tag{3.14}
 \end{equation}\]</span>
 <p>It is easy to see that a <em>good fit</em> is one where the sum of <em>explained</em> squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an <span class="math inline">\(R^2\)</span> close to one. In the opposite case, we will see an <span class="math inline">\(R^2\)</span> close to zero. Notice that a small <span class="math inline">\(R^2\)</span> does not imply that the model is useless, just that it explains a small fraction of the observed variation.</p>
 </div>

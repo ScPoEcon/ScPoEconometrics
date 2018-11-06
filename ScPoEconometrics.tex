@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-11-05}
+    \date{2018-11-06}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -2806,7 +2806,7 @@ useful. It summarizes the \emph{distribution} of values in a vector. In
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-76-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-76-1} \end{center}
 
 The histogram function has a number of parameters which can be changed
 to make our plot look much nicer. Use the \texttt{?} operator to read
@@ -2824,7 +2824,7 @@ parameters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-77-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-77-1} \end{center}
 
 Importantly, you should always be sure to label your axes and give the
 plot a title. The argument \texttt{breaks} is specific to
@@ -2846,7 +2846,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-78-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2859,7 +2859,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-79-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-79-1} \end{center}
 
 \subsection{Boxplots}\label{boxplots}
 
@@ -2892,7 +2892,7 @@ dots are outliers.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-81-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-81-1} \end{center}
 
 However, more often we will use boxplots to compare a numerical variable
 for different values of a categorical variable.
@@ -2903,7 +2903,7 @@ for different values of a categorical variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-82-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-82-1} \end{center}
 
 Here used the \texttt{boxplot()} command to create side-by-side
 boxplots. However, since we are now dealing with two variables, the
@@ -2928,7 +2928,7 @@ course.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-83-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-83-1} \end{center}
 
 Again, \texttt{boxplot()} has a number of additional arguments which
 have the ability to make our plot more visually appealing.
@@ -2947,7 +2947,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-84-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-84-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2961,7 +2961,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-85-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-85-1} \end{center}
 
 \subsection{\texorpdfstring{\texttt{ggplot}}{ggplot}}\label{ggplot}
 
@@ -2977,7 +2977,7 @@ sometimes the other way around.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-86-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 \texttt{ggplot} is impossible to describe in brief terms, so please look
 at \href{http://ggplot2.tidyverse.org}{the package's website} which
@@ -2996,7 +2996,7 @@ demonstrate how one could further customize that first plot:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-87-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-87-1} \end{center}
 
 If you want to see \texttt{ggplot} in action, you could start with
 \href{http://jcyhong.github.io/ggplot_demo.html}{this} and then look at
@@ -3088,6 +3088,41 @@ Note that \(x,y\) being drawn from a \emph{continuous distribution}
 and correlation: We can compute those measures also for discrete random
 variables (like the throws of two dice, as you will see in one of our
 tutorials).
+
+\subsection{\texorpdfstring{Visually estimating
+\(\sigma\)}{Visually estimating \textbackslash{}sigma}}\label{visually-estimating-sigma}
+
+Sometimes it is useful to estimate the standard deviation of some data
+\emph{without} the help of a computer (for example during an exam ;-) ).
+If \(x\) is approximately normally distributed, 95\% of its observations
+will lie within a range of \(\bar{x}\pm\) two standard deviations of
+\(x\). That is to say, \emph{four} standard deviations of \(x\) cover
+95\% of its observations. Hence, a simple way to estimate the standard
+deviation for a variable is to look at the range of \(x\), and simply
+divide that number by four.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sdd =}\StringTok{ }\DecValTok{3}
+\NormalTok{md =}\StringTok{ }\DecValTok{3}
+\NormalTok{dta =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{50}\NormalTok{,}\DataTypeTok{mean=}\NormalTok{md,}\DataTypeTok{sd=}\NormalTok{sdd)}
+\KeywordTok{plot}\NormalTok{(dta,}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{50}\NormalTok{),}\DataTypeTok{pch=}\DecValTok{3}\NormalTok{,}\DataTypeTok{yaxt=}\StringTok{"n"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{""}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"x"}\NormalTok{,}\DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{)}
+\KeywordTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DataTypeTok{at=}\KeywordTok{round}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(dta),md,}\KeywordTok{max}\NormalTok{(dta)),}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/vis-1} 
+
+}
+
+\caption{visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$.}\label{fig:vis}
+\end{figure}
+
+This is illustrated in figure \ref{fig:vis}. Here we see that
+\texttt{range(x)/4} gives 3.16 which compares favourably to the actual
+standard deviation 3.
 
 \section{\texorpdfstring{The
 \texttt{tidyverse}}{The tidyverse}}\label{the-tidyverse}
@@ -3654,7 +3689,7 @@ time, in terms of millions of people. We will make use of the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/gather-plot-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/gather-plot-1} \end{center}
 
 \subsubsection*{\texorpdfstring{Arrange a
 \texttt{tibble}}{Arrange a tibble}}\label{arrange-a-tibble}
@@ -3930,7 +3965,7 @@ plotting code:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/psexes-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/psexes-1} \end{center}
 
 \subsubsection*{Always Compare to Germany
 :-)}\label{always-compare-to-germany--}
@@ -4006,7 +4041,7 @@ population each country amounts to:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-107-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-107-1} \end{center}
 
 \chapter{Linear Regression}\label{linreg}
 
@@ -4081,7 +4116,7 @@ coordinates and mark them in the graph. In \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-110-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-110-1} \end{center}
 
 Here, each dot represents one observation. In this case, one particular
 measurement \texttt{speed} and \texttt{dist} for a car. Now, again:
@@ -4107,13 +4142,13 @@ scatterplot, like so:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-112-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-112-1} \end{center}
 
 Now that doesn't seem a particularly \emph{good} way to summarize the
 relationship. Clearly, a \emph{better} line would be not be flat, but
 have a \emph{slope}, i.e.~go upwards:
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-113-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-113-1} \end{center}
 
 That is slightly better. However, the line seems at too high a level -
 the point at which it crosses the y-axis is called the \emph{intercept};
@@ -4310,6 +4345,22 @@ a line as in \(y = b_0 + b_1 x\),
   For example, if \(y\) is wage and \(x\) is years of education, \(b_1\)
   would measure the effect of an additional year of education on wages.
 \end{itemize}
+
+There is an alternative representation for the OLS slope coefficient
+which relates to the \emph{correlation coefficient} \(r\). Remember from
+section \ref{summarize-two} that \(r = \frac{cov(x,y)}{s_x s_y}\), where
+\(s_z\) is the standard deviation of variable \(z\). With this in hand,
+we can derive the OLS slope coefficient as
+
+\begin{align}
+b_1 &= \frac{cov(x,y)}{var(x)}\\
+    &= \frac{cov(x,y)}{s_x s_x} \\
+    &= r\frac{s_y}{s_x} \label{eq:beta1-r}
+\end{align}
+
+In other words, the slope coefficient is equal to the correlation
+coefficient \(r\) times the ratio of standard deviations of \(y\) and
+\(x\).
 
 \subsection{Linear Regression without
 Regressor}\label{linear-regression-without-regressor}
@@ -4554,7 +4605,7 @@ constructing 4 different datasets which all have identical
 line \emph{are identical}. However, the usefulness of the statistics to
 describe the relationship in the data is not clear.
 
-\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-129-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-129-1} \end{center}
 
 The important lesson from this example is the following:
 
@@ -4584,7 +4635,7 @@ Data}\label{non-linear-relationships-in-data}
 
 Suppose our data now looks like this:
 
-\includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-1} \end{center}
 
 Putting our previous \emph{best line} defined in equation
 \eqref{eq:abline} as \(y = b_0 + b_1 x + e\), we get something like this:
@@ -4677,7 +4728,8 @@ particular statistical model fits the data. It is called \(R^2\)
 We make use of the just introduced decomposition of variance, and write
 the formula as
 
-\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \label{eq:Rsquared}
+\begin{equation}
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  \label{eq:Rsquared}
 \end{equation}
 
 It is easy to see that a \emph{good fit} is one where the sum of
@@ -5269,10 +5321,12 @@ comparing both visualizations, can you explain why we observe this
 strange inversion of coefficient signs?
 
 \begin{figure}
-\centering
-\includegraphics{ScPoEconometrics_files/figure-latex/3D-Plotly-inter-1.pdf}
-\caption{\label{fig:3D-Plotly-inter}Californa Test Scores vs student/teach
-ratio and avg income plus interaction term}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/3D-Plotly-inter-1} 
+
+}
+
+\caption{Californa Test Scores vs student/teach ratio and avg income plus interaction term}\label{fig:3D-Plotly-inter}
 \end{figure}
 
 \chapter{Categorial Variables}\label{categorical-vars}
