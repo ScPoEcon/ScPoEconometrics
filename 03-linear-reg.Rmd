@@ -261,6 +261,15 @@ where $\bar{z}$ denotes the sample mean of variable $z$. The interpretation of t
 * $b_1 = \frac{d y}{d x}$ measures the change in $y$ resulting from a one unit change in $x$
 * For example, if $y$ is wage and $x$ is years of education, $b_1$ would measure the effect of an additional year of education on wages.
 
+There is an alternative representation for the OLS slope coefficient which relates to the *correlation coefficient* $r$. Remember from section \@ref(summarize-two) that $r = \frac{cov(x,y)}{s_x s_y}$, where $s_z$ is the standard deviation of variable $z$. With this in hand, we can derive the OLS slope coefficient as
+
+\begin{align}
+b_1 &= \frac{cov(x,y)}{var(x)}\\
+    &= \frac{cov(x,y)}{s_x s_x} \\
+    &= r\frac{s_y}{s_x} (\#eq:beta1-r)
+\end{align}
+    In other words, the slope coefficient is equal to the correlation coefficient $r$ times the ratio of standard deviations of $y$ and $x$.
+
 ### Linear Regression without Regressor
 
 There are several important special cases for the linear regression introduced above. Let's start with the most obvious one: What is the meaning of running a regression *without any regressor*, i.e. without a $x$? Our line becomes very simple. Instead of \@ref(eq:bline), we get
@@ -502,7 +511,8 @@ The total variation in outcome $y$ (often called SST, or *total sum of squares*)
 
 In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called $R^2$ (*R squared*), also called the *coefficient of determination*. We make use of the just introduced decomposition of variance, and write the formula as
 
-\begin{equation}R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (\#eq:Rsquared)
+\begin{equation}
+R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]  (\#eq:Rsquared)
 \end{equation}
 
 It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.

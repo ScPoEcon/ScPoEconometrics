@@ -218,6 +218,19 @@ Now this is better. Given that the correlation has to lie in $[-1,1]$, a value o
 
 Note that $x,y$ being drawn from a *continuous distribution* (they are joint normally distributed) had no implication for covariance and correlation: We can compute those measures also for discrete random variables (like the throws of two dice, as you will see in one of our tutorials).
 
+### Visually estimating $\sigma$
+
+Sometimes it is useful to estimate the standard deviation of some data *without* the help of a computer (for example during an exam ;-) ). If $x$ is approximately normally distributed, 95% of its observations will lie within a range of $\bar{x}\pm$ two standard deviations of $x$. That is to say, *four* standard deviations of $x$ cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of $x$, and simply divide that number by four. 
+ 
+```{r vis,fig.cap='visual estimation on $\\sigma$. The x-axis labels min and max as well as mean of $x$.'}
+sdd = 3
+md = 3
+dta = rnorm(50,mean=md,sd=sdd)
+plot(dta,rep(1,50),pch=3,yaxt="n",ylab="",xlab="x",xaxt="n")
+axis(1,at=round(c(min(dta),md,max(dta)),2))
+```
+
+This is illustrated in figure \@ref(fig:vis). Here we see that `range(x)/4` gives `r round(diff(range(dta))/4,2)` which compares favourably to the actual standard deviation `r sdd`.
 
 
 ## The `tidyverse`
