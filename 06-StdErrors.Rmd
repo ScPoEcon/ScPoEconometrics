@@ -445,11 +445,10 @@ y_i = b_0 + b_1 x_i + e_i
 $$ 
 You find a positive impact of bathrooms on houses:
 
-```{r housing,echo=FALSE}
+```{r housing,echo=TRUE}
 data(Housing, package="Ecdat")
 hlm = lm(price ~ bathrms, data = Housing)
 summary(hlm)
-
 ```
 
 In fact, from this you conclude that each additional bathroom increases the sales price of a house by `r options(scipen=999);round(coef(hlm)[2],1)` dollars. Let's see if our assumption $E[\varepsilon|x] = 0$ is satisfied:

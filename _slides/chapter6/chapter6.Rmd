@@ -63,6 +63,7 @@ A Statistical Model is a set of assumptions about how the data have been **gener
 
 * The data are drawn from a **random sample** of size $n$.
 * The variance of the error term $\varepsilon$ is the same for each value of $x$: $Var(\varepsilon|x) = \sigma^2$. This property is called **homoskedasticity**.
+* The errors are *normally distributed*: $\varepsilon \sim \mathcal{N}(0,\sigma^2)$
 
 <div class="centered">
 <div class="red">
@@ -134,11 +135,116 @@ launchApp("standard_errors_changeN")
 
 ## Tasked by Monsieur le Directeur
 
-# Confidence Intervals
+>* Suppose we were asked to estimate the mean height $\mu$ of all SciencesPo students (including regional campuses! `r emo::ji("smile")`
+>* Why not just go and measure all students?
+>* So we randomly sample 50 students.
+>* We find $\bar{x} = 168.5$. So what?
 
-# Hypothesis Testing
+## Test Statistics {.flexbox .vcenter}
+
+<div class="centered">
+<div class="red">
+You should follow the [book](https://scpoecon.github.io/ScPoEconometrics/std-errors.html#back-to-sampling) from here on! I just put down some keywords on the remaining slides.</div>
+</div>
+
+* z-score
+* t-statistic
+
+## Confidence Intervals {.flexbox .vcenter}
+
+* We observe variation around $\bar{x} = 168.5$ in our sample
+* Can we provide a *range* of confidence where the true $\mu$ will lie with $1-\alpha$ probability?
+
+## Hypothesis Testing {.flexbox .vcenter}
+
+* Competing Hypothesis
+* How to confidently choose between them?
+
+## Errors {.flexbox .vcenter}
+
+* Type 1: reject a true H0
+* Type 2: fail to reject H0 when H1 is true.
+
+## Performing the test
+
+## Testing Regression coefficient
+
+* This is *very* similar to testing sample means!
+* The most important hypothesis for us: is $\beta_k= 0$?
+
+## P-values and Stars
+
+# Omitted Variable Bias
+
+## House prices {.smaller}
+
+```{r,echo=FALSE}
+data(Housing, package="Ecdat")
+hlm = lm(formula = price ~ bathrms, data = Housing)
+summary(hlm)
+```
+
+## Checking Conditional Mean Assumption {.smaller}
+
+```{r,echo=TRUE,message=FALSE,warning=FALSE}
+library(dplyr)
+# add residuals to the data
+Housing$resid <- resid(hlm)
+Housing %>%
+  group_by(bathrms) %>%
+  summarise(mean_of_resid=mean(resid))
+```
+
+## Wrong Model?
+
+>* What if this is the correct model?
+    $$
+    y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i 
+    $$
+>* Well, then what we *identify* is in fact
+    $$
+    y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
+    $$ 
+>* If we **omit** $z$, it's in the error:
+    $$u_i = b_2 z_i + e_i$$
+    
+## Is omitting $z$ a Problem? {.flexbox .vcenter}
+
+>* Only if $Cov(x,z)\neq 0$.
+>* $z$ being part of $e$ then means that $Cov(x,e)\neq 0$ - which we require!
+>* So: what could $z$ be in this case?
+
+## Omitting `lotsize` {.flexbox .vcenter}
+
+>* Larger plots of land admit building larger houses.
+>* Larger houses are ... larger `r emo::ji("exclamation")` and thus can afford to have more bathrooms!
+>* (there is no `surface` in the data, which would be an even better candidate)
+>* If indeed `lotsize` is correlated with `bathrooms`, we **cannot make our ceteris paribus claims**!
+>* We said: All Else Equal! Well, if you increase `bathrooms`, you tend to also increase `lotsize`!! `r emo::ji("facepunch")`
 
 
+## Including `lotsize` {.smaller}
 
-# Finally: `***` Stars!
+```{r,echo=FALSE}
+options(scipen=0)
+hlm2 = update(hlm, . ~ . + lotsize)
+summary(hlm2)
+options(scipen=999)
+```
 
+
+## How do $z$ and $x$ covary?
+
+```{r, fig.align='center', warning=FALSE, message=FALSE,echo=FALSE}
+library(ggplot2)
+options(scipen=0)
+h = subset(Housing,lotsize<13000 & bathrms<4)
+h$bathrms = factor(h$bathrms)
+ggplot(data=h,aes(x=lotsize,color=bathrms,fill=bathrms)) + geom_density(alpha=0.2,size=1) + theme_bw()
+```
+
+## Direction of Omitted Variable Bias {.flexbox .vcenter}
+
+>* If $Cov(x,z)>0$, $b_1$ will be *upward biased* (i.e. too high!)
+>* If $Cov(x,z)<0$, $b_1$ will be *downward biased* (i.e. too low!)
+>* $Cov(x,z)\neq0$ means that we attribute part of $z$'s impact on $y$ to $x$, because they covary!
