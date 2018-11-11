@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-06">
+<meta name="date" content="2018-11-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -486,6 +486,9 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.14}
 <p><span class="math display">\[
 y_i = b_0 + b_1 x_i + e_i 
 \]</span> You find a positive impact of bathrooms on houses:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Housing, <span class="dt">package=</span><span class="st">&quot;Ecdat&quot;</span>)
+hlm =<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>bathrms, <span class="dt">data =</span> Housing)
+<span class="kw">summary</span>(hlm)</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = price ~ bathrms, data = Housing)

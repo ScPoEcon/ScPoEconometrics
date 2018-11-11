@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-11-06}
+    \date{2018-11-11}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -6645,6 +6645,14 @@ function of number of bathrooms (\(x\)). We run OLS as
 \[
 y_i = b_0 + b_1 x_i + e_i 
 \] You find a positive impact of bathrooms on houses:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(Housing, }\DataTypeTok{package=}\StringTok{"Ecdat"}\NormalTok{)}
+\NormalTok{hlm =}\StringTok{ }\KeywordTok{lm}\NormalTok{(price }\OperatorTok{~}\StringTok{ }\NormalTok{bathrms, }\DataTypeTok{data =}\NormalTok{ Housing)}
+\KeywordTok{summary}\NormalTok{(hlm)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 #OUT> 

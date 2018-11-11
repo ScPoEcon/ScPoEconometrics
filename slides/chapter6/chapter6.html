@@ -10,7 +10,7 @@
 
 
 
-  <meta name="date" content="2018-11-06" />
+  <meta name="date" content="2018-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,7 +112,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2018-11-06</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2018-11-11</p>
           </hgroup>
   </slide>
 
@@ -191,6 +191,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
 <ul>
 <li>The data are drawn from a <strong>random sample</strong> of size \(n\).</li>
 <li>The variance of the error term \(\varepsilon\) is the same for each value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is called <strong>homoskedasticity</strong>.</li>
+<li>The errors are <em>normally distributed</em>: \(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)</li>
 </ul>
 
 <div class="centered">
@@ -256,11 +257,159 @@ launchApp(&quot;standard_errors_changeN&quot;) </pre>
 
 </article></slide><slide class=""><hgroup><h2>Tasked by Monsieur le Directeur</h2></hgroup><article  id="tasked-by-monsieur-le-directeur">
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Confidence Intervals</h2></hgroup><article  id="confidence-intervals">
+<ul class = 'build'>
+<li>Suppose we were asked to estimate the mean height \(\mu\) of all SciencesPo students (including regional campuses! 😄</li>
+<li>Why not just go and measure all students?</li>
+<li>So we randomly sample 50 students.</li>
+<li>We find \(\bar{x} = 168.5\). So what?</li>
+</ul>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Hypothesis Testing</h2></hgroup><article  id="hypothesis-testing">
+</article></slide><slide class=""><hgroup><h2>Test Statistics</h2></hgroup><article  id="test-statistics" class="flexbox vcenter">
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Finally: <code>***</code> Stars!</h2></hgroup><article  id="finally-stars"></article></slide>
+<div class="centered">
+<div class="red">
+You should follow the <a href='https://scpoecon.github.io/ScPoEconometrics/std-errors.html#back-to-sampling' title=''>book</a> from here on! I just put down some keywords on the remaining slides.</div></div>
+
+<ul>
+<li>z-score</li>
+<li>t-statistic</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Confidence Intervals</h2></hgroup><article  id="confidence-intervals" class="flexbox vcenter">
+
+<ul>
+<li>We observe variation around \(\bar{x} = 168.5\) in our sample</li>
+<li>Can we provide a <em>range</em> of confidence where the true \(\mu\) will lie with \(1-\alpha\) probability?</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Hypothesis Testing</h2></hgroup><article  id="hypothesis-testing" class="flexbox vcenter">
+
+<ul>
+<li>Competing Hypothesis</li>
+<li>How to confidently choose between them?</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Errors</h2></hgroup><article  id="errors" class="flexbox vcenter">
+
+<ul>
+<li>Type 1: reject a true H0</li>
+<li>Type 2: fail to reject H0 when H1 is true.</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Performing the test</h2></hgroup><article  id="performing-the-test">
+
+</article></slide><slide class=""><hgroup><h2>Testing Regression coefficient</h2></hgroup><article  id="testing-regression-coefficient">
+
+<ul>
+<li>This is <em>very</em> similar to testing sample means!</li>
+<li>The most important hypothesis for us: is \(\beta_k= 0\)?</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>P-values and Stars</h2></hgroup><article  id="p-values-and-stars">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Omitted Variable Bias</h2></hgroup><article  id="omitted-variable-bias">
+
+</article></slide><slide class=""><hgroup><h2>House prices</h2></hgroup><article  id="house-prices" class="smaller">
+
+<pre >## 
+## Call:
+## lm(formula = price ~ bathrms, data = Housing)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -77225 -15271  -2510  11704 102729 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    32794       2694   12.17   &lt;2e-16 ***
+## bathrms        27477       1952   14.08   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22880 on 544 degrees of freedom
+## Multiple R-squared:  0.267,  Adjusted R-squared:  0.2657 
+## F-statistic: 198.2 on 1 and 544 DF,  p-value: &lt; 2.2e-16</pre>
+
+</article></slide><slide class=""><hgroup><h2>Checking Conditional Mean Assumption</h2></hgroup><article  id="checking-conditional-mean-assumption" class="smaller">
+
+<pre class = 'prettyprint lang-r'>library(dplyr)
+# add residuals to the data
+Housing$resid &lt;- resid(hlm)
+Housing %&gt;%
+  group_by(bathrms) %&gt;%
+  summarise(mean_of_resid=mean(resid))</pre>
+
+<pre >## # A tibble: 4 x 2
+##   bathrms mean_of_resid
+##     &lt;dbl&gt;         &lt;dbl&gt;
+## 1       1         -118.
+## 2       2          955.
+## 3       3       -11195.
+## 4       4        32298.</pre>
+
+</article></slide><slide class=""><hgroup><h2>Wrong Model?</h2></hgroup><article  id="wrong-model">
+
+<ul class = 'build'>
+<li>What if this is the correct model? \[
+y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i 
+\]</li>
+<li>Well, then what we <em>identify</em> is in fact \[
+y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
+\]</li>
+<li>If we <strong>omit</strong> \(z\), it&#39;s in the error: \[u_i = b_2 z_i + e_i\]</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Is omitting \(z\) a Problem?</h2></hgroup><article  id="is-omitting-z-a-problem" class="flexbox vcenter">
+
+<ul class = 'build'>
+<li>Only if \(Cov(x,z)\neq 0\).</li>
+<li>\(z\) being part of \(e\) then means that \(Cov(x,e)\neq 0\) - which we require!</li>
+<li>So: what could \(z\) be in this case?</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Omitting <code>lotsize</code></h2></hgroup><article  id="omitting-lotsize" class="flexbox vcenter">
+
+<ul class = 'build'>
+<li>Larger plots of land admit building larger houses.</li>
+<li>Larger houses are &#8230; larger ❗ and thus can afford to have more bathrooms!</li>
+<li>(there is no <code>surface</code> in the data, which would be an even better candidate)</li>
+<li>If indeed <code>lotsize</code> is correlated with <code>bathrooms</code>, we <strong>cannot make our ceteris paribus claims</strong>!</li>
+<li>We said: All Else Equal! Well, if you increase <code>bathrooms</code>, you tend to also increase <code>lotsize</code>!! 👊</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Including <code>lotsize</code></h2></hgroup><article  id="including-lotsize" class="smaller">
+
+<pre >## 
+## Call:
+## lm(formula = price ~ bathrms + lotsize, data = Housing)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -60752 -12532  -1674  10514  92931 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
+## bathrms     2.281e+04  1.703e+03  13.397  &lt; 2e-16 ***
+## lotsize     5.575e+00  3.944e-01  14.136  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 19580 on 543 degrees of freedom
+## Multiple R-squared:  0.4642, Adjusted R-squared:  0.4622 
+## F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</pre>
+
+</article></slide><slide class=""><hgroup><h2>How do \(z\) and \(x\) covary?</h2></hgroup><article  id="how-do-z-and-x-covary">
+
+<p><img src="chapter6_files/figure-html/unnamed-chunk-7-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Direction of Omitted Variable Bias</h2></hgroup><article  id="direction-of-omitted-variable-bias" class="flexbox vcenter">
+
+<ul class = 'build'>
+<li>If \(Cov(x,z)&gt;0\), \(b_1\) will be <em>upward biased</em> (i.e. too high!)</li>
+<li>If \(Cov(x,z)&lt;0\), \(b_1\) will be <em>downward biased</em> (i.e. too low!)</li>
+<li>\(Cov(x,z)\neq0\) means that we attribute part of \(z\)&#39;s impact on \(y\) to \(x\), because they covary!</li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>
