@@ -1,0 +1,155 @@
+---
+title: "Effects of Free Trade Agreements"
+author: "Florian Oswald"
+date: "11/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Setup
+
+The datasets needed for this exercise are available in Stata format at this [dropbox link](https://www.dropbox.com/s/w4kb37e2108msx8/biltrade_L2.dta?dl=0). Download the file, and read it into `R` with the function `read_stata` from the `haven` package.
+
+```{r load,echo=FALSE}
+library(haven)
+x=read_stata("~/Dropbox/teaching/ScPo/ScPoEconometrics/exercises/reeconometricstrade/biltrade_L2.dta")
+```
+
+## Exploring the data
+
+1. What variables are included in the data?
+
+```{r}
+names(x)
+```
+
+2. how many observations do we have in total?
+
+```{r}
+dim(x)
+```
+
+3. How many unique countries do we have in the columns `iso_o` and `iso_d` (origin/destination)?
+
+```{r}
+length(unique(x$iso_o))
+length(unique(x$iso_d))
+```
+
+4. How does the total number of observations evolve over the years? That is, how many rows of data do we have for each year?
+
+```{r}
+ny = table(x$year)
+plot(ny,type = "l")
+```
+
+5. What about countries? How many countries `iso_o` do we have by year?
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+library(ggplot2)
+nc = x %>%
+  group_by(year) %>%
+  summarise(count=n_distinct(iso_o))
+
+nc %>%
+  ggplot(aes(x=year,y=count)) + geom_line()
+```
+
+5. Do all countries trade with each other? How many country pairs would we observe if each country traded with each other possible country?
+Produce a heat map that illustrates cross country trade. Compare who trades with whom in 1948 and 2016, and compute the share of trading countries. 
+
+```{r heat,message=FALSE,warning=FALSE}
+library(SparseM)
+f48 = x %>%
+  filter(year==1948 & flow>0) %>%
+  summarise(count = n_distinct(iso_d,iso_o))
+tot48 = nc %>%
+  filter(year==1948) %>%
+  mutate(allpairs = count*(count-1))
+tot16 = nc %>%
+  filter(year==2016) %>%
+  mutate(allpairs = count*(count-1))
+
+f48$frac = f48$count / tot48$allpairs
+
+f16 = x %>%
+  filter(year==2016 & flow>0) %>%
+  summarise(count = n_distinct(iso_d,iso_o))
+f16$frac = f16$count / tot16$allpairs
+
+
+od48 = with(subset(x,year==1948),table(iso_o,iso_d))
+od16 = with(subset(x,year==2016),table(iso_o,iso_d))
+op <- par()
+par(mfcol=c(1,2))
+image(as.matrix.csr(od48),main=paste("1948:",round(f48$frac,2)*100,"% of pairs"))
+image(as.matrix.csr(od16),main=paste("2016:",round(f16$frac,2)*100,"% of pairs"))
+par(mfcol=c(1,1))
+par <- op
+```
+
+## Gravity
+
+Compute a new variable called `gravity`, defined as
+
+$$
+\text{gravity}_{odt} = \frac{GDP_{ot} \cdot GDP_{dt}}{DGP_{wt}\cdot distance_{od}}
+$$
+where indices $o,d,t$ stand for *origin*, *destination* and *year*. The index $w$ means *world*, i.e. here we talk about the sum of all destination countries. You need to be careful here because some countries don't have any data in certain years (as we know from above), so there will be *missing values*. When you prepare this computation, apply the following cleaning protocol to your data:
+
+1. remove all duplicates
+1. group the data by year
+1. create world gdp as `gdp_w` by summing over `gdp_d` by year
+1. keep all data with positive `flow`
+1. transform `flow` into `flow/1000`
+1. compute the share of `gdp_o` and `gdp_d` in world gdp and drop observations smaller than the first percentile of either share
+1. finally, compute gravity.
+
+```{r}
+library(dplyr)
+x = x[complete.cases(x),]
+x2 = x %>%
+  distinct() %>%
+  group_by(year) %>%
+  mutate(gdp_w = sum(gdp_d)) %>%
+  mutate(sh_o = gdp_o / gdp_w, sh_d = gdp_d / gdp_w) %>%
+  filter((sh_o > quantile(sh_o,0.01)) & (sh_d > quantile(sh_d,0.01))) %>%
+  mutate(gravity = (gdp_o*gdp_d)/(gdp_w*distw), flow1000 = flow/1000)
+```
+
+## Gravity Regression
+
+Run a regression of the log of trade flows on the log of `gravity`, using only data for the year 1995. Interpret the coefficient obtained. In a scatterplot, represent the relationship between the log of trade flows on the log of the gravity prediction, together with a 45 degree line.  How should we interpret the distance of each point to the 45 degree line?
+
+```{r grav}
+d95 <- subset(x2,year==1995 & flow>0 & gravity>0)
+g95 <- lm(formula = log(flow1000) ~ log(gravity), data = d95)
+summary(g95)
+plot(log(flow1000)~log(gravity),data=d95)
+abline(g95,col="red")
+```
+
+## Effect of Free Trade Agreements
+
+Do the same scatterplot, but highlighting in a different color the pairs of countries engaged in a Free Trade Agreement (fta_wto = 1 for those in the database). Is it clear what is the effect of agreements graphically?
+
+```{r}
+library(ggplot2)
+d95 %>%
+  sample_frac(0.1) %>%
+  ggplot(mapping = aes(x = log(gravity),y = log(flow1000),
+       color = factor(fta_wto))) + geom_point(shape=1,alpha=0.9) + theme_bw()
+```
+
+### Investigate this more with Regressions
+
+Run 4 regressions:
+
+1.	A classical gravity equation with only GDPs and distance (in logs) explaining the log of trade flows. 
+1.	Introduce the `fta` dummy variable in that regression
+1.	Introduce common language and contiguity.
+
