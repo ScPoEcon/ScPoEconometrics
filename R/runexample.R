@@ -1,5 +1,4 @@
 
-
 #' runTutorial: Run a Tutorial!
 #'
 #' @param tutoname string of which tutorial you want to run
