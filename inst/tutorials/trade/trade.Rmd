@@ -3,13 +3,10 @@ title: "Effects of Free Trade Agreements"
 author: "Florian Oswald"
 date: "11/10/2018"
 output: html_document
-params: 
-  echo: FALSE
-  include: TRUE
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = params$echo,include=params$include)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Setup
@@ -180,7 +177,7 @@ Run the following regressions using the 1995 data as above.
     $$
     \log \left( \frac{flow_{odt}}{1000} \right) = \log(GDP_{ot}) + \log(GDP_{dt} - \log(distance_{od})
     $$
-    ```{r}
+    ```{r,include=FALSE}
     gravity <- lm(formula = 
                     log(flow1000) ~ log(gdp_o) + log(gdp_d) + log(distw), 
                   data=d95)
@@ -196,14 +193,14 @@ Run the following regressions using the 1995 data as above.
     \%\Delta E[y|d] =& \frac{\exp(a + b ) - \exp(a)}{\exp(a)}\\
       =& e^{a + b - a} - 1 = \exp(  b ) - 1
     \end{align}
-    ```{r}
+    ```{r,include=FALSE}
     fta <- update(gravity, . ~ . + fta_wto)
     summary(fta)
     eff = round(100*(exp(coef(fta))["fta_wto"] - 1),2)
     print(paste("Effect of becoming wto member is a",eff,"% increase on trade flows."))
     ```
 1.	Introduce common language and contiguity. Again compute the impact of having a common official language and of being contiguous contries.
-    ```{r}
+    ```{r,include=FALSE}
     lang <- update(fta, . ~ . + comlang_off + contig)
     summary(lang)
     effs = round(100*(exp(coef(lang))[c("comlang_off","contig")] - 1),2)

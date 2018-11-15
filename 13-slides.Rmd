@@ -8,5 +8,7 @@
 * [chapter 5](slides/chapter5/chapter5.html)
 * [chapter 6](slides/chapter6/chapter6.html)
 
+## Worked Tutorials
 
+* [Trade exercise](images/trade.html)
 
