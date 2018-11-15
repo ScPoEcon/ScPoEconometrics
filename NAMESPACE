@@ -3,6 +3,7 @@
 export(aboutApp)
 export(launchApp)
 export(runTutorial)
+export(tutodir)
 import(Ecdat)
 import(EnvStats)
 import(bookdown)

@@ -1,11 +1,10 @@
 
-
 #' runTutorial: Run a Tutorial!
 #'
 #' @param tutoname string of which tutorial you want to run
 #' This function runs a given `tutoname` for you. run without an argument \code{runTutorial()} to see a list of available tutorials.
 #' @export
-runTutorial <- function(tutoname) {
+runTutorial <- function(tutoname,opts=NULL) {
   # locate all the examples that exist
   validExamples <- list.files(system.file("tutorials", package = "ScPoEconometrics"))
 
@@ -27,9 +26,41 @@ runTutorial <- function(tutoname) {
   # find and launch
   appDir <- system.file("tutorials", tutoname, package = "ScPoEconometrics")
   rmds = list.files(path=appDir,pattern="\\.Rmd$",full.names=TRUE)
-  rmarkdown::run(file = rmds[1])
+  if (is.null(opts)){
+    rmarkdown::run(file = rmds[1])
+  } else {
+    if (opts=="out"){
+      rmarkdown::run(rmds[1],render_args=list(params=list(include=TRUE)))
+    } else if (opts=="sol"){
+      rmarkdown::run(rmds[1],render_args=list(params=list(echo=TRUE,include=TRUE)))
+    }
+  }
 }
 
+#' get tutorial dir
+#'
+#' @export
+tutodir <- function(tutoname){
+  validExamples <- list.files(system.file("tutorials", package = "ScPoEconometrics"))
+
+  validExamplesMsg <-
+    paste0(
+      "Valid Tutorials are: '",
+      paste(validExamples, collapse = "', '"),
+      "'")
+
+  # if an invalid example is given, throw an error
+  if (missing(tutoname) || !nzchar(tutoname) ||
+      !tutoname %in% validExamples) {
+    stop(
+      'Please run `runTutorial()` with a valid tutorial as an argument.\n',
+      validExamplesMsg,
+      call. = FALSE)
+  }
+  appDir <- system.file("tutorials", tutoname, package = "ScPoEconometrics")
+  rmds = list.files(path=appDir,pattern="\\.Rmd$",full.names=TRUE)
+  return(rmds[1])
+}
 
 #' launchApp: Launch an App!
 #'

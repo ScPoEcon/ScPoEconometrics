@@ -4,7 +4,7 @@
 \alias{runTutorial}
 \title{runTutorial: Run a Tutorial!}
 \usage{
-runTutorial(tutoname)
+runTutorial(tutoname, opts = NULL)
 }
 \arguments{
 \item{tutoname}{string of which tutorial you want to run
