@@ -292,7 +292,7 @@ We can stick to the following cookbook procedure, which is illustrated in figure
 3. Rejection Region:
     We perform a one-sided test. We said we are happy with a 5% significance level, i.e. we are looking for the $t$ value which corresponds *just* to $1-0.05 = 0.95$ mass under the pdf of the $t$ distribution. More precisely, we are looking for the $1-0.05 = 0.95$ quantile of the $t_{`r n`}$ distribution.^[See the previous footnote for an explanation of this!] This implies a critical value $c = `r round(qt(0.95,df=n),3)`$, which you can verify by typing `qt(0.95,df=50)` in `R`.
 4. Calculate our test statistic:
-    $\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{20/\sqrt{50}} = `r tstat`$
+    $\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{`r s`/\sqrt{`r n`}} = `r tstat`$
 5. Decide:
     We find that $`r tstat` < `r round(ctval,3)`$. Hence, we cannot reject $H_0$, because we only found weak evidence against it in our sample of data.
 
