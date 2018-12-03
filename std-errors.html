@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-11-15">
+<meta name="date" content="2018-12-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -397,7 +397,7 @@ The crucial thing to note here is that, given we are working with a <strong>rand
 <li>That is, our statistic is <span class="math inline">\(T=\frac{\bar{x} - \mu}{s/\sqrt{n}} \sim t_{49}\)</span>, where 49 is equal to the <em>degrees of freedom</em> in this case.</li>
 </ul></li>
 <li>Rejection Region: We perform a one-sided test. We said we are happy with a 5% significance level, i.e. we are looking for the <span class="math inline">\(t\)</span> value which corresponds <em>just</em> to <span class="math inline">\(1-0.05 = 0.95\)</span> mass under the pdf of the <span class="math inline">\(t\)</span> distribution. More precisely, we are looking for the <span class="math inline">\(1-0.05 = 0.95\)</span> quantile of the <span class="math inline">\(t_{50}\)</span> distribution.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> This implies a critical value <span class="math inline">\(c = 1.676\)</span>, which you can verify by typing <code>qt(0.95,df=50)</code> in <code>R</code>.</li>
-<li>Calculate our test statistic: <span class="math inline">\(\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{20/\sqrt{50}} = 1.061\)</span></li>
+<li>Calculate our test statistic: <span class="math inline">\(\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{10/\sqrt{50}} = 1.061\)</span></li>
 <li>Decide: We find that <span class="math inline">\(1.061 &lt; 1.676\)</span>. Hence, we cannot reject <span class="math inline">\(H_0\)</span>, because we only found weak evidence against it in our sample of data.</li>
 </ol>
 <div class="figure" style="text-align: center"><span id="fig:testfig"></span>
