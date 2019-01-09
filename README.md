@@ -69,7 +69,7 @@ runTutorial("chapter3")
 
 All material of this course is open source, and you are free to use it. Please refer to the [license](#license) section below for the precise wording and terms of the agreement. In particular, please stick to the agreement about proper citation of this repository.
 
-There is some relevant material in the [teachers](blob/master/teachers) folder. In particular, the `ForTeachers.md` document contains a detailed explanation of the course structure, as well as a section on student feedback from the first iteration of the course. The few other documents in there should be self explanatory.
+There is some relevant material in the [teachers](/teachers) folder. In particular, the `ForTeachers.md` document contains a detailed explanation of the course structure, as well as a section on student feedback from the first iteration of the course. The few other documents in there should be self explanatory.
 
 As outlined in the license section, you are free to use and re-use any parts of the content as you see fit. For instance, you could re-use our slides, and modify them, or publish a different version of our textbook (with proper attribution). However, it could be valuable to integrate your changes/additions to the project. In this case, please read on in the next section about how to make contributions.
 
