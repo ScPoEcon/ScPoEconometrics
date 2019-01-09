@@ -6,7 +6,7 @@ This is the git repo for the UG Econometrics book taught to 2nd year students at
 
 1. [Status](#status)
 2. [Usage and Installation](#usage-and-installation) 
-3. [Meta Infos for Teachers](#)
+3. [Meta Infos for Teachers](#meta-information-for-teachers)
 4. [How to Contribute](#contribution-workflow)
 5. [License and Copyright](#license)
 
