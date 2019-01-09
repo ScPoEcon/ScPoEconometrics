@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Introduction to Econometrics with R</title>
+  <title>Chapter 2 Working With Data | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Introduction to Econometrics with R" />
+  <meta property="og:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction to Econometrics with R" />
+  <meta name="twitter:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
   
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-12-03">
+<meta name="date" content="2019-01-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="linreg.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -458,34 +459,34 @@ example_data_from_disk =<span class="st"> </span><span class="kw">read_csv</span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mpg,<span class="dt">package =</span> <span class="st">&quot;ggplot2&quot;</span>)  <span class="co"># load dataset `mpg` from `ggplot2` package</span>
 <span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 10 x 11
-#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla…
-#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;ch&gt;
-#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     com…
-#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     com…
-#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     com…
-#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     com…
-#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     com…
-#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     com…
-#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     com…
-#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     com…
-#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     com…
-#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     com…</code></pre>
+#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…</code></pre>
 <p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame, as we have seen. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates with rows and columns were omitted.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 234 x 11
-#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla…
-#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;ch&gt;
-#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     com…
-#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     com…
-#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     com…
-#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     com…
-#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     com…
-#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     com…
-#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     com…
-#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     com…
-#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     com…
-#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     com…
-#OUT&gt; # ... with 224 more rows</code></pre>
+#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…
+#OUT&gt; # … with 224 more rows</code></pre>
 <p>Let’s look at <code>str</code> as well to get familiar with the content of the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg)</code></pre></div>
 <pre><code>#OUT&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 234 obs. of  11 variables:
@@ -633,7 +634,7 @@ tot_pop_raw</code></pre></div>
 #OUT&gt;  8 Czech … 10343… 10425… 10462… 10486… 10505… 10516… 10512… 10538… 10553…
 #OUT&gt;  9 Denmark 54757… 55114… 55347… 55606… 55805… 56026… 56272… 56597… 57072…
 #OUT&gt; 10 German… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175…
-#OUT&gt; # ... with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
+#OUT&gt; # … with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
 <p>This shows a <code>tibble</code>, which we encountered just above. The column names are <code>Country,2008,2009,...</code>, and the rows are numbered <code>1,2,3,...</code>. Notice, in particular, that <em>all</em> columns seem to be of type <code>&lt;chr&gt;</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
 <div id="tidyr" class="section level4">
 <h4><span class="header-section-number">2.4.3.1</span> <code>tidyr</code></h4>
@@ -659,7 +660,7 @@ tot_pop</code></pre></div>
 #OUT&gt;  8 Czech Republic                                   2008  10343422 
 #OUT&gt;  9 Denmark                                          2008  5475791  
 #OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008  82217837 
-#OUT&gt; # ... with 580 more rows</code></pre>
+#OUT&gt; # … with 580 more rows</code></pre>
 <p>That’s better! However, <code>counts</code> is still <code>chr</code>! Let’s convert it to a number:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tot_pop<span class="op">$</span>counts =<span class="st"> </span><span class="kw">as.integer</span>(tot_pop<span class="op">$</span>counts)</code></pre></div>
 <pre><code>#OUT&gt; Warning: NAs introduced by coercion</code></pre>
@@ -677,7 +678,7 @@ tot_pop</code></pre></div>
 #OUT&gt;  8 Czech Republic                                   2008   10343422
 #OUT&gt;  9 Denmark                                          2008    5475791
 #OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008   82217837
-#OUT&gt; # ... with 580 more rows</code></pre>
+#OUT&gt; # … with 580 more rows</code></pre>
 <p>Now you can see that column <code>counts</code> is indeed <code>int</code>, i.e. an integer number, and we are fine. The <code>Warning: NAs introduced by coercion</code> means that <code>R</code> converted some values to <code>NA</code>, because it couldn’t convert them into <code>numeric</code>. More below!</p>
 </div>
 <div id="dplyr" class="section level4">
@@ -728,13 +729,13 @@ bottom5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span>
 <span class="co"># let&#39;s see top 5</span>
 top5</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 5 x 3
-#OUT&gt;   Country                                                   year    counts
-#OUT&gt;   &lt;chr&gt;                                                     &lt;chr&gt;    &lt;int&gt;
-#OUT&gt; 1 European Economic Area (EU28  - current composition, plu… 2017    5.17e8
-#OUT&gt; 2 European Economic Area (EU28  - current composition, plu… 2016    5.16e8
-#OUT&gt; 3 European Economic Area (EU28  - current composition, plu… 2015    5.14e8
-#OUT&gt; 4 European Economic Area (EU27 -  before the accession of … 2017    5.13e8
-#OUT&gt; 5 European Economic Area (EU28  - current composition, plu… 2014    5.12e8</code></pre>
+#OUT&gt;   Country                                                    year    counts
+#OUT&gt;   &lt;chr&gt;                                                      &lt;chr&gt;    &lt;int&gt;
+#OUT&gt; 1 European Economic Area (EU28  - current composition, plus… 2017    5.17e8
+#OUT&gt; 2 European Economic Area (EU28  - current composition, plus… 2016    5.16e8
+#OUT&gt; 3 European Economic Area (EU28  - current composition, plus… 2015    5.14e8
+#OUT&gt; 4 European Economic Area (EU27 -  before the accession of C… 2017    5.13e8
+#OUT&gt; 5 European Economic Area (EU28  - current composition, plus… 2014    5.12e8</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and bottom 5</span>
 bottom5</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 5 x 3
@@ -756,13 +757,13 @@ top5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span cla
 bottom5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)
 top5</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 5 x 2
-#OUT&gt;   Country                                                       mean_count
-#OUT&gt;   &lt;chr&gt;                                                              &lt;dbl&gt;
-#OUT&gt; 1 European Economic Area (EU28  - current composition, plus IS… 514029320 
-#OUT&gt; 2 European Economic Area (EU27 -  before the accession of Croa… 509813491.
-#OUT&gt; 3 European Union (current composition)                          508502858.
-#OUT&gt; 4 European Union (before the accession of Croatia)              504287028.
-#OUT&gt; 5 European Union (without United Kingdom)                       443638309.</code></pre>
+#OUT&gt;   Country                                                        mean_count
+#OUT&gt;   &lt;chr&gt;                                                               &lt;dbl&gt;
+#OUT&gt; 1 European Economic Area (EU28  - current composition, plus IS,… 514029320 
+#OUT&gt; 2 European Economic Area (EU27 -  before the accession of Croat… 509813491.
+#OUT&gt; 3 European Union (current composition)                           508502858.
+#OUT&gt; 4 European Union (before the accession of Croatia)               504287028.
+#OUT&gt; 5 European Union (without United Kingdom)                        443638309.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bottom5</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 5 x 2
 #OUT&gt;   Country       mean_count
@@ -863,7 +864,7 @@ females_raw</code></pre></div>
 #OUT&gt;  8 Czech … 5.28e6 5.31e6 5.33e6 5.34e6 5.35e6 5.35e6 5.35e6 5.36e6 5.37e6
 #OUT&gt;  9 Denmark 2.76e6 2.78e6 2.79e6 2.80e6 2.81e6 2.82e6 2.83e6 2.85e6 2.87e6
 #OUT&gt; 10 German… 4.19e7 4.18e7 4.17e7 4.11e7 4.11e7 4.11e7 4.12e7 4.14e7 4.17e7
-#OUT&gt; # ... with 49 more rows, and 1 more variable: `2017` &lt;dbl&gt;</code></pre>
+#OUT&gt; # … with 49 more rows, and 1 more variable: `2017` &lt;dbl&gt;</code></pre>
 <p>You can see that <code>R</code> now correctly read the numbers as such, after we told it that the <code>:</code> character has the special <em>missing</em> meaning: before, it <em>coerced</em> the entire <code>2008</code> column (for example) to be of type <code>chr</code> after it hit the first <code>:</code>. We had to manually convert the column back to <code>numeric</code>, in the process automatically coercing the <code>:</code>s into <code>NA</code>. Now we addressed that issue directly. Let’s also get the male data in the same way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">males_raw =<span class="st"> </span><span class="kw">read_excel</span>(
                 <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,
@@ -893,7 +894,7 @@ sexes</code></pre></div>
 #OUT&gt;  8 Czech Republic                                   2008    5065117 male 
 #OUT&gt;  9 Denmark                                          2008    2712666 male 
 #OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008   40274292 male 
-#OUT&gt; # ... with 1,170 more rows</code></pre>
+#OUT&gt; # … with 1,170 more rows</code></pre>
 <p>Now that we have all the data nice and <code>tidy</code> in a <code>data.frame</code>, this is a very small change to our previous plotting code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sexes <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>)) <span class="op">%&gt;%</span>
@@ -943,7 +944,7 @@ merge_GER</code></pre></div>
 #OUT&gt;  8 Italy          2010  59190143 Germany including former GDR 81802257
 #OUT&gt;  9 United Kingdom 2010  62510197 Germany including former GDR 81802257
 #OUT&gt; 10 France         2011  64978721 Germany including former GDR 80222065
-#OUT&gt; # ... with 20 more rows</code></pre>
+#OUT&gt; # … with 20 more rows</code></pre>
 <p>Here you see that the merge (or join) operation labelled <code>col.x</code> and <code>col.y</code> if both datasets contained a column called <code>col</code>. Now let’s continue to compute what proportion of german population each country amounts to:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(merge_GER)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>
 merge_GER <span class="op">%&gt;%</span>
@@ -995,7 +996,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1007,6 +1008,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/02-SummaryStats.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
 "toc": {
@@ -1022,7 +1027,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

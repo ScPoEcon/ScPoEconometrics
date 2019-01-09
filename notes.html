@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Introduction to Econometrics with R</title>
+  <title>Chapter 14 Notes | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Introduction to Econometrics with R" />
+  <meta property="og:title" content="Chapter 14 Notes | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction to Econometrics with R" />
+  <meta name="twitter:title" content="Chapter 14 Notes | Introduction to Econometrics with R" />
   
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2018-12-03">
+<meta name="date" content="2019-01-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -222,10 +223,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><strong>bookdown</strong> <span class="citation">(Xie <a href="#ref-R-bookdown">2018</a>)</span></li>
 <li><strong>shiny</strong> <span class="citation">(Chang et al. <a href="#ref-R-shiny">2018</a>)</span></li>
-<li><strong>learnr</strong> <span class="citation">(Schloerke, Allaire, and Borges <a href="#ref-R-learnr">2018</a>)</span></li>
+<li><strong>learnr</strong> <span class="citation">(Schloerke, Allaire, and Borges <a href="#ref-R-learnr">2019</a>)</span></li>
 <li><strong>datasauRus</strong> <span class="citation">(Locke and D’Agostino McGowan <a href="#ref-R-datasauRus">2018</a>)</span></li>
 <li><strong>webshot</strong> <span class="citation">(Chang <a href="#ref-R-webshot">2018</a>)</span></li>
-<li><strong>AER</strong> <span class="citation">(Kleiber and Zeileis <a href="#ref-R-AER">2017</a>)</span></li>
+<li><strong>AER</strong> <span class="citation">(Kleiber and Zeileis <a href="#ref-R-AER">2018</a>)</span></li>
 <li><strong>knitr</strong> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span></li>
 <li><strong>ScPoEconometrics</strong> <span class="citation">(Oswald <a href="#ref-R-ScPoEconometrics">2018</a>)</span></li>
 <li><strong>Ecdat</strong> <span class="citation">(Croissant <a href="#ref-R-Ecdat">2016</a>)</span></li>
@@ -253,7 +254,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2018. <em>Shiny: Web Application Framework for R</em>. <a href="https://CRAN.R-project.org/package=shiny" class="uri">https://CRAN.R-project.org/package=shiny</a>.</p>
 </div>
 <div id="ref-R-learnr">
-<p>Schloerke, Barret, JJ Allaire, and Barbara Borges. 2018. <em>Learnr: Interactive Tutorials for R</em>. <a href="https://rstudio.github.io/learnr/" class="uri">https://rstudio.github.io/learnr/</a>.</p>
+<p>Schloerke, Barret, JJ Allaire, and Barbara Borges. 2019. <em>Learnr: Interactive Tutorials for R</em>. <a href="https://rstudio.github.io/learnr/" class="uri">https://rstudio.github.io/learnr/</a>.</p>
 </div>
 <div id="ref-R-datasauRus">
 <p>Locke, Steph, and Lucy D’Agostino McGowan. 2018. <em>DatasauRus: Datasets from the Datasaurus Dozen</em>. <a href="https://CRAN.R-project.org/package=datasauRus" class="uri">https://CRAN.R-project.org/package=datasauRus</a>.</p>
@@ -262,7 +263,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Chang, Winston. 2018. <em>Webshot: Take Screenshots of Web Pages</em>. <a href="https://CRAN.R-project.org/package=webshot" class="uri">https://CRAN.R-project.org/package=webshot</a>.</p>
 </div>
 <div id="ref-R-AER">
-<p>Kleiber, Christian, and Achim Zeileis. 2017. <em>AER: Applied Econometrics with R</em>. <a href="https://CRAN.R-project.org/package=AER" class="uri">https://CRAN.R-project.org/package=AER</a>.</p>
+<p>Kleiber, Christian, and Achim Zeileis. 2018. <em>AER: Applied Econometrics with R</em>. <a href="https://CRAN.R-project.org/package=AER" class="uri">https://CRAN.R-project.org/package=AER</a>.</p>
 </div>
 <div id="ref-xie2015">
 <p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>
@@ -333,7 +334,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -345,6 +346,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/14-Notes.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
 "toc": {
@@ -360,7 +365,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

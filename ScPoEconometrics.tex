@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-12-03}
+    \date{2019-01-09}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -141,20 +141,6 @@
 }
 \makeatother
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -3183,18 +3169,18 @@ Let's grab some data from the \texttt{ggplot2} package:
 
 \begin{verbatim}
 #OUT> # A tibble: 10 x 11
-#OUT>    manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla~
-#OUT>    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <ch>
-#OUT>  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     com~
-#OUT>  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     com~
-#OUT>  3 audi         a4      2    2008     4 manu~ f        20    31 p     com~
-#OUT>  4 audi         a4      2    2008     4 auto~ f        21    30 p     com~
-#OUT>  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     com~
-#OUT>  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     com~
-#OUT>  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     com~
-#OUT>  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     com~
-#OUT>  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     com~
-#OUT> 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     com~
+#OUT>    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT>    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
+#OUT>  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
+#OUT>  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
+#OUT>  3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
+#OUT>  4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
+#OUT>  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
+#OUT>  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
+#OUT>  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
+#OUT>  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+#OUT>  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
+#OUT> 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
 \end{verbatim}
 
 The function \texttt{head()} will display the first \texttt{n}
@@ -3215,18 +3201,18 @@ omitted.
 
 \begin{verbatim}
 #OUT> # A tibble: 234 x 11
-#OUT>    manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla~
-#OUT>    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <ch>
-#OUT>  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     com~
-#OUT>  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     com~
-#OUT>  3 audi         a4      2    2008     4 manu~ f        20    31 p     com~
-#OUT>  4 audi         a4      2    2008     4 auto~ f        21    30 p     com~
-#OUT>  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     com~
-#OUT>  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     com~
-#OUT>  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     com~
-#OUT>  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     com~
-#OUT>  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     com~
-#OUT> 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     com~
+#OUT>    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT>    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
+#OUT>  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
+#OUT>  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
+#OUT>  3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
+#OUT>  4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
+#OUT>  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
+#OUT>  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
+#OUT>  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
+#OUT>  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+#OUT>  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
+#OUT> 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
 #OUT> # ... with 224 more rows
 \end{verbatim}
 
@@ -3707,13 +3693,13 @@ time, in terms of millions of people. We will make use of the
 
 \begin{verbatim}
 #OUT> # A tibble: 5 x 3
-#OUT>   Country                                                   year    counts
-#OUT>   <chr>                                                     <chr>    <int>
-#OUT> 1 European Economic Area (EU28  - current composition, plu~ 2017    5.17e8
-#OUT> 2 European Economic Area (EU28  - current composition, plu~ 2016    5.16e8
-#OUT> 3 European Economic Area (EU28  - current composition, plu~ 2015    5.14e8
-#OUT> 4 European Economic Area (EU27 -  before the accession of ~ 2017    5.13e8
-#OUT> 5 European Economic Area (EU28  - current composition, plu~ 2014    5.12e8
+#OUT>   Country                                                    year    counts
+#OUT>   <chr>                                                      <chr>    <int>
+#OUT> 1 European Economic Area (EU28  - current composition, plus~ 2017    5.17e8
+#OUT> 2 European Economic Area (EU28  - current composition, plus~ 2016    5.16e8
+#OUT> 3 European Economic Area (EU28  - current composition, plus~ 2015    5.14e8
+#OUT> 4 European Economic Area (EU27 -  before the accession of C~ 2017    5.13e8
+#OUT> 5 European Economic Area (EU28  - current composition, plus~ 2014    5.12e8
 \end{verbatim}
 
 \begin{Shaded}
@@ -3755,13 +3741,13 @@ that:
 
 \begin{verbatim}
 #OUT> # A tibble: 5 x 2
-#OUT>   Country                                                       mean_count
-#OUT>   <chr>                                                              <dbl>
-#OUT> 1 European Economic Area (EU28  - current composition, plus IS~ 514029320 
-#OUT> 2 European Economic Area (EU27 -  before the accession of Croa~ 509813491.
-#OUT> 3 European Union (current composition)                          508502858.
-#OUT> 4 European Union (before the accession of Croatia)              504287028.
-#OUT> 5 European Union (without United Kingdom)                       443638309.
+#OUT>   Country                                                        mean_count
+#OUT>   <chr>                                                               <dbl>
+#OUT> 1 European Economic Area (EU28  - current composition, plus IS,~ 514029320 
+#OUT> 2 European Economic Area (EU27 -  before the accession of Croat~ 509813491.
+#OUT> 3 European Union (current composition)                           508502858.
+#OUT> 4 European Union (before the accession of Croatia)               504287028.
+#OUT> 5 European Union (without United Kingdom)                        443638309.
 \end{verbatim}
 
 \begin{Shaded}
