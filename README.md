@@ -1,5 +1,17 @@
 # ScPo UG Econometrics
 
+This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
+
+## Contents
+
+1. [Status](#status)
+2. [Usage and Installation](#usage-and-installation) 
+3. [Meta Infos for Teachers](#)
+4. [How to Contribute](#contribution-workflow)
+5. [License and Copyright](#license)
+
+## Status
+
 **Tests on MacOS and Linux**: [![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
 
 **Tests on Windows**: [![Build status](https://ci.appveyor.com/api/projects/status/9ctm2rneexsid3t2?svg=true)](https://ci.appveyor.com/project/FlorianOswald/scpoeconometrics)
@@ -7,7 +19,6 @@
 
 **Developers Chatroom**: [![Gitter Chat](http://badges.gitter.im/ScPoEcon/ScPoEconometrics.svg)](https://gitter.im/ScPoEconometrics/Lobby)  [Students please only talk to us on Slack!]
 
-This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
 ## Usage and Installation
 
@@ -51,6 +62,17 @@ In order to run the accompanying tutorials you would type, for example:
 library(ScPoEconometrics)
 runTutorial("chapter3")
 ```
+
+## Meta Information for Teachers
+
+*This section is only relevant if you want to teach this course.*
+
+All material of this course is open source, and you are free to use it. Please refer to the [license](#license) section below for the precise wording and terms of the agreement. In particular, please stick to the agreement about proper citation of this repository.
+
+There is some relevant material in the [teachers](blob/master/teachers) folder. In particular, the `ForTeachers.md` document contains a detailed explanation of the course structure, as well as a section on student feedback from the first iteration of the course. The few other documents in there should be self explanatory.
+
+As outlined in the license section, you are free to use and re-use any parts of the content as you see fit. For instance, you could re-use our slides, and modify them, or publish a different version of our textbook (with proper attribution). However, it could be valuable to integrate your changes/additions to the project. In this case, please read on in the next section about how to make contributions.
+
 
 ## Contribution Workflow - Developers only!
 
