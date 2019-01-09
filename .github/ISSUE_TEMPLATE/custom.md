@@ -1,6 +1,6 @@
 ---
 name: Custom issue template
-about: how to file an issue
+about: Please file an issue here!
 title: ''
 labels: ''
 assignees: ''
