@@ -22,7 +22,7 @@ Imports: bookdown,
   webshot,
   Ecdat,
   EnvStats,
-  rmarkdown,
+  rmarkdown (>= 1.11),
   AER
 Suggests:
   shinytest,
