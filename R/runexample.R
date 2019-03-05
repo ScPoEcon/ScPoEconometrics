@@ -94,7 +94,7 @@ aboutApp <- function(appname){
 
   # render and launch the about document
   appDir = system.file("shinys", appname, package = "ScPoEconometrics")
-  rmarkdown::run(paste0(appDir, "/about.Rmd"))
+  rmarkdown::run(file = file.path(appDir, "about.Rmd"))
 }
 
 gitbook <- function(){
