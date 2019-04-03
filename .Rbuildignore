@@ -5,7 +5,7 @@
 _book*
 _slides*
 _tex*
-^.*\.Rmd$
+^\d\d-.*\.Rmd$
 ^.*\.yml$
 ^.*\.sh$
 ^.*\.css$
