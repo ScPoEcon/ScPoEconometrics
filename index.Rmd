@@ -56,13 +56,10 @@ The book and all other content for this course are hosted under an open source l
 
 We will assess participation in class and conduct a final exam.
 
-### Team {-}
-
-This material is used in the Economtrics course of the Campuses of SciencesPo in Paris, Reims, LeHavre, Menton and Dijon. The teaching and development team can be found [here on github](https://github.com/orgs/ScPoEcon/teams/ugmetrics)
 
 ### Communication {-}
 
-We will communicate exclusively on our [`slack`](https://econometrics-scpo.slack.com) app. You will get an invitation email to join from your instructor in due course.
+We will communicate exclusively on our [`slack`](https://scpomtrics.slack.com) group. You will get an invitation email to join from your instructor in due course.
 
 
 

@@ -1,0 +1,72 @@
+# To Be Done Chapters
+
+The following topics could be part of a future version of this course.
+
+## Quantile Regression
+
+1. before you were modelling the mean. the average link
+1. now what happens to **outliers**? how robust is the mean to that
+1. what about the entire distribution of this?
+
+## Panel Data
+
+### fixed effects
+
+### DiD
+
+### RDD
+
+
+### Example
+
+* scanner data on breakfast cereals, $(Q_{it},D_{it})$
+* why does D vary with Q
+* pos relation ship 
+* don't observe the group identity!
+* unobserved het alpha is correlated with Q
+* within group estimator
+* what if you don't have panel data?
+
+## Logit and Probit
+
+## Principal Component Analysis
+
+
+## General Notes
+
+this creates a library for the used R packages.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown','ScPoEconometrics','shiny','learnr','datasauRus','webshot','AER'
+), 'packages.bib')
+```
+
+Packages used:
+
+* **bookdown** [@R-bookdown]
+* **shiny** [@R-shiny]
+* **learnr** [@R-learnr]
+* **datasauRus** [@R-datasauRus]
+* **webshot** [@R-webshot]
+* **AER** [@R-AER]
+* **knitr** [@xie2015]
+* **ScPoEconometrics** [@R-ScPoEconometrics]
+* **Ecdat** [@R-Ecdat]
+* **Ecfun** [@R-Ecfun]
+* **R** [@R-base]
+* **dplyr** [@R-dplyr]
+* **ggplot2** [@R-ggplot2]
+* **reshape2** [@R-reshape2]
+* **bindrcpp** [@R-bindrcpp]
+* **mvtnorm** [@R-mvtnorm]
+* **plotly** [@R-plotly]
+* **readr** [@R-readr]
+* **readxl** [@R-readxl]
+* **tidyr** [@R-tidyr]
+* **readr** [@R-readr]
+
+
+
+
