@@ -17,6 +17,7 @@ cache:
 
 environment:
   USE_RTOOLS: true
+  R_REMOTES_STANDALONE: true
 
 build_script:
   - travis-tool.sh install_deps

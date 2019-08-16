@@ -1,7 +1,0 @@
-# Quantile Regression {#quantreg}
-
-
-
-1. before you were modelling the mean. the average link
-1. now what happens to **outliers**? how robust is the mean to that
-1. what about the entire distribution of this?

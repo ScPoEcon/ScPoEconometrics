@@ -1,0 +1,14 @@
+
+# Slides
+
+* [chapter 1](http://rpubs.com/floswald/ScPoMetrics-1)
+* [chapter 2](http://rpubs.com/floswald/ScPoMetrics-2)
+* [chapter 3](http://rpubs.com/floswald/ScPoMetrics-3)
+* [chapter 4](slides/chapter4/chapter4.html)
+* [chapter 5](slides/chapter5/chapter5.html)
+* [chapter 6](slides/chapter6/chapter6.html)
+
+## Worked Tutorials
+
+* [Trade exercise](images/trade.html)
+
