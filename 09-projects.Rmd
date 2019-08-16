@@ -42,6 +42,12 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
     # install.packages("Hmisc")
     sqrt(Hmisc::wtd.var(x, weights = weight_variable))
     ```
+    
+    ```{r, echo = FALSE,eval = FALSE}
+    d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+    sqrt(Hmisc::wtd.var(d$kfr_pooled_p25, weights = d$count_pooled))
+    ```
+    
 1. Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles.  How do the patterns differ?
 1. Using a linear regression, estimate the relationship between outcomes of children at the 25th and 75th percentile for the Census tracts in your home county.  Generate a scatter plot to visualize this regression.  Do areas where children from low-income families do well generally have better outcomes for those from high-income families, too?
     

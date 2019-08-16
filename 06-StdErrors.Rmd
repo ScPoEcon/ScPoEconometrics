@@ -169,7 +169,7 @@ The way to proceed is to construct a *confidence interval* about the true popula
 
 where $c$ stands for *critical value*, which we need to choose. This is illustrated in figure \@ref(fig:cifig).
 
-```{r cifig, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Confidence Interval Construction. The blue area is called *coverage region* which contains the true $\\mu$ with probability $1-\\alpha$.',fig.align='center',engine.opts = list(convert = 'convert', convert.opts = '-density 600')}
+```{r cifig, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Confidence Interval Construction. The blue area is called *coverage region* which contains the true $\\mu$ with probability $1-\\alpha$.',fig.align='center'}
 \begin{tikzpicture}[scale=2, y=5cm]
 \draw[domain=-3.15:-2] (-3.15,0) plot[id=gauss1,samples=50]
 (\x,{1/sqrt(2*pi)*exp(-0.5*(\x)^2)}) -- (-2,0);   
@@ -297,7 +297,7 @@ We can stick to the following cookbook procedure, which is illustrated in figure
     We find that $`r tstat` < `r round(ctval,3)`$. Hence, we cannot reject $H_0$, because we only found weak evidence against it in our sample of data.
 
 
-```{r testfig, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Cookbook Testing Proceedure. Subscripts $c$ indicate *critical value*. There are two x-axis: one for values of $\\bar{x}$, and one for the corresponding $t$ statistic. The red area is the rejection area. If we observe a test statistic such that $t>t_c$, we feel reassured that our $\\bar{x}$ is *sufficiently far away* from the hypothesized value $\\mu$, such that we feel comfortable with rejecting $H_0$. And vice versa: If our test statistic falls below $t_c$, we will not reject $H_0$',fig.align='center',engine.opts = list(convert = 'convert', convert.opts = '-density 600')}
+```{r testfig, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Cookbook Testing Proceedure. Subscripts $c$ indicate *critical value*. There are two x-axis: one for values of $\\bar{x}$, and one for the corresponding $t$ statistic. The red area is the rejection area. If we observe a test statistic such that $t>t_c$, we feel reassured that our $\\bar{x}$ is *sufficiently far away* from the hypothesized value $\\mu$, such that we feel comfortable with rejecting $H_0$. And vice versa: If our test statistic falls below $t_c$, we will not reject $H_0$',fig.align='center'}
 \begin{tikzpicture}[scale=2, y=5cm]
 \draw[domain=-3:1.645] plot[id=gauss1, samples=100] (\x,{1/sqrt(2*pi)*exp(-0.5*(\x)^2)});   
 \draw[domain=1.645:3.2,fill=red,opacity=0.4] (1.645,0) --
@@ -337,7 +337,7 @@ Clearly, if in the **true** regression model we find $\beta_k=0$, this means tha
 
 As such, this is a *two-sided test*. We can again illustrate this in figure \@ref(fig:testfig2). Notice how we now have two rejection areas. 
 
-```{r testfig2, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\\beta_k=0$. ',fig.align='center',engine.opts = list(convert = 'convert', convert.opts = '-density 600')}
+```{r testfig2, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Testing whether coefficient $b_k$ is *statistically significantly different* from zero. Now we have two red rejection areas. We relabel critical values with a superscript here. If we observe a test statistic falling in either red region, we reject, else we do not. Notice that the true value under $H_0$ is $\\beta_k=0$. ',fig.align='center'}
 \begin{tikzpicture}[scale=2, y=5cm]
 \draw[domain=-3.15:-1.96,fill=red,opacity=0.4] (-3.15,0) plot[id=gauss1,samples=50]
 (\x,{1/sqrt(2*pi)*exp(-0.5*(\x)^2)}) -- (-1.96,0);   
