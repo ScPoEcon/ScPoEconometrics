@@ -1,6 +1,6 @@
 {
   "input": {
-    "i_dummy": 1.75,
+    "i_dummy": 2.25,
     "meany": true,
     "meany_x0": true,
     "meany_x1": true,
@@ -8,17 +8,17 @@
   },
   "output": {
     "regPlot_dummy": {
-      "src": "[image data sha1: 7738500102fc5b1ac37da4236eaba7582d8415a7]",
+      "src": "[image data sha1: 3981e5c8fbb9c7a6e55fc16b3e70114b226a43df]",
       "width": 611,
       "height": 400,
       "coordmap": {
         "panels": [
           {
             "domain": {
-              "left": -1.29892221101963,
-              "right": 2.29892221101963,
-              "bottom": 0.11321295880197,
-              "top": 7.49261447520114
+              "left": -1.17496613215464,
+              "right": 2.17496613215464,
+              "bottom": 0.602863423031125,
+              "top": 7.47378176503848
             },
             "range": {
               "left": 59.04,
@@ -41,7 +41,7 @@
         }
       }
     },
-    "userguess_dummy": "Your guess:\n y = 1.75 + 3x"
+    "userguess_dummy": "Your guess:\n y = 2.25 + 3x"
   },
   "export": {
 
