@@ -24,14 +24,32 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
 
 ### Questions
 
-1. Referring to the [NYT article](https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html): 
+1. Referring to the [NYT article](https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html):
     1. Why does the Seattle Housing Authority give away vouchers to pay for rent in the area between 100th and 115th Streets, east of Meridian, west of 35th Avenue?
+```{r, echo = FALSE, eval = FALSE}
+# Because research has shown that childreen who lives in that area have substantial higher chance to escape poverty.
+```
     1. The data here shows how easy it is for children of poor parents to escape poverty themselves. In explaining what makes a *good* neighborhood, how much of the variation we see is actually explained by things like school boundary lines and poverty levels alone? In other words, how *important* is the school you go to in isoluation of other factors, if you want to escape the low rank of your parents in the income distribution?
     1. Some select census tracts have received up to 500 million USD since 1990 in place-based neighborhood improvement policies. Do we know if and to what extent those investments were efficacious?
+
 1. Go to [https://www.opportunityatlas.org](https://www.opportunityatlas.org) and look at the census tracts around where your home is, if you grew up in the United States. If you grew up outside the US, randomly choose one of the State Capitals from [this list](https://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States#State_capitals) and select any census tract at random by zooming in. Make sure to immediately post your choice of city in the corresponding slack channel (e.g. "florian-atlas" for my group) to avoid having multiple reports on the same city. Let's call the chosen census tract your *home*. 
-    1. Create Figure 1 in your report, which should display the map shown by [https://www.opportunityatlas.org](https://www.opportunityatlas.org) for the census tracts around your home (you can download that map *as an image* bottom left). 
-    1. Your accompanying text should describe what is shown in that map, in particular what data are being visualized. Examine next the patterns for a number of different groups (e.g., lowest income children, high income children) and outcomes (e.g., earnings in adulthood, incarceration rates).  Only choose one or two of these to include in your report.  
+```{r, echo = FALSE, eval = FALSE}
+# Tract 24003706500, Annapolis, MD
+```
+    1. Create Figure 1 in your report, which should display the map shown by [https://www.opportunityatlas.org](https://www.opportunityatlas.org) for the census tracts around your home (you can download that map *as an image* bottom left).
+```{r out.width = "75%", echo = FALSE, eval = FALSE}
+library(knitr)
+include_graphics("images/pv-atlas.png")
+```
+    1. Your accompanying text should describe what is shown in that map, in particular what data are being visualized. Examine next the patterns for a number of different groups (e.g., lowest income children, high income children) and outcomes (e.g., earnings in adulthood, incarceration rates).  Only choose one or two of these to include in your report.
+```{r out.width = "75%", echo = FALSE, eval = FALSE}
+library(knitr)
+include_graphics("images/pv-atlas-2.png")
+include_graphics("images/pv-atlas-3.png")
+```
+
 1. To answer the next question, read the [Opportunity Atlas Manual](https://opportunityinsights.org/wp-content/uploads/2018/10/atlas_paper.pdf): What period do the data you are analyzing come from?  Are you concerned that the neighborhoods you are studying may have changed for kids now growing up there?  What evidence do the authors of the manual provide suggesting that such changes are or are not important?  What type of data could you use to test whether your neighborhood has changed in recent years?
+
 1. Now turn to the `atlas.Rds` data set, which you can load as shown below. How does average upward mobility, pooling races and genders, for children with parents at the 25th percentile (`kfr_pooled_p25`) in your home Census tract compare to mean (population-weighted, using `count_pooled`) upward mobility in your state and in the U.S. overall?  Do kids where you grew up have better or worse chances of climbing the income ladder than the average child in America? 
 *Hint*: The Opportunity Atlas website will give you the tract, county, and state FIPS codes for your home address. For example, searching for “Lynwood Road, Verona, New Jersey” will display Tract 34013021000, Verona, NJ.  The first two digits refer to the state code, the next three digits refer to the county code, and the last 6 digits refer to the tract code.  In `R`, listing this observation can be done as follows:
 
@@ -39,20 +57,20 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
     # load data
     d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
     # subset data.frame
-    subset(d, kfr_pooled_p25 if state == 34 & county == 013 & tract == 021000)
+    subset(d, kfr_pooled_p25 if state == 24 & county == 003 & tract == 706500)
     ```
 1. What is the standard deviation of upward mobility (population-weighted) in your home county, and what does this number tell you? Is it larger or smaller than the standard deviation across tracts in your state (i.e. compare your county to all other counties in your state)? Across tracts in the entire country? What do you learn from these comparisons? Notice that you can compute a weighted standard deviation for vector `x` using weights `weight_variable` in `R` like this
     
     ```R
     # you need the Hmisc package installed. if not:
-    # install.packages("Hmisc")
+    install.packages("Hmisc")
     sqrt(Hmisc::wtd.var(x, weights = weight_variable))
     ```
     
-    ```{r, echo = FALSE,eval = FALSE}
-    d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
-    sqrt(Hmisc::wtd.var(d$kfr_pooled_p25, weights = d$count_pooled))
-    ```
+```{r, echo = FALSE,eval = FALSE}
+d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+sqrt(Hmisc::wtd.var(d$kfr_pooled_p25, weights = d$count_pooled))
+```
     
 1. Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles.  How do the patterns differ?
 1. Using a linear regression, estimate the relationship between outcomes of children at the 25th and 75th percentile for the Census tracts in your home county.  Generate a scatter plot to visualize this regression.  Do areas where children from low-income families do well generally have better outcomes for those from high-income families, too?
