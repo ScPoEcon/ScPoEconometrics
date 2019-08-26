@@ -26,6 +26,9 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
 
 1. Referring to the [NYT article](https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html): 
     1. Why does the Seattle Housing Authority give away vouchers to pay for rent in the area between 100th and 115th Streets, east of Meridian, west of 35th Avenue?
+    ```{r chunk_name, results="hide"}
+# Because research has shown that childreen who lives in that area have substantial higher chance to escape poverty. 
+    ```
     1. The data here shows how easy it is for children of poor parents to escape poverty themselves. In explaining what makes a *good* neighborhood, how much of the variation we see is actually explained by things like school boundary lines and poverty levels alone? In other words, how *important* is the school you go to in isoluation of other factors, if you want to escape the low rank of your parents in the income distribution?
     1. Some select census tracts have received up to 500 million USD since 1990 in place-based neighborhood improvement policies. Do we know if and to what extent those investments were efficacious?
 1. Go to [https://www.opportunityatlas.org](https://www.opportunityatlas.org) and look at the census tracts around where your home is, if you grew up in the United States. If you grew up outside the US, randomly choose one of the State Capitals from [this list](https://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States#State_capitals) and select any census tract at random by zooming in. Make sure to immediately post your choice of city in the corresponding slack channel (e.g. "florian-atlas" for my group) to avoid having multiple reports on the same city. Let's call the chosen census tract your *home*. 
