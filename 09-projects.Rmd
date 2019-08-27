@@ -91,10 +91,9 @@ sum(values_us*weights_us)
     ```
     
 ```{r, echo = FALSE,eval = FALSE}
-install.packages("Hmisc")
+library("Hmisc")
 
-c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>%
-
+c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
 sqrt(Hmisc::wtd.var(c$kfr_pooled_p25, weights = c$count_pooled))
 ```
     
