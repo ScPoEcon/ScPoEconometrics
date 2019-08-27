@@ -1,4 +1,3 @@
-
 # Projects
 
 ## Opportunity Atlas {#opp-atlas}
@@ -14,7 +13,6 @@ This project focuses on developing your descriptive data analysis skills. In par
 
 In order to achieve those goals, you will interact with the Atlas website at [https://www.opportunityatlas.org](https://www.opportunityatlas.org), and you will use the raw data behind the website to compute additional statistics.
 
-
 ### Instructions
 
 1. Your submission will be a statistical report addressing the below questions, produced from a single `R` markdown file (ending in `.Rmd`). You can create a simple `Rmd` template in Rstudio by clicking top left on the "new file" symbol, then selecting *R Markdown*. A quick but effective guide on using Markdown is available [here](https://rmarkdown.rstudio.com/authoring_basics.html).
@@ -24,26 +22,34 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
 
 ### Questions
 
+```{r setup, include=FALSE}
+library(knitr)
+library(dplyr)
+library(Hmisc)
+library(ggplot2)
+
+showsols <- T
+```
+
 1. Referring to the [NYT article](https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html):
     1. Why does the Seattle Housing Authority give away vouchers to pay for rent in the area between 100th and 115th Streets, east of Meridian, west of 35th Avenue?
-```{r, echo = FALSE, eval = FALSE}
+```{r include = showsols}
 # Because research has shown that childreen who lives in that area have substantial higher chance to escape poverty.
 ```
     1. The data here shows how easy it is for children of poor parents to escape poverty themselves. In explaining what makes a *good* neighborhood, how much of the variation we see is actually explained by things like school boundary lines and poverty levels alone? In other words, how *important* is the school you go to in isoluation of other factors, if you want to escape the low rank of your parents in the income distribution?
+    
     1. Some select census tracts have received up to 500 million USD since 1990 in place-based neighborhood improvement policies. Do we know if and to what extent those investments were efficacious?
 
 1. Go to [https://www.opportunityatlas.org](https://www.opportunityatlas.org) and look at the census tracts around where your home is, if you grew up in the United States. If you grew up outside the US, randomly choose one of the State Capitals from [this list](https://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States#State_capitals) and select any census tract at random by zooming in. Make sure to immediately post your choice of city in the corresponding slack channel (e.g. "florian-atlas" for my group) to avoid having multiple reports on the same city. Let's call the chosen census tract your *home*. 
-```{r, echo = FALSE, eval = FALSE}
+```{r include = showsols}
 # Tract 24003706500, Annapolis, MD
 ```
     1. Create Figure 1 in your report, which should display the map shown by [https://www.opportunityatlas.org](https://www.opportunityatlas.org) for the census tracts around your home (you can download that map *as an image* bottom left).
-```{r out.width = "75%", echo = FALSE, eval = FALSE}
-library(knitr)
+```{r include = showsols, out.width = "75%"}
 include_graphics("images/pv-atlas.png")
 ```
     1. Your accompanying text should describe what is shown in that map, in particular what data are being visualized. Examine next the patterns for a number of different groups (e.g., lowest income children, high income children) and outcomes (e.g., earnings in adulthood, incarceration rates).  Only choose one or two of these to include in your report.
-```{r out.width = "75%", echo = FALSE, eval = FALSE}
-library(knitr)
+```{r include = showsols, out.width = "75%"}
 include_graphics("images/pv-atlas-2.png")
 include_graphics("images/pv-atlas-3.png")
 ```
@@ -60,9 +66,7 @@ include_graphics("images/pv-atlas-3.png")
     subset(d, select = kfr_pooled_p25, subset = state == 24 & county == 003 & tract == 706500)
     ```
     
-```{r, echo = FALSE, eval = FALSE}
-library(dplyr)
-
+```{r include = showsols}
 d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
 s = d %>% select(kfr_pooled_p25, count_pooled, state) %>% na.omit()
 
@@ -92,10 +96,7 @@ sum(values_us*weights_us)
     sqrt(Hmisc::wtd.var(x, weights = weight_variable))
     ```
     
-```{r, echo = FALSE,eval = FALSE}
-library("Hmisc")
-
-d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+```{r include = showsols}
 c = d %>% filter(state == 24 & county == 003)
 
 sqrt(Hmisc::wtd.var(c$kfr_pooled_p25, weights = c$count_pooled))
@@ -103,10 +104,7 @@ sqrt(Hmisc::wtd.var(c$kfr_pooled_p25, weights = c$count_pooled))
     
 1. Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles.  How do the patterns differ?
 
-```{r, echo = FALSE,eval = FALSE}
-d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
-c = d %>% filter(state == 24 & county == 003)
-
+```{r include = showsols}
 ## 75 pctiles
 
 s = d %>% select(kfr_pooled_p75, count_pooled, state) %>% na.omit()
@@ -160,12 +158,7 @@ sqrt(Hmisc::wtd.var(c$kfr_pooled_p100, weights = c$count_pooled))
     # explain scatter plot
     ```
         
-```{r, echo = FALSE, eval = FALSE}
-library(dplyr)
-library(ggplot2)
-c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>% 
-  filter(state == 24 & county == 003)
-
+```{r include = showsols}
 reg_pooled = lm(kfr_pooled_p75 ~ kfr_pooled_p25, data = c, weights = c$count_pooled) 
 summary(reg_pooled)
 
@@ -178,13 +171,8 @@ ggplot(data = c, aes(x = kfr_pooled_p25, y = kfr_pooled_p75, weight = count_pool
     
 1. Next, examine whether the patterns you have looked at above are similar by race. If there is not enough racial heterogeneity in the area of interest (i.e., data is missing for most racial groups), then choose a different area to examine.
 
-```{r, echo = FALSE, eval = FALSE}
-library(dplyr)
-library(ggplot2)
-
-# Home county 
-c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>% 
-  filter(state == 24 & county == 003)
+```{r include = showsols}
+## home county
 
 # black
 reg_black = lm(kfr_black_p75 ~ kfr_black_p25, data = c, weights = c$count_black) 
@@ -222,8 +210,6 @@ ggplot(data = c, aes(x = kfr_white_p25, y = kfr_white_p75, weight = c$count_whit
 
 ## all us 
 
-d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) 
-
 # black
 reg_black = lm(kfr_black_p75 ~ kfr_black_p25, data = d, weights = d$count_black) 
 summary(reg_black)
@@ -260,6 +246,15 @@ ggplot(data = d, aes(x = kfr_white_p25, y = kfr_white_p75, weight = d$count_whit
 ```
 
 1. Using the Census tracts in your home county, can you identify any covariates which help explain some of the patterns you have identified above? Some examples of covariates you might examine include housing prices, income inequality, fraction of children with single parents, job density, etc. For 2 or 3 of these, report estimated correlation coefficients along with their 95% confidence intervals.
+
+```{r include = showsols}
+# Patterns : 
+# - greater upward mobility for low income families children -> more up mob for high income families children
+# - 
+
+# job density
+
+```
 
 1. Open question: formulate a hypothesis for why you see the variation in upward mobility for children who grew up in the Census tracts near your home and provide correlational evidence testing that hypothesis. For this question, many covariates have been provided to you in the `atlas.Rds` file, which are described in subsection \@ref(proj1-data).
 
