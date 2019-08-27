@@ -65,6 +65,7 @@ library(dplyr)
 
 d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
 s = d %>% select(kfr_pooled_p25, count_pooled, state) %>% na.omit()
+
 weights_state = s$count_pooled[s$state == 24]/sum(s$count_pooled[s$state == 24])
 weights_us = s$count_pooled/sum(s$count_pooled)
 values_state = s$kfr_pooled_p25[s$state == 24]
@@ -72,6 +73,7 @@ values_us = s$kfr_pooled_p25
 
 # home 
 up_mob_home = subset(d, select = kfr_pooled_p25, subset = state == 24 & county == 003 & tract == 706500)
+up_mob_home
 # all state 
 sum(values_state*weights_state)
 # all US
@@ -93,15 +95,19 @@ sum(values_us*weights_us)
 ```{r, echo = FALSE,eval = FALSE}
 library("Hmisc")
 
-c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+c = d %>% filter(state == 24 & county == 003)
+
 sqrt(Hmisc::wtd.var(c$kfr_pooled_p25, weights = c$count_pooled))
 ```
     
 1. Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles.  How do the patterns differ?
 
 ```{r, echo = FALSE,eval = FALSE}
-## 75 pctiles
 d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+c = d %>% filter(state == 24 & county == 003)
+
+## 75 pctiles
 
 s = d %>% select(kfr_pooled_p75, count_pooled, state) %>% na.omit()
 weights_state = s$count_pooled[s$state == 24]/sum(s$count_pooled[s$state == 24])
@@ -118,10 +124,10 @@ sum(values_state*weights_state)
 sum(values_us*weights_us)
 # rel diff 
 100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
-
 # --> On average, kids who grew up in relatively rich family in "my home" Census Tract are predicted to achieve the same upward mobility than in the whole state or in the whole country. 
 
 sqrt(Hmisc::wtd.var(c$kfr_pooled_p75, weights = c$count_pooled))
+# --> only slightly higher than for p25 
 
 ## 100 pctiles 
 
@@ -140,10 +146,10 @@ sum(values_state*weights_state)
 sum(values_us*weights_us)
 # rel diff 
 100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
-
 # --> On average, kids who grew up in very rich family in "my home" Census Tract are predicted to achieve better upward mobility than in the whole state or in the whole country. 
 
 sqrt(Hmisc::wtd.var(c$kfr_pooled_p100, weights = c$count_pooled))
+# --> substantially higher than for p25 
 ```
   
 1. Using a linear regression, estimate the relationship between outcomes of children at the 25th and 75th percentile for the Census tracts in your home county.  Generate a scatter plot to visualize this regression.  Do areas where children from low-income families do well generally have better outcomes for those from high-income families, too?
@@ -153,10 +159,111 @@ sqrt(Hmisc::wtd.var(c$kfr_pooled_p100, weights = c$count_pooled))
     # explain lm
     # explain scatter plot
     ```
+        
+```{r, echo = FALSE, eval = FALSE}
+library(dplyr)
+library(ggplot2)
+c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>% 
+  filter(state == 24 & county == 003)
+
+reg_pooled = lm(kfr_pooled_p75 ~ kfr_pooled_p25, data = c, weights = c$count_pooled) 
+summary(reg_pooled)
+
+ggplot(data = c, aes(x = kfr_pooled_p25, y = kfr_pooled_p75, weight = count_pooled)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# areas where children from low-income families do well generally have better outcomes for those from high-income families too ! If upward mobility of 25 pctile income families increase by 1000 $, the one from high income families is expected to increase by approximately 
+```
     
 1. Next, examine whether the patterns you have looked at above are similar by race. If there is not enough racial heterogeneity in the area of interest (i.e., data is missing for most racial groups), then choose a different area to examine.
 
+```{r, echo = FALSE, eval = FALSE}
+library(dplyr)
+library(ggplot2)
+
+# Home county 
+c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>% 
+  filter(state == 24 & county == 003)
+
+# black
+reg_black = lm(kfr_black_p75 ~ kfr_black_p25, data = c, weights = c$count_black) 
+summary(reg_black)
+
+ggplot(data = c, aes(x = kfr_black_p25, y = kfr_black_p75, weight = c$count_black)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# asian 
+reg_asian = lm(kfr_asian_p75 ~ kfr_asian_p25, data = c,  weights = c$count_asian) 
+summary(reg_asian)
+
+ggplot(data = c, aes(x = kfr_asian_p25, y = kfr_asian_p75, weight = c$count_asian)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# hisp 
+reg_hisp = lm(kfr_hisp_p75 ~ kfr_hisp_p25, data = c,  weights = c$count_hisp) 
+summary(reg_hisp)
+
+ggplot(data = c, aes(x = kfr_hisp_p25, y = kfr_hisp_p75, weight = c$count_hisp)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# white 
+reg_white = lm(kfr_white_p75 ~ kfr_white_p25, data = c,  weights = c$count_white) 
+summary(reg_white)
+
+ggplot(data = c, aes(x = kfr_white_p25, y = kfr_white_p75, weight = c$count_white)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+## In home county, global pattern is mainly driven by white people, also significant for black but lower magnitude and very few observation for other races
+
+## all us 
+
+d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) 
+
+# black
+reg_black = lm(kfr_black_p75 ~ kfr_black_p25, data = d, weights = d$count_black) 
+summary(reg_black)
+
+ggplot(data = d, aes(x = kfr_black_p25, y = kfr_black_p75, weight = d$count_black)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# asian 
+reg_asian = lm(kfr_asian_p75 ~ kfr_asian_p25, data = d,  weights = d$count_asian) 
+summary(reg_asian)
+
+ggplot(data = d, aes(x = kfr_asian_p25, y = kfr_asian_p75, weight = d$count_asian)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# hisp 
+reg_hisp = lm(kfr_hisp_p75 ~ kfr_hisp_p25, data = d,  weights = d$count_hisp) 
+summary(reg_hisp)
+
+ggplot(data = d, aes(x = kfr_hisp_p25, y = kfr_hisp_p75, weight = d$count_hisp)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# white 
+reg_white = lm(kfr_white_p75 ~ kfr_white_p25, data = d,  weights = d$count_white) 
+summary(reg_white)
+
+ggplot(data = d, aes(x = kfr_white_p25, y = kfr_white_p75, weight = d$count_white)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+## In all US, pattern is significant for all races. 
+```
+
 1. Using the Census tracts in your home county, can you identify any covariates which help explain some of the patterns you have identified above? Some examples of covariates you might examine include housing prices, income inequality, fraction of children with single parents, job density, etc. For 2 or 3 of these, report estimated correlation coefficients along with their 95% confidence intervals.
+
+```{r, echo = FALSE, eval = FALSE}
+
+```
 
 1. Open question: formulate a hypothesis for why you see the variation in upward mobility for children who grew up in the Census tracts near your home and provide correlational evidence testing that hypothesis. For this question, many covariates have been provided to you in the `atlas.Rds` file, which are described in subsection \@ref(proj1-data).
 
