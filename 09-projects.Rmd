@@ -57,8 +57,34 @@ include_graphics("images/pv-atlas-3.png")
     # load data
     d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
     # subset data.frame
-    subset(d, kfr_pooled_p25 if state == 24 & county == 003 & tract == 706500)
+    subset(d, select = kfr_pooled_p25, subset = state == 24 & county == 003 & tract == 706500)
     ```
+    
+```{r, echo = FALSE, eval = FALSE}
+library(dplyr)
+
+d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+s = d %>% select(kfr_pooled_p25, count_pooled, state) %>% na.omit()
+weights_state = s$count_pooled[s$state == 24]/sum(s$count_pooled[s$state == 24])
+weights_us = s$count_pooled/sum(s$count_pooled)
+values_state = s$kfr_pooled_p25[s$state == 24]
+values_us = s$kfr_pooled_p25
+
+# home 
+up_mob_home = subset(d, select = kfr_pooled_p25, subset = state == 24 & county == 003 & tract == 706500)
+
+# all state 
+sum(values_state*weights_state)
+
+# all US
+sum(values_us*weights_us)
+
+# rel diff
+100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
+
+# --> On average, kids who grew up in relatively poor family in "my home" Census Tract are predicted to achieve 10% lower upward mobility than in the whole state or in the whole country 
+```
+
 1. What is the standard deviation of upward mobility (population-weighted) in your home county, and what does this number tell you? Is it larger or smaller than the standard deviation across tracts in your state (i.e. compare your county to all other counties in your state)? Across tracts in the entire country? What do you learn from these comparisons? Notice that you can compute a weighted standard deviation for vector `x` using weights `weight_variable` in `R` like this
     
     ```R
@@ -68,19 +94,74 @@ include_graphics("images/pv-atlas-3.png")
     ```
     
 ```{r, echo = FALSE,eval = FALSE}
-d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
-sqrt(Hmisc::wtd.var(d$kfr_pooled_p25, weights = d$count_pooled))
+install.packages("Hmisc")
+
+c = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds")) %>%
+
+sqrt(Hmisc::wtd.var(c$kfr_pooled_p25, weights = c$count_pooled))
 ```
     
 1. Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles.  How do the patterns differ?
+
+```{r, echo = FALSE,eval = FALSE}
+## 75 pctiles
+d = readRDS(system.file(package = "ScPoEconometrics","datasets","atlas.Rds"))
+
+s = d %>% select(kfr_pooled_p75, count_pooled, state) %>% na.omit()
+weights_state = s$count_pooled[s$state == 24]/sum(s$count_pooled[s$state == 24])
+weights_us = s$count_pooled/sum(s$count_pooled)
+values_state = s$kfr_pooled_p75[s$state == 24]
+values_us = s$kfr_pooled_p75
+
+# home 
+up_mob_home = subset(d, select = kfr_pooled_p75, subset = state == 24 & county == 003 & tract == 706500)
+up_mob_home
+# all state 
+sum(values_state*weights_state)
+# all US
+sum(values_us*weights_us)
+# rel diff 
+100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
+
+# --> On average, kids who grew up in relatively rich family in "my home" Census Tract are predicted to achieve the same upward mobility than in the whole state or in the whole country. 
+
+sqrt(Hmisc::wtd.var(c$kfr_pooled_p75, weights = c$count_pooled))
+
+## 100 pctiles 
+
+s = d %>% select(kfr_pooled_p100, count_pooled, state) %>% na.omit()
+weights_state = s$count_pooled[s$state == 24]/sum(s$count_pooled[s$state == 24])
+weights_us = s$count_pooled/sum(s$count_pooled)
+values_state = s$kfr_pooled_p100[s$state == 24]
+values_us = s$kfr_pooled_p100
+
+# home 
+up_mob_home = subset(d, select = kfr_pooled_p100, subset = state == 24 & county == 003 & tract == 706500)
+up_mob_home
+# all state 
+sum(values_state*weights_state)
+# all US
+sum(values_us*weights_us)
+# rel diff 
+100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
+
+# --> On average, kids who grew up in very rich family in "my home" Census Tract are predicted to achieve better upward mobility than in the whole state or in the whole country. 
+
+sqrt(Hmisc::wtd.var(c$kfr_pooled_p100, weights = c$count_pooled))
+```
+  
 1. Using a linear regression, estimate the relationship between outcomes of children at the 25th and 75th percentile for the Census tracts in your home county.  Generate a scatter plot to visualize this regression.  Do areas where children from low-income families do well generally have better outcomes for those from high-income families, too?
     
+  
     ```R
     # explain lm
     # explain scatter plot
     ```
+    
 1. Next, examine whether the patterns you have looked at above are similar by race. If there is not enough racial heterogeneity in the area of interest (i.e., data is missing for most racial groups), then choose a different area to examine.
+
 1. Using the Census tracts in your home county, can you identify any covariates which help explain some of the patterns you have identified above? Some examples of covariates you might examine include housing prices, income inequality, fraction of children with single parents, job density, etc. For 2 or 3 of these, report estimated correlation coefficients along with their 95% confidence intervals.
+
 1. Open question: formulate a hypothesis for why you see the variation in upward mobility for children who grew up in the Census tracts near your home and provide correlational evidence testing that hypothesis. For this question, many covariates have been provided to you in the `atlas.Rds` file, which are described in subsection \@ref(proj1-data).
 
 ### Detailed Data Description {#proj1-data}
