@@ -173,7 +173,7 @@ ggplot(data = c, aes(x = kfr_pooled_p25, y = kfr_pooled_p75, weight = count_pool
   geom_point() + 
   geom_smooth(method = "lm")
 
-# areas where children from low-income families do well generally have better outcomes for those from high-income families too ! If upward mobility of 25 pctile income families increase by 1000 $, the one from high income families is expected to increase by approximately 
+# areas where children from low-income families do well generally have better outcomes for those from high-income families too ! If expected income of 25 pctile income families children increase by 1000 $, the one from high income families children is expected to increase by approximately 
 ```
     
 1. Next, examine whether the patterns you have looked at above are similar by race. If there is not enough racial heterogeneity in the area of interest (i.e., data is missing for most racial groups), then choose a different area to examine.
@@ -260,10 +260,6 @@ ggplot(data = d, aes(x = kfr_white_p25, y = kfr_white_p75, weight = d$count_whit
 ```
 
 1. Using the Census tracts in your home county, can you identify any covariates which help explain some of the patterns you have identified above? Some examples of covariates you might examine include housing prices, income inequality, fraction of children with single parents, job density, etc. For 2 or 3 of these, report estimated correlation coefficients along with their 95% confidence intervals.
-
-```{r, echo = FALSE, eval = FALSE}
-
-```
 
 1. Open question: formulate a hypothesis for why you see the variation in upward mobility for children who grew up in the Census tracts near your home and provide correlational evidence testing that hypothesis. For this question, many covariates have been provided to you in the `atlas.Rds` file, which are described in subsection \@ref(proj1-data).
 
