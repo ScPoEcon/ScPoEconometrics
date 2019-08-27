@@ -72,13 +72,10 @@ values_us = s$kfr_pooled_p25
 
 # home 
 up_mob_home = subset(d, select = kfr_pooled_p25, subset = state == 24 & county == 003 & tract == 706500)
-
 # all state 
 sum(values_state*weights_state)
-
 # all US
 sum(values_us*weights_us)
-
 # rel diff
 100*(up_mob_home - sum(values_us*weights_us)) / sum(values_us*weights_us)
 
