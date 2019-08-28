@@ -27,7 +27,6 @@ In order to achieve those goals, you will interact with the Atlas website at [ht
 ```{r projects-setup, include=FALSE}
 library(knitr)
 library(dplyr)
-library(Hmisc)
 library(ggplot2)
 
 showsols <- F
@@ -46,14 +45,25 @@ showsols <- F
     ```{r include = showsols}
     # Tract 24003706500, Annapolis, MD
     ```
-    1. Create Figure 1 in your report, which should display the map shown by [https://www.opportunityatlas.org](https://www.opportunityatlas.org) for the census tracts around your home (you can download that map *as an image* bottom left).
+    1. Create Figure 1 in your report, which should display the map shown by [https://www.opportunityatlas.org](https://www.opportunityatlas.org) for the census tracts around your home (you can download that map *as an image* bottom left). Notice that you can include a figure in an `.Rmd` like follows. Remember that all `R`-code chunks in your .Rmd are inside a block delimited by tripple backticks ```` ``` ````. 
+    
+        ````markdown
+        `r ''````{r your-chunk-label,echo = FALSE, out.width = "75%"}
+        # your-chunk-label: name you give that code chunk (optional)
+        # echo = TRUE/FALSE: display the code in output?
+        # out.width = "75%": scale image to 75% of page width
+        # all options: https://yihui.name/knitr/options/
+        knitr::include_graphics("path_to_your_grahpic.png") 
+        ```
+        ````
+        
         ```{r include = showsols, out.width = "75%"}
-        include_graphics("images/pv-atlas.png")
+        knitr::include_graphics("images/pv-atlas.png")
         ```
     1. Your accompanying text should describe what is shown in that map, in particular what data are being visualized. Examine next the patterns for a number of different groups (e.g., lowest income children, high income children) and outcomes (e.g., earnings in adulthood, incarceration rates).  Only choose one or two of these to include in your report.
         ```{r include = showsols, out.width = "75%"}
-        include_graphics("images/pv-atlas-2.png")
-        include_graphics("images/pv-atlas-3.png")
+        knitr::include_graphics("images/pv-atlas-2.png")
+        knitr::include_graphics("images/pv-atlas-3.png")
         ```
 1. To answer the next question, read the [Opportunity Atlas Manual](https://opportunityinsights.org/wp-content/uploads/2018/10/atlas_paper.pdf): What period do the data you are analyzing come from?  Are you concerned that the neighborhoods you are studying may have changed for kids now growing up there?  What evidence do the authors of the manual provide suggesting that such changes are or are not important?  What type of data could you use to test whether your neighborhood has changed in recent years?
 1. Now turn to the `atlas.Rds` data set, which you can load as shown below. How does average upward mobility, pooling races and genders, for children with parents at the 25th percentile (`kfr_pooled_p25`) in your home Census tract compare to mean (population-weighted, using `count_pooled`) upward mobility in your state and in the U.S. overall?  Do kids where you grew up have better or worse chances of climbing the income ladder than the average child in America? 

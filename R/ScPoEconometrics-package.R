@@ -28,5 +28,6 @@
 #' @import rmarkdown
 #' @import magick
 #' @import pdftools
+#' @import Hmisc
 #' @keywords internal
 NULL
