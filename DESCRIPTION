@@ -23,7 +23,8 @@ Imports: bookdown,
   Ecdat,
   EnvStats,
   rmarkdown (>= 1.11),
-  AER
+  AER,
+  magick
 Suggests:
   shinytest,
   testthat

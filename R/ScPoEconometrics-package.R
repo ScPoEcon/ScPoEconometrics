@@ -26,5 +26,6 @@
 #' @import Ecdat
 #' @import EnvStats
 #' @import rmarkdown
+#' @import magick
 #' @keywords internal
 NULL
