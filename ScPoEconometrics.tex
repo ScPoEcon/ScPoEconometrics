@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-08-16}
+    \date{2019-08-28}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -6836,33 +6836,9 @@ We need a factor that is outside this circular system, affecting
 \textbf{only} the size of the police force, but not the actual crime
 rate. Such a factor is called an \emph{instrumental variable}.
 
-\chapter{Slides}\label{slides}
-
-\begin{itemize}
-\tightlist
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-1}{chapter 1}
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-2}{chapter 2}
-\item
-  \href{http://rpubs.com/floswald/ScPoMetrics-3}{chapter 3}
-\item
-  \href{slides/chapter4/chapter4.html}{chapter 4}
-\item
-  \href{slides/chapter5/chapter5.html}{chapter 5}
-\item
-  \href{slides/chapter6/chapter6.html}{chapter 6}
-\end{itemize}
-
-\section{Worked Tutorials}\label{worked-tutorials}
-
-\begin{itemize}
-\tightlist
-\item
-  \href{images/trade.html}{Trade exercise}
-\end{itemize}
-
 \chapter{Projects}\label{projects}
+
+This chapter contains several empirical projects.
 
 \section{Opportunity Atlas}\label{opp-atlas}
 
@@ -6938,7 +6914,6 @@ raw data behind the website to compute additional statistics.
 
   \begin{enumerate}
   \def\labelenumii{\arabic{enumii}.}
-  \tightlist
   \item
     Why does the Seattle Housing Authority give away vouchers to pay for
     rent in the area between 100th and 115th Streets, east of Meridian,
@@ -6970,19 +6945,33 @@ raw data behind the website to compute additional statistics.
 
   \begin{enumerate}
   \def\labelenumii{\arabic{enumii}.}
-  \tightlist
   \item
     Create Figure 1 in your report, which should display the map shown
     by \url{https://www.opportunityatlas.org} for the census tracts
     around your home (you can download that map \emph{as an image}
-    bottom left).
+    bottom left). Notice that you can include a figure in an
+    \texttt{.Rmd} like follows. Remember that all \texttt{R}-code chunks
+    in your .Rmd are inside a block delimited by tripple backticks
+    \texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{```\{r your-chunk-label,echo = FALSE, out.width = "75%"\}}
+\FunctionTok{# your-chunk-label: name you give that code chunk (optional)}
+\FunctionTok{# echo = TRUE/FALSE: display the code in output?}
+\FunctionTok{# out.width = "75%": scale image to 75% of page width}
+\FunctionTok{# all options: https://yihui.name/knitr/options/}
+\NormalTok{knitr::include_graphics("path_to_your_grahpic.png") }
+\NormalTok{```}
+\end{Highlighting}
+\end{Shaded}
   \item
     Your accompanying text should describe what is shown in that map, in
     particular what data are being visualized. Examine next the patterns
     for a number of different groups (e.g., lowest income children, high
     income children) and outcomes (e.g., earnings in adulthood,
     incarceration rates). Only choose one or two of these to include in
-    your report.\\
+    your report.
   \end{enumerate}
 \item
   To answer the next question, read the
@@ -7014,7 +7003,7 @@ raw data behind the website to compute additional statistics.
 \CommentTok{# load data}
 \NormalTok{d =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\KeywordTok{system.file}\NormalTok{(}\DataTypeTok{package =} \StringTok{"ScPoEconometrics"}\NormalTok{,}\StringTok{"datasets"}\NormalTok{,}\StringTok{"atlas.Rds"}\NormalTok{))}
 \CommentTok{# subset data.frame}
-\KeywordTok{subset}\NormalTok{(d, kfr_pooled_p25 }\ControlFlowTok{if}\NormalTok{ state }\OperatorTok{==}\StringTok{ }\DecValTok{34} \OperatorTok{&}\StringTok{ }\NormalTok{county }\OperatorTok{==}\StringTok{ }\DecValTok{013} \OperatorTok{&}\StringTok{ }\NormalTok{tract }\OperatorTok{==}\StringTok{ }\DecValTok{021000}\NormalTok{)}
+\KeywordTok{subset}\NormalTok{(d, }\DataTypeTok{select =}\NormalTok{ kfr_pooled_p25, }\DataTypeTok{subset =}\NormalTok{ state }\OperatorTok{==}\StringTok{ }\DecValTok{24} \OperatorTok{&}\StringTok{ }\NormalTok{county }\OperatorTok{==}\StringTok{ }\DecValTok{003} \OperatorTok{&}\StringTok{ }\NormalTok{tract }\OperatorTok{==}\StringTok{ }\DecValTok{706500}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -7030,7 +7019,7 @@ raw data behind the website to compute additional statistics.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# you need the Hmisc package installed. if not:}
-\CommentTok{# install.packages("Hmisc")}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"Hmisc"}\NormalTok{)}
 \KeywordTok{sqrt}\NormalTok{(Hmisc}\OperatorTok{::}\KeywordTok{wtd.var}\NormalTok{(x, }\DataTypeTok{weights =}\NormalTok{ weight_variable))}
 \end{Highlighting}
 \end{Shaded}
@@ -7537,6 +7526,14 @@ Count of Native American children\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
+
+\section{Trade Exercise}\label{trade-exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{images/trade.html}{Trade exercise}
+\end{itemize}
 
 \bibliography{packages.bib,book.bib}
 
