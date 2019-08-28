@@ -375,7 +375,7 @@ With continous distributions we cannot apply the grouping trick from the previou
 
 ### Income in London
 
-Now suppose that `y` are measures of annual income obtained randomly from the population of London, and as such, are measured in Thousand Pound Sterling (GBP), i.e. `y=10` means *annual income of 10000GBP*. Can you compute the *median* income in London? Remember that the median is the value above and below which exactly half of the data lie. Use the function `median` to compute this.
+Now suppose that `y` are measures of annual income obtained randomly from the population of London, and as such, are measured in Thousand Pound Sterling (GBP), i.e. `y=10` means *annual income of 10000GBP*. Can you compute the *median* income in London? Just enter the relevant code in the above code box.  Use the function `median` to compute this, and then answer the following question:
 
 ```{r quizln}
 quiz(
