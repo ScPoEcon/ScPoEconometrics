@@ -5,7 +5,7 @@ os:
 
 before_install:
 #  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; fi
 
 cache:
   packages: yes
@@ -15,7 +15,7 @@ pandoc_version: 1.19.2.1
 before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew tap homebrew/cask; brew cask install phantomJS; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew tap homebrew/cask; brew cask install phantomJS; brew install imagemagick@6; fi
 
 script:
   - R CMD build .
