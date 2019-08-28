@@ -1,7 +1,7 @@
 ScPoEconometrics 2
 ========================================================
 author: Florian Oswald
-date: 2018-09-22
+date: 2019-07-29
 autosize: true
 css: ../style.css
 
@@ -356,18 +356,18 @@ mpg
 
 ```
 # A tibble: 234 x 11
-   manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla…
-   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <ch>
- 1 audi         a4      1.8  1999     4 auto… f        18    29 p     com…
- 2 audi         a4      1.8  1999     4 manu… f        21    29 p     com…
- 3 audi         a4      2    2008     4 manu… f        20    31 p     com…
- 4 audi         a4      2    2008     4 auto… f        21    30 p     com…
- 5 audi         a4      2.8  1999     6 auto… f        16    26 p     com…
- 6 audi         a4      2.8  1999     6 manu… f        18    26 p     com…
- 7 audi         a4      3.1  2008     6 auto… f        18    27 p     com…
- 8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     com…
- 9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     com…
-10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     com…
+   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
+ 1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
+ 2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
+ 3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
+ 4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
+ 5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
+ 6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
+ 7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
+ 8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+ 9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
+10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
 # ... with 224 more rows
 ```
 

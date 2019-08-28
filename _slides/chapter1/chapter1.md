@@ -5,7 +5,7 @@
 ScPoEconometrics
 ========================================================
 author: Florian Oswald
-date: 2018-09-14
+date: 2019-07-29
 autosize: true
 css: ../style.css
 
@@ -242,7 +242,7 @@ packageVersion("ScPoEconometrics")
 ```
 
 ```
-[1] '0.1.3'
+[1] '0.2.1'
 ```
 
 
@@ -764,7 +764,7 @@ Control Flow
 
 
 ```r
-if (condition = TRUE) {
+if (condition == TRUE) {
   some R code
 } else {
   some other R code
