@@ -27,5 +27,6 @@
 #' @import EnvStats
 #' @import rmarkdown
 #' @import magick
+#' @import pdftools
 #' @keywords internal
 NULL

@@ -24,7 +24,8 @@ Imports: bookdown,
   EnvStats,
   rmarkdown (>= 1.11),
   AER,
-  magick
+  magick,
+  pdftools
 Suggests:
   shinytest,
   testthat
