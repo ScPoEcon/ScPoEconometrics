@@ -1,6 +1,15 @@
 library(dplyr)
 library(plotly)
 
+set.seed(19)
+
+# Generate Random Data
+x <- rnorm(n = 20, mean = 2, sd = 4)
+
+a_true <- -2
+b_true <- 1.5
+y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1.5)
+
 ui <- fluidPage(
   br(),
   br(),
@@ -9,12 +18,12 @@ ui <- fluidPage(
   column(width = 2,
          sliderInput("i_ssr", "Intercept", min = -4,
                      max = 4, step = .25, value = .5),
-         sliderInput("s_ssr", "Slope", min = -4,
-                     max = 4, step = .25, value = -1),
+         sliderInput("s_ssr", "Slope", min = -1,
+                     max = 3, step = .25, value = -1),
          br(),
          br(),
 
-         textOutput("userguess_ssr")),
+         verbatimTextOutput("userguess_ssr")),
 
   column(width = 4,
          plotOutput("regPlot_ssr")),
@@ -29,21 +38,12 @@ server <- function(input,output){
 
     a <- input$i_ssr
     b <- input$s_ssr
-    paste0("Your guess:\n y = ", a, " + ", b, "x")
+    errors <- (a + b*x) - y
+    paste0("Your guess:\n y = ", a, " + ", b, "x\n SSR = ", round(sum(errors^2),3))
 
   })
 
   output$regPlot_ssr <- renderPlot({
-
-    set.seed(19)
-
-    # Generate Random Data
-    x <- rnorm(n = 20, mean = 2, sd = 4)
-
-    a_true <- -2
-    b_true <- 1.5
-    y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1.5)
-    # True DGP: y = -2 + 1.5 * x + u
 
     # a = intercept, b = slope (user input)
     a <- input$i_ssr
@@ -59,10 +59,7 @@ server <- function(input,output){
          main = "Fit the data!", frame.plot = FALSE,
          cex = 1.2)
 
-    b_best = cov(x, y)/var(x) #approx. 1.25
-    a_best = mean(y) - b_best*mean(x) #approx -1
-
-    if (near(a, a_best, tol = .125) &&  near(b, b_best, tol = .125)){
+    if (a == a_true &&  b == b_true){
       curve(expr = expr, from = min(x)-10, to = max(x)+10, add = TRUE, col = "black")
       segments(x0 = x, y0 = y, x1 = x, y1 = (y + errors), col = "green")
       rect(xleft = x, ybottom = y,
@@ -79,16 +76,6 @@ server <- function(input,output){
   })
 
   output$SSR_cone <- renderPlotly({
-    set.seed(19)
-
-    # Generate Random Data
-    x <- rnorm(n = 20, mean = 2, sd = 4)
-
-    a_true <- -2
-    b_true <- 1.5
-    y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1.5)
-    # True DGP: y = -2 + 1.5 * x + u
-
     # a = intercept, b = slope (user input)
     a <- input$i_ssr
     b <- input$s_ssr
@@ -108,13 +95,13 @@ server <- function(input,output){
     df <- cbind(df, mapply(ssr, df$a, df$b))
     colnames(df) <- c("a", "b", "ssr")
 
-    annot <- data.frame(b_0 = a, b_1 = b, SSR = ssr(a, b))
+    annot <- data.frame(intercept = a, slope = b, SSR = ssr(a, b))
 
     # camera
     # https://plot.ly/python/3d-camera-controls/
     scene = list(camera = list(eye = list(x = 2.5, y = 0.1, z = 0.5)))
     plot_ly(x=possible_a,y=possible_b, z=matrix(df$ssr,c(length(possible_a),length(possible_b))),type="surface",colors = "YlOrRd", opacity = .85) %>%
-      add_trace(data=annot,x = ~b_0, y = ~b_1, z = ~SSR,mode="markers",type="scatter3d",marker=list(size=5,color="black",symbol=104)) %>%
+      add_trace(data=annot,x = ~intercept, y = ~slope, z = ~SSR,mode="markers",type="scatter3d",marker=list(size=5,color="black",symbol=104)) %>%
       colorbar(title = "Sum of Squared\nResiduals") %>%
       layout(title = "\nYour guess is the black dot\n(You can move around the plot!)",
              xaxis=list(range=c(-6,6)), yaxis=list(range=c(-6,6)),scene=scene)
