@@ -1,6 +1,15 @@
 library(dplyr)
 library(shiny)
 
+
+set.seed(19)
+
+# Generate Random Data
+x <- rnorm(n = 20, mean = 2, sd = 4)
+b_true <- -0.5
+a_true <- 1.5
+y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 2)
+
 ui <- fluidPage(
   br(),
   br(),
@@ -40,7 +49,7 @@ server <- function(input,output){
     # # True DGP: y = 1.5 -2 * x + u
 
     # get data from disk
-    load(file = system.file(package = "ScPoEconometrics","datasets","simple_arrows.RData"))
+    # load(file = system.file(package = "ScPoEconometrics","datasets","simple_arrows.RData"))
 
     # a = intercept, b = slope (user input)
     a <- input$i_simple
@@ -80,7 +89,7 @@ server <- function(input,output){
       # # True DGP: y = -2 + 1.5 * x + u
 
       # get data from disk
-      load(file = system.file(package = "ScPoEconometrics","datasets","simple_arrows.RData"))
+      # load(file = system.file(package = "ScPoEconometrics","datasets","simple_arrows.RData"))
 
 
       # a = intercept, b = slope (user input)

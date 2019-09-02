@@ -1,22 +1,22 @@
 {
   "input": {
-    "i_std": 2,
-    "s_std": -0.2,
-    "std": false
+    "i_std": 0,
+    "s_std": 0.6,
+    "std": true
   },
   "output": {
     "regPlot_std": {
-      "src": "[image data sha1: 3ef860d4f4149c7ceebb8834ba1ea8e91c964831]",
+      "src": "[image data sha1: 4c41b159c14439f392ca99fa3e00a7b670d76292]",
       "width": 611,
       "height": 400,
       "coordmap": {
         "panels": [
           {
             "domain": {
-              "left": -7.28205164184668,
-              "right": 9.26715200755619,
-              "bottom": -0.64398120505692,
-              "top": 7.84187895036794
+              "left": -7.89137639747014,
+              "right": 7.75892564899204,
+              "bottom": -3.96959719468073,
+              "top": 4.05533725956592
             },
             "range": {
               "left": 59.04,
@@ -39,7 +39,7 @@
         }
       }
     },
-    "userguess_std": "Your guess:\n y = 2 + -0.2x\n SSR: 88.6611966974004"
+    "userguess_std": "Your guess:\n [y / SD(y)] = 0 + 0.6[x / SD(x)]\n SSR: 11.8840245203905"
   },
   "export": {
 
