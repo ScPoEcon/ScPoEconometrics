@@ -1,22 +1,22 @@
 {
   "input": {
-    "dm": false,
-    "i_dm": 0.5,
-    "s_dm": 0.1
+    "dm": true,
+    "i_dm": 0,
+    "s_dm": 1.2
   },
   "output": {
     "regPlot_dm": {
-      "src": "[image data sha1: 45e8f64973d7624fc9e94b64171130a6dd433432]",
+      "src": "[image data sha1: 32a9d86750cd3d752748e583986e485e08f062be]",
       "width": 611,
       "height": 400,
       "coordmap": {
         "panels": [
           {
             "domain": {
-              "left": -13.0495667711796,
-              "right": 13.5864904241601,
-              "bottom": -5.86466418514498,
-              "top": 7.79338615008708
+              "left": -13.6012379040906,
+              "right": 13.0348192912491,
+              "bottom": -8.69942713856809,
+              "top": 4.95862319666398
             },
             "range": {
               "left": 59.04,
@@ -39,7 +39,7 @@
         }
       }
     },
-    "userguess_dm": "Your guess:\ny = 0.5 + 0.1x.\nSSR = 15.1"
+    "userguess_dm": "Your guess:\n[y - mean(y)] = 0 + 1.2 [x - mean(x)].\nSSR = 8.66"
   },
   "export": {
 
