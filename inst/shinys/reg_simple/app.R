@@ -1,6 +1,16 @@
 library(dplyr)
 library(shiny)
 
+
+set.seed(19)
+
+# Generate Random Data
+x <- rnorm(n = 20, mean = 2, sd = 4)
+
+a_true <- -2
+b_true <- 1.5
+y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+
 ui <- fluidPage(
   br(),
   br(),
@@ -29,14 +39,14 @@ server <- function(input,output){
 
   output$regPlot_simple <- renderPlot({
 
-    set.seed(19)
-
-    # Generate Random Data
-    x <- rnorm(n = 20, mean = 2, sd = 4)
-
-    a_true <- -2
-    b_true <- 1.5
-    y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+    # set.seed(19)
+    #
+    # # Generate Random Data
+    # x <- rnorm(n = 20, mean = 2, sd = 4)
+    #
+    # a_true <- -2
+    # b_true <- 1.5
+    # y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
     # True DGP: y = -2 + 1.5 * x + u
 
 
@@ -73,14 +83,14 @@ server <- function(input,output){
   })
 
   output$MSE2 <- renderText({
-    set.seed(19)
-
-    # Generate Random Data
-    x <- rnorm(n = 20, mean = 2, sd = 4)
-
-    a_true <- -2
-    b_true <- 1.5
-    y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
+    # set.seed(19)
+    #
+    # # Generate Random Data
+    # x <- rnorm(n = 20, mean = 2, sd = 4)
+    #
+    # a_true <- -2
+    # b_true <- 1.5
+    # y <- a_true + b_true*x + rnorm(n = 20, mean = 0, sd = 1)
     # True DGP: y = -2 + 1.5 * x + u
 
 

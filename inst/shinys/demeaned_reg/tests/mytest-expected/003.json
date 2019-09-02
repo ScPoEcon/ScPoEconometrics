@@ -1,22 +1,22 @@
 {
   "input": {
-    "i_std": 2,
-    "s_std": -0.2,
-    "std": false
+    "dm": true,
+    "i_dm": 0,
+    "s_dm": 1.2
   },
   "output": {
-    "regPlot_std": {
-      "src": "[image data sha1: 3ef860d4f4149c7ceebb8834ba1ea8e91c964831]",
+    "regPlot_dm": {
+      "src": "[image data sha1: 32a9d86750cd3d752748e583986e485e08f062be]",
       "width": 611,
       "height": 400,
       "coordmap": {
         "panels": [
           {
             "domain": {
-              "left": -7.28205164184668,
-              "right": 9.26715200755619,
-              "bottom": -0.64398120505692,
-              "top": 7.84187895036794
+              "left": -13.6012379040906,
+              "right": 13.0348192912491,
+              "bottom": -8.69942713856809,
+              "top": 4.95862319666398
             },
             "range": {
               "left": 59.04,
@@ -39,7 +39,7 @@
         }
       }
     },
-    "userguess_std": "Your guess:\n y = 2 + -0.2x\n SSR: 88.6611966974004"
+    "userguess_dm": "Your guess:\n[y - mean(y)] = 0 + 1.2 [x - mean(x)].\nSSR = 8.66"
   },
   "export": {
 

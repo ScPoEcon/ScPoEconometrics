@@ -1,4 +1,13 @@
 
+get_lm <- function(a,b,n=20,xscale = 1, escale = 1, seed = 1){
+    set.seed(seed)
+    x = runif(n,min = -1*xscale, max = xscale)
+    y <- a + b * x + rnorm(n,sd = escale)
+    list(x=x,y=y, a = a, b = b, n = n, xscale = xscale, escale = escale)
+}
+
+
+
 #' runTutorial: Run a Tutorial!
 #'
 #' @param tutoname string of which tutorial you want to run

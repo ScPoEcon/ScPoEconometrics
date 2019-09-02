@@ -32,7 +32,7 @@ ui <- fluidPage(
     sliderInput("ex2", "Example:", min = 1,
                 max = 3, step = 1, value = 1, ticks = FALSE),
 
-    textOutput("userguess2")),
+    verbatimTextOutput("userguess2")),
 
   mainPanel(
     plotOutput("regPlot2"),
