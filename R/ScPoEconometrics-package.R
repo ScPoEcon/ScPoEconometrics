@@ -29,5 +29,6 @@
 #' @import magick
 #' @import pdftools
 #' @import Hmisc
+#' @importFrom stats rnorm runif
 #' @keywords internal
 NULL
