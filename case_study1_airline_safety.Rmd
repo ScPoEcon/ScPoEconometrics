@@ -1,0 +1,106 @@
+# Case study #1 : Airline Safety data
+
+    ```{r setup, include=FALSE}
+    knitr::opts_chunk$set(include = FALSE)
+    library(ggplot2)
+    library(ggpubr)
+    library(haven)
+    library(dplyr)
+    ```
+
+## Setup
+
+This case study is based on an [article](https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/) from [FiveThirtyEight](https://fivethirtyeight.com/) published by [Nate Silver](https://fivethirtyeight.com/contributors/nate-silver/). Using [data](https://github.com/fivethirtyeight/data/tree/master/airline-safety) from the [Aviation Safety Network’s database](https://aviation-safety.net/index.php), we want to see if past safety records can predict future risk of accidents. In other words "Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?"
+
+    ```{r include = FALSE}
+    ## need to find the best way to let students download the data 
+    data=read.csv2("~/Documents/TA_Econometrics/Case_studies/airline_safety/data-master/airline-safety/airline-safety_long.csv", sep = ";")
+    ```
+    
+## Exploring the data
+
+The dataset contains the safety records of major commercial airlines over the past 30 years (1985 to 2014). The period has been break down into two halves: from 1985 to 1999, and from 2000 to 2014.
+
+1. First look at the dataset
+    1. What are the variables names and types (categorical, numerical, ...) included in the data ?
+    ```{r}
+    #names(data)
+    str(data)
+    ```
+    1. What is the number of observations in total?
+    ```{r}
+    dim(data)[1]
+    ```
+    1. What defines an observation in our case (no need to code) ? 
+    
+1. Having a  closer look
+    1. How does the dataset look like ? Have a look to the first 5 observations, and the bottom 5. 
+    ```{r}
+    head(data)
+    tail(data)
+    ```
+    1. What are the different values of the "type" variable ? Same question for the "period" variable.
+    ```{r}
+    table(data$type, useNA = "ifany")
+    table(data$period, useNA = "ifany")
+    ```
+    1. Is there any NA's in the dataset ?
+    ```{r}
+    sum(is.na(data))
+    apply(data, 2, function(x) any(is.na(x)))
+    ```
+    1. The variable "avail_seat_km_per_week" corresponds to the number of seats multiplied by the number of kilometers the airline flies in a week. In your opinion, why this variable could be important for future analysis ?
+
+## Analysis
+
+1. What are the mean value of the number of incidents by type and period ? Same for the standard deviation ?
+    ```{r}
+    
+    data %>%
+      group_by(period, type) %>% 
+      summarise(mean_fatal_by_period = mean(value), 
+                sd_fatal_by_period = sd(value))
+    ```
+1. Interpretation : Overall, what happened between the two periods? What can we say about the relative value of the standard deviation compared to the mean? Do you find the mean value meaningfull in this case? 
+
+1. Propose a vizualization showing the evolution of the number of fatal accidents between the two periods. 
+    ```{r}
+    ggplot(subset(data, type != "fatalitie"), aes(x = period, y = value))+
+      geom_boxplot()+
+      facet_wrap(~type)
+      
+    
+    ```
+1. Over 2000-2014 period, what is the top 3 companies (meaning the worst companies) in terms of fatalities?
+    ```{r}
+    data %>% 
+      filter(type == "fatalitie" & period == "2000_2014") %>%
+      arrange(desc(value)) %>%
+      head(3)
+    ```
+1. Do the same taking into account the "avail_seat_km_per_week" variable? 
+    ```{r}
+    data %>% 
+      filter(type == "fatalitie" & period == "2000_2014") %>%
+      arrange(desc(value/avail_seat_km_per_week)) %>%
+      head(3)
+    ```
+1. Bonus : Measuring a ratio of risk. Assume that, in your whole life, you will fly on average 2000 km every year during 50 years (~ 1 Paris - New-York every five years). 
+    1. The number of fatalities given in the dataset correspond to periods of 15 years. However the avail_seat_km_per_week variable is normalized by week. Create a new variable normalizing the fatalities values by week.  
+    ```{r}
+    data$value_by_week = data$value/(15*52)
+    ```
+    1. Compute the risk you have to be in a "dead seat" during your life based on the safety records of each companies in the period 2000-2014. 
+    ```{r}
+    risk_data = data %>% 
+      filter(type == "fatalitie" & period == "2000_2014") %>%
+      mutate(risk = value_by_week/avail_seat_km_per_week*100000) %>%
+      select(airline,risk)
+    ```
+    1. Express the risk in the terms "one chance over ... to die". What are the level of risk associated to the top 3 most dangerous companies? 
+    ```{r}
+    risk_data %>% 
+      mutate(risk_bis = 1/risk) %>%
+      arrange(risk_bis) %>%
+      head(3)
+    ```
