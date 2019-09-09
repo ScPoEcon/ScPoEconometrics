@@ -36,15 +36,16 @@ This case study is based on an [article](https://fivethirtyeight.com/features/sh
 # data$type = as.factor(data$type)
 # data$period = as.factor(ifelse(data$period == "85_99", "1985_1999", "2000_2014"))
 # 
-# write.csv2(data,
+# write.table(data,
 #            file = "~/Documents/TA_Econometrics/Repo_github/ScPoEconometrics/airline-safety.csv",
-#            row.names = F)
+#            row.names = F,
+#            sep = ",")
 ```
 
 To load the dataset, you can run the following command (NB : it uses the `readr` package)
 ```{r include=TRUE}
 # load data from our github repo 
-data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/tree/airline_safety/airline-safety.csv")
+data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/airline_safety/airline-safety.csv")
 ```
 
 ## Exploring the data
