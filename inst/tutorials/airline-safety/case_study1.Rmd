@@ -15,7 +15,7 @@ library(tidyr)
 This case study is based on an [article](https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/) from [FiveThirtyEight](https://fivethirtyeight.com/) published by [Nate Silver](https://fivethirtyeight.com/contributors/nate-silver/). Using [data](https://github.com/fivethirtyeight/data/tree/master/airline-safety)^[The original dataset has been reshaped for the purpose of the course.] from the [Aviation Safety Network’s database](https://aviation-safety.net/index.php), we want to see if past safety records can predict future risk of accidents. In other words "Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?"
 
 ```{r}
-## read the data from Fivethirtyeight and reshape it  
+## read the data from Fivethirtyeight, reshape it, and store it in our repo 
 # data=read_csv("https://raw.github.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv")
 
 # # reshape the data in long format to play with dpylr
@@ -37,14 +37,14 @@ This case study is based on an [article](https://fivethirtyeight.com/features/sh
 # data$period = as.factor(ifelse(data$period == "85_99", "1985_1999", "2000_2014"))
 # 
 # write.table(data,
-#            file = "~/Documents/TA_Econometrics/Repo_github/ScPoEconometrics/airline-safety.csv",
+#            file = "~/Documents/TA_Econometrics/Repo_github/ScPoEconometrics/inst/datasets/airline-safety.csv",
 #            row.names = F,
 #            sep = ",")
 ```
 
 To load the dataset, you can run the following command (NB : it uses the `readr` package)
 ```{r include=TRUE, cache.comments=FALSE}
-# load data from our github repo 
+# load data from our github repo
 data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/airline_safety/inst/datasets/airline-safety.csv")
 ```
 
