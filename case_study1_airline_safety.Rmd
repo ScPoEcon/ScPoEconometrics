@@ -43,9 +43,9 @@ This case study is based on an [article](https://fivethirtyeight.com/features/sh
 ```
 
 To load the dataset, you can run the following command (NB : it uses the `readr` package)
-```{r include=TRUE}
+```{r include=TRUE, cache.comments=FALSE}
 # load data from our github repo 
-data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/airline_safety/airline-safety.csv")
+data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/airline_safety/inst/datasets/airline-safety.csv")
 ```
 
 ## Exploring the data
