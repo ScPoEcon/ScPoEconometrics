@@ -44,9 +44,9 @@ This case study is based on an [article](https://fivethirtyeight.com/features/sh
 To load the dataset, you can run the following command (NB : it uses the `readr` package)
 ```{r include=TRUE}
 # load data from our github repo 
-data=read_csv("https://raw.github.com/ScPoEcon/ScPoEconometrics/airline-safety.csv")
+data=read_csv("https://raw.github.com/pvilledieu/ScPoEconometrics/tree/airline_safety/airline-safety.csv")
 ```
-    
+
 ## Exploring the data
 
 The dataset contains the safety records of major commercial airlines over the past 30 years (1985 to 2014). The period has been break down into two halves: from 1985 to 1999, and from 2000 to 2014.
