@@ -1,0 +1,121 @@
+# Case study #1 : Airline Safety data
+
+```{r setup-airlines, include=FALSE}
+knitr::opts_chunk$set(include = FALSE)
+library(ggplot2)
+library(ggpubr)
+library(haven)
+library(dplyr)
+#library(tidyr)
+```
+
+## Setup
+
+This case study is based on an [article](https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/) from [FiveThirtyEight](https://fivethirtyeight.com/) published by [Nate Silver](https://fivethirtyeight.com/contributors/nate-silver/). Using [data](https://github.com/fivethirtyeight/data/tree/master/airline-safety)^[The original dataset has been reshaped for the purpose of the course.] from the [Aviation Safety Network’s database](https://aviation-safety.net/index.php), we want to see if past safety records can predict future risk of accidents. In other words "Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?"
+
+
+## About this document
+
+* This is using `markdown` to simply format text.
+* Check out [this](https://rmarkdown.rstudio.com/lesson-1.html) tutorial to get started.
+* To solve this exercise, you only need to fill in R code in the corresponding code boxes. Those boxes are marked with three backticks: `` ` ``
+
+So, for example, this is an R code block:
+
+```{r}
+# your R code here
+
+```
+
+You can at any point click *knit* above to produce a nicely formatted pdf or html document which evaluates all your code, and *knits* it into the text.
+
+## The Questions!
+
+If you have `packageVersion("ScPoEconometrics") > 0.2.3`, you have the dataset installed and can load it like this:
+```{r include=TRUE}
+# load data ScPoEconometrics package
+data=read.csv(system.file(package = "ScPoEconometrics", "datasets", "airline-safety.csv"))
+```
+
+If not, you can get it from github via
+
+```{r , eval = FALSE, include = TRUE}
+# load data from our github repo
+data=read.csv(file = "https://raw.githubusercontent.com/ScPoEcon/ScPoEconometrics/master/inst/datasets/airline-safety.csv")
+```
+
+
+
+
+## Exploring the data
+
+The dataset contains the safety records of major commercial airlines over the past 30 years (1985 to 2014). The period has been break down into two halves: from 1985 to 1999, and from 2000 to 2014.
+
+1. First look at the dataset
+    1. What are the variables names and types (categorical, numerical, ...) included in the data ?
+        ```{r}
+        # your solution here
+        ```
+    1. What is the number of observations in total?
+        ```{r}
+        # your solution here
+        ```
+    1. What defines an observation in our case (no need to code) ? 
+    
+1. Having a  closer look
+    1. How does the dataset look like : have a look to the first 5 observations, and the bottom 5. 
+        ```{r}
+        # your solution here
+
+        ```
+    1. What are the different values of the `type` variable ? Same question for the `period variable.
+        ```{r}
+                # your solution here
+
+        ```
+    1. Are there any NA's in the dataset ?
+        ```{r}
+        # your solution here
+
+        ```
+    1. The `avail_seat_km_per_week` variable corresponds to the number of seats multiplied by the number of kilometers the airline flies in a week. In your opinion, why could this variable be important for future analysis ?
+
+## Analysis
+
+1. What are the mean value of the number of incidents by `type` and `period` ? Same for the standard deviation ?
+    ```{r}
+    # your solution here
+
+    ```
+1. Interpretation : Overall, what happened between the two periods? What can we say about the relative value of the standard deviation compared to the mean? Do you find the mean value meaningfull in this case? 
+1. Propose a vizualization showing the evolution of the number of fatal accidents between the two periods. 
+    ```{r}
+            # your solution here
+
+    ```
+1. Over 2000-2014 period, what are the top 3 companies (meaning the worst companies) in terms of fatalities?
+    ```{r}
+            # your solution here
+
+    ```
+1. Do the same taking into account the "avail_seat_km_per_week" variable? Was it predictable? 
+    ```{r}
+            # your solution here
+
+    ```
+1. Bonus : Measuring a ratio of risk. Assume that, in your whole life, you will fly on average 2000 km every year during 50 years (~ 1 Paris - New-York every five years). 
+    1. The number of fatalities given in the dataset correspond to periods of 15 years. However the `avail_seat_km_per_week` variable is normalized by week, so create a new variable `value_by_week` normalizing values by week.  
+        ```{r}
+                # your solution here
+
+        ```
+    1. In a new dataset, create a `risk` variable giving the risk you have to be in a "dead seat" during your life based on the safety records of each company in the period 2000-2014. 
+        ```{r}
+                # your solution here
+
+        ```
+    1. Express this risk as "one chance over ... to die" for each company. What are the level of risk associated to the top 3 most dangerous companies? 
+        ```{r}
+                # your solution here
+
+        ```
