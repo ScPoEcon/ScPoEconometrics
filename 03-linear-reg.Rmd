@@ -518,6 +518,109 @@ R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} 
 It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.
 
 
+## An Example: A Log Wage Equation
+
+Let's consider the following example concerning wage data collected in the 1976 Current Population Survey in the USA.^[This example is close to the vignette of the [wooldridge](https://cloud.r-project.org/web/packages/wooldridge/index.html) package, whose author I hereby thank for the excellent work.] We want to investigate the relationship between average hourly earnings, and years of education. Let's start with a plot:
+
+```{r wooldridge-wages, echo=TRUE,fig.cap='Wages vs Education from the wooldridge dataset \\emph{wage1}.',fig.height=7}
+data("wage1", package = "wooldridge")   # load data
+
+par(mfcol = c(2,1))  # set up a plot with 2 panels
+# plot 1
+plot(y = wage1$wage, 
+     x = wage1$educ, 
+     col = "red", pch = 21, bg = "grey",     
+     cex=1.25, xaxt="n", frame = FALSE, 
+     main = "Wages vs. Education, 1976", 
+     xlab = "years of education", ylab = "Hourly wages")
+axis(side = 1, at = c(0,6,12,18))
+rug(wage1$wage, side=2, col="red")
+
+# plot 2
+hist(wage1$wage,prob = TRUE, col = "grey", border = "red", 
+     main = "Histogram of wages and Density")
+lines(density(wage1$wage), col = "black", lw = 2)
+par(mfcol = c(1,1))  # of plot
+```
+
+Looking at the top panel of figure \@ref(fig:wooldridge-wages), you notice two things: From the red ticks on the y axis, you see that wages are very concentrated at around 5 USD per hour, with fewer and fewer observations at higher rates; and second, that it seems that the hourly wage seems to increase with higher education levels. The bottom panel reinforces the first point, showing that the estimated pdf (probability density function) shown as a black line has a very long right tail: there are always fewer and fewer, but always larger and larger values of hourly wage in the data.
+
+```{block,type="warning"}
+You have seen this shape of a distribution in the tutorial for chapter 2 already! Do you remember the name of this particular shape of a distribution? (why not type `ScPoEconometrics::runTutorial('chapter2')`) to check?
+```
+
+Let's run a first regression on this data to generate some intution. We use the `lm` function for this purpose:
+
+```{r}
+hourly_wage <- lm(formula = wage ~ educ, data = wage1)
+summary(hourly_wage)
+
+```
+
+The interpretation of this estimation is that
+
+1. With zero year of education, the hourly wage is about -0.9 dollars per hour
+1. Each additional year of education increase hourly wage by an additional 54 cents.
+1. For example, for 15 years of education, we predict roughly -0.9 + 0.541 * 15 = `r -0.9 + 0.541 * 15` dollars/h.
+
+```{block type="tip"}
+Regression estimates ($b_0, b_1$) are in the scale *of the data*. The actual *value* of the estimates will vary, if we change the scale of the data. The overall fit of the model to the data would *not* change, however, so that the $R^2$ statistic would be constant.
+```
+
+### Scaling Regressions
+
+Suppose we wanted to use the above estimates to report the effect of years of education on wages, with the only difference that we now measure wages not in terms of hours, but in terms of *years*, i.e. we want to know the effect on *annual* wage. Let's assume we have full-time workers, 7h per day, 5 days per week, 45 weeks per year. Calling this factor $\delta = 7 \times 5 \times 45 = 1575$, we have that $x$ dollars per hour imply $x \times \delta = x \times `r 7*5*45`$ dollars per year. 
+
+What would be the effect of using $wage \times `r 7*5*45`$ instead of $wage$ as outcome variable on our regression coefficients $b_0$ and $b_1$? Well, let's try!
+
+```{r,results= "asis",echo = FALSE}
+delta = 7*5*45
+wage1$annual_wage <- wage1$wage * delta
+wage_annual <- lm(formula = annual_wage ~ educ, data = wage1)
+c1 = coef(hourly_wage)
+c2 = coef(wage_annual)
+stargazer::stargazer(hourly_wage, wage_annual, type = "html",title = "Effect of Scaling on Coefficients")
+```
+
+Let's call the coefficients in the column labelled (1) as $b_0$ and $b_1$, and let's call the ones in column (2) $b_0^*$ and $b_1^*$. In column (1) we see that another year increaeses hourly wage by `r round(c1[2],2)` dollars, as before.  In column (2), the corresponding number is `r round(c2[2],2)`, i.e. another year of education will increase *annual* wages by `r round(c2[2],2)` on average. Notice however, that $b_0 \times \delta = `r round(c1[1],2)` \times `r delta` = `r round(c2[1],2)` = b_0^*$ and that $b_1 \times \delta = `r round(c1[2],2)` \times `r delta` = `r round(c2[2],2)` = b_1^*$, that is we just had to multiply both coefficients by the scaling factor applied to original outcome $y$! Also, observe that the $R^2$s of both regressions are identical!
+
+So, we see that rescaling the outcome variable $y$ is relatively straightforward. Just multiply all coefficients by the scaling factor, and you retain the identically same fit to the data. Rescaling the regressors $x$ is slightly different, but it's easy to work out *how* different, given the linear nature of the covariance operator, which constitutes the OLS estimator. Suppose we rescale $x$ by the number $c$. Then, using the OLS formula in \@ref(eq:beta1hat), we see that we get new slope coefficient $b_1^*$ via
+
+\begin{align} 
+b_1^* &= \frac{Cov(cx,y)}{Var(cx)} \\ 
+      &= \frac{cCov(x,y)}{c^2 Var(x)} \\
+      &= \frac{1}{c} b_1.
+\end{align}
+
+As for the intercept, and by using \@ref(eq:beta0hat)
+\begin{align} 
+b_0^* &= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\ 
+      &= \bar{y} -             b_1^* \frac{c}{N}\sum_{i=1}^N x_i  \\
+      &= \bar{y} - \frac{1}{c} b_1 c * \bar{x}  \\
+      &= \bar{y} -  b_1 * \bar{x}  \\
+      &= b_0
+\end{align}
+
+That is, we change the slope by the *inverse* of the scaling factor applied to regressor $x$, but the intercept is unaffected from this. You should play around for a while with our rescaling app:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp('Rescale')
+```
+
+### A Particular Rescaling: The $\log$ Transform
+
+
+
+
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+runTutorial('rescaling')
+```
+
+Of course you remembered, this looks like the Log-Normal pdf! 
+
 
 ## An Example: California Student Test Scores {#lm-example1}
 
@@ -618,3 +721,5 @@ p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
 ```
 
 The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $b_1$. We will learn more about it in chapter \@ref(std-errors).
+
+

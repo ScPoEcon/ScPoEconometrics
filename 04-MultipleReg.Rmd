@@ -12,7 +12,7 @@ mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i (\#eq:abline2d)
 on our built-in dataset of cars (`mtcars`):
 
 ```{r mtcarsdata}
-subset(mtcars, select = c(mpg,hp,wt))
+head(subset(mtcars, select = c(mpg,hp,wt)))
 ```
 
 How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $b_1$ and $b_2$ to be? 
@@ -74,7 +74,7 @@ As a matter of fact, the kind of question asked here is so common that it has go
 \frac{\partial mpg_i}{\partial hp_i} = b_1 (\#eq:abline2d-deriv)
 \end{equation}
 
-This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
+The $\partial$ sign denotes a *partial derivative* of the function describing `mpg` with respect to the variable `hp`. It measures *how the value of `mpg` changes, as we change the value of `hp` ever so slightly*. In our context, this means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
 <br>
 
 ```{r,echo=FALSE}
@@ -84,13 +84,13 @@ summary(fit)
 From this table you see that the coefficient on `wt` has value `r round(coef(fit)[2],5)`. You can interpret this as follows:
 
 ```{block,type="warning"}
-Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $hp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
+Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. In other words, increasing the weight of a car by 1000 pounds (lbs), will lead to 3.88 miles less travelled per gallon. Similarly, a car with one additional horse power means that we will travel 0.03177  fewer miles per gallon of gasoline, *all else (i.e. $wt$) equal*.
 ```
 
 
 ## Multicolinearity {#multicol}
 
-One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wtplus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wtplus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
+One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable should provide at least some new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wtplus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wtplus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
 
 \begin{align}
 y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
@@ -101,7 +101,7 @@ y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
 This shows that we cannot *identify* the regression coefficients in case of linearly dependent data. Variation in the variable `wt` identifies a different coefficient, say $\gamma = b_1 + b_2$, from what we actually wanted: separate estimates for $b_1,b_2$.
 
 ```{block, type="note"}
-All variables in a multiple regression should be *linearly independent*, or *not* colinear. This is known as the **rank condition**. In particular, this condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can get from them, and our estimates becomes *less precise*.
+We cannot have variables which are *linearly dependent*, or *perfectly colinear*. This is known as the **rank condition**. In particular, the condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can extract from them, and our estimates becomes *less precise*.
 ```
 
 
@@ -111,17 +111,17 @@ All variables in a multiple regression should be *linearly independent*, or *not
 
 ## California Test Scores 2
 
-Let us extend our example of student test scores from chapter \@ref(linreg) by adding families' average income to our previous model:
+Let us extend our example of student test scores from chapter \@ref(linreg) by adding *number of computers in school* to our previous model:
 
 $$
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{computer}_i + e_i
 $$
 
 We can incoporate this new variable to our model by simply adding it to our `formula`:
 
 ```{r lmfit-multiv,warning=FALSE,message=FALSE}
 library("Ecdat") # reload the data
-fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
+fit_multivariate <- lm(formula = testscr ~ str + computer, data = Caschool)
 summary(fit_multivariate)
 ```
 
@@ -132,39 +132,39 @@ library(plotly)
 library(reshape2)
 
 to_plot_x <- c(min(Caschool$str), max(Caschool$str))
-to_plot_y <- c(min(Caschool$avginc), max(Caschool$avginc))
+to_plot_y <- c(min(Caschool$computer), max(Caschool$computer))
 
 df <- data.frame(str = rep(to_plot_x, 2),
-           avginc = rep(to_plot_y, each = 2))
+           computer = rep(to_plot_y, each = 2))
 df["pred"] <- predict.lm(fit_multivariate, df, se.fit = F)
 
-surf <- acast(df, avginc ~ str)
+surf <- acast(df, computer ~ str)
 color <- rep(0, length(df))
 
 Caschool %>%
   plot_ly(colors = "grey") %>%
-  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
+  add_markers(x = ~str, y = ~computer, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
   add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane", opacity = .75, cauto = F, surfacecolor = color) %>%
   hide_colorbar()
 ```
 
-While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $avginc$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
+While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $computer$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
 
 
 ## Interactions {#mreg-interactions}
 
-Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether the average income in an ares is high or low? Notice that `str` and `avginc` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
+Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `computer` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether there are many or few computers in a given school? Is `str` *particularly* important for the test score if there are only a few computers available, for instance? Notice that `str` and `computer` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
 
 
 \begin{equation}
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i (\#eq:caschool-inter)
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{computer}_i + b_3 (\text{str}_i \times  \text{computer}_i)+ e_i (\#eq:caschool-inter)
 \end{equation}
 
 
-The inclusion of the *product* of `str` and `avginc` amounts to having different slopes with respect to `str` for different values of  `avginc` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
+The inclusion of the *product* of `str` and `computer` amounts to having different slopes with respect to `str` for different values of  `computer` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
 
 \begin{equation}
-\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
+\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{computer}_i (\#eq:caschool-inter-deriv)
 \end{equation}
 
 
@@ -174,28 +174,71 @@ The inclusion of the *product* of `str` and `avginc` amounts to having different
 Back in our `R` session, we can run the full interactions model like this:
 
 ```{r}
-lm_inter = lm(formula = testscr ~ str + avginc + str*avginc, data = Caschool)
+fit_inter = lm(formula = testscr ~ str + computer + str*computer, data = Caschool)
 # note that this would produce the same result:
-# lm(formula = testscr ~ str*avginc, data = Caschool)
-# R expands str*avginc for you in main effects + interactions
-summary(lm_inter)
+# lm(formula = testscr ~ str*computer, data = Caschool)
+# R expands str*computer for you in main effects + interactions
+summary(fit_inter)
 ```
 
-We see here that the regression now estimates and additional coefficient $b_3$ for us. We observe also that the estimate of $b_2$ changes signs and becomes negative, while the interaction effect $b_3$ is positive. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an increase in average district income in isolation actually reduces scores; and that the interaction of both increases scores (more students per teacher are actually a good thing for student performance in richer areas).
+We see here that the regression now estimates and additional coefficient $b_3$ for us. We observe also that the estimate of $b_2$ changes signs and becomes positive, while the interaction effect $b_3$ is negative. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an additional computer increases the average test score by 0.05 points; and that the interaction of both decreases scores, implying that more students per teacher decrease scores slightly more if there are more computers.
 
-Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? Discuss with your neighbor and give some reasons for your choice (other than "\@ref(fig:3D-Plotly-inter) looks nicer" ;-) ). In particular, comparing both visualizations, can you explain why we observe this strange inversion of coefficient signs?
+Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? 
 
-```{r 3D-Plotly-inter, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income plus interaction term'}
+```{r 3D-Plotly-inter, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and computers in school plus interaction term'}
 
-df["pred"] <- predict.lm(lm_inter, df, se.fit = F)
-surf <- acast(df, avginc ~ str)
+df["pred"] <- predict.lm(fit_inter, df, se.fit = F)
+surf <- acast(df, computer ~ str)
 
 color <- rep(0, length(df))
 
 Caschool %>%
   plot_ly(colors = "blue") %>%
-  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
+  add_markers(x = ~str, y = ~computer, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
   add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane with Interaction", opacity = .75, cauto = F, surfacecolor = color) %>%
   hide_colorbar()
 
 ```
+
+## How To Make Predictions {#make-preds}
+
+It's useful to know how to make a *prediction*, using a regression model like the one in \@ref(eq:caschool-inter). Looking back at this expression, remember that the OLS procedure gives us *estimates* for the values $b_0,b_1, b_2$. With those in hand, it is straightforward to make a prediction about the *conditional mean* of the outcome `testscr` - just plug in the desired numbers for `str` and `computer`. Suppose you want to know what the mean of `testsrc` is conditional on `str = 20` and `computer = 150`. You'd do
+
+\begin{align}
+E[\text{testscr}|\text{str}=20,\text{computer}=150] &= b_0 + b_1  20 + b_2  150 + b_3 (20 \times  150) \\
+&= `r round(coef(fit_inter) %*% c(1,20,150,20*150),2)`.
+\end{align}
+
+I computed the last line directly with
+
+```{r,eval=FALSE}
+x = c(1,20,150,20*150)  # 1 for intercept
+pred = coef(fit_inter) %*% x
+```
+
+but `R` has a more complete prediction interface. For starters, you can predict the model on all data points which were contained in the dataset we used for estimation, i.e. `Caschool` in our case:
+
+```{r}
+head(predict(fit_inter))  # first 6 observations of Caschool as predicted by our model
+```
+
+Often you want to add that prediction *to* the original dataset:
+
+```{r}
+ca_prediction = cbind(Caschool, prediction = predict(fit_inter))
+head(ca_prediction[, c("testscr","computer","str","prediction")])
+```
+
+You'll remember that we called the distance in prediction and observed outcome our *residual* $e$. Well here this is just `testscr - prediction`. Indeed, $e$ is such an important quantity that `R` has a convenient method to compute $y - \hat{y}$ from an `lm` object directly - the method `resid`. Let's add another column to `ca_prediction`: 
+
+```{r}
+ca_prediction = cbind(ca_prediction, residual = resid(fit_inter))
+head(ca_prediction[, c("testscr","computer","str","prediction","residual")])
+```
+
+Using the data in `ca_prediction`, you should now check for yourself what we already know about $\hat{y}$ and $e$ from section \@ref(pred-resids): 
+
+1. What is the average of the vector `residual`?
+1. What is the average of `prediction`?
+1. How does this compare to the average of the outcome `testscr`?
+1. What is the correlation between `prediction` and `residual`?
