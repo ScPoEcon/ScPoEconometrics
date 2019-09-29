@@ -540,7 +540,10 @@ rug(wage1$wage, side=2, col="red")
 hist(wage1$wage,prob = TRUE, col = "grey", border = "red", 
      main = "Histogram of wages and Density")
 lines(density(wage1$wage), col = "black", lw = 2)
-par(mfcol = c(1,1))  # of plot
+```
+
+```{r,echo=FALSE}
+par(mfcol = c(1,1)) 
 ```
 
 Looking at the top panel of figure \@ref(fig:wooldridge-wages), you notice two things: From the red ticks on the y axis, you see that wages are very concentrated at around 5 USD per hour, with fewer and fewer observations at higher rates; and second, that it seems that the hourly wage seems to increase with higher education levels. The bottom panel reinforces the first point, showing that the estimated pdf (probability density function) shown as a black line has a very long right tail: there are always fewer and fewer, but always larger and larger values of hourly wage in the data.
@@ -549,7 +552,13 @@ Looking at the top panel of figure \@ref(fig:wooldridge-wages), you notice two t
 You have seen this shape of a distribution in the tutorial for chapter 2 already! Do you remember the name of this particular shape of a distribution? (why not type `ScPoEconometrics::runTutorial('chapter2')`) to check?
 ```
 
-Let's run a first regression on this data to generate some intution. We use the `lm` function for this purpose:
+Let's run a first regression on this data to generate some intution:
+
+\begin{equation}
+\text{wage}_i = b_0 + b_1 \text{educ}_i + e_i (\#eq:wage)
+\end{equation}
+
+We use the `lm` function for this purpose as follows:
 
 ```{r}
 hourly_wage <- lm(formula = wage ~ educ, data = wage1)
@@ -584,7 +593,9 @@ stargazer::stargazer(hourly_wage, wage_annual, type = "html",title = "Effect of 
 
 Let's call the coefficients in the column labelled (1) as $b_0$ and $b_1$, and let's call the ones in column (2) $b_0^*$ and $b_1^*$. In column (1) we see that another year increaeses hourly wage by `r round(c1[2],2)` dollars, as before.  In column (2), the corresponding number is `r round(c2[2],2)`, i.e. another year of education will increase *annual* wages by `r round(c2[2],2)` on average. Notice however, that $b_0 \times \delta = `r round(c1[1],2)` \times `r delta` = `r round(c2[1],2)` = b_0^*$ and that $b_1 \times \delta = `r round(c1[2],2)` \times `r delta` = `r round(c2[2],2)` = b_1^*$, that is we just had to multiply both coefficients by the scaling factor applied to original outcome $y$! Also, observe that the $R^2$s of both regressions are identical!
 
-So, we see that rescaling the outcome variable $y$ is relatively straightforward. Just multiply all coefficients by the scaling factor, and you retain the identically same fit to the data. Rescaling the regressors $x$ is slightly different, but it's easy to work out *how* different, given the linear nature of the covariance operator, which constitutes the OLS estimator. Suppose we rescale $x$ by the number $c$. Then, using the OLS formula in \@ref(eq:beta1hat), we see that we get new slope coefficient $b_1^*$ via
+So, we see that rescaling the outcome variable $y$ is relatively straightforward. Just multiply all coefficients by the scaling factor, and you retain the identically same fit to the data. 
+
+Rescaling the regressors $x$ is slightly different, but it's easy to work out *how* different, given the linear nature of the covariance operator, which constitutes the OLS estimator. Suppose we rescale $x$ by the number $c$. Then, using the OLS formula in \@ref(eq:beta1hat), we see that we get new slope coefficient $b_1^*$ via
 
 \begin{align} 
 b_1^* &= \frac{Cov(cx,y)}{Var(cx)} \\ 
@@ -610,8 +621,47 @@ launchApp('Rescale')
 
 ### A Particular Rescaling: The $\log$ Transform
 
+The natural logarithm is a particularly important transformation that we often encounter in economics. Why would we transform a variable with the $\log$ function to start with?
 
+1. Several important economic variables (like wages, city size, firm size, etc) are approximately *log-normally* distributed. By transforming them with the $\log$, we obtain an approzimately *normally* distributed variable, which has desirable properties for our regression.
+1. Applying $\log$ reduces the impact of outliers.
+1. The transformation allows for a convenient interpretation in terms of *percentage changes* of the outcome variable.
 
+Let's investigate this issue in our running example by transforming the wage data above. Look back at the bottom panel of figure \@ref(fig:wooldridge-wages): Of course you saw immediately that this looked a lot like a log-normal distribution, so point 1. above applies. We modify the left hand side of equation \@ref(eq:wage):
+
+\begin{equation}
+\log(\text{wage}_i) = b_0 + b_1 \text{educ}_i + e_i (\#eq:log-wage)
+\end{equation}
+
+We Let's use the `update` function to modify the previous regression:
+
+```{r}
+log_hourly_wage = update(hourly_wage, log(wage) ~ ., data = wage1)
+```
+
+The `update` function takes an existing `lm` object, like `hourly_wage` here, and updates the `formula`. Here the `.` on the right hand side means *leave unchanged*. Let's compare the output between both models:
+
+```{r,echo = FALSE, results = "asis"}
+stargazer::stargazer(hourly_wage, log_hourly_wage, title = "Log Transformed Equation",type = "html")
+```
+
+The interpretation of the transformed model in column (2) is now the following: 
+
+```{block type = "note"}
+We call a regression of the form $\log(y) = b_0 + b_1 x + u$ a *log-level* specification, because only the right hand side has been transformed. Here, the impact of increasing $x$ by one unit is to increase $y$ by $100 \times b_1$ **percent**. In our example: an additional year of education will increase hourly wages (and **not** log (!) wages) by 8.3%.
+```
+
+Notice that the $R^2$ slightly improved, so have a better fit to the data. Whether we apply the $log$ to left or right-hand side makes a difference, as outlined in this table:
+
+<center><caption> (\#tab:loglog) Common Regression Specifications </caption></center>
+Specification | Outcome Var | Regressor | Interpretation of $b_1$ | Comment
+:------------:|:------------:|:------------:|:------------:|:------------:
+Level-level | y | x | $\Delta y = b_1 \Delta x$ | Standard
+Level-log | y | $\log(x)$ | $\Delta y = b_1 \Delta x$ | less frequent
+Log-level | $\log(y)$  | x | $\% \Delta y = (100 b_1) \Delta$ x | Semi-elasticity
+Log-Log  | $\log(y)$  | $\log(x)$ | $\% \Delta y = \% \Delta$ x | Elasticity
+
+this is in table \@ref(tab:loglog)
 
 
 ```{r,eval=FALSE}
@@ -619,7 +669,6 @@ library(ScPoEconometrics)
 runTutorial('rescaling')
 ```
 
-Of course you remembered, this looks like the Log-Normal pdf! 
 
 
 ## An Example: California Student Test Scores {#lm-example1}
