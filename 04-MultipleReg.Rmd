@@ -44,6 +44,8 @@ mtcars %>%
   hide_colorbar()
 ```
 
+
+
 This visualization shows a couple of things: the data are shown with red points and the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d). You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
 
 Furthermore, *multiple* regression refers the fact that there could be *more* than two regressors. In fact, you could in principle have $K$ regressors, and our theory developed so far would still be valid:
@@ -105,108 +107,93 @@ We cannot have variables which are *linearly dependent*, or *perfectly colinear*
 
 
 
-## Low Wage Equation
+## Log Wage Equation
 
-Back to our wage dataset from the previous chapter. Let's add more explanatory variables to this relationship. For instance, what's the impact of experience in the labor market, and time spent with the current employer? Let's first look at how those variables co-vary with log wages:
+Let's go back to our previous example of the relationship between log wages and education. How does this relationship change if we also think that experience in the labor market has an impact, next to years of education? Here is a picture:
+
+```{r plane3D-lwage,echo=FALSE,fig.align='center',fig.cap='Log wages vs education and experience in 3D.',warning=FALSE,message=FALSE}
+data("wage1", package = "wooldridge")
+# linear fit
+log_wage <- lm(lwage ~ educ + exper,data=wage1)
+ 
+to_plot_x <- range(wage1$educ)
+to_plot_y <- range(wage1$exper)
+
+df <- data.frame(educ = rep(to_plot_x, 2),
+           exper = rep(to_plot_y, each = 2))
+df["pred"] <- predict.lm(log_wage, df, se.fit = F)
+
+surf <- acast(df, educ ~ exper)
+
+color <- rep(0, length(df))
+wage1 %>%
+  plot_ly(colors = "grey") %>%
+  add_markers(x = ~educ, y = ~exper, z = ~lwage,name = "data",opacity = .8, marker=list(color = 'red', size = 5, hoverinfo="skip", opacity = 0.8)) %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "wages 3D", opacity = .75, cauto = F, surfacecolor = color) %>%
+  hide_colorbar()
+```
+
+Let's add even more variables! For instance, what's the impact of experience in the labor market, and time spent with the current employer? Let's first look at how those variables co-vary with each other:
 
 ```{r corrplot}
-data("wage1", package = "wooldridge")
 cmat = round(cor(subset(wage1,select = c(lwage,educ,exper,tenure))),2) # correlation matrix
 corrplot::corrplot(cmat,type = "upper",method = "ellipse")
 ```
 
-The way to read the so-called *correlation plot* in figure @\ref(fig:corrplot) is straightforward: each row illustrates the correlation of a certain variable with the other variables. In this example both the shape of the ellipse in each cell as well as their color coding tell us how strongly two variables correlate. Let us put this into a regression model now:
+The way to read the so-called *correlation plot* in figure \@ref(fig:corrplot) is straightforward: each row illustrates the correlation of a certain variable with the other variables. In this example both the shape of the ellipse in each cell as well as their color coding tell us how strongly two variables correlate. Let us put this into a regression model now:
 
 ```{r,results = 'asis'}
 educ_only <- lm(lwage ~ educ                 , data = wage1)
+educ_exper <- lm(lwage ~ educ + exper        , data = wage1)
 log_wages <- lm(lwage ~ educ + exper + tenure, data = wage1)
-stargazer::stargazer(educ_only, log_wages,type = "html")
+stargazer::stargazer(educ_only, educ_exper, log_wages,type = "html")
 ```
 
-Column (1) refers to model \@ref(eq:log-wage) from the previous chapter, where we only had `educ` as a regressor: we obtain an $R^2$ of 0.186. You can see that by adding more regressors in column (2), the quality of our fit increases, as more of the variation in $y$ is now accounted for by our model.
-
-
-## California Test Scores 2
-
-Let us extend our example of student test scores from chapter \@ref(linreg) by adding *number of computers in school* to our previous model:
-
-$$
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{computer}_i + e_i
-$$
-
-We can incoporate this new variable to our model by simply adding it to our `formula`:
-
-```{r lmfit-multiv,warning=FALSE,message=FALSE}
-library("Ecdat") # reload the data
-fit_multivariate <- lm(formula = testscr ~ str + computer, data = Caschool)
-summary(fit_multivariate)
-```
-
-Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane* [Interactive!].
-
-```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.',fig.align='center'}
-library(plotly)
-library(reshape2)
-
-to_plot_x <- c(min(Caschool$str), max(Caschool$str))
-to_plot_y <- c(min(Caschool$computer), max(Caschool$computer))
-
-df <- data.frame(str = rep(to_plot_x, 2),
-           computer = rep(to_plot_y, each = 2))
-df["pred"] <- predict.lm(fit_multivariate, df, se.fit = F)
-
-surf <- acast(df, computer ~ str)
-color <- rep(0, length(df))
-
-Caschool %>%
-  plot_ly(colors = "grey") %>%
-  add_markers(x = ~str, y = ~computer, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
-  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane", opacity = .75, cauto = F, surfacecolor = color) %>%
-  hide_colorbar()
-```
-
-While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $computer$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
+Column (1) refers to model \@ref(eq:log-wage) from the previous chapter, where we only had `educ` as a regressor: we obtain an $R^2$ of 0.186. Column (2) is the model that generated the plane in figure \@ref(fig:plane3D-lwage) above. (3) is the model with three regressors. You can see that by adding more regressors, the quality of our fit increases, as more of the variation in $y$ is now accounted for by our model. You can also see that the values of our estimated coefficients keeps changing as we move from left to right across the columns. Given the correlation structure shown in figure \@ref(fig:corrplot), it is only natural that this is happening: We see that `educ` and `exper` are negatively correlated, for example. So, if we *omit* `exper` from the model in column (1), `educ` will reflect part of this correlation with `exper` by a lower estimated value. By directly controlling for `exper` in column (2) we get an estimate of the effect of `educ` *net of* whatever effect `exper` has in isolation on the outcome variable. We will come back to this point later on.
 
 ## How To Make Predictions {#make-preds}
 
-It's useful to know how to make a *prediction*, using a regression model like the one in \@ref(eq:caschool-inter). Looking back at this expression, remember that the OLS procedure gives us *estimates* for the values $b_0,b_1, b_2$. With those in hand, it is straightforward to make a prediction about the *conditional mean* of the outcome `testscr` - just plug in the desired numbers for `str` and `computer`. Suppose you want to know what the mean of `testsrc` is conditional on `str = 20` and `computer = 150`. You'd do
+So suppose we have a model like 
+
+$$\text{lwage} = b_0 + b_{1}(\text{educ}) + b_{2}(\text{exper}) + b_{3}(\text{tenure}) + \epsilon$$
+How could we use this to make a *prediction* of log wages, given some new data? Remember that the OLS procedure gives us *estimates* for the values $b_0,b_1, b_2,b_3$. With those in hand, it is straightforward to make a prediction about the *conditional mean* of the outcome - just plug in the desired numbers for `educ,exper` and `tenure`. Suppose you want to know what the mean of `lwage` is conditional on `educ = 10,exper=4` and `tenure = 2`. You'd do
 
 \begin{align}
-E[\text{testscr}|\text{str}=20,\text{computer}=150] &= b_0 + b_1  20 + b_2  150 \\
-&= `r round(coef(fit_inter) %*% c(1,20,150),2)`.
+E[\text{lwage}|\text{educ}=10,\text{exper}=4,\text{tenure}=2] &= b_0 + b_1  10 + b_2 4 + b_3  2\\
+&= `r round(coef(log_wages) %*% c(1,10,4,2),2)`.
 \end{align}
 
 I computed the last line directly with
 
 ```{r,eval=FALSE}
-x = c(1,20,150)  # 1 for intercept
-pred = coef(fit_inter) %*% x
+x = c(1,10,4,2)  # 1 for intercept
+pred = coef(log_wages) %*% x
 ```
 
-but `R` has a more complete prediction interface. For starters, you can predict the model on all data points which were contained in the dataset we used for estimation, i.e. `Caschool` in our case:
+but `R` has a more complete prediction interface, using the function `predict`. For starters, you can predict the model on all data points which were contained in the dataset we used for estimation, i.e. `wage1` in our case:
 
 ```{r}
-head(predict(fit_multivariate))  # first 6 observations of Caschool as predicted by our model
+head(predict(log_wages))  # first 6 observations of wage1 as predicted by our model
 ```
 
 Often you want to add that prediction *to* the original dataset:
 
 ```{r}
-ca_prediction = cbind(Caschool, prediction = predict(fit_multivariate))
-head(ca_prediction[, c("testscr","computer","str","prediction")])
+wage_prediction = cbind(wage1, prediction = predict(log_wages))
+head(wage_prediction[, c("lwage","educ","exper","tenure","prediction")])
 ```
 
-You'll remember that we called the distance in prediction and observed outcome our *residual* $e$. Well here this is just `testscr - prediction`. Indeed, $e$ is such an important quantity that `R` has a convenient method to compute $y - \hat{y}$ from an `lm` object directly - the method `resid`. Let's add another column to `ca_prediction`: 
+You'll remember that we called the distance in prediction and observed outcome our *residual* $e$. Well here this is just `lwage - prediction`. Indeed, $e$ is such an important quantity that `R` has a convenient method to compute $y - \hat{y}$ from an `lm` object directly - the method `resid`. Let's add another column to `wage_prediction`: 
 
 ```{r}
-ca_prediction = cbind(ca_prediction, residual = resid(fit_multivariate))
-head(ca_prediction[, c("testscr","computer","str","prediction","residual")])
+wage_prediction = cbind(wage_prediction, residual = resid(log_wages))
+head(wage_prediction[, c("lwage","educ","exper","tenure","prediction","residual")])
 ```
 
-Using the data in `ca_prediction`, you should now check for yourself what we already know about $\hat{y}$ and $e$ from section \@ref(pred-resids): 
+Using the data in `wage_prediction`, you should now check for yourself what we already know about $\hat{y}$ and $e$ from section \@ref(pred-resids): 
 
 1. What is the average of the vector `residual`?
 1. What is the average of `prediction`?
-1. How does this compare to the average of the outcome `testscr`?
+1. How does this compare to the average of the outcome `lwage`?
 1. What is the correlation between `prediction` and `residual`?
 

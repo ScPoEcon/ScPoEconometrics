@@ -1,4 +1,4 @@
-# Categorial Variables {#categorical-vars}
+# Categorial Variables {#categorical-vars} 
 
 
 Up until now, we have encountered only examples with *continuous* variables $x$ and $y$, that is, $x,y \in \mathbb{R}$, so that a typical observation could have been $(y_i,x_i) = (1.5,5.62)$. There are many situations where it makes sense to think about the data in terms of *categories*, rather than continuous numbers. For example, whether an observation $i$ is *male* or *female*, whether a pixel on a screen is *black* or *white*, and whether a good was produced in *France*, *Germany*, *Italy*, *China* or *Spain* are all categorical classifications of data. 
@@ -150,7 +150,7 @@ launchApp("reg_dummy_example")
 
 
 
-## Categorical Variables in `R`: `factor`
+## Categorical Variables in `R`: `factor` 
 
 `R` has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called `factor`. We encountered them as basic data types in section \@ref(data-types) already, but it is worth repeating this here. We have seen that a factor *categorizes* a usually small number of numeric values by *labels*, as in this example which is similar to what I used to create regressor `is.female` for the above regression:
 
@@ -188,15 +188,14 @@ factor(x = c(1,1,2,4,3,4),labels = c("HS","someCol","BA","MSc"))
 
 Notice here that `R` will apply the labels in increasing order the way you supplied it (i.e. a numerical value `4` will correspond to "MSc", no matter the ordering in `x`.)
 
-### `factor` and `lm()`
+### Log Wages and Dummies {#factors}
 
 The above developed `factor` terminology fits neatly into `R`'s linear model fitting framework. Let us illustrate the simplest use by way of example.
 
-
-Going back to our wage example, let's say that a workers wage depends on their education as well as their sex:
+Going back to our wage example, let's say that a worker's wage depends on their education as well as their sex:
 
 \begin{equation}
-\ln w_i = b_0 + b_1 educ_i + b_2 sex_i + e_i (\#eq:wage-sex)
+\ln w_i = b_0 + b_1 educ_i + b_2 female_i + e_i (\#eq:wage-sex)
 \end{equation}
 
 
@@ -224,6 +223,101 @@ cowplot::plot_grid(p1,p2, rel_widths = c(1,1.2))
 Figure \@ref(fig:wage-plot) illustrates this. The left panel is our previous model. The right panel adds the `female` dummy. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of $b_2 = `r round(coef(lm_w_sex)[3],2)`$ is the size of the downward shift. 
 
 
+
+
 ## Interactions
 
+Sometimes it is useful to let the slope of a certain variable to be dependent on the value of *another* regressor. For example consider a model for the sales prices of houses, where `area` is the livable surface of the property, and `age` is its age:
 
+\begin{equation}
+\log(price) = b_0 + b_1 \text{area} + b_2 \text{age} + b_3 (\text{area} \times \text{age}) + e  (\#eq:price-interact)
+\end{equation}
+
+In that model, the partial effect of `area` on `log(price)`, keeping all other variables fixed, is
+
+\begin{equation}
+\frac{\partial \log(price)}{\partial \text{area}} = b_1 + b_3 (\text{age}) 
+\end{equation}
+
+If we find that $b_3 > 0$ in a regression, we conclude that the size of a house values more in older houses. We call $b_3$ the **interaction effect** between area and age. Let's look at that regression model now.
+
+
+```{r}
+data(hprice3, package = "wooldridge")
+summary(lm(lprice ~ area*age, data = hprice3))
+```
+
+In this instance, we see that indeed there is a small positive interaction between `area` and `age` on the sales price: even though `age` in isolation decreases the sales value, bigger houses command a small premium if they are older.
+
+### Interactions with Dummies: Differential Slopes
+
+It is straightforward to extend the interactions logic to allow not only for different *intercepts*, but also different *slopes* for each subgroup in a dataset. Let's go back to our dataset of wages from section \@ref(factors) above. Now that we know how to create and interaction between two variables, we can easily modify equation \@ref(eq:wage-sex) like this:
+
+\begin{equation}
+\ln w = b_0 + b_1 \text{female} + b_2 \text{educ} + b_3 (\text{female} \times \text{educ}) + e (\#eq:wage-sex2)
+\end{equation}
+
+The only peculiarity here is that `female` is a factor with levels `0` and `1`: i.e. the interaction term $b_3$ will be zero for all men. Similarly to above, we can test whether there are indeed different returns to education or men and women by looking at the estimated value $b_3$:
+
+```{r,echo = TRUE}
+lm_w_interact <- lm(lwage ~ educ * female , data = wage1)  # R expands to full interactions model
+summary(lm_w_interact)
+```
+
+We will in the next chapter learn that the estimate for $b_3$ on the interaction `educ:female1` is difficult for us to distinguish from zero in a statistical sense; Hence for now we conclude that there are *no* significantly different returns in education for men and women in this data. This is easy to verify visually in this plot, where we are unable to detect a difference in slopes in the right panel.
+
+```{r wage-plot2,fig.align='center',echo=FALSE,fig.cap='log wage vs educ. Right panel allows slopes to be different - turns out they are not!',message=FALSE,warning=FALSE,fig.height=3}
+
+p_sex = cbind(wage1,pred=predict(lm_w_sex))
+p_sex = cbind(p_sex,pred_inter=predict(lm_w_interact))
+# p_sex = dplyr::sample_n(p_sex,2500)
+p2 <- ggplot(data=p_sex,mapping=aes(x=educ,y=lwage,color=female)) 
+p2 <- p2 + geom_jitter(shape=1,alpha=0.6,width=0.1) + geom_line(mapping = aes(y=pred), size=1) + theme_bw() + scale_y_continuous(name = "log wage") + ggtitle("Impose Parallel Slopes") + theme(legend.position = "none")
+
+p3 <- ggplot(data=p_sex,mapping=aes(x=educ,y=lwage,color=female)) 
+p3 <- p3 + geom_jitter(shape=1,alpha=0.6,width=0.1) + geom_line(mapping = aes(y=pred_inter), size=1) + theme_bw() + scale_y_continuous(name = NULL)  + ggtitle("Allow Different Slopes") + theme(legend.position = "none")
+
+cowplot::plot_grid(p2,p3)
+```
+
+
+## (Unobserved) Individual Heterogeneity
+
+Finally, dummary variables are sometimes very important to account for spurious relationships in that data. Consider the following (artificial example):
+
+1. Suppose we collected data on hourly wage data together with a the number of hours worked for a set of individuals.
+1. We plot want to investigate labour supply behaviour of those individuals, hence we run regression `hours_worked ~ wage`.
+1. We expect to get a positive coefficient on `wage`: the higher the wage, the more hours worked.
+1. You know that individuals are members of either group `g=0` or `g=1`.
+
+```{r, echo = FALSE}
+two_clouds <- function(a1 = 5, a2 = -2, b1 = 2.5, b2 = 1.5, n1 = 50, n2 = 50){
+  set.seed(12)
+  x1 = rnorm(n1,mean = 1,sd = 0.5)
+  x2 = rnorm(n2,mean = 1.3,sd = 0.5)
+  y1 = a1 + b1 * x1 + rnorm(n1,sd = 2)
+  y2 = a2 + b2 * x2 + rnorm(n2,sd = 2)
+  x = c(x1,x2)
+  y = c(y1,y2)
+  g = factor(c(rep(1,n1),rep(2,n1)))
+  z = data.frame(x,y,g)
+  m1 = lm(y~x,data = z)
+  m2 = update(m1, . ~ . + g)
+  p1 = ggplot(z, aes(x,y)) + geom_point() + geom_smooth(method = "lm",se =FALSE) + scale_x_continuous(name = "wage")  + scale_y_continuous(name = "hours") + theme_bw() 
+  p2 = ggplot(z, aes(x,y,color = g)) + geom_point() + geom_smooth(method = "lm",se = FALSE) + scale_x_continuous(name = "wage")  + scale_y_continuous(name = "hours") + theme_bw()  + ggtitle("Controlling for Group")
+  # par(mfcol = c(1,2))
+  # plot(z$x,z$y)
+  # abline(m1)
+  list(m1=m1,m2=m2,p1 = p1, p = cowplot::plot_grid(p1,p2,rel_widths = c(1,1.2)))
+}
+tc = two_clouds()
+tc$p1
+```
+
+Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let's use this and include `g` as a dummy in the regression - suppose `g` encodes male and female. 
+
+```{r,echo = FALSE,fig.align='center',fig.cap='Left and right panel exhibit the same data. The right panel controls for group composition.',}
+tc$p
+```
+
+This is an artificial example; yet it shows that you can be severly misled if you don't account for group-specific effects in your data. The problem is particularly accute if we *don't know group membership* - we can then resort to advanced methods that are beyond the scope of this course to *estimate* which group each individual belongs to. If we *do know* group membership, however, it is good practice to include a group dummy so as to control for group effects.

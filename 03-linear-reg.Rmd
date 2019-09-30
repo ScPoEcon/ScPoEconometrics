@@ -594,7 +594,7 @@ The main interpretation of this table can be read off the column labelled *Estim
 1. Each additional year of education increase hourly wage by 54 cents. (row named `educ`)
 1. For example, for 15 years of education, we predict roughly -0.9 + 0.541 * 15 = `r -0.9 + 0.541 * 15` dollars/h.
 
-### Scaling Regressions
+## Scaling Regressions
 
 ```{block type="tip"}
 Regression estimates ($b_0, b_1$) are in the scale *of the data*. The actual *value* of the estimates will vary, if we change the scale of the data. The overall fit of the model to the data would *not* change, however, so that the $R^2$ statistic would be constant.
@@ -640,7 +640,7 @@ library(ScPoEconometrics)
 launchApp('Rescale')
 ```
 
-### A Particular Rescaling: The $\log$ Transform
+## A Particular Rescaling: The $\log$ Transform
 
 The natural logarithm is a particularly important transformation that we often encounter in economics. Why would we transform a variable with the $\log$ function to start with?
 
