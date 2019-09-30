@@ -35,6 +35,7 @@
 #' @import corrplot
 #' @import cowplot
 #' @import stargazer
+#' @import equatiomatic
 #' @importFrom stats rnorm runif
 #' @importFrom magrittr %>%
 #' @keywords internal
