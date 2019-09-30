@@ -32,6 +32,8 @@
 #' @import equatiomatic
 #' @import wooldridge
 #' @import dplyr
+#' @import corrplot
+#' @import cowplot
 #' @importFrom stats rnorm runif
 #' @importFrom magrittr %>%
 #' @keywords internal

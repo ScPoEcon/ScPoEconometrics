@@ -1,0 +1,196 @@
+
+
+## An Example: California Student Test Scores {#lm-example1}
+
+Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our `apps`. As it turns out, `R` can do this much more precisely, and very fast!
+
+Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool` dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
+
+### Loading and exploring Data
+
+We can explore which variables are included in the dataset using the `names()` function:
+
+```{r str, warning=F, message = F}
+library("Ecdat") # Load the Ecdat library
+names(Caschool) # Display the variables of the Caschool dataset
+```
+
+For each variable in the dataset, basic summary statistics can be obtained by calling `summary()`
+
+```{r summary}
+summary(Caschool[, c("testscr", "str", "avginc")])
+```
+
+
+### Fitting a linear model
+
+Suppose we are interested in the following linear model:
+
+$$\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i$$
+Where $\text{testscr}_i$ is the *average test score* for a given school $i$ and $\text{str}_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. Again, $b_0$ and $b_1$ are the intercept and the slope of the regression line.
+
+The subscript $i$ indexes all unique elementary schools ($i \in \{1, 2, 3, \dots 420\}$) and $e_i$ is the error, or *residual*, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the *sum of squared residuals* (SSR)).
+
+At this point you should step back and take a second to think about what you believe the relation between a school's test scores and student/teacher ratio will be. Do you believe that, in general, a high student/teacher ratio will be associated with higher-than-average test scores for the school? Do you think that the number of students per teacher will impact results in any way? 
+
+Let's find out! As always, we will start by plotting the data to inspect it visually:
+
+```{r first-reg0,fig.align='center',fig.cap='Student Teacher Ratio vs Test Scores'}
+
+plot(formula = testscr ~ str,
+     data = Caschool,
+     xlab = "Student/Teacher Ratio",
+     ylab = "Average Test Score", pch = 21, col = 'blue')
+```
+
+Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let's ask `R`!
+
+### The `lm()` function
+
+We will use the built-in `lm()` function to estimate the coefficients $b_0$ and $b_1$ using the data at hand. `lm` stands for *linear model*, which is what our representation in \@ref(eq:abline) amounts to. This function typically only takes 2 arguments, `formula` and `data`:
+
+`lm(formula, data)`
+
+- `formula` is the description of our model which we want `R` to estimate for us. Its syntax is very simple: `Y ~ X` (more generally, `DependentVariable ~ Independent Variables`). You can think of the tilda operator `~` as the equal sign in your model equation. An intercept is included by default and so you do not have to ask for it in `formula`.
+  For example, the simple model $income = b_0 + b_1 \cdot age$ can be written as `income ~ age`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
+
+- `data` is simply the `data.frame` containing the variables in the model.
+
+In the context of our example, the function call is therefore:
+
+```{r lmfit}
+# assign lm() output to some object `fit_cal`
+fit_cal <- lm(formula = testscr ~ str, data = Caschool)
+
+# ask R for the regression summary
+summary(fit_cal) 
+```
+
+As we can see, `R` returns its estimates for the Intercept and Slope coefficients, $b_0 =$ `r round(coef(fit_cal)[1], 2)` and $b_1 =$ `r round(coef(fit_cal)[2], 2)`. The estimated relationship between a school's Student/Teacher Ratio and its average test results is **negative**.
+
+The output of the `summary` method for an `lm` object is commonly called a *regression table*, and you will be able to decypher it by the end of this course. You should be able to find an interpret the $R^2$ though: Are we explaining a lot of the variance in `testscr` with this simple model, or are we not?
+
+### Plotting the regression line
+
+We can also use our `lm` fit to draw the regression line on top of our initial scatterplot, using the following syntax:
+
+```{r plot-reg1,fig.align='center',fig.cap='Test Scores with Regression Line'}
+plot(formula = testscr ~ str,
+     data = Caschool,
+     xlab = "Student/Teacher Ratio",
+     ylab = "Average Test Score", pch = 21, col = 'blue')# same plot as before
+abline(fit_cal, col = 'red') # add regression line
+
+```
+
+
+As you probably expected, the best line for schools' Student/Teacher Ratio and its average test results is downward sloping.
+
+Just as a way of showcasing another way to make the above plot, here is how you could use `ggplot`:
+
+```{r,fig.align="center"}
+library(ggplot2)
+p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
+p <- p + geom_point() # add points
+p <- p + geom_smooth(method = "lm", size=1, color="red") # add regression line
+p <- p + scale_y_continuous(name = "Average Test Score") + 
+         scale_x_continuous(name = "Student/Teacher Ratio")
+p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
+```
+
+The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $b_1$. We will learn more about it in chapter \@ref(std-errors).
+
+
+
+
+
+
+## Interactions {#mreg-interactions}
+
+Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `computer` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether there are many or few computers in a given school? Is `str` *particularly* important for the test score if there are only a few computers available, for instance? Notice that `str` and `computer` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
+
+
+\begin{equation}
+\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{computer}_i + b_3 (\text{str}_i \times  \text{computer}_i)+ e_i (\#eq:caschool-inter)
+\end{equation}
+
+
+The inclusion of the *product* of `str` and `computer` amounts to having different slopes with respect to `str` for different values of  `computer` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
+
+\begin{equation}
+\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{computer}_i (\#eq:caschool-inter-deriv)
+\end{equation}
+
+
+>You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.
+
+
+Back in our `R` session, we can run the full interactions model like this:
+
+```{r}
+fit_inter = lm(formula = testscr ~ str + computer + str*computer, data = Caschool)
+# note that this would produce the same result:
+# lm(formula = testscr ~ str*computer, data = Caschool)
+# R expands str*computer for you in main effects + interactions
+summary(fit_inter)
+```
+
+We see here that the regression now estimates and additional coefficient $b_3$ for us. We observe also that the estimate of $b_2$ changes signs and becomes positive, while the interaction effect $b_3$ is negative. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an additional computer increases the average test score by 0.05 points; and that the interaction of both decreases scores, implying that more students per teacher decrease scores slightly more if there are more computers.
+
+Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? 
+
+```{r 3D-Plotly-inter, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and computers in school plus interaction term'}
+
+df["pred"] <- predict.lm(fit_inter, df, se.fit = F)
+surf <- acast(df, computer ~ str)
+
+color <- rep(0, length(df))
+
+Caschool %>%
+  plot_ly(colors = "blue") %>%
+  add_markers(x = ~str, y = ~computer, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane with Interaction", opacity = .75, cauto = F, surfacecolor = color) %>%
+  hide_colorbar()
+
+```
+
+
+
+
+
+
+## Saturated Models: Main Effects and Interactions
+
+You can see above that we *restricted* male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. As already introduced in chapter \@ref(mreg-interactions), interactions allow that the *ceteris paribus* effect of a certain regressor, `exp` say, depends also on the value of yet another regressor, `sex` for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to `exp` in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
+
+\begin{equation}
+\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i (\#eq:wage-sex-inter)
+\end{equation}
+
+The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`. This is easy to see if we take the partial derivative of \@ref(eq:wage-sex-inter) with respect to `sex`:
+
+\begin{equation}
+\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i (\#eq:wage-sex-inter-deriv)
+\end{equation}
+
+Back in our `R` session, we can run the full interactions model like this:
+
+```{r}
+lm_inter = lm(lwage ~ exp*sex, data = Wages)
+summary(lm_inter)
+```
+
+You can see here that `R` automatically expands `exp*sex` to include both *main effects*, i.e. `exp` and `sex` as single regressors as before, and their interaction, denoted by `exp:sexmale`. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that $b_3 = 0$. (If, for some reason, you wanted to include only the interaction, you could supply directly `formula = lwage ~ exp:sex` to `lm`, although this would be a rather difficult to interpret model.)
+
+We call a model like \@ref(eq:wage-sex-inter) a *saturated model*, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.
+
+To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for `sex`, `smsa`, `union` and `bluecol`, including all main and all interaction effects:
+
+```{r}
+lm_full = lm(lwage ~ sex*smsa*union*bluecol,data=Wages)
+summary(lm_full)
+```
+
+The main effects remain clear to interpret: being a blue collar worker, for example, reduces average wages by 34% relative to white collar workers. One-way interactions are still ok to interpret as well: `sexmale:bluecolyes` indicates in addition to a wage premium over females of `r round(coef(lm_full)[2],2)`, and a penalty of being blue collar of `r round(coef(lm_full)[5],2)`, **male** blue collar workers suffer an additional wage loss of `r round(coef(lm_full)[9],2)`. All of this is relative to the base category, which are female white collar workers who don't live in an smsa and are not union members. If we now add a third or even a fourth interaction, this becomes much harder to interpret, and in fact we rarely see such interactions in applied work.
+
+

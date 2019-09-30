@@ -29,7 +29,9 @@ Imports: bookdown,
   pdftools,
   Hmisc,
   magrittr,
-  dplyr
+  dplyr,
+  corrplot,
+  cowplot
 Remotes: datalorax/equatiomatic
 Suggests:
   shinytest,

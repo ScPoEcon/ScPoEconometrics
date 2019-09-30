@@ -192,129 +192,38 @@ Notice here that `R` will apply the labels in increasing order the way you suppl
 
 The above developed `factor` terminology fits neatly into `R`'s linear model fitting framework. Let us illustrate the simplest use by way of example.
 
-```{r,warning=FALSE,message=FALSE}
-library(Ecdat)  # need to load this library
-data("Wages")   # from Ecdat
-str(Wages)   # let's examine this dataset!
-```
 
-Notice here that, conveniently, `sex` is already coded as type `factor`. Now assume that this is a single cross section for wages of US workers. The main outcome variable is `lwage` which stands for *logarithm of wage*. 
-
-### Log Transformations
-
-It is quite common to transform either outcome or explanatory or both variables by the natural logarithm. The primary motivation of this is to make the regression scale invariant. Suppose that factor $\alpha$ represented the *scale* of measurement of income, so that $\alpha=1$ if we measure in Euros, or $\alpha=1000$ if in thousands of Euros. With log-transforming regressor $x$, our equation would look like
-
-$$
-y = b_0 + b_1 \log(\alpha x) = b_0 + \log \alpha  + b_1 \log x 
-$$
-where the *scale* $\alpha$ moves into the intercept, and our slope coefficient becomes invariant to it. If both outcome and regressor are transformed, we have 
-
-$$
-\log y = b_0 + b_1 \log x
-$$
-and the slope coefficient is
-
-$$
-b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
-$$
-which represents the **elasticity** of $y$ with respect to $x$: what is the percentage change in $y$ if $x$ changes by one percent?
-
-Finally, if *only the outcome* is log transformed, but not the regressor, we have a *semi-elasticity* formulation. 
-$$
-\log y = b_0 + b_1 x
-$$
-and the slope coefficient becomes
-
-$$
-b_1 = \frac{d\log y}{d x}
-$$
-This means a one-unit change in $x$ increases the logarithm of the outcome by $b_1$ units. For small changes in $x$, we can just exponentiate $b_1$ to get the effect of $x$ the *level* of $y$.
-
-Going back to our example, let's say that a workers wage depends only on his *experience*, measured in the number of years he/she worked full-time:
+Going back to our wage example, let's say that a workers wage depends on their education as well as their sex:
 
 \begin{equation}
-\ln w_i = b_0 + b_1 exp_i + e_i (\#eq:wage-exp)
+\ln w_i = b_0 + b_1 educ_i + b_2 sex_i + e_i (\#eq:wage-sex)
 \end{equation}
 
 
-```{r}
-lm_w = lm(lwage ~ exp, data = Wages)
-summary(lm_w)
+```{r,results = "asis"}
+data("wage1", package = "wooldridge")
+wage1$female = as.factor(wage1$female)  # convert 0-1 to factor
+lm_w = lm(lwage ~ educ, data = wage1)
+lm_w_sex = lm(lwage ~ educ + female, data = wage1)
+stargazer::stargazer(lm_w,lm_w_sex,type = "html")
 ```
 
-We see from this that an additional year of full-time work experience will increase the mean of $\ln w$ by 0.0088. Given the log transformation on wages, we can just exponentiate that to get an estimated effect on the (geometric!) mean of wages as $\exp(\hat{b}_1) = `r exp(coef(lm_w)[2])`$. This means that hourly wages increase by roughly $100 * (\exp(b_1)-1) = `r round((exp(coef(lm_w)[2]) -1) * 100,2)`$ percent with an additional year of experience. We can verify the positive relationship in figure \@ref(fig:wage-plot).
+We know the results from column (1) very well by now. How does the relationship change if we include the `female` indicator? Remember from above that `female` is a `factor` with two levels, *0* and *1*, where *1* means *that's a female*. We see in the above output that `R` included a regressor called `female1`. This is a combination of the variable name `female` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `female==0`. The interpretation is that $b_2$ measures the effect of being female *relative* to being male. `R` automatically creates a dummy variable for each potential level, excluding the first category.
 
-```{r wage-plot,fig.align='center',echo=FALSE,fig.cap='log wage vs experience. Red line shows the regression.',message=FALSE,warning=FALSE}
+```{r wage-plot,fig.align='center',echo=FALSE,fig.cap='log wage vs educ. Right panel with female dummy.',message=FALSE,warning=FALSE,fig.height=3}
 library(ggplot2)
-library(dplyr)
-ggplot(mapping = aes(y=lwage,x=exp), data=Wages) + geom_point(shape=1,alpha=0.6) + geom_smooth(method="lm",col="red",se=FALSE) + theme_bw()
+p1 = ggplot(mapping = aes(y=lwage,x=educ), data=wage1) + geom_point(shape=1,alpha=0.6) + geom_smooth(method="lm",col="blue",se=FALSE) + theme_bw()
 
+p_sex = cbind(wage1,pred=predict(lm_w_sex))
+# p_sex = dplyr::sample_n(p_sex,2500)
+p2 <- ggplot(data=p_sex,mapping=aes(x=educ,y=lwage,color=female)) 
+p2 <- p2 + geom_jitter(shape=1,alpha=0.6,width=0.1) + geom_line(mapping = aes(y=pred), size=1) + theme_bw() + scale_y_continuous(name = NULL)
+cowplot::plot_grid(p1,p2, rel_widths = c(1,1.2))
 ```
 
-Now let's investigate whether this relationship is different for men and women. We can do this by just including the `factor` variable `sex`:
-
-\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i (\#eq:wage-sex)
-\end{equation}
-
-In `R` we can do this easily by using the `update` function as follows:
-
-```{r}
-lm_sex = update(lm_w, . ~ . + sex)  # update lm_w with same LHS, same RHS, but add sex to it
-summary(lm_sex)
-```
+Figure \@ref(fig:wage-plot) illustrates this. The left panel is our previous model. The right panel adds the `female` dummy. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of $b_2 = `r round(coef(lm_w_sex)[3],2)`$ is the size of the downward shift. 
 
 
-What's going on here? Remember from above that `sex` is a `factor` with 2 levels *female* and *male*. We see in the above output that `R` included a regressor called `sexmale` $=\mathbf{1}[sex_i==male]$. This is a combination of the variable name `sex` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `sex=="female"`. The interpretation is that $b_2$ measures the effect of being male *relative* to being female. `R` automatically creates a dummy variable for each potential level, excluding the first category. In particular, if `sex` had a third category `dont want to say`, there would be an additional regressor called `sexdontwanttosay`.
-
-```{r wage-plot2,fig.align='center',echo=FALSE,fig.cap='log wage vs experience with different intercepts by sex'}
-
-p_sex = cbind(Wages,pred=predict(lm_sex))
-p_sex = sample_n(p_sex,2500)
-p <- ggplot(data=p_sex,mapping=aes(x=exp,y=lwage,color=sex)) 
-p + geom_jitter(shape=1,alpha=0.6,width=0.1) + geom_line(mapping = aes(y=pred), size=1) + theme_bw()
-# plot(lwage ~ exp, data=Wages)
-# abline(a=co[1],b=co[2],col="red",lw=2)
-# abline(a=co[1]+co[3],b=co[2],col="blue",lw=2)
-# legend("topright",c("Female","Male"),col=c("red","blue"),lw=c(2,2),lty=c(1,1))
-```
-
-
-Figure \@ref(fig:wage-plot2) illustrates this. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of $b_2 = `r round(coef(lm_sex)[3],2)`$ is the size of the downward shift. 
-
-
-## Saturated Models: Main Effects and Interactions
-
-You can see above that we *restricted* male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called *interaction* effects. As already introduced in chapter \@ref(mreg-interactions), interactions allow that the *ceteris paribus* effect of a certain regressor, `exp` say, depends also on the value of yet another regressor, `sex` for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to `exp` in figure \@ref(fig:wage-plot2). Therefore we formulate this version of our model:
-
-\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i (\#eq:wage-sex-inter)
-\end{equation}
-
-The inclusion of the *product* of `exp` and `sex` amounts to having different slopes for different categories in `sex`. This is easy to see if we take the partial derivative of \@ref(eq:wage-sex-inter) with respect to `sex`:
-
-\begin{equation}
-\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i (\#eq:wage-sex-inter-deriv)
-\end{equation}
-
-Back in our `R` session, we can run the full interactions model like this:
-
-```{r}
-lm_inter = lm(lwage ~ exp*sex, data = Wages)
-summary(lm_inter)
-```
-
-You can see here that `R` automatically expands `exp*sex` to include both *main effects*, i.e. `exp` and `sex` as single regressors as before, and their interaction, denoted by `exp:sexmale`. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that $b_3 = 0$. (If, for some reason, you wanted to include only the interaction, you could supply directly `formula = lwage ~ exp:sex` to `lm`, although this would be a rather difficult to interpret model.)
-
-We call a model like \@ref(eq:wage-sex-inter) a *saturated model*, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.
-
-To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for `sex`, `smsa`, `union` and `bluecol`, including all main and all interaction effects:
-
-```{r}
-lm_full = lm(lwage ~ sex*smsa*union*bluecol,data=Wages)
-summary(lm_full)
-```
-
-The main effects remain clear to interpret: being a blue collar worker, for example, reduces average wages by 34% relative to white collar workers. One-way interactions are still ok to interpret as well: `sexmale:bluecolyes` indicates in addition to a wage premium over females of `r round(coef(lm_full)[2],2)`, and a penalty of being blue collar of `r round(coef(lm_full)[5],2)`, **male** blue collar workers suffer an additional wage loss of `r round(coef(lm_full)[9],2)`. All of this is relative to the base category, which are female white collar workers who don't live in an smsa and are not union members. If we now add a third or even a fourth interaction, this becomes much harder to interpret, and in fact we rarely see such interactions in applied work.
+## Interactions
 
 
