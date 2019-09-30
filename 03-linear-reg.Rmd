@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Linear Regression {#linreg}
 
 In this chapter we will learn an additional way how one can represent the relationship between *outcome*, or *dependent* variable variable $y$ and an *explanatory* or *independent* variable $x$. We will refer throughout to the graphical representation of a collection of independent observations on $x$ and $y$, i.e., a *dataset*. 
@@ -611,7 +616,7 @@ wage1$annual_wage <- wage1$wage * delta
 wage_annual <- lm(formula = annual_wage ~ educ, data = wage1)
 c1 = coef(hourly_wage)
 c2 = coef(wage_annual)
-stargazer::stargazer(hourly_wage, wage_annual, type = "html",title = "Effect of Scaling on Coefficients")
+stargazer::stargazer(hourly_wage, wage_annual, type = if (knitr:::is_latex_output()) "latex" else "html",title = "Effect of Scaling on Coefficients")
 ```
 
 Let's call the coefficients in the column labelled (1) as $b_0$ and $b_1$, and let's call the ones in column (2) $b_0^*$ and $b_1^*$. In column (1) we see that another year increaeses hourly wage by `r round(c1[2],2)` dollars, as before.  In column (2), the corresponding number is `r round(c2[2],2)`, i.e. another year of education will increase *annual* wages by `r round(c2[2],2)` dollars, on average. Notice however, that $b_0 \times \delta = `r round(c1[1],2)` \times `r delta` = `r round(c2[1],2)` = b_0^*$ and that $b_1 \times \delta = `r round(c1[2],2)` \times `r delta` = `r round(c2[2],2)` = b_1^*$, that is we just had to multiply both coefficients by the scaling factor applied to original outcome $y$ to obtain our new coefficients $b_0^*$ and $b_1^*$! Also, observe that the $R^2$s of both regressions are identical! So, really, we did not have to run the regression in column (2) at all to make this change: multiplying all coefficients through by $\delta$ is enough in this case. We keep the identically same fit to the data. 
@@ -677,7 +682,7 @@ par(mfrow = c(1,1))
 It *looks as if* the regression line has the same slope, but beware of the different scales of the y-axis! You can clearly see that all y-values have been compressed by the log transformation. The log case behaves differently from our *scaling by a constant number* case above because it is a *nonlinear* function. Let's compare the output between both models:
 
 ```{r,echo = FALSE, results = "asis"}
-stargazer::stargazer(hourly_wage, log_hourly_wage, title = "Log Transformed Equation",type = "html")
+stargazer::stargazer(hourly_wage, log_hourly_wage, title = "Log Transformed Equation",type = if (knitr:::is_latex_output()) "latex" else "html")
 ```
 
 The interpretation of the transformed model in column (2) is now the following: 
