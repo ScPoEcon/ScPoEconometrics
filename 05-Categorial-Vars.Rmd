@@ -204,7 +204,7 @@ data("wage1", package = "wooldridge")
 wage1$female = as.factor(wage1$female)  # convert 0-1 to factor
 lm_w = lm(lwage ~ educ, data = wage1)
 lm_w_sex = lm(lwage ~ educ + female, data = wage1)
-stargazer::stargazer(lm_w,lm_w_sex,type = "html")
+stargazer::stargazer(lm_w,lm_w_sex,type = if (knitr:::is_latex_output()) "latex" else "html")
 ```
 
 We know the results from column (1) very well by now. How does the relationship change if we include the `female` indicator? Remember from above that `female` is a `factor` with two levels, *0* and *1*, where *1* means *that's a female*. We see in the above output that `R` included a regressor called `female1`. This is a combination of the variable name `female` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `female==0`. The interpretation is that $b_2$ measures the effect of being female *relative* to being male. `R` automatically creates a dummy variable for each potential level, excluding the first category.

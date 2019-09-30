@@ -146,7 +146,7 @@ The way to read the so-called *correlation plot* in figure \@ref(fig:corrplot) i
 educ_only <- lm(lwage ~ educ                 , data = wage1)
 educ_exper <- lm(lwage ~ educ + exper        , data = wage1)
 log_wages <- lm(lwage ~ educ + exper + tenure, data = wage1)
-stargazer::stargazer(educ_only, educ_exper, log_wages,type = "html")
+stargazer::stargazer(educ_only, educ_exper, log_wages,type = if (knitr:::is_latex_output()) "latex" else "html")
 ```
 
 Column (1) refers to model \@ref(eq:log-wage) from the previous chapter, where we only had `educ` as a regressor: we obtain an $R^2$ of 0.186. Column (2) is the model that generated the plane in figure \@ref(fig:plane3D-lwage) above. (3) is the model with three regressors. You can see that by adding more regressors, the quality of our fit increases, as more of the variation in $y$ is now accounted for by our model. You can also see that the values of our estimated coefficients keeps changing as we move from left to right across the columns. Given the correlation structure shown in figure \@ref(fig:corrplot), it is only natural that this is happening: We see that `educ` and `exper` are negatively correlated, for example. So, if we *omit* `exper` from the model in column (1), `educ` will reflect part of this correlation with `exper` by a lower estimated value. By directly controlling for `exper` in column (2) we get an estimate of the effect of `educ` *net of* whatever effect `exper` has in isolation on the outcome variable. We will come back to this point later on.
