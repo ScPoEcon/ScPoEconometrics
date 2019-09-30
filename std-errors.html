@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-09-12" />
+<meta name="date" content="2019-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -146,19 +146,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
 <li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
 <li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
-<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.7</b> An Example: California Student Test Scores</a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
-<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#california-test-scores-2"><i class="fa fa-check"></i><b>4.3</b> California Test Scores 2</a></li>
-<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
@@ -321,7 +324,7 @@ Figure 6.3: Confidence Interval Construction. The blue area is called <em>covera
 \mathcal{T}_{df}(c)\equiv&amp; \Pr \left( T &lt; c \right)  = 1-\frac{\alpha}{2} = 0.975 \\\tag{6.8}
 c =&amp; \mathcal{T}_{df}^{-1}(\mathcal{T}_{df}(c)) = \mathcal{T}_{df}^{-1}(0.975)
 \end{align}\]</span>
-<p>Here <span class="math inline">\(\mathcal{T}_{df}^{-1}\)</span> stands for the <em>quantile function</em>, i.e. the inverse of the CDF. In our example with <span class="math inline">\(df = 49\)</span>, you can find thus that <span class="math inline">\(c = 2.01\)</span> by typing <code>qt(0.975,df=49)</code> into your <code>R</code> session.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Now we only have to expand the definition of the <em>T</em> statistic from <a href="std-errors.html#eq:tscore">(6.6)</a> inside <a href="std-errors.html#eq:ci">(6.7)</a> to obtain</p>
+<p>Here <span class="math inline">\(\mathcal{T}_{df}^{-1}\)</span> stands for the <em>quantile function</em>, i.e. the inverse of the CDF. In our example with <span class="math inline">\(df = 49\)</span>, you can find thus that <span class="math inline">\(c = 2.01\)</span> by typing <code>qt(0.975,df=49)</code> into your <code>R</code> session.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> Now we only have to expand the definition of the <em>T</em> statistic from <a href="std-errors.html#eq:tscore">(6.6)</a> inside <a href="std-errors.html#eq:ci">(6.7)</a> to obtain</p>
 <span class="math display" id="eq:ci2">\[\begin{align}
 0.95 = 1-\alpha &amp;= \Pr \left(-c \leq T \leq c \right) \\\tag{6.9}
                 &amp;= \Pr \left(-2.01 \leq \sqrt{n} \frac{\bar{x} - \mu}{s} \leq 2.01 \right) \\
@@ -337,7 +340,7 @@ CI = \left[165.658 , 171.342 \right]
 </div>
 <div id="hypothesis-testing" class="section level2">
 <h2><span class="header-section-number">6.4</span> Hypothesis Testing</h2>
-<p>Now know by now how the standard errors of an OLS estimate are computed, and what they stand for. We can now briefly<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> discuss a very common usage of this information, in relation to which variables we should include in our regression. There is a statistical proceedure called <em>hypothesis testing</em> which helps us to make such decisions. In <a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing">hypothesis testing</a>, we have a baseline, or <em>null</em> hypothesis <span class="math inline">\(H_0\)</span>, which we want to confront with a competing <em>alternative</em> hypthesis <span class="math inline">\(H_1\)</span>. Continuing with our example of the mean height of SciencesPo students (<span class="math inline">\(\mu\)</span>), one potential hypothesis could be</p>
+<p>Now know by now how the standard errors of an OLS estimate are computed, and what they stand for. We can now briefly<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> discuss a very common usage of this information, in relation to which variables we should include in our regression. There is a statistical proceedure called <em>hypothesis testing</em> which helps us to make such decisions. In <a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing">hypothesis testing</a>, we have a baseline, or <em>null</em> hypothesis <span class="math inline">\(H_0\)</span>, which we want to confront with a competing <em>alternative</em> hypthesis <span class="math inline">\(H_1\)</span>. Continuing with our example of the mean height of SciencesPo students (<span class="math inline">\(\mu\)</span>), one potential hypothesis could be</p>
 <span class="math display">\[\begin{align}
 H_0:&amp; \mu = 167\\
 H_1:&amp; \mu \neq 167
@@ -382,7 +385,7 @@ The crucial thing to note here is that, given we are working with a <strong>rand
 <li>The corresponding test statistic is the <em>t-statistic</em>, which follows the <a href="https://en.wikipedia.org/wiki/Student&#39;s_t-distribution">Student’s T</a> distribution.</li>
 <li>That is, our statistic is <span class="math inline">\(T=\frac{\bar{x} - \mu}{s/\sqrt{n}} \sim t_{49}\)</span>, where 49 is equal to the <em>degrees of freedom</em> in this case.</li>
 </ul></li>
-<li>Rejection Region: We perform a one-sided test. We said we are happy with a 5% significance level, i.e. we are looking for the <span class="math inline">\(t\)</span> value which corresponds <em>just</em> to <span class="math inline">\(1-0.05 = 0.95\)</span> mass under the pdf of the <span class="math inline">\(t\)</span> distribution. More precisely, we are looking for the <span class="math inline">\(1-0.05 = 0.95\)</span> quantile of the <span class="math inline">\(t_{50}\)</span> distribution.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> This implies a critical value <span class="math inline">\(c = 1.676\)</span>, which you can verify by typing <code>qt(0.95,df=50)</code> in <code>R</code>.</li>
+<li>Rejection Region: We perform a one-sided test. We said we are happy with a 5% significance level, i.e. we are looking for the <span class="math inline">\(t\)</span> value which corresponds <em>just</em> to <span class="math inline">\(1-0.05 = 0.95\)</span> mass under the pdf of the <span class="math inline">\(t\)</span> distribution. More precisely, we are looking for the <span class="math inline">\(1-0.05 = 0.95\)</span> quantile of the <span class="math inline">\(t_{50}\)</span> distribution.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> This implies a critical value <span class="math inline">\(c = 1.676\)</span>, which you can verify by typing <code>qt(0.95,df=50)</code> in <code>R</code>.</li>
 <li>Calculate our test statistic: <span class="math inline">\(\frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{168.5 - 167}{10/\sqrt{50}} = 1.061\)</span></li>
 <li>Decide: We find that <span class="math inline">\(1.061 &lt; 1.676\)</span>. Hence, we cannot reject <span class="math inline">\(H_0\)</span>, because we only found weak evidence against it in our sample of data.</li>
 </ol>
@@ -547,8 +550,8 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 #OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
 <p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-159"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-159-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-175"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-175-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 6.6: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
@@ -569,10 +572,10 @@ If there is an omitted variable <span class="math inline"><span class="math inli
 </div>
 <div class="footnotes">
 <hr />
-<ol start="5">
-<li id="fn5"><p>You often will see <span class="math inline">\(c=1.96\)</span>, which comes from the fact that one relies on the <em>t</em> distribution converging to the normal distribution with large <span class="math inline">\(n\)</span>. Type <code>qnorm(0.975)</code> to confirm!<a href="std-errors.html#fnref5">↩</a></p></li>
-<li id="fn6"><p>We will not go into great detail here. Please refer back to your statistics course from last spring semester (chapters 8 and 9), or the short note I <a href="images/hypothesis.pdf">wrote while ago</a><a href="std-errors.html#fnref6">↩</a></p></li>
-<li id="fn7"><p>See the previous footnote for an explanation of this!<a href="std-errors.html#fnref7">↩</a></p></li>
+<ol start="6">
+<li id="fn6"><p>You often will see <span class="math inline">\(c=1.96\)</span>, which comes from the fact that one relies on the <em>t</em> distribution converging to the normal distribution with large <span class="math inline">\(n\)</span>. Type <code>qnorm(0.975)</code> to confirm!<a href="std-errors.html#fnref6">↩</a></p></li>
+<li id="fn7"><p>We will not go into great detail here. Please refer back to your statistics course from last spring semester (chapters 8 and 9), or the short note I <a href="images/hypothesis.pdf">wrote while ago</a><a href="std-errors.html#fnref7">↩</a></p></li>
+<li id="fn8"><p>See the previous footnote for an explanation of this!<a href="std-errors.html#fnref8">↩</a></p></li>
 </ol>
 </div>
             </section>

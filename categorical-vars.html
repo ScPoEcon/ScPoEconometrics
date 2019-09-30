@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-09-12" />
+<meta name="date" content="2019-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -146,19 +146,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
 <li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
 <li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
-<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.7</b> An Example: California Student Test Scores</a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
-<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#california-test-scores-2"><i class="fa fa-check"></i><b>4.3</b> California Test Scores 2</a></li>
-<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
@@ -215,7 +218,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                     0 &amp; \text{if }i\text{ is not female}. \\
                  \end{cases} \\
 \end{align*}\]</span>
-<p>By definition, we have just introduced a linear dependence into our dataset. It will always be true that <span class="math inline">\(\text{is.male}_i + \text{is.female}_i = 1\)</span>. This is because dummy variables are based on data being mutually exclusively categorized - here, you are either male or female.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> This should immediately remind you of section <a href="multiple-reg.html#multicol">4.2</a> where we introduced <em>multicolinearity</em>. A regression of income on both of our variables like this</p>
+<p>By definition, we have just introduced a linear dependence into our dataset. It will always be true that <span class="math inline">\(\text{is.male}_i + \text{is.female}_i = 1\)</span>. This is because dummy variables are based on data being mutually exclusively categorized - here, you are either male or female.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> This should immediately remind you of section <a href="multiple-reg.html#multicol">4.2</a> where we introduced <em>multicolinearity</em>. A regression of income on both of our variables like this</p>
 <p><span class="math display">\[
 y_i = b_0 + b_1 \text{is.female}_i + b_2 \text{is.male}_i + e_i
 \]</span> would be invalid because of perfect colinearity between <span class="math inline">\(\text{is.female}_i\)</span> and <span class="math inline">\(\text{is.male}_i\)</span>. The solution to this is pragmatic and simple:</p>
@@ -322,207 +325,321 @@ sex</code></pre></div>
 #OUT&gt; Levels: HS someCol BA MSc</code></pre>
 <p>Notice here that <code>R</code> will apply the labels in increasing order the way you supplied it (i.e. a numerical value <code>4</code> will correspond to “MSc”, no matter the ordering in <code>x</code>.)</p>
 </div>
-<div id="factor-and-lm" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> <code>factor</code> and <code>lm()</code></h3>
+<div id="factors" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Log Wages and Dummies</h3>
 <p>The above developed <code>factor</code> terminology fits neatly into <code>R</code>’s linear model fitting framework. Let us illustrate the simplest use by way of example.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Ecdat)  <span class="co"># need to load this library</span>
-<span class="kw">data</span>(<span class="st">&quot;Wages&quot;</span>)   <span class="co"># from Ecdat</span>
-<span class="kw">str</span>(Wages)   <span class="co"># let&#39;s examine this dataset!</span></code></pre></div>
-<pre><code>#OUT&gt; &#39;data.frame&#39;: 4165 obs. of  12 variables:
-#OUT&gt;  $ exp    : int  3 4 5 6 7 8 9 30 31 32 ...
-#OUT&gt;  $ wks    : int  32 43 40 39 42 35 32 34 27 33 ...
-#OUT&gt;  $ bluecol: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 2 2 2 ...
-#OUT&gt;  $ ind    : int  0 0 0 0 1 1 1 0 0 1 ...
-#OUT&gt;  $ south  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 1 1 1 ...
-#OUT&gt;  $ smsa   : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-#OUT&gt;  $ married: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...
-#OUT&gt;  $ sex    : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 2 2 2 2 2 2 2 2 2 ...
-#OUT&gt;  $ union  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 2 ...
-#OUT&gt;  $ ed     : int  9 9 9 9 9 9 9 11 11 11 ...
-#OUT&gt;  $ black  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-#OUT&gt;  $ lwage  : num  5.56 5.72 6 6 6.06 ...</code></pre>
-<p>Notice here that, conveniently, <code>sex</code> is already coded as type <code>factor</code>. Now assume that this is a single cross section for wages of US workers. The main outcome variable is <code>lwage</code> which stands for <em>logarithm of wage</em>.</p>
-</div>
-<div id="log-transformations" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> Log Transformations</h3>
-<p>It is quite common to transform either outcome or explanatory or both variables by the natural logarithm. The primary motivation of this is to make the regression scale invariant. Suppose that factor <span class="math inline">\(\alpha\)</span> represented the <em>scale</em> of measurement of income, so that <span class="math inline">\(\alpha=1\)</span> if we measure in Euros, or <span class="math inline">\(\alpha=1000\)</span> if in thousands of Euros. With log-transforming regressor <span class="math inline">\(x\)</span>, our equation would look like</p>
-<p><span class="math display">\[
-y = b_0 + b_1 \log(\alpha x) = b_0 + \log \alpha  + b_1 \log x 
-\]</span> where the <em>scale</em> <span class="math inline">\(\alpha\)</span> moves into the intercept, and our slope coefficient becomes invariant to it. If both outcome and regressor are transformed, we have</p>
-<p><span class="math display">\[
-\log y = b_0 + b_1 \log x
-\]</span> and the slope coefficient is</p>
-<p><span class="math display">\[
-b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
-\]</span> which represents the <strong>elasticity</strong> of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>: what is the percentage change in <span class="math inline">\(y\)</span> if <span class="math inline">\(x\)</span> changes by one percent?</p>
-<p>Finally, if <em>only the outcome</em> is log transformed, but not the regressor, we have a <em>semi-elasticity</em> formulation. <span class="math display">\[
-\log y = b_0 + b_1 x
-\]</span> and the slope coefficient becomes</p>
-<p><span class="math display">\[
-b_1 = \frac{d\log y}{d x}
-\]</span> This means a one-unit change in <span class="math inline">\(x\)</span> increases the logarithm of the outcome by <span class="math inline">\(b_1\)</span> units. For small changes in <span class="math inline">\(x\)</span>, we can just exponentiate <span class="math inline">\(b_1\)</span> to get the effect of <span class="math inline">\(x\)</span> the <em>level</em> of <span class="math inline">\(y\)</span>.</p>
-<p>Going back to our example, let’s say that a workers wage depends only on his <em>experience</em>, measured in the number of years he/she worked full-time:</p>
-<span class="math display" id="eq:wage-exp">\[\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + e_i \tag{5.3}
-\end{equation}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_w =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp, <span class="dt">data =</span> Wages)
-<span class="kw">summary</span>(lm_w)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -2.30153 -0.29144  0.02307  0.27927  1.97171 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.5014318  0.0144657  449.44   &lt;2e-16 ***
-#OUT&gt; exp         0.0088101  0.0006378   13.81   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4513 on 4163 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.04383, Adjusted R-squared:  0.0436 
-#OUT&gt; F-statistic: 190.8 on 1 and 4163 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>We see from this that an additional year of full-time work experience will increase the mean of <span class="math inline">\(\ln w\)</span> by 0.0088. Given the log transformation on wages, we can just exponentiate that to get an estimated effect on the (geometric!) mean of wages as <span class="math inline">\(\exp(\hat{b}_1) = 1.0088491\)</span>. This means that hourly wages increase by roughly <span class="math inline">\(100 * (\exp(b_1)-1) = 0.88\)</span> percent with an additional year of experience. We can verify the positive relationship in figure <a href="categorical-vars.html#fig:wage-plot">5.2</a>.</p>
-<div class="figure" style="text-align: center"><span id="fig:wage-plot"></span>
-<img src="ScPoEconometrics_files/figure-html/wage-plot-1.png" alt="log wage vs experience. Red line shows the regression." width="672" />
-<p class="caption">
-Figure 5.2: log wage vs experience. Red line shows the regression.
-</p>
-</div>
-<p>Now let’s investigate whether this relationship is different for men and women. We can do this by just including the <code>factor</code> variable <code>sex</code>:</p>
+<p>Going back to our wage example, let’s say that a worker’s wage depends on their education as well as their sex:</p>
 <span class="math display" id="eq:wage-sex">\[\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i \tag{5.4}
+\ln w_i = b_0 + b_1 educ_i + b_2 female_i + e_i \tag{5.3}
 \end{equation}\]</span>
-<p>In <code>R</code> we can do this easily by using the <code>update</code> function as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_sex =<span class="st"> </span><span class="kw">update</span>(lm_w, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>sex)  <span class="co"># update lm_w with same LHS, same RHS, but add sex to it</span>
-<span class="kw">summary</span>(lm_sex)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp + sex, data = Wages)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.87081 -0.26688  0.01733  0.26336  1.90325 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.1257661  0.0223319  274.31   &lt;2e-16 ***
-#OUT&gt; exp         0.0076134  0.0006082   12.52   &lt;2e-16 ***
-#OUT&gt; sexmale     0.4501101  0.0210974   21.34   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4286 on 4162 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.1381,  Adjusted R-squared:  0.1377 
-#OUT&gt; F-statistic: 333.4 on 2 and 4162 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>What’s going on here? Remember from above that <code>sex</code> is a <code>factor</code> with 2 levels <em>female</em> and <em>male</em>. We see in the above output that <code>R</code> included a regressor called <code>sexmale</code> <span class="math inline">\(=\mathbf{1}[sex_i==male]\)</span>. This is a combination of the variable name <code>sex</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>sex==&quot;female&quot;</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being male <em>relative</em> to being female. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category. In particular, if <code>sex</code> had a third category <code>dont want to say</code>, there would be an additional regressor called <code>sexdontwanttosay</code>.</p>
-<div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
-<img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs experience with different intercepts by sex" width="672" />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;wage1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
+wage1<span class="op">$</span>female =<span class="st"> </span><span class="kw">as.factor</span>(wage1<span class="op">$</span>female)  <span class="co"># convert 0-1 to factor</span>
+lm_w =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ, <span class="dt">data =</span> wage1)
+lm_w_sex =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>female, <span class="dt">data =</span> wage1)
+stargazer<span class="op">::</span><span class="kw">stargazer</span>(lm_w,lm_w_sex,<span class="dt">type =</span> <span class="st">&quot;html&quot;</span>)</code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="2">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="2">
+lwage
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+educ
+</td>
+<td>
+0.083<sup>***</sup>
+</td>
+<td>
+0.077<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.007)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+female1
+</td>
+<td>
+</td>
+<td>
+-0.361<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(0.039)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.584<sup>***</sup>
+</td>
+<td>
+0.826<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.097)
+</td>
+<td>
+(0.094)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+526
+</td>
+<td>
+526
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.186
+</td>
+<td>
+0.300
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.184
+</td>
+<td>
+0.298
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.480 (df = 524)
+</td>
+<td>
+0.445 (df = 523)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+119.582<sup>***</sup> (df = 1; 524)
+</td>
+<td>
+112.189<sup>***</sup> (df = 2; 523)
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="2" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p>We know the results from column (1) very well by now. How does the relationship change if we include the <code>female</code> indicator? Remember from above that <code>female</code> is a <code>factor</code> with two levels, <em>0</em> and <em>1</em>, where <em>1</em> means <em>that’s a female</em>. We see in the above output that <code>R</code> included a regressor called <code>female1</code>. This is a combination of the variable name <code>female</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>female==0</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being female <em>relative</em> to being male. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category.</p>
+<div class="figure" style="text-align: center"><span id="fig:wage-plot"></span>
+<img src="ScPoEconometrics_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
 <p class="caption">
-Figure 5.3: log wage vs experience with different intercepts by sex
+Figure 5.2: log wage vs educ. Right panel with female dummy.
 </p>
 </div>
-<p>Figure <a href="categorical-vars.html#fig:wage-plot2">5.3</a> illustrates this. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of <span class="math inline">\(b_2 = 0.45\)</span> is the size of the downward shift.</p>
+<p>Figure <a href="categorical-vars.html#fig:wage-plot">5.2</a> illustrates this. The left panel is our previous model. The right panel adds the <code>female</code> dummy. You can see that both male and female have the same upward sloping regression line. But you can also see that there is a parallel downward shift from male to female line. The estimate of <span class="math inline">\(b_2 = -0.36\)</span> is the size of the downward shift.</p>
 </div>
 </div>
-<div id="saturated-models-main-effects-and-interactions" class="section level2">
-<h2><span class="header-section-number">5.4</span> Saturated Models: Main Effects and Interactions</h2>
-<p>You can see above that we <em>restricted</em> male and female to have the same slope with repect to years of experience. This may or may not be a good assumption. Thankfully, the dummy variable regression machinery allows for a quick solution to this - so-called <em>interaction</em> effects. As already introduced in chapter <a href="multiple-reg.html#mreg-interactions">4.4</a>, interactions allow that the <em>ceteris paribus</em> effect of a certain regressor, <code>exp</code> say, depends also on the value of yet another regressor, <code>sex</code> for example. Suppose then we would like to see whether male and female not only have different intercepts, but also different slopes with respect to <code>exp</code> in figure <a href="categorical-vars.html#fig:wage-plot2">5.3</a>. Therefore we formulate this version of our model:</p>
-<span class="math display" id="eq:wage-sex-inter">\[\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i \tag{5.5}
+<div id="interactions" class="section level2">
+<h2><span class="header-section-number">5.4</span> Interactions</h2>
+<p>Sometimes it is useful to let the slope of a certain variable to be dependent on the value of <em>another</em> regressor. For example consider a model for the sales prices of houses, where <code>area</code> is the livable surface of the property, and <code>age</code> is its age:</p>
+<span class="math display" id="eq:price-interact">\[\begin{equation}
+\log(price) = b_0 + b_1 \text{area} + b_2 \text{age} + b_3 (\text{area} \times \text{age}) + e  \tag{5.4}
 \end{equation}\]</span>
-<p>The inclusion of the <em>product</em> of <code>exp</code> and <code>sex</code> amounts to having different slopes for different categories in <code>sex</code>. This is easy to see if we take the partial derivative of <a href="categorical-vars.html#eq:wage-sex-inter">(5.5)</a> with respect to <code>sex</code>:</p>
-<span class="math display" id="eq:wage-sex-inter-deriv">\[\begin{equation}
-\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i \tag{5.6}
+<p>In that model, the partial effect of <code>area</code> on <code>log(price)</code>, keeping all other variables fixed, is</p>
+<span class="math display">\[\begin{equation}
+\frac{\partial \log(price)}{\partial \text{area}} = b_1 + b_3 (\text{age}) 
 \end{equation}\]</span>
-<p>Back in our <code>R</code> session, we can run the full interactions model like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_inter =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>exp<span class="op">*</span>sex, <span class="dt">data =</span> Wages)
-<span class="kw">summary</span>(lm_inter)</code></pre></div>
+<p>If we find that <span class="math inline">\(b_3 &gt; 0\)</span> in a regression, we conclude that the size of a house values more in older houses. We call <span class="math inline">\(b_3\)</span> the <strong>interaction effect</strong> between area and age. Let’s look at that regression model now.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(hprice3, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
+<span class="kw">summary</span>(<span class="kw">lm</span>(lprice <span class="op">~</span><span class="st"> </span>area<span class="op">*</span>age, <span class="dt">data =</span> hprice3))</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ exp * sex, data = Wages)
+#OUT&gt; lm(formula = lprice ~ area * age, data = hprice3)
 #OUT&gt; 
 #OUT&gt; Residuals:
 #OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.82137 -0.26797  0.01781  0.26231  1.90757 
+#OUT&gt; -1.27226 -0.16538 -0.00298  0.20673  0.83985 
 #OUT&gt; 
 #OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 6.169017   0.038165 161.643  &lt; 2e-16 ***
-#OUT&gt; exp         0.005071   0.001918   2.644  0.00822 ** 
-#OUT&gt; sexmale     0.401116   0.040917   9.803  &lt; 2e-16 ***
-#OUT&gt; exp:sexmale 0.002826   0.002022   1.397  0.16236    
+#OUT&gt;               Estimate Std. Error t value Pr(&gt;|t|)    
+#OUT&gt; (Intercept)  1.071e+01  6.633e-02 161.448  &lt; 2e-16 ***
+#OUT&gt; area         3.647e-04  2.875e-05  12.686  &lt; 2e-16 ***
+#OUT&gt; age         -7.377e-03  1.358e-03  -5.434  1.1e-07 ***
+#OUT&gt; area:age     9.168e-07  4.898e-07   1.872   0.0622 .  
 #OUT&gt; ---
 #OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #OUT&gt; 
-#OUT&gt; Residual standard error: 0.4285 on 4161 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.1385,  Adjusted R-squared:  0.1379 
-#OUT&gt; F-statistic:   223 on 3 and 4161 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>You can see here that <code>R</code> automatically expands <code>exp*sex</code> to include both <em>main effects</em>, i.e. <code>exp</code> and <code>sex</code> as single regressors as before, and their interaction, denoted by <code>exp:sexmale</code>. It turns out that in this example, the estimate for the interaction is not statistically significant, i.e. we cannot reject the null hypothesis that <span class="math inline">\(b_3 = 0\)</span>. (If, for some reason, you wanted to include only the interaction, you could supply directly <code>formula = lwage ~ exp:sex</code> to <code>lm</code>, although this would be a rather difficult to interpret model.)</p>
-<p>We call a model like <a href="categorical-vars.html#eq:wage-sex-inter">(5.5)</a> a <em>saturated model</em>, because it includes all main effects and possible interactions. What our little exercise showed us was that with the sample of data at hand, we cannot actually claim that there exists a differential slope for male and female, so the model with main effects only may be more appropriate here.</p>
-<p>To finally illustrate the limits of interpretability when including interactions, suppose we run the fully saturated model for <code>sex</code>, <code>smsa</code>, <code>union</code> and <code>bluecol</code>, including all main and all interaction effects:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_full =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>sex<span class="op">*</span>smsa<span class="op">*</span>union<span class="op">*</span>bluecol,<span class="dt">data=</span>Wages)
-<span class="kw">summary</span>(lm_full)</code></pre></div>
+#OUT&gt; Residual standard error: 0.2925 on 317 degrees of freedom
+#OUT&gt; Multiple R-squared:  0.5586,  Adjusted R-squared:  0.5545 
+#OUT&gt; F-statistic: 133.7 on 3 and 317 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>In this instance, we see that indeed there is a small positive interaction between <code>area</code> and <code>age</code> on the sales price: even though <code>age</code> in isolation decreases the sales value, bigger houses command a small premium if they are older.</p>
+<div id="interactions-with-dummies-differential-slopes" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Interactions with Dummies: Differential Slopes</h3>
+<p>It is straightforward to extend the interactions logic to allow not only for different <em>intercepts</em>, but also different <em>slopes</em> for each subgroup in a dataset. Let’s go back to our dataset of wages from section <a href="categorical-vars.html#factors">5.3.2</a> above. Now that we know how to create and interaction between two variables, we can easily modify equation <a href="categorical-vars.html#eq:wage-sex">(5.3)</a> like this:</p>
+<span class="math display" id="eq:wage-sex2">\[\begin{equation}
+\ln w = b_0 + b_1 \text{female} + b_2 \text{educ} + b_3 (\text{female} \times \text{educ}) + e \tag{5.5}
+\end{equation}\]</span>
+<p>The only peculiarity here is that <code>female</code> is a factor with levels <code>0</code> and <code>1</code>: i.e. the interaction term <span class="math inline">\(b_3\)</span> will be zero for all men. Similarly to above, we can test whether there are indeed different returns to education or men and women by looking at the estimated value <span class="math inline">\(b_3\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_w_interact &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">*</span><span class="st"> </span>female , <span class="dt">data =</span> wage1)  <span class="co"># R expands to full interactions model</span>
+<span class="kw">summary</span>(lm_w_interact)</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ sex * smsa * union * bluecol, data = Wages)
+#OUT&gt; lm(formula = lwage ~ educ * female, data = wage1)
 #OUT&gt; 
 #OUT&gt; Residuals:
 #OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.95214 -0.23409 -0.01681  0.25317  1.90450 
+#OUT&gt; -2.02673 -0.27468 -0.03721  0.26221  1.34740 
 #OUT&gt; 
 #OUT&gt; Coefficients:
-#OUT&gt;                                     Estimate Std. Error t value Pr(&gt;|t|)
-#OUT&gt; (Intercept)                          6.12378    0.06300  97.198  &lt; 2e-16
-#OUT&gt; sexmale                              0.67057    0.06577  10.195  &lt; 2e-16
-#OUT&gt; smsayes                              0.33424    0.06872   4.864 1.19e-06
-#OUT&gt; unionyes                             0.84284    0.16866   4.997 6.06e-07
-#OUT&gt; bluecolyes                          -0.34016    0.08423  -4.039 5.47e-05
-#OUT&gt; sexmale:smsayes                     -0.15917    0.07226  -2.203 0.027670
-#OUT&gt; sexmale:unionyes                    -0.92893    0.17816  -5.214 1.94e-07
-#OUT&gt; smsayes:unionyes                    -0.83927    0.17979  -4.668 3.14e-06
-#OUT&gt; sexmale:bluecolyes                  -0.15046    0.08820  -1.706 0.088100
-#OUT&gt; smsayes:bluecolyes                  -0.12471    0.09727  -1.282 0.199882
-#OUT&gt; unionyes:bluecolyes                 -0.31819    0.22924  -1.388 0.165208
-#OUT&gt; sexmale:smsayes:unionyes             0.72672    0.19060   3.813 0.000139
-#OUT&gt; sexmale:smsayes:bluecolyes           0.25860    0.10327   2.504 0.012318
-#OUT&gt; sexmale:unionyes:bluecolyes          0.71906    0.23772   3.025 0.002503
-#OUT&gt; smsayes:unionyes:bluecolyes          0.50057    0.24862   2.013 0.044137
-#OUT&gt; sexmale:smsayes:unionyes:bluecolyes -0.58330    0.25899  -2.252 0.024361
-#OUT&gt;                                        
-#OUT&gt; (Intercept)                         ***
-#OUT&gt; sexmale                             ***
-#OUT&gt; smsayes                             ***
-#OUT&gt; unionyes                            ***
-#OUT&gt; bluecolyes                          ***
-#OUT&gt; sexmale:smsayes                     *  
-#OUT&gt; sexmale:unionyes                    ***
-#OUT&gt; smsayes:unionyes                    ***
-#OUT&gt; sexmale:bluecolyes                  .  
-#OUT&gt; smsayes:bluecolyes                     
-#OUT&gt; unionyes:bluecolyes                    
-#OUT&gt; sexmale:smsayes:unionyes            ***
-#OUT&gt; sexmale:smsayes:bluecolyes          *  
-#OUT&gt; sexmale:unionyes:bluecolyes         ** 
-#OUT&gt; smsayes:unionyes:bluecolyes         *  
-#OUT&gt; sexmale:smsayes:unionyes:bluecolyes *  
+#OUT&gt;                Estimate Std. Error t value Pr(&gt;|t|)    
+#OUT&gt; (Intercept)   8.260e-01  1.181e-01   6.997 8.08e-12 ***
+#OUT&gt; educ          7.723e-02  8.988e-03   8.593  &lt; 2e-16 ***
+#OUT&gt; female1      -3.601e-01  1.854e-01  -1.942   0.0527 .  
+#OUT&gt; educ:female1 -6.408e-05  1.450e-02  -0.004   0.9965    
 #OUT&gt; ---
 #OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #OUT&gt; 
-#OUT&gt; Residual standard error: 0.3832 on 4149 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.3129,  Adjusted R-squared:  0.3105 
-#OUT&gt; F-statistic:   126 on 15 and 4149 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>The main effects remain clear to interpret: being a blue collar worker, for example, reduces average wages by 34% relative to white collar workers. One-way interactions are still ok to interpret as well: <code>sexmale:bluecolyes</code> indicates in addition to a wage premium over females of 0.67, and a penalty of being blue collar of -0.34, <strong>male</strong> blue collar workers suffer an additional wage loss of -0.15. All of this is relative to the base category, which are female white collar workers who don’t live in an smsa and are not union members. If we now add a third or even a fourth interaction, this becomes much harder to interpret, and in fact we rarely see such interactions in applied work.</p>
+#OUT&gt; Residual standard error: 0.4459 on 522 degrees of freedom
+#OUT&gt; Multiple R-squared:  0.3002,  Adjusted R-squared:  0.2962 
+#OUT&gt; F-statistic: 74.65 on 3 and 522 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We will in the next chapter learn that the estimate for <span class="math inline">\(b_3\)</span> on the interaction <code>educ:female1</code> is difficult for us to distinguish from zero in a statistical sense; Hence for now we conclude that there are <em>no</em> significantly different returns in education for men and women in this data. This is easy to verify visually in this plot, where we are unable to detect a difference in slopes in the right panel.</p>
+<div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
+<img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
+<p class="caption">
+Figure 5.3: log wage vs educ. Right panel allows slopes to be different - turns out they are not!
+</p>
+</div>
+</div>
+</div>
+<div id="unobserved-individual-heterogeneity" class="section level2">
+<h2><span class="header-section-number">5.5</span> (Unobserved) Individual Heterogeneity</h2>
+<p>Finally, dummary variables are sometimes very important to account for spurious relationships in that data. Consider the following (artificial example):</p>
+<ol style="list-style-type: decimal">
+<li>Suppose we collected data on hourly wage data together with a the number of hours worked for a set of individuals.</li>
+<li>We plot want to investigate labour supply behaviour of those individuals, hence we run regression <code>hours_worked ~ wage</code>.</li>
+<li>We expect to get a positive coefficient on <code>wage</code>: the higher the wage, the more hours worked.</li>
+<li>You know that individuals are members of either group <code>g=0</code> or <code>g=1</code>.</li>
+</ol>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-165-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let’s use this and include <code>g</code> as a dummy in the regression - suppose <code>g</code> encodes male and female.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-166-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
+<p class="caption">
+Figure 5.4: Left and right panel exhibit the same data. The right panel controls for group composition.
+</p>
+</div>
+<p>This is an artificial example; yet it shows that you can be severly misled if you don’t account for group-specific effects in your data. The problem is particularly accute if we <em>don’t know group membership</em> - we can then resort to advanced methods that are beyond the scope of this course to <em>estimate</em> which group each individual belongs to. If we <em>do know</em> group membership, however, it is good practice to include a group dummy so as to control for group effects.</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="4">
-<li id="fn4"><p>There are <a href="https://en.wikipedia.org/wiki/Transgender">transgender</a> individuals where this example will not apply.<a href="categorical-vars.html#fnref4">↩</a></p></li>
+<ol start="5">
+<li id="fn5"><p>There are <a href="https://en.wikipedia.org/wiki/Transgender">transgender</a> individuals where this example will not apply.<a href="categorical-vars.html#fnref5">↩</a></p></li>
 </ol>
 </div>
             </section>

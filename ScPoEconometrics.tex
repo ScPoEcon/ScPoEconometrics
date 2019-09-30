@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-09-12}
+    \date{2019-09-30}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4711,227 +4711,521 @@ opposite case, we will see an \(R^2\) close to zero. Notice that a small
 \(R^2\) does not imply that the model is useless, just that it explains
 a small fraction of the observed variation.
 
-\section{An Example: California Student Test Scores}\label{lm-example1}
+\section{An Example: A Log Wage
+Equation}\label{an-example-a-log-wage-equation}
 
-Luckily for us, fitting a linear model to some data does not require us
-to iteratively find the best intercept and slope manually, as you have
-experienced in our \texttt{apps}. As it turns out, \texttt{R} can do
-this much more precisely, and very fast!
-
-Let's explore how to do this, using a real life dataset taken from the
-\texttt{Ecdat} package which includes many economics-related dataset. In
-this example, we will use the \texttt{Caschool} dataset which contains
-the average test scores of 420 elementary schools in California along
-with some additional information.
-
-\subsection{Loading and exploring
-Data}\label{loading-and-exploring-data}
-
-We can explore which variables are included in the dataset using the
-\texttt{names()} function:
+Let's consider the following example concerning wage data collected in
+the 1976 Current Population Survey in the USA.\footnote{This example is
+  close to the vignette of the
+  \href{https://cloud.r-project.org/web/packages/wooldridge/index.html}{wooldridge}
+  package, whose author I hereby thank for the excellent work.} We want
+to investigate the relationship between average hourly earnings, and
+years of education. Let's start with a plot:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(}\StringTok{"Ecdat"}\NormalTok{) }\CommentTok{# Load the Ecdat library}
-\KeywordTok{names}\NormalTok{(Caschool) }\CommentTok{# Display the variables of the Caschool dataset}
-\end{Highlighting}
-\end{Shaded}
+\KeywordTok{data}\NormalTok{(}\StringTok{"wage1"}\NormalTok{, }\DataTypeTok{package =} \StringTok{"wooldridge"}\NormalTok{)   }\CommentTok{# load data}
 
-\begin{verbatim}
-#OUT>  [1] "distcod"  "county"   "district" "grspan"   "enrltot"  "teachers"
-#OUT>  [7] "calwpct"  "mealpct"  "computer" "testscr"  "compstu"  "expnstu" 
-#OUT> [13] "str"      "avginc"   "elpct"    "readscr"  "mathscr"
-\end{verbatim}
+\CommentTok{# a function that returns a plot}
+\NormalTok{plotfun <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(wage1,}\DataTypeTok{log=}\OtherTok{FALSE}\NormalTok{,}\DataTypeTok{rug =} \OtherTok{TRUE}\NormalTok{)\{}
+\NormalTok{    y =}\StringTok{ }\NormalTok{wage1}\OperatorTok{$}\NormalTok{wage}
+    \ControlFlowTok{if}\NormalTok{ (log)\{}
+\NormalTok{        y =}\StringTok{ }\KeywordTok{log}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{wage)}
+\NormalTok{    \}}
+    \KeywordTok{plot}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ y,}
+       \DataTypeTok{x =}\NormalTok{ wage1}\OperatorTok{$}\NormalTok{educ, }
+       \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{21}\NormalTok{, }\DataTypeTok{bg =} \StringTok{"grey"}\NormalTok{,     }
+       \DataTypeTok{cex=}\FloatTok{1.25}\NormalTok{, }\DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{, }\DataTypeTok{frame =} \OtherTok{FALSE}\NormalTok{,      }\CommentTok{# set default x-axis to none}
+       \DataTypeTok{main =} \KeywordTok{ifelse}\NormalTok{(log,}\StringTok{"log(Wages) vs. Education, 1976"}\NormalTok{,}\StringTok{"Wages vs. Education, 1976"}\NormalTok{),}
+       \DataTypeTok{xlab =} \StringTok{"years of education"}\NormalTok{, }
+       \DataTypeTok{ylab =} \KeywordTok{ifelse}\NormalTok{(log,}\StringTok{"Log Hourly wages"}\NormalTok{,}\StringTok{"Hourly wages"}\NormalTok{))}
+    \KeywordTok{axis}\NormalTok{(}\DataTypeTok{side =} \DecValTok{1}\NormalTok{, }\DataTypeTok{at =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{18}\NormalTok{))         }\CommentTok{# add custom ticks to x axis}
+    \ControlFlowTok{if}\NormalTok{ (rug) }\KeywordTok{rug}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{wage, }\DataTypeTok{side=}\DecValTok{2}\NormalTok{, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)        }\CommentTok{# add `rug` to y axis}
+\NormalTok{\}}
 
-For each variable in the dataset, basic summary statistics can be
-obtained by calling \texttt{summary()}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfcol =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))  }\CommentTok{# set up a plot with 2 panels}
+\CommentTok{# plot 1: standard scatter plot}
+\KeywordTok{plotfun}\NormalTok{(wage1)}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(Caschool[, }\KeywordTok{c}\NormalTok{(}\StringTok{"testscr"}\NormalTok{, }\StringTok{"str"}\NormalTok{, }\StringTok{"avginc"}\NormalTok{)])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT>     testscr           str            avginc      
-#OUT>  Min.   :605.5   Min.   :14.00   Min.   : 5.335  
-#OUT>  1st Qu.:640.0   1st Qu.:18.58   1st Qu.:10.639  
-#OUT>  Median :654.5   Median :19.72   Median :13.728  
-#OUT>  Mean   :654.2   Mean   :19.64   Mean   :15.317  
-#OUT>  3rd Qu.:666.7   3rd Qu.:20.87   3rd Qu.:17.629  
-#OUT>  Max.   :706.8   Max.   :25.80   Max.   :55.328
-\end{verbatim}
-
-\subsection{Fitting a linear model}\label{fitting-a-linear-model}
-
-Suppose we are interested in the following linear model:
-
-\[\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i\] Where
-\(\text{testscr}_i\) is the \emph{average test score} for a given school
-\(i\) and \(\text{str}_i\) is the \emph{Student/Teacher Ratio} (i.e.~the
-average number of students per teacher) in the same school \(i\). Again,
-\(b_0\) and \(b_1\) are the intercept and the slope of the regression
-line.
-
-The subscript \(i\) indexes all unique elementary schools
-(\(i \in \{1, 2, 3, \dots 420\}\)) and \(e_i\) is the error, or
-\emph{residual}, of the regression. (Remember that our procedure for
-finding the line of best fit is to minimize the \emph{sum of squared
-residuals} (SSR)).
-
-At this point you should step back and take a second to think about what
-you believe the relation between a school's test scores and
-student/teacher ratio will be. Do you believe that, in general, a high
-student/teacher ratio will be associated with higher-than-average test
-scores for the school? Do you think that the number of students per
-teacher will impact results in any way?
-
-Let's find out! As always, we will start by plotting the data to inspect
-it visually:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str,}
-     \DataTypeTok{data =}\NormalTok{ Caschool,}
-     \DataTypeTok{xlab =} \StringTok{"Student/Teacher Ratio"}\NormalTok{,}
-     \DataTypeTok{ylab =} \StringTok{"Average Test Score"}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{21}\NormalTok{, }\DataTypeTok{col =} \StringTok{'blue'}\NormalTok{)}
+\CommentTok{# plot 2: add a panel with histogram+density}
+\KeywordTok{hist}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{wage,}\DataTypeTok{prob =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{col =} \StringTok{"grey"}\NormalTok{, }\DataTypeTok{border =} \StringTok{"red"}\NormalTok{, }
+     \DataTypeTok{main =} \StringTok{"Histogram of wages and Density"}\NormalTok{,}\DataTypeTok{xlab =} \StringTok{"hourly wage"}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(}\KeywordTok{density}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{wage), }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{lw =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/first-reg0-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wooldridge-wages-1} 
 
 }
 
-\caption{Student Teacher Ratio vs Test Scores}\label{fig:first-reg0}
+\caption{Wages vs Education from the wooldridge dataset wage1.}\label{fig:wooldridge-wages}
 \end{figure}
 
-Can you spot a trend in the data? According to you, what would the line
-of best fit look like? Would it be upward or downward slopping? Let's
-ask \texttt{R}!
+Looking at the top panel of figure \ref{fig:wooldridge-wages}, you
+notice two things: From the red ticks on the y axis, you see that wages
+are very concentrated at around 5 USD per hour, with fewer and fewer
+observations at higher rates; and second, that it seems that the hourly
+wage seems to increase with higher education levels. The bottom panel
+reinforces the first point, showing that the estimated pdf (probability
+density function) shown as a black line has a very long right tail:
+there are always fewer and fewer, but always larger and larger values of
+hourly wage in the data.
 
-\subsection{\texorpdfstring{The \texttt{lm()}
-function}{The lm() function}}\label{the-lm-function}
+\begin{warning}
+You have seen this shape of a distribution in the tutorial for chapter 2
+already! Do you remember the name of this particular shape of a
+distribution? (why not type
+\texttt{ScPoEconometrics::runTutorial(\textquotesingle{}chapter2\textquotesingle{})})
+to check?
+\end{warning}
 
-We will use the built-in \texttt{lm()} function to estimate the
-coefficients \(b_0\) and \(b_1\) using the data at hand. \texttt{lm}
-stands for \emph{linear model}, which is what our representation in
-\eqref{eq:abline} amounts to. This function typically only takes 2
-arguments, \texttt{formula} and \texttt{data}:
+Let's run a first regression on this data to generate some intution:
 
-\texttt{lm(formula,\ data)}
+\begin{equation}
+\text{wage}_i = b_0 + b_1 \text{educ}_i + e_i \label{eq:wage}
+\end{equation}
 
-\begin{itemize}
-\item
-  \texttt{formula} is the description of our model which we want
-  \texttt{R} to estimate for us. Its syntax is very simple:
-  \texttt{Y\ \textasciitilde{}\ X} (more generally,
-  \texttt{DependentVariable\ \textasciitilde{}\ Independent\ Variables}).
-  You can think of the tilda operator \texttt{\textasciitilde{}} as the
-  equal sign in your model equation. An intercept is included by default
-  and so you do not have to ask for it in \texttt{formula}. For example,
-  the simple model \(income = b_0 + b_1 \cdot age\) can be written as
-  \texttt{income\ \textasciitilde{}\ age}. A \texttt{formula} can
-  sometimes be written between quotation marks:
-  \texttt{"X\ \textasciitilde{}\ Y"}.
-\item
-  \texttt{data} is simply the \texttt{data.frame} containing the
-  variables in the model.
-\end{itemize}
-
-In the context of our example, the function call is therefore:
+We use the \texttt{lm} function for this purpose as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# assign lm() output to some object `fit_cal`}
-\NormalTok{fit_cal <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str, }\DataTypeTok{data =}\NormalTok{ Caschool)}
+\NormalTok{hourly_wage <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ wage }\OperatorTok{~}\StringTok{ }\NormalTok{educ, }\DataTypeTok{data =}\NormalTok{ wage1)}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{# ask R for the regression summary}
-\KeywordTok{summary}\NormalTok{(fit_cal) }
+and we can add the resulting regression line to our above plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plotfun}\NormalTok{(wage1)}
+\KeywordTok{abline}\NormalTok{(hourly_wage, }\DataTypeTok{col =} \StringTok{'black'}\NormalTok{, }\DataTypeTok{lw =} \DecValTok{2}\NormalTok{) }\CommentTok{# add regression line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wooldridge-wages2-1} 
+
+}
+
+\caption{Wages vs Education from the wooldridge dataset wage1, with regression}\label{fig:wooldridge-wages2}
+\end{figure}
+
+The \texttt{hourly\_wage} object contains the results of this
+estimation. We can get a summary of those results with the
+\texttt{summary} method:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(hourly_wage)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 #OUT> 
 #OUT> Call:
-#OUT> lm(formula = testscr ~ str, data = Caschool)
+#OUT> lm(formula = wage ~ educ, data = wage1)
 #OUT> 
 #OUT> Residuals:
 #OUT>     Min      1Q  Median      3Q     Max 
-#OUT> -47.727 -14.251   0.483  12.822  48.540 
+#OUT> -5.3396 -2.1501 -0.9674  1.1921 16.6085 
 #OUT> 
 #OUT> Coefficients:
 #OUT>             Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 698.9330     9.4675  73.825  < 2e-16 ***
-#OUT> str          -2.2798     0.4798  -4.751 2.78e-06 ***
+#OUT> (Intercept) -0.90485    0.68497  -1.321    0.187    
+#OUT> educ         0.54136    0.05325  10.167   <2e-16 ***
 #OUT> ---
 #OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #OUT> 
-#OUT> Residual standard error: 18.58 on 418 degrees of freedom
-#OUT> Multiple R-squared:  0.05124, Adjusted R-squared:  0.04897 
-#OUT> F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06
+#OUT> Residual standard error: 3.378 on 524 degrees of freedom
+#OUT> Multiple R-squared:  0.1648,  Adjusted R-squared:  0.1632 
+#OUT> F-statistic: 103.4 on 1 and 524 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
-As we can see, \texttt{R} returns its estimates for the Intercept and
-Slope coefficients, \(b_0 =\) 698.93 and \(b_1 =\) -2.28. The estimated
-relationship between a school's Student/Teacher Ratio and its average
-test results is \textbf{negative}.
+The main interpretation of this table can be read off the column
+labelled \emph{Estimate}, reporting estimated coefficients \(b_0,b_1\):
 
-The output of the \texttt{summary} method for an \texttt{lm} object is
-commonly called a \emph{regression table}, and you will be able to
-decypher it by the end of this course. You should be able to find an
-interpret the \(R^2\) though: Are we explaining a lot of the variance in
-\texttt{testscr} with this simple model, or are we not?
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  With zero year of education, the hourly wage is about -0.9 dollars per
+  hour (row named \texttt{(Intercept)})
+\item
+  Each additional year of education increase hourly wage by 54 cents.
+  (row named \texttt{educ})
+\item
+  For example, for 15 years of education, we predict roughly -0.9 +
+  0.541 * 15 = 7.215 dollars/h.
+\end{enumerate}
 
-\subsection{Plotting the regression
-line}\label{plotting-the-regression-line}
+\section{Scaling Regressions}\label{scaling-regressions}
 
-We can also use our \texttt{lm} fit to draw the regression line on top
-of our initial scatterplot, using the following syntax:
+\begin{tip}
+Regression estimates (\(b_0, b_1\)) are in the scale \emph{of the data}.
+The actual \emph{value} of the estimates will vary, if we change the
+scale of the data. The overall fit of the model to the data would
+\emph{not} change, however, so that the \(R^2\) statistic would be
+constant.
+\end{tip}
+
+Suppose we wanted to use the above estimates to report the effect of
+years of education on \emph{annual} wages instead of \emph{hourly} ones.
+Let's assume we have full-time workers, 7h per day, 5 days per week, 45
+weeks per year. Calling this factor
+\(\delta = 7 \times 5 \times 45 = 1575\), we have that \(x\) dollars per
+hour imply \(x \times \delta = x \times 1575\) dollars per year.
+
+What would be the effect of using \(\tilde{y} = wage \times 1575\)
+instead of \(y = wage\) as outcome variable on our regression
+coefficients \(b_0\) and \(b_1\)? Well, let's try!
+
+Effect of Scaling on Coefficients
+
+Dependent variable:
+
+wage
+
+annual\_wage
+
+(1)
+
+(2)
+
+educ
+
+0.541***
+
+852.641***
+
+(0.053)
+
+(83.866)
+
+Constant
+
+-0.905
+
+-1,425.141
+
+(0.685)
+
+(1,078.824)
+
+Observations
+
+526
+
+526
+
+R2
+
+0.165
+
+0.165
+
+Adjusted R2
+
+0.163
+
+0.163
+
+Residual Std. Error (df = 524)
+
+3.378
+
+5,320.963
+
+F Statistic (df = 1; 524)
+
+103.363***
+
+103.363***
+
+Note:
+
+\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+
+Let's call the coefficients in the column labelled (1) as \(b_0\) and
+\(b_1\), and let's call the ones in column (2) \(b_0^*\) and \(b_1^*\).
+In column (1) we see that another year increaeses hourly wage by 0.54
+dollars, as before. In column (2), the corresponding number is 852.64,
+i.e.~another year of education will increase \emph{annual} wages by
+852.64 dollars, on average. Notice however, that
+\(b_0 \times \delta = -0.9 \times 1575 = -1425.14 = b_0^*\) and that
+\(b_1 \times \delta = 0.54 \times 1575 = 852.64 = b_1^*\), that is we
+just had to multiply both coefficients by the scaling factor applied to
+original outcome \(y\) to obtain our new coefficients \(b_0^*\) and
+\(b_1^*\)! Also, observe that the \(R^2\)s of both regressions are
+identical! So, really, we did not have to run the regression in column
+(2) at all to make this change: multiplying all coefficients through by
+\(\delta\) is enough in this case. We keep the identically same fit to
+the data.
+
+Rescaling the regressors \(x\) is slightly different, but it's easy to
+work out \emph{how} different, given the linear nature of the covariance
+operator, which is part of the OLS estimator. Suppose we rescale \(x\)
+by the number \(c\). Then, using the OLS formula in \eqref{eq:beta1hat},
+we see that we get new slope coefficient \(b_1^*\) via
+
+\begin{align} 
+b_1^* &= \frac{Cov(cx,y)}{Var(cx)} \\ 
+      &= \frac{cCov(x,y)}{c^2 Var(x)} \\
+      &= \frac{1}{c} b_1.
+\end{align}
+
+As for the intercept, and by using \eqref{eq:beta0hat}
+
+\begin{align} 
+b_0^* &= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\ 
+      &= \bar{y} -             b_1^* \frac{c}{N}\sum_{i=1}^N x_i  \\
+      &= \bar{y} - \frac{1}{c} b_1 c * \bar{x}  \\
+      &= \bar{y} -  b_1 * \bar{x}  \\
+      &= b_0
+\end{align}
+
+That is, we change the slope by the \emph{inverse} of the scaling factor
+applied to regressor \(x\), but the intercept is unaffected from this.
+You should play around for a while with our rescaling app to get a
+feeling for this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str,}
-     \DataTypeTok{data =}\NormalTok{ Caschool,}
-     \DataTypeTok{xlab =} \StringTok{"Student/Teacher Ratio"}\NormalTok{,}
-     \DataTypeTok{ylab =} \StringTok{"Average Test Score"}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{21}\NormalTok{, }\DataTypeTok{col =} \StringTok{'blue'}\NormalTok{)}\CommentTok{# same plot as before}
-\KeywordTok{abline}\NormalTok{(fit_cal, }\DataTypeTok{col =} \StringTok{'red'}\NormalTok{) }\CommentTok{# add regression line}
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{'Rescale'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{\texorpdfstring{A Particular Rescaling: The \(\log\)
+Transform}{A Particular Rescaling: The \textbackslash{}log Transform}}\label{a-particular-rescaling-the-log-transform}
+
+The natural logarithm is a particularly important transformation that we
+often encounter in economics. Why would we transform a variable with the
+\(\log\) function to start with?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Several important economic variables (like wages, city size, firm
+  size, etc) are approximately \emph{log-normally} distributed. By
+  transforming them with the \(\log\), we obtain an approximately
+  \emph{normally} distributed variable, which has desirable properties
+  for our regression.
+\item
+  Applying the \(\log\) reduces the impact of outliers.
+\item
+  The transformation allows for a convenient interpretation in terms of
+  \emph{percentage changes} of the outcome variable.
+\end{enumerate}
+
+Let's investigate this issue in our running example by transforming the
+wage data above. Look back at the bottom panel of figure
+\ref{fig:wooldridge-wages}: Of course you saw immediately that this
+looked a lot like a log-normal distribution, so point 1. above applies.
+We modify the left hand side of equation \eqref{eq:wage}:
+
+\begin{equation}
+\log(\text{wage}_i) = b_0 + b_1 \text{educ}_i + e_i \label{eq:log-wage}
+\end{equation}
+
+Let's use the \texttt{update} function to modify our previous regression
+model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log_hourly_wage =}\StringTok{ }\KeywordTok{update}\NormalTok{(hourly_wage, }\KeywordTok{log}\NormalTok{(wage) }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ wage1)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{update} function takes an existing \texttt{lm} object, like
+\texttt{hourly\_wage} here, and updates the \texttt{formula}. Here the
+\texttt{.} on the right hand side means \emph{leave unchanged} (so the
+RHS stays unchanged). How do our pictures change?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\KeywordTok{plotfun}\NormalTok{(wage1,}\DataTypeTok{rug =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(hourly_wage, }\DataTypeTok{col =} \StringTok{'black'}\NormalTok{, }\DataTypeTok{lw =} \DecValTok{2}\NormalTok{) }\CommentTok{# add regression line}
+
+\KeywordTok{plotfun}\NormalTok{(wage1,}\DataTypeTok{log =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{rug =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(log_hourly_wage, }\DataTypeTok{col =} \StringTok{'black'}\NormalTok{, }\DataTypeTok{lw =} \DecValTok{2}\NormalTok{) }\CommentTok{# add regression line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/logplot-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+It \emph{looks as if} the regression line has the same slope, but beware
+of the different scales of the y-axis! You can clearly see that all
+y-values have been compressed by the log transformation. The log case
+behaves differently from our \emph{scaling by a constant number} case
+above because it is a \emph{nonlinear} function. Let's compare the
+output between both models:
+
+Log Transformed Equation
+
+Dependent variable:
+
+wage
+
+log(wage)
+
+(1)
+
+(2)
+
+educ
+
+0.541***
+
+0.083***
+
+(0.053)
+
+(0.008)
+
+Constant
+
+-0.905
+
+0.584***
+
+(0.685)
+
+(0.097)
+
+Observations
+
+526
+
+526
+
+R2
+
+0.165
+
+0.186
+
+Adjusted R2
+
+0.163
+
+0.184
+
+Residual Std. Error (df = 524)
+
+3.378
+
+0.480
+
+F Statistic (df = 1; 524)
+
+103.363***
+
+119.582***
+
+Note:
+
+\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+
+The interpretation of the transformed model in column (2) is now the
+following:
+
+\begin{note}
+We call a regression of the form \(\log(y) = b_0 + b_1 x + u\) a
+\emph{log-level} specification, because we regressed the log of a
+variable on the level (i.e not the log!) of another variable. Here, the
+impact of increasing \(x\) by one unit is to increase \(y\) by
+\(100 \times b_1\) \textbf{percent}. In our example: an additional year
+of education will increase hourly wages by 8.3\%. Notice that this is
+very different from saying \emph{\ldots{}increases log hourly wages by
+8.3\%}, which is wrong.
+\end{note}
+
+Notice that the \(R^2\) slightly improved, so have a better fit to the
+data. This is due the fact that the log compressed large outlier values.
+Whether we apply the \(log\) to left or right-hand side variables makes
+a difference, as outlined in this important table:
+
+\label{tab:loglog} Common Regression Specifications
+
+\begin{longtable}[]{@{}ccccc@{}}
+\toprule
+Specification & Outcome Var & Regressor & Interpretation of \(b_1\) &
+Comment\tabularnewline
+\midrule
+\endhead
+Level-level & y & x & \(\Delta y = b_1 \Delta x\) &
+Standard\tabularnewline
+Level-log & y & \(\log(x)\) & \(\Delta y = b_1 \Delta x\) & less
+frequent\tabularnewline
+Log-level & \(\log(y)\) & x & \(\% \Delta y = (100 b_1) \Delta\) x &
+Semi-elasticity\tabularnewline
+Log-Log & \(\log(y)\) & \(\log(x)\) & \(\% \Delta y = \% \Delta\) x &
+Elasticity\tabularnewline
+\bottomrule
+\end{longtable}
+
+You may remember from your introductory micro course what the definition
+of the \emph{elasticity} of \(y\) with respect to \(x\) is: This number
+tells us by how many percent \(y\) will change, if we change \(x\) by
+one percent. Let's look at another example from the \texttt{wooldridge}
+package of datasets, this time concerning CEO salaries and their
+relationship with company sales.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"ceosal1"}\NormalTok{, }\DataTypeTok{package =} \StringTok{"wooldridge"}\NormalTok{)  }
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(salary }\OperatorTok{~}\StringTok{ }\NormalTok{sales, }\DataTypeTok{data =}\NormalTok{ ceosal1, }\DataTypeTok{main =} \StringTok{"Sales vs Salaries"}\NormalTok{,}\DataTypeTok{xaxt =} \StringTok{"n"}\NormalTok{,}\DataTypeTok{frame =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DataTypeTok{at =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{40000}\NormalTok{, }\DecValTok{80000}\NormalTok{))}
+\KeywordTok{rug}\NormalTok{(ceosal1}\OperatorTok{$}\NormalTok{salary,}\DataTypeTok{side =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{rug}\NormalTok{(ceosal1}\OperatorTok{$}\NormalTok{sales,}\DataTypeTok{side =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{log}\NormalTok{(salary) }\OperatorTok{~}\StringTok{ }\KeywordTok{log}\NormalTok{(sales), }\DataTypeTok{data =}\NormalTok{ ceosal1, }\DataTypeTok{main =} \StringTok{"Log(Sales) vs Log(Salaries)"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/plot-reg1-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/ceo-sal-1} 
 
 }
 
-\caption{Test Scores with Regression Line}\label{fig:plot-reg1}
+\caption{The effect of log-transforming highly skewed data.}\label{fig:ceo-sal}
 \end{figure}
 
-As you probably expected, the best line for schools' Student/Teacher
-Ratio and its average test results is downward sloping.
+In the left panel of figure \ref{fig:ceo-sal} you clearly see that both
+\texttt{sales} and \texttt{salary} have very long right tails, as
+indicated by the rug plots on either axis. As a consequence, the points
+are clustered in the bottom left corner of the plot. We suspect a
+positive relationship, but it's hard to see. Contrast this with the
+right panel, where both axis have been log transformed: the points are
+nicely spread out, clearly spelling out a positive correlation. Let's
+see what this gives in a regression model!
 
-Just as a way of showcasing another way to make the above plot, here is
-how you could use \texttt{ggplot}:
+\[
+\text{logsalary} = 4.82 + 0.26(\text{logsales}) + \epsilon
+\]
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ str, }\DataTypeTok{y =}\NormalTok{ testscr), }\DataTypeTok{data =}\NormalTok{ Caschool) }\CommentTok{# base plot}
-\NormalTok{p <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\CommentTok{# add points}
-\NormalTok{p <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{size=}\DecValTok{1}\NormalTok{, }\DataTypeTok{color=}\StringTok{"red"}\NormalTok{) }\CommentTok{# add regression line}
-\NormalTok{p <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Average Test Score"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{         }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Student/Teacher Ratio"}\NormalTok{)}
-\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Testscores vs Student/Teacher Ratio"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Refering back at table \ref{tab:loglog}, here we have a log-log
+specification. Therefore we interpret this regression as follows:
 
-\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-133-1} \end{center}
-
-The shaded area around the red line shows the width of the 95\%
-confidence interval around our estimate of the slope coefficient
-\(b_1\). We will learn more about it in chapter \ref{std-errors}.
+\begin{tip}
+In a log-log equation, the slope coefficient \(b_1\) is the
+\emph{elasticity of \(y\) with respect to changes in \(x\)}. Here: A 1\%
+increase in sales is associated to a 0.26\% increase in CEO salaries.
+Note, again, that there is no \emph{log} in this statement.
+\end{tip}
 
 \chapter{Multiple Regression}\label{multiple-reg}
 
@@ -4954,44 +5248,18 @@ on our built-in dataset of cars (\texttt{mtcars}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{subset}\NormalTok{(mtcars, }\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(mpg,hp,wt))}
+\KeywordTok{head}\NormalTok{(}\KeywordTok{subset}\NormalTok{(mtcars, }\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(mpg,hp,wt)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#OUT>                      mpg  hp    wt
-#OUT> Mazda RX4           21.0 110 2.620
-#OUT> Mazda RX4 Wag       21.0 110 2.875
-#OUT> Datsun 710          22.8  93 2.320
-#OUT> Hornet 4 Drive      21.4 110 3.215
-#OUT> Hornet Sportabout   18.7 175 3.440
-#OUT> Valiant             18.1 105 3.460
-#OUT> Duster 360          14.3 245 3.570
-#OUT> Merc 240D           24.4  62 3.190
-#OUT> Merc 230            22.8  95 3.150
-#OUT> Merc 280            19.2 123 3.440
-#OUT> Merc 280C           17.8 123 3.440
-#OUT> Merc 450SE          16.4 180 4.070
-#OUT> Merc 450SL          17.3 180 3.730
-#OUT> Merc 450SLC         15.2 180 3.780
-#OUT> Cadillac Fleetwood  10.4 205 5.250
-#OUT> Lincoln Continental 10.4 215 5.424
-#OUT> Chrysler Imperial   14.7 230 5.345
-#OUT> Fiat 128            32.4  66 2.200
-#OUT> Honda Civic         30.4  52 1.615
-#OUT> Toyota Corolla      33.9  65 1.835
-#OUT> Toyota Corona       21.5  97 2.465
-#OUT> Dodge Challenger    15.5 150 3.520
-#OUT> AMC Javelin         15.2 150 3.435
-#OUT> Camaro Z28          13.3 245 3.840
-#OUT> Pontiac Firebird    19.2 175 3.845
-#OUT> Fiat X1-9           27.3  66 1.935
-#OUT> Porsche 914-2       26.0  91 2.140
-#OUT> Lotus Europa        30.4 113 1.513
-#OUT> Ford Pantera L      15.8 264 3.170
-#OUT> Ferrari Dino        19.7 175 2.770
-#OUT> Maserati Bora       15.0 335 3.570
-#OUT> Volvo 142E          21.4 109 2.780
+#OUT>                    mpg  hp    wt
+#OUT> Mazda RX4         21.0 110 2.620
+#OUT> Mazda RX4 Wag     21.0 110 2.875
+#OUT> Datsun 710        22.8  93 2.320
+#OUT> Hornet 4 Drive    21.4 110 3.215
+#OUT> Hornet Sportabout 18.7 175 3.440
+#OUT> Valiant           18.1 105 3.460
 \end{verbatim}
 
 How do you think \texttt{hp} and \texttt{wt} will influence how many
@@ -5066,13 +5334,15 @@ following quantity:
 \frac{\partial mpg_i}{\partial hp_i} = b_1 \label{eq:abline2d-deriv}
 \end{equation}
 
-This means: \emph{keeping all other variables fixed, what is the effect
-of \texttt{hp} on \texttt{mpg}?}. In calculus, the answer to this is
-provided by the \emph{partial derivative} as shown in
-\eqref{eq:abline2d-deriv}. We call the value of coefficient \(b_1\)
-therefore also the \emph{partial effect} of \texttt{hp} on \texttt{mpg}.
-In terms of our dataset, we use \texttt{R} to run the following
-\textbf{multiple regression}:
+The \(\partial\) sign denotes a \emph{partial derivative} of the
+function describing \texttt{mpg} with respect to the variable
+\texttt{hp}. It measures \emph{how the value of \texttt{mpg} changes, as
+we change the value of \texttt{hp} ever so slightly}. In our context,
+this means: \emph{keeping all other variables fixed, what is the effect
+of \texttt{hp} on \texttt{mpg}?}. We call the value of coefficient
+\(b_1\) therefore also the \emph{partial effect} of \texttt{hp} on
+\texttt{mpg}. In terms of our dataset, we use \texttt{R} to run the
+following \textbf{multiple regression}:
 
 \begin{verbatim}
 #OUT> 
@@ -5102,25 +5372,27 @@ From this table you see that the coefficient on \texttt{wt} has value
 \begin{warning}
 Holding all other variables fixed at their observed values - or
 \emph{ceteris paribus} - a one unit increase in \(wt\) implies a
--3.87783 units change in \(mpg\). Similarly, one more \(hp\) horse power
-implies a change in \(mpg\) of -0.03177 units, \emph{all else (i.e.
-\(wt\)) equal}.
+-3.87783 units change in \(mpg\). In other words, increasing the weight
+of a car by 1000 pounds (lbs), will lead to 3.88 miles less travelled
+per gallon. Similarly, a car with one additional horse power means that
+we will travel 0.03177 fewer miles per gallon of gasoline, \emph{all
+else (i.e. \(wt\)) equal}.
 \end{warning}
 
 \section{Multicolinearity}\label{multicol}
 
 One important requirement for multiple regression is that the data be
-\textbf{not linearly dependent}: Each variable provides new information
-for the outcome, and it cannot be replicated as a linear combination of
-other variables. Suppose that in the example above, we had a variable
-\texttt{wtplus} defined as \texttt{wt\ +\ 1}, and we included this new
-variable together with \texttt{wt} in our regression. In this case,
-\texttt{wtplus} provides no new information. It's enough to know \(wt\),
-and add \(1\) to it. In this sense, \texttt{wt\_plus} is a redundant
-variable and should not be included in the model. Notice that this holds
-only for \emph{linearly} dependent variables - \emph{nonlinear}
-transformations (like for example \(wt^2\)) are exempt from this rule.
-Here is why:
+\textbf{not linearly dependent}: Each variable should provide at least
+some new information for the outcome, and it cannot be replicated as a
+linear combination of other variables. Suppose that in the example
+above, we had a variable \texttt{wtplus} defined as \texttt{wt\ +\ 1},
+and we included this new variable together with \texttt{wt} in our
+regression. In this case, \texttt{wtplus} provides no new information.
+It's enough to know \(wt\), and add \(1\) to it. In this sense,
+\texttt{wt\_plus} is a redundant variable and should not be included in
+the model. Notice that this holds only for \emph{linearly} dependent
+variables - \emph{nonlinear} transformations (like for example \(wt^2\))
+are exempt from this rule. Here is why:
 
 \begin{align}
 y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
@@ -5134,172 +5406,281 @@ identifies a different coefficient, say \(\gamma = b_1 + b_2\), from
 what we actually wanted: separate estimates for \(b_1,b_2\).
 
 \begin{note}
-All variables in a multiple regression should be \emph{linearly
-independent}, or \emph{not} colinear. This is known as the \textbf{rank
-condition}. In particular, this condition dictates that we need at least
+We cannot have variables which are \emph{linearly dependent}, or
+\emph{perfectly colinear}. This is known as the \textbf{rank condition}.
+In particular, the condition dictates that we need at least
 \(N \geq K+1\), i.e.~more observations than coefficients. The greater
 the degree of linear dependence amongst our explanatory variables, the
-less information we can get from them, and our estimates becomes
+less information we can extract from them, and our estimates becomes
 \emph{less precise}.
 \end{note}
 
-\section{California Test Scores 2}\label{california-test-scores-2}
+\section{Log Wage Equation}\label{log-wage-equation}
 
-Let us extend our example of student test scores from chapter
-\ref{linreg} by adding families' average income to our previous model:
+Let's go back to our previous example of the relationship between log
+wages and education. How does this relationship change if we also think
+that experience in the labor market has an impact, next to years of
+education? Here is a picture:
 
-\[
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
-\]
+\begin{figure}
 
-We can incoporate this new variable to our model by simply adding it to
-our \texttt{formula}:
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/plane3D-lwage-1} 
+
+}
+
+\caption{Log wages vs education and experience in 3D.}\label{fig:plane3D-lwage}
+\end{figure}
+
+Let's add even more variables! For instance, what's the impact of
+experience in the labor market, and time spent with the current
+employer? Let's first look at how those variables co-vary with each
+other:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(}\StringTok{"Ecdat"}\NormalTok{) }\CommentTok{# reload the data}
-\NormalTok{fit_multivariate <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =} \StringTok{"testscr ~ str + avginc"}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ Caschool)}
-\KeywordTok{summary}\NormalTok{(fit_multivariate)}
+\NormalTok{cmat =}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{cor}\NormalTok{(}\KeywordTok{subset}\NormalTok{(wage1,}\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(lwage,educ,exper,tenure))),}\DecValTok{2}\NormalTok{) }\CommentTok{# correlation matrix}
+\NormalTok{corrplot}\OperatorTok{::}\KeywordTok{corrplot}\NormalTok{(cmat,}\DataTypeTok{type =} \StringTok{"upper"}\NormalTok{,}\DataTypeTok{method =} \StringTok{"ellipse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/corrplot-1} \end{center}
+
+The way to read the so-called \emph{correlation plot} in figure
+\ref{fig:corrplot} is straightforward: each row illustrates the
+correlation of a certain variable with the other variables. In this
+example both the shape of the ellipse in each cell as well as their
+color coding tell us how strongly two variables correlate. Let us put
+this into a regression model now:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{educ_only <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ                 , }\DataTypeTok{data =}\NormalTok{ wage1)}
+\NormalTok{educ_exper <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{exper        , }\DataTypeTok{data =}\NormalTok{ wage1)}
+\NormalTok{log_wages <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{exper }\OperatorTok{+}\StringTok{ }\NormalTok{tenure, }\DataTypeTok{data =}\NormalTok{ wage1)}
+\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(educ_only, educ_exper, log_wages,}\DataTypeTok{type =} \StringTok{"html"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Dependent variable:
+
+lwage
+
+(1)
+
+(2)
+
+(3)
+
+educ
+
+0.083***
+
+0.098***
+
+0.092***
+
+(0.008)
+
+(0.008)
+
+(0.007)
+
+exper
+
+0.010***
+
+0.004**
+
+(0.002)
+
+(0.002)
+
+tenure
+
+0.022***
+
+(0.003)
+
+Constant
+
+0.584***
+
+0.217**
+
+0.284***
+
+(0.097)
+
+(0.109)
+
+(0.104)
+
+Observations
+
+526
+
+526
+
+526
+
+R2
+
+0.186
+
+0.249
+
+0.316
+
+Adjusted R2
+
+0.184
+
+0.246
+
+0.312
+
+Residual Std. Error
+
+0.480 (df = 524)
+
+0.461 (df = 523)
+
+0.441 (df = 522)
+
+F Statistic
+
+119.582*** (df = 1; 524)
+
+86.862*** (df = 2; 523)
+
+80.391*** (df = 3; 522)
+
+Note:
+
+\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+
+Column (1) refers to model \eqref{eq:log-wage} from the previous chapter,
+where we only had \texttt{educ} as a regressor: we obtain an \(R^2\) of
+0.186. Column (2) is the model that generated the plane in figure
+\ref{fig:plane3D-lwage} above. (3) is the model with three regressors.
+You can see that by adding more regressors, the quality of our fit
+increases, as more of the variation in \(y\) is now accounted for by our
+model. You can also see that the values of our estimated coefficients
+keeps changing as we move from left to right across the columns. Given
+the correlation structure shown in figure \ref{fig:corrplot}, it is only
+natural that this is happening: We see that \texttt{educ} and
+\texttt{exper} are negatively correlated, for example. So, if we
+\emph{omit} \texttt{exper} from the model in column (1), \texttt{educ}
+will reflect part of this correlation with \texttt{exper} by a lower
+estimated value. By directly controlling for \texttt{exper} in column
+(2) we get an estimate of the effect of \texttt{educ} \emph{net of}
+whatever effect \texttt{exper} has in isolation on the outcome variable.
+We will come back to this point later on.
+
+\section{How To Make Predictions}\label{make-preds}
+
+So suppose we have a model like
+
+\[\text{lwage} = b_0 + b_{1}(\text{educ}) + b_{2}(\text{exper}) + b_{3}(\text{tenure}) + \epsilon\]
+How could we use this to make a \emph{prediction} of log wages, given
+some new data? Remember that the OLS procedure gives us \emph{estimates}
+for the values \(b_0,b_1, b_2,b_3\). With those in hand, it is
+straightforward to make a prediction about the \emph{conditional mean}
+of the outcome - just plug in the desired numbers for
+\texttt{educ,exper} and \texttt{tenure}. Suppose you want to know what
+the mean of \texttt{lwage} is conditional on
+\texttt{educ\ =\ 10,exper=4} and \texttt{tenure\ =\ 2}. You'd do
+
+\begin{align}
+E[\text{lwage}|\text{educ}=10,\text{exper}=4,\text{tenure}=2] &= b_0 + b_1  10 + b_2 4 + b_3  2\\
+&= 1.27.
+\end{align}
+
+I computed the last line directly with
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{)  }\CommentTok{# 1 for intercept}
+\NormalTok{pred =}\StringTok{ }\KeywordTok{coef}\NormalTok{(log_wages) }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+but \texttt{R} has a more complete prediction interface, using the
+function \texttt{predict}. For starters, you can predict the model on
+all data points which were contained in the dataset we used for
+estimation, i.e. \texttt{wage1} in our case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(}\KeywordTok{predict}\NormalTok{(log_wages))  }\CommentTok{# first 6 observations of wage1 as predicted by our model}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = "testscr ~ str + avginc", data = Caschool)
-#OUT> 
-#OUT> Residuals:
-#OUT>     Min      1Q  Median      3Q     Max 
-#OUT> -39.608  -9.052   0.707   9.259  31.898 
-#OUT> 
-#OUT> Coefficients:
-#OUT>              Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 638.72915    7.44908  85.746   <2e-16 ***
-#OUT> str          -0.64874    0.35440  -1.831   0.0679 .  
-#OUT> avginc        1.83911    0.09279  19.821   <2e-16 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 13.35 on 417 degrees of freedom
-#OUT> Multiple R-squared:  0.5115,  Adjusted R-squared:  0.5091 
-#OUT> F-statistic: 218.3 on 2 and 417 DF,  p-value: < 2.2e-16
+#OUT>        1        2        3        4        5        6 
+#OUT> 1.304921 1.523506 1.304921 1.819802 1.461690 1.970451
 \end{verbatim}
 
-Although it is quite cumbersome and not typical to visualize
-multivariate regressions, we can still do this with 2 explanatory
-variables using a \emph{regression (2-dimensional) plane}
-{[}Interactive!{]}.
-
-\begin{figure}
-
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/3D-Plotly-1} 
-
-}
-
-\caption{Californa Test Scores vs student/teach ratio and avg income.}\label{fig:3D-Plotly}
-\end{figure}
-
-While you explore this plot, ask yourself the following question: if you
-could only choose one of the two explanatory variables in our model
-(that is, either \(str\) or \(avginc\)) to predict the value of a given
-school's average test score, which one would you choose? Why? Discuss
-this with your classmates.
-
-\section{Interactions}\label{mreg-interactions}
-
-Interactions allow that the \emph{ceteris paribus} effect of a certain
-regressor, \texttt{str} say, depends also on the value of yet another
-regressor, \texttt{avginc} for example. In other words, do test scores
-depend differentially on the student teacher ratio, depending on wether
-the average income in an ares is high or low? Notice that \texttt{str}
-and \texttt{avginc} in isolation cannot answer that question (because
-the value of other variables is assumed \emph{fixed}!). To measure such
-an effect, we would reformulate our model like this:
-
-\begin{equation}
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i \label{eq:caschool-inter}
-\end{equation}
-
-The inclusion of the \emph{product} of \texttt{str} and \texttt{avginc}
-amounts to having different slopes with respect to \texttt{str} for
-different values of \texttt{avginc} (and vice versa). This is easy to
-see if we take the partial derivative of \eqref{eq:caschool-inter} with
-respect to \texttt{str}:
-
-\begin{equation}
-\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i \label{eq:caschool-inter-deriv}
-\end{equation}
-
-\begin{quote}
-You should go back to equation \eqref{eq:abline2d-deriv} to remind
-yourself of what a \emph{partial effect} was, and how exactly the
-present \eqref{eq:caschool-inter-deriv} differs from what we saw there.
-\end{quote}
-
-Back in our \texttt{R} session, we can run the full interactions model
-like this:
+Often you want to add that prediction \emph{to} the original dataset:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lm_inter =}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ testscr }\OperatorTok{~}\StringTok{ }\NormalTok{str }\OperatorTok{+}\StringTok{ }\NormalTok{avginc }\OperatorTok{+}\StringTok{ }\NormalTok{str}\OperatorTok{*}\NormalTok{avginc, }\DataTypeTok{data =}\NormalTok{ Caschool)}
-\CommentTok{# note that this would produce the same result:}
-\CommentTok{# lm(formula = testscr ~ str*avginc, data = Caschool)}
-\CommentTok{# R expands str*avginc for you in main effects + interactions}
-\KeywordTok{summary}\NormalTok{(lm_inter)}
+\NormalTok{wage_prediction =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(wage1, }\DataTypeTok{prediction =} \KeywordTok{predict}\NormalTok{(log_wages))}
+\KeywordTok{head}\NormalTok{(wage_prediction[, }\KeywordTok{c}\NormalTok{(}\StringTok{"lwage"}\NormalTok{,}\StringTok{"educ"}\NormalTok{,}\StringTok{"exper"}\NormalTok{,}\StringTok{"tenure"}\NormalTok{,}\StringTok{"prediction"}\NormalTok{)])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = testscr ~ str + avginc + str * avginc, data = Caschool)
-#OUT> 
-#OUT> Residuals:
-#OUT>     Min      1Q  Median      3Q     Max 
-#OUT> -41.346  -9.260   0.209   8.736  33.368 
-#OUT> 
-#OUT> Coefficients:
-#OUT>              Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 689.47473   14.40894  47.850  < 2e-16 ***
-#OUT> str          -3.40957    0.75980  -4.487 9.34e-06 ***
-#OUT> avginc       -1.62388    0.85214  -1.906   0.0574 .  
-#OUT> str:avginc    0.18988    0.04646   4.087 5.24e-05 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 13.1 on 416 degrees of freedom
-#OUT> Multiple R-squared:  0.5303,  Adjusted R-squared:  0.527 
-#OUT> F-statistic: 156.6 on 3 and 416 DF,  p-value: < 2.2e-16
+#OUT>      lwage educ exper tenure prediction
+#OUT> 1 1.131402   11     2      0   1.304921
+#OUT> 2 1.175573   12    22      2   1.523506
+#OUT> 3 1.098612   11     2      0   1.304921
+#OUT> 4 1.791759    8    44     28   1.819802
+#OUT> 5 1.667707   12     7      2   1.461690
+#OUT> 6 2.169054   16     9      8   1.970451
 \end{verbatim}
 
-We see here that the regression now estimates and additional coefficient
-\(b_3\) for us. We observe also that the estimate of \(b_2\) changes
-signs and becomes negative, while the interaction effect \(b_3\) is
-positive. This means that an increase in \texttt{str} reduces average
-student scores (more students per teacher make it harder to teach
-effectively); that an increase in average district income in isolation
-actually reduces scores; and that the interaction of both increases
-scores (more students per teacher are actually a good thing for student
-performance in richer areas).
+You'll remember that we called the distance in prediction and observed
+outcome our \emph{residual} \(e\). Well here this is just
+\texttt{lwage\ -\ prediction}. Indeed, \(e\) is such an important
+quantity that \texttt{R} has a convenient method to compute
+\(y - \hat{y}\) from an \texttt{lm} object directly - the method
+\texttt{resid}. Let's add another column to \texttt{wage\_prediction}:
 
-Looking at our visualization may help understand this result better.
-Figure \ref{fig:3D-Plotly-inter} shows a plane that is no longer
-actually a \emph{plane}. It shows a curved surface. You can see that the
-surface became more flexible in that we could kind of \emph{bend} it
-more. Which model do you like better to explain this data? Discuss with
-your neighbor and give some reasons for your choice (other than
-``\ref{fig:3D-Plotly-inter} looks nicer'' ;-) ). In particular,
-comparing both visualizations, can you explain why we observe this
-strange inversion of coefficient signs?
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wage_prediction =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(wage_prediction, }\DataTypeTok{residual =} \KeywordTok{resid}\NormalTok{(log_wages))}
+\KeywordTok{head}\NormalTok{(wage_prediction[, }\KeywordTok{c}\NormalTok{(}\StringTok{"lwage"}\NormalTok{,}\StringTok{"educ"}\NormalTok{,}\StringTok{"exper"}\NormalTok{,}\StringTok{"tenure"}\NormalTok{,}\StringTok{"prediction"}\NormalTok{,}\StringTok{"residual"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
+\begin{verbatim}
+#OUT>      lwage educ exper tenure prediction    residual
+#OUT> 1 1.131402   11     2      0   1.304921 -0.17351850
+#OUT> 2 1.175573   12    22      2   1.523506 -0.34793289
+#OUT> 3 1.098612   11     2      0   1.304921 -0.20630832
+#OUT> 4 1.791759    8    44     28   1.819802 -0.02804286
+#OUT> 5 1.667707   12     7      2   1.461690  0.20601725
+#OUT> 6 2.169054   16     9      8   1.970451  0.19860271
+\end{verbatim}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/3D-Plotly-inter-1} 
+Using the data in \texttt{wage\_prediction}, you should now check for
+yourself what we already know about \(\hat{y}\) and \(e\) from section
+\ref{pred-resids}:
 
-}
-
-\caption{Californa Test Scores vs student/teach ratio and avg income plus interaction term}\label{fig:3D-Plotly-inter}
-\end{figure}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the average of the vector \texttt{residual}?
+\item
+  What is the average of \texttt{prediction}?
+\item
+  How does this compare to the average of the outcome \texttt{lwage}?
+\item
+  What is the correlation between \texttt{prediction} and
+  \texttt{residual}?
+\end{enumerate}
 
 \chapter{Categorial Variables}\label{categorical-vars}
 
@@ -5578,124 +5959,110 @@ Notice here that \texttt{R} will apply the labels in increasing order
 the way you supplied it (i.e.~a numerical value \texttt{4} will
 correspond to ``MSc'', no matter the ordering in \texttt{x}.)
 
-\subsection{\texorpdfstring{\texttt{factor} and
-\texttt{lm()}}{factor and lm()}}\label{factor-and-lm}
+\subsection{Log Wages and Dummies}\label{factors}
 
 The above developed \texttt{factor} terminology fits neatly into
 \texttt{R}'s linear model fitting framework. Let us illustrate the
 simplest use by way of example.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(Ecdat)  }\CommentTok{# need to load this library}
-\KeywordTok{data}\NormalTok{(}\StringTok{"Wages"}\NormalTok{)   }\CommentTok{# from Ecdat}
-\KeywordTok{str}\NormalTok{(Wages)   }\CommentTok{# let's examine this dataset!}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT> 'data.frame': 4165 obs. of  12 variables:
-#OUT>  $ exp    : int  3 4 5 6 7 8 9 30 31 32 ...
-#OUT>  $ wks    : int  32 43 40 39 42 35 32 34 27 33 ...
-#OUT>  $ bluecol: Factor w/ 2 levels "no","yes": 1 1 1 1 1 1 1 2 2 2 ...
-#OUT>  $ ind    : int  0 0 0 0 1 1 1 0 0 1 ...
-#OUT>  $ south  : Factor w/ 2 levels "no","yes": 2 2 2 2 2 2 2 1 1 1 ...
-#OUT>  $ smsa   : Factor w/ 2 levels "no","yes": 1 1 1 1 1 1 1 1 1 1 ...
-#OUT>  $ married: Factor w/ 2 levels "no","yes": 2 2 2 2 2 2 2 2 2 2 ...
-#OUT>  $ sex    : Factor w/ 2 levels "female","male": 2 2 2 2 2 2 2 2 2 2 ...
-#OUT>  $ union  : Factor w/ 2 levels "no","yes": 1 1 1 1 1 1 1 1 1 2 ...
-#OUT>  $ ed     : int  9 9 9 9 9 9 9 11 11 11 ...
-#OUT>  $ black  : Factor w/ 2 levels "no","yes": 1 1 1 1 1 1 1 1 1 1 ...
-#OUT>  $ lwage  : num  5.56 5.72 6 6 6.06 ...
-\end{verbatim}
-
-Notice here that, conveniently, \texttt{sex} is already coded as type
-\texttt{factor}. Now assume that this is a single cross section for
-wages of US workers. The main outcome variable is \texttt{lwage} which
-stands for \emph{logarithm of wage}.
-
-\subsection{Log Transformations}\label{log-transformations}
-
-It is quite common to transform either outcome or explanatory or both
-variables by the natural logarithm. The primary motivation of this is to
-make the regression scale invariant. Suppose that factor \(\alpha\)
-represented the \emph{scale} of measurement of income, so that
-\(\alpha=1\) if we measure in Euros, or \(\alpha=1000\) if in thousands
-of Euros. With log-transforming regressor \(x\), our equation would look
-like
-
-\[
-y = b_0 + b_1 \log(\alpha x) = b_0 + \log \alpha  + b_1 \log x 
-\] where the \emph{scale} \(\alpha\) moves into the intercept, and our
-slope coefficient becomes invariant to it. If both outcome and regressor
-are transformed, we have
-
-\[
-\log y = b_0 + b_1 \log x
-\] and the slope coefficient is
-
-\[
-b_1 = \frac{d\log y}{d \log x} = \frac{dy/y}{dx/x}
-\] which represents the \textbf{elasticity} of \(y\) with respect to
-\(x\): what is the percentage change in \(y\) if \(x\) changes by one
-percent?
-
-Finally, if \emph{only the outcome} is log transformed, but not the
-regressor, we have a \emph{semi-elasticity} formulation. \[
-\log y = b_0 + b_1 x
-\] and the slope coefficient becomes
-
-\[
-b_1 = \frac{d\log y}{d x}
-\] This means a one-unit change in \(x\) increases the logarithm of the
-outcome by \(b_1\) units. For small changes in \(x\), we can just
-exponentiate \(b_1\) to get the effect of \(x\) the \emph{level} of
-\(y\).
-
-Going back to our example, let's say that a workers wage depends only on
-his \emph{experience}, measured in the number of years he/she worked
-full-time:
+Going back to our wage example, let's say that a worker's wage depends
+on their education as well as their sex:
 
 \begin{equation}
-\ln w_i = b_0 + b_1 exp_i + e_i \label{eq:wage-exp}
+\ln w_i = b_0 + b_1 educ_i + b_2 female_i + e_i \label{eq:wage-sex}
 \end{equation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lm_w =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{exp, }\DataTypeTok{data =}\NormalTok{ Wages)}
-\KeywordTok{summary}\NormalTok{(lm_w)}
+\KeywordTok{data}\NormalTok{(}\StringTok{"wage1"}\NormalTok{, }\DataTypeTok{package =} \StringTok{"wooldridge"}\NormalTok{)}
+\NormalTok{wage1}\OperatorTok{$}\NormalTok{female =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{female)  }\CommentTok{# convert 0-1 to factor}
+\NormalTok{lm_w =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ, }\DataTypeTok{data =}\NormalTok{ wage1)}
+\NormalTok{lm_w_sex =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{female, }\DataTypeTok{data =}\NormalTok{ wage1)}
+\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(lm_w,lm_w_sex,}\DataTypeTok{type =} \StringTok{"html"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = lwage ~ exp, data = Wages)
-#OUT> 
-#OUT> Residuals:
-#OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -2.30153 -0.29144  0.02307  0.27927  1.97171 
-#OUT> 
-#OUT> Coefficients:
-#OUT>              Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 6.5014318  0.0144657  449.44   <2e-16 ***
-#OUT> exp         0.0088101  0.0006378   13.81   <2e-16 ***
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 0.4513 on 4163 degrees of freedom
-#OUT> Multiple R-squared:  0.04383, Adjusted R-squared:  0.0436 
-#OUT> F-statistic: 190.8 on 1 and 4163 DF,  p-value: < 2.2e-16
-\end{verbatim}
+Dependent variable:
 
-We see from this that an additional year of full-time work experience
-will increase the mean of \(\ln w\) by 0.0088. Given the log
-transformation on wages, we can just exponentiate that to get an
-estimated effect on the (geometric!) mean of wages as
-\(\exp(\hat{b}_1) = 1.0088491\). This means that hourly wages increase
-by roughly \(100 * (\exp(b_1)-1) = 0.88\) percent with an additional
-year of experience. We can verify the positive relationship in figure
-\ref{fig:wage-plot}.
+lwage
+
+(1)
+
+(2)
+
+educ
+
+0.083***
+
+0.077***
+
+(0.008)
+
+(0.007)
+
+female1
+
+-0.361***
+
+(0.039)
+
+Constant
+
+0.584***
+
+0.826***
+
+(0.097)
+
+(0.094)
+
+Observations
+
+526
+
+526
+
+R2
+
+0.186
+
+0.300
+
+Adjusted R2
+
+0.184
+
+0.298
+
+Residual Std. Error
+
+0.480 (df = 524)
+
+0.445 (df = 523)
+
+F Statistic
+
+119.582*** (df = 1; 524)
+
+112.189*** (df = 2; 523)
+
+Note:
+
+\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+
+We know the results from column (1) very well by now. How does the
+relationship change if we include the \texttt{female} indicator?
+Remember from above that \texttt{female} is a \texttt{factor} with two
+levels, \emph{0} and \emph{1}, where \emph{1} means \emph{that's a
+female}. We see in the above output that \texttt{R} included a regressor
+called \texttt{female1}. This is a combination of the variable name
+\texttt{female} and the level which was included in the regression. In
+other words, \texttt{R} chooses a \emph{reference category} (by default
+the first of all levels by order of appearance), which is excluded -
+here this is \texttt{female==0}. The interpretation is that \(b_2\)
+measures the effect of being female \emph{relative} to being male.
+\texttt{R} automatically creates a dummy variable for each potential
+level, excluding the first category.
 
 \begin{figure}
 
@@ -5703,63 +6070,130 @@ year of experience. We can verify the positive relationship in figure
 
 }
 
-\caption{log wage vs experience. Red line shows the regression.}\label{fig:wage-plot}
+\caption{log wage vs educ. Right panel with female dummy.}\label{fig:wage-plot}
 \end{figure}
 
-Now let's investigate whether this relationship is different for men and
-women. We can do this by just including the \texttt{factor} variable
-\texttt{sex}:
+Figure \ref{fig:wage-plot} illustrates this. The left panel is our
+previous model. The right panel adds the \texttt{female} dummy. You can
+see that both male and female have the same upward sloping regression
+line. But you can also see that there is a parallel downward shift from
+male to female line. The estimate of \(b_2 = -0.36\) is the size of the
+downward shift.
+
+\section{Interactions}\label{interactions}
+
+Sometimes it is useful to let the slope of a certain variable to be
+dependent on the value of \emph{another} regressor. For example consider
+a model for the sales prices of houses, where \texttt{area} is the
+livable surface of the property, and \texttt{age} is its age:
 
 \begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + e_i \label{eq:wage-sex}
+\log(price) = b_0 + b_1 \text{area} + b_2 \text{age} + b_3 (\text{area} \times \text{age}) + e  \label{eq:price-interact}
 \end{equation}
 
-In \texttt{R} we can do this easily by using the \texttt{update}
-function as follows:
+In that model, the partial effect of \texttt{area} on
+\texttt{log(price)}, keeping all other variables fixed, is
+
+\begin{equation}
+\frac{\partial \log(price)}{\partial \text{area}} = b_1 + b_3 (\text{age}) 
+\end{equation}
+
+If we find that \(b_3 > 0\) in a regression, we conclude that the size
+of a house values more in older houses. We call \(b_3\) the
+\textbf{interaction effect} between area and age. Let's look at that
+regression model now.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lm_sex =}\StringTok{ }\KeywordTok{update}\NormalTok{(lm_w, . }\OperatorTok{~}\StringTok{ }\NormalTok{. }\OperatorTok{+}\StringTok{ }\NormalTok{sex)  }\CommentTok{# update lm_w with same LHS, same RHS, but add sex to it}
-\KeywordTok{summary}\NormalTok{(lm_sex)}
+\KeywordTok{data}\NormalTok{(hprice3, }\DataTypeTok{package =} \StringTok{"wooldridge"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(lprice }\OperatorTok{~}\StringTok{ }\NormalTok{area}\OperatorTok{*}\NormalTok{age, }\DataTypeTok{data =}\NormalTok{ hprice3))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 #OUT> 
 #OUT> Call:
-#OUT> lm(formula = lwage ~ exp + sex, data = Wages)
+#OUT> lm(formula = lprice ~ area * age, data = hprice3)
 #OUT> 
 #OUT> Residuals:
 #OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -1.87081 -0.26688  0.01733  0.26336  1.90325 
+#OUT> -1.27226 -0.16538 -0.00298  0.20673  0.83985 
 #OUT> 
 #OUT> Coefficients:
-#OUT>              Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 6.1257661  0.0223319  274.31   <2e-16 ***
-#OUT> exp         0.0076134  0.0006082   12.52   <2e-16 ***
-#OUT> sexmale     0.4501101  0.0210974   21.34   <2e-16 ***
+#OUT>               Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept)  1.071e+01  6.633e-02 161.448  < 2e-16 ***
+#OUT> area         3.647e-04  2.875e-05  12.686  < 2e-16 ***
+#OUT> age         -7.377e-03  1.358e-03  -5.434  1.1e-07 ***
+#OUT> area:age     9.168e-07  4.898e-07   1.872   0.0622 .  
 #OUT> ---
 #OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #OUT> 
-#OUT> Residual standard error: 0.4286 on 4162 degrees of freedom
-#OUT> Multiple R-squared:  0.1381,  Adjusted R-squared:  0.1377 
-#OUT> F-statistic: 333.4 on 2 and 4162 DF,  p-value: < 2.2e-16
+#OUT> Residual standard error: 0.2925 on 317 degrees of freedom
+#OUT> Multiple R-squared:  0.5586,  Adjusted R-squared:  0.5545 
+#OUT> F-statistic: 133.7 on 3 and 317 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
-What's going on here? Remember from above that \texttt{sex} is a
-\texttt{factor} with 2 levels \emph{female} and \emph{male}. We see in
-the above output that \texttt{R} included a regressor called
-\texttt{sexmale} \(=\mathbf{1}[sex_i==male]\). This is a combination of
-the variable name \texttt{sex} and the level which was included in the
-regression. In other words, \texttt{R} chooses a \emph{reference
-category} (by default the first of all levels by order of appearance),
-which is excluded - here this is \texttt{sex=="female"}. The
-interpretation is that \(b_2\) measures the effect of being male
-\emph{relative} to being female. \texttt{R} automatically creates a
-dummy variable for each potential level, excluding the first category.
-In particular, if \texttt{sex} had a third category
-\texttt{dont\ want\ to\ say}, there would be an additional regressor
-called \texttt{sexdontwanttosay}.
+In this instance, we see that indeed there is a small positive
+interaction between \texttt{area} and \texttt{age} on the sales price:
+even though \texttt{age} in isolation decreases the sales value, bigger
+houses command a small premium if they are older.
+
+\subsection{Interactions with Dummies: Differential
+Slopes}\label{interactions-with-dummies-differential-slopes}
+
+It is straightforward to extend the interactions logic to allow not only
+for different \emph{intercepts}, but also different \emph{slopes} for
+each subgroup in a dataset. Let's go back to our dataset of wages from
+section \ref{factors} above. Now that we know how to create and
+interaction between two variables, we can easily modify equation
+\eqref{eq:wage-sex} like this:
+
+\begin{equation}
+\ln w = b_0 + b_1 \text{female} + b_2 \text{educ} + b_3 (\text{female} \times \text{educ}) + e \label{eq:wage-sex2}
+\end{equation}
+
+The only peculiarity here is that \texttt{female} is a factor with
+levels \texttt{0} and \texttt{1}: i.e.~the interaction term \(b_3\) will
+be zero for all men. Similarly to above, we can test whether there are
+indeed different returns to education or men and women by looking at the
+estimated value \(b_3\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm_w_interact <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{*}\StringTok{ }\NormalTok{female , }\DataTypeTok{data =}\NormalTok{ wage1)  }\CommentTok{# R expands to full interactions model}
+\KeywordTok{summary}\NormalTok{(lm_w_interact)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = lwage ~ educ * female, data = wage1)
+#OUT> 
+#OUT> Residuals:
+#OUT>      Min       1Q   Median       3Q      Max 
+#OUT> -2.02673 -0.27468 -0.03721  0.26221  1.34740 
+#OUT> 
+#OUT> Coefficients:
+#OUT>                Estimate Std. Error t value Pr(>|t|)    
+#OUT> (Intercept)   8.260e-01  1.181e-01   6.997 8.08e-12 ***
+#OUT> educ          7.723e-02  8.988e-03   8.593  < 2e-16 ***
+#OUT> female1      -3.601e-01  1.854e-01  -1.942   0.0527 .  
+#OUT> educ:female1 -6.408e-05  1.450e-02  -0.004   0.9965    
+#OUT> ---
+#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#OUT> 
+#OUT> Residual standard error: 0.4459 on 522 degrees of freedom
+#OUT> Multiple R-squared:  0.3002,  Adjusted R-squared:  0.2962 
+#OUT> F-statistic: 74.65 on 3 and 522 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+We will in the next chapter learn that the estimate for \(b_3\) on the
+interaction \texttt{educ:female1} is difficult for us to distinguish
+from zero in a statistical sense; Hence for now we conclude that there
+are \emph{no} significantly different returns in education for men and
+women in this data. This is easy to verify visually in this plot, where
+we are unable to detect a difference in slopes in the right panel.
 
 \begin{figure}
 
@@ -5767,167 +6201,57 @@ called \texttt{sexdontwanttosay}.
 
 }
 
-\caption{log wage vs experience with different intercepts by sex}\label{fig:wage-plot2}
+\caption{log wage vs educ. Right panel allows slopes to be different - turns out they are not!}\label{fig:wage-plot2}
 \end{figure}
 
-Figure \ref{fig:wage-plot2} illustrates this. You can see that both male
-and female have the same upward sloping regression line. But you can
-also see that there is a parallel downward shift from male to female
-line. The estimate of \(b_2 = 0.45\) is the size of the downward shift.
+\section{(Unobserved) Individual
+Heterogeneity}\label{unobserved-individual-heterogeneity}
 
-\section{Saturated Models: Main Effects and
-Interactions}\label{saturated-models-main-effects-and-interactions}
+Finally, dummary variables are sometimes very important to account for
+spurious relationships in that data. Consider the following (artificial
+example):
 
-You can see above that we \emph{restricted} male and female to have the
-same slope with repect to years of experience. This may or may not be a
-good assumption. Thankfully, the dummy variable regression machinery
-allows for a quick solution to this - so-called \emph{interaction}
-effects. As already introduced in chapter \ref{mreg-interactions},
-interactions allow that the \emph{ceteris paribus} effect of a certain
-regressor, \texttt{exp} say, depends also on the value of yet another
-regressor, \texttt{sex} for example. Suppose then we would like to see
-whether male and female not only have different intercepts, but also
-different slopes with respect to \texttt{exp} in figure
-\ref{fig:wage-plot2}. Therefore we formulate this version of our model:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Suppose we collected data on hourly wage data together with a the
+  number of hours worked for a set of individuals.
+\item
+  We plot want to investigate labour supply behaviour of those
+  individuals, hence we run regression
+  \texttt{hours\_worked\ \textasciitilde{}\ wage}.
+\item
+  We expect to get a positive coefficient on \texttt{wage}: the higher
+  the wage, the more hours worked.
+\item
+  You know that individuals are members of either group \texttt{g=0} or
+  \texttt{g=1}.
+\end{enumerate}
 
-\begin{equation}
-\ln w_i = b_0 + b_1 exp_i + b_2 sex_i + b_3 (sex_i \times exp_i) + e_i \label{eq:wage-sex-inter}
-\end{equation}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-165-1} \end{center}
 
-The inclusion of the \emph{product} of \texttt{exp} and \texttt{sex}
-amounts to having different slopes for different categories in
-\texttt{sex}. This is easy to see if we take the partial derivative of
-\eqref{eq:wage-sex-inter} with respect to \texttt{sex}:
+Here we observe a slightly negative relationship: higher wages are
+associated with fewer hours worked? Maybe. But what is this, there is a
+group identifier in this data! Let's use this and include \texttt{g} as
+a dummy in the regression - suppose \texttt{g} encodes male and female.
 
-\begin{equation}
-\frac{\partial \ln w_i}{\partial sex_i} = b_2 + b_3 exp_i \label{eq:wage-sex-inter-deriv}
-\end{equation}
+\begin{figure}
 
-Back in our \texttt{R} session, we can run the full interactions model
-like this:
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-166-1} 
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lm_inter =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{exp}\OperatorTok{*}\NormalTok{sex, }\DataTypeTok{data =}\NormalTok{ Wages)}
-\KeywordTok{summary}\NormalTok{(lm_inter)}
-\end{Highlighting}
-\end{Shaded}
+}
 
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = lwage ~ exp * sex, data = Wages)
-#OUT> 
-#OUT> Residuals:
-#OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -1.82137 -0.26797  0.01781  0.26231  1.90757 
-#OUT> 
-#OUT> Coefficients:
-#OUT>             Estimate Std. Error t value Pr(>|t|)    
-#OUT> (Intercept) 6.169017   0.038165 161.643  < 2e-16 ***
-#OUT> exp         0.005071   0.001918   2.644  0.00822 ** 
-#OUT> sexmale     0.401116   0.040917   9.803  < 2e-16 ***
-#OUT> exp:sexmale 0.002826   0.002022   1.397  0.16236    
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 0.4285 on 4161 degrees of freedom
-#OUT> Multiple R-squared:  0.1385,  Adjusted R-squared:  0.1379 
-#OUT> F-statistic:   223 on 3 and 4161 DF,  p-value: < 2.2e-16
-\end{verbatim}
+\caption{Left and right panel exhibit the same data. The right panel controls for group composition.}\label{fig:unnamed-chunk-166}
+\end{figure}
 
-You can see here that \texttt{R} automatically expands \texttt{exp*sex}
-to include both \emph{main effects}, i.e. \texttt{exp} and \texttt{sex}
-as single regressors as before, and their interaction, denoted by
-\texttt{exp:sexmale}. It turns out that in this example, the estimate
-for the interaction is not statistically significant, i.e.~we cannot
-reject the null hypothesis that \(b_3 = 0\). (If, for some reason, you
-wanted to include only the interaction, you could supply directly
-\texttt{formula\ =\ lwage\ \textasciitilde{}\ exp:sex} to \texttt{lm},
-although this would be a rather difficult to interpret model.)
-
-We call a model like \eqref{eq:wage-sex-inter} a \emph{saturated model},
-because it includes all main effects and possible interactions. What our
-little exercise showed us was that with the sample of data at hand, we
-cannot actually claim that there exists a differential slope for male
-and female, so the model with main effects only may be more appropriate
-here.
-
-To finally illustrate the limits of interpretability when including
-interactions, suppose we run the fully saturated model for \texttt{sex},
-\texttt{smsa}, \texttt{union} and \texttt{bluecol}, including all main
-and all interaction effects:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lm_full =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{sex}\OperatorTok{*}\NormalTok{smsa}\OperatorTok{*}\NormalTok{union}\OperatorTok{*}\NormalTok{bluecol,}\DataTypeTok{data=}\NormalTok{Wages)}
-\KeywordTok{summary}\NormalTok{(lm_full)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-#OUT> 
-#OUT> Call:
-#OUT> lm(formula = lwage ~ sex * smsa * union * bluecol, data = Wages)
-#OUT> 
-#OUT> Residuals:
-#OUT>      Min       1Q   Median       3Q      Max 
-#OUT> -1.95214 -0.23409 -0.01681  0.25317  1.90450 
-#OUT> 
-#OUT> Coefficients:
-#OUT>                                     Estimate Std. Error t value Pr(>|t|)
-#OUT> (Intercept)                          6.12378    0.06300  97.198  < 2e-16
-#OUT> sexmale                              0.67057    0.06577  10.195  < 2e-16
-#OUT> smsayes                              0.33424    0.06872   4.864 1.19e-06
-#OUT> unionyes                             0.84284    0.16866   4.997 6.06e-07
-#OUT> bluecolyes                          -0.34016    0.08423  -4.039 5.47e-05
-#OUT> sexmale:smsayes                     -0.15917    0.07226  -2.203 0.027670
-#OUT> sexmale:unionyes                    -0.92893    0.17816  -5.214 1.94e-07
-#OUT> smsayes:unionyes                    -0.83927    0.17979  -4.668 3.14e-06
-#OUT> sexmale:bluecolyes                  -0.15046    0.08820  -1.706 0.088100
-#OUT> smsayes:bluecolyes                  -0.12471    0.09727  -1.282 0.199882
-#OUT> unionyes:bluecolyes                 -0.31819    0.22924  -1.388 0.165208
-#OUT> sexmale:smsayes:unionyes             0.72672    0.19060   3.813 0.000139
-#OUT> sexmale:smsayes:bluecolyes           0.25860    0.10327   2.504 0.012318
-#OUT> sexmale:unionyes:bluecolyes          0.71906    0.23772   3.025 0.002503
-#OUT> smsayes:unionyes:bluecolyes          0.50057    0.24862   2.013 0.044137
-#OUT> sexmale:smsayes:unionyes:bluecolyes -0.58330    0.25899  -2.252 0.024361
-#OUT>                                        
-#OUT> (Intercept)                         ***
-#OUT> sexmale                             ***
-#OUT> smsayes                             ***
-#OUT> unionyes                            ***
-#OUT> bluecolyes                          ***
-#OUT> sexmale:smsayes                     *  
-#OUT> sexmale:unionyes                    ***
-#OUT> smsayes:unionyes                    ***
-#OUT> sexmale:bluecolyes                  .  
-#OUT> smsayes:bluecolyes                     
-#OUT> unionyes:bluecolyes                    
-#OUT> sexmale:smsayes:unionyes            ***
-#OUT> sexmale:smsayes:bluecolyes          *  
-#OUT> sexmale:unionyes:bluecolyes         ** 
-#OUT> smsayes:unionyes:bluecolyes         *  
-#OUT> sexmale:smsayes:unionyes:bluecolyes *  
-#OUT> ---
-#OUT> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#OUT> 
-#OUT> Residual standard error: 0.3832 on 4149 degrees of freedom
-#OUT> Multiple R-squared:  0.3129,  Adjusted R-squared:  0.3105 
-#OUT> F-statistic:   126 on 15 and 4149 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-The main effects remain clear to interpret: being a blue collar worker,
-for example, reduces average wages by 34\% relative to white collar
-workers. One-way interactions are still ok to interpret as well:
-\texttt{sexmale:bluecolyes} indicates in addition to a wage premium over
-females of 0.67, and a penalty of being blue collar of -0.34,
-\textbf{male} blue collar workers suffer an additional wage loss of
--0.15. All of this is relative to the base category, which are female
-white collar workers who don't live in an smsa and are not union
-members. If we now add a third or even a fourth interaction, this
-becomes much harder to interpret, and in fact we rarely see such
-interactions in applied work.
+This is an artificial example; yet it shows that you can be severly
+misled if you don't account for group-specific effects in your data. The
+problem is particularly accute if we \emph{don't know group membership}
+- we can then resort to advanced methods that are beyond the scope of
+this course to \emph{estimate} which group each individual belongs to.
+If we \emph{do know} group membership, however, it is good practice to
+include a group dummy so as to control for group effects.
 
 \chapter{Standard Errors}\label{std-errors}
 
@@ -6766,11 +7090,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-159-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-175-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-159}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-175}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
