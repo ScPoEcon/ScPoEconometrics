@@ -34,6 +34,7 @@
 #' @import dplyr
 #' @import corrplot
 #' @import cowplot
+#' @import stargazer
 #' @importFrom stats rnorm runif
 #' @importFrom magrittr %>%
 #' @keywords internal

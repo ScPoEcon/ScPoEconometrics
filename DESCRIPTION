@@ -32,7 +32,8 @@ Imports: bookdown,
   dplyr,
   corrplot,
   cowplot,
-  wooldridge
+  wooldridge,
+  stargazer
 Remotes: datalorax/equatiomatic
 Suggests:
   shinytest,
