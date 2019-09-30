@@ -29,6 +29,10 @@
 #' @import magick
 #' @import pdftools
 #' @import Hmisc
+#' @import equatiomatic
+#' @import wooldridge
+#' @import dplyr
 #' @importFrom stats rnorm runif
+#' @importFrom magrittr %>%
 #' @keywords internal
 NULL
