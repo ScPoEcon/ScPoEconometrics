@@ -518,103 +518,212 @@ R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} 
 It is easy to see that a *good fit* is one where the sum of *explained* squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an $R^2$ close to one. In the opposite case, we will see an $R^2$ close to zero. Notice that a small $R^2$ does not imply that the model is useless, just that it explains a small fraction of the observed variation.
 
 
+## An Example: A Log Wage Equation
 
-## An Example: California Student Test Scores {#lm-example1}
+Let's consider the following example concerning wage data collected in the 1976 Current Population Survey in the USA.^[This example is close to the vignette of the [wooldridge](https://cloud.r-project.org/web/packages/wooldridge/index.html) package, whose author I hereby thank for the excellent work.] We want to investigate the relationship between average hourly earnings, and years of education. Let's start with a plot:
 
-Luckily for us, fitting a linear model to some data does not require us to iteratively find the best intercept and slope manually, as you have experienced in our `apps`. As it turns out, `R` can do this much more precisely, and very fast!
+```{r wooldridge-wages, echo=TRUE,fig.cap='Wages vs Education from the wooldridge dataset wage1.',fig.height=7}
+data("wage1", package = "wooldridge")   # load data
 
-Let's explore how to do this, using a real life dataset taken from the `Ecdat` package which includes many economics-related dataset. In this example, we will use the `Caschool` dataset which contains the average test scores of 420 elementary schools in California along with some additional information.
+# a function that returns a plot
+plotfun <- function(wage1,log=FALSE,rug = TRUE){
+    y = wage1$wage
+    if (log){
+        y = log(wage1$wage)
+    }
+    plot(y = y,
+       x = wage1$educ, 
+       col = "red", pch = 21, bg = "grey",     
+       cex=1.25, xaxt="n", frame = FALSE,      # set default x-axis to none
+       main = ifelse(log,"log(Wages) vs. Education, 1976","Wages vs. Education, 1976"),
+       xlab = "years of education", 
+       ylab = ifelse(log,"Log Hourly wages","Hourly wages"))
+    axis(side = 1, at = c(0,6,12,18))         # add custom ticks to x axis
+    if (rug) rug(wage1$wage, side=2, col="red")        # add `rug` to y axis
+}
 
-### Loading and exploring Data
+par(mfcol = c(2,1))  # set up a plot with 2 panels
+# plot 1: standard scatter plot
+plotfun(wage1)
 
-We can explore which variables are included in the dataset using the `names()` function:
-
-```{r str, warning=F, message = F}
-library("Ecdat") # Load the Ecdat library
-names(Caschool) # Display the variables of the Caschool dataset
+# plot 2: add a panel with histogram+density
+hist(wage1$wage,prob = TRUE, col = "grey", border = "red", 
+     main = "Histogram of wages and Density",xlab = "hourly wage")
+lines(density(wage1$wage), col = "black", lw = 2)
 ```
 
-For each variable in the dataset, basic summary statistics can be obtained by calling `summary()`
-
-```{r summary}
-summary(Caschool[, c("testscr", "str", "avginc")])
+```{r,echo=FALSE}
+par(mfcol = c(1,1)) 
 ```
 
+Looking at the top panel of figure \@ref(fig:wooldridge-wages), you notice two things: From the red ticks on the y axis, you see that wages are very concentrated at around 5 USD per hour, with fewer and fewer observations at higher rates; and second, that it seems that the hourly wage seems to increase with higher education levels. The bottom panel reinforces the first point, showing that the estimated pdf (probability density function) shown as a black line has a very long right tail: there are always fewer and fewer, but always larger and larger values of hourly wage in the data.
 
-### Fitting a linear model
+```{block,type="warning"}
+You have seen this shape of a distribution in the tutorial for chapter 2 already! Do you remember the name of this particular shape of a distribution? (why not type `ScPoEconometrics::runTutorial('chapter2')`) to check?
+```
+<br>
 
-Suppose we are interested in the following linear model:
+Let's run a first regression on this data to generate some intution:
 
-$$\text{testscr}_i = b_0 + b_1 \times \text{str}_i + e_i$$
-Where $\text{testscr}_i$ is the *average test score* for a given school $i$ and $\text{str}_i$ is the *Student/Teacher Ratio* (i.e. the average number of students per teacher) in the same school $i$. Again, $b_0$ and $b_1$ are the intercept and the slope of the regression line.
+\begin{equation}
+\text{wage}_i = b_0 + b_1 \text{educ}_i + e_i (\#eq:wage)
+\end{equation}
 
-The subscript $i$ indexes all unique elementary schools ($i \in \{1, 2, 3, \dots 420\}$) and $e_i$ is the error, or *residual*, of the regression. (Remember that our procedure for finding the line of best fit is to minimize the *sum of squared residuals* (SSR)).
+We use the `lm` function for this purpose as follows:
 
-At this point you should step back and take a second to think about what you believe the relation between a school's test scores and student/teacher ratio will be. Do you believe that, in general, a high student/teacher ratio will be associated with higher-than-average test scores for the school? Do you think that the number of students per teacher will impact results in any way? 
-
-Let's find out! As always, we will start by plotting the data to inspect it visually:
-
-```{r first-reg0,fig.align='center',fig.cap='Student Teacher Ratio vs Test Scores'}
-
-plot(formula = testscr ~ str,
-     data = Caschool,
-     xlab = "Student/Teacher Ratio",
-     ylab = "Average Test Score", pch = 21, col = 'blue')
+```{r}
+hourly_wage <- lm(formula = wage ~ educ, data = wage1)
 ```
 
-Can you spot a trend in the data? According to you, what would the line of best fit look like? Would it be upward or downward slopping? Let's ask `R`!
+and we can add the resulting regression line to our above plot:
 
-### The `lm()` function
-
-We will use the built-in `lm()` function to estimate the coefficients $b_0$ and $b_1$ using the data at hand. `lm` stands for *linear model*, which is what our representation in \@ref(eq:abline) amounts to. This function typically only takes 2 arguments, `formula` and `data`:
-
-`lm(formula, data)`
-
-- `formula` is the description of our model which we want `R` to estimate for us. Its syntax is very simple: `Y ~ X` (more generally, `DependentVariable ~ Independent Variables`). You can think of the tilda operator `~` as the equal sign in your model equation. An intercept is included by default and so you do not have to ask for it in `formula`.
-  For example, the simple model $income = b_0 + b_1 \cdot age$ can be written as `income ~ age`. A `formula` can sometimes be written between quotation marks: `"X ~ Y"`.
-
-- `data` is simply the `data.frame` containing the variables in the model.
-
-In the context of our example, the function call is therefore:
-
-```{r lmfit}
-# assign lm() output to some object `fit_cal`
-fit_cal <- lm(formula = testscr ~ str, data = Caschool)
-
-# ask R for the regression summary
-summary(fit_cal) 
+```{r wooldridge-wages2, echo=TRUE,fig.cap='Wages vs Education from the wooldridge dataset wage1, with regression'}
+plotfun(wage1)
+abline(hourly_wage, col = 'black', lw = 2) # add regression line
 ```
 
-As we can see, `R` returns its estimates for the Intercept and Slope coefficients, $b_0 =$ `r round(coef(fit_cal)[1], 2)` and $b_1 =$ `r round(coef(fit_cal)[2], 2)`. The estimated relationship between a school's Student/Teacher Ratio and its average test results is **negative**.
+The `hourly_wage` object contains the results of this estimation. We can get a summary of those results with the `summary` method:
 
-The output of the `summary` method for an `lm` object is commonly called a *regression table*, and you will be able to decypher it by the end of this course. You should be able to find an interpret the $R^2$ though: Are we explaining a lot of the variance in `testscr` with this simple model, or are we not?
-
-### Plotting the regression line
-
-We can also use our `lm` fit to draw the regression line on top of our initial scatterplot, using the following syntax:
-
-```{r plot-reg1,fig.align='center',fig.cap='Test Scores with Regression Line'}
-plot(formula = testscr ~ str,
-     data = Caschool,
-     xlab = "Student/Teacher Ratio",
-     ylab = "Average Test Score", pch = 21, col = 'blue')# same plot as before
-abline(fit_cal, col = 'red') # add regression line
-
+```{r}
+summary(hourly_wage)
 ```
 
+The main interpretation of this table can be read off the column labelled *Estimate*, reporting estimated coefficients $b_0,b_1$:
 
-As you probably expected, the best line for schools' Student/Teacher Ratio and its average test results is downward sloping.
+1. With zero year of education, the hourly wage is about -0.9 dollars per hour (row named `(Intercept)`)
+1. Each additional year of education increase hourly wage by 54 cents. (row named `educ`)
+1. For example, for 15 years of education, we predict roughly -0.9 + 0.541 * 15 = `r -0.9 + 0.541 * 15` dollars/h.
 
-Just as a way of showcasing another way to make the above plot, here is how you could use `ggplot`:
+## Scaling Regressions
 
-```{r,fig.align="center"}
-library(ggplot2)
-p <- ggplot(mapping = aes(x = str, y = testscr), data = Caschool) # base plot
-p <- p + geom_point() # add points
-p <- p + geom_smooth(method = "lm", size=1, color="red") # add regression line
-p <- p + scale_y_continuous(name = "Average Test Score") + 
-         scale_x_continuous(name = "Student/Teacher Ratio")
-p + theme_bw() + ggtitle("Testscores vs Student/Teacher Ratio")
+```{block type="tip"}
+Regression estimates ($b_0, b_1$) are in the scale *of the data*. The actual *value* of the estimates will vary, if we change the scale of the data. The overall fit of the model to the data would *not* change, however, so that the $R^2$ statistic would be constant.
+```
+<br>
+
+Suppose we wanted to use the above estimates to report the effect of years of education on *annual* wages instead of *hourly* ones. Let's assume we have full-time workers, 7h per day, 5 days per week, 45 weeks per year. Calling this factor $\delta = 7 \times 5 \times 45 = 1575$, we have that $x$ dollars per hour imply $x \times \delta = x \times `r 7*5*45`$ dollars per year. 
+
+What would be the effect of using $\tilde{y} = wage \times `r 7*5*45`$ instead of $y = wage$ as outcome variable on our regression coefficients $b_0$ and $b_1$? Well, let's try!
+
+```{r,results= "asis",echo = FALSE}
+delta = 7*5*45
+wage1$annual_wage <- wage1$wage * delta
+wage_annual <- lm(formula = annual_wage ~ educ, data = wage1)
+c1 = coef(hourly_wage)
+c2 = coef(wage_annual)
+stargazer::stargazer(hourly_wage, wage_annual, type = "html",title = "Effect of Scaling on Coefficients")
 ```
 
-The shaded area around the red line shows the width of the 95% confidence interval around our estimate of the slope coefficient $b_1$. We will learn more about it in chapter \@ref(std-errors).
+Let's call the coefficients in the column labelled (1) as $b_0$ and $b_1$, and let's call the ones in column (2) $b_0^*$ and $b_1^*$. In column (1) we see that another year increaeses hourly wage by `r round(c1[2],2)` dollars, as before.  In column (2), the corresponding number is `r round(c2[2],2)`, i.e. another year of education will increase *annual* wages by `r round(c2[2],2)` dollars, on average. Notice however, that $b_0 \times \delta = `r round(c1[1],2)` \times `r delta` = `r round(c2[1],2)` = b_0^*$ and that $b_1 \times \delta = `r round(c1[2],2)` \times `r delta` = `r round(c2[2],2)` = b_1^*$, that is we just had to multiply both coefficients by the scaling factor applied to original outcome $y$ to obtain our new coefficients $b_0^*$ and $b_1^*$! Also, observe that the $R^2$s of both regressions are identical! So, really, we did not have to run the regression in column (2) at all to make this change: multiplying all coefficients through by $\delta$ is enough in this case. We keep the identically same fit to the data. 
+
+Rescaling the regressors $x$ is slightly different, but it's easy to work out *how* different, given the linear nature of the covariance operator, which is part of the OLS estimator. Suppose we rescale $x$ by the number $c$. Then, using the OLS formula in \@ref(eq:beta1hat), we see that we get new slope coefficient $b_1^*$ via
+
+\begin{align} 
+b_1^* &= \frac{Cov(cx,y)}{Var(cx)} \\ 
+      &= \frac{cCov(x,y)}{c^2 Var(x)} \\
+      &= \frac{1}{c} b_1.
+\end{align}
+
+As for the intercept, and by using \@ref(eq:beta0hat)
+\begin{align} 
+b_0^* &= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\ 
+      &= \bar{y} -             b_1^* \frac{c}{N}\sum_{i=1}^N x_i  \\
+      &= \bar{y} - \frac{1}{c} b_1 c * \bar{x}  \\
+      &= \bar{y} -  b_1 * \bar{x}  \\
+      &= b_0
+\end{align}
+
+That is, we change the slope by the *inverse* of the scaling factor applied to regressor $x$, but the intercept is unaffected from this. You should play around for a while with our rescaling app to get a feeling for this:
+
+```{r,eval=FALSE}
+library(ScPoEconometrics)
+launchApp('Rescale')
+```
+
+## A Particular Rescaling: The $\log$ Transform
+
+The natural logarithm is a particularly important transformation that we often encounter in economics. Why would we transform a variable with the $\log$ function to start with?
+
+1. Several important economic variables (like wages, city size, firm size, etc) are approximately *log-normally* distributed. By transforming them with the $\log$, we obtain an approximately *normally* distributed variable, which has desirable properties for our regression.
+1. Applying the $\log$ reduces the impact of outliers.
+1. The transformation allows for a convenient interpretation in terms of *percentage changes* of the outcome variable.
+
+Let's investigate this issue in our running example by transforming the wage data above. Look back at the bottom panel of figure \@ref(fig:wooldridge-wages): Of course you saw immediately that this looked a lot like a log-normal distribution, so point 1. above applies. We modify the left hand side of equation \@ref(eq:wage):
+
+\begin{equation}
+\log(\text{wage}_i) = b_0 + b_1 \text{educ}_i + e_i (\#eq:log-wage)
+\end{equation}
+
+Let's use the `update` function to modify our previous regression model:
+
+```{r}
+log_hourly_wage = update(hourly_wage, log(wage) ~ ., data = wage1)
+```
+
+The `update` function takes an existing `lm` object, like `hourly_wage` here, and updates the `formula`. Here the `.` on the right hand side means *leave unchanged* (so the RHS stays unchanged). How do our pictures change?
+
+```{r logplot,echo = TRUE}
+par(mfrow = c(1,2))
+
+plotfun(wage1,rug = FALSE)
+abline(hourly_wage, col = 'black', lw = 2) # add regression line
+
+plotfun(wage1,log = TRUE, rug = FALSE)
+abline(log_hourly_wage, col = 'black', lw = 2) # add regression line
+
+par(mfrow = c(1,1))
+```
+
+It *looks as if* the regression line has the same slope, but beware of the different scales of the y-axis! You can clearly see that all y-values have been compressed by the log transformation. The log case behaves differently from our *scaling by a constant number* case above because it is a *nonlinear* function. Let's compare the output between both models:
+
+```{r,echo = FALSE, results = "asis"}
+stargazer::stargazer(hourly_wage, log_hourly_wage, title = "Log Transformed Equation",type = "html")
+```
+
+The interpretation of the transformed model in column (2) is now the following: 
+
+```{block type = "note"}
+We call a regression of the form $\log(y) = b_0 + b_1 x + u$ a *log-level* specification, because we regressed the log of a variable on the level (i.e not the log!) of another variable. Here, the impact of increasing $x$ by one unit is to increase $y$ by $100 \times b_1$ **percent**. In our example: an additional year of education will increase hourly wages by 8.3%. Notice that this is very different from saying *...increases log hourly wages by 8.3%*, which is wrong.
+```
+<br>
+
+Notice that the $R^2$ slightly improved, so have a better fit to the data. This is due the fact that the log compressed large outlier values. Whether we apply the $log$ to left or right-hand side variables makes a difference, as outlined in this important table:
+
+<center><caption> (\#tab:loglog) Common Regression Specifications </caption></center>
+Specification | Outcome Var | Regressor | Interpretation of $b_1$ | Comment
+:------------:|:------------:|:------------:|:------------:|:------------:
+Level-level | y | x | $\Delta y = b_1 \Delta x$ | Standard
+Level-log | y | $\log(x)$ | $\Delta y = b_1 \Delta x$ | less frequent
+Log-level | $\log(y)$  | x | $\% \Delta y = (100 b_1) \Delta$ x | Semi-elasticity
+Log-Log  | $\log(y)$  | $\log(x)$ | $\% \Delta y = \% \Delta$ x | Elasticity
+
+You may remember from your introductory micro course what the definition of the *elasticity* of $y$ with respect to $x$ is: This number tells us by how many percent $y$ will change, if we change $x$ by one percent. Let's look at another example from the `wooldridge` package of datasets, this time concerning CEO salaries and their relationship with company sales.
+
+```{r ceo-sal,fig.cap="The effect of log-transforming highly skewed data.",fig.height = 4}
+data("ceosal1", package = "wooldridge")  
+par(mfrow = c(1,2))
+plot(salary ~ sales, data = ceosal1, main = "Sales vs Salaries",xaxt = "n",frame = FALSE)
+axis(1, at = c(0,40000, 80000))
+rug(ceosal1$salary,side = 2)
+rug(ceosal1$sales,side = 1)
+plot(log(salary) ~ log(sales), data = ceosal1, main = "Log(Sales) vs Log(Salaries)")
+```
+```{r,echo = FALSE}
+par(mfrow = c(1,1))
+```
+In the left panel of figure \@ref(fig:ceo-sal) you clearly see that both `sales` and `salary` have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it's hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let's see what this gives in a regression model!
+
+```{r,results = 'asis',echo = FALSE,warning=FALSE,message = FALSE}
+library(magrittr)
+library(dplyr)
+ceosal1 %>%
+  mutate(logsalary = log(salary), logsales = log(sales)) %>%
+  lm(logsalary ~ logsales, data = .) %>%
+  equatiomatic::extract_eq(use_coefs = TRUE)
+```
+
+Refering back at table \@ref(tab:loglog), here we have a log-log specification. Therefore we interpret this regression as follows: 
+
+```{block type = "tip"}
+In a log-log equation, the slope coefficient $b_1$ is the *elasticity of $y$ with respect to changes in $x$*. Here: A 1% increase in sales is associated to a 0.26% increase in CEO salaries. Note, again, that there is no *log* in this statement. 
+```

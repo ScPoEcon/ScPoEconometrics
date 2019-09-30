@@ -1,7 +1,6 @@
 # Multiple Regression {#multiple-reg}
 
 
-
 We can extend the discussion from chapter \@ref(linreg) to more than one explanatory variable. For example, suppose that instead of only $x$ we now had $x_1$ and $x_2$ in order to explain $y$. Everything we've learned for the single variable case applies here as well. Instead of a regression *line*, we now get a regression *plane*, i.e. an object representable in 3 dimenions: $(x_1,x_2,y)$.
 As an example, suppose we wanted to explain how many *miles per gallon* (`mpg`) a car can travel as a function of its *horse power* (`hp`) and its *weight* (`wt`). In other words we want to estimate the equation
 
@@ -12,7 +11,7 @@ mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i (\#eq:abline2d)
 on our built-in dataset of cars (`mtcars`):
 
 ```{r mtcarsdata}
-subset(mtcars, select = c(mpg,hp,wt))
+head(subset(mtcars, select = c(mpg,hp,wt)))
 ```
 
 How do you think `hp` and `wt` will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of $b_1$ and $b_2$ to be? 
@@ -45,6 +44,8 @@ mtcars %>%
   hide_colorbar()
 ```
 
+
+
 This visualization shows a couple of things: the data are shown with red points and the grey plane is the one resulting from OLS estimation of equation \@ref(eq:abline2d). You should realize that this is exactly the same story as told in figure \@ref(fig:line-arrows) - just in three dimensions!
 
 Furthermore, *multiple* regression refers the fact that there could be *more* than two regressors. In fact, you could in principle have $K$ regressors, and our theory developed so far would still be valid:
@@ -74,7 +75,7 @@ As a matter of fact, the kind of question asked here is so common that it has go
 \frac{\partial mpg_i}{\partial hp_i} = b_1 (\#eq:abline2d-deriv)
 \end{equation}
 
-This means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. In calculus, the answer to this is provided by the *partial derivative* as shown in \@ref(eq:abline2d-deriv). We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
+The $\partial$ sign denotes a *partial derivative* of the function describing `mpg` with respect to the variable `hp`. It measures *how the value of `mpg` changes, as we change the value of `hp` ever so slightly*. In our context, this means: *keeping all other variables fixed, what is the effect of `hp` on `mpg`?*. We call the value of coefficient $b_1$ therefore also the *partial effect* of `hp` on `mpg`. In terms of our dataset, we use `R` to run the following **multiple regression**:
 <br>
 
 ```{r,echo=FALSE}
@@ -84,13 +85,13 @@ summary(fit)
 From this table you see that the coefficient on `wt` has value `r round(coef(fit)[2],5)`. You can interpret this as follows:
 
 ```{block,type="warning"}
-Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. Similarly, one more $hp$ horse power implies a change in $mpg$ of -0.03177 units, *all else (i.e. $wt$) equal*.
+Holding all other variables fixed at their observed values - or *ceteris paribus* - a one unit increase in $wt$ implies a -3.87783 units change in $mpg$. In other words, increasing the weight of a car by 1000 pounds (lbs), will lead to 3.88 miles less travelled per gallon. Similarly, a car with one additional horse power means that we will travel 0.03177  fewer miles per gallon of gasoline, *all else (i.e. $wt$) equal*.
 ```
 
 
 ## Multicolinearity {#multicol}
 
-One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wtplus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wtplus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
+One important requirement for multiple regression is that the data be **not linearly dependent**: Each variable should provide at least some new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable `wtplus` defined as `wt + 1`, and we included this new variable together with `wt` in our regression. In this case, `wtplus` provides no new information. It's enough to know $wt$, and add $1$ to it. In this sense, `wt_plus` is a redundant variable and should not be included in the model. Notice that this holds only for *linearly* dependent variables - *nonlinear* transformations (like for example $wt^2$) are exempt from this rule. Here is why:
 
 \begin{align}
 y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
@@ -101,101 +102,98 @@ y &= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
 This shows that we cannot *identify* the regression coefficients in case of linearly dependent data. Variation in the variable `wt` identifies a different coefficient, say $\gamma = b_1 + b_2$, from what we actually wanted: separate estimates for $b_1,b_2$.
 
 ```{block, type="note"}
-All variables in a multiple regression should be *linearly independent*, or *not* colinear. This is known as the **rank condition**. In particular, this condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can get from them, and our estimates becomes *less precise*.
+We cannot have variables which are *linearly dependent*, or *perfectly colinear*. This is known as the **rank condition**. In particular, the condition dictates that we need at least $N \geq K+1$, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can extract from them, and our estimates becomes *less precise*.
 ```
 
 
 
+## Log Wage Equation
 
+Let's go back to our previous example of the relationship between log wages and education. How does this relationship change if we also think that experience in the labor market has an impact, next to years of education? Here is a picture:
 
+```{r plane3D-lwage,echo=FALSE,fig.align='center',fig.cap='Log wages vs education and experience in 3D.',warning=FALSE,message=FALSE}
+data("wage1", package = "wooldridge")
+# linear fit
+log_wage <- lm(lwage ~ educ + exper,data=wage1)
+ 
+to_plot_x <- range(wage1$educ)
+to_plot_y <- range(wage1$exper)
 
-## California Test Scores 2
+df <- data.frame(educ = rep(to_plot_x, 2),
+           exper = rep(to_plot_y, each = 2))
+df["pred"] <- predict.lm(log_wage, df, se.fit = F)
 
-Let us extend our example of student test scores from chapter \@ref(linreg) by adding families' average income to our previous model:
+surf <- acast(df, educ ~ exper)
 
-$$
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
-$$
-
-We can incoporate this new variable to our model by simply adding it to our `formula`:
-
-```{r lmfit-multiv,warning=FALSE,message=FALSE}
-library("Ecdat") # reload the data
-fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
-summary(fit_multivariate)
-```
-
-Although it is quite cumbersome and not typical to visualize multivariate regressions, we can still do this with 2 explanatory variables using a *regression (2-dimensional) plane* [Interactive!].
-
-```{r 3D-Plotly, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income.',fig.align='center'}
-library(plotly)
-library(reshape2)
-
-to_plot_x <- c(min(Caschool$str), max(Caschool$str))
-to_plot_y <- c(min(Caschool$avginc), max(Caschool$avginc))
-
-df <- data.frame(str = rep(to_plot_x, 2),
-           avginc = rep(to_plot_y, each = 2))
-df["pred"] <- predict.lm(fit_multivariate, df, se.fit = F)
-
-surf <- acast(df, avginc ~ str)
 color <- rep(0, length(df))
-
-Caschool %>%
+wage1 %>%
   plot_ly(colors = "grey") %>%
-  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
-  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane", opacity = .75, cauto = F, surfacecolor = color) %>%
+  add_markers(x = ~educ, y = ~exper, z = ~lwage,name = "data",opacity = .8, marker=list(color = 'red', size = 5, hoverinfo="skip", opacity = 0.8)) %>%
+  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "wages 3D", opacity = .75, cauto = F, surfacecolor = color) %>%
   hide_colorbar()
 ```
 
-While you explore this plot, ask yourself the following question: if you could only choose one of the two explanatory variables in our model (that is, either $str$ or $avginc$) to predict the value of a given school's average test score, which one would you choose? Why? Discuss this with your classmates.
+Let's add even more variables! For instance, what's the impact of experience in the labor market, and time spent with the current employer? Let's first look at how those variables co-vary with each other:
 
+```{r corrplot}
+cmat = round(cor(subset(wage1,select = c(lwage,educ,exper,tenure))),2) # correlation matrix
+corrplot::corrplot(cmat,type = "upper",method = "ellipse")
+```
 
-## Interactions {#mreg-interactions}
+The way to read the so-called *correlation plot* in figure \@ref(fig:corrplot) is straightforward: each row illustrates the correlation of a certain variable with the other variables. In this example both the shape of the ellipse in each cell as well as their color coding tell us how strongly two variables correlate. Let us put this into a regression model now:
 
-Interactions allow that the *ceteris paribus* effect of a certain regressor, `str` say, depends also on the value of yet another regressor, `avginc` for example. In other words, do test scores depend differentially on the student teacher ratio, depending on wether the average income in an ares is high or low? Notice that `str` and `avginc` in isolation cannot answer that question (because the value of other variables is assumed *fixed*!). To measure such an effect, we would reformulate our model like this:
+```{r,results = 'asis'}
+educ_only <- lm(lwage ~ educ                 , data = wage1)
+educ_exper <- lm(lwage ~ educ + exper        , data = wage1)
+log_wages <- lm(lwage ~ educ + exper + tenure, data = wage1)
+stargazer::stargazer(educ_only, educ_exper, log_wages,type = "html")
+```
 
+Column (1) refers to model \@ref(eq:log-wage) from the previous chapter, where we only had `educ` as a regressor: we obtain an $R^2$ of 0.186. Column (2) is the model that generated the plane in figure \@ref(fig:plane3D-lwage) above. (3) is the model with three regressors. You can see that by adding more regressors, the quality of our fit increases, as more of the variation in $y$ is now accounted for by our model. You can also see that the values of our estimated coefficients keeps changing as we move from left to right across the columns. Given the correlation structure shown in figure \@ref(fig:corrplot), it is only natural that this is happening: We see that `educ` and `exper` are negatively correlated, for example. So, if we *omit* `exper` from the model in column (1), `educ` will reflect part of this correlation with `exper` by a lower estimated value. By directly controlling for `exper` in column (2) we get an estimate of the effect of `educ` *net of* whatever effect `exper` has in isolation on the outcome variable. We will come back to this point later on.
 
-\begin{equation}
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + b_3 (\text{str}_i \times  \text{avginc}_i)+ e_i (\#eq:caschool-inter)
-\end{equation}
+## How To Make Predictions {#make-preds}
 
+So suppose we have a model like 
 
-The inclusion of the *product* of `str` and `avginc` amounts to having different slopes with respect to `str` for different values of  `avginc` (and vice versa). This is easy to see if we take the partial derivative of \@ref(eq:caschool-inter) with respect to `str`:
+$$\text{lwage} = b_0 + b_{1}(\text{educ}) + b_{2}(\text{exper}) + b_{3}(\text{tenure}) + \epsilon$$
+How could we use this to make a *prediction* of log wages, given some new data? Remember that the OLS procedure gives us *estimates* for the values $b_0,b_1, b_2,b_3$. With those in hand, it is straightforward to make a prediction about the *conditional mean* of the outcome - just plug in the desired numbers for `educ,exper` and `tenure`. Suppose you want to know what the mean of `lwage` is conditional on `educ = 10,exper=4` and `tenure = 2`. You'd do
 
-\begin{equation}
-\frac{\partial \text{testscr}_i}{\partial \text{str}_i} = b_1 + b_3 \text{avginc}_i (\#eq:caschool-inter-deriv)
-\end{equation}
+\begin{align}
+E[\text{lwage}|\text{educ}=10,\text{exper}=4,\text{tenure}=2] &= b_0 + b_1  10 + b_2 4 + b_3  2\\
+&= `r round(coef(log_wages) %*% c(1,10,4,2),2)`.
+\end{align}
 
+I computed the last line directly with
 
->You should go back to equation \@ref(eq:abline2d-deriv) to remind yourself of what a *partial effect* was, and how exactly the present \@ref(eq:caschool-inter-deriv) differs from what we saw there.
+```{r,eval=FALSE}
+x = c(1,10,4,2)  # 1 for intercept
+pred = coef(log_wages) %*% x
+```
 
-
-Back in our `R` session, we can run the full interactions model like this:
+but `R` has a more complete prediction interface, using the function `predict`. For starters, you can predict the model on all data points which were contained in the dataset we used for estimation, i.e. `wage1` in our case:
 
 ```{r}
-lm_inter = lm(formula = testscr ~ str + avginc + str*avginc, data = Caschool)
-# note that this would produce the same result:
-# lm(formula = testscr ~ str*avginc, data = Caschool)
-# R expands str*avginc for you in main effects + interactions
-summary(lm_inter)
+head(predict(log_wages))  # first 6 observations of wage1 as predicted by our model
 ```
 
-We see here that the regression now estimates and additional coefficient $b_3$ for us. We observe also that the estimate of $b_2$ changes signs and becomes negative, while the interaction effect $b_3$ is positive. This means that an increase in `str` reduces average student scores (more students per teacher make it harder to teach effectively); that an increase in average district income in isolation actually reduces scores; and that the interaction of both increases scores (more students per teacher are actually a good thing for student performance in richer areas).
+Often you want to add that prediction *to* the original dataset:
 
-Looking at our visualization may help understand this result better. Figure \@ref(fig:3D-Plotly-inter) shows a plane that is no longer actually a *plane*. It shows a curved surface. You can see that the surface became more flexible in that we could kind of *bend* it more. Which model do you like better to explain this data? Discuss with your neighbor and give some reasons for your choice (other than "\@ref(fig:3D-Plotly-inter) looks nicer" ;-) ). In particular, comparing both visualizations, can you explain why we observe this strange inversion of coefficient signs?
-
-```{r 3D-Plotly-inter, echo = FALSE, warning=F, message = F,fig.cap='Californa Test Scores vs student/teach ratio and avg income plus interaction term'}
-
-df["pred"] <- predict.lm(lm_inter, df, se.fit = F)
-surf <- acast(df, avginc ~ str)
-
-color <- rep(0, length(df))
-
-Caschool %>%
-  plot_ly(colors = "blue") %>%
-  add_markers(x = ~str, y = ~avginc, z = ~testscr, name = "Data", hoverinfo = "skip", opacity = .6, marker=list(color = 'red', size = 4)) %>%
-  add_surface(x = to_plot_x, y = to_plot_y, z = ~surf, inherit = F, name = "Best Fit Plane with Interaction", opacity = .75, cauto = F, surfacecolor = color) %>%
-  hide_colorbar()
-
+```{r}
+wage_prediction = cbind(wage1, prediction = predict(log_wages))
+head(wage_prediction[, c("lwage","educ","exper","tenure","prediction")])
 ```
+
+You'll remember that we called the distance in prediction and observed outcome our *residual* $e$. Well here this is just `lwage - prediction`. Indeed, $e$ is such an important quantity that `R` has a convenient method to compute $y - \hat{y}$ from an `lm` object directly - the method `resid`. Let's add another column to `wage_prediction`: 
+
+```{r}
+wage_prediction = cbind(wage_prediction, residual = resid(log_wages))
+head(wage_prediction[, c("lwage","educ","exper","tenure","prediction","residual")])
+```
+
+Using the data in `wage_prediction`, you should now check for yourself what we already know about $\hat{y}$ and $e$ from section \@ref(pred-resids): 
+
+1. What is the average of the vector `residual`?
+1. What is the average of `prediction`?
+1. How does this compare to the average of the outcome `lwage`?
+1. What is the correlation between `prediction` and `residual`?
+

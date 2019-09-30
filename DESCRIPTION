@@ -27,7 +27,14 @@ Imports: bookdown,
   AER,
   magick,
   pdftools,
-  Hmisc
+  Hmisc,
+  magrittr,
+  dplyr,
+  corrplot,
+  cowplot,
+  wooldridge,
+  stargazer
+Remotes: datalorax/equatiomatic
 Suggests:
   shinytest,
   testthat
