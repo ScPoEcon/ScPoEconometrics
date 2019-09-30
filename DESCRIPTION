@@ -31,7 +31,8 @@ Imports: bookdown,
   magrittr,
   dplyr,
   corrplot,
-  cowplot
+  cowplot,
+  wooldridge
 Remotes: datalorax/equatiomatic
 Suggests:
   shinytest,
