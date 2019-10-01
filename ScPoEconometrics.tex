@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-09-30}
+    \date{2019-10-01}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4882,71 +4882,38 @@ What would be the effect of using \(\tilde{y} = wage \times 1575\)
 instead of \(y = wage\) as outcome variable on our regression
 coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
-Effect of Scaling on Coefficients
+\% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
+01, 2019 - 08:05:27 AM
 
-Dependent variable:
-
-wage
-
-annual\_wage
-
-(1)
-
-(2)
-
-educ
-
-0.541***
-
-852.641***
-
-(0.053)
-
-(83.866)
-
-Constant
-
--0.905
-
--1,425.141
-
-(0.685)
-
-(1,078.824)
-
-Observations
-
-526
-
-526
-
-R2
-
-0.165
-
-0.165
-
-Adjusted R2
-
-0.163
-
-0.163
-
-Residual Std. Error (df = 524)
-
-3.378
-
-5,320.963
-
-F Statistic (df = 1; 524)
-
-103.363***
-
-103.363***
-
-Note:
-
-\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+\begin{table}[!htbp] \centering 
+  \caption{Effect of Scaling on Coefficients} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & wage & annual\_wage \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ educ & 0.541$^{***}$ & 852.641$^{***}$ \\ 
+  & (0.053) & (83.866) \\ 
+  & & \\ 
+ Constant & $-$0.905 & $-$1,425.141 \\ 
+  & (0.685) & (1,078.824) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 526 & 526 \\ 
+R$^{2}$ & 0.165 & 0.165 \\ 
+Adjusted R$^{2}$ & 0.163 & 0.163 \\ 
+Residual Std. Error (df = 524) & 3.378 & 5,320.963 \\ 
+F Statistic (df = 1; 524) & 103.363$^{***}$ & 103.363$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
 
 Let's call the coefficients in the column labelled (1) as \(b_0\) and
 \(b_1\), and let's call the ones in column (2) \(b_0^*\) and \(b_1^*\).
@@ -5072,71 +5039,38 @@ behaves differently from our \emph{scaling by a constant number} case
 above because it is a \emph{nonlinear} function. Let's compare the
 output between both models:
 
-Log Transformed Equation
+\% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
+01, 2019 - 08:05:27 AM
 
-Dependent variable:
-
-wage
-
-log(wage)
-
-(1)
-
-(2)
-
-educ
-
-0.541***
-
-0.083***
-
-(0.053)
-
-(0.008)
-
-Constant
-
--0.905
-
-0.584***
-
-(0.685)
-
-(0.097)
-
-Observations
-
-526
-
-526
-
-R2
-
-0.165
-
-0.186
-
-Adjusted R2
-
-0.163
-
-0.184
-
-Residual Std. Error (df = 524)
-
-3.378
-
-0.480
-
-F Statistic (df = 1; 524)
-
-103.363***
-
-119.582***
-
-Note:
-
-\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+\begin{table}[!htbp] \centering 
+  \caption{Log Transformed Equation} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & wage & log(wage) \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ educ & 0.541$^{***}$ & 0.083$^{***}$ \\ 
+  & (0.053) & (0.008) \\ 
+  & & \\ 
+ Constant & $-$0.905 & 0.584$^{***}$ \\ 
+  & (0.685) & (0.097) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 526 & 526 \\ 
+R$^{2}$ & 0.165 & 0.186 \\ 
+Adjusted R$^{2}$ & 0.163 & 0.184 \\ 
+Residual Std. Error (df = 524) & 3.378 & 0.480 \\ 
+F Statistic (df = 1; 524) & 103.363$^{***}$ & 119.582$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
 
 The interpretation of the transformed model in column (2) is now the
 following:
@@ -5457,107 +5391,48 @@ this into a regression model now:
 \NormalTok{educ_only <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ                 , }\DataTypeTok{data =}\NormalTok{ wage1)}
 \NormalTok{educ_exper <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{exper        , }\DataTypeTok{data =}\NormalTok{ wage1)}
 \NormalTok{log_wages <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{exper }\OperatorTok{+}\StringTok{ }\NormalTok{tenure, }\DataTypeTok{data =}\NormalTok{ wage1)}
-\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(educ_only, educ_exper, log_wages,}\DataTypeTok{type =} \StringTok{"html"}\NormalTok{)}
+\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(educ_only, educ_exper, log_wages,}\DataTypeTok{type =} \ControlFlowTok{if}\NormalTok{ (knitr}\OperatorTok{:::}\KeywordTok{is_latex_output}\NormalTok{()) }\StringTok{"latex"} \ControlFlowTok{else} \StringTok{"html"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Dependent variable:
+\% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
+01, 2019 - 08:05:31 AM
 
-lwage
-
-(1)
-
-(2)
-
-(3)
-
-educ
-
-0.083***
-
-0.098***
-
-0.092***
-
-(0.008)
-
-(0.008)
-
-(0.007)
-
-exper
-
-0.010***
-
-0.004**
-
-(0.002)
-
-(0.002)
-
-tenure
-
-0.022***
-
-(0.003)
-
-Constant
-
-0.584***
-
-0.217**
-
-0.284***
-
-(0.097)
-
-(0.109)
-
-(0.104)
-
-Observations
-
-526
-
-526
-
-526
-
-R2
-
-0.186
-
-0.249
-
-0.316
-
-Adjusted R2
-
-0.184
-
-0.246
-
-0.312
-
-Residual Std. Error
-
-0.480 (df = 524)
-
-0.461 (df = 523)
-
-0.441 (df = 522)
-
-F Statistic
-
-119.582*** (df = 1; 524)
-
-86.862*** (df = 2; 523)
-
-80.391*** (df = 3; 522)
-
-Note:
-
-\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{lwage} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ educ & 0.083$^{***}$ & 0.098$^{***}$ & 0.092$^{***}$ \\ 
+  & (0.008) & (0.008) & (0.007) \\ 
+  & & & \\ 
+ exper &  & 0.010$^{***}$ & 0.004$^{**}$ \\ 
+  &  & (0.002) & (0.002) \\ 
+  & & & \\ 
+ tenure &  &  & 0.022$^{***}$ \\ 
+  &  &  & (0.003) \\ 
+  & & & \\ 
+ Constant & 0.584$^{***}$ & 0.217$^{**}$ & 0.284$^{***}$ \\ 
+  & (0.097) & (0.109) & (0.104) \\ 
+  & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 526 & 526 & 526 \\ 
+R$^{2}$ & 0.186 & 0.249 & 0.316 \\ 
+Adjusted R$^{2}$ & 0.184 & 0.246 & 0.312 \\ 
+Residual Std. Error & 0.480 (df = 524) & 0.461 (df = 523) & 0.441 (df = 522) \\ 
+F Statistic & 119.582$^{***}$ (df = 1; 524) & 86.862$^{***}$ (df = 2; 523) & 80.391$^{***}$ (df = 3; 522) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
 
 Column (1) refers to model \eqref{eq:log-wage} from the previous chapter,
 where we only had \texttt{educ} as a regressor: we obtain an \(R^2\) of
@@ -5978,77 +5853,45 @@ on their education as well as their sex:
 \NormalTok{wage1}\OperatorTok{$}\NormalTok{female =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(wage1}\OperatorTok{$}\NormalTok{female)  }\CommentTok{# convert 0-1 to factor}
 \NormalTok{lm_w =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ, }\DataTypeTok{data =}\NormalTok{ wage1)}
 \NormalTok{lm_w_sex =}\StringTok{ }\KeywordTok{lm}\NormalTok{(lwage }\OperatorTok{~}\StringTok{ }\NormalTok{educ }\OperatorTok{+}\StringTok{ }\NormalTok{female, }\DataTypeTok{data =}\NormalTok{ wage1)}
-\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(lm_w,lm_w_sex,}\DataTypeTok{type =} \StringTok{"html"}\NormalTok{)}
+\NormalTok{stargazer}\OperatorTok{::}\KeywordTok{stargazer}\NormalTok{(lm_w,lm_w_sex,}\DataTypeTok{type =} \ControlFlowTok{if}\NormalTok{ (knitr}\OperatorTok{:::}\KeywordTok{is_latex_output}\NormalTok{()) }\StringTok{"latex"} \ControlFlowTok{else} \StringTok{"html"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Dependent variable:
+\% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
+01, 2019 - 08:05:31 AM
 
-lwage
-
-(1)
-
-(2)
-
-educ
-
-0.083***
-
-0.077***
-
-(0.008)
-
-(0.007)
-
-female1
-
--0.361***
-
-(0.039)
-
-Constant
-
-0.584***
-
-0.826***
-
-(0.097)
-
-(0.094)
-
-Observations
-
-526
-
-526
-
-R2
-
-0.186
-
-0.300
-
-Adjusted R2
-
-0.184
-
-0.298
-
-Residual Std. Error
-
-0.480 (df = 524)
-
-0.445 (df = 523)
-
-F Statistic
-
-119.582*** (df = 1; 524)
-
-112.189*** (df = 2; 523)
-
-Note:
-
-\emph{p\textless{}0.1; \textbf{p\textless{}0.05; }}p\textless{}0.01
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{lwage} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ educ & 0.083$^{***}$ & 0.077$^{***}$ \\ 
+  & (0.008) & (0.007) \\ 
+  & & \\ 
+ female1 &  & $-$0.361$^{***}$ \\ 
+  &  & (0.039) \\ 
+  & & \\ 
+ Constant & 0.584$^{***}$ & 0.826$^{***}$ \\ 
+  & (0.097) & (0.094) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 526 & 526 \\ 
+R$^{2}$ & 0.186 & 0.300 \\ 
+Adjusted R$^{2}$ & 0.184 & 0.298 \\ 
+Residual Std. Error & 0.480 (df = 524) & 0.445 (df = 523) \\ 
+F Statistic & 119.582$^{***}$ (df = 1; 524) & 112.189$^{***}$ (df = 2; 523) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
 
 We know the results from column (1) very well by now. How does the
 relationship change if we include the \texttt{female} indicator?

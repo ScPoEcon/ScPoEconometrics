@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -336,7 +336,7 @@ sex</code></pre></div>
 wage1<span class="op">$</span>female =<span class="st"> </span><span class="kw">as.factor</span>(wage1<span class="op">$</span>female)  <span class="co"># convert 0-1 to factor</span>
 lm_w =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ, <span class="dt">data =</span> wage1)
 lm_w_sex =<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>female, <span class="dt">data =</span> wage1)
-stargazer<span class="op">::</span><span class="kw">stargazer</span>(lm_w,lm_w_sex,<span class="dt">type =</span> <span class="st">&quot;html&quot;</span>)</code></pre></div>
+stargazer<span class="op">::</span><span class="kw">stargazer</span>(lm_w,lm_w_sex,<span class="dt">type =</span> <span class="cf">if</span> (knitr<span class="op">:::</span><span class="kw">is_latex_output</span>()) <span class="st">&quot;latex&quot;</span> <span class="cf">else</span> <span class="st">&quot;html&quot;</span>)</code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
