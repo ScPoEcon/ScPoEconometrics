@@ -41,17 +41,18 @@ This case study is based on an [article](https://fivethirtyeight.com/features/sh
             sep = ",")
 ```
 
-If you have `packageVersion("ScPoEconometrics") > 0.2.3`, you have the dataset installed and can load it like this:
+## The Questions!
+
+This next code chunk loads the data for you:
+
 ```{r include=TRUE}
 # load data ScPoEconometrics package
-data=read.csv(system.file(package = "ScPoEconometrics", "datasets", "airline-safety.csv"))
-```
+if (packageVersion("ScPoEconometrics") > "0.2.3"){
+    data=read.csv(system.file(package = "ScPoEconometrics", "datasets", "airline-safety.csv"))
+} else {
+    data=read.csv(file = "https://raw.githubusercontent.com/ScPoEcon/ScPoEconometrics/master/inst/datasets/airline-safety.csv")
+}
 
-If not, you can get it from github via
-
-```{r , eval = FALSE, include = TRUE}
-# load data from our github repo
-data=read.csv(file = "https://raw.githubusercontent.com/ScPoEcon/ScPoEconometrics/master/inst/datasets/airline-safety.csv")
 ```
 
 ## Exploring the data
@@ -111,7 +112,7 @@ The dataset contains the safety records of major commercial airlines over the pa
       arrange(desc(value)) %>%
       head(3)
     ```
-1. Do the same taking into account the "avail_seat_km_per_week" variable? Was it predictable? 
+1. Do the same taking into account the "avail_seat_km_per_week" variable, i.e. analyse "fatalities per `avail_seat_km_per_week`"? Do you obtain the same ranking of airlines?
     ```{r}
     data %>% 
       filter(type == "fatalities" & period == "2000_2014") %>%
