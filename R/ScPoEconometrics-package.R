@@ -29,13 +29,13 @@
 #' @import magick
 #' @import pdftools
 #' @import Hmisc
-#' @import equatiomatic
 #' @import wooldridge
 #' @import dplyr
 #' @import corrplot
 #' @import cowplot
 #' @import stargazer
 #' @import equatiomatic
+#' @import quantreg
 #' @importFrom stats rnorm runif
 #' @importFrom magrittr %>%
 #' @keywords internal
