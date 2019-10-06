@@ -1,6 +1,14 @@
 
 # Standard Errors {#std-errors}
 
+## Sampling
+
+* what is it
+* why is it needed
+* how does it influence regression
+
+
+
 In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $b_0$, $b_1$ and $b_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
 
 ```{block,type="note"}
