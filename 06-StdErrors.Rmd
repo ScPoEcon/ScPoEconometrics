@@ -1,23 +1,7 @@
 
 # Standard Errors {#std-errors}
 
-## Sampling
-
-* what is it
-* why is it needed
-* how does it influence regression
-
-
-
-In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $b_0$, $b_1$ and $b_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. 
-
-```{block,type="note"}
-<center>
-How *confident* should we be about the estimated values $b$?
-</center>
-```
-<br>
-We have already seen plots like \@ref(fig:confint) below. We have called the shaded area around the regression line as the *confidence interval* or *confidence band*. Now it's time to define properly what this shaded area tells us.
+In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the `Std. Error` column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:
 
 ```{r confint,fig.align="center",message=FALSE,warning=FALSE,echo=FALSE,fig.cap="Confidence bands around a regression line."}
 library(ggplot2)
@@ -29,10 +13,14 @@ p <- p + scale_y_continuous(name = "log hourly wage") +
          scale_x_continuous(name = "years of education")
 p + theme_bw() + ggtitle("Log Wages vs Education")
 ```
-  
-The shaded area shows us the region within which the **true** red line will lie with 95% probability. The fact that there is an unknown true line (i.e. a *true* slope coefficient $\beta_1$) that we wish to uncover from a sample of data should remind you immediately of our first tutorial. There, we wanted to estimate the true population mean from a sample of data, and we saw that as the sample size $N$ increased, our estimate got better and better - fundamentally, this is the same idea here.
 
-Before delving into further details about this confidence band, we have to make quick detour to statistical sampling and hypothesis tests. We will first give the classical theory, so you know where to look up the formula and how to compute the objects yourself, if needed. Then, we will do a simulation study and make sure all of this is easy to understand. Ready? Go!
+In order to fully understand this, we need to go back and make sure we have a good grasp of *sampling*. Let's do this first.
+
+## Sampling
+
+Let's start this chapter with a discussion about [sampling as given here](https://moderndive.com/7-sampling.html).
+
+
 
 
 ## Inference in Theory
@@ -408,7 +396,17 @@ theme_bw()
 p + facet_wrap(~.draw)
 ```
  
+ 
+## Uncertainty in Regression Estimates
 
+In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in `R` by using the `lm` function as well. It is now time to introduce the notion that given that $b_0$, $b_1$ and $b_2$ are *estimates* of some unkown *population parameters*, there is some degree of **uncertainty** about their values. An other way to say this is that we want some indication about the *precision* of those estimates. The underlying issue that the data we have at hand are usually *samples* from a larger population.
+
+```{block,type="note"}
+<center>
+How *confident* should we be about the estimated values $b$?
+</center>
+```
+<br>
 
 ## What is *true*? What are Statistical Models?
 
