@@ -36,6 +36,7 @@
 #' @import stargazer
 #' @import equatiomatic
 #' @import quantreg
+#' @import ungeviz
 #' @importFrom stats rnorm runif
 #' @importFrom magrittr %>%
 #' @keywords internal
