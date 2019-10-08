@@ -91,13 +91,23 @@ pasta_samples <- data.frame(group = 1:11, replicate = 1:11, prop_green = c(0.3,0
 pasta_samples
 ```
 
-This produces an associated histogram like
+This produces an associated histogram which looks very much like the one we draws onto the board:
 
 ```{r pasta-hist,echo = FALSE}
 hist(pasta_samples$prop_green,breaks = c(0.125,0.175,0.225,0.275,0.325),main = "Histogram of 11 Pasta Samples", xlab = "Proportion of Green Fusilli")
 ```
 
 ### Recap
+
+Let's recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure \@ref(fig:pasta1) are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a *random ample* from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.
+
+After replacing the Fusilli from the first sample in the jar, we asked ourselves if, upon drawing a *new* sample of 20 Fusilli, we should expect to see the same outcome - and we concluded: maybe, but maybe not. In short, we discovered some random variation from sample to sample. We called this **sampling variation**.
+
+The purpose of this little activity was three-fold:
+
+1. To understand that random samples differ and that there is sampling variation.
+1. To understand that bigger samples will yield smaller sampling variation.
+1. To illustrate that the sampling distribution of *any* statistic (i.e. not only the sample proportion as in our case) computed from a random sample converges to a normal distribution as the sample size increases.
 
 ## Inference in Theory
 

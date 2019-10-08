@@ -36,7 +36,9 @@ Imports:
     wooldridge,
     stargazer,
     quantreg,
-    infer
+    infer,
+    equatiomatic,
+    unvegiz
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,
