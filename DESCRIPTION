@@ -38,7 +38,7 @@ Imports:
     quantreg,
     infer,
     equatiomatic,
-    unvegiz
+    ungeviz
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,
