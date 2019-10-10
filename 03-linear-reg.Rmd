@@ -700,7 +700,7 @@ Specification | Outcome Var | Regressor | Interpretation of $b_1$ | Comment
 Level-level | y | x | $\Delta y = b_1 \Delta x$ | Standard
 Level-log | y | $\log(x)$ | $\Delta y = b_1 \Delta x$ | less frequent
 Log-level | $\log(y)$  | x | $\% \Delta y = (100 b_1) \Delta$ x | Semi-elasticity
-Log-Log  | $\log(y)$  | $\log(x)$ | $\% \Delta y = \% \Delta$ x | Elasticity
+Log-Log  | $\log(y)$  | $\log(x)$ | $\% \Delta y = \% \Delta$ b_1 x | Elasticity
 
 You may remember from your introductory micro course what the definition of the *elasticity* of $y$ with respect to $x$ is: This number tells us by how many percent $y$ will change, if we change $x$ by one percent. Let's look at another example from the `wooldridge` package of datasets, this time concerning CEO salaries and their relationship with company sales.
 

@@ -110,6 +110,10 @@ gitbook <- function(){
   bookdown::render_book('index.Rmd', 'bookdown::gitbook')
 }
 
+pdfbook <- function(){
+  bookdown::render_book('index.Rmd', 'bookdown::pdf_book')
+}
+
 getprompt <- function(){
   return("#OUT>")
 }
