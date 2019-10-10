@@ -12,29 +12,34 @@ Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Description: The is the R package for the 2nd year UG course in econometrics at SciencesPo.
 URL: https://github.com/ScPoEcon/ScPoEconometrics
-Imports: bookdown,
-  shiny (>= 1.2.0),
-  learnr,
-  mvtnorm,
-  tidyverse,
-  reshape2,
-  datasauRus,
-  plotly,
-  webshot,
-  Ecdat,
-  EnvStats,
-  rmarkdown (>= 1.11),
-  AER,
-  magick,
-  pdftools,
-  Hmisc,
-  magrittr,
-  dplyr,
-  corrplot,
-  cowplot,
-  wooldridge,
-  stargazer
-Remotes: datalorax/equatiomatic
+Imports: 
+    bookdown,
+    shiny (>= 1.2.0),
+    learnr,
+    mvtnorm,
+    tidyverse,
+    reshape2,
+    datasauRus,
+    plotly,
+    webshot,
+    Ecdat,
+    EnvStats,
+    rmarkdown (>= 1.11),
+    AER,
+    magick,
+    pdftools,
+    Hmisc,
+    magrittr,
+    dplyr,
+    corrplot,
+    cowplot,
+    wooldridge,
+    stargazer,
+    quantreg,
+    infer,
+    equatiomatic,
+    ungeviz
+Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,
   testthat
