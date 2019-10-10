@@ -6,8 +6,10 @@ os:
 before_install:
 #  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; sudo add-apt-repository -y ppa:opencpu/poppler; sudo apt-get update; sudo sudo apt-get install -y libpoppler-cpp-dev ;fi
-
-r_github_packages: datalorax/equatiomatic
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
+    export PATH="/usr/local/opt/llvm/bin:$PATH" &&
+    export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
+    export CFLAGS="-I/usr/local/opt/llvm/include"; fi
 
 cache:
   packages: yes
