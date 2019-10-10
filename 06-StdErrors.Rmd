@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # Standard Errors {#std-errors}
 
@@ -27,20 +32,20 @@ What is the proportion of **green** Fusilli in a pack of Tricolore Fusilli?
 
 Well, it's time to find out.
 
-```{r pasta1, fig.cap="A glass jar filled with Fusilli pasta in three different colors.",echo = FALSE, out.width = "700px"}
+```{r pasta1, fig.cap="A glass jar filled with Fusilli pasta in three different colors.",echo = FALSE,fig.width = 8, out.width = "90%"}
 knitr::include_graphics("images/pasta1.JPG")
 ```
 
+Let's call the fusilly in this jar our *study population*, i.e. the set of units about which we want to learn something. There are several approaches to address the question of how big a proportion in the population the green Fusilli make up. One obvious solution is to enumerate all Fusilli according to their color, and compute their proportion in the entire population. It works perfectly well as a solution, but is a long and arduous process, see figures \@ref(fig:pasta2) and \@ref(fig:pasta3). 
 
-Let's call the fusilly in this jar our *study population*, i.e. the set of units about which we want to learn something. There are several approaches to address the question of how big a proportion in the population the green Fusilli make up. One obvious solution is to enumerate all Fusilli according to their color, and compute their proportion in the entire population. It works perfectly well as a solution, but is a long and arduous process, see figures \@ref(fig:pasta2) and  \@ref(fig:pasta3). 
-
-```{r pasta2, fig.cap="Manually separating Fusilli by their color is very costly in terms of effort and cost.",echo = FALSE,fig.width = 8, out.width = "700px"}
+```{r pasta2, fig.cap="Manually separating Fusilli by their color is very costly in terms of effort and cost.",echo = FALSE,fig.width = 8, out.width = "90%"}
 knitr::include_graphics("images/pasta2.JPG")
 ```
 
+
 Additionally, you may draw worried looks from the people around you, while you are doing it. Maybe this is not the right way to approach this task?^[Regardless of the worried onlookers, I did what I had to do and I carried on to count the green pile. I know exactly how many greens are in there now! I then computed the weight of 20 Fusilli (5g), and backed out the number of Fusilli in the other piles. I will declare those numbers as the *true numbers*. (Sceptics are free to recount.)]
 
-```{r pasta3, fig.cap="Heaps of Fusilli pasta ready to be counted.",echo = FALSE, out.width = "700px"}
+```{r pasta3, fig.cap="Heaps of Fusilli pasta ready to be counted.",echo = FALSE, out.width = "90%"}
 knitr::include_graphics("images/pasta3.JPG")
 ```
 
@@ -56,7 +61,7 @@ White   |  8    |     0.4
 
 So far, so good. We have our first *estimate of the population proportion of green Fusilli in the overall population*: 0.25. Notice that taking a sample of $N=20$ was *much* quicker and *much less painful* than performing the full count (i.e. the *census*) of Fusilli performed above. 
 
-```{r pasta5, fig.cap="Taking one sample of 20 Fusilli from the jar.",echo = FALSE, out.width = "700px"}
+```{r pasta5, fig.cap="Taking one sample of 20 Fusilli from the jar.",echo = FALSE, out.width = "90%"}
 knitr::include_graphics("images/pasta5.JPG")
 ```
 
@@ -73,7 +78,7 @@ Let's see how this story evolved as we started taking more samples at a time.
 
 We formed teams of two students in class who would each in turn take samples from the jar (the population) of size $N=20$, as before. Each team computed the proportion of green Fusilli they had in their sample, and we wrote this data down in a table on the board. Then, we drew a histogram which showed how many samples had fallen into which bins. 
 
-```{r pasta6, fig.cap="Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.",echo = FALSE, out.width = "700px"}
+```{r pasta6, fig.cap="Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.",echo = FALSE, out.width = "90%"}
 knitr::include_graphics("images/pasta6.JPG")
 ```
 
@@ -99,7 +104,7 @@ hist(pasta_samples$prop_green,breaks = c(0.125,0.175,0.225,0.275,0.325),main = "
 
 ### Recap
 
-Let's recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure \@ref(fig:pasta1) are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a *random ample* from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.
+Let's recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure \@ref(fig:pasta1) are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a *random sample* from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.
 
 After replacing the Fusilli from the first sample in the jar, we asked ourselves if, upon drawing a *new* sample of 20 Fusilli, we should expect to see the same outcome - and we concluded: maybe, but maybe not. In short, we discovered some random variation from sample to sample. We called this **sampling variation**.
 
@@ -108,6 +113,23 @@ The purpose of this little activity was three-fold:
 1. To understand that random samples differ and that there is sampling variation.
 1. To understand that bigger samples will yield smaller sampling variation.
 1. To illustrate that the sampling distribution of *any* statistic (i.e. not only the sample proportion as in our case) computed from a random sample converges to a normal distribution as the sample size increases.
+
+```{block type = "note"}
+The value of this exercise consisted in making **you** perform the sampling activity yourself. We will now hand over to the brilliant **moderndive** package, which will further develop this chapter. 
+```
+
+
+## Handover to `Moderndive`
+
+```{r handover,out.width="90%", fig.cap="The Moderndive package used red and white balls instead of fusilli pasta.",echo = FALSE}
+knitr::include_graphics("images/transition.png")
+```
+
+The sampling activity in `moderndive` was performed with red and white balls instead of green fusilli pasta. The rest is identical. We will now read sections [7.2](https://moderndive.com/7-sampling.html#sampling-simulation) and [7.3](https://moderndive.com/7-sampling.html#sampling-framework) in their book, and return to this page later.
+
+
+
+
 
 ## Inference in Theory
 
@@ -336,151 +358,7 @@ We define the p-value as the sum of rejection areas for a given test statistic $
 \alpha^* = \Pr(t > |T^*|) 
 \end{align}
 
-## Inference via Bootstrap
 
-We will now take the ideas from the previous section and illustrate them using one single powerful idea. Instead of relying on some *population distribution* from which our samples of data have been drawn, we can regard the sampling distribution itself as the population distribution, and take samples *from* it. Our discussion in the previous section *relied* on a tight connection between sampling and population distribution - how else could we have inferred anything about the population from looking at our sample? We will take this idea to its extreme now and look *only* at the sampling distribution. This idea is a *resampling* technique, commonly referred to as the *Bootstrap*.
-
-```{block type = "warning"}
-**Bootstrapping** is a test or metric that relies on *resampling with replacement*. It allows estimation of the sampling distribution of almost any statistic using random sampling methods.
-```
-
-### How does the Bootstrap work?
-
-This best to show with an example. Suppose we had stored our `R n` measurements of students heights from figure \@ref(fig:heightdata) above in the variable `height`
-
-```{r}
-head(height)
-```
-
-and let's suppose we want to figure out the distribution of the sample mean $\bar{height}$ here. We will now compute the mean of `height` repeatedly, each time collecting the result in a vector:
-
-```{r}
-r = c()
-R = 200
-for (ib in 1:R){
-  bs = sample(height,size = 10,replace = TRUE)  # bootstrap sample
-  r = c(r,mean(bs))  # add to results vector
-}
-```
-
-How are `r R` means we have computed distributed? Do they all have the same value? Different? How?
-
-```{r hists-x,echo = FALSE,fig.cap="The Distribution of 200 means of `height`, where each version was obtained by resampling from `height` with replacement. The red line indicates the *true* mean from the original sample of `height`."}
-hist(r,main = "Histogram of Means of Height",xlab = "Mean of Height")
-abline(v = mean(height),col = "red",lw=2)
-```
-
-Well, this is very similar to a normal distribution, isn't it?^[In particular, notice that is *not* the same histogram as the one in figure \@ref(fig:heightdata) above. Here we see the *means* of height, whereas above we plotted the raw data values.] You should remember that above, for example in figure \@ref(fig:cifig), we had derived a *theoretical* sampling distribution. Relying on statistical theory, we learned that a certain test statistic will be distributed according to a certain distribution (students's t, or normal, for instance), and that we could use that knowledge to construct confidence intervals and hypothesis tests. Well, what you are seeing in figure \@ref(fig:hists-x) is the bootstrapped counterpart to that theoretical distribution. It's the *simulated proof* that the sampling distribution of the mean is indeed the normal distribution. The advantage here is that we did not need to rely on *any* theory at all, just simple resampling.
-
-### Bootstrapped Confidence Intervals
-
-Let's redo what we did above with the bootstrap. We will use the brilliant [infer](https://github.com/tidymodels/infer) package to have some fun with this.
-
-```{r}
-library(infer)
-hdf = data.frame(height)   # needs a data.frame
-boot <- hdf %>%
-   specify(response = height) %>%   # specify repsonse
-   generate(reps = 1000, type = "bootstrap") %>%   # generate BS samples
-   calculate(stat = "mean")   # calculate statistic of interest
-( percentile_ci <- get_ci(boot) )   # get CI
-```
-
-You note that this is reasonably close to the confidence interval about our sample mean we obtained above, which was $$\left[`r round(xbar - qt(0.975,df=n-1)* s/sqrt(n),3)` , `r round(xbar + qt(0.975,df=n-1)* s/sqrt(n),3)` \right]$$
-
-What is really cool is the visualization:
-
-```{r boot-ci, fig.cap="Simulate Distribution under Null Hypothesis together with a 95% confidence region"}
-visualize(boot) +
-  shade_confidence_interval(endpoints = percentile_ci) + theme_bw()
-```
-
-
-In figure \@ref(fig:boot-ci) we see that each value of a sample mean within the green shaded area would lie within a 95% confidence region about the location of the true *population* mean. 
-
-We can also repeat our hypothesis test from above with the help of the bootstrap. The hypothesis were
-
-\begin{align}
-H_0:& \mu = `r mu`\\
-H_1:& \mu > `r mu`.
-\end{align}
-
-
-```{r H0-height, fig.cap = "One sided hypothesis test with bootstrap."}
-H0_height <- hdf %>%
-   specify(response = height) %>%   # specify repsonse
-   hypothesize(null = "point", mu = 167) %>%  # spell out H0
-   generate(reps = 1000, type = "bootstrap") %>%   # generate BS samples
-   calculate(stat = "mean")   # calculate statistic of interest
-
-visualize(H0_height) +
-  shade_p_value(obs_stat = xbar, direction = "right") + theme_bw()
-```
-
-In figure \@ref(fig:H0-height) we see the simulated distribution under the Null, i.e. the one where indeed $\mu = `r mu`$. The red vertical line is the value of our calculated test statistic, which was `r xbar`. The shaded area shows is the corresponding level of significance that we would have to adopt, would we want to reject H0 on the grounds of having observed `\bar{x} = r xbar`. The size of the red-shaded area is *p-value* of this test. It's easy to compute from this object via
-
-```{r}
-pval = H0_height %>%
-  get_p_value(obs_stat = xbar, direction = "right")
-pval
-```
-
-This means that had we adopt a significance level of $\alpha = `r pval`$, we would (just!) been able to reject the Null hypthesis. Now you remember that $\alpha$ is the probability of a Type 1 Error. So, we would have to be happy to make a wrong decision (i.e. to reject when in fact we should not) in about `r round(pval,2)`% of all cases. So, as above, we probably conclude that this is pretty weak evidence against H0, and we cannot reject it based on this evidence.
-
-It's illustrative to reason about how this picture changes as we change the hypothesized value. Suppose we change our hypothesis to 
-
-\begin{align}
-H_0:& \mu = 164\\
-H_1:& \mu > 164.
-\end{align}
-
-```{r H0-height2, fig.cap = "One sided hypothesis test with bootstrap and different hypothesis."}
-H0_height <- hdf %>%
-   specify(response = height) %>%   # specify repsonse
-   hypothesize(null = "point", mu = 164) %>%  # spell out H0
-   generate(reps = 1000, type = "bootstrap") %>%   # generate BS samples
-   calculate(stat = "mean")   # calculate statistic of interest
-
-visualize(H0_height) +
-  shade_p_value(obs_stat = xbar, direction = "right") + theme_bw()
-```
-
-
-The concept is astonishingly simple. It's best to illustrate with an example from the [ungeviz](https://github.com/wilkelab/ungeviz) package.^[this is based on `help(bootstrapper,package = "ungeviz")`] Here is a dataset:
-
-```{r}
-set.seed(1)
-n = 10  # data points
-x = rnorm(n)
-df <- data.frame(x,y = x + 0.5*rnorm(n))
-plot(y~x,data=df)
-grid()
-```
-
-Now we are going to randomly choose rows of this dataframe, `n` at a time, but with replacement. One way to achieve this is via
-
-```{r, eval = FALSE}
-dplyr::sample_n(df, size = n, replace = TRUE)
-```
-
-which would generate one reshuffled sample of `df`. We repeat this for $R$ draws, and each time we calculate the statistic we are interested in. The mean of `x`, mean of `y`, whatever. Let's compute the OLS slope coefficient instead, just another statistic, and let's just take a small number of draws, $R=9$:
-
-```{r ungeviz-demo,echo = FALSE,fig.height = 8}
-library(ungeviz)
-bs <- bootstrapper(9)
-p <- ggplot(df, aes(x, y)) +
-geom_point(shape = 21, size = 6, fill = "white") +
-geom_text(label = "0", hjust = 0.5, vjust = 0.5, size = 10/.pt) +
-geom_point(data = bs, aes(group = .row), shape = 21, size = 6, fill = "blue") +
-geom_text(
-data = bs, aes(label = .copies, group = .row),
-hjust = 0.5, vjust = 0.5, size = 10/.pt, color = "white"
-) +
-geom_smooth(data = bs, method = "lm", se = FALSE, color = "red") +
-ggtitle("Bootstrap demonstration") +
-theme_bw()
-p + facet_wrap(~.draw)
-```
  
  
 ## Uncertainty in Regression Estimates
