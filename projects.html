@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Projects | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Projects | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-10-01" />
+<meta name="date" content="2019-10-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,7 +48,9 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
@@ -164,18 +167,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
-<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
-<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#back-to-sampling"><i class="fa fa-check"></i><b>6.3</b> Back to Sampling</a></li>
-<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.4</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.5</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#inference-in-theory"><i class="fa fa-check"></i><b>6.4</b> Inference in Theory</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.5</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.6</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.7</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.8" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.8</b> Standard Errors in Theory</a></li>
+<li class="chapter" data-level="6.9" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.9</b> What’s in my model? (And what is not?)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>7</b> Instrumental Variables</a><ul>
 <li class="chapter" data-level="7.1" data-path="IV.html"><a href="IV.html#simultaneity-bias"><i class="fa fa-check"></i><b>7.1</b> Simultaneity Bias</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>8</b> Projects</a><ul>
-<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#opp-atlas"><i class="fa fa-check"></i><b>8.1</b> Opportunity Atlas</a></li>
-<li class="chapter" data-level="8.2" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.2</b> Trade Exercise</a></li>
+<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.1</b> Trade Exercise</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -201,399 +207,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="projects" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Projects</h1>
 <p>This chapter contains several empirical projects.</p>
-<div id="opp-atlas" class="section level2">
-<h2><span class="header-section-number">8.1</span> Opportunity Atlas</h2>
-<p>In this empirical project you will have a close look at what is commonly known as <em>the American Dream</em> - the idea that in a society with few barriers, everybody can achieve upward social mobility and be better off than their parents, if only they work hard enough.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a></p>
-<p>The <a href="https://www.opportunityatlas.org">Opportunity Atlas</a> is a website maintained by the US Census Bureau and fed with data from recent high-quality research on upward social mobility at the Census Tract level. Census Tracts are geographic areas which contain on average less than 4000 residents, and which cover the entire United States. The Atlas has been widely used in recent newspaper reporting, and you should start this project by reading the <a href="https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html">corresponding piece</a> from the New York Times <em>Upshot</em> series.</p>
-<p>This project focuses on developing your descriptive data analysis skills. In particular you will</p>
-<ol style="list-style-type: decimal">
-<li>use mapping tools to visualize geospatial data, and</li>
-<li>compute simple descriptive statistics and report regression results to shed light on the relationship between two or more random variables.</li>
-</ol>
-<p>In order to achieve those goals, you will interact with the Atlas website at <a href="https://www.opportunityatlas.org" class="uri">https://www.opportunityatlas.org</a>, and you will use the raw data behind the website to compute additional statistics.</p>
-<div id="instructions" class="section level3">
-<h3><span class="header-section-number">8.1.1</span> Instructions</h3>
-<ol style="list-style-type: decimal">
-<li>Your submission will be a statistical report addressing the below questions, produced from a single <code>R</code> markdown file (ending in <code>.Rmd</code>). You can create a simple <code>Rmd</code> template in Rstudio by clicking top left on the “new file” symbol, then selecting <em>R Markdown</em>. A quick but effective guide on using Markdown is available <a href="https://rmarkdown.rstudio.com/authoring_basics.html">here</a>.</li>
-<li>Please submit two files: the <code>.Rmd</code> source file (which creates the report), and the report itself, in either HTML or PDF format (Rstudio dropdown menu <em>knit</em>)</li>
-<li>You can do this exercise in teams of up to 3 people: make sure to edit the <code>author</code> field in the <code>Rmd</code> correspondingly.</li>
-<li>Submit by sending a private message with the <code>Rmd</code> as attachment on slack.</li>
-</ol>
-</div>
-<div id="questions" class="section level3">
-<h3><span class="header-section-number">8.1.2</span> Questions</h3>
-<ol style="list-style-type: decimal">
-<li>Referring to the <a href="https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html">NYT article</a>:
-<ol style="list-style-type: decimal">
-<li><p>Why does the Seattle Housing Authority give away vouchers to pay for rent in the area between 100th and 115th Streets, east of Meridian, west of 35th Avenue?</p></li>
-<li><p>The data here shows how easy it is for children of poor parents to escape poverty themselves. In explaining what makes a <em>good</em> neighborhood, how much of the variation we see is actually explained by things like school boundary lines and poverty levels alone? In other words, how <em>important</em> is the school you go to in isoluation of other factors, if you want to escape the low rank of your parents in the income distribution?</p></li>
-<li><p>Some select census tracts have received up to 500 million USD since 1990 in place-based neighborhood improvement policies. Do we know if and to what extent those investments were efficacious?</p></li>
-</ol></li>
-<li><p>Go to <a href="https://www.opportunityatlas.org" class="uri">https://www.opportunityatlas.org</a> and look at the census tracts around where your home is, if you grew up in the United States. If you grew up outside the US, randomly choose one of the State Capitals from <a href="https://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States#State_capitals">this list</a> and select any census tract at random by zooming in. Make sure to immediately post your choice of city in the corresponding slack channel (e.g. “florian-atlas” for my group) to avoid having multiple reports on the same city. Let’s call the chosen census tract your <em>home</em>.</p>
-<ol style="list-style-type: decimal">
-<li><p>Create Figure 1 in your report, which should display the map shown by <a href="https://www.opportunityatlas.org" class="uri">https://www.opportunityatlas.org</a> for the census tracts around your home (you can download that map <em>as an image</em> bottom left). Notice that you can include a figure in an <code>.Rmd</code> like follows. Remember that all <code>R</code>-code chunks in your .Rmd are inside a block delimited by tripple backticks <code>```</code>.</p>
-<div class="sourceCode"><pre class="sourceCode markdown"><code class="sourceCode markdown">```{r your-chunk-label,echo = FALSE, out.width = &quot;75%&quot;}
-<span class="fu"># your-chunk-label: name you give that code chunk (optional)</span>
-<span class="fu"># echo = TRUE/FALSE: display the code in output?</span>
-<span class="fu"># out.width = &quot;75%&quot;: scale image to 75% of page width</span>
-<span class="fu"># all options: https://yihui.name/knitr/options/</span>
-knitr::include_graphics(&quot;path_to_your_grahpic.png&quot;) 
-```</code></pre></div></li>
-<li><p>Your accompanying text should describe what is shown in that map, in particular what data are being visualized. Examine next the patterns for a number of different groups (e.g., lowest income children, high income children) and outcomes (e.g., earnings in adulthood, incarceration rates). Only choose one or two of these to include in your report.</p></li>
-</ol></li>
-<li>To answer the next question, read the <a href="https://opportunityinsights.org/wp-content/uploads/2018/10/atlas_paper.pdf">Opportunity Atlas Manual</a>: What period do the data you are analyzing come from? Are you concerned that the neighborhoods you are studying may have changed for kids now growing up there? What evidence do the authors of the manual provide suggesting that such changes are or are not important? What type of data could you use to test whether your neighborhood has changed in recent years?</li>
-<li><p>Now turn to the <code>atlas.Rds</code> data set, which you can load as shown below. How does average upward mobility, pooling races and genders, for children with parents at the 25th percentile (<code>kfr_pooled_p25</code>) in your home Census tract compare to mean (population-weighted, using <code>count_pooled</code>) upward mobility in your state and in the U.S. overall? Do kids where you grew up have better or worse chances of climbing the income ladder than the average child in America? <em>Hint</em>: The Opportunity Atlas website will give you the tract, county, and state FIPS codes for your home address. For example, searching for “Lynwood Road, Verona, New Jersey” will display Tract 34013021000, Verona, NJ. The first two digits refer to the state code, the next three digits refer to the county code, and the last 6 digits refer to the tract code. In <code>R</code>, listing this observation can be done as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load data</span>
-d =<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="dt">package =</span> <span class="st">&quot;ScPoEconometrics&quot;</span>,<span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;atlas.Rds&quot;</span>))
-<span class="co"># subset data.frame</span>
-<span class="kw">subset</span>(d, <span class="dt">select =</span> kfr_pooled_p25, <span class="dt">subset =</span> state <span class="op">==</span><span class="st"> </span><span class="dv">24</span> <span class="op">&amp;</span><span class="st"> </span>county <span class="op">==</span><span class="st"> </span><span class="dv">003</span> <span class="op">&amp;</span><span class="st"> </span>tract <span class="op">==</span><span class="st"> </span><span class="dv">706500</span>)</code></pre></div></li>
-<li><p>What is the standard deviation of upward mobility (population-weighted) in your home county, and what does this number tell you? Is it larger or smaller than the standard deviation across tracts in your state (i.e. compare your county to all other counties in your state)? Across tracts in the entire country? What do you learn from these comparisons? Notice that you can compute a weighted standard deviation for vector <code>x</code> using weights <code>weight_variable</code> in <code>R</code> like this</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you need the Hmisc package installed. if not:</span>
-<span class="kw">install.packages</span>(<span class="st">&quot;Hmisc&quot;</span>)
-<span class="kw">sqrt</span>(Hmisc<span class="op">::</span><span class="kw">wtd.var</span>(x, <span class="dt">weights =</span> weight_variable))</code></pre></div></li>
-<li><p>Now let’s turn to downward mobility: repeat questions 3. and 4. looking at children who start with parents at the 75th and 100th percentiles. How do the patterns differ?</p></li>
-<li><p>Using a linear regression, estimate the relationship between outcomes of children at the 25th and 75th percentile for the Census tracts in your home county. Generate a scatter plot to visualize this regression. Do areas where children from low-income families do well generally have better outcomes for those from high-income families, too?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># explain lm</span>
-<span class="co"># explain scatter plot</span></code></pre></div></li>
-<li><p>Next, examine whether the patterns you have looked at above are similar by race. If there is not enough racial heterogeneity in the area of interest (i.e., data is missing for most racial groups), then choose a different area to examine.</p></li>
-<li><p>Using the Census tracts in your home county, can you identify any covariates which help explain some of the patterns you have identified above? Some examples of covariates you might examine include housing prices, income inequality, fraction of children with single parents, job density, etc. For 2 or 3 of these, report estimated correlation coefficients along with their 95% confidence intervals.</p></li>
-<li><p>Open question: formulate a hypothesis for why you see the variation in upward mobility for children who grew up in the Census tracts near your home and provide correlational evidence testing that hypothesis. For this question, many covariates have been provided to you in the <code>atlas.Rds</code> file, which are described in subsection <a href="projects.html#proj1-data">8.1.3</a>.</p></li>
-</ol>
-</div>
-<div id="proj1-data" class="section level3">
-<h3><span class="header-section-number">8.1.3</span> Detailed Data Description</h3>
-<p>The data consist of <span class="math inline">\(n = 73,278\)</span> U.S. Census tracts. For more details on the construction of the variables included in this data set, please see <a href="http://www.nber.org/papers/w25147">Chetty, Raj, John Friedman, Nathaniel Hendren, Maggie R. Jones, and Sonya R. Porter. 2018. “The Opportunity Atlas: Mapping the Childhood Roots of Social Mobility.” NBER Working Paper No. 25147</a></p>
-<table style="width:12%;">
-<colgroup>
-<col width="4%" />
-<col width="4%" />
-<col width="4%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable name</th>
-<th>Label</th>
-<th>Obs.</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>tract</td>
-<td>Tract FIPS Code (6-digit) 2010</td>
-<td>73,278</td>
-</tr>
-<tr class="even">
-<td>county</td>
-<td>County FIPS Code (3-digit)</td>
-<td>73,278</td>
-</tr>
-<tr class="odd">
-<td>state</td>
-<td>State FIPS Code (2-digit)</td>
-<td>73,278</td>
-</tr>
-<tr class="even">
-<td>cz</td>
-<td>Commuting Zone Identifier (1990 Definition)</td>
-<td>72,473</td>
-</tr>
-<tr class="odd">
-<td>hhinc_mean2000</td>
-<td>Mean Household Income 2000</td>
-<td>72,302</td>
-</tr>
-<tr class="even">
-<td>mean_commutetime2000</td>
-<td>Average Commute Time of Working Adults in 2000</td>
-<td>72,313</td>
-</tr>
-<tr class="odd">
-<td>frac_coll_plus2010</td>
-<td>Fraction of Residents with a College Degree or More in 2010</td>
-<td>72,993</td>
-</tr>
-<tr class="even">
-<td>foreign_share2010</td>
-<td>Share of Population Born Outside the U.S.</td>
-<td>72,279</td>
-</tr>
-<tr class="odd">
-<td>med_hhinc2016</td>
-<td>Median Household Income in 2016</td>
-<td>72,763</td>
-</tr>
-<tr class="even">
-<td>med_hhinc1990</td>
-<td>Median Household Income in 1999</td>
-<td>72,313</td>
-</tr>
-<tr class="odd">
-<td>popdensity2000</td>
-<td>Population Density (per square mile) in 2000</td>
-<td>72,469</td>
-</tr>
-<tr class="even">
-<td>poor_share2010</td>
-<td>Poverty Rate 2010</td>
-<td>72,933</td>
-</tr>
-<tr class="odd">
-<td>poor_share2000</td>
-<td>Poverty Rate 2000</td>
-<td>72,315</td>
-</tr>
-<tr class="even">
-<td>poor_share1990</td>
-<td>Poverty Rate 1990</td>
-<td>72,323</td>
-</tr>
-<tr class="odd">
-<td>share_black2010</td>
-<td>Share black 2010</td>
-<td>73,111</td>
-</tr>
-<tr class="even">
-<td>share_hisp2010</td>
-<td>Share Hispanic 2010</td>
-<td>73,111</td>
-</tr>
-<tr class="odd">
-<td>share_asian2010</td>
-<td>Share Asian 2010</td>
-<td>71,945</td>
-</tr>
-<tr class="even">
-<td>share_black2000</td>
-<td>Share black 2000</td>
-<td>72,368</td>
-</tr>
-<tr class="odd">
-<td>share_white2000</td>
-<td>Share white 2000</td>
-<td>72,368</td>
-</tr>
-<tr class="even">
-<td>share_hisp2000</td>
-<td>Share Hispanic 2000</td>
-<td>72,368</td>
-</tr>
-<tr class="odd">
-<td>share_asian2000</td>
-<td>Share Asian 2000</td>
-<td>71,050</td>
-</tr>
-<tr class="even">
-<td>gsmn_math_g3_2013</td>
-<td>Average School District Level Standardized Test Scores in 3rd Grade in 2013</td>
-<td>72,090</td>
-</tr>
-<tr class="odd">
-<td>rent_twobed2015</td>
-<td>Average Rent for Two-Bedroom Apartment in 2015</td>
-<td>56,607</td>
-</tr>
-<tr class="even">
-<td>singleparent_share2010</td>
-<td>Share of Single-Headed Households with Children 2010</td>
-<td>72,564</td>
-</tr>
-<tr class="odd">
-<td>singleparent_share1990</td>
-<td>Share of Single-Headed Households with Children 1990</td>
-<td>72,196</td>
-</tr>
-<tr class="even">
-<td>singleparent_share2000</td>
-<td>Share of Single-Headed Households with Children 2000</td>
-<td>72,285</td>
-</tr>
-<tr class="odd">
-<td>traveltime15_2010</td>
-<td>Share of Working Adults w/ Commute Time of 15 Minutes Or Less in 2010</td>
-<td>72,939</td>
-</tr>
-<tr class="even">
-<td>emp2000</td>
-<td>Employment Rate 2000</td>
-<td>72,344</td>
-</tr>
-<tr class="odd">
-<td>mail_return_rate2010</td>
-<td>Census Form Rate Return Rate 2010</td>
-<td>72,547</td>
-</tr>
-<tr class="even">
-<td>ln_wage_growth_hs_grad</td>
-<td>Log wage growth for HS Grad., 2005-2014</td>
-<td>51,635</td>
-</tr>
-<tr class="odd">
-<td>jobs_total_5mi_2015</td>
-<td>Number of Primary Jobs within 5 Miles in 2015</td>
-<td>72,311</td>
-</tr>
-<tr class="even">
-<td>jobs_highpay_5mi_2015</td>
-<td>Number of High-Paying (&gt;USD40,000 annually) Jobs within 5 Miles in 2015</td>
-<td>72,311</td>
-</tr>
-<tr class="odd">
-<td>nonwhite_share2010</td>
-<td>Share of People who are not white 2010</td>
-<td>73,111</td>
-</tr>
-<tr class="even">
-<td>popdensity2010</td>
-<td>Population Density (per square mile) in 2010</td>
-<td>73,194</td>
-</tr>
-<tr class="odd">
-<td>ann_avg_job_growth_2004_2013</td>
-<td>Average Annual Job Growth Rate 2004-2013</td>
-<td>70,664</td>
-</tr>
-<tr class="even">
-<td>job_density_2013</td>
-<td>Job Density (in square miles) in 2013</td>
-<td>72,463</td>
-</tr>
-<tr class="odd">
-<td>kfr_pooled_p25</td>
-<td>Household income ($) at age 31-37 for children with parents at the 25th percentile of the national income distribution</td>
-<td>72,011</td>
-</tr>
-<tr class="even">
-<td>kfr_pooled_p75</td>
-<td>Household income ($) at age 31-37 for children with parents at the 75th percentile of the national income distribution</td>
-<td>72,012</td>
-</tr>
-<tr class="odd">
-<td>kfr_pooled_p100</td>
-<td>Household income ($) at age 31-37 for children with parents at the 100th percentile of the national income distribution</td>
-<td>71,968</td>
-</tr>
-<tr class="even">
-<td>kfr_natam_p25</td>
-<td>Household income ($) at age 31-37 for Native American children with parents at the 25th percentile of the national income distribution</td>
-<td>1,733</td>
-</tr>
-<tr class="odd">
-<td>kfr_natam_p75</td>
-<td>Household income ($) at age 31-37 for Native American children with parents at the 75th percentile of the national income distribution</td>
-<td>1,728</td>
-</tr>
-<tr class="even">
-<td>kfr_natam_p100</td>
-<td>Household income ($) at age 31-37 for Native American children with parents at the 100th percentile of the national income distribution</td>
-<td>1,594</td>
-</tr>
-<tr class="odd">
-<td>kfr_asian_p25</td>
-<td>Household income ($) at age 31-37 for Asian children with parents at the 25th percentile of the national income distribution</td>
-<td>15,434</td>
-</tr>
-<tr class="even">
-<td>kfr_asian_p75</td>
-<td>Household income ($) at age 31-37 for Asian children with parents at the 75th percentile of the national income distribution</td>
-<td>15,360</td>
-</tr>
-<tr class="odd">
-<td>kfr_asian_p100</td>
-<td>Household income ($) at age 31-37 for Asian children with parents at the 100th percentile of the national income distribution</td>
-<td>13,480</td>
-</tr>
-<tr class="even">
-<td>kfr_black_p25</td>
-<td>Household income ($) at age 31-37 for Black children with parents at the 25th percentile of the national income distribution</td>
-<td>34,086</td>
-</tr>
-<tr class="odd">
-<td>kfr_black_p75</td>
-<td>Household income ($) at age 31-37 for Black children with parents at the 75th percentile of the national income distribution</td>
-<td>34,049</td>
-</tr>
-<tr class="even">
-<td>kfr_black_p100</td>
-<td>Household income ($) at age 31-37 for Black children with parents at the 100th percentile of the national income distribution</td>
-<td>32,536</td>
-</tr>
-<tr class="odd">
-<td>kfr_hisp_p25</td>
-<td>Household income ($) at age 31-37 for Hispanic children with parents at the 25th percentile of the national income distribution</td>
-<td>37,611</td>
-</tr>
-<tr class="even">
-<td>kfr_hisp_p75</td>
-<td>Household income ($) at age 31-37 for Hispanic children with parents at the 75th percentile of the national income distribution</td>
-<td>37,579</td>
-</tr>
-<tr class="odd">
-<td>kfr_hisp_p100</td>
-<td>Household income ($) at age 31-37 for Hispanic children with parents at the 100th percentile of the national income distribution</td>
-<td>35,987</td>
-</tr>
-<tr class="even">
-<td>kfr_white_p25</td>
-<td>Household income ($) at age 31-37 for white children with parents at the 25th percentile of the national income distribution</td>
-<td>67,978</td>
-</tr>
-<tr class="odd">
-<td>kfr_white_p75</td>
-<td>Household income ($) at age 31-37 for white children with parents at the 75th percentile of the national income distribution</td>
-<td>67,968</td>
-</tr>
-<tr class="even">
-<td>kfr_white_p100</td>
-<td>Household income ($) at age 31-37 for white children with parents at the 100th percentile of the national income distribution</td>
-<td>67,627</td>
-</tr>
-<tr class="odd">
-<td>count_pooled</td>
-<td>Count of all children</td>
-<td>72,451</td>
-</tr>
-<tr class="even">
-<td>count_white</td>
-<td>Count of White children</td>
-<td>72,451</td>
-</tr>
-<tr class="odd">
-<td>count_black</td>
-<td>Count of Black children</td>
-<td>72,451</td>
-</tr>
-<tr class="even">
-<td>count_asian</td>
-<td>Count of Asian children</td>
-<td>72,451</td>
-</tr>
-<tr class="odd">
-<td>count_hisp</td>
-<td>Count of Hispanic children</td>
-<td>72,451</td>
-</tr>
-<tr class="even">
-<td>count_natam</td>
-<td>Count of Native American children</td>
-<td>72,451</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div id="trade-exercise" class="section level2">
-<h2><span class="header-section-number">8.2</span> Trade Exercise</h2>
+<h2><span class="header-section-number">8.1</span> Trade Exercise</h2>
 <ul>
 <li><a href="images/trade.html">Trade exercise</a></li>
 </ul>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="9">
-<li id="fn9"><p>This project is a slightly modified version of the exercise designed by Raj Chetty and Gregory Bruich, available <a href="https://opportunityinsights.org/course/">online here</a>. Permission was granted to reuse their exercise.<a href="projects.html#fnref9">↩</a></p></li>
-</ol>
 </div>
             </section>
 
@@ -606,11 +226,13 @@ d =<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">sys
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

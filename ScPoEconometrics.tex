@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-01}
+    \date{2019-10-10}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4883,8 +4883,8 @@ instead of \(y = wage\) as outcome variable on our regression
 coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
-01, 2019 - 08:05:27 AM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Thu, Oct
+10, 2019 - 02:14:49 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Effect of Scaling on Coefficients} 
@@ -5040,8 +5040,8 @@ above because it is a \emph{nonlinear} function. Let's compare the
 output between both models:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
-01, 2019 - 08:05:27 AM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Thu, Oct
+10, 2019 - 02:14:49 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Log Transformed Equation} 
@@ -5105,8 +5105,8 @@ Level-log & y & \(\log(x)\) & \(\Delta y = b_1 \Delta x\) & less
 frequent\tabularnewline
 Log-level & \(\log(y)\) & x & \(\% \Delta y = (100 b_1) \Delta\) x &
 Semi-elasticity\tabularnewline
-Log-Log & \(\log(y)\) & \(\log(x)\) & \(\% \Delta y = \% \Delta\) x &
-Elasticity\tabularnewline
+Log-Log & \(\log(y)\) & \(\log(x)\) & \(\% \Delta y = \% \Delta\) b\_1 x
+& Elasticity\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -5396,8 +5396,8 @@ this into a regression model now:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
-01, 2019 - 08:05:31 AM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Thu, Oct
+10, 2019 - 02:14:53 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5858,8 +5858,8 @@ on their education as well as their sex:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Tue, Oct
-01, 2019 - 08:05:31 AM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Thu, Oct
+10, 2019 - 02:14:53 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -6098,23 +6098,11 @@ include a group dummy so as to control for group effects.
 
 \chapter{Standard Errors}\label{std-errors}
 
-In the previous chapters we have seen how the OLS method can produce
-estimates about intercept and slope coefficients from data. You have
-seen this method at work in \texttt{R} by using the \texttt{lm} function
-as well. It is now time to introduce the notion that given that \(b_0\),
-\(b_1\) and \(b_2\) are \emph{estimates} of some unkown \emph{population
-parameters}, there is some degree of \textbf{uncertainty} about their
-values. An other way to say this is that we want some indication about
-the \emph{precision} of those estimates.
-
-\begin{note}
-How \emph{confident} should we be about the estimated values \(b\)?
-\end{note}
-
- Let's go back to the regression with one variable and remind ourselves
-of the example at the end of chapter \ref{linreg}. There we introduced
-the term \emph{confidence interval}, shown as the shaded area in figure
-\ref{fig:confint}:
+In this chapter we want to investigate uncertainty in regression
+estimates. We want to understand what the precise meaning of the
+\texttt{Std.\ Error} column in a typical regression table is telling us.
+In terms of a picture, we want to understand better the meaning of the
+shaded area as in this one here:
 
 \begin{figure}
 
@@ -6125,173 +6113,251 @@ the term \emph{confidence interval}, shown as the shaded area in figure
 \caption{Confidence bands around a regression line.}\label{fig:confint}
 \end{figure}
 
-The shaded area shows us the region within which the \textbf{true} red
-line will lie with 95\% probability. The fact that there is an unknown
-true line (i.e.~a \emph{true} slope coefficient \(\beta_1\)) that we
-wish to uncover from a sample of data should remind you immediately of
-our first tutorial. There, we wanted to estimate the true population
-mean from a sample of data, and we saw that as the sample size \(N\)
-increased, our estimate got better and better - fundamentally this is
-the same idea here.
+In order to fully understand this, we need to go back and make sure we
+have a good grasp of \emph{sampling}. Let's do this first.
 
-\section{\texorpdfstring{What is \emph{true}? What are Statistical
-Models?}{What is true? What are Statistical Models?}}\label{what-is-true-what-are-statistical-models}
+\section{Sampling}\label{sampling}
 
-A \textbf{statistical model} is simply a set of assumptions about how
-some data have been generated. As such, it models the data-generating
-process (DGP), as we have it in mind. Once we define a DGP, we could
-simulate data from it and see how this compares to the data we observe
-in the real world. Or, we could change the parameters of the DGP so as
-to understand how the real world data \emph{would} change, could we (or
-some policy) change the corresponding parameters in reality. Let us now
-consider one particular statistical model, which in fact we have seen so
-many times already.
+In class we were confronted with a jar of Tricolore Fusilli pasta as
+picture in figure \ref{fig:pasta1}.\footnote{This part is largely based
+  on \href{https://moderndive.com/7-sampling.html}{moderndive}, to which
+  I am giving full credit hereby. Thanks for this great idea.} We asked
+ourselves a question which, secretly, many of you had asked themselves
+at one point in their lives, namely:
 
-\section{The Classical Regression Model}\label{class-reg}
+\begin{tip}
+What is the proportion of \textbf{green} Fusilli in a pack of Tricolore
+Fusilli?
+\end{tip}
 
-Let's bring back our simple model \eqref{eq:abline} to explain this
-concept.
+Well, it's time to find out.
 
-\begin{equation}
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
-\end{equation}
+\begin{figure}
 
-The smallest set of assumptions used to define the \emph{classical
-regression model} as in \eqref{eq:abline-5} are the following:
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta1} 
+
+}
+
+\caption{A glass jar filled with Fusilli pasta in three different colors.}\label{fig:pasta1}
+\end{figure}
+
+Let's call the fusilly in this jar our \emph{study population}, i.e.~the
+set of units about which we want to learn something. There are several
+approaches to address the question of how big a proportion in the
+population the green Fusilli make up. One obvious solution is to
+enumerate all Fusilli according to their color, and compute their
+proportion in the entire population. It works perfectly well as a
+solution, but is a long and arduous process, see figures
+\ref{fig:pasta2} and \ref{fig:pasta3}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta2} 
+
+}
+
+\caption{Manually separating Fusilli by their color is very costly in terms of effort and cost.}\label{fig:pasta2}
+\end{figure}
+
+Additionally, you may draw worried looks from the people around you,
+while you are doing it. Maybe this is not the right way to approach this
+task?\footnote{Regardless of the worried onlookers, I did what I had to
+  do and I carried on to count the green pile. I know exactly how many
+  greens are in there now! I then computed the weight of 20 Fusilli
+  (5g), and backed out the number of Fusilli in the other piles. I will
+  declare those numbers as the \emph{true numbers}. (Sceptics are free
+  to recount.)}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta3} 
+
+}
+
+\caption{Heaps of Fusilli pasta ready to be counted.}\label{fig:pasta3}
+\end{figure}
+
+\subsection{Taking One Sample From the
+Population}\label{taking-one-sample-from-the-population}
+
+We started by randomly grabbing a handful of Fusilli from the jar and by
+letting drop exactly \(N=20\) into a paper coffee cup, pictured in
+\ref{fig:pasta5}. We call \(N\) the \emph{sample size}. The count and
+corresponding proportions of each color in this first sample are shown
+in the following table:
+
+\begin{longtable}[]{@{}ccc@{}}
+\toprule
+Color & Count & Proportion\tabularnewline
+\midrule
+\endhead
+Red & 7 & 0.35\tabularnewline
+Green & 5 & 0.25\tabularnewline
+White & 8 & 0.4\tabularnewline
+\bottomrule
+\end{longtable}
+
+So far, so good. We have our first \emph{estimate of the population
+proportion of green Fusilli in the overall population}: 0.25. Notice
+that taking a sample of \(N=20\) was \emph{much} quicker and \emph{much
+less painful} than performing the full count (i.e.~the \emph{census}) of
+Fusilli performed above.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta5} 
+
+}
+
+\caption{Taking one sample of 20 Fusilli from the jar.}\label{fig:pasta5}
+\end{figure}
+
+Then, we put my sample back into the jar, and we reshuffled the Fusilli.
+Had we taken \emph{another} sample, again of \(N=20\), would we again
+have gotten 7 Red, 5 Green, and 8 White, just as in the first sample?
+Maybe, but maybe not. Suppose we had carried on for several times
+drawing samples of 20 and counting the colors: Would we also have
+observed 5 green Fusilli? Definitely not. We would have noted some
+degree of \emph{variability} in the proportions computed from our
+samples. The \emph{sample proportions} in this case are an example of a
+\emph{sample statistic}.
+
+\begin{note}
+\textbf{Sampling Variation} refers to the fact that if we
+\emph{randomly} take samples from a wider population, the \emph{random}
+composition of each sample will imply that we obtain statistics that
+vary - they take on potentially different values in each sample.
+\end{note}
+
+Let's see how this story evolved as we started taking more samples at a
+time.
+
+\section{Taking Eleven Samples From The
+Population}\label{taking-eleven-samples-from-the-population}
+
+We formed teams of two students in class who would each in turn take
+samples from the jar (the population) of size \(N=20\), as before. Each
+team computed the proportion of green Fusilli they had in their sample,
+and we wrote this data down in a table on the board. Then, we drew a
+histogram which showed how many samples had fallen into which bins.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta6} 
+
+}
+
+\caption{Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.}\label{fig:pasta6}
+\end{figure}
+
+We looked at the histogram in figure \ref{fig:pasta6} and we noted
+several things:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  The data are \textbf{not linearly dependent}: Each variable provides
-  new information for the outcome, and it cannot be replicated as a
-  linear combination of other variables. We have seen this in section
-  \ref{multicol}. In the particular case of one regressor, as here, we
-  require that \(x\) exhibit some variation in the data, i.e.
-  \(Var(x)\neq 0\).
+  The largest proportions where 0.3 green
 \item
-  The mean of the residuals conditional on \(x\) should be zero,
-  \(E[\varepsilon|x] = 0\). Notice that this also means that
-  \(Cov(\varepsilon,x) = 0\), i.e.~that the errors and our explanatory
-  variable(s) should be \emph{uncorrelated}. It is said that \(x\)
-  should be \textbf{strictly exogenous} to the model.
+  The smallest proportion was 0.15 green.
+\item
+  Most samples found a proportion of 0.25 green fusilli.
+\item
+  We did think that this looked \emph{suspiciouly} like a \textbf{normal
+  distribution}.
 \end{enumerate}
 
-These assumptions are necessary to successfully (and correctly!) run an
-OLS regression. They are often supplemented with an additional set of
-assumptions, which help with certain aspects of the exposition, but are
-not strictly necessary:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  The data are drawn from a \textbf{random sample} of size \(n\):
-  observation \((x_i,y_i)\) comes from the exact same distribution, and
-  is independent of observation \((x_j,y_j)\), for all \(i\neq j\).
-\item
-  The variance of the error term \(\varepsilon\) is the same for each
-  value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
-  called \textbf{homoskedasticity}.
-\item
-  The error is normally distributed, i.e.
-  \(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)
-\end{enumerate}
-
-Invoking assumption 5. in particular defines what is commonly called the
-\emph{normal} linear regression model.
-
-\subsection{\texorpdfstring{\(b\) is not
-\(\beta\)!}{b is not \textbackslash{}beta!}}\label{b-is-not-beta}
-
-Let's talk about the small but important modifications we applied to
-model \eqref{eq:abline} to end up at \eqref{eq:abline-5} above:
-
-\begin{itemize}
-\tightlist
-\item
-  \(\beta_0\) and \(\beta_1\) and intercept and slope parameters
-\item
-  \(\varepsilon\) is the error term.
-\end{itemize}
-
-First, we \emph{assumed} that \eqref{eq:abline-5} is the correct
-represenation of the DGP. With that assumption in place, the values
-\(\beta_0\) and \(\beta_1\) are the \emph{true parameter values} which
-generated the data. Notice that \(\beta_0\) and \(\beta_1\) are
-potentially different from \(b_0\) and \(b_1\) in \eqref{eq:abline} for a
-given sample of data - they could in practice be very close to each
-other, but \(b_0\) and \(b_1\) are \emph{estimates} of \(\beta_0\) and
-\(\beta_1\). And, crucially, those estimates are generated from a sample
-of data. Now, the fact that our data \(\{y_i,x_i\}_{i=1}^N\) are a
-sample from a larger population, means that there will be \emph{sampling
-variation} in our estimates - exactly like in the case of the sample
-mean estimating the population average as mentioned above. One
-particular sample of data will generate one particular set of estimates
-\(b_0\) and \(b_1\), whereas another sample of data will generate
-estimates which will in general be different - by \emph{how much} those
-estimates differ across samples is the question in this chapter. In
-general, the more observations we have the greater the precision of our
-estimates, hence, the closer the estimates from different samples will
-lie together.
-
-\subsection{Standard Errors in Theory}\label{se-theory}
-
-The standard deviation of the OLS parameters is generally called
-\emph{standard error}. As such, it is just the square root of the
-parameter's variance. Under assumptions 1. through 4. we can define the
-formula for the variance of our slope coefficient in the context of our
-single regressor model \eqref{eq:abline-5} as follows:
-
-\begin{equation}
-Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols}
-\end{equation}
-
-In pratice, we don't know the theoretical variance of \(\varepsilon\),
-i.e. \(\sigma^2\), but we form an estimate about it from our sample of
-data. A widely used estimate uses the already encountered SSR (sum of
-squared residuals), and is denoted \(s^2\):
-
-\[
-s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
-\] where \(n-p\) are the \emph{degrees of freedom} available in this
-estimation. \(p\) is the number of parameters we wish to estimate (here:
-1). So, the variance formula would become
-
-\begin{equation}
-Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols2}
-\end{equation}
-
-We most of the time work directly with the \emph{standard error} of a
-coefficient, hence we define
-
-\begin{equation}
-SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}}  \label{eq:SE-ols2}
-\end{equation}
-
-You can clearly see that, as \(n\) increases, the denominator increases,
-and therefore variance and standard error of the estimate will decrease.
-
-\subsection{Standard Errors in
-Practice}\label{standard-errors-in-practice}
-
-We would like to further make this point in an experiential way, i.e.~we
-want you to experience what is going on. We invite you to spend some
-time with the following apps. In particular, make sure you have a
-thorough understanding of \texttt{launchApp("estimate")}.
+We collected the sample data into a data.frame:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"estimate"}\NormalTok{)}
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
-\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{) }
+\NormalTok{pasta_samples <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{group =} \DecValTok{1}\OperatorTok{:}\DecValTok{11}\NormalTok{, }\DataTypeTok{replicate =} \DecValTok{1}\OperatorTok{:}\DecValTok{11}\NormalTok{, }\DataTypeTok{prop_green =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.3}\NormalTok{,}\FloatTok{0.15}\NormalTok{,}\FloatTok{0.3}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.2}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.2}\NormalTok{))}
+\NormalTok{pasta_samples}
 \end{Highlighting}
 \end{Shaded}
 
-\section{Back to Sampling}\label{back-to-sampling}
+\begin{verbatim}
+#OUT>    group replicate prop_green
+#OUT> 1      1         1       0.30
+#OUT> 2      2         2       0.25
+#OUT> 3      3         3       0.25
+#OUT> 4      4         4       0.30
+#OUT> 5      5         5       0.15
+#OUT> 6      6         6       0.30
+#OUT> 7      7         7       0.25
+#OUT> 8      8         8       0.25
+#OUT> 9      9         9       0.20
+#OUT> 10    10        10       0.25
+#OUT> 11    11        11       0.20
+\end{verbatim}
+
+This produces an associated histogram which looks very much like the one
+we draws onto the board:
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/pasta-hist-1} \end{center}
+
+\subsection{Recap}\label{recap}
+
+Let's recaptiulate what we just did. We wanted to know what proportion
+of Fusilli in the glass jar in figure \ref{fig:pasta1} are green. We
+acknowledged that an exclusive count, or a census, is a costly and
+cumbersome exercise, which in most circumstances we will try to avoid.
+In order to make some progress nonetheless, we took a \emph{random
+sample} from the full population in the jar: we randomly selected 20
+Fusilli, and looked at the proportion of green ones in there. We found a
+proportion of 0.25.
+
+After replacing the Fusilli from the first sample in the jar, we asked
+ourselves if, upon drawing a \emph{new} sample of 20 Fusilli, we should
+expect to see the same outcome - and we concluded: maybe, but maybe not.
+In short, we discovered some random variation from sample to sample. We
+called this \textbf{sampling variation}.
+
+The purpose of this little activity was three-fold:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  To understand that random samples differ and that there is sampling
+  variation.
+\item
+  To understand that bigger samples will yield smaller sampling
+  variation.
+\item
+  To illustrate that the sampling distribution of \emph{any} statistic
+  (i.e.~not only the sample proportion as in our case) computed from a
+  random sample converges to a normal distribution as the sample size
+  increases.
+\end{enumerate}
+
+\begin{note}
+The value of this exercise consisted in making \textbf{you} perform the
+sampling activity yourself. We will now hand over to the brilliant
+\textbf{moderndive} package, which will further develop this chapter.
+\end{note}
+
+\section{\texorpdfstring{Handover to
+\texttt{Moderndive}}{Handover to Moderndive}}\label{handover-to-moderndive}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/transition} 
+
+}
+
+\caption{The Moderndive package used red and white balls instead of fusilli pasta.}\label{fig:handover}
+\end{figure}
+
+The sampling activity in \texttt{moderndive} was performed with red and
+white balls instead of green fusilli pasta. The rest is identical. We
+will now read sections
+\href{https://moderndive.com/7-sampling.html\#sampling-simulation}{7.2}
+and
+\href{https://moderndive.com/7-sampling.html\#sampling-framework}{7.3}
+in their book, and return to this page later.
+
+\section{Inference in Theory}\label{inference-in-theory}
 
 Imagine we were tasked by the Director of our school to provide him with
 our best guess of the \emph{mean body height} \(\mu\) amongst all
@@ -6450,18 +6516,7 @@ CI = \left[165.658 , 171.342 \right]
 We would tell the director that with 95\% probability, the true average
 height of all students comes to lie within those two bounds.
 
-Finally, looking back at figure \ref{fig:confint} above, the shaded area
-is just the 95\% confidence interval \emph{about the true value
-\(\beta_1\)}. We would say that \emph{the true regression line} is
-contained within the shaded region with 95\% probability. Very similarly
-to our example of \(\bar{x}\), in that picture we have instead an
-estimate \(b_1\), with an associated standard error \(SE(b_1)\). The
-shaded area is called \emph{confidence band}, and it is just plotting
-the confidence interval \emph{for each value \(x\)} in the data. You can
-see how the band becomes narrower (i.e.~the estimate becomes more
-precise) if there is more data associated to a certain \(x\).
-
-\section{Hypothesis Testing}\label{hypothesis-testing}
+\subsection{Hypothesis Testing}\label{hypothesis-testing}
 
 Now know by now how the standard errors of an OLS estimate are computed,
 and what they stand for. We can now briefly\footnote{We will not go into
@@ -6621,6 +6676,280 @@ in figure \ref{fig:testfig}.
 
 \caption{Cookbook Testing Proceedure. Subscripts $c$ indicate *critical value*. There are two x-axis: one for values of $\bar{x}$, and one for the corresponding $t$ statistic. The red area is the rejection area. If we observe a test statistic such that $t>t_c$, we feel reassured that our $\bar{x}$ is *sufficiently far away* from the hypothesized value $\mu$, such that we feel comfortable with rejecting $H_0$. And vice versa: If our test statistic falls below $t_c$, we will not reject $H_0$}\label{fig:testfig}
 \end{figure}
+
+You can see from this that whether or not our test statistic is far way
+from the critical value, or just below does not change our decision:
+it's either accept or reject. We never know if we \emph{narrowly}
+rejected a \(H_0\), or not. P-values are an improvement over this stark
+dichotomy. The p-value is defined as the particular level of
+significance \(\alpha^*\), up to which \emph{all} \(H_0\)'s would be
+rejected. If this is a very small number, we have overwhelming support
+to reject the null. If, on the contrary, \(\alpha^*\) turns out to be
+rather large, we only found weak evidence against \(H_0\).
+
+We define the p-value as the sum of rejection areas for a given test
+statistic \(T^*\). Notice that the symmetry of the \(t\) distribution
+implies that we would multiply by two each of the two tail probabilities
+in the case of a two-sided test.
+
+\begin{align}
+\alpha^* = \Pr(t > |T^*|) 
+\end{align}
+
+\section{Uncertainty in Regression
+Estimates}\label{uncertainty-in-regression-estimates}
+
+In the previous chapters we have seen how the OLS method can produce
+estimates about intercept and slope coefficients from data. You have
+seen this method at work in \texttt{R} by using the \texttt{lm} function
+as well. It is now time to introduce the notion that given that \(b_0\),
+\(b_1\) and \(b_2\) are \emph{estimates} of some unkown \emph{population
+parameters}, there is some degree of \textbf{uncertainty} about their
+values. An other way to say this is that we want some indication about
+the \emph{precision} of those estimates. The underlying issue that the
+data we have at hand are usually \emph{samples} from a larger
+population.
+
+\begin{note}
+How \emph{confident} should we be about the estimated values \(b\)?
+\end{note}
+
+\section{\texorpdfstring{What is \emph{true}? What are Statistical
+Models?}{What is true? What are Statistical Models?}}\label{what-is-true-what-are-statistical-models}
+
+A \textbf{statistical model} is simply a set of assumptions about how
+some data have been generated. As such, it models the data-generating
+process (DGP), as we have it in mind. Once we define a DGP, we could
+simulate data from it and see how this compares to the data we observe
+in the real world. Or, we could change the parameters of the DGP so as
+to understand how the real world data \emph{would} change, could we (or
+some policy) change the corresponding parameters in reality. Let us now
+consider one particular statistical model, which in fact we have seen so
+many times already.
+
+\section{The Classical Regression Model (CRM)}\label{class-reg}
+
+Let's bring back our simple model \eqref{eq:abline} to explain this
+concept.
+
+\begin{equation}
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:abline-5}
+\end{equation}
+
+The smallest set of assumptions used to define the \emph{classical
+regression model} as in \eqref{eq:abline-5} are the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The data are \textbf{not linearly dependent}: Each variable provides
+  new information for the outcome, and it cannot be replicated as a
+  linear combination of other variables. We have seen this in section
+  \ref{multicol}. In the particular case of one regressor, as here, we
+  require that \(x\) exhibit some variation in the data, i.e.
+  \(Var(x)\neq 0\).
+\item
+  The mean of the residuals conditional on \(x\) should be zero,
+  \(E[\varepsilon|x] = 0\). Notice that this also means that
+  \(Cov(\varepsilon,x) = 0\), i.e.~that the errors and our explanatory
+  variable(s) should be \emph{uncorrelated}. It is said that \(x\)
+  should be \textbf{strictly exogenous} to the model.
+\end{enumerate}
+
+These assumptions are necessary to successfully (and correctly!) run an
+OLS regression. They are often supplemented with an additional set of
+assumptions, which help with certain aspects of the exposition, but are
+not strictly necessary:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The data are drawn from a \textbf{random sample} of size \(n\):
+  observation \((x_i,y_i)\) comes from the exact same distribution, and
+  is independent of observation \((x_j,y_j)\), for all \(i\neq j\).
+\item
+  The variance of the error term \(\varepsilon\) is the same for each
+  value of \(x\): \(Var(\varepsilon|x) = \sigma^2\). This property is
+  called \textbf{homoskedasticity}.
+\item
+  The error is normally distributed, i.e.
+  \(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)
+\end{enumerate}
+
+Invoking assumption 5. in particular defines what is commonly called the
+\emph{normal} linear regression model.
+
+\subsection{\texorpdfstring{\(b\) is not
+\(\beta\)!}{b is not \textbackslash{}beta!}}\label{b-is-not-beta}
+
+Let's talk about the small but important modifications we applied to
+model \eqref{eq:abline} to end up at \eqref{eq:abline-5} above:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\beta_0\) and \(\beta_1\) and intercept and slope parameters
+\item
+  \(\varepsilon\) is the error term.
+\end{itemize}
+
+First, we \emph{assumed} that \eqref{eq:abline-5} is the correct
+represenation of the DGP. With that assumption in place, the values
+\(\beta_0\) and \(\beta_1\) are the \emph{true parameter values} which
+generated the data. Notice that \(\beta_0\) and \(\beta_1\) are
+potentially different from \(b_0\) and \(b_1\) in \eqref{eq:abline} for a
+given sample of data - they could in practice be very close to each
+other, but \(b_0\) and \(b_1\) are \emph{estimates} of \(\beta_0\) and
+\(\beta_1\). And, crucially, those estimates are generated from a sample
+of data. Now, the fact that our data \(\{y_i,x_i\}_{i=1}^N\) are a
+sample from a larger population, means that there will be \emph{sampling
+variation} in our estimates - exactly like in the case of the sample
+mean estimating the population average as mentioned above. One
+particular sample of data will generate one particular set of estimates
+\(b_0\) and \(b_1\), whereas another sample of data will generate
+estimates which will in general be different - by \emph{how much} those
+estimates differ across samples is the question in this chapter. In
+general, the more observations we have the greater the precision of our
+estimates, hence, the closer the estimates from different samples will
+lie together.
+
+\subsection{Violating the Assumptions of the
+CRM}\label{violating-the-assumptions-of-the-crm}
+
+It's interesting to consider in which circumstances we might violate
+those assumptions. Let's give an example for each of them:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  No Perfect Collinearity. We have seen that a perfect collinearity
+  makes it impossible to compute to OLS coefficients. Remember the
+  example about adding \texttt{wtplus\ =\ wt\ +\ 1} to the
+  \texttt{mtcars} dataset? Here it is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\NormalTok{mtcars }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{wtplus =}\NormalTok{ wt }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\KeywordTok{lm}\NormalTok{(mpg }\OperatorTok{~}\StringTok{ }\NormalTok{wt }\OperatorTok{+}\StringTok{ }\NormalTok{wtplus, }\DataTypeTok{data =}\NormalTok{ .)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> 
+#OUT> Call:
+#OUT> lm(formula = mpg ~ wt + wtplus, data = .)
+#OUT> 
+#OUT> Coefficients:
+#OUT> (Intercept)           wt       wtplus  
+#OUT>      37.285       -5.344           NA
+\end{verbatim}
+
+  That the coefficient on \texttt{wtplus} is \texttt{NA} is the result
+  of the direct linear dependence. (Notice that creating
+  \texttt{wtplus2\ =\ (wt\ +\ 1)\^{}2}) would work, since that is not
+  linear!)
+\item
+  Conditional Mean of errors is zero, \(E[\varepsilon|x] = 0\). Going
+  back to our running example in figure \ref{fig:confint} about wages
+  and education: Suppose that each individual \(i\) in our data
+  something like \emph{innate ability}, something we might wish to
+  measure with an IQ-test, however imperfecty. Let's call it \(a_i\). It
+  seems reasonable to think that high \(a_i\) will go together with high
+  wages. At the same time, people with high \(a_i\) will find studying
+  for exams and school work much less burdensome than others, hence they
+  might select into obtaining more years of schooling. The problem?
+  Well, there is no \(a_i\) in our regression equation - most of time we
+  don't have a good measure of it to start with. So it's an
+  \emph{unobserved variable}, and as such, it is part of the error term
+  \(\varepsilon\) in our model. We will attribute to \texttt{educ} part
+  of the effect on wages that is actually \emph{caused} by ability
+  \(a_i\)! Sometimes we may be able to reason about whether our estimate
+  on \texttt{educ} is too high or too low, but we will never know it's
+  true value. We don't get the \emph{ceteris paribus} effect (the true
+  partial derivative of \texttt{educ} on \texttt{lwage}). Technically,
+  the assumption \(E[\varepsilon|x] = 0\) implies that
+  \(Cov(\varepsilon,x) = 0\), so that's the part that is violated.
+\item
+  Data from Random Sample. One common concern here is that the
+  observations in the data could have been \emph{selected} in a
+  particular fashion, which would make it less representative of the
+  underlying population. Suppose we had ended up with individuals only
+  from the richest neighborhood of town; Our interpretation the impact
+  of education on wages might not be valid for other areas.
+\item
+  Homoskedasticity. For correct inference (below!), we want to know
+  whether the variance of \(\varepsilon\) varies with our regressor
+  \(x\) or not. Here is a typical example where it does:
+
+  \begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-173-1} \end{center}
+
+  As income increases, not all people increase their food consumption in
+  an equal way. So \(Var(\varepsilon|x)\) will vary with the value of
+  \(x\), hence it won't be equal to the constant \(\sigma^2\).
+\item
+  If the distribution of \(\varepsilon\) is not normal, it is more
+  cumbersome to derive theoretical results about inference.
+\end{enumerate}
+
+\section{Standard Errors in Theory}\label{se-theory}
+
+The standard deviation of the OLS parameters is generally called
+\emph{standard error}. As such, it is just the square root of the
+parameter's variance. Under assumptions 1. through 4. above we can
+define the formula for the variance of our slope coefficient in the
+context of our single regressor model \eqref{eq:abline-5} as follows:
+
+\begin{equation}
+Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols}
+\end{equation}
+
+In pratice, we don't know the theoretical variance of \(\varepsilon\),
+i.e. \(\sigma^2\), but we form an estimate about it from our sample of
+data. A widely used estimate uses the already encountered SSR (sum of
+squared residuals), and is denoted \(s^2\):
+
+\[
+s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
+\] where \(n-p\) are the \emph{degrees of freedom} available in this
+estimation. \(p\) is the number of parameters we wish to estimate (here:
+1). So, the variance formula would become
+
+\begin{equation}
+Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}  \label{eq:var-ols2}
+\end{equation}
+
+We most of the time work directly with the \emph{standard error} of a
+coefficient, hence we define
+
+\begin{equation}
+SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}}  \label{eq:SE-ols2}
+\end{equation}
+
+You can clearly see that, as \(n\) increases, the denominator increases,
+and therefore variance and standard error of the estimate will decrease.
+
+\subsection{Standard Errors in
+Practice}\label{standard-errors-in-practice}
+
+We would like to further make this point in an experiential way, i.e.~we
+want you to experience what is going on. We invite you to spend some
+time with the following apps. In particular, make sure you have a
+thorough understanding of \texttt{launchApp("estimate")}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"estimate"}\NormalTok{)}
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"sampling"}\NormalTok{)  }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_simple"}\NormalTok{) }
+\KeywordTok{launchApp}\NormalTok{(}\StringTok{"standard_errors_changeN"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
 
 \subsection{Testing Regression
 Coefficients}\label{testing-regression-coefficients}
@@ -6933,11 +7262,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-175-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-180-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-175}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-180}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
@@ -7006,693 +7335,6 @@ rate. Such a factor is called an \emph{instrumental variable}.
 \chapter{Projects}\label{projects}
 
 This chapter contains several empirical projects.
-
-\section{Opportunity Atlas}\label{opp-atlas}
-
-In this empirical project you will have a close look at what is commonly
-known as \emph{the American Dream} - the idea that in a society with few
-barriers, everybody can achieve upward social mobility and be better off
-than their parents, if only they work hard enough.\footnote{This project
-  is a slightly modified version of the exercise designed by Raj Chetty
-  and Gregory Bruich, available
-  \href{https://opportunityinsights.org/course/}{online here}.
-  Permission was granted to reuse their exercise.}
-
-The \href{https://www.opportunityatlas.org}{Opportunity Atlas} is a
-website maintained by the US Census Bureau and fed with data from recent
-high-quality research on upward social mobility at the Census Tract
-level. Census Tracts are geographic areas which contain on average less
-than 4000 residents, and which cover the entire United States. The Atlas
-has been widely used in recent newspaper reporting, and you should start
-this project by reading the
-\href{https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html}{corresponding
-piece} from the New York Times \emph{Upshot} series.
-
-This project focuses on developing your descriptive data analysis
-skills. In particular you will
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  use mapping tools to visualize geospatial data, and
-\item
-  compute simple descriptive statistics and report regression results to
-  shed light on the relationship between two or more random variables.
-\end{enumerate}
-
-In order to achieve those goals, you will interact with the Atlas
-website at \url{https://www.opportunityatlas.org}, and you will use the
-raw data behind the website to compute additional statistics.
-
-\subsection{Instructions}\label{instructions}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Your submission will be a statistical report addressing the below
-  questions, produced from a single \texttt{R} markdown file (ending in
-  \texttt{.Rmd}). You can create a simple \texttt{Rmd} template in
-  Rstudio by clicking top left on the ``new file'' symbol, then
-  selecting \emph{R Markdown}. A quick but effective guide on using
-  Markdown is available
-  \href{https://rmarkdown.rstudio.com/authoring_basics.html}{here}.
-\item
-  Please submit two files: the \texttt{.Rmd} source file (which creates
-  the report), and the report itself, in either HTML or PDF format
-  (Rstudio dropdown menu \emph{knit})
-\item
-  You can do this exercise in teams of up to 3 people: make sure to edit
-  the \texttt{author} field in the \texttt{Rmd} correspondingly.
-\item
-  Submit by sending a private message with the \texttt{Rmd} as
-  attachment on slack.
-\end{enumerate}
-
-\subsection{Questions}\label{questions}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Referring to the
-  \href{https://www.nytimes.com/2018/10/01/upshot/maps-neighborhoods-shape-child-poverty.html}{NYT
-  article}:
-
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \item
-    Why does the Seattle Housing Authority give away vouchers to pay for
-    rent in the area between 100th and 115th Streets, east of Meridian,
-    west of 35th Avenue?
-  \item
-    The data here shows how easy it is for children of poor parents to
-    escape poverty themselves. In explaining what makes a \emph{good}
-    neighborhood, how much of the variation we see is actually explained
-    by things like school boundary lines and poverty levels alone? In
-    other words, how \emph{important} is the school you go to in
-    isoluation of other factors, if you want to escape the low rank of
-    your parents in the income distribution?
-  \item
-    Some select census tracts have received up to 500 million USD since
-    1990 in place-based neighborhood improvement policies. Do we know if
-    and to what extent those investments were efficacious?
-  \end{enumerate}
-\item
-  Go to \url{https://www.opportunityatlas.org} and look at the census
-  tracts around where your home is, if you grew up in the United States.
-  If you grew up outside the US, randomly choose one of the State
-  Capitals from
-  \href{https://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States\#State_capitals}{this
-  list} and select any census tract at random by zooming in. Make sure
-  to immediately post your choice of city in the corresponding slack
-  channel (e.g. ``florian-atlas'' for my group) to avoid having multiple
-  reports on the same city. Let's call the chosen census tract your
-  \emph{home}.
-
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \item
-    Create Figure 1 in your report, which should display the map shown
-    by \url{https://www.opportunityatlas.org} for the census tracts
-    around your home (you can download that map \emph{as an image}
-    bottom left). Notice that you can include a figure in an
-    \texttt{.Rmd} like follows. Remember that all \texttt{R}-code chunks
-    in your .Rmd are inside a block delimited by tripple backticks
-    \texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{```\{r your-chunk-label,echo = FALSE, out.width = "75%"\}}
-\FunctionTok{# your-chunk-label: name you give that code chunk (optional)}
-\FunctionTok{# echo = TRUE/FALSE: display the code in output?}
-\FunctionTok{# out.width = "75%": scale image to 75% of page width}
-\FunctionTok{# all options: https://yihui.name/knitr/options/}
-\NormalTok{knitr::include_graphics("path_to_your_grahpic.png") }
-\NormalTok{```}
-\end{Highlighting}
-\end{Shaded}
-  \item
-    Your accompanying text should describe what is shown in that map, in
-    particular what data are being visualized. Examine next the patterns
-    for a number of different groups (e.g., lowest income children, high
-    income children) and outcomes (e.g., earnings in adulthood,
-    incarceration rates). Only choose one or two of these to include in
-    your report.
-  \end{enumerate}
-\item
-  To answer the next question, read the
-  \href{https://opportunityinsights.org/wp-content/uploads/2018/10/atlas_paper.pdf}{Opportunity
-  Atlas Manual}: What period do the data you are analyzing come from?
-  Are you concerned that the neighborhoods you are studying may have
-  changed for kids now growing up there? What evidence do the authors of
-  the manual provide suggesting that such changes are or are not
-  important? What type of data could you use to test whether your
-  neighborhood has changed in recent years?
-\item
-  Now turn to the \texttt{atlas.Rds} data set, which you can load as
-  shown below. How does average upward mobility, pooling races and
-  genders, for children with parents at the 25th percentile
-  (\texttt{kfr\_pooled\_p25}) in your home Census tract compare to mean
-  (population-weighted, using \texttt{count\_pooled}) upward mobility in
-  your state and in the U.S. overall? Do kids where you grew up have
-  better or worse chances of climbing the income ladder than the average
-  child in America? \emph{Hint}: The Opportunity Atlas website will give
-  you the tract, county, and state FIPS codes for your home address. For
-  example, searching for ``Lynwood Road, Verona, New Jersey'' will
-  display Tract 34013021000, Verona, NJ. The first two digits refer to
-  the state code, the next three digits refer to the county code, and
-  the last 6 digits refer to the tract code. In \texttt{R}, listing this
-  observation can be done as follows:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# load data}
-\NormalTok{d =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\KeywordTok{system.file}\NormalTok{(}\DataTypeTok{package =} \StringTok{"ScPoEconometrics"}\NormalTok{,}\StringTok{"datasets"}\NormalTok{,}\StringTok{"atlas.Rds"}\NormalTok{))}
-\CommentTok{# subset data.frame}
-\KeywordTok{subset}\NormalTok{(d, }\DataTypeTok{select =}\NormalTok{ kfr_pooled_p25, }\DataTypeTok{subset =}\NormalTok{ state }\OperatorTok{==}\StringTok{ }\DecValTok{24} \OperatorTok{&}\StringTok{ }\NormalTok{county }\OperatorTok{==}\StringTok{ }\DecValTok{003} \OperatorTok{&}\StringTok{ }\NormalTok{tract }\OperatorTok{==}\StringTok{ }\DecValTok{706500}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\item
-  What is the standard deviation of upward mobility
-  (population-weighted) in your home county, and what does this number
-  tell you? Is it larger or smaller than the standard deviation across
-  tracts in your state (i.e.~compare your county to all other counties
-  in your state)? Across tracts in the entire country? What do you learn
-  from these comparisons? Notice that you can compute a weighted
-  standard deviation for vector \texttt{x} using weights
-  \texttt{weight\_variable} in \texttt{R} like this
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# you need the Hmisc package installed. if not:}
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{"Hmisc"}\NormalTok{)}
-\KeywordTok{sqrt}\NormalTok{(Hmisc}\OperatorTok{::}\KeywordTok{wtd.var}\NormalTok{(x, }\DataTypeTok{weights =}\NormalTok{ weight_variable))}
-\end{Highlighting}
-\end{Shaded}
-\item
-  Now let's turn to downward mobility: repeat questions 3. and 4.
-  looking at children who start with parents at the 75th and 100th
-  percentiles. How do the patterns differ?
-\item
-  Using a linear regression, estimate the relationship between outcomes
-  of children at the 25th and 75th percentile for the Census tracts in
-  your home county. Generate a scatter plot to visualize this
-  regression. Do areas where children from low-income families do well
-  generally have better outcomes for those from high-income families,
-  too?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# explain lm}
-\CommentTok{# explain scatter plot}
-\end{Highlighting}
-\end{Shaded}
-\item
-  Next, examine whether the patterns you have looked at above are
-  similar by race. If there is not enough racial heterogeneity in the
-  area of interest (i.e., data is missing for most racial groups), then
-  choose a different area to examine.
-\item
-  Using the Census tracts in your home county, can you identify any
-  covariates which help explain some of the patterns you have identified
-  above? Some examples of covariates you might examine include housing
-  prices, income inequality, fraction of children with single parents,
-  job density, etc. For 2 or 3 of these, report estimated correlation
-  coefficients along with their 95\% confidence intervals.
-\item
-  Open question: formulate a hypothesis for why you see the variation in
-  upward mobility for children who grew up in the Census tracts near
-  your home and provide correlational evidence testing that hypothesis.
-  For this question, many covariates have been provided to you in the
-  \texttt{atlas.Rds} file, which are described in subsection
-  \ref{proj1-data}.
-\end{enumerate}
-
-\subsection{Detailed Data Description}\label{proj1-data}
-
-The data consist of \(n = 73,278\) U.S. Census tracts. For more details
-on the construction of the variables included in this data set, please
-see \href{http://www.nber.org/papers/w25147}{Chetty, Raj, John Friedman,
-Nathaniel Hendren, Maggie R. Jones, and Sonya R. Porter. 2018. ``The
-Opportunity Atlas: Mapping the Childhood Roots of Social Mobility.''
-NBER Working Paper No. 25147}
-
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-\begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-Variable name\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-Label\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-Obs.\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-tract\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Tract FIPS Code (6-digit) 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,278\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-county\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-County FIPS Code (3-digit)\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,278\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-state\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-State FIPS Code (2-digit)\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,278\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-cz\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Commuting Zone Identifier (1990 Definition)\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,473\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-hhinc\_mean2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Mean Household Income 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,302\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-mean\_commutetime2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Average Commute Time of Working Adults in 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,313\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-frac\_coll\_plus2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Fraction of Residents with a College Degree or More in 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,993\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-foreign\_share2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of Population Born Outside the U.S.\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,279\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-med\_hhinc2016\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Median Household Income in 2016\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,763\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-med\_hhinc1990\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Median Household Income in 1999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,313\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-popdensity2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Population Density (per square mile) in 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,469\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-poor\_share2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Poverty Rate 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,933\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-poor\_share2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Poverty Rate 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,315\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-poor\_share1990\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Poverty Rate 1990\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,323\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_black2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share black 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,111\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_hisp2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share Hispanic 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,111\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_asian2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share Asian 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-71,945\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_black2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share black 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,368\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_white2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share white 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,368\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_hisp2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share Hispanic 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,368\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-share\_asian2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share Asian 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-71,050\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-gsmn\_math\_g3\_2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Average School District Level Standardized Test Scores in 3rd Grade in
-2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,090\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-rent\_twobed2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Average Rent for Two-Bedroom Apartment in 2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-56,607\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-singleparent\_share2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of Single-Headed Households with Children 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,564\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-singleparent\_share1990\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of Single-Headed Households with Children 1990\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,196\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-singleparent\_share2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of Single-Headed Households with Children 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,285\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-traveltime15\_2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of Working Adults w/ Commute Time of 15 Minutes Or Less in
-2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,939\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-emp2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Employment Rate 2000\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,344\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-mail\_return\_rate2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Census Form Rate Return Rate 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,547\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-ln\_wage\_growth\_hs\_grad\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Log wage growth for HS Grad., 2005-2014\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-51,635\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-jobs\_total\_5mi\_2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Number of Primary Jobs within 5 Miles in 2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,311\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-jobs\_highpay\_5mi\_2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Number of High-Paying (\textgreater{}USD40,000 annually) Jobs within 5
-Miles in 2015\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,311\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-nonwhite\_share2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Share of People who are not white 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,111\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-popdensity2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Population Density (per square mile) in 2010\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-73,194\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-ann\_avg\_job\_growth\_2004\_2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Average Annual Job Growth Rate 2004-2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-70,664\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-job\_density\_2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Job Density (in square miles) in 2013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,463\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_pooled\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for children with parents at the 25th
-percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,011\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_pooled\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for children with parents at the 75th
-percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,012\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_pooled\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for children with parents at the
-100th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-71,968\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_natam\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Native American children with
-parents at the 25th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1,733\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_natam\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Native American children with
-parents at the 75th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1,728\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_natam\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Native American children with
-parents at the 100th percentile of the national income
-distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1,594\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_asian\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Asian children with parents at
-the 25th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-15,434\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_asian\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Asian children with parents at
-the 75th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-15,360\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_asian\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Asian children with parents at
-the 100th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-13,480\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_black\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Black children with parents at
-the 25th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-34,086\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_black\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Black children with parents at
-the 75th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-34,049\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_black\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Black children with parents at
-the 100th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-32,536\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_hisp\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Hispanic children with parents at
-the 25th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-37,611\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_hisp\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Hispanic children with parents at
-the 75th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-37,579\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_hisp\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for Hispanic children with parents at
-the 100th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-35,987\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_white\_p25\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for white children with parents at
-the 25th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-67,978\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_white\_p75\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for white children with parents at
-the 75th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-67,968\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-kfr\_white\_p100\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Household income (\$) at age 31-37 for white children with parents at
-the 100th percentile of the national income distribution\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-67,627\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_pooled\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of all children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_white\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of White children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_black\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of Black children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_asian\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of Asian children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_hisp\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of Hispanic children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-count\_natam\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-Count of Native American children\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-72,451\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
 
 \section{Trade Exercise}\label{trade-exercise}
 
