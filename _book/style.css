@@ -1,0 +1,44 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+/*
+ * Admonitions
+ *
+ * Colors (title, body)
+ * warning: #f0b37e #ffedcc (orange)
+ * note:    #6ab0de #e7f2fa (blue)
+ * tip:     #1abc9c #dbfaf4 (green)
+*/
+.note {
+    padding: 0.5em;
+    background-color: #e7f2fa;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.warning {
+    padding: 0.5em;
+    background-color: #f0b37e;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tip {
+    padding: 0.5em;
+    background-color: #dbfaf4;
+    border-radius: 5px;
+    text-align: center;
+}
+
