@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Working With Data | Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  
+
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+
+
+<meta name="date" content="2019-11-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+<link rel="prev" href="R-intro.html"/>
+<link rel="next" href="linreg.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
+<li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
+<li class="chapter" data-level="7.6" data-path="causality.html"><a href="causality.html#star-experiment"><i class="fa fa-check"></i><b>7.6</b> STAR Experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>8</b> Projects</a><ul>
+<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.1</b> Trade Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Econometrics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sum" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Working With Data</h1>
+<p>In this chapter we will first learn some basic concepts that help summarizing data. Then, we will tackle a real-world task and read, clean, and summarize data from the web.</p>
+<div id="summary-statistics" class="section level2">
+<h2><span class="header-section-number">2.1</span> Summary Statistics</h2>
+<p><code>R</code> has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example.</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="co"># for the mpg dataset, we load:</span></a>
+<a class="sourceLine" id="cb233-2" title="2"><span class="kw">library</span>(ggplot2)</a></code></pre></div>
+<div id="central-tendency" class="section level3 unnumbered">
+<h3>Central Tendency</h3>
+<p>Suppose we want to know the <em>mean</em> and <em>median</em> of all the values stored in the <code>data.frame</code> column <code>mpg$cty</code>:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Measure</th>
+<th align="center"><code>R</code></th>
+<th align="center">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Mean</td>
+<td align="center"><code>mean(mpg$cty)</code></td>
+<td align="center">16.8589744</td>
+</tr>
+<tr class="even">
+<td align="center">Median</td>
+<td align="center"><code>median(mpg$cty)</code></td>
+<td align="center">17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="spread" class="section level3 unnumbered">
+<h3>Spread</h3>
+<p>How do the values in that column <em>vary</em>? How far <em>spread out</em> are they?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Measure</th>
+<th align="center"><code>R</code></th>
+<th align="center">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Variance</td>
+<td align="center"><code>var(mpg$cty)</code></td>
+<td align="center">18.1130736</td>
+</tr>
+<tr class="even">
+<td align="center">Standard Deviation</td>
+<td align="center"><code>sd(mpg$cty)</code></td>
+<td align="center">4.2559457</td>
+</tr>
+<tr class="odd">
+<td align="center">IQR</td>
+<td align="center"><code>IQR(mpg$cty)</code></td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">Minimum</td>
+<td align="center"><code>min(mpg$cty)</code></td>
+<td align="center">9</td>
+</tr>
+<tr class="odd">
+<td align="center">Maximum</td>
+<td align="center"><code>max(mpg$cty)</code></td>
+<td align="center">35</td>
+</tr>
+<tr class="even">
+<td align="center">Range</td>
+<td align="center"><code>range(mpg$cty)</code></td>
+<td align="center">9, 35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="categorical" class="section level3 unnumbered">
+<h3>Categorical</h3>
+<p>For categorical variables, counts and percentages can be used for summary.</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" title="1"><span class="kw">table</span>(mpg<span class="op">$</span>drv)</a></code></pre></div>
+<pre><code>#OUT&gt; 
+#OUT&gt;   4   f   r 
+#OUT&gt; 103 106  25</code></pre>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" title="1"><span class="kw">table</span>(mpg<span class="op">$</span>drv) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(mpg)</a></code></pre></div>
+<pre><code>#OUT&gt; 
+#OUT&gt;         4         f         r 
+#OUT&gt; 0.4401709 0.4529915 0.1068376</code></pre>
+</div>
+</div>
+<div id="plotting" class="section level2">
+<h2><span class="header-section-number">2.2</span> Plotting</h2>
+<p>Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks will be to visualize it. Often, a proper visualization can illuminate features of the data that can inform further analysis.</p>
+<p>We will look at four methods of visualizing data by using the basic <code>plot</code> facilities built-in with <code>R</code>:</p>
+<ul>
+<li>Histograms</li>
+<li>Barplots</li>
+<li>Boxplots</li>
+<li>Scatterplots</li>
+</ul>
+<div id="histograms" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Histograms</h3>
+<p>When visualizing a single numerical variable, a <strong>histogram</strong> is useful. It summarizes the <em>distribution</em> of values in a vector. In <code>R</code> you create one using the <code>hist()</code> function:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" title="1"><span class="kw">hist</span>(mpg<span class="op">$</span>cty)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-76-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">hist</span>(mpg<span class="op">$</span>cty,</a>
+<a class="sourceLine" id="cb239-2" title="2">     <span class="dt">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,</a>
+<a class="sourceLine" id="cb239-3" title="3">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of MPG (City)&quot;</span>, <span class="co"># main title</span></a>
+<a class="sourceLine" id="cb239-4" title="4">     <span class="dt">breaks =</span> <span class="dv">12</span>,   <span class="co"># how many breaks?</span></a>
+<a class="sourceLine" id="cb239-5" title="5">     <span class="dt">col    =</span> <span class="st">&quot;red&quot;</span>,</a>
+<a class="sourceLine" id="cb239-6" title="6">     <span class="dt">border =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-77-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
+</div>
+<div id="barplots" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Barplots</h3>
+<p>Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" title="1"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv))</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1"><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv),</a>
+<a class="sourceLine" id="cb241-2" title="2">        <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</a>
+<a class="sourceLine" id="cb241-3" title="3">        <span class="dt">ylab   =</span> <span class="st">&quot;Frequency&quot;</span>,</a>
+<a class="sourceLine" id="cb241-4" title="4">        <span class="dt">main   =</span> <span class="st">&quot;Drivetrains&quot;</span>,</a>
+<a class="sourceLine" id="cb241-5" title="5">        <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
+<a class="sourceLine" id="cb241-6" title="6">        <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-79-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplots" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Boxplots</h3>
+<p>To visualize the relationship between a numerical and categorical variable, once could use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" title="1"><span class="kw">unique</span>(mpg<span class="op">$</span>drv)</a></code></pre></div>
+<pre><code>#OUT&gt; [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
+<p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function. The box shows the <em>interquartile range</em>, the solid line in the middle is the value of the median, the wiskers show 1.5 times the interquartile range, and the dots are outliers.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" title="1"><span class="kw">boxplot</span>(mpg<span class="op">$</span>hwy)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" title="1"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-82-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Here used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" title="1"><span class="kw">boxplot</span>(hwy <span class="op">~</span><span class="st"> </span>drv, <span class="dt">data =</span> mpg,</a>
+<a class="sourceLine" id="cb246-2" title="2">     <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</a>
+<a class="sourceLine" id="cb246-3" title="3">     <span class="dt">ylab   =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</a>
+<a class="sourceLine" id="cb246-4" title="4">     <span class="dt">main   =</span> <span class="st">&quot;MPG (Highway) vs Drivetrain&quot;</span>,</a>
+<a class="sourceLine" id="cb246-5" title="5">     <span class="dt">pch    =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb246-6" title="6">     <span class="dt">cex    =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb246-7" title="7">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
+<a class="sourceLine" id="cb246-8" title="8">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
+</div>
+<div id="scatterplots" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Scatterplots</h3>
+<p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" title="1"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" title="1"><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg,</a>
+<a class="sourceLine" id="cb248-2" title="2">     <span class="dt">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,</a>
+<a class="sourceLine" id="cb248-3" title="3">     <span class="dt">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</a>
+<a class="sourceLine" id="cb248-4" title="4">     <span class="dt">main =</span> <span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>,</a>
+<a class="sourceLine" id="cb248-5" title="5">     <span class="dt">pch  =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb248-6" title="6">     <span class="dt">cex  =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb248-7" title="7">     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ggplot" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> <code>ggplot</code></h3>
+<p>All of the above plots could also have been generated using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><code>ggplot</code> is impossible to describe in brief terms, so please look at <a href="http://ggplot2.tidyverse.org">the package’s website</a> which provides excellent guidance. We will from time to time use ggplot in this book, so you could familiarize yourself with it. Let’s quickly demonstrate how one could further customize that first plot:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st">   </span><span class="co"># ggplot() makes base plot</span></a>
+<a class="sourceLine" id="cb250-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st">     </span><span class="co"># how to show x and y?</span></a>
+<a class="sourceLine" id="cb250-3" title="3"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="co"># name of y axis</span></a>
+<a class="sourceLine" id="cb250-4" title="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Engine Displacement (in Liters)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># x axis</span></a>
+<a class="sourceLine" id="cb250-5" title="5"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st">    </span><span class="co"># change the background</span></a>
+<a class="sourceLine" id="cb250-6" title="6"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>)   <span class="co"># add a title</span></a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If you want to see <code>ggplot</code> in action, you could start with <a href="http://jcyhong.github.io/ggplot_demo.html">this</a> and then look at that <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">very nice tutorial</a>? It’s fun!</p>
+</div>
+</div>
+<div id="summarize-two" class="section level2">
+<h2><span class="header-section-number">2.3</span> Summarizing Two Variables</h2>
+<p>We often are interested in how two variables are related to each other. The core concepts here are <em>covariance</em> and <em>correlation</em>. Let’s generate some data on <code>x</code> and <code>y</code> and plot them against each other:</p>
+<div class="figure" style="text-align: center"><span id="fig:x-y-corr"></span>
+<img src="ScPoEconometrics_files/figure-html/x-y-corr-1.png" alt="How are $x$ and $y$ related?" width="672" />
+<p class="caption">
+Figure 2.1: How are <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> related?
+</p>
+</div>
+<p>Taking as example the data in this plot, the concepts <em>covariance</em> and <em>correlation</em> relate to the following type of question:</p>
+<div class="note">
+<p>
+Given we observe value of something like <span class="math inline"><span class="math inline">\(x=2\)</span></span>, say, can we expect a high or a low value of <span class="math inline"><span class="math inline">\(y\)</span></span>, on average? Something like <span class="math inline"><span class="math inline">\(y=2\)</span></span> or rather something like <span class="math inline"><span class="math inline">\(y=-2\)</span></span>?
+</p>
+</div>
+<p><br>
+The answer to this type of question can be addressed by computing the covariance of both variables:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" title="1"><span class="kw">cov</span>(x,y)  </a></code></pre></div>
+<pre><code>#OUT&gt; [1] 1.041195</code></pre>
+<p>Here, this gives a positive number, 1.04, indicating that as one variable lies above it’s average, the other one does as well. In other words, it indicates a <strong>positive relationship</strong>. What is less clear, however, how to interpret the magnitude of 1.04. Is that a <em>strong</em> or a <em>weak</em> positive association?</p>
+<p>In fact, we cannot tell. This is because the covariance is measured in the same units as the data, and those units often differ between both variables. There is a better measure available to us though, the <strong>correlation</strong>, which is obtained by <em>standardizing</em> each variable. By <em>standardizing</em> a variable <span class="math inline">\(x\)</span> one means to divide <span class="math inline">\(x\)</span> by its standard deviation <span class="math inline">\(\sigma_x\)</span>:</p>
+<p><span class="math display">\[
+z = \frac{x}{\sigma_x}
+\]</span></p>
+<p>The <em>correlation coefficient</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, commonly denoted <span class="math inline">\(r_{x,y}\)</span>, is then defined as</p>
+<p><span class="math display">\[
+r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
+\]</span></p>
+<p>and we get rid of the units problem. In <code>R</code>, you can call directly</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" title="1"><span class="kw">cor</span>(x,y)</a></code></pre></div>
+<pre><code>#OUT&gt; [1] 0.9142495</code></pre>
+<p>Now this is better. Given that the correlation has to lie in <span class="math inline">\([-1,1]\)</span>, a value of 0.91 is indicative of a rather strong positive relationship for the data in figure <a href="sum.html#fig:x-y-corr">2.1</a></p>
+<p>Note that <span class="math inline">\(x,y\)</span> being drawn from a <em>continuous distribution</em> (they are joint normally distributed) had no implication for covariance and correlation: We can compute those measures also for discrete random variables (like the throws of two dice, as you will see in one of our tutorials).</p>
+<div id="visually-estimating-sigma" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Visually estimating <span class="math inline">\(\sigma\)</span></h3>
+<p>Sometimes it is useful to estimate the standard deviation of some data <em>without</em> the help of a computer (for example during an exam ;-) ). If <span class="math inline">\(x\)</span> is approximately normally distributed, 95% of its observations will lie within a range of <span class="math inline">\(\bar{x}\pm\)</span> two standard deviations of <span class="math inline">\(x\)</span>. That is to say, <em>four</em> standard deviations of <span class="math inline">\(x\)</span> cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of <span class="math inline">\(x\)</span>, and simply divide that number by four.</p>
+<div class="figure" style="text-align: center"><span id="fig:vis"></span>
+<img src="ScPoEconometrics_files/figure-html/vis-1.png" alt="visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$." width="672" />
+<p class="caption">
+Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. The x-axis labels min and max as well as mean of <span class="math inline">\(x\)</span>.
+</p>
+</div>
+<p>This is illustrated in figure <a href="sum.html#fig:vis">2.2</a>. Here we see that <code>range(x)/4</code> gives 3.16 which compares favourably to the actual standard deviation 3.</p>
+</div>
+</div>
+<div id="the-tidyverse" class="section level2">
+<h2><span class="header-section-number">2.4</span> The <code>tidyverse</code></h2>
+<p><a href="http://hadley.nz">Hadley Wickham</a> is the author of R packages <code>ggplot2</code> and also of <code>dplyr</code> (and also a myriad of others). With <code>ggplot2</code> he introduced what is called the <em>grammar of graphics</em> (hence, <code>gg</code>) to <code>R</code>. Grammar in the sense that there are <strong>nouns</strong> and <strong>verbs</strong> and a <strong>syntax</strong>, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the <em>grammar</em> idea into various other packages. The <code>tidyverse</code> package is a collection of those packages.</p>
+<p><code>tidy</code> data is data where:</p>
+<ul>
+<li>Each variable is a column</li>
+<li>Each observation is a row</li>
+<li>Each value is a cell</li>
+</ul>
+<p>Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us <em>not</em> tidy most of the times, and we first need to clean, or <code>tidy</code>, it up. Once it’s in <code>tidy</code> format, we can use the tools in the <code>tidyverse</code> with great efficiency to analyse the data and stop worrying about which tool to use.</p>
+<div id="reading-.csv-data-in-the-tidy-way" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Reading <code>.csv</code> data in the <em>tidy</em> way</h3>
+<p>We could have used the <code>read_csv()</code> function from the <code>readr</code> package to read our example dataset from the previous chapter. The <code>readr</code> function <code>read_csv()</code> has a number of advantages over the built-in <code>read.csv</code>. For example, it is much faster reading larger data. <a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html">It also uses the <code>tibble</code> package to read the data as a tibble.</a> <strong>A <code>tibble</code> is simply a data frame that prints with sanity.</strong> Notice in the output below that we are given additional information such as dimension and variable type.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" title="1"><span class="kw">library</span>(readr)  <span class="co"># you need `install.packages(&quot;readr&quot;)` once!</span></a>
+<a class="sourceLine" id="cb255-2" title="2">path =<span class="st"> </span><span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,<span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;example-data.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb255-3" title="3">example_data_from_disk =<span class="st"> </span><span class="kw">read_csv</span>(path)</a></code></pre></div>
+</div>
+<div id="tidy-data.frames-are-tibbles" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Tidy <code>data.frames</code> are <code>tibbles</code></h3>
+<p>Let’s grab some data from the <code>ggplot2</code> package:</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" title="1"><span class="kw">data</span>(mpg,<span class="dt">package =</span> <span class="st">&quot;ggplot2&quot;</span>)  <span class="co"># load dataset `mpg` from `ggplot2` package</span></a>
+<a class="sourceLine" id="cb256-2" title="2"><span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 10 x 11
+#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…</code></pre>
+<p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame, as we have seen. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates with rows and columns were omitted.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" title="1">mpg</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 234 x 11
+#OUT&gt;    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+#OUT&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+#OUT&gt;  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+#OUT&gt;  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+#OUT&gt;  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+#OUT&gt;  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+#OUT&gt;  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+#OUT&gt;  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+#OUT&gt;  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+#OUT&gt;  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+#OUT&gt;  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+#OUT&gt; 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…
+#OUT&gt; # … with 224 more rows</code></pre>
+<p>Let’s look at <code>str</code> as well to get familiar with the content of the data:</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" title="1"><span class="kw">str</span>(mpg)</a></code></pre></div>
+<pre><code>#OUT&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 234 obs. of  11 variables:
+#OUT&gt;  $ manufacturer: chr  &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
+#OUT&gt;  $ model       : chr  &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; ...
+#OUT&gt;  $ displ       : num  1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+#OUT&gt;  $ year        : int  1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+#OUT&gt;  $ cyl         : int  4 4 4 4 6 6 6 4 4 4 ...
+#OUT&gt;  $ trans       : chr  &quot;auto(l5)&quot; &quot;manual(m5)&quot; &quot;manual(m6)&quot; &quot;auto(av)&quot; ...
+#OUT&gt;  $ drv         : chr  &quot;f&quot; &quot;f&quot; &quot;f&quot; &quot;f&quot; ...
+#OUT&gt;  $ cty         : int  18 21 20 21 16 18 18 18 16 20 ...
+#OUT&gt;  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
+#OUT&gt;  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
+#OUT&gt;  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...</code></pre>
+<p>In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.</p>
+<p>To understand more about the data set, we use the <code>?</code> operator to pull up the documentation for the data.</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" title="1">?mpg</a></code></pre></div>
+<p>Working with tibbles is mostly the same as working with plain data.frames:</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" title="1"><span class="kw">names</span>(mpg)</a></code></pre></div>
+<pre><code>#OUT&gt;  [1] &quot;manufacturer&quot; &quot;model&quot;        &quot;displ&quot;        &quot;year&quot;        
+#OUT&gt;  [5] &quot;cyl&quot;          &quot;trans&quot;        &quot;drv&quot;          &quot;cty&quot;         
+#OUT&gt;  [9] &quot;hwy&quot;          &quot;fl&quot;           &quot;class&quot;</code></pre>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" title="1">mpg<span class="op">$</span>year</a></code></pre></div>
+<pre><code>#OUT&gt;   [1] 1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 2008 1999 1999 2008
+#OUT&gt;  [15] 2008 1999 2008 2008 2008 2008 2008 1999 2008 1999 1999 2008 2008 2008
+#OUT&gt;  [29] 2008 2008 1999 1999 1999 2008 1999 2008 2008 1999 1999 1999 1999 2008
+#OUT&gt;  [43] 2008 2008 1999 1999 2008 2008 2008 2008 1999 1999 2008 2008 2008 1999
+#OUT&gt;  [57] 1999 1999 2008 2008 2008 1999 2008 1999 2008 2008 2008 2008 2008 2008
+#OUT&gt;  [71] 1999 1999 2008 1999 1999 1999 2008 1999 1999 1999 2008 2008 1999 1999
+#OUT&gt;  [85] 1999 1999 1999 2008 1999 2008 1999 1999 2008 2008 1999 1999 2008 2008
+#OUT&gt;  [99] 2008 1999 1999 1999 1999 1999 2008 2008 2008 2008 1999 1999 2008 2008
+#OUT&gt; [113] 1999 1999 2008 1999 1999 2008 2008 2008 2008 2008 2008 2008 1999 1999
+#OUT&gt; [127] 2008 2008 2008 2008 1999 2008 2008 1999 1999 1999 2008 1999 2008 2008
+#OUT&gt; [141] 1999 1999 1999 2008 2008 2008 2008 1999 1999 2008 1999 1999 2008 2008
+#OUT&gt; [155] 1999 1999 1999 2008 2008 1999 1999 2008 2008 2008 2008 1999 1999 1999
+#OUT&gt; [169] 1999 2008 2008 2008 2008 1999 1999 1999 1999 2008 2008 1999 1999 2008
+#OUT&gt; [183] 2008 1999 1999 2008 1999 1999 2008 2008 1999 1999 2008 1999 1999 1999
+#OUT&gt; [197] 2008 2008 1999 2008 1999 1999 2008 1999 1999 2008 2008 1999 1999 2008
+#OUT&gt; [211] 2008 1999 1999 1999 1999 2008 2008 2008 2008 1999 1999 1999 1999 1999
+#OUT&gt; [225] 1999 2008 2008 1999 1999 2008 2008 1999 1999 2008</code></pre>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" title="1">mpg<span class="op">$</span>hwy</a></code></pre></div>
+<pre><code>#OUT&gt;   [1] 29 29 31 30 26 26 27 26 25 28 27 25 25 25 25 24 25 23 20 15 20 17 17
+#OUT&gt;  [24] 26 23 26 25 24 19 14 15 17 27 30 26 29 26 24 24 22 22 24 24 17 22 21
+#OUT&gt;  [47] 23 23 19 18 17 17 19 19 12 17 15 17 17 12 17 16 18 15 16 12 17 17 16
+#OUT&gt;  [70] 12 15 16 17 15 17 17 18 17 19 17 19 19 17 17 17 16 16 17 15 17 26 25
+#OUT&gt;  [93] 26 24 21 22 23 22 20 33 32 32 29 32 34 36 36 29 26 27 30 31 26 26 28
+#OUT&gt; [116] 26 29 28 27 24 24 24 22 19 20 17 12 19 18 14 15 18 18 15 17 16 18 17
+#OUT&gt; [139] 19 19 17 29 27 31 32 27 26 26 25 25 17 17 20 18 26 26 27 28 25 25 24
+#OUT&gt; [162] 27 25 26 23 26 26 26 26 25 27 25 27 20 20 19 17 20 17 29 27 31 31 26
+#OUT&gt; [185] 26 28 27 29 31 31 26 26 27 30 33 35 37 35 15 18 20 20 22 17 19 18 20
+#OUT&gt; [208] 29 26 29 29 24 44 29 26 29 29 29 29 23 24 44 41 29 26 28 29 29 29 28
+#OUT&gt; [231] 29 26 26 26</code></pre>
+<p>Subsetting is also similar to dataframe. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display <code>manufacturer</code>, <code>model</code> and <code>year</code>.</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" title="1"><span class="co"># mpg[row condition, col condition]</span></a>
+<a class="sourceLine" id="cb269-2" title="2">mpg[mpg<span class="op">$</span>hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>)]</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 6 x 3
+#OUT&gt;   manufacturer model       year
+#OUT&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;
+#OUT&gt; 1 honda        civic       2008
+#OUT&gt; 2 honda        civic       2008
+#OUT&gt; 3 toyota       corolla     2008
+#OUT&gt; 4 volkswagen   jetta       1999
+#OUT&gt; 5 volkswagen   new beetle  1999
+#OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
+<p>An alternative would be to use the <code>subset()</code> function, which has a much more readable syntax.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" title="1"><span class="kw">subset</span>(mpg, <span class="dt">subset =</span> hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>))</a></code></pre></div>
+<p>Lastly, and most <em>tidy</em>, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <em>pipe operator</em> <code>f(x) %&gt;% g(z)</code> from the <code>magrittr</code> package. This operator takes the output of the first command, for example <code>y = f(x)</code>, and passes it <em>as the first argument</em> to the next function, i.e. we’d obtain <code>g(y,z)</code> here.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb272-2" title="2">mpg <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb272-3" title="3"><span class="st">  </span><span class="kw">filter</span>(hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb272-4" title="4"><span class="st">  </span><span class="kw">select</span>(manufacturer, model, year)</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 6 x 3
+#OUT&gt;   manufacturer model       year
+#OUT&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;
+#OUT&gt; 1 honda        civic       2008
+#OUT&gt; 2 honda        civic       2008
+#OUT&gt; 3 toyota       corolla     2008
+#OUT&gt; 4 volkswagen   jetta       1999
+#OUT&gt; 5 volkswagen   new beetle  1999
+#OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
+<p>Note that the above syntax is equivalent to the following pipe-free command (which is much harder to read!):</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb274-2" title="2"><span class="kw">select</span>(<span class="kw">filter</span>(mpg, hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>), manufacturer, model, year)</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 6 x 3
+#OUT&gt;   manufacturer model       year
+#OUT&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;
+#OUT&gt; 1 honda        civic       2008
+#OUT&gt; 2 honda        civic       2008
+#OUT&gt; 3 toyota       corolla     2008
+#OUT&gt; 4 volkswagen   jetta       1999
+#OUT&gt; 5 volkswagen   new beetle  1999
+#OUT&gt; 6 volkswagen   new beetle  1999</code></pre>
+<p>All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.</p>
+<div id="task-1-1" class="section level4">
+<h4><span class="header-section-number">2.4.2.1</span> Task 1</h4>
+<ol style="list-style-type: decimal">
+<li>Make sure to have the <code>mpg</code> dataset loaded by typing <code>data(mpg)</code> (and <code>library(ggplot2)</code> if you haven’t!). Use the <code>table</code> function to find out how many cars were built by <em>mercury</em>?</li>
+<li>What is the average year the audi’s were built in this dataset? Use the function <code>mean</code> on the subset of column <code>year</code> that corresponds to <code>audi</code>. (Be careful: subsetting a <code>tibble</code> returns a <code>tibble</code> (and not a vector)!. so get the <code>year</code> column after you have subset the <code>tibble</code>.)</li>
+<li>Use the <code>dplyr</code> piping syntax from above first with <code>group_by</code> and then with <code>summarise(newvar=your_expression)</code> to find the mean <code>year</code> by all manufacturers (i.e. same as previous task, but for all manufacturers. don’t write a loop!).</li>
+</ol>
+</div>
+</div>
+<div id="tidy-example-importing-non-tidy-excel-data" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Tidy Example: Importing Non-Tidy Excel Data</h3>
+<p>The data we will look at is from <a href="http://ec.europa.eu/eurostat/data/database">Eurostat</a> on demography and migration. You should download the data yourself (click on previous link, then drill down to <em>database by themes &gt; Population and social conditions &gt; Demograph and migration &gt; Population change - Demographic balance and crude rates at national level (demo_gind)</em>).</p>
+<p>Once downloaded, we can read the data with the function <code>read_excel</code> from the package <a href="http://readxl.tidyverse.org"><code>readxl</code></a>, again part of the <code>tidyverse</code> suite.</p>
+<p>It’s important to know how the data is organized in the spreadsheet. Open the file with Excel to see:</p>
+<ul>
+<li>There is a heading which we don’t need.</li>
+<li>There are 5 rows with info that we don’t need.</li>
+<li>There is one table per variable (total population, males, females, etc)</li>
+<li>Each table has one row for each country, and one column for each year.</li>
+<li>As such, this data is <strong>not tidy</strong>.</li>
+</ul>
+<p>Now we will read the first chunk of data, from the first table: <em>total population</em>:</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" title="1"><span class="kw">library</span>(readxl)  <span class="co"># load the library</span></a>
+<a class="sourceLine" id="cb276-2" title="2"><span class="co"># Notice that if you installed the R package of this book,</span></a>
+<a class="sourceLine" id="cb276-3" title="3"><span class="co"># you have the .xls data file already at </span></a>
+<a class="sourceLine" id="cb276-4" title="4"><span class="co"># `system.file(package=&quot;ScPoEconometrics&quot;,</span></a>
+<a class="sourceLine" id="cb276-5" title="5"><span class="co">#                        &quot;datasets&quot;,&quot;demo_gind.xls&quot;)`</span></a>
+<a class="sourceLine" id="cb276-6" title="6"><span class="co"># otherwise:</span></a>
+<a class="sourceLine" id="cb276-7" title="7"><span class="co"># * download the file to your computer</span></a>
+<a class="sourceLine" id="cb276-8" title="8"><span class="co"># * change the argument `path` to where you downloaded it</span></a>
+<a class="sourceLine" id="cb276-9" title="9"><span class="co"># you may want to change your working directory with `setwd(&quot;your/directory&quot;)</span></a>
+<a class="sourceLine" id="cb276-10" title="10"><span class="co"># or in RStudio by clicking Session &gt; Set Working Directory</span></a>
+<a class="sourceLine" id="cb276-11" title="11"></a>
+<a class="sourceLine" id="cb276-12" title="12"><span class="co"># total population in raw format</span></a>
+<a class="sourceLine" id="cb276-13" title="13">tot_pop_raw =<span class="st"> </span><span class="kw">read_excel</span>(</a>
+<a class="sourceLine" id="cb276-14" title="14">                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,</a>
+<a class="sourceLine" id="cb276-15" title="15">                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), </a>
+<a class="sourceLine" id="cb276-16" title="16">                <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span></a>
+<a class="sourceLine" id="cb276-17" title="17">                <span class="dt">range=</span><span class="st">&quot;A9:K68&quot;</span>)  <span class="co"># which excel cell range to read</span></a>
+<a class="sourceLine" id="cb276-18" title="18"><span class="kw">names</span>(tot_pop_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span></a>
+<a class="sourceLine" id="cb276-19" title="19">tot_pop_raw</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 59 x 11
+#OUT&gt;    Country `2008` `2009` `2010` `2011` `2012` `2013` `2014` `2015` `2016`
+#OUT&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; 
+#OUT&gt;  1 Europe… 50029… 50209… 50317… 50296… 50404… 50516… 50701… 50854… 51027…
+#OUT&gt;  2 Europe… 43872… 44004… 44066… 43994… 44055… 44125… 44266… 44366… 44489…
+#OUT&gt;  3 Europe… 49598… 49778… 49886… 49867… 49977… 50090… 50276… 50431… 50608…
+#OUT&gt;  4 Euro a… 33309… 33447… 33526… 33457… 33528… 33604… 33754… 33856… 33988…
+#OUT&gt;  5 Euro a… 32988… 33128… 33212… 33152… 33228… 33307… 33459… 33563… 33699…
+#OUT&gt;  6 Belgium 10666… 10753… 10839… 11000… 11075… 11137… 11180… 11237… 11311…
+#OUT&gt;  7 Bulgar… 75180… 74671… 74217… 73694… 73272… 72845… 72456… 72021… 71537…
+#OUT&gt;  8 Czech … 10343… 10425… 10462… 10486… 10505… 10516… 10512… 10538… 10553…
+#OUT&gt;  9 Denmark 54757… 55114… 55347… 55606… 55805… 56026… 56272… 56597… 57072…
+#OUT&gt; 10 German… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175…
+#OUT&gt; # … with 49 more rows, and 1 more variable: `2017` &lt;chr&gt;</code></pre>
+<p>This shows a <code>tibble</code>, which we encountered just above. The column names are <code>Country,2008,2009,...</code>, and the rows are numbered <code>1,2,3,...</code>. Notice, in particular, that <em>all</em> columns seem to be of type <code>&lt;chr&gt;</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
+<div id="tidyr" class="section level4">
+<h4><span class="header-section-number">2.4.3.1</span> <code>tidyr</code></h4>
+<p>In the previous <code>tibble</code>, each year is a column name (like <code>2008</code>) instead of all years being collected in one column <code>year</code>. We really would like to have several rows for each Country, one row per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
+<ol style="list-style-type: decimal">
+<li>specify which columns are to be gathered: in our case, all years (note that <code>paste(2008:2017)</code> produces a vector like <code>["2008", "2009", "2010",...]</code>)</li>
+<li>say what those columns should be gathered into, i.e. what is the <em>key</em> for those values: we’ll call it <code>year</code>.</li>
+<li>Finally, what is the name of the new resulting column, containing the <em>value</em> from each cell: let’s call it <code>counts</code>.</li>
+</ol>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" title="1"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather function</span></a>
+<a class="sourceLine" id="cb278-2" title="2">tot_pop =<span class="st"> </span><span class="kw">gather</span>(tot_pop_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</a>
+<a class="sourceLine" id="cb278-3" title="3">tot_pop</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 590 x 3
+#OUT&gt;    Country                                          year  counts   
+#OUT&gt;    &lt;chr&gt;                                            &lt;chr&gt; &lt;chr&gt;    
+#OUT&gt;  1 European Union (current composition)             2008  500297033
+#OUT&gt;  2 European Union (without United Kingdom)          2008  438725386
+#OUT&gt;  3 European Union (before the accession of Croatia) 2008  495985066
+#OUT&gt;  4 Euro area (19 countries)                         2008  333096775
+#OUT&gt;  5 Euro area (18 countries)                         2008  329884170
+#OUT&gt;  6 Belgium                                          2008  10666866 
+#OUT&gt;  7 Bulgaria                                         2008  7518002  
+#OUT&gt;  8 Czech Republic                                   2008  10343422 
+#OUT&gt;  9 Denmark                                          2008  5475791  
+#OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008  82217837 
+#OUT&gt; # … with 580 more rows</code></pre>
+<p>That’s better! However, <code>counts</code> is still <code>chr</code>! Let’s convert it to a number:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" title="1">tot_pop<span class="op">$</span>counts =<span class="st"> </span><span class="kw">as.integer</span>(tot_pop<span class="op">$</span>counts)</a></code></pre></div>
+<pre><code>#OUT&gt; Warning: NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" title="1">tot_pop</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 590 x 3
+#OUT&gt;    Country                                          year     counts
+#OUT&gt;    &lt;chr&gt;                                            &lt;chr&gt;     &lt;int&gt;
+#OUT&gt;  1 European Union (current composition)             2008  500297033
+#OUT&gt;  2 European Union (without United Kingdom)          2008  438725386
+#OUT&gt;  3 European Union (before the accession of Croatia) 2008  495985066
+#OUT&gt;  4 Euro area (19 countries)                         2008  333096775
+#OUT&gt;  5 Euro area (18 countries)                         2008  329884170
+#OUT&gt;  6 Belgium                                          2008   10666866
+#OUT&gt;  7 Bulgaria                                         2008    7518002
+#OUT&gt;  8 Czech Republic                                   2008   10343422
+#OUT&gt;  9 Denmark                                          2008    5475791
+#OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008   82217837
+#OUT&gt; # … with 580 more rows</code></pre>
+<p>Now you can see that column <code>counts</code> is indeed <code>int</code>, i.e. an integer number, and we are fine. The <code>Warning: NAs introduced by coercion</code> means that <code>R</code> converted some values to <code>NA</code>, because it couldn’t convert them into <code>numeric</code>. More below!</p>
+</div>
+<div id="dplyr" class="section level4">
+<h4><span class="header-section-number">2.4.3.2</span> <code>dplyr</code></h4>
+<blockquote>
+<p>The <a href="http://r4ds.had.co.nz/transform.html">transform</a> chapter of Hadley Wickham’s book is a great place to read up more on using <code>dplyr</code>.</p>
+</blockquote>
+<p>With <code>dplyr</code> you can do the following operations on <code>data.frame</code>s and <code>tibble</code>s:</p>
+<ul>
+<li>Choose observations based on a certain value (i.e. subset): <code>filter()</code></li>
+<li>Reorder rows: <code>arrange()</code></li>
+<li>Select variables by name: <code>select()</code></li>
+<li>Create new variables out of existing ones: <code>mutate()</code></li>
+<li>Summarise variables: <code>summarise()</code></li>
+</ul>
+<p>All of those verbs can be used with <code>group_by()</code>, where we apply the respective operation on a <em>group</em> of the dataframe/tibble. For example, on our <code>tot_pop</code> tibble we will now</p>
+<ul>
+<li>filter</li>
+<li>mutate</li>
+<li>and plot the resulting values</li>
+</ul>
+<p>Let’s get a plot of the populations of France, the UK and Italy over time, in terms of millions of people. We will make use of the <code>piping</code> syntax of <code>dplyr</code> which we introduced just above.</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" title="1"><span class="kw">library</span>(dplyr)  <span class="co"># for %&gt;%, filter, mutate, ...</span></a>
+<a class="sourceLine" id="cb284-2" title="2"><span class="co"># 1. take the data.frame `tot_pop`</span></a>
+<a class="sourceLine" id="cb284-3" title="3">tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-4" title="4"><span class="st">  </span><span class="co"># 2. pipe it into the filter function</span></a>
+<a class="sourceLine" id="cb284-5" title="5"><span class="st">  </span><span class="co"># filter on Country being one of &quot;France&quot;,&quot;United Kingdom&quot; or &quot;Italy&quot;</span></a>
+<a class="sourceLine" id="cb284-6" title="6"><span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-7" title="7"><span class="st">  </span><span class="co"># 3. pipe the result into the mutate function</span></a>
+<a class="sourceLine" id="cb284-8" title="8"><span class="st">  </span><span class="co"># create a new column called millions</span></a>
+<a class="sourceLine" id="cb284-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-10" title="10"><span class="st">  </span><span class="co"># 4. pipe the result into ggplot to make a plot</span></a>
+<a class="sourceLine" id="cb284-11" title="11"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="arrange-a-tibble" class="section level4 unnumbered">
+<h4>Arrange a <code>tibble</code></h4>
+<ul>
+<li>What are the top/bottom 5 most populated areas?</li>
+</ul>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" title="1">top5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(counts)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># arrange in descending order of col `counts`</span></a>
+<a class="sourceLine" id="cb285-3" title="3"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb285-4" title="4"></a>
+<a class="sourceLine" id="cb285-5" title="5">bottom5 =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(counts)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-7" title="7"><span class="st">  </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb285-8" title="8"><span class="co"># let&#39;s see top 5</span></a>
+<a class="sourceLine" id="cb285-9" title="9">top5</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 5 x 3
+#OUT&gt;   Country                                                    year    counts
+#OUT&gt;   &lt;chr&gt;                                                      &lt;chr&gt;    &lt;int&gt;
+#OUT&gt; 1 European Economic Area (EU28  - current composition, plus… 2017    5.17e8
+#OUT&gt; 2 European Economic Area (EU28  - current composition, plus… 2016    5.16e8
+#OUT&gt; 3 European Economic Area (EU28  - current composition, plus… 2015    5.14e8
+#OUT&gt; 4 European Economic Area (EU27 -  before the accession of C… 2017    5.13e8
+#OUT&gt; 5 European Economic Area (EU28  - current composition, plus… 2014    5.12e8</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" title="1"><span class="co"># and bottom 5</span></a>
+<a class="sourceLine" id="cb287-2" title="2">bottom5</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 5 x 3
+#OUT&gt;   Country    year  counts
+#OUT&gt;   &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
+#OUT&gt; 1 San Marino 2015   32789
+#OUT&gt; 2 San Marino 2014   32520
+#OUT&gt; 3 San Marino 2008   32054
+#OUT&gt; 4 San Marino 2011   31863
+#OUT&gt; 5 San Marino 2009   31269</code></pre>
+<p>Now this is not exactly what we wanted. It’s always the same country in both top and bottom, because there are multiple years per country. Let’s compute average population over the last 5 years and rank according to that:</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" title="1">topbottom =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-3" title="3"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2012</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_count =</span> <span class="kw">mean</span>(counts)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_count))</a>
+<a class="sourceLine" id="cb289-6" title="6"></a>
+<a class="sourceLine" id="cb289-7" title="7">top5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb289-8" title="8">bottom5 =<span class="st"> </span>topbottom <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb289-9" title="9">top5</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 5 x 2
+#OUT&gt;   Country                                                        mean_count
+#OUT&gt;   &lt;chr&gt;                                                               &lt;dbl&gt;
+#OUT&gt; 1 European Economic Area (EU28  - current composition, plus IS,… 514029320 
+#OUT&gt; 2 European Economic Area (EU27 -  before the accession of Croat… 509813491.
+#OUT&gt; 3 European Union (current composition)                           508502858.
+#OUT&gt; 4 European Union (before the accession of Croatia)               504287028.
+#OUT&gt; 5 European Union (without United Kingdom)                        443638309.</code></pre>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" title="1">bottom5</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 5 x 2
+#OUT&gt;   Country       mean_count
+#OUT&gt;   &lt;chr&gt;              &lt;dbl&gt;
+#OUT&gt; 1 Luxembourg       563319.
+#OUT&gt; 2 Malta            440467.
+#OUT&gt; 3 Iceland          329501.
+#OUT&gt; 4 Liechtenstein     37353 
+#OUT&gt; 5 San Marino        33014.</code></pre>
+<p>That’s better!</p>
+</div>
+<div id="look-for-nas-in-a-tibble" class="section level4 unnumbered">
+<h4>Look for <code>NA</code>s in a <code>tibble</code></h4>
+<p>Sometimes data is <em>missing</em>, and <code>R</code> represents it with the special value <code>NA</code> (not available). It is good to know where in our dataset we are going to encounter any missing values, so the task here is: let’s produce a table that has three columns:</p>
+<ol style="list-style-type: decimal">
+<li>the names of countries with missing data</li>
+<li>how many years of data are missing for each of those</li>
+<li>and the actual years that are missing</li>
+</ol>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" title="1">missings =<span class="st"> </span>tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb293-2" title="2"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(counts)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># is.na(x) returns TRUE if x is NA</span></a>
+<a class="sourceLine" id="cb293-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb293-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_missing =</span> <span class="kw">n</span>(),<span class="dt">years =</span> <span class="kw">paste</span>(year,<span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))</a>
+<a class="sourceLine" id="cb293-5" title="5">knitr<span class="op">:::</span><span class="kw">kable</span>(missings)  <span class="co"># knitr:::kable makes a nice table</span></a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Country</th>
+<th align="right">n_missing</th>
+<th align="left">years</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Albania</td>
+<td align="right">2</td>
+<td align="left">2010, 2012</td>
+</tr>
+<tr class="even">
+<td align="left">Andorra</td>
+<td align="right">2</td>
+<td align="left">2014, 2015</td>
+</tr>
+<tr class="odd">
+<td align="left">Armenia</td>
+<td align="right">1</td>
+<td align="left">2014</td>
+</tr>
+<tr class="even">
+<td align="left">France (metropolitan)</td>
+<td align="right">4</td>
+<td align="left">2014, 2015, 2016, 2017</td>
+</tr>
+<tr class="odd">
+<td align="left">Georgia</td>
+<td align="right">1</td>
+<td align="left">2013</td>
+</tr>
+<tr class="even">
+<td align="left">Monaco</td>
+<td align="right">7</td>
+<td align="left">2008, 2009, 2010, 2011, 2012, 2013, 2014</td>
+</tr>
+<tr class="odd">
+<td align="left">Russia</td>
+<td align="right">4</td>
+<td align="left">2013, 2015, 2016, 2017</td>
+</tr>
+<tr class="even">
+<td align="left">San Marino</td>
+<td align="right">1</td>
+<td align="left">2010</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="males-and-females" class="section level4 unnumbered">
+<h4>Males and Females</h4>
+<p>Let’s look at the numbers by male and female population. They are in the same xls file, but at different cell ranges. Also, I just realised that the special character <code>:</code> indicates <em>missing</em> data. We can feed that to <code>read_excel</code> and that will spare us the need to convert data types afterwards. Let’s see:</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" title="1">females_raw =<span class="st"> </span><span class="kw">read_excel</span>(</a>
+<a class="sourceLine" id="cb294-2" title="2">                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,</a>
+<a class="sourceLine" id="cb294-3" title="3">                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), </a>
+<a class="sourceLine" id="cb294-4" title="4">                <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span></a>
+<a class="sourceLine" id="cb294-5" title="5">                <span class="dt">range=</span><span class="st">&quot;A141:K200&quot;</span>,  <span class="co"># which excel cell range to read</span></a>
+<a class="sourceLine" id="cb294-6" title="6">                <span class="dt">na=</span><span class="st">&quot;:&quot;</span> )   <span class="co"># missing data indicator</span></a>
+<a class="sourceLine" id="cb294-7" title="7"><span class="kw">names</span>(females_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span></a>
+<a class="sourceLine" id="cb294-8" title="8">females_raw</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 59 x 11
+#OUT&gt;    Country `2008` `2009` `2010` `2011` `2012` `2013` `2014` `2015` `2016`
+#OUT&gt;    &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+#OUT&gt;  1 Europe… 2.56e8 2.57e8 2.58e8 2.58e8 2.58e8 2.59e8 2.60e8 2.60e8 2.61e8
+#OUT&gt;  2 Europe… 2.25e8 2.26e8 2.26e8 2.26e8 2.26e8 2.26e8 2.27e8 2.27e8 2.28e8
+#OUT&gt;  3 Europe… 2.54e8 2.55e8 2.55e8 2.56e8 2.56e8 2.57e8 2.57e8 2.58e8 2.59e8
+#OUT&gt;  4 Euro a… 1.71e8 1.71e8 1.72e8 1.72e8 1.72e8 1.72e8 1.73e8 1.73e8 1.74e8
+#OUT&gt;  5 Euro a… 1.69e8 1.70e8 1.70e8 1.70e8 1.70e8 1.71e8 1.71e8 1.72e8 1.72e8
+#OUT&gt;  6 Belgium 5.44e6 5.48e6 5.53e6 5.60e6 5.64e6 5.67e6 5.69e6 5.71e6 5.74e6
+#OUT&gt;  7 Bulgar… 3.86e6 3.83e6 3.81e6 3.78e6 3.76e6 3.74e6 3.72e6 3.70e6 3.68e6
+#OUT&gt;  8 Czech … 5.28e6 5.31e6 5.33e6 5.34e6 5.35e6 5.35e6 5.35e6 5.36e6 5.37e6
+#OUT&gt;  9 Denmark 2.76e6 2.78e6 2.79e6 2.80e6 2.81e6 2.82e6 2.83e6 2.85e6 2.87e6
+#OUT&gt; 10 German… 4.19e7 4.18e7 4.17e7 4.11e7 4.11e7 4.11e7 4.12e7 4.14e7 4.17e7
+#OUT&gt; # … with 49 more rows, and 1 more variable: `2017` &lt;dbl&gt;</code></pre>
+<p>You can see that <code>R</code> now correctly read the numbers as such, after we told it that the <code>:</code> character has the special <em>missing</em> meaning: before, it <em>coerced</em> the entire <code>2008</code> column (for example) to be of type <code>chr</code> after it hit the first <code>:</code>. We had to manually convert the column back to <code>numeric</code>, in the process automatically coercing the <code>:</code>s into <code>NA</code>. Now we addressed that issue directly. Let’s also get the male data in the same way:</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" title="1">males_raw =<span class="st"> </span><span class="kw">read_excel</span>(</a>
+<a class="sourceLine" id="cb296-2" title="2">                <span class="dt">path =</span> <span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,</a>
+<a class="sourceLine" id="cb296-3" title="3">                                    <span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;demo_gind.xls&quot;</span>), </a>
+<a class="sourceLine" id="cb296-4" title="4">                <span class="dt">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="co"># which sheet</span></a>
+<a class="sourceLine" id="cb296-5" title="5">                <span class="dt">range=</span><span class="st">&quot;A75:K134&quot;</span>,  <span class="co"># which excel cell range to read</span></a>
+<a class="sourceLine" id="cb296-6" title="6">                <span class="dt">na=</span><span class="st">&quot;:&quot;</span> )   <span class="co"># missing data indicator</span></a>
+<a class="sourceLine" id="cb296-7" title="7"><span class="kw">names</span>(males_raw)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span>   <span class="co"># lets rename the first column</span></a></code></pre></div>
+<p>Next step was to <code>tidy</code> up this data, just as before:</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" title="1">females =<span class="st"> </span><span class="kw">gather</span>(females_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</a>
+<a class="sourceLine" id="cb297-2" title="2">males =<span class="st"> </span><span class="kw">gather</span>(males_raw, <span class="kw">paste</span>(<span class="dv">2008</span><span class="op">:</span><span class="dv">2017</span>),<span class="dt">key=</span><span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;counts&quot;</span>)</a></code></pre></div>
+<p>Let’s try to tweak our above plot to show the same data in two separate panels: one for males and one for females. This is easiest to do with <code>ggplot</code> if we have all the data in one single <code>data.frame</code> (or <code>tibble</code>), and marked with a <em>group identifier</em>. Let’s first add this to both datasets, and then let’s just combine both into one:</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" title="1">females<span class="op">$</span>sex =<span class="st"> &quot;female&quot;</span></a>
+<a class="sourceLine" id="cb298-2" title="2">males<span class="op">$</span>sex =<span class="st"> &quot;male&quot;</span></a>
+<a class="sourceLine" id="cb298-3" title="3">sexes =<span class="st"> </span><span class="kw">rbind</span>(males,females)   <span class="co"># &quot;row bind&quot; 2 data.frames</span></a>
+<a class="sourceLine" id="cb298-4" title="4">sexes</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 1,180 x 4
+#OUT&gt;    Country                                          year     counts sex  
+#OUT&gt;    &lt;chr&gt;                                            &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
+#OUT&gt;  1 European Union (current composition)             2008  243990548 male 
+#OUT&gt;  2 European Union (without United Kingdom)          2008  213826199 male 
+#OUT&gt;  3 European Union (before the accession of Croatia) 2008  241913560 male 
+#OUT&gt;  4 Euro area (19 countries)                         2008  162516883 male 
+#OUT&gt;  5 Euro area (18 countries)                         2008  161029464 male 
+#OUT&gt;  6 Belgium                                          2008    5224309 male 
+#OUT&gt;  7 Bulgaria                                         2008    3660367 male 
+#OUT&gt;  8 Czech Republic                                   2008    5065117 male 
+#OUT&gt;  9 Denmark                                          2008    2712666 male 
+#OUT&gt; 10 Germany (until 1990 former territory of the FRG) 2008   40274292 male 
+#OUT&gt; # … with 1,170 more rows</code></pre>
+<p>Now that we have all the data nice and <code>tidy</code> in a <code>data.frame</code>, this is a very small change to our previous plotting code:</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" title="1">sexes <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb300-2" title="2"><span class="st">  </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,<span class="st">&quot;United Kingdom&quot;</span>,<span class="st">&quot;Italy&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb300-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">millions =</span> counts <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb300-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.Date</span>(year,<span class="dt">format=</span><span class="st">&quot;%Y&quot;</span>),  <span class="co"># convert to `Date`</span></a>
+<a class="sourceLine" id="cb300-5" title="5">                       <span class="dt">y=</span>millions,<span class="dt">colour=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb300-6" title="6"><span class="st">      </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb300-7" title="7"><span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">name =</span> <span class="st">&quot;year&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># rename x axis</span></a>
+<a class="sourceLine" id="cb300-8" title="8"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>sex)   <span class="co"># make two panels, splitting by groups `sex`</span></a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/psexes-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="always-compare-to-germany--" class="section level4 unnumbered">
+<h4>Always Compare to Germany :-)</h4>
+<p>How do our three countries compare with respect to the biggest country in the EU in terms of population? What <em>fraction</em> of Germany does the French population make in any given year, for example?</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" title="1"><span class="co"># remember that the pipe operator %&gt;% takes the </span></a>
+<a class="sourceLine" id="cb301-2" title="2"><span class="co"># result of the previous operation and passes it</span></a>
+<a class="sourceLine" id="cb301-3" title="3"><span class="co"># as the *first* argument to the next function call</span></a>
+<a class="sourceLine" id="cb301-4" title="4">merge_GER &lt;-<span class="st"> </span>tot_pop <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-5" title="5"><span class="st">  </span><span class="co"># 1. subset to countries of interest</span></a>
+<a class="sourceLine" id="cb301-6" title="6"><span class="st">  </span><span class="kw">filter</span>(</a>
+<a class="sourceLine" id="cb301-7" title="7">    Country <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb301-8" title="8"><span class="st">      </span><span class="kw">c</span>(<span class="st">&quot;France&quot;</span>,</a>
+<a class="sourceLine" id="cb301-9" title="9">        <span class="st">&quot;United Kingdom&quot;</span>,</a>
+<a class="sourceLine" id="cb301-10" title="10">        <span class="st">&quot;Italy&quot;</span>)</a>
+<a class="sourceLine" id="cb301-11" title="11">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-12" title="12"><span class="st">  </span><span class="co"># 2. group data by year</span></a>
+<a class="sourceLine" id="cb301-13" title="13"><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-14" title="14"><span class="st">  </span><span class="co"># 3. add GER&#39;s count as new column *by year*</span></a>
+<a class="sourceLine" id="cb301-15" title="15"><span class="st">  </span><span class="kw">left_join</span>(</a>
+<a class="sourceLine" id="cb301-16" title="16">    <span class="co"># Germany only</span></a>
+<a class="sourceLine" id="cb301-17" title="17">    <span class="kw">filter</span>(tot_pop,</a>
+<a class="sourceLine" id="cb301-18" title="18">           Country <span class="op">%in%</span><span class="st"> &quot;Germany including former GDR&quot;</span>),</a>
+<a class="sourceLine" id="cb301-19" title="19">    <span class="co"># join back in `by year`</span></a>
+<a class="sourceLine" id="cb301-20" title="20">    <span class="dt">by=</span><span class="st">&quot;year&quot;</span>)</a>
+<a class="sourceLine" id="cb301-21" title="21">merge_GER</a></code></pre></div>
+<pre><code>#OUT&gt; # A tibble: 30 x 5
+#OUT&gt; # Groups:   year [10]
+#OUT&gt;    Country.x      year  counts.x Country.y                    counts.y
+#OUT&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;                           &lt;int&gt;
+#OUT&gt;  1 France         2008  64007193 Germany including former GDR 82217837
+#OUT&gt;  2 Italy          2008  58652875 Germany including former GDR 82217837
+#OUT&gt;  3 United Kingdom 2008  61571647 Germany including former GDR 82217837
+#OUT&gt;  4 France         2009  64350226 Germany including former GDR 82002356
+#OUT&gt;  5 Italy          2009  59000586 Germany including former GDR 82002356
+#OUT&gt;  6 United Kingdom 2009  62042343 Germany including former GDR 82002356
+#OUT&gt;  7 France         2010  64658856 Germany including former GDR 81802257
+#OUT&gt;  8 Italy          2010  59190143 Germany including former GDR 81802257
+#OUT&gt;  9 United Kingdom 2010  62510197 Germany including former GDR 81802257
+#OUT&gt; 10 France         2011  64978721 Germany including former GDR 80222065
+#OUT&gt; # … with 20 more rows</code></pre>
+<p>Here you see that the merge (or join) operation labelled <code>col.x</code> and <code>col.y</code> if
+both datasets contained a column called <code>col</code>. Now let’s continue to compute what proportion of german population each country amounts to:</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" title="1"><span class="kw">names</span>(merge_GER)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Country&quot;</span></a>
+<a class="sourceLine" id="cb303-2" title="2">merge_GER <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop_GER =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>counts.x <span class="op">/</span><span class="st"> </span>counts.y) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-4" title="4"><span class="st">  </span><span class="co"># 5. plot</span></a>
+<a class="sourceLine" id="cb303-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> </a>
+<a class="sourceLine" id="cb303-6" title="6">           <span class="kw">aes</span>(<span class="dt">x =</span> year,</a>
+<a class="sourceLine" id="cb303-7" title="7">               <span class="dt">y =</span> prop_GER,</a>
+<a class="sourceLine" id="cb303-8" title="8">               <span class="dt">color =</span> Country,</a>
+<a class="sourceLine" id="cb303-9" title="9">               <span class="dt">group =</span> Country)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb303-10" title="10"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb303-11" title="11"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;percent of German population&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb303-12" title="12"><span class="st">  </span><span class="kw">theme_bw</span>()  <span class="co"># new theme for a change?</span></a></code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-107-1.png" width="672" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>A <em>pipe</em> is a concept from the Unix world, where it means to take the output of some command, and pass it on to another command. This way, one can construct a <em>pipeline</em> of commands. For additional info on the pipe operator in R, you might be interested <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">in this tutorial</a>.<a href="sum.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="R-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linreg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/02-SummaryStats.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

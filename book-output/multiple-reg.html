@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Multiple Regression | Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Multiple Regression | Introduction to Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Multiple Regression | Introduction to Econometrics with R" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  
+
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+
+
+<meta name="date" content="2019-11-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+<link rel="prev" href="linreg.html"/>
+<link rel="next" href="categorical-vars.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
+<li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
+<li class="chapter" data-level="7.6" data-path="causality.html"><a href="causality.html#star-experiment"><i class="fa fa-check"></i><b>7.6</b> STAR Experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>8</b> Projects</a><ul>
+<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.1</b> Trade Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Econometrics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-reg" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Multiple Regression</h1>
+<p>We can extend the discussion from chapter <a href="linreg.html#linreg">3</a> to more than one explanatory variable. For example, suppose that instead of only <span class="math inline">\(x\)</span> we now had <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> in order to explain <span class="math inline">\(y\)</span>. Everything we’ve learned for the single variable case applies here as well. Instead of a regression <em>line</em>, we now get a regression <em>plane</em>, i.e. an object representable in 3 dimenions: <span class="math inline">\((x_1,x_2,y)\)</span>.
+As an example, suppose we wanted to explain how many <em>miles per gallon</em> (<code>mpg</code>) a car can travel as a function of its <em>horse power</em> (<code>hp</code>) and its <em>weight</em> (<code>wt</code>). In other words we want to estimate the equation</p>
+<p><span class="math display" id="eq:abline2d">\[\begin{equation}
+mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i \tag{4.1}
+\end{equation}\]</span></p>
+<p>on our built-in dataset of cars (<code>mtcars</code>):</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb332-1" title="1"><span class="kw">head</span>(<span class="kw">subset</span>(mtcars, <span class="dt">select =</span> <span class="kw">c</span>(mpg,hp,wt)))</a></code></pre></div>
+<pre><code>#OUT&gt;                    mpg  hp    wt
+#OUT&gt; Mazda RX4         21.0 110 2.620
+#OUT&gt; Mazda RX4 Wag     21.0 110 2.875
+#OUT&gt; Datsun 710        22.8  93 2.320
+#OUT&gt; Hornet 4 Drive    21.4 110 3.215
+#OUT&gt; Hornet Sportabout 18.7 175 3.440
+#OUT&gt; Valiant           18.1 105 3.460</code></pre>
+<p>How do you think <code>hp</code> and <code>wt</code> will influence how many miles per gallon of gasoline each of those cars can travel? In other words, what do you expect the signs of <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> to be?</p>
+<p>With two explanatory variables as here, it is still possible to visualize the regression plane, so let’s start with this as an answer. The OLS regression plane through this dataset looks like in figure <a href="multiple-reg.html#fig:plane3D-reg">4.1</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:plane3D-reg"></span>
+<div id="htmlwidget-c3c486277d37bec9ab31" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c3c486277d37bec9ab31">{"x":{"visdat":{"fd823c5bed14":["function () ","plotlyVisDat"]},"cur_data":"fd823c5bed14","attrs":{"fd823c5bed14":{"colors":"grey","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"z":{},"type":"scatter3d","mode":"markers","name":"data","opacity":0.8,"marker":{"color":"red","size":5,"hoverinfo":"skip"},"inherit":true},"fd823c5bed14.1":{"z":{},"type":"surface","x":[1.513,5.424],"y":[52,335],"name":"Mtcars 3D","opacity":0.75,"cauto":false,"surfacecolor":[0,0,0],"inherit":false}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"wt"},"yaxis":{"title":"hp"},"zaxis":{"title":"mpg"}},"hovermode":"closest","showlegend":true,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],"y":[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],"z":[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],"type":"scatter3d","mode":"markers","name":"data","opacity":0.8,"marker":{"color":"red","size":5,"hoverinfo":"skip","line":{"color":"rgba(31,119,180,1)"},"showscale":false},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"colorbar":{"title":"mpg<br />surf","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(190,190,190,1)"],["1","rgba(190,190,190,1)"]],"showscale":false,"z":[[29.7079189601165,20.716174964165],[14.5417229265718,5.54997893062028]],"type":"surface","x":[1.513,5.424],"y":[52,335],"name":"Mtcars 3D","opacity":0.75,"cauto":false,"surfacecolor":[0,0,0],"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 4.1: Multiple Regression - a plane in 3D. The red lines indicate the residual for each observation.
+</p>
+</div>
+<p>This visualization shows a couple of things: the data are shown with red points and the grey plane is the one resulting from OLS estimation of equation <a href="multiple-reg.html#eq:abline2d">(4.1)</a>. You should realize that this is exactly the same story as told in figure <a href="linreg.html#fig:line-arrows">3.1</a> - just in three dimensions!</p>
+<p>Furthermore, <em>multiple</em> regression refers the fact that there could be <em>more</em> than two regressors. In fact, you could in principle have <span class="math inline">\(K\)</span> regressors, and our theory developed so far would still be valid:</p>
+<p><span class="math display" id="eq:multiple-reg">\[\begin{align}
+\hat{y}_i &amp;= b_0 + b_1 x_{1i} +   b_2 x_{2i} + \dots + b_K x_{Ki}\\
+e_i &amp;= y_i - \hat{y}_i \tag{4.2}
+\end{align}\]</span></p>
+<p>Just as before, the least squares method chooses numbers <span class="math inline">\((b_0,b_1,\dots,b_K)\)</span> to as to minimize SSR, exactly as in the minimization problem for the one regressor case seen in <a href="linreg.html#eq:ols-min">(3.4)</a>.</p>
+<div id="ceteris" class="section level2">
+<h2><span class="header-section-number">4.1</span> All Else Equal</h2>
+<p>We can see from the above plot that cars with more horse power and greater weight, in general travel fewer miles per gallon of combustible. Hence, we observe a plane that is downward sloping in both the <em>weight</em> and <em>horse power</em> directions. Suppose now we wanted to know impact of <code>hp</code> on <code>mpg</code> <em>in isolation</em>, so as if we could ask</p>
+<div class="tip">
+<center>
+Keeping the value of <span class="math inline"><span class="math inline">\(wt\)</span></span> fixed for a certain car, what would be the impact on <span class="math inline"><span class="math inline">\(mpg\)</span></span> be if we were to increase <strong>only</strong> its <span class="math inline"><span class="math inline">\(hp\)</span></span>? Put differently, keeping <strong>all else equal</strong>, what’s the impact of changing <span class="math inline"><span class="math inline">\(hp\)</span></span> on <span class="math inline"><span class="math inline">\(mpg\)</span></span>?
+</center>
+</div>
+<p><br>
+We ask this kind of question all the time in econometrics. In figure <a href="multiple-reg.html#fig:plane3D-reg">4.1</a> you clearly see that both explanatory variables have a negative impact on the outcome of interest: as one increases either the horse power or the weight of a car, one finds that miles per gallon decreases. What is kind of hard to read off is <em>how negative</em> an impact each variable has in isolation.</p>
+<p>As a matter of fact, the kind of question asked here is so common that it has got its own name: we’d say “<em>ceteris paribus</em>, what is the impact of <code>hp</code> on <code>mpg</code>?”. <em>ceteris paribus</em> is latin and means <em>the others equal</em>, i.e. all other variables fixed. In terms of our model in <a href="multiple-reg.html#eq:abline2d">(4.1)</a>, we want to know the following quantity:</p>
+<p><span class="math display" id="eq:abline2d-deriv">\[\begin{equation}
+\frac{\partial mpg_i}{\partial hp_i} = b_1 \tag{4.3}
+\end{equation}\]</span></p>
+<p>The <span class="math inline">\(\partial\)</span> sign denotes a <em>partial derivative</em> of the function describing <code>mpg</code> with respect to the variable <code>hp</code>. It measures <em>how the value of <code>mpg</code> changes, as we change the value of <code>hp</code> ever so slightly</em>. In our context, this means: <em>keeping all other variables fixed, what is the effect of <code>hp</code> on <code>mpg</code>?</em>. We call the value of coefficient <span class="math inline">\(b_1\)</span> therefore also the <em>partial effect</em> of <code>hp</code> on <code>mpg</code>. In terms of our dataset, we use <code>R</code> to run the following <strong>multiple regression</strong>:
+<br></p>
+<pre><code>#OUT&gt; 
+#OUT&gt; Call:
+#OUT&gt; lm(formula = mpg ~ wt + hp, data = mtcars)
+#OUT&gt; 
+#OUT&gt; Residuals:
+#OUT&gt;    Min     1Q Median     3Q    Max 
+#OUT&gt; -3.941 -1.600 -0.182  1.050  5.854 
+#OUT&gt; 
+#OUT&gt; Coefficients:
+#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#OUT&gt; (Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
+#OUT&gt; wt          -3.87783    0.63273  -6.129 1.12e-06 ***
+#OUT&gt; hp          -0.03177    0.00903  -3.519  0.00145 ** 
+#OUT&gt; ---
+#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#OUT&gt; 
+#OUT&gt; Residual standard error: 2.593 on 29 degrees of freedom
+#OUT&gt; Multiple R-squared:  0.8268,  Adjusted R-squared:  0.8148 
+#OUT&gt; F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
+<p>From this table you see that the coefficient on <code>wt</code> has value -3.87783. You can interpret this as follows:</p>
+<div class="warning">
+<p>
+Holding all other variables fixed at their observed values - or <em>ceteris paribus</em> - a one unit increase in <span class="math inline"><span class="math inline">\(wt\)</span></span> implies a -3.87783 units change in <span class="math inline"><span class="math inline">\(mpg\)</span></span>. In other words, increasing the weight of a car by 1000 pounds (lbs), will lead to 3.88 miles less travelled per gallon. Similarly, a car with one additional horse power means that we will travel 0.03177 fewer miles per gallon of gasoline, <em>all else (i.e. <span class="math inline"><span class="math inline">\(wt\)</span></span>) equal</em>.
+</p>
+</div>
+</div>
+<div id="multicol" class="section level2">
+<h2><span class="header-section-number">4.2</span> Multicolinearity</h2>
+<p>One important requirement for multiple regression is that the data be <strong>not linearly dependent</strong>: Each variable should provide at least some new information for the outcome, and it cannot be replicated as a linear combination of other variables. Suppose that in the example above, we had a variable <code>wtplus</code> defined as <code>wt + 1</code>, and we included this new variable together with <code>wt</code> in our regression. In this case, <code>wtplus</code> provides no new information. It’s enough to know <span class="math inline">\(wt\)</span>, and add <span class="math inline">\(1\)</span> to it. In this sense, <code>wt_plus</code> is a redundant variable and should not be included in the model. Notice that this holds only for <em>linearly</em> dependent variables - <em>nonlinear</em> transformations (like for example <span class="math inline">\(wt^2\)</span>) are exempt from this rule. Here is why:</p>
+<p><span class="math display">\[\begin{align}
+y &amp;= b_0 + b_1 \text{wt} + b_2 \text{wtplus} + e \\
+  &amp;= b_0 + b_1 \text{wt} + b_2 (\text{wt} + 1) + e \\
+  &amp;= (b_0 + b_2) + \text{wt} (b_1 + b_2) + e
+\end{align}\]</span></p>
+<p>This shows that we cannot <em>identify</em> the regression coefficients in case of linearly dependent data. Variation in the variable <code>wt</code> identifies a different coefficient, say <span class="math inline">\(\gamma = b_1 + b_2\)</span>, from what we actually wanted: separate estimates for <span class="math inline">\(b_1,b_2\)</span>.</p>
+<div class="note">
+<p>
+We cannot have variables which are <em>linearly dependent</em>, or <em>perfectly colinear</em>. This is known as the <strong>rank condition</strong>. In particular, the condition dictates that we need at least <span class="math inline"><span class="math inline">\(N \geq K+1\)</span></span>, i.e. more observations than coefficients. The greater the degree of linear dependence amongst our explanatory variables, the less information we can extract from them, and our estimates becomes <em>less precise</em>.
+</p>
+</div>
+</div>
+<div id="log-wage-equation" class="section level2">
+<h2><span class="header-section-number">4.3</span> Log Wage Equation</h2>
+<p>Let’s go back to our previous example of the relationship between log wages and education. How does this relationship change if we also think that experience in the labor market has an impact, next to years of education? Here is a picture:</p>
+<div class="figure" style="text-align: center"><span id="fig:plane3D-lwage"></span>
+<div id="htmlwidget-ebea31e4b9402cd40755" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ebea31e4b9402cd40755">{"x":{"visdat":{"fd8217922853":["function () ","plotlyVisDat"]},"cur_data":"fd8217922853","attrs":{"fd8217922853":{"colors":"grey","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"z":{},"type":"scatter3d","mode":"markers","name":"data","opacity":0.8,"marker":{"color":"red","size":5,"hoverinfo":"skip","opacity":0.8},"inherit":true},"fd8217922853.1":{"z":{},"type":"surface","x":[0,18],"y":[1,51],"name":"wages 3D","opacity":0.75,"cauto":false,"surfacecolor":[0,0,0],"inherit":false}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"educ"},"yaxis":{"title":"exper"},"zaxis":{"title":"lwage"}},"hovermode":"closest","showlegend":true,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[11,12,11,8,12,16,18,12,12,17,16,13,12,12,12,16,12,13,12,12,12,12,16,12,11,16,16,16,15,8,14,14,13,12,12,16,12,4,14,12,12,12,14,11,13,15,10,12,14,12,12,16,12,12,12,15,16,8,18,16,13,14,10,10,14,14,16,12,16,12,16,17,12,12,12,13,12,12,12,18,9,16,10,12,12,12,12,12,8,12,12,14,12,12,12,9,13,12,14,12,15,12,12,12,14,15,12,12,12,17,11,18,12,14,14,10,14,12,15,8,16,14,15,12,18,16,10,8,10,11,18,15,12,11,12,12,14,16,2,14,16,12,12,13,12,15,10,12,16,13,9,12,13,12,12,14,16,16,9,18,10,10,13,12,18,13,12,13,13,13,18,12,12,13,12,12,12,14,10,12,16,16,12,14,12,12,12,12,12,12,12,16,16,14,11,16,12,12,17,12,12,16,8,12,12,12,16,12,12,9,13,16,14,8,14,13,12,18,9,8,8,12,14,12,16,8,13,9,16,12,15,11,14,12,12,12,18,12,12,12,12,12,12,14,16,12,14,11,12,10,12,6,13,12,10,12,14,13,12,18,12,12,12,12,12,8,13,13,14,12,10,16,12,16,12,14,18,17,13,14,15,14,12,8,12,12,8,12,9,12,16,12,16,12,12,13,10,6,12,12,16,12,8,12,6,4,11,11,7,12,18,12,16,12,14,12,10,10,9,10,12,12,12,10,16,16,16,12,12,7,8,16,16,18,13,10,16,14,16,12,9,11,11,12,11,12,12,12,12,14,14,18,12,12,12,11,12,17,16,13,13,12,14,14,11,10,8,14,12,10,17,9,12,12,14,16,12,10,0,14,15,16,12,11,11,12,13,12,13,16,15,16,15,12,18,6,6,12,12,16,9,12,11,10,12,8,9,17,16,11,10,8,13,14,13,11,7,16,12,13,14,16,14,11,8,14,17,10,12,12,18,14,18,12,16,14,12,9,12,12,17,12,15,17,16,12,15,16,12,15,12,12,12,12,16,11,14,14,13,14,12,12,8,12,3,11,15,11,12,4,9,12,12,11,12,16,13,15,16,12,12,12,9,10,12,11,8,6,16,12,12,16,12,10,13,13,14,16,10,12,12,11,0,5,16,16,9,15,12,12,12,13,12,7,17,12,12,14,12,13,12,16,10,15,16,14],"y":[2,22,2,44,7,9,15,5,26,22,8,3,15,18,31,14,10,16,13,36,11,29,9,3,37,3,11,31,30,9,23,2,16,7,3,22,15,39,3,11,3,20,16,45,11,20,1,36,9,15,18,3,15,7,2,3,1,13,8,7,40,42,36,13,9,26,7,25,10,3,3,17,17,20,7,24,28,2,19,13,22,3,4,7,6,13,14,14,40,11,14,40,1,2,4,19,1,34,5,3,6,14,35,8,7,11,14,35,46,7,45,29,6,15,33,15,5,7,6,33,2,4,1,29,17,17,36,31,23,13,3,15,48,6,12,5,19,9,39,28,23,2,15,5,18,2,3,31,20,34,5,11,31,8,2,18,3,3,4,4,1,1,28,47,13,2,48,6,8,25,13,8,19,1,43,19,11,43,44,22,3,3,41,5,14,24,28,25,3,11,7,9,5,9,1,2,13,10,5,30,31,1,9,10,38,19,5,26,35,2,1,19,3,36,29,1,38,1,29,36,4,45,22,20,5,15,10,3,16,38,33,2,6,19,29,2,3,4,10,4,14,15,19,17,29,2,5,38,3,47,7,47,23,12,11,25,6,3,14,13,9,1,6,11,47,49,37,2,7,22,8,1,43,2,2,1,1,26,1,37,12,41,24,38,18,26,45,27,2,41,11,5,3,3,4,21,34,49,6,26,9,23,33,5,49,48,35,23,26,16,23,36,4,10,18,3,7,7,33,34,8,17,2,5,41,35,11,4,12,35,33,8,2,8,29,14,26,11,10,13,23,1,35,5,13,22,21,19,13,15,3,6,6,16,31,1,5,3,11,6,11,7,5,5,2,44,44,13,26,2,10,2,35,6,8,1,14,14,22,8,1,15,14,37,1,4,29,45,22,42,9,8,31,24,16,6,14,47,34,6,7,27,24,18,12,27,49,4,24,3,2,29,34,10,5,2,39,5,14,8,10,2,9,1,45,33,21,2,9,33,16,10,9,8,9,23,23,22,37,22,28,14,19,10,25,21,32,21,36,2,11,40,11,9,23,1,30,41,6,11,43,39,50,26,51,3,3,15,17,36,31,9,42,3,37,23,21,11,35,42,3,13,14,14,39,11,28,18,6,26,21,34,17,2,5,1,40,39,1,14,2,2,42,34,10,4,4,21,31,20,36,7,15,25,7,17,3,12,18,47,2,14,2,13,5,5],"z":[1.13140213489532,1.17557334899902,1.0986123085022,1.7917594909668,1.66770684719086,2.16905379295349,2.42036819458008,1.60943794250488,1.28093385696411,2.9003221988678,1.83258152008057,2.09556102752686,2.17133688926697,1.70474803447723,3.10009241104126,2.85243916511536,2.01490306854248,2.36368012428284,1.28093385696411,1.50407743453979,1.92861866950989,2.13771033287048,1.84530019760132,-0.63487833738327,1.7917594909668,2.25758767127991,2.05155634880066,2.52572870254517,2.52572870254517,1.1786550283432,2.56494927406311,1.50407743453979,2.27006196975708,1.60943794250488,1.54329812526703,1.45161378383636,1.81645214557648,1.25561606884003,1.0986123085022,1.83258152008057,2.05540490150452,2.30258512496948,1.50407743453979,1.3862943649292,1.85316812992096,2.61739587783813,0.512823581695557,1.07500243186951,1.29472720623016,1.06471073627472,0.488580018281937,2.15176224708557,1.60943794250488,1.7917594909668,0.916290760040283,1.1786550283432,1.22377550601959,2.30258512496948,3.07408118247986,1.47704875469208,2.46044325828552,2.51688981056213,1.83258152008057,1.31103193759918,2.05155634880066,2.99473166465759,1.83258152008057,2.30258512496948,1.74221897125244,0.6931471824646,1.74221897125244,2.57108426094055,1.59127390384674,1.06815314292908,1.32175588607788,2.47653841972351,1.3862943649292,1.13140213489532,2.13416647911072,1.96571278572083,1.50407743453979,1.53686726093292,1.06471073627472,1.89761984348297,1.25276291370392,1.18172717094421,1.1786550283432,2.0794415473938,2.28747153282166,2.01490306854248,1.77664577960968,2.46470403671265,1.0986123085022,1.57069706916809,1.8718022108078,1.3862943649292,1.25276291370392,2.57718181610107,1.44691896438599,1.25276291370392,1.63510572910309,1.32175588607788,1.50407743453979,2.03208780288696,2.70805025100708,1.92424869537354,2.59001708030701,1.89761984348297,0.928219318389893,2.28238248825073,1.21491265296936,3.21807551383972,1.68639898300171,1.80992674827576,1.43508446216583,1.32175588607788,1.25276291370392,1.29198372364044,1.33500111103058,1.0986123085022,1.60943794250488,1.53255689144135,1.0986123085022,1.16315078735352,1.36353743076324,1.86097455024719,1.70110511779785,0.405465096235275,1.06471073627472,1.60943794250488,2.18829584121704,1.60943794250488,1.25846099853516,1.06471073627472,1.50407743453979,0.810930192470551,1.60943794250488,2.30258512496948,1.32175588607788,2.30258512496948,2.39333939552307,2.06686282157898,1.55180871486664,1.76473081111908,1.3428647518158,1.16315078735352,0.6931471824646,1.50407743453979,2.44668555259705,0.760805904865265,0.867100536823273,1.32175588607788,1.70837783813477,1.8718022108078,1.13140213489532,2.30258512496948,1.89160478115082,2.30258512496948,0.837247490882874,1.92861866950989,1.04027664661407,1.14103305339813,2.0794415473938,1.50407743453979,2.15755939483643,0.6931471824646,1.55814456939697,1.83258152008057,1.7917594909668,2.73306798934937,2.67965078353882,2.52572870254517,1.65822803974152,0.77472722530365,1.96571278572083,1.82776987552643,2.19722461700439,2.30258512496948,1.75267207622528,1.3862943649292,2.16905379295349,1.87640702724457,2.02814817428589,1.60943794250488,1.60943794250488,3.0846586227417,2.15640258789062,1.19392240047455,1.49065434932709,1.51512730121613,1.25276291370392,1.83258152008057,1.34807312488556,1.82131826877594,1.06815314292908,1.83258152008057,1.83258152008057,2.20276474952698,2.30258512496948,2.40784549713135,1.92861866950989,2.16905379295349,2.30258512496948,1.11514163017273,1.0986123085022,1.75785791873932,1.41098690032959,2.0794415473938,1.81645214557648,0.993251800537109,1.01160097122192,1.0986123085022,1.0986123085022,1.99605989456177,2.01490306854248,1.25276291370392,2.09186410903931,1.32175588607788,1.1786550283432,1.76301693916321,1.25276291370392,1.20297229290009,1.3862943649292,1.25276291370392,1.83258152008057,1.08180522918701,1.74221897125244,1.0986123085022,3.12938857078552,2.19722461700439,2.11986351013184,1.0986123085022,1.74919986724854,1.91102290153503,2.30258512496948,1.0986123085022,1.25276291370392,1.1786550283432,1.3862943649292,1.07158362865448,1.11841487884521,1.16315078735352,1.55814456939697,1.0986123085022,2.89922142028809,1.25276291370392,1.41342306137085,0.672944486141205,1.45628666877747,1.0986123085022,1.86408007144928,1.64865863323212,1.50407743453979,1.35583519935608,1.23837423324585,2.38967967033386,1.41098690032959,1.0986123085022,1.77495241165161,2.89037179946899,1.3862943649292,1.0986123085022,1.26694762706757,1.0986123085022,2.16905379295349,1.06471073627472,1.83418023586273,1.25276291370392,1.52605628967285,1.7917594909668,1.0612565279007,1.71918880939484,1.3862943649292,1.7917594909668,1.50407743453979,1.07158362865448,1.46556746959686,2.93863272666931,1.45395302772522,1.51951324939728,1.83258152008057,1.08180522918701,2.16905379295349,2.14006614685059,1.32175588607788,1.14740252494812,1.60943794250488,1.86562931537628,0.6931471824646,1.56653034687042,1.7544037103653,1.15688121318817,1.54329812526703,1.41098690032959,1.06815314292908,1.7917594909668,1.28093385696411,1.37371563911438,1.94591009616852,1.0986123085022,1.80500471591949,2.15524458885193,1.0986123085022,1.32175588607788,1.06471073627472,1.0986123085022,1.83258152008057,1.25276291370392,1.0986123085022,1.17557334899902,2.08193850517273,1.20297229290009,1.65822803974152,1.83258152008057,1.25276291370392,1.08180522918701,1.0986123085022,1.54543256759644,1.31640827655792,1.3862943649292,1.3862943649292,1.06471073627472,1.11514163017273,1.6193882226944,2.63547945022583,2.89922142028809,1.83258152008057,1.65822803974152,1.56653034687042,1.20896029472351,1.0986123085022,2.13179683685303,1.74046611785889,2.48323845863342,1.25276291370392,1.44456326961517,1.94591009616852,1.7917594909668,2.50307393074036,1.50407743453979,1.0986123085022,1.06471073627472,2.70805025100708,1.3862943649292,1.65822803974152,1.3862943649292,1.19392240047455,1.6193882226944,1.27536273002625,1.60943794250488,1.51951324939728,2.52572870254517,1.23837423324585,1.53255689144135,2.30258512496948,1.07158362865448,1.50629723072052,1.8718022108078,2.01490306854248,1.26412665843964,1.43508446216583,1.25561606884003,1.50407743453979,1.20896029472351,1.06815314292908,1.65822803974152,1.39871692657471,1.32175588607788,1.22377550601959,1.0986123085022,1.83896100521088,0.932164072990417,1.50407743453979,1.14103305339813,1.85002839565277,1.54329812526703,1.91692268848419,2.14358925819397,1.42791604995728,1.32175588607788,2.40694522857666,1.18172717094421,2.21156573295593,1.50407743453979,1.0986123085022,2.16905379295349,1.42069578170776,1.05431199073792,1.20896029472351,1.80500471591949,1.0986123085022,1.43508446216583,1.72276663780212,2.30258512496948,2.52572870254517,1.32441890239716,1.13140213489532,1.45628666877747,2.39059591293335,2.01490306854248,1.39871692657471,1.53686726093292,1.60943794250488,1.06471073627472,2.0794415473938,2.13179683685303,1.07158362865448,1.83258152008057,1.83258152008057,1.63119947910309,1.3862943649292,1.49065434932709,1.92861866950989,1.69193911552429,1.0986123085022,1.06471073627472,1.83258152008057,1.46787440776825,1.1786550283432,1.98237991333008,1.8484548330307,1.7281094789505,2.16905379295349,1.16315078735352,1.0986123085022,1.0986123085022,2.52572870254517,1.05779027938843,1.20896029472351,1.8718022108078,2.33988094329834,1.50407743453979,2.30258512496948,1.33762919902802,2.17475175857544,2.24283504486084,1.84530019760132,1.3862943649292,1.06471073627472,2.99573230743408,2.42036819458008,1.25276291370392,1.7917594909668,2.66583824157715,1.85002839565277,1.26694762706757,1.0986123085022,1.50407743453979,1.89160478115082,2.23001432418823,1.0986123085022,1.1786550283432,0.405465096235275,1.77495241165161,2.0794415473938,1.06471073627472,1.19088757038116,1.8718022108078,1.3862943649292,1.7917594909668,1.40609693527222,1.32175588607788,1.11514163017273,1.25276291370392,1.07158362865448,1.50407743453979,1.20896029472351,1.78339123725891,2.0794415473938,1.0986123085022,1.60943794250488,1.70474803447723,0.974559664726257,1.0986123085022,1.50407743453979,2.86220097541809,2.10169219970703,2.2071750164032,2.46979308128357,1.1786550283432,1.50407743453979,1.50407743453979,1.31103193759918,1.8718022108078,1.06471073627472,1.72276663780212,0.802001595497131,1.60943794250488,2.11986351013184,1.06471073627472,1.83258152008057,1.51512730121613,1.1878434419632,0.832909107208252,1.19392240047455,1.14740252494812,2.52572870254517,1.63899672031403,1.14103305339813,1.981001496315,1.06471073627472,0.559615790843964,1.0612565279007,1.06471073627472,2.87412929534912,1.83258152008057,0.955511391162872,1.89160478115082,1.25276291370392,1.8718022108078,1.0986123085022,1.47704875469208,2.30258512496948,1.59938752651215,2.19722461700439,0.357674419879913,1.12492954730988,2.23323512077332,2.01490306854248,1.55814456939697,1.73165559768677,2.70805025100708,0.819779813289642,1.54115903377533,2.44755101203918,1.25276291370392],"type":"scatter3d","mode":"markers","name":"data","opacity":0.8,"marker":{"color":"red","size":5,"hoverinfo":"skip","opacity":0.8,"line":{"color":"rgba(31,119,180,1)"},"showscale":false},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"colorbar":{"title":"lwage<br />surf","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(190,190,190,1)"],["1","rgba(190,190,190,1)"]],"showscale":false,"z":[[0.227201325786357,0.744548720620687],[1.99004164539928,2.50738904023361]],"type":"surface","x":[0,18],"y":[1,51],"name":"wages 3D","opacity":0.75,"cauto":false,"surfacecolor":[0,0,0],"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 4.2: Log wages vs education and experience in 3D.
+</p>
+</div>
+<p>Let’s add even more variables! For instance, what’s the impact of experience in the labor market, and time spent with the current employer? Let’s first look at how those variables co-vary with each other:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" title="1">cmat =<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(wage1,<span class="dt">select =</span> <span class="kw">c</span>(lwage,educ,exper,tenure))),<span class="dv">2</span>) <span class="co"># correlation matrix</span></a>
+<a class="sourceLine" id="cb335-2" title="2">corrplot<span class="op">::</span><span class="kw">corrplot</span>(cmat,<span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>,<span class="dt">method =</span> <span class="st">&quot;ellipse&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:corrplot"></span>
+<img src="ScPoEconometrics_files/figure-html/corrplot-1.png" alt="correlation plot" width="672" />
+<p class="caption">
+Figure 4.3: correlation plot
+</p>
+</div>
+<p>The way to read the so-called <em>correlation plot</em> in figure <a href="multiple-reg.html#fig:corrplot">4.3</a> is straightforward: each row illustrates the correlation of a certain variable with the other variables. In this example both the shape of the ellipse in each cell as well as their color coding tell us how strongly two variables correlate. Let us put this into a regression model now:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" title="1">educ_only &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ                 , <span class="dt">data =</span> wage1)</a>
+<a class="sourceLine" id="cb336-2" title="2">educ_exper &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>exper        , <span class="dt">data =</span> wage1)</a>
+<a class="sourceLine" id="cb336-3" title="3">log_wages &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>exper <span class="op">+</span><span class="st"> </span>tenure, <span class="dt">data =</span> wage1)</a>
+<a class="sourceLine" id="cb336-4" title="4">stargazer<span class="op">::</span><span class="kw">stargazer</span>(educ_only, educ_exper, log_wages,<span class="dt">type =</span> <span class="cf">if</span> (knitr<span class="op">:::</span><span class="kw">is_latex_output</span>()) <span class="st">&quot;latex&quot;</span> <span class="cf">else</span> <span class="st">&quot;html&quot;</span>)</a></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+lwage
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+educ
+</td>
+<td>
+0.083<sup>***</sup>
+</td>
+<td>
+0.098<sup>***</sup>
+</td>
+<td>
+0.092<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.007)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+exper
+</td>
+<td>
+</td>
+<td>
+0.010<sup>***</sup>
+</td>
+<td>
+0.004<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.002)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+tenure
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+0.022<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.584<sup>***</sup>
+</td>
+<td>
+0.217<sup>**</sup>
+</td>
+<td>
+0.284<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.097)
+</td>
+<td>
+(0.109)
+</td>
+<td>
+(0.104)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+526
+</td>
+<td>
+526
+</td>
+<td>
+526
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.186
+</td>
+<td>
+0.249
+</td>
+<td>
+0.316
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.184
+</td>
+<td>
+0.246
+</td>
+<td>
+0.312
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.480 (df = 524)
+</td>
+<td>
+0.461 (df = 523)
+</td>
+<td>
+0.441 (df = 522)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+119.582<sup>***</sup> (df = 1; 524)
+</td>
+<td>
+86.862<sup>***</sup> (df = 2; 523)
+</td>
+<td>
+80.391<sup>***</sup> (df = 3; 522)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p>Column (1) refers to model <a href="linreg.html#eq:log-wage">(3.16)</a> from the previous chapter, where we only had <code>educ</code> as a regressor: we obtain an <span class="math inline">\(R^2\)</span> of 0.186. Column (2) is the model that generated the plane in figure <a href="multiple-reg.html#fig:plane3D-lwage">4.2</a> above. (3) is the model with three regressors. You can see that by adding more regressors, the quality of our fit increases, as more of the variation in <span class="math inline">\(y\)</span> is now accounted for by our model. You can also see that the values of our estimated coefficients keeps changing as we move from left to right across the columns. Given the correlation structure shown in figure <a href="multiple-reg.html#fig:corrplot">4.3</a>, it is only natural that this is happening: We see that <code>educ</code> and <code>exper</code> are negatively correlated, for example. So, if we <em>omit</em> <code>exper</code> from the model in column (1), <code>educ</code> will reflect part of this correlation with <code>exper</code> by a lower estimated value. By directly controlling for <code>exper</code> in column (2) we get an estimate of the effect of <code>educ</code> <em>net of</em> whatever effect <code>exper</code> has in isolation on the outcome variable. We will come back to this point later on.</p>
+</div>
+<div id="make-preds" class="section level2">
+<h2><span class="header-section-number">4.4</span> How To Make Predictions</h2>
+<p>So suppose we have a model like</p>
+<p><span class="math display">\[\text{lwage} = b_0 + b_{1}(\text{educ}) + b_{2}(\text{exper}) + b_{3}(\text{tenure}) + \epsilon\]</span>
+How could we use this to make a <em>prediction</em> of log wages, given some new data? Remember that the OLS procedure gives us <em>estimates</em> for the values <span class="math inline">\(b_0,b_1, b_2,b_3\)</span>. With those in hand, it is straightforward to make a prediction about the <em>conditional mean</em> of the outcome - just plug in the desired numbers for <code>educ,exper</code> and <code>tenure</code>. Suppose you want to know what the mean of <code>lwage</code> is conditional on <code>educ = 10,exper=4</code> and <code>tenure = 2</code>. You’d do</p>
+<p><span class="math display">\[\begin{align}
+E[\text{lwage}|\text{educ}=10,\text{exper}=4,\text{tenure}=2] &amp;= b_0 + b_1  10 + b_2 4 + b_3  2\\
+&amp;= 1.27.
+\end{align}\]</span></p>
+<p>I computed the last line directly with</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" title="1">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">2</span>)  <span class="co"># 1 for intercept</span></a>
+<a class="sourceLine" id="cb337-2" title="2">pred =<span class="st"> </span><span class="kw">coef</span>(log_wages) <span class="op">%*%</span><span class="st"> </span>x</a></code></pre></div>
+<p>but <code>R</code> has a more complete prediction interface, using the function <code>predict</code>. For starters, you can predict the model on all data points which were contained in the dataset we used for estimation, i.e. <code>wage1</code> in our case:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb338-1" title="1"><span class="kw">head</span>(<span class="kw">predict</span>(log_wages))  <span class="co"># first 6 observations of wage1 as predicted by our model</span></a></code></pre></div>
+<pre><code>#OUT&gt;        1        2        3        4        5        6 
+#OUT&gt; 1.304921 1.523506 1.304921 1.819802 1.461690 1.970451</code></pre>
+<p>Often you want to add that prediction <em>to</em> the original dataset:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb340-1" title="1">wage_prediction =<span class="st"> </span><span class="kw">cbind</span>(wage1, <span class="dt">prediction =</span> <span class="kw">predict</span>(log_wages))</a>
+<a class="sourceLine" id="cb340-2" title="2"><span class="kw">head</span>(wage_prediction[, <span class="kw">c</span>(<span class="st">&quot;lwage&quot;</span>,<span class="st">&quot;educ&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;tenure&quot;</span>,<span class="st">&quot;prediction&quot;</span>)])</a></code></pre></div>
+<pre><code>#OUT&gt;      lwage educ exper tenure prediction
+#OUT&gt; 1 1.131402   11     2      0   1.304921
+#OUT&gt; 2 1.175573   12    22      2   1.523506
+#OUT&gt; 3 1.098612   11     2      0   1.304921
+#OUT&gt; 4 1.791759    8    44     28   1.819802
+#OUT&gt; 5 1.667707   12     7      2   1.461690
+#OUT&gt; 6 2.169054   16     9      8   1.970451</code></pre>
+<p>You’ll remember that we called the distance in prediction and observed outcome our <em>residual</em> <span class="math inline">\(e\)</span>. Well here this is just <code>lwage - prediction</code>. Indeed, <span class="math inline">\(e\)</span> is such an important quantity that <code>R</code> has a convenient method to compute <span class="math inline">\(y - \hat{y}\)</span> from an <code>lm</code> object directly - the method <code>resid</code>. Let’s add another column to <code>wage_prediction</code>:</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb342-1" title="1">wage_prediction =<span class="st"> </span><span class="kw">cbind</span>(wage_prediction, <span class="dt">residual =</span> <span class="kw">resid</span>(log_wages))</a>
+<a class="sourceLine" id="cb342-2" title="2"><span class="kw">head</span>(wage_prediction[, <span class="kw">c</span>(<span class="st">&quot;lwage&quot;</span>,<span class="st">&quot;educ&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;tenure&quot;</span>,<span class="st">&quot;prediction&quot;</span>,<span class="st">&quot;residual&quot;</span>)])</a></code></pre></div>
+<pre><code>#OUT&gt;      lwage educ exper tenure prediction    residual
+#OUT&gt; 1 1.131402   11     2      0   1.304921 -0.17351850
+#OUT&gt; 2 1.175573   12    22      2   1.523506 -0.34793289
+#OUT&gt; 3 1.098612   11     2      0   1.304921 -0.20630832
+#OUT&gt; 4 1.791759    8    44     28   1.819802 -0.02804286
+#OUT&gt; 5 1.667707   12     7      2   1.461690  0.20601725
+#OUT&gt; 6 2.169054   16     9      8   1.970451  0.19860271</code></pre>
+<p>Using the data in <code>wage_prediction</code>, you should now check for yourself what we already know about <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(e\)</span> from section <a href="linreg.html#pred-resids">3.3</a>:</p>
+<ol style="list-style-type: decimal">
+<li>What is the average of the vector <code>residual</code>?</li>
+<li>What is the average of <code>prediction</code>?</li>
+<li>How does this compare to the average of the outcome <code>lwage</code>?</li>
+<li>What is the correlation between <code>prediction</code> and <code>residual</code>?</li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linreg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="categorical-vars.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/04-MultipleReg.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
