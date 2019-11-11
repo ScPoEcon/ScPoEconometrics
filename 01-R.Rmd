@@ -24,8 +24,8 @@ A key difference for you to understand is the one between `R`, the actual progra
 
 The best way to appreciate the value of `RStudio` is to start using `R` *without* `RStudio`. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows or Mac), or start R in your terminal (on Linux or Mac) by just typing `R` in a terminal, see figure \@ref(fig:console). You've just opened the R **console** which allows you to start typing code right after the `>` sign, called *prompt*. Try typing `2 + 2` or `print("Your Name")` and hit the return key. And *voilà*, your first R commands!
 
-```{r console,fig.cap="R GUI symbol and R in a MacOS Terminal",fig.align='center',out.width="50%",echo=FALSE}
-knitr::include_graphics(c("images/RLogo.png","images/console.png"))
+```{r console, fig.cap="R GUI symbol and R in a MacOS Terminal",fig.align='center',out.width="50%",echo=FALSE}
+knitr::include_graphics(c("images/RLogo.png","images/console.png") )
 ```
 
 

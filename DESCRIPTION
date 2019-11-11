@@ -2,7 +2,7 @@ Package: ScPoEconometrics
 Type: Package
 Title: ScPoEconometrics
 Date: 2019-10-10
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: c(
     person("Florian", "Oswald", email = "florian.oswald@sciencespo.fr", role = c("aut","cre")),
     person("Jean-Marc", "Robin", email = "jeanmarc.robin@sciencespo.fr", role = "ctb"),
@@ -38,7 +38,8 @@ Imports:
     quantreg,
     infer,
     equatiomatic,
-    ungeviz
+    ungeviz,
+    ggdag
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,

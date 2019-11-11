@@ -135,7 +135,7 @@ wage1 %>%
 
 Let's add even more variables! For instance, what's the impact of experience in the labor market, and time spent with the current employer? Let's first look at how those variables co-vary with each other:
 
-```{r corrplot}
+```{r corrplot, fig.cap = "correlation plot"}
 cmat = round(cor(subset(wage1,select = c(lwage,educ,exper,tenure))),2) # correlation matrix
 corrplot::corrplot(cmat,type = "upper",method = "ellipse")
 ```

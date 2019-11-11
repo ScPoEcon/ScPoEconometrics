@@ -1,7 +1,7 @@
 # Case study #1 : Airline Safety data
 
 ```{r setup-airlines, include=FALSE}
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(include = TRUE)
 library(ggplot2)
 library(ggpubr)
 library(haven)
