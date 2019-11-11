@@ -156,7 +156,7 @@ Next, let's define three *average* effects of interest:
 1. the Average Treatment on the Treated (ATT): $\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]$
 1. the Average Treatment on the Untreated (ATU): $\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]$
 
-Notice that *none* of those can be computed from data either, because all of them require data on individual $i$ from *both* scenarios. Let's focus on the ATE for now. Fundamentally we face a **missing data problem**: either $Y_i^1$ or $Y_i^0$ are missing from our dataset. Nevertheless, let's setup the following *naive* simple difference in means estimator \hat{\delta}:
+Notice that *none* of those can be computed from data either, because all of them require data on individual $i$ from *both* scenarios. Let's focus on the ATE for now. Fundamentally we face a **missing data problem**: either $Y_i^1$ or $Y_i^0$ are missing from our dataset. Nevertheless, let's setup the following *naive* simple difference in means estimator $\hat{\delta}$:
 
 \begin{align}
 \hat{\delta} =& E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
