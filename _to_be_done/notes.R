@@ -43,7 +43,7 @@ ggplot(BlueJays, aes(BillLength, Head, color = KnownSex)) +
   enter_fade() + exit_fade()
 
 data("wage1", package = "wooldridge")
-wage1$female = as.factor(wage1$female)
+wage1$female = factor(wage1$female, labels = c("male","female"))
 bs <- bootstrapper(20, female)
 
 anim <- ggplot(wage1, aes(x = educ, y = lwage, color = female)) +
@@ -53,7 +53,7 @@ anim <- ggplot(wage1, aes(x = educ, y = lwage, color = female)) +
   geom_point(data = bs, aes(group = .row)) +
   geom_smooth(data = bs, method = "lm", fullrange = TRUE, se = FALSE) +
   facet_wrap(~female, scales = "free_x") +
-  scale_color_manual(values = c("0" = "#D55E00", "1" = "#0072B2"), guide = "none") +
+  scale_color_manual(values = c("male" = "#D55E00", "female" = "#0072B2"), guide = "none") +
   theme_bw() +
   transition_states(.draw, 1, 1) +
   enter_fade() + exit_fade()

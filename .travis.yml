@@ -5,8 +5,8 @@ os:
 
 before_install:
 #  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; sudo add-apt-repository -y ppa:cran/poppler; sudo apt-get update; sudo sudo apt-get install -y libpoppler-cpp-dev ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; sudo add-apt-repository -y ppa:cran/poppler; sudo apt-get update; sudo apt-get install -y libpoppler-cpp-dev; sudo apt-get install -y libv8-dev ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm; brew install v8;  brew install poppler;
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
     export CFLAGS="-I/usr/local/opt/llvm/include"; fi
@@ -19,7 +19,7 @@ pandoc_version: 1.19.2.1
 before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew tap homebrew/cask; brew cask install phantomJS; brew install imagemagick@6; brew install poppler; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew tap homebrew/cask; brew cask install phantomJS; brew install imagemagick@6; fi
 
 script:
   - R CMD build .
