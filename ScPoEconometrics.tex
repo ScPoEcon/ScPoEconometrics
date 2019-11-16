@@ -4886,7 +4886,7 @@ coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 08:09:27 PM
+16, 2019 - 09:55:50 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Effect of Scaling on Coefficients} 
@@ -5043,7 +5043,7 @@ output between both models:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 08:09:27 PM
+16, 2019 - 09:55:51 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Log Transformed Equation} 
@@ -5406,7 +5406,7 @@ this into a regression model now:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 08:09:31 PM
+16, 2019 - 09:55:54 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5868,7 +5868,7 @@ on their education as well as their sex:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 08:09:31 PM
+16, 2019 - 09:55:55 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -6614,8 +6614,8 @@ that in the
 \href{https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html}{first
 set of slides} we introduced Econometrics as the economist's toolkit to
 answer questions like \emph{does \(x\) \textbf{cause} \(y\)?} Let's
-illustrate the issues at stake a question from epidemiologie and public
-health instead:
+illustrate the issues at stake with a question from epidemiologie and
+public health:
 
 \begin{warning}
 Does smoking \textbf{cause} lung cancer?
@@ -6623,9 +6623,9 @@ Does smoking \textbf{cause} lung cancer?
 
 Just in case you were wondering: Yes it does! However, for a very long
 time the \emph{causal impact} of smoking on lung cancer was hotly
-debated, and it's instructive for us to look at this history. This
-chapter is drawn from chapter 5 of \emph{The Book of Why} by
-\href{http://bayes.cs.ucla.edu/jp_home.html}{Judea Pearl}.
+debated, and it's instructive for us to look at this history.\footnote{This
+  chapter is drawn from chapter 5 of \emph{The Book of Why} by
+  \href{http://bayes.cs.ucla.edu/jp_home.html}{Judea Pearl}.}
 
 Let's go back to the 1950's. We are at the start of a big increase in
 deaths from lung cancer. At the same time cigarette consumption was
@@ -6656,7 +6656,8 @@ could equally be responsible for the rise in cancer rates:
   General greater air pollution.
 \end{enumerate}
 
-We call those other factors \textbf{confounders}.
+We call those other factors \textbf{confounders} of the relationship
+between smoking and lung cancer.
 
 So, there were a series of sceptics around who at the time were
 contesting the existing evidence. That evidence consisted in general of
@@ -6720,25 +6721,9 @@ Let's put a some structure on this problem now, so we can make progress.
 
 A DAG is a tool to visualize a causal relationship. It is a graph where
 nodes are connected via arrows, where an arrow can run in one direction
-only (hence, \emph{directed} graph). Here is a simple example of a DAG,
-in which \(x\) \textbf{causes} \(y\):
-
-\begin{verbatim}
-#OUT> 
-#OUT> Attaching package: 'ggdag'
-\end{verbatim}
-
-\begin{verbatim}
-#OUT> The following object is masked from 'package:ggplot2':
-#OUT> 
-#OUT>     expand_scale
-\end{verbatim}
-
-\begin{verbatim}
-#OUT> The following object is masked from 'package:stats':
-#OUT> 
-#OUT>     filter
-\end{verbatim}
+only (hence, \emph{directed} graph). If an arrow starts at node \(x\)
+and ends at node \(y\), we say that \(x\) causes \(y\). Here is a simple
+example of such a DAG:
 
 \begin{figure}
 
@@ -6792,24 +6777,24 @@ smoking and lung cancer:
 
 }
 
-\caption{Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. (Arrow from smoking to cancer sometimes not visible!)}\label{fig:dag-cig}
+\caption{Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.}\label{fig:dag-cig}
 \end{figure}
 
 Basically, what critics like Fisher were claiming was that the existing
 studies did not compare like for like. In other words, our \emph{ceteris
 paribus} assumption was not satisfied. They were worried that
-\emph{smoking} was the only relevant difference between a population of
-smokers and one of non-smokers. In particular, they worried that people
-\textbf{self-selected} into smoking, and that the choice to become a
-smoker may be influenced by other, unobserved, underlying forces - like
-genetic predisposition, for example. That could mean that smokers were
-also more likely to take risks, or more likely to be heavy drinkers, or
-engage in other behaviours that might be conducive to develop lung
-cancer. They did not formulate it in terms of genetics at the time,
-because they could not know until the 2000's, when the human genome was
-sufficiently mapped to establish this fact (and indeed there \textbf{is}
-a smoking gene! But that's beside the point), but they worried about
-this factor.
+\emph{smoking} was not the only relevant difference between a population
+of smokers and one of non-smokers. In particular, they worried that
+people \textbf{self-selected} into smoking, and that the choice to
+become a smoker may be influenced by other, unobserved, underlying
+forces - like genetic predisposition, for example. That could mean that
+smokers were also more likely to take risks, or more likely to be heavy
+drinkers, or engage in other behaviours that might be conducive to
+develop lung cancer. They did not formulate it in terms of genetics at
+the time, because they could not know until the 2000's, when the human
+genome was sufficiently mapped to establish this fact (and indeed there
+\textbf{is} a smoking gene! But that's beside the point), but they
+worried about this factor.
 
 The argument was settled in the eyes of most physicians, when Jerome
 Cornfield in 1959 wrote a rebuttal of Fisher's points. Cornfield's
@@ -6945,8 +6930,9 @@ alike is the fact that one has to \emph{imagine a parallel universe}
 where the actions taken were different, \textbf{without} having observed
 that precise situation before. Neo did \emph{not} take the blue pill,
 and whatever happened after that originated from this decision - so how
-are we to tell what would have happened? It's hard, but it's
-fascinating. We \emph{imagine} what would have happened.
+are we to tell what would have happened? It's easy for us and
+\href{https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/}{still
+hard for machines}.
 
 Potential outcome \(Y_i^0\) above is what is known as the
 \emph{counterfactual} outcome. What would have happened to subject
@@ -6962,28 +6948,29 @@ individual \(i\) as follows:
 Notice our insistence about talking about a single individual \(i\)
 throughout here. Keeping the potential outcome model
 \eqref{eq:rubin-model} in mind, i.e.~the fact that we only observe
-\emph{one} of both outcomes, we face \textbf{fundamental identification
-problem of program evaluation}:
+\emph{one} of both outcomes, we face the \textbf{fundamental
+identification problem of program evaluation}:
 
 \begin{warning}
 Given we only observe \emph{one} potential outcome, we cannot compute
 the treatment effect \(\delta_i\) for any individual \(i\).
 \end{warning}
 
- Next, let's define three \emph{average} effects of interest:
+ That's pretty dire news. Let's see if we can do better with an average
+effect instead. Let's define three \emph{average} effects of interest:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   the Average Treatment Effect (ATE):
-  \(\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\)
+  \[\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\]
 \item
   the Average Treatment on the Treated (ATT):
-  \(\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\)
+  \[\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\]
 \item
   the Average Treatment on the Untreated (ATU):
-  \(\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\)
+  \[\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\]
 \end{enumerate}
 
 Notice that \emph{none} of those can be computed from data either,
@@ -7005,10 +6992,10 @@ Now let's consider what randomly choosing people for treatment does. The
 key consideration here is that the true \(\delta_i\) is potentially
 different for each person. That is, some people will have a high effect
 of treatment, while others may have a small (or even negative!) effect.
-To learn about the true \(\delta^{ATE}\), it matters who ends up being
-treated!
+To learn about the true \(\delta^{ATE}\) from our naive
+\(\hat{\delta}\), it matters who ends up being treated!
 
-Now imagine that individuals have at least some partial knowledge about
+Imagine that individuals have at least some partial knowledge about
 their likely \emph{gains from treatment}, i.e.~their personal
 \(\delta_i\). If those who expect to benefit a lot will select
 disproportionately into treatment, then our estimator \(\hat{\delta}\)
@@ -7062,8 +7049,8 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \label{eq:DGP-h}
 \end{equation}
 
 and imagine it represents the data generating process (DGP) of the
-impact of \(x\) on \(y\). Writing down this equation tightly linked to
-drawing this DAG from above:
+impact of \(x\) on \(y\). Writing down this equation is tightly linked
+to drawing this DAG from above:
 
 \begin{figure}
 

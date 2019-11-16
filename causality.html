@@ -209,14 +209,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="causality" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Causality</h1>
-<p>In this chapter we take on a challenging part of our course. Remember that in the <a href="https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html">first set of slides</a> we introduced Econometrics as the economist’s toolkit to answer questions like <em>does <span class="math inline">\(x\)</span> <strong>cause</strong> <span class="math inline">\(y\)</span>?</em> Let’s illustrate the issues at stake a question from epidemiologie and public health instead:</p>
+<p>In this chapter we take on a challenging part of our course. Remember that in the <a href="https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html">first set of slides</a> we introduced Econometrics as the economist’s toolkit to answer questions like <em>does <span class="math inline">\(x\)</span> <strong>cause</strong> <span class="math inline">\(y\)</span>?</em> Let’s illustrate the issues at stake with a question from epidemiologie and public health:</p>
 <div class="warning">
 <p>
 Does smoking <strong>cause</strong> lung cancer?
 </p>
 </div>
 <p><br></p>
-<p>Just in case you were wondering: Yes it does! However, for a very long time the <em>causal impact</em> of smoking on lung cancer was hotly debated, and it’s instructive for us to look at this history. This chapter is drawn from chapter 5 of <em>The Book of Why</em> by <a href="http://bayes.cs.ucla.edu/jp_home.html">Judea Pearl</a>.</p>
+<p>Just in case you were wondering: Yes it does! However, for a very long time the <em>causal impact</em> of smoking on lung cancer was hotly debated, and it’s instructive for us to look at this history.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
 <p>Let’s go back to the 1950’s. We are at the start of a big increase in deaths from lung cancer. At the same time cigarette consumption was growing very fast. With the benefit of hindsight, we can now draw this graph:</p>
 <div class="figure" style="text-align: center"><span id="fig:smoking-cancer"></span>
 <img src="images/Smoking_lung_cancer.png" alt="Two time series showing cigarette consumption per capita and incidence of lung cancer in the USA." width="355" />
@@ -230,7 +230,7 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 <li>Inhalation of motor exhausts (leaded gasoline fumes)</li>
 <li>General greater air pollution.</li>
 </ol>
-<p>We call those other factors <strong>confounders</strong>.</p>
+<p>We call those other factors <strong>confounders</strong> of the relationship between smoking and lung cancer.</p>
 <p>So, there were a series of sceptics around who at the time were contesting the existing evidence. That evidence consisted in general of the following:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Case-Control studies</strong>: British Epidemiologists Richard Doll and Austin Bradford Hill started to compare people already diagnosed with cancer to those without, recording their history, and observable characteristics (like age and health behaviours). In one study, out of 649 lung cancer patients interviewed, all but 2 had been smokers! In that study, a cancer patient was 1.5 million times more likely to be have been a smoker than a non-smoker. Still, critics said, there are several sources of bias:
@@ -250,15 +250,7 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 <p>Let’s put a some structure on this problem now, so we can make progress.</p>
 <div id="dags" class="section level2">
 <h2><span class="header-section-number">7.1</span> Directed Acyclical Graphs (DAG)</h2>
-<p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). Here is a simple example of a DAG, in which <span class="math inline">\(x\)</span> <strong>causes</strong> <span class="math inline">\(y\)</span>:</p>
-<pre><code>#OUT&gt; 
-#OUT&gt; Attaching package: &#39;ggdag&#39;</code></pre>
-<pre><code>#OUT&gt; The following object is masked from &#39;package:ggplot2&#39;:
-#OUT&gt; 
-#OUT&gt;     expand_scale</code></pre>
-<pre><code>#OUT&gt; The following object is masked from &#39;package:stats&#39;:
-#OUT&gt; 
-#OUT&gt;     filter</code></pre>
+<p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). If an arrow starts at node <span class="math inline">\(x\)</span> and ends at node <span class="math inline">\(y\)</span>, we say that <span class="math inline">\(x\)</span> causes <span class="math inline">\(y\)</span>. Here is a simple example of such a DAG:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag1"></span>
 <img src="ScPoEconometrics_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
@@ -285,12 +277,12 @@ Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confo
 <h2><span class="header-section-number">7.2</span> Smoking in a DAG</h2>
 <p>Let’s use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag-cig"></span>
-<img src="ScPoEconometrics_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. (Arrow from smoking to cancer sometimes not visible!)" width="672" />
+<img src="ScPoEconometrics_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
 <p class="caption">
-Figure 7.5: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. (Arrow from smoking to cancer sometimes not visible!)
+Figure 7.5: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher’s view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
 </p>
 </div>
-<p>Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our <em>ceteris paribus</em> assumption was not satisfied. They were worried that <em>smoking</em> was the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people <strong>self-selected</strong> into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000’s, when the human genome was sufficiently mapped to establish this fact (and indeed there <strong>is</strong> a smoking gene! But that’s beside the point), but they worried about this factor.</p>
+<p>Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our <em>ceteris paribus</em> assumption was not satisfied. They were worried that <em>smoking</em> was not the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people <strong>self-selected</strong> into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000’s, when the human genome was sufficiently mapped to establish this fact (and indeed there <strong>is</strong> a smoking gene! But that’s beside the point), but they worried about this factor.</p>
 <p>The argument was settled in the eyes of most physicians, when Jerome Cornfield in 1959 wrote a rebuttal of Fisher’s points. Cornfield’s strategy was to allow Fisher to have his unobserved factor, but to show that there was an upper bound to <em>how important</em> it could be in determining the outcome. Here goes:</p>
 <ol style="list-style-type: decimal">
 <li>Suppose there is indeed a confounding factor “smoking gene”, and that it completely determines the risk of cancer in smokers.</li>
@@ -302,7 +294,7 @@ Figure 7.5: Two competing causal graphs for the relationship between smoking and
 </div>
 <div id="rct" class="section level2">
 <h2><span class="header-section-number">7.3</span> Randomized Control Trials (RCT) Primer</h2>
-<p>We now present a quick introduction to Randomized Control Trials (RCTs). The history of randomization is fascinating and goes back a long time, again involving R.A. Fisher from above.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> Suffice it to say that RCTs have become so important in Economics that the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/">Nobel Price in Economics 2019</a> has been awarded to three exponents of the RCT literature, <a href="https://www.economist.com/finance-and-economics/2019/10/17/a-nobel-economics-prize-goes-to-pioneers-in-understanding-poverty">Duflo, Banerje and Kremer</a>. RCTs are widely used in Medicine, where they originate from (in some sense). But, what <em>are</em> RCTs?</p>
+<p>We now present a quick introduction to Randomized Control Trials (RCTs). The history of randomization is fascinating and goes back a long time, again involving R.A. Fisher from above.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> Suffice it to say that RCTs have become so important in Economics that the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/">Nobel Price in Economics 2019</a> has been awarded to three exponents of the RCT literature, <a href="https://www.economist.com/finance-and-economics/2019/10/17/a-nobel-economics-prize-goes-to-pioneers-in-understanding-poverty">Duflo, Banerje and Kremer</a>. RCTs are widely used in Medicine, where they originate from (in some sense). But, what <em>are</em> RCTs?</p>
 <div class="note">
 <p>
 A randomized controlled trial is a type of scientific experiment that aims to reduce certain sources of bias when testing the effectiveness of some intervention (treatment or policy); this is accomplished by randomly allocating subjects to two or more groups, treating them differently, and then comparing them with respect to a measured response.
@@ -330,23 +322,23 @@ Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 \tag{7.1}
 <li>What would have happend, had <a href="https://en.wikipedia.org/wiki/Neo_(The_Matrix)">Neo</a> taken the blue pill instead?</li>
 </ul>
 <p>Our ability to make those considerations distinguishes us from animals. It’s one of the biggest challenges for machines when trying to be <em>intelligent</em>.</p>
-<p>What makes this question so hard to answer for machines and animals alike is the fact that one has to <em>imagine a parallel universe</em> where the actions taken were different, <strong>without</strong> having observed that precise situation before. Neo did <em>not</em> take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It’s hard, but it’s fascinating. We <em>imagine</em> what would have happened.</p>
+<p>What makes this question so hard to answer for machines and animals alike is the fact that one has to <em>imagine a parallel universe</em> where the actions taken were different, <strong>without</strong> having observed that precise situation before. Neo did <em>not</em> take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It’s easy for us and <a href="https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/">still hard for machines</a>.</p>
 <p>Potential outcome <span class="math inline">\(Y_i^0\)</span> above is what is known as the <em>counterfactual</em> outcome. What would have happened to subject <span class="math inline">\(i\)</span>, had they <strong>not</strong> received treatment <span class="math inline">\(D\)</span>?</p>
 <p>Following Rubin, let us define the <strong>treatment effect</strong> for individual <span class="math inline">\(i\)</span> as follows:</p>
 <span class="math display" id="eq:TE">\[\begin{equation}
 \delta_i = Y_i^1 - Y_i^0 \tag{7.2}
 \end{equation}\]</span>
-<p>Notice our insistence about talking about a single individual <span class="math inline">\(i\)</span> throughout here. Keeping the potential outcome model <a href="causality.html#eq:rubin-model">(7.1)</a> in mind, i.e. the fact that we only observe <em>one</em> of both outcomes, we face <strong>fundamental identification problem of program evaluation</strong>:</p>
+<p>Notice our insistence about talking about a single individual <span class="math inline">\(i\)</span> throughout here. Keeping the potential outcome model <a href="causality.html#eq:rubin-model">(7.1)</a> in mind, i.e. the fact that we only observe <em>one</em> of both outcomes, we face the <strong>fundamental identification problem of program evaluation</strong>:</p>
 <div class="warning">
 <p>
 Given we only observe <em>one</em> potential outcome, we cannot compute the treatment effect <span class="math inline"><span class="math inline">\(\delta_i\)</span></span> for any individual <span class="math inline"><span class="math inline">\(i\)</span></span>.
 </p>
 </div>
-<p><br> Next, let’s define three <em>average</em> effects of interest:</p>
+<p><br> That’s pretty dire news. Let’s see if we can do better with an average effect instead. Let’s define three <em>average</em> effects of interest:</p>
 <ol style="list-style-type: decimal">
-<li>the Average Treatment Effect (ATE): <span class="math inline">\(\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\)</span></li>
-<li>the Average Treatment on the Treated (ATT): <span class="math inline">\(\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\)</span></li>
-<li>the Average Treatment on the Untreated (ATU): <span class="math inline">\(\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\)</span></li>
+<li>the Average Treatment Effect (ATE): <span class="math display">\[\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\]</span></li>
+<li>the Average Treatment on the Treated (ATT): <span class="math display">\[\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\]</span></li>
+<li>the Average Treatment on the Untreated (ATU): <span class="math display">\[\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\]</span></li>
 </ol>
 <p>Notice that <em>none</em> of those can be computed from data either, because all of them require data on individual <span class="math inline">\(i\)</span> from <em>both</em> scenarios. Let’s focus on the ATE for now. Fundamentally we face a <strong>missing data problem</strong>: either <span class="math inline">\(Y_i^1\)</span> or <span class="math inline">\(Y_i^0\)</span> are missing from our dataset. Nevertheless, let’s setup the following <em>naive</em> simple difference in means estimator <span class="math inline">\(\hat{\delta}\)</span>:</p>
 <span class="math display" id="eq:SDO">\[\begin{align}
@@ -354,8 +346,8 @@ Given we only observe <em>one</em> potential outcome, we cannot compute the trea
 \hat{\delta} =&amp; \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \tag{7.3}
 \end{align}\]</span>
 <p>in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups.</p>
-<p>Now let’s consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span>, it matters who ends up being treated!</p>
-<p>Now imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
+<p>Now let’s consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span> from our naive <span class="math inline">\(\hat{\delta}\)</span>, it matters who ends up being treated!</p>
+<p>Imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
 <p><span class="math display">\[
 \frac{1}{N_T} \sum_{i \in T}^{N_T} Y_i
 \]</span></p>
@@ -376,7 +368,7 @@ The mean of the residuals conditional on <span class="math inline"><span class="
 <span class="math display" id="eq:DGP-h">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{7.4}
 \end{equation}\]</span>
-<p>and imagine it represents the data generating process (DGP) of the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Writing down this equation tightly linked to drawing this DAG from above:</p>
+<p>and imagine it represents the data generating process (DGP) of the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Writing down this equation is tightly linked to drawing this DAG from above:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag4"></span>
 <img src="ScPoEconometrics_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
@@ -499,7 +491,8 @@ If there is an omitted variable <span class="math inline"><span class="math inli
 <div class="footnotes">
 <hr />
 <ol start="8">
-<li id="fn8"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham’s</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref8">↩</a></p></li>
+<li id="fn8"><p>This chapter is drawn from chapter 5 of <em>The Book of Why</em> by <a href="http://bayes.cs.ucla.edu/jp_home.html">Judea Pearl</a>.<a href="causality.html#fnref8">↩</a></p></li>
+<li id="fn9"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham’s</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref9">↩</a></p></li>
 </ol>
 </div>
             </section>
