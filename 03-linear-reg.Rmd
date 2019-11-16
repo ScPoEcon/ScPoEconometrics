@@ -698,7 +698,7 @@ Notice that the $R^2$ slightly improved, so have a better fit to the data. This 
 Specification | Outcome Var | Regressor | Interpretation of $b_1$ | Comment
 :------------:|:------------:|:------------:|:------------:|:------------:
 Level-level | y | x | $\Delta y = b_1 \Delta x$ | Standard
-Level-log | y | $\log(x)$ | $\Delta y = b_1 \Delta x$ | less frequent
+Level-log | y | $\log(x)$ | $\Delta y = \frac{b_1}{100} \Delta x$ | less frequent
 Log-level | $\log(y)$  | x | $\% \Delta y = (100 b_1) \Delta$ x | Semi-elasticity
 Log-Log  | $\log(y)$  | $\log(x)$ | $\% \Delta y = \% \Delta$ b_1 x | Elasticity
 
