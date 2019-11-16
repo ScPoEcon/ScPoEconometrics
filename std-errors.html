@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Regression Inference | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Regression Inference | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-11" />
+<meta name="date" content="2019-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -69,66 +69,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -244,7 +219,7 @@ Figure 6.1: Confidence bands around a regression line.
 <p>In order to fully understand this, we need to go back and make sure we have a good grasp of <em>sampling</em>. Let’s do this first.</p>
 <div id="sampling" class="section level2">
 <h2><span class="header-section-number">6.1</span> Sampling</h2>
-<p>In class we were confronted with a jar of Tricolore Fusilli pasta as picture in figure <a href="std-errors.html#fig:pasta1">6.2</a>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> We asked ourselves a question which, secretly, many of you had asked themselves at one point in their lives, namely:</p>
+<p>In class we were confronted with a jar of Tricolore Fusilli pasta as picture in figure <a href="std-errors.html#fig:pasta1">6.2</a>.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> We asked ourselves a question which, secretly, many of you had asked themselves at one point in their lives, namely:</p>
 <div class="tip">
 <p>
 What is the proportion of <strong>green</strong> Fusilli in a pack of Tricolore Fusilli?
@@ -265,7 +240,7 @@ Figure 6.2: A glass jar filled with Fusilli pasta in three different colors.
 Figure 6.3: Manually separating Fusilli by their color is very costly in terms of effort and cost.
 </p>
 </div>
-<p>Additionally, you may draw worried looks from the people around you, while you are doing it. Maybe this is not the right way to approach this task?<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
+<p>Additionally, you may draw worried looks from the people around you, while you are doing it. Maybe this is not the right way to approach this task?<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
 <div class="figure" style="text-align: center"><span id="fig:pasta3"></span>
 <img src="images/pasta3.JPG" alt="Heaps of Fusilli pasta ready to be counted." width="90%" />
 <p class="caption">
@@ -334,8 +309,8 @@ Figure 6.6: Taking eleven samples of 20 Fusilli each from the jar, and plotting 
 <li>We did think that this looked <em>suspiciouly</em> like a <strong>normal distribution</strong>.</li>
 </ol>
 <p>We collected the sample data into a data.frame:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" title="1">pasta_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">group =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">replicate =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">prop_green =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.3</span>,<span class="fl">0.15</span>,<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>))</a>
-<a class="sourceLine" id="cb359-2" title="2">pasta_samples</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pasta_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">group =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">replicate =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">prop_green =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.3</span>,<span class="fl">0.15</span>,<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>))
+pasta_samples</code></pre></div>
 <pre><code>#OUT&gt;    group replicate prop_green
 #OUT&gt; 1      1         1       0.30
 #OUT&gt; 2      2         2       0.25
@@ -394,19 +369,19 @@ How <em>confident</em> should we be about the estimated values <span class="math
 <div id="class-reg" class="section level2">
 <h2><span class="header-section-number">6.6</span> The Classical Regression Model (CRM)</h2>
 <p>Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
-<p><span class="math display" id="eq:abline-5">\[\begin{equation}
+<span class="math display" id="eq:abline-5">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>The smallest set of assumptions used to define the <em>classical regression model</em> as in <a href="std-errors.html#eq:abline-5">(6.1)</a> are the following:</p>
 <ol style="list-style-type: decimal">
-<li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section <a href="multiple-reg.html#multicol">4.2</a>. In the particular case of one regressor, as here, we require that <span class="math inline">\(x\)</span> exhibit some variation in the data, i.e. <span class="math inline">\(Var(x)\neq 0\)</span>.</li>
+<li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section <a href="multiple-reg.html#multicol">4.2</a>. In the particular case of one regressor, as here, we require that <span class="math inline">\(x\)</span> exhibit some variation in the data, i.e. <span class="math inline">\(Var(x)\neq 0\)</span>.</li>
 <li>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Notice that this also means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. It is said that <span class="math inline">\(x\)</span> should be <strong>strictly exogenous</strong> to the model.</li>
 </ol>
 <p>These assumptions are necessary to successfully (and correctly!) run an OLS regression. They are often supplemented with an additional set of assumptions, which help with certain aspects of the exposition, but are not strictly necessary:</p>
 <ol start="3" style="list-style-type: decimal">
 <li>The data are drawn from a <strong>random sample</strong> of size <span class="math inline">\(n\)</span>: observation <span class="math inline">\((x_i,y_i)\)</span> comes from the exact same distribution, and is independent of observation <span class="math inline">\((x_j,y_j)\)</span>, for all <span class="math inline">\(i\neq j\)</span>.</li>
 <li>The variance of the error term <span class="math inline">\(\varepsilon\)</span> is the same for each value of <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(\varepsilon|x) = \sigma^2\)</span>. This property is called <strong>homoskedasticity</strong>.</li>
-<li>The error is normally distributed, i.e. <span class="math inline">\(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)</span></li>
+<li>The error is normally distributed, i.e. <span class="math inline">\(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)</span></li>
 </ol>
 <p>Invoking assumption 5. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
 <div id="b-is-not-beta" class="section level3">
@@ -423,10 +398,10 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <p>It’s interesting to consider in which circumstances we might violate those assumptions. Let’s give an example for each of them:</p>
 <ol style="list-style-type: decimal">
 <li><p>No Perfect Collinearity. We have seen that a perfect collinearity makes it impossible to compute to OLS coefficients. Remember the example about adding <code>wtplus = wt + 1</code> to the <code>mtcars</code> dataset? Here it is:</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb361-2" title="2">mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb361-3" title="3"><span class="kw">mutate</span>(<span class="dt">wtplus =</span> wt <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb361-4" title="4"><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>wtplus, <span class="dt">data =</span> .)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+mtcars <span class="op">%&gt;%</span>
+<span class="kw">mutate</span>(<span class="dt">wtplus =</span> wt <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>wtplus, <span class="dt">data =</span> .)</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = mpg ~ wt + wtplus, data = .)
@@ -434,35 +409,31 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 #OUT&gt; Coefficients:
 #OUT&gt; (Intercept)           wt       wtplus  
 #OUT&gt;      37.285       -5.344           NA</code></pre>
-<p>That the coefficient on <code>wtplus</code> is <code>NA</code> is the result of the direct linear dependence. (Notice that creating <code>wtplus2 = (wt + 1)^2</code>) would work, since that is not linear!)</p></li>
-<li><p>Conditional Mean of errors is zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Going back to our running example in figure <a href="std-errors.html#fig:confint">6.1</a> about wages and education: Suppose that each individual <span class="math inline">\(i\)</span> in our data something like <em>innate ability</em>, something we might wish to measure with an IQ-test, however imperfecty. Let’s call it <span class="math inline">\(a_i\)</span>. It seems reasonable to think that high <span class="math inline">\(a_i\)</span> will go together with high wages. At the same time, people with high <span class="math inline">\(a_i\)</span> will find studying for exams and school work much less burdensome than others, hence they might select into obtaining more years of schooling. The problem? Well, there is no <span class="math inline">\(a_i\)</span> in our regression equation - most of time we don’t have a good measure of it to start with. So it’s an <em>unobserved variable</em>, and as such, it is part of the error term <span class="math inline">\(\varepsilon\)</span> in our model. We will attribute to <code>educ</code> part of the effect on wages that is actually <em>caused</em> by ability <span class="math inline">\(a_i\)</span>! Sometimes we may be able to reason about whether our estimate on <code>educ</code> is too high or too low, but we will never know it’s true value. We don’t get the <em>ceteris paribus</em> effect (the true partial derivative of <code>educ</code> on <code>lwage</code>). Technically, the assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> implies that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, so that’s the part that is violated.</p></li>
-<li><p>Data from Random Sample. One common concern here is that the observations in the data could have been <em>selected</em> in a particular fashion, which would make it less representative of the underlying population. Suppose we had ended up with individuals only from the richest neighborhood of town; Our interpretation the impact of education on wages might not be valid for other areas.</p></li>
-<li><p>Homoskedasticity. For correct inference (below!), we want to know whether the variance of <span class="math inline">\(\varepsilon\)</span> varies with our explanatory variable <span class="math inline">\(x\)</span>, or not. Here is a typical example where it does:
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-172-1.png" width="672" style="display: block; margin: auto;" />
-As income increases, not all people increase their food consumption in an equal way. So <span class="math inline">\(Var(\varepsilon|x)\)</span> will vary with the value of <span class="math inline">\(x\)</span>, hence it won’t be equal to the constant <span class="math inline">\(\sigma^2\)</span>.</p></li>
+That the coefficient on <code>wtplus</code> is <code>NA</code> is the result of the direct linear dependence. (Notice that creating <code>wtplus2 = (wt + 1)^2</code>) would work, since that is not linear!)</li>
+<li>Conditional Mean of errors is zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Going back to our running example in figure <a href="std-errors.html#fig:confint">6.1</a> about wages and education: Suppose that each individual <span class="math inline">\(i\)</span> in our data something like <em>innate ability</em>, something we might wish to measure with an IQ-test, however imperfecty. Let’s call it <span class="math inline">\(a_i\)</span>. It seems reasonable to think that high <span class="math inline">\(a_i\)</span> will go together with high wages. At the same time, people with high <span class="math inline">\(a_i\)</span> will find studying for exams and school work much less burdensome than others, hence they might select into obtaining more years of schooling. The problem? Well, there is no <span class="math inline">\(a_i\)</span> in our regression equation - most of time we don’t have a good measure of it to start with. So it’s an <em>unobserved variable</em>, and as such, it is part of the error term <span class="math inline">\(\varepsilon\)</span> in our model. We will attribute to <code>educ</code> part of the effect on wages that is actually <em>caused</em> by ability <span class="math inline">\(a_i\)</span>! Sometimes we may be able to reason about whether our estimate on <code>educ</code> is too high or too low, but we will never know it’s true value. We don’t get the <em>ceteris paribus</em> effect (the true partial derivative of <code>educ</code> on <code>lwage</code>). Technically, the assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> implies that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, so that’s the part that is violated.</li>
+<li>Data from Random Sample. One common concern here is that the observations in the data could have been <em>selected</em> in a particular fashion, which would make it less representative of the underlying population. Suppose we had ended up with individuals only from the richest neighborhood of town; Our interpretation the impact of education on wages might not be valid for other areas.</li>
+<li>Homoskedasticity. For correct inference (below!), we want to know whether the variance of <span class="math inline">\(\varepsilon\)</span> varies with our explanatory variable <span class="math inline">\(x\)</span>, or not. Here is a typical example where it does: <img src="ScPoEconometrics_files/figure-html/unnamed-chunk-172-1.png" width="672" style="display: block; margin: auto;" /> As income increases, not all people increase their food consumption in an equal way. So <span class="math inline">\(Var(\varepsilon|x)\)</span> will vary with the value of <span class="math inline">\(x\)</span>, hence it won’t be equal to the constant <span class="math inline">\(\sigma^2\)</span>.</li>
 <li><p>If the distribution of <span class="math inline">\(\varepsilon\)</span> is not normal, it is more cumbersome to derive theoretical results about inference.</p></li>
 </ol>
 </div>
 </div>
 <div id="se-theory" class="section level2">
 <h2><span class="header-section-number">6.7</span> Standard Errors in Theory</h2>
-<p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance.
-Under assumptions 1. through 4. above we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
-<p><span class="math display" id="eq:var-ols">\[\begin{equation}
+<p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance. Under assumptions 1. through 4. above we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
+<span class="math display" id="eq:var-ols">\[\begin{equation}
 Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2}  \tag{6.2}
-\end{equation}\]</span></p>
-<p>In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
+\end{equation}\]</span>
+<p>In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
 <p><span class="math display">\[
 s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
-\]</span>
-where <span class="math inline">\(n-p\)</span> are the <em>degrees of freedom</em> available in this estimation. <span class="math inline">\(p\)</span> is the number of parameters we wish to estimate (here: 1). So, the variance formula would become</p>
-<p><span class="math display" id="eq:var-ols2">\[\begin{equation}
+\]</span> where <span class="math inline">\(n-p\)</span> are the <em>degrees of freedom</em> available in this estimation. <span class="math inline">\(p\)</span> is the number of parameters we wish to estimate (here: 1). So, the variance formula would become</p>
+<span class="math display" id="eq:var-ols2">\[\begin{equation}
 Var(b_1|x_i) = \frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}  \tag{6.3}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>We most of the time work directly with the <em>standard error</em> of a coefficient, hence we define</p>
-<p><span class="math display" id="eq:SE-ols2">\[\begin{equation}
+<span class="math display" id="eq:SE-ols2">\[\begin{equation}
 SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2}}  \tag{6.4}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>You can clearly see that, as <span class="math inline">\(n\)</span> increases, the denominator increases, and therefore variance and standard error of the estimate will decrease.</p>
 
 </div>
@@ -470,8 +441,8 @@ SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2
 <div class="footnotes">
 <hr />
 <ol start="6">
-<li id="fn6"><p>This part is largely based on <a href="https://moderndive.com/7-sampling.html">moderndive</a>, to which I am giving full credit hereby. Thanks for this great idea.<a href="std-errors.html#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>Regardless of the worried onlookers, I did what I had to do and I carried on to count the green pile. I know exactly how many greens are in there now! I then computed the weight of 20 Fusilli (5g), and backed out the number of Fusilli in the other piles. I will declare those numbers as the <em>true numbers</em>. (Sceptics are free to recount.)<a href="std-errors.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>This part is largely based on <a href="https://moderndive.com/7-sampling.html">moderndive</a>, to which I am giving full credit hereby. Thanks for this great idea.<a href="std-errors.html#fnref6">↩</a></p></li>
+<li id="fn7"><p>Regardless of the worried onlookers, I did what I had to do and I carried on to count the green pile. I know exactly how many greens are in there now! I then computed the weight of 20 Fusilli (5g), and backed out the number of Fusilli in the other piles. I will declare those numbers as the <em>true numbers</em>. (Sceptics are free to recount.)<a href="std-errors.html#fnref7">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -496,15 +467,13 @@ SE(b_1) = \sqrt{Var(b_1|x_i)} = \sqrt{\frac{SSR}{(n-p)\sum_i^N (x_i - \bar{x})^2
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -532,7 +501,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Causality | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Causality | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-11" />
+<meta name="date" content="2019-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -69,66 +69,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -276,6 +251,14 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 <div id="dags" class="section level2">
 <h2><span class="header-section-number">7.1</span> Directed Acyclical Graphs (DAG)</h2>
 <p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). Here is a simple example of a DAG, in which <span class="math inline">\(x\)</span> <strong>causes</strong> <span class="math inline">\(y\)</span>:</p>
+<pre><code>#OUT&gt; 
+#OUT&gt; Attaching package: &#39;ggdag&#39;</code></pre>
+<pre><code>#OUT&gt; The following object is masked from &#39;package:ggplot2&#39;:
+#OUT&gt; 
+#OUT&gt;     expand_scale</code></pre>
+<pre><code>#OUT&gt; The following object is masked from &#39;package:stats&#39;:
+#OUT&gt; 
+#OUT&gt;     filter</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:dag1"></span>
 <img src="ScPoEconometrics_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
@@ -319,14 +302,13 @@ Figure 7.5: Two competing causal graphs for the relationship between smoking and
 </div>
 <div id="rct" class="section level2">
 <h2><span class="header-section-number">7.3</span> Randomized Control Trials (RCT) Primer</h2>
-<p>We now present a quick introduction to Randomized Control Trials (RCTs). The history of randomization is fascinating and goes back a long time, again involving R.A. Fisher from above.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> Suffice it to say that RCTs have become so important in Economics that the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/">Nobel Price in Economics 2019</a> has been awarded to three exponents of the RCT literature, <a href="https://www.economist.com/finance-and-economics/2019/10/17/a-nobel-economics-prize-goes-to-pioneers-in-understanding-poverty">Duflo, Banerje and Kremer</a>. RCTs are widely used in Medicine, where they originate from (in some sense). But, what <em>are</em> RCTs?</p>
+<p>We now present a quick introduction to Randomized Control Trials (RCTs). The history of randomization is fascinating and goes back a long time, again involving R.A. Fisher from above.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> Suffice it to say that RCTs have become so important in Economics that the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/">Nobel Price in Economics 2019</a> has been awarded to three exponents of the RCT literature, <a href="https://www.economist.com/finance-and-economics/2019/10/17/a-nobel-economics-prize-goes-to-pioneers-in-understanding-poverty">Duflo, Banerje and Kremer</a>. RCTs are widely used in Medicine, where they originate from (in some sense). But, what <em>are</em> RCTs?</p>
 <div class="note">
 <p>
 A randomized controlled trial is a type of scientific experiment that aims to reduce certain sources of bias when testing the effectiveness of some intervention (treatment or policy); this is accomplished by randomly allocating subjects to two or more groups, treating them differently, and then comparing them with respect to a measured response.
 </p>
 </div>
-<p><br>
-That sounds really intuitive. If we <em>randomly</em> allocate people to receive treatment, there can be no concern of unobserved confounders, as we have relieved the subjects of making the choice to get treated. Remember the cigarette smokers above: The concern was that an unobserved genetic predisposition correlated with both choosing to become a smoker but also with other potentially cancer-inducing behaviours like drinking or risk taking. Imagine for a moment that we could randomly select people at some young age to be selected for treatment (smoking for 30 years, say). The genetic predisposition will be equally prevalent in both treatment and control group. However, only the treatment group is allowed (and indeed forced) to smoke. Observing higher cancer rates in the treatment group would provide <em>causal evidence</em> for the effect of smoking on lung cancer.</p>
+<p><br> That sounds really intuitive. If we <em>randomly</em> allocate people to receive treatment, there can be no concern of unobserved confounders, as we have relieved the subjects of making the choice to get treated. Remember the cigarette smokers above: The concern was that an unobserved genetic predisposition correlated with both choosing to become a smoker but also with other potentially cancer-inducing behaviours like drinking or risk taking. Imagine for a moment that we could randomly select people at some young age to be selected for treatment (smoking for 30 years, say). The genetic predisposition will be equally prevalent in both treatment and control group. However, only the treatment group is allowed (and indeed forced) to smoke. Observing higher cancer rates in the treatment group would provide <em>causal evidence</em> for the effect of smoking on lung cancer.</p>
 <p>Thankfully, such an experiment is impossible to run on ethical grounds. We could never subject individuals to such severe and prolongued health risks for the sake of a research study. That’s why the question took to long to be settled!</p>
 <p>Let’s introduce a formal framework now to think more about RCTs.</p>
 </div>
@@ -338,9 +320,9 @@ That sounds really intuitive. If we <em>randomly</em> allocate people to receive
 <li><span class="math inline">\(Y_i^0\)</span>: individual <span class="math inline">\(i\)</span> has <strong>not</strong> been treated</li>
 </ul>
 <p>Denoting with <span class="math inline">\(D_i \in \{0,1\}\)</span> the treatment indicator which is one if <span class="math inline">\(i\)</span> is indeed treated, the <em>observed outcome</em> <span class="math inline">\(Y_i\)</span> is then</p>
-<p><span class="math display" id="eq:rubin-model">\[\begin{equation}
+<span class="math display" id="eq:rubin-model">\[\begin{equation}
 Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 \tag{7.1}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>This simple equation is able to formalize a rather deep question. We only ever observe one outcome of events for a given individual <span class="math inline">\(i\)</span>, say <span class="math inline">\(Y_i = Y_i^1\)</span> in case treatment was given. The deep question is: <em>what would have happened to <span class="math inline">\(i\)</span>, had they <strong>not</strong> received treatment</em>? You will realize that this a very natural question for us humans to put to ourselves, and to subsequently answer:</p>
 <ul>
 <li>How long would the trip have taken, had I chosen another metro line?</li>
@@ -351,27 +333,26 @@ Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 \tag{7.1}
 <p>What makes this question so hard to answer for machines and animals alike is the fact that one has to <em>imagine a parallel universe</em> where the actions taken were different, <strong>without</strong> having observed that precise situation before. Neo did <em>not</em> take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It’s hard, but it’s fascinating. We <em>imagine</em> what would have happened.</p>
 <p>Potential outcome <span class="math inline">\(Y_i^0\)</span> above is what is known as the <em>counterfactual</em> outcome. What would have happened to subject <span class="math inline">\(i\)</span>, had they <strong>not</strong> received treatment <span class="math inline">\(D\)</span>?</p>
 <p>Following Rubin, let us define the <strong>treatment effect</strong> for individual <span class="math inline">\(i\)</span> as follows:</p>
-<p><span class="math display" id="eq:TE">\[\begin{equation}
+<span class="math display" id="eq:TE">\[\begin{equation}
 \delta_i = Y_i^1 - Y_i^0 \tag{7.2}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>Notice our insistence about talking about a single individual <span class="math inline">\(i\)</span> throughout here. Keeping the potential outcome model <a href="causality.html#eq:rubin-model">(7.1)</a> in mind, i.e. the fact that we only observe <em>one</em> of both outcomes, we face <strong>fundamental identification problem of program evaluation</strong>:</p>
 <div class="warning">
 <p>
 Given we only observe <em>one</em> potential outcome, we cannot compute the treatment effect <span class="math inline"><span class="math inline">\(\delta_i\)</span></span> for any individual <span class="math inline"><span class="math inline">\(i\)</span></span>.
 </p>
 </div>
-<p><br>
-Next, let’s define three <em>average</em> effects of interest:</p>
+<p><br> Next, let’s define three <em>average</em> effects of interest:</p>
 <ol style="list-style-type: decimal">
 <li>the Average Treatment Effect (ATE): <span class="math inline">\(\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\)</span></li>
 <li>the Average Treatment on the Treated (ATT): <span class="math inline">\(\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\)</span></li>
 <li>the Average Treatment on the Untreated (ATU): <span class="math inline">\(\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\)</span></li>
 </ol>
 <p>Notice that <em>none</em> of those can be computed from data either, because all of them require data on individual <span class="math inline">\(i\)</span> from <em>both</em> scenarios. Let’s focus on the ATE for now. Fundamentally we face a <strong>missing data problem</strong>: either <span class="math inline">\(Y_i^1\)</span> or <span class="math inline">\(Y_i^0\)</span> are missing from our dataset. Nevertheless, let’s setup the following <em>naive</em> simple difference in means estimator <span class="math inline">\(\hat{\delta}\)</span>:</p>
-<p><span class="math display" id="eq:SDO">\[\begin{align}
+<span class="math display" id="eq:SDO">\[\begin{align}
 \hat{\delta} =&amp; E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
 \hat{\delta} =&amp; \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \tag{7.3}
-\end{align}\]</span></p>
+\end{align}\]</span>
 <p>in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups.</p>
 <p>Now let’s consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span>, it matters who ends up being treated!</p>
 <p>Now imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
@@ -392,9 +373,9 @@ The mean of the residuals conditional on <span class="math inline"><span class="
 </div>
 <p><br></p>
 <p>Let us start again with</p>
-<p><span class="math display" id="eq:DGP-h">\[\begin{equation}
+<span class="math display" id="eq:DGP-h">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{7.4}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>and imagine it represents the data generating process (DGP) of the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Writing down this equation tightly linked to drawing this DAG from above:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag4"></span>
 <img src="ScPoEconometrics_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
@@ -417,9 +398,9 @@ Figure 7.7: The same simple DAG where <span class="math inline">\(z\)</span> is 
 y_i = b_0 + b_1 x_i + e_i 
 \]</span></p>
 <p>and find a positive impact of bathrooms on houses:</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb363-1" title="1"><span class="kw">data</span>(Housing, <span class="dt">package=</span><span class="st">&quot;Ecdat&quot;</span>)</a>
-<a class="sourceLine" id="cb363-2" title="2">hlm =<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>bathrms, <span class="dt">data =</span> Housing)</a>
-<a class="sourceLine" id="cb363-3" title="3"><span class="kw">summary</span>(hlm)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Housing, <span class="dt">package=</span><span class="st">&quot;Ecdat&quot;</span>)
+hlm =<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>bathrms, <span class="dt">data =</span> Housing)
+<span class="kw">summary</span>(hlm)</code></pre></div>
 <pre><code>#OUT&gt; 
 #OUT&gt; Call:
 #OUT&gt; lm(formula = price ~ bathrms, data = Housing)
@@ -439,12 +420,12 @@ y_i = b_0 + b_1 x_i + e_i
 #OUT&gt; Multiple R-squared:  0.267,   Adjusted R-squared:  0.2657 
 #OUT&gt; F-statistic: 198.2 on 1 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>In fact, from this you conclude that each additional bathroom increases the sales price of a house by 27477 dollars. Let’s see if our assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> is satisfied:</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb365-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb365-2" title="2"><span class="co"># add residuals to the data</span></a>
-<a class="sourceLine" id="cb365-3" title="3">Housing<span class="op">$</span>resid &lt;-<span class="st"> </span><span class="kw">resid</span>(hlm)</a>
-<a class="sourceLine" id="cb365-4" title="4">Housing <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb365-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(bathrms) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb365-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_of_resid=</span><span class="kw">mean</span>(resid))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="co"># add residuals to the data</span>
+Housing<span class="op">$</span>resid &lt;-<span class="st"> </span><span class="kw">resid</span>(hlm)
+Housing <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(bathrms) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_of_resid=</span><span class="kw">mean</span>(resid))</code></pre></div>
 <pre><code>#OUT&gt; # A tibble: 4 x 2
 #OUT&gt;   bathrms mean_of_resid
 #OUT&gt;     &lt;dbl&gt;         &lt;dbl&gt;
@@ -458,16 +439,13 @@ y_i = b_0 + b_1 x_i + e_i
 Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span> (and, hence, <span class="math inline"><span class="math inline">\(e\)</span></span>)!
 </p>
 </div>
-<p><br>
-It looks like our DGP in <a href="causality.html#eq:DGP-h">(7.4)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this:</p>
-<p><span class="math display" id="eq:DGP-h2">\[\begin{equation}
+<p><br> It looks like our DGP in <a href="causality.html#eq:DGP-h">(7.4)</a> is the <em>wrong model</em>. Suppose instead, that in reality sales prices are generated like this:</p>
+<span class="math display" id="eq:DGP-h2">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{7.5}
-\end{equation}\]</span></p>
-<p>This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this:
-<span class="math display">\[
+\end{equation}\]</span>
+<p>This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
-\]</span>
-This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
+\]</span> This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
 </div>
 <div id="including-an-omitted-variable" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> Including an Omitted Variable</h3>
@@ -521,7 +499,7 @@ If there is an omitted variable <span class="math inline"><span class="math inli
 <div class="footnotes">
 <hr />
 <ol start="8">
-<li id="fn8"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham’s</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref8" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham’s</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref8">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -546,15 +524,13 @@ If there is an omitted variable <span class="math inline"><span class="math inli
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -582,7 +558,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
