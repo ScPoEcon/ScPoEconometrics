@@ -1,13 +1,13 @@
 # Causality {#causality}
 
-In this chapter we take on a challenging part of our course. Remember that in the [first set of slides](https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html) we introduced Econometrics as the economist's toolkit to answer questions like *does $x$ **cause** $y$?* Let's illustrate the issues at stake a question from epidemiologie and public health instead:
+In this chapter we take on a challenging part of our course. Remember that in the [first set of slides](https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html) we introduced Econometrics as the economist's toolkit to answer questions like *does $x$ **cause** $y$?* Let's illustrate the issues at stake with a question from epidemiologie and public health:
 
 ```{block type = "warning"}
 Does smoking **cause** lung cancer?
 ```
 <br>
 
-Just in case you were wondering: Yes it does! However, for a very long time the *causal impact* of smoking on lung cancer was hotly debated, and it's instructive for us to look at this history. This chapter is drawn from chapter 5 of *The Book of Why* by [Judea Pearl](http://bayes.cs.ucla.edu/jp_home.html).
+Just in case you were wondering: Yes it does! However, for a very long time the *causal impact* of smoking on lung cancer was hotly debated, and it's instructive for us to look at this history.^[This chapter is drawn from chapter 5 of *The Book of Why* by [Judea Pearl](http://bayes.cs.ucla.edu/jp_home.html).]
 
 Let's go back to the 1950's. We are at the start of a big increase in deaths from lung cancer. At the same time cigarette consumption was growing very fast. With the benefit of hindsight, we can now draw this graph:
 
@@ -21,7 +21,7 @@ However, time series graphs are poor tools to make causal statements. Many *othe
 1. Inhalation of motor exhausts (leaded gasoline fumes)
 1. General greater air pollution.
 
-We call those other factors **confounders**.
+We call those other factors **confounders** of the relationship between smoking and lung cancer.
 
 So, there were a series of sceptics around who at the time were contesting the existing evidence. That evidence consisted in general of the following:
 
@@ -39,9 +39,9 @@ Let's put a some structure on this problem now, so we can make progress.
 
 ## Directed Acyclical Graphs (DAG) {#dags}
 
-A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, *directed* graph). Here is a simple example of a DAG, in which $x$ **causes** $y$:
+A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, *directed* graph). If an arrow starts at node $x$ and ends at node $y$, we say that $x$ causes $y$. Here is a simple example of such a DAG:
 
-```{r dag1,echo = FALSE,warning = FALSE,messgae = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG showing the causal impact of $x$ on $y$."}
+```{r dag1,echo = FALSE,warning = FALSE,message = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG showing the causal impact of $x$ on $y$."}
 library(ggdag)
 theme_set(theme_dag())
 d1 = dagify(y ~ x) %>% 
@@ -69,7 +69,7 @@ Pearl calls the path from $z$ to $y$ a *backdoor path*. For use the existence of
 
 Let's use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:
 
-```{r dag-cig,fig.height = 4,echo = FALSE,fig.cap = "Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. (Arrow from smoking to cancer sometimes not visible!)"}
+```{r dag-cig,fig.height = 4,echo = FALSE,fig.cap = "Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel."}
 # https://cran.r-project.org/web/packages/ggdag/vignettes/bias-structures.html
 p1 = dagify(cancer ~ smoking,
        labels = c("cancer" = "Lung Cancer", 
@@ -81,15 +81,24 @@ p1 = dagify(cancer ~ smoking,
 
 p2 = confounder_triangle(x = "Smoking", y = "Lung Cancer", z = "Gene") %>% 
        ggdag(text = FALSE, use_labels = "label") + ggtitle("R.A. Fisher") + theme(plot.title = element_text(hjust = 0.5))
+p3 <- dagify(cancer ~ smoking,
+smoking ~ gene,
+cancer ~ gene,
+outcome = "cancer",
+labels = c("gene" = "Gene", "cancer" = "Lung Cancer",
+"smoking" = "Smoking")) %>%   
+  tidy_dagitty(layout = "tree") %>%
+  ggdag(text = FALSE, use_labels = "label") + ggtitle("Gene Partial")
+
 cowplot::plot_grid(p1,p2,axis = "tb")
 ```
 
-Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our *ceteris paribus* assumption was not satisfied. They were worried that *smoking* was the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people **self-selected** into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000's, when the human genome was sufficiently mapped to establish this fact (and indeed there **is** a smoking gene! But that's beside the point), but they worried about this factor.
+Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our *ceteris paribus* assumption was not satisfied. They were worried that *smoking* was not the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people **self-selected** into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000's, when the human genome was sufficiently mapped to establish this fact (and indeed there **is** a smoking gene! But that's beside the point), but they worried about this factor.
 
 
 The argument was settled in the eyes of most physicians, when Jerome Cornfield in 1959 wrote a rebuttal of Fisher's points. Cornfield's strategy was to allow Fisher to have his unobserved factor, but to show that there was an upper bound to *how important* it could be in determining the outcome. Here goes:
 
-1. Suppose there is indeed a confounding factor "smoking gene", and that it completely determines the risk of cancer in smokers.
+1. Suppose there is indeed a confounding factor "smoking gene", and that it completely determines the risk of cancer in smokers. 
 1. Suppose smokers are observed to have 9 times the risk of non-smokers to develop lung cancer.
 1. The smoking gene needs to be at least 9 times more prevalent in smokers than in non-smokers to explain this difference in risk.
 
@@ -134,7 +143,7 @@ This simple equation is able to formalize a rather deep question. We only ever o
 
 Our ability to make those considerations distinguishes us from animals. It's one of the biggest challenges for machines when trying to be *intelligent*.
 
-What makes this question so hard to answer for machines and animals alike is the fact that one has to *imagine a parallel universe* where the actions taken were different, **without** having observed that precise situation before. Neo did *not* take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It's hard, but it's fascinating. We *imagine* what would have happened. 
+What makes this question so hard to answer for machines and animals alike is the fact that one has to *imagine a parallel universe* where the actions taken were different, **without** having observed that precise situation before. Neo did *not* take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It's easy for us and [still hard for machines](https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/). 
 
 Potential outcome $Y_i^0$ above is what is known as the *counterfactual* outcome. What would have happened to subject $i$, had they **not** received treatment $D$?
 
@@ -144,17 +153,17 @@ Following Rubin, let us define the **treatment effect** for individual $i$ as fo
 \delta_i = Y_i^1 - Y_i^0 (\#eq:TE)
 \end{equation}
 
-Notice our insistence about talking about a single individual $i$ throughout here. Keeping the potential outcome model \@ref(eq:rubin-model) in mind, i.e. the fact that we only observe *one* of both outcomes, we face **fundamental identification problem of program evaluation**:
+Notice our insistence about talking about a single individual $i$ throughout here. Keeping the potential outcome model \@ref(eq:rubin-model) in mind, i.e. the fact that we only observe *one* of both outcomes, we face the **fundamental identification problem of program evaluation**:
 
 ```{block type="warning"}
 Given we only observe *one* potential outcome, we cannot compute the treatment effect $\delta_i$ for any individual $i$.
 ```
 <br>
-Next, let's define three *average* effects of interest:
+That's pretty dire news. Let's see if we can do better with an average effect instead. Let's define three *average* effects of interest:
 
-1. the Average Treatment Effect (ATE): $\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]$
-1. the Average Treatment on the Treated (ATT): $\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]$
-1. the Average Treatment on the Untreated (ATU): $\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]$
+1. the Average Treatment Effect (ATE): $$\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]$$
+1. the Average Treatment on the Treated (ATT): $$\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]$$
+1. the Average Treatment on the Untreated (ATU): $$\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]$$
 
 Notice that *none* of those can be computed from data either, because all of them require data on individual $i$ from *both* scenarios. Let's focus on the ATE for now. Fundamentally we face a **missing data problem**: either $Y_i^1$ or $Y_i^0$ are missing from our dataset. Nevertheless, let's setup the following *naive* simple difference in means estimator $\hat{\delta}$:
 
@@ -165,9 +174,9 @@ Notice that *none* of those can be computed from data either, because all of the
 
 in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups.
 
-Now let's consider what randomly choosing people for treatment does. The key consideration here is that the true $\delta_i$ is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true $\delta^{ATE}$, it matters who ends up being treated! 
+Now let's consider what randomly choosing people for treatment does. The key consideration here is that the true $\delta_i$ is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true $\delta^{ATE}$ from our naive $\hat{\delta}$, it matters who ends up being treated! 
 
-Now imagine that individuals have at least some partial knowledge about their likely *gains from treatment*, i.e. their personal $\delta_i$. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator $\hat{\delta}$ will be biased upwards for the true average effect $\delta^{ATE}$. This is so because the average of observed outcomes in the treatment group, i.e.
+Imagine that individuals have at least some partial knowledge about their likely *gains from treatment*, i.e. their personal $\delta_i$. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator $\hat{\delta}$ will be biased upwards for the true average effect $\delta^{ATE}$. This is so because the average of observed outcomes in the treatment group, i.e.
 
 $$
 \frac{1}{N_T} \sum_{i \in T}^{N_T} Y_i
@@ -194,7 +203,7 @@ Let us start again with
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:DGP-h)
 \end{equation}
 
-and imagine it represents the data generating process (DGP) of the impact of $x$ on $y$. Writing down this equation tightly linked to drawing this DAG from above:
+and imagine it represents the data generating process (DGP) of the impact of $x$ on $y$. Writing down this equation is tightly linked to drawing this DAG from above:
 
 ```{r dag4,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "The same simple DAG showing the causal impact of $x$ on $y$.",echo = FALSE}
 d1
