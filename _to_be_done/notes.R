@@ -1,3 +1,46 @@
+
+
+
+
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges_diagonal() +
+  geom_dag_text() +
+  theme_dag()
+
+
+dagify(y ~ x,
+       x ~ z,
+       y ~ z) %>%
+  tidy_dagitty(layout = "tree") %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges_diagonal() +
+  geom_dag_text() +
+  theme_dag() + scale_adjus
+
+d = dagify(y ~ x,
+           x ~ z,
+           y ~ z) %>%
+  tidy_dagitty(layout = "tree")
+
+p1 = d %>%
+  filter(name == "z") %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_linetype = "dashed") +
+  geom_dag_text() +
+  theme_dag()
+
+d2 = d %>%
+  filter(name != "z") %>%
+  ggdag()
+
+p1 + geom_dag_point(data = d2)
+
+
+
+
 # bootstrap from ungeviz repo
 
 library(gganimate)

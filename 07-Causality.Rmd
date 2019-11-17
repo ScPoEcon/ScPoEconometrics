@@ -49,21 +49,33 @@ d1 = dagify(y ~ x) %>%
 d1
 ```
 
-Consider this setting with the following where there is a third variable, $z$. It could be possible that also $z$ has a direct influence on $y$:
+Now consider this setting, where there is a third variable, $z$. It could be possible that also $z$ has a direct influence on $y$:
 
-```{r dag2,echo = FALSE,warning = FALSE,messgae = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$."}
+```{r dag2,echo = FALSE,warning = FALSE,message = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$."}
 dagify(y ~ x,
        y ~ z) %>% 
   ggdag()
 ```
 
-Now let's change this and create a path from $z$ to *both* $x$ and $y$ instead. We call $z$ a *confounder* in the relationship between $x$ and $y$: $z$ *confounds* the direct causal impact of $x$ on $y$, by affecting them both at the same time.
+Now let's change this and create a path from $z$ to *both* $x$ and $y$ instead. We call $z$ a *confounder* in the relationship between $x$ and $y$: $z$ *confounds* the direct causal impact of $x$ on $y$, by affecting them both at the same time. What is more, there is no arrow from $x$ to $y$ at all, so the only *real* explanatory variable here is in fact $z$. Attributing any explanatory power to $x$ would be wrong in this setting.
 
-```{r dag3,echo = FALSE,warning = FALSE,messgae = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG where $z$ is a confounder."}
+```{r dag3,echo = FALSE,warning = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation."}
 ggdag_confounder_triangle()
 ```
 
-Pearl calls the path from $z$ to $y$ a *backdoor path*. For use the existence of $z$ is particularly problematic if $z$ is **unobserved**.
+Here is a second example where $z$ is a confounder, but slightly different. 
+
+```{r dag41,echo=FALSE,fig.cap="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it."}
+d4 = dagify(y ~ x,
+  x ~ z,
+  y ~ z) %>%
+    tidy_dagitty(layout = "tree") %>%
+  ggdag()
+d4
+```
+
+In \@ref(fig:dag41) there is an arrow from $x$ to $y$. In this setting, if we are able to *observe* $z$, we can adjust the correlation we observe between $x$ to $y$ for the variation induced by $z$. In practice, this is precisely what multiple regression will do: holding $z$ fixed at some value, what is the partial effect of $x$ on $y$. Notice that $z$ cedes to be a confounder in this situation, and interpreting our regression coefficient on $x$ as *causal* is correct.
+
 
 ## Smoking in a DAG
 
@@ -169,10 +181,10 @@ Notice that *none* of those can be computed from data either, because all of the
 
 \begin{align}
 \hat{\delta} =& E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
-\hat{\delta} =& \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j (\#eq:SDO)
+             =& \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j (\#eq:SDO)
 \end{align}
 
-in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups.
+in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups. That is, $N_C$ is the number of people in the control group, $N_T$ is the same for treatment group.
 
 Now let's consider what randomly choosing people for treatment does. The key consideration here is that the true $\delta_i$ is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true $\delta^{ATE}$ from our naive $\hat{\delta}$, it matters who ends up being treated! 
 
@@ -182,11 +194,11 @@ $$
 \frac{1}{N_T} \sum_{i \in T}^{N_T} Y_i
 $$
 
-will be **too high**. It represents the disproportionately *high* treatment outcome $Y_i^1$ for all those who *anticipated* such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment.
+will be **too high**. It represents the disproportionately *high* treatment outcome $Y_i^1$ for all those who *anticipated* such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment. It's not *representative* of the true population wide treatment outcome $E[Y_i^1]$.
 
 Here is where randomization comes into play. Suppose we now flip a coin for each person to determine whether they obtain treatment or not. This takes away from them the possibility to select on expected gains into treatment. Crucially, the distribution of effects $\delta_i$ is still the same in the study population, i.e. there are still people with high and people with low effects. But we have solved the missing data problem mentioned above, because whether $Y_i^1$ or rather $Y_i^0$ is observed for each $i$ is now **random**, and no longer a function of any other factor that $i$ could act upon! Hooray!
 
-Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder $z$ in \@ref(fig:dag3). 
+Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder $z$ in \@ref(fig:dag41). 
 
 ## Omitted Variable Bias and DAGs
 
@@ -211,16 +223,16 @@ d1
 
 The role of $\varepsilon_i$ in equation \@ref(eq:DGP-h) is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to *fully* explain $y_i$ with our necessarily simple model. However, assumption $E[\varepsilon|x] = 0$ (or $Cov(\varepsilon,x) = 0$) makes sure that those other factors are in **no systematic relationship** with our regressor $x$. Why? Well if it *were* the case that another factor $z$ is related to $x$, we could never make our ceteris paribus statements of *holding all other factors fixed, the impact of $x$ on $y$ is $\beta$*. In other words, we'd have a confounder in our regression. 
 
-```{r dag5,echo = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "The same simple DAG where $z$ is a confounder."}
-ggdag_confounder_triangle()
+```{r dag5,echo = FALSE,fig.width=4,fig.height = 4, fig.align = "center",fig.cap = "The same simple DAG where $z$ is a confounder that needs to be controlled for."}
+d4
 ```
 
 
-Notice, again, that the key here is that $z$ is **unobservable**, hence will form part of the error term $\varepsilon$.
+Notice, again, that the key here is that if we don't control for $z$, it will form part of the error term $\varepsilon$. Given the causal link from $z$ to $x$, we will then observe that $Cov(x,u) = Cov(x,\varepsilon + z) \neq 0$, invalidating our assumption.
 
 ### House Prices and Bathrooms
 
-Let's imagine that equation \@ref(eq:DGP-h) the impact of number of bathrooms ($x$) on the sales price of houses ($y$). We run OLS as
+Let's imagine that equation \@ref(eq:DGP-h) represents the impact of number of bathrooms ($x$) on the sales price of houses ($y$). We run OLS as
 
 $$
 y_i = b_0 + b_1 x_i + e_i 
@@ -295,7 +307,7 @@ This shows that lotsize and the number of bathrooms is indeed positively related
 ```{block type='note'}
 **Direction of Omitted Variable Bias**
 
-If there is an omitted variable $z$ that is *positively* correlated with our explanatory variable $x$, then our estimate of effect of $x$ on $y$ will be too large (or, *biased upwards*). The correlation between $x$ and $z$ means that we attribute part of the impact of $z$ on $y$ mistakenly to $x$! And, of course, vice versa for *negatively* correlated omitted variables.
+If the direction of correlation between omitted variable $z$ and $x$ is the same as that between $x$ and $y$, we will observe upward bias in our estimate of $b_1$, and vice versa if the correlations go in opposite directions. In other words, we have positive bias if $b_2 z_i > 0$ and vice versa.
 ```
 <br>
 
