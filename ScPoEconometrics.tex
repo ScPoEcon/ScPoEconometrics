@@ -128,7 +128,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-11-16}
+    \date{2019-11-17}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -4885,8 +4885,8 @@ instead of \(y = wage\) as outcome variable on our regression
 coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 09:55:50 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
+17, 2019 - 08:43:47 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Effect of Scaling on Coefficients} 
@@ -5042,8 +5042,8 @@ above because it is a \emph{nonlinear} function. Let's compare the
 output between both models:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 09:55:51 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
+17, 2019 - 08:43:48 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Log Transformed Equation} 
@@ -5405,8 +5405,8 @@ this into a regression model now:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 09:55:54 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
+17, 2019 - 08:43:51 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5867,8 +5867,8 @@ on their education as well as their sex:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Nov
-16, 2019 - 09:55:55 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
+17, 2019 - 08:43:52 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -6734,9 +6734,8 @@ example of such a DAG:
 \caption{A simple DAG showing the causal impact of $x$ on $y$.}\label{fig:dag1}
 \end{figure}
 
-Consider this setting with the following where there is a third
-variable, \(z\). It could be possible that also \(z\) has a direct
-influence on \(y\):
+Now consider this setting, where there is a third variable, \(z\). It
+could be possible that also \(z\) has a direct influence on \(y\):
 
 \begin{figure}
 
@@ -6750,7 +6749,10 @@ influence on \(y\):
 Now let's change this and create a path from \(z\) to \emph{both} \(x\)
 and \(y\) instead. We call \(z\) a \emph{confounder} in the relationship
 between \(x\) and \(y\): \(z\) \emph{confounds} the direct causal impact
-of \(x\) on \(y\), by affecting them both at the same time.
+of \(x\) on \(y\), by affecting them both at the same time. What is
+more, there is no arrow from \(x\) to \(y\) at all, so the only
+\emph{real} explanatory variable here is in fact \(z\). Attributing any
+explanatory power to \(x\) would be wrong in this setting.
 
 \begin{figure}
 
@@ -6758,12 +6760,29 @@ of \(x\) on \(y\), by affecting them both at the same time.
 
 }
 
-\caption{A simple DAG where $z$ is a confounder.}\label{fig:dag3}
+\caption{A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation.}\label{fig:dag3}
 \end{figure}
 
-Pearl calls the path from \(z\) to \(y\) a \emph{backdoor path}. For use
-the existence of \(z\) is particularly problematic if \(z\) is
-\textbf{unobserved}.
+Here is a second example where \(z\) is a confounder, but slightly
+different.
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag41-1} 
+
+}
+
+\caption{$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it.}\label{fig:dag41}
+\end{figure}
+
+In \ref{fig:dag41} there is an arrow from \(x\) to \(y\). In this
+setting, if we are able to \emph{observe} \(z\), we can adjust the
+correlation we observe between \(x\) to \(y\) for the variation induced
+by \(z\). In practice, this is precisely what multiple regression will
+do: holding \(z\) fixed at some value, what is the partial effect of
+\(x\) on \(y\). Notice that \(z\) cedes to be a confounder in this
+situation, and interpreting our regression coefficient on \(x\) as
+\emph{causal} is correct.
 
 \section{Smoking in a DAG}\label{smoking-in-a-dag}
 
@@ -6982,11 +7001,12 @@ simple difference in means estimator \(\hat{\delta}\):
 
 \begin{align}
 \hat{\delta} =& E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
-\hat{\delta} =& \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \label{eq:SDO}
+             =& \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \label{eq:SDO}
 \end{align}
 
 in other words, we just difference the mean outcomes in both treatment
-(T) and control (C) groups.
+(T) and control (C) groups. That is, \(N_C\) is the number of people in
+the control group, \(N_T\) is the same for treatment group.
 
 Now let's consider what randomly choosing people for treatment does. The
 key consideration here is that the true \(\delta_i\) is potentially
@@ -7010,7 +7030,9 @@ group, i.e.
 will be \textbf{too high}. It represents the disproportionately
 \emph{high} treatment outcome \(Y_i^1\) for all those who
 \emph{anticipated} such a high outcome from treatment, and who therefore
-were particularly eager to get selected into treatment.
+were particularly eager to get selected into treatment. It's not
+\emph{representative} of the true population wide treatment outcome
+\(E[Y_i^1]\).
 
 Here is where randomization comes into play. Suppose we now flip a coin
 for each person to determine whether they obtain treatment or not. This
@@ -7024,7 +7046,7 @@ of any other factor that \(i\) could act upon! Hooray!
 
 Notice how this links back to our initial discussion about DAGs above.
 Randomisation essentially cancels the links starting at confounder \(z\)
-in \ref{fig:dag3}.
+in \ref{fig:dag41}.
 
 \section{Omitted Variable Bias and
 DAGs}\label{omitted-variable-bias-and-dags}
@@ -7079,17 +7101,21 @@ in our regression.
 
 }
 
-\caption{The same simple DAG where $z$ is a confounder.}\label{fig:dag5}
+\caption{The same simple DAG where $z$ is a confounder that needs to be controlled for.}\label{fig:dag5}
 \end{figure}
 
-Notice, again, that the key here is that \(z\) is \textbf{unobservable},
-hence will form part of the error term \(\varepsilon\).
+Notice, again, that the key here is that if we don't control for \(z\),
+it will form part of the error term \(\varepsilon\). Given the causal
+link from \(z\) to \(x\), we will then observe that
+\(Cov(x,u) = Cov(x,\varepsilon + z) \neq 0\), invalidating our
+assumption.
 
 \subsection{House Prices and
 Bathrooms}\label{house-prices-and-bathrooms}
 
-Let's imagine that equation \eqref{eq:DGP-h} the impact of number of
-bathrooms (\(x\)) on the sales price of houses (\(y\)). We run OLS as
+Let's imagine that equation \eqref{eq:DGP-h} represents the impact of
+number of bathrooms (\(x\)) on the sales price of houses (\(y\)). We run
+OLS as
 
 \[
 y_i = b_0 + b_1 x_i + e_i 
@@ -7250,12 +7276,11 @@ general result:
 \begin{note}
 \textbf{Direction of Omitted Variable Bias}
 
-If there is an omitted variable \(z\) that is \emph{positively}
-correlated with our explanatory variable \(x\), then our estimate of
-effect of \(x\) on \(y\) will be too large (or, \emph{biased upwards}).
-The correlation between \(x\) and \(z\) means that we attribute part of
-the impact of \(z\) on \(y\) mistakenly to \(x\)! And, of course, vice
-versa for \emph{negatively} correlated omitted variables.
+If the direction of correlation between omitted variable \(z\) and \(x\)
+is the same as that between \(x\) and \(y\), we will observe upward bias
+in our estimate of \(b_1\), and vice versa if the correlations go in
+opposite directions. In other words, we have positive bias if
+\(b_2 z_i > 0\) and vice versa.
 \end{note}
 
 \section{STAR Experiment}\label{star-experiment}

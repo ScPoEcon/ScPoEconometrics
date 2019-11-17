@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-16" />
+<meta name="date" content="2019-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -257,21 +257,28 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 Figure 7.2: A simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
-<p>Consider this setting with the following where there is a third variable, <span class="math inline">\(z\)</span>. It could be possible that also <span class="math inline">\(z\)</span> has a direct influence on <span class="math inline">\(y\)</span>:</p>
+<p>Now consider this setting, where there is a third variable, <span class="math inline">\(z\)</span>. It could be possible that also <span class="math inline">\(z\)</span> has a direct influence on <span class="math inline">\(y\)</span>:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag2"></span>
 <img src="ScPoEconometrics_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
 <p class="caption">
 Figure 7.3: A simple DAG with with 2 causal paths: Both <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> have a direct impact on <span class="math inline">\(y\)</span>.
 </p>
 </div>
-<p>Now let’s change this and create a path from <span class="math inline">\(z\)</span> to <em>both</em> <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> instead. We call <span class="math inline">\(z\)</span> a <em>confounder</em> in the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: <span class="math inline">\(z\)</span> <em>confounds</em> the direct causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, by affecting them both at the same time.</p>
+<p>Now let’s change this and create a path from <span class="math inline">\(z\)</span> to <em>both</em> <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> instead. We call <span class="math inline">\(z\)</span> a <em>confounder</em> in the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: <span class="math inline">\(z\)</span> <em>confounds</em> the direct causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, by affecting them both at the same time. What is more, there is no arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> at all, so the only <em>real</em> explanatory variable here is in fact <span class="math inline">\(z\)</span>. Attributing any explanatory power to <span class="math inline">\(x\)</span> would be wrong in this setting.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag3"></span>
-<img src="ScPoEconometrics_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
 <p class="caption">
-Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confounder.
+Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confounder. There is no causal path from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>, and any correlation we observe between those variables is completely induced by <span class="math inline">\(z\)</span>. We call this spurious correlation.
 </p>
 </div>
-<p>Pearl calls the path from <span class="math inline">\(z\)</span> to <span class="math inline">\(y\)</span> a <em>backdoor path</em>. For use the existence of <span class="math inline">\(z\)</span> is particularly problematic if <span class="math inline">\(z\)</span> is <strong>unobserved</strong>.</p>
+<p>Here is a second example where <span class="math inline">\(z\)</span> is a confounder, but slightly different.</p>
+<div class="figure" style="text-align: center"><span id="fig:dag41"></span>
+<img src="ScPoEconometrics_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
+<p class="caption">
+Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, but there is a causal link from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> now. If we observed <span class="math inline">\(z\)</span>, we can control for it.
+</p>
+</div>
+<p>In <a href="causality.html#fig:dag41">7.5</a> there is an arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>. In this setting, if we are able to <em>observe</em> <span class="math inline">\(z\)</span>, we can adjust the correlation we observe between <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> for the variation induced by <span class="math inline">\(z\)</span>. In practice, this is precisely what multiple regression will do: holding <span class="math inline">\(z\)</span> fixed at some value, what is the partial effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Notice that <span class="math inline">\(z\)</span> cedes to be a confounder in this situation, and interpreting our regression coefficient on <span class="math inline">\(x\)</span> as <em>causal</em> is correct.</p>
 </div>
 <div id="smoking-in-a-dag" class="section level2">
 <h2><span class="header-section-number">7.2</span> Smoking in a DAG</h2>
@@ -279,7 +286,7 @@ Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confo
 <div class="figure" style="text-align: center"><span id="fig:dag-cig"></span>
 <img src="ScPoEconometrics_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
 <p class="caption">
-Figure 7.5: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher’s view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
+Figure 7.6: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher’s view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
 </p>
 </div>
 <p>Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our <em>ceteris paribus</em> assumption was not satisfied. They were worried that <em>smoking</em> was not the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people <strong>self-selected</strong> into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000’s, when the human genome was sufficiently mapped to establish this fact (and indeed there <strong>is</strong> a smoking gene! But that’s beside the point), but they worried about this factor.</p>
@@ -290,7 +297,7 @@ Figure 7.5: Two competing causal graphs for the relationship between smoking and
 <li>The smoking gene needs to be at least 9 times more prevalent in smokers than in non-smokers to explain this difference in risk.</li>
 </ol>
 <p>But now consider what this implies. Let’s suppose that around 11% of all non-smokers have the smoking gene. That means that <span class="math inline">\(9\times 11 = 99\%\)</span> of smokers need to have it! What’s even more worrying, if only even 12% of non smokers have the gene, then the argument breaks down because it would require <span class="math inline">\(9\times 12 = 108\%\)</span> of smokers to have it, which is of course impossible.</p>
-<p>This argument was so important that it got a name: <strong>Cornfield’s inequality</strong>. It left of Fisher’s argument nothing but a pile of rubble. It’s impossible to think that genetic variation alone could be so important in determining a complex choice of becoming a smoker or not. Looking back at the right panel of figure <a href="causality.html#fig:dag-cig">7.5</a>, the link from smoking to lung cancer was much too strong to be explained by the genetic hypothesis alone.</p>
+<p>This argument was so important that it got a name: <strong>Cornfield’s inequality</strong>. It left of Fisher’s argument nothing but a pile of rubble. It’s impossible to think that genetic variation alone could be so important in determining a complex choice of becoming a smoker or not. Looking back at the right panel of figure <a href="causality.html#fig:dag-cig">7.6</a>, the link from smoking to lung cancer was much too strong to be explained by the genetic hypothesis alone.</p>
 </div>
 <div id="rct" class="section level2">
 <h2><span class="header-section-number">7.3</span> Randomized Control Trials (RCT) Primer</h2>
@@ -343,17 +350,17 @@ Given we only observe <em>one</em> potential outcome, we cannot compute the trea
 <p>Notice that <em>none</em> of those can be computed from data either, because all of them require data on individual <span class="math inline">\(i\)</span> from <em>both</em> scenarios. Let’s focus on the ATE for now. Fundamentally we face a <strong>missing data problem</strong>: either <span class="math inline">\(Y_i^1\)</span> or <span class="math inline">\(Y_i^0\)</span> are missing from our dataset. Nevertheless, let’s setup the following <em>naive</em> simple difference in means estimator <span class="math inline">\(\hat{\delta}\)</span>:</p>
 <span class="math display" id="eq:SDO">\[\begin{align}
 \hat{\delta} =&amp; E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
-\hat{\delta} =&amp; \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \tag{7.3}
+             =&amp; \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \tag{7.3}
 \end{align}\]</span>
-<p>in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups.</p>
+<p>in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups. That is, <span class="math inline">\(N_C\)</span> is the number of people in the control group, <span class="math inline">\(N_T\)</span> is the same for treatment group.</p>
 <p>Now let’s consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span> from our naive <span class="math inline">\(\hat{\delta}\)</span>, it matters who ends up being treated!</p>
 <p>Imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
 <p><span class="math display">\[
 \frac{1}{N_T} \sum_{i \in T}^{N_T} Y_i
 \]</span></p>
-<p>will be <strong>too high</strong>. It represents the disproportionately <em>high</em> treatment outcome <span class="math inline">\(Y_i^1\)</span> for all those who <em>anticipated</em> such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment.</p>
+<p>will be <strong>too high</strong>. It represents the disproportionately <em>high</em> treatment outcome <span class="math inline">\(Y_i^1\)</span> for all those who <em>anticipated</em> such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment. It’s not <em>representative</em> of the true population wide treatment outcome <span class="math inline">\(E[Y_i^1]\)</span>.</p>
 <p>Here is where randomization comes into play. Suppose we now flip a coin for each person to determine whether they obtain treatment or not. This takes away from them the possibility to select on expected gains into treatment. Crucially, the distribution of effects <span class="math inline">\(\delta_i\)</span> is still the same in the study population, i.e. there are still people with high and people with low effects. But we have solved the missing data problem mentioned above, because whether <span class="math inline">\(Y_i^1\)</span> or rather <span class="math inline">\(Y_i^0\)</span> is observed for each <span class="math inline">\(i\)</span> is now <strong>random</strong>, and no longer a function of any other factor that <span class="math inline">\(i\)</span> could act upon! Hooray!</p>
-<p>Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder <span class="math inline">\(z\)</span> in <a href="causality.html#fig:dag3">7.4</a>.</p>
+<p>Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder <span class="math inline">\(z\)</span> in <a href="causality.html#fig:dag41">7.5</a>.</p>
 </div>
 <div id="omitted-variable-bias-and-dags" class="section level2">
 <h2><span class="header-section-number">7.5</span> Omitted Variable Bias and DAGs</h2>
@@ -372,20 +379,20 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{7.4}
 <div class="figure" style="text-align: center"><span id="fig:dag4"></span>
 <img src="ScPoEconometrics_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
-Figure 7.6: The same simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
+Figure 7.7: The same simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
 <p>The role of <span class="math inline">\(\varepsilon_i\)</span> in equation <a href="causality.html#eq:DGP-h">(7.4)</a> is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to <em>fully</em> explain <span class="math inline">\(y_i\)</span> with our necessarily simple model. However, assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> (or <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>) makes sure that those other factors are in <strong>no systematic relationship</strong> with our regressor <span class="math inline">\(x\)</span>. Why? Well if it <em>were</em> the case that another factor <span class="math inline">\(z\)</span> is related to <span class="math inline">\(x\)</span>, we could never make our ceteris paribus statements of <em>holding all other factors fixed, the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is <span class="math inline">\(\beta\)</span></em>. In other words, we’d have a confounder in our regression.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag5"></span>
-<img src="ScPoEconometrics_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
 <p class="caption">
-Figure 7.7: The same simple DAG where <span class="math inline">\(z\)</span> is a confounder.
+Figure 7.8: The same simple DAG where <span class="math inline">\(z\)</span> is a confounder that needs to be controlled for.
 </p>
 </div>
-<p>Notice, again, that the key here is that <span class="math inline">\(z\)</span> is <strong>unobservable</strong>, hence will form part of the error term <span class="math inline">\(\varepsilon\)</span>.</p>
+<p>Notice, again, that the key here is that if we don’t control for <span class="math inline">\(z\)</span>, it will form part of the error term <span class="math inline">\(\varepsilon\)</span>. Given the causal link from <span class="math inline">\(z\)</span> to <span class="math inline">\(x\)</span>, we will then observe that <span class="math inline">\(Cov(x,u) = Cov(x,\varepsilon + z) \neq 0\)</span>, invalidating our assumption.</p>
 <div id="house-prices-and-bathrooms" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> House Prices and Bathrooms</h3>
-<p>Let’s imagine that equation <a href="causality.html#eq:DGP-h">(7.4)</a> the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). We run OLS as</p>
+<p>Let’s imagine that equation <a href="causality.html#eq:DGP-h">(7.4)</a> represents the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). We run OLS as</p>
 <p><span class="math display">\[
 y_i = b_0 + b_1 x_i + e_i 
 \]</span></p>
@@ -467,7 +474,7 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-180"></span>
 <img src="ScPoEconometrics_files/figure-html/unnamed-chunk-180-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
-Figure 7.8: Distribution of <code>lotsize</code> by <code>bathrms</code>
+Figure 7.9: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
 </div>
 <p>This shows that lotsize and the number of bathrooms is indeed positively related. Larger lot of the house, more bathrooms. This leads to a general result:</p>
@@ -476,7 +483,7 @@ Figure 7.8: Distribution of <code>lotsize</code> by <code>bathrms</code>
 <strong>Direction of Omitted Variable Bias</strong>
 </p>
 <p>
-If there is an omitted variable <span class="math inline"><span class="math inline">\(z\)</span></span> that is <em>positively</em> correlated with our explanatory variable <span class="math inline"><span class="math inline">\(x\)</span></span>, then our estimate of effect of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span> will be too large (or, <em>biased upwards</em>). The correlation between <span class="math inline"><span class="math inline">\(x\)</span></span> and <span class="math inline"><span class="math inline">\(z\)</span></span> means that we attribute part of the impact of <span class="math inline"><span class="math inline">\(z\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span> mistakenly to <span class="math inline"><span class="math inline">\(x\)</span></span>! And, of course, vice versa for <em>negatively</em> correlated omitted variables.
+If the direction of correlation between omitted variable <span class="math inline"><span class="math inline">\(z\)</span></span> and <span class="math inline"><span class="math inline">\(x\)</span></span> is the same as that between <span class="math inline"><span class="math inline">\(x\)</span></span> and <span class="math inline"><span class="math inline">\(y\)</span></span>, we will observe upward bias in our estimate of <span class="math inline"><span class="math inline">\(b_1\)</span></span>, and vice versa if the correlations go in opposite directions. In other words, we have positive bias if <span class="math inline"><span class="math inline">\(b_2 z_i &amp;gt; 0\)</span></span> and vice versa.
 </p>
 </div>
 <p><br></p>
