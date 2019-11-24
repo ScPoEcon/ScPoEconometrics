@@ -1,6 +1,37 @@
 
 
 
+data("STAR",package = "AER")
+x = as.data.table(STAR)
+
+mx = melt.data.table(x, id = 1:3, measure.vars = patterns("star*"), variable.name = "grade", value.name = "classtype")
+# mx[, grade := as.character(grade)]
+ms = melt.data.table(x, id = 1:3, measure.vars = patterns("read*","math*", "schoolid*", "degree*","experience*","tethnicity*"), variable.name = "grade", value.name = c("read","math","schoolid","degree","experience","tethniticy"))
+
+mx = cbind(mx,ms[,-c(1:4)])
+mx = mx[complete.cases(mx)]
+
+setkey(mx, classtype)
+ecdfs = mx[classtype != "small", list(readcdf = list(ecdf(read)),mathcdf = list(ecdf(math))),by = grade]
+
+om = par("mar")
+par(mfcol=c(4,2),mar = c(2,om[2],2.5,om[4]))
+ecdfs[,.SD[,plot(mathcdf[[1]],main = paste("math ecdf grade",.BY))],by = grade]
+ecdfs[,.SD[,plot(readcdf[[1]],main = paste("read ecdf grade",.BY))],by = grade]
+par(mfcol=c(1,1),mar = om)
+
+setkey(ecdfs, grade)
+setkey(mx,grade)
+
+z=mx[,list(perc_read = ecdfs[(.BY),readcdf][[1]](read),perc_math = ecdfs[(.BY),mathcdf][[1]](math)),by=grade]
+z[,score := rowMeans(.SD), .SDcols = c("perc_read","perc_math")]
+
+mx = cbind(mx,z[,!"grade"])
+
+ggplot(data = z, mapping = aes(x = score,color=classtype)) + geom_density() + facet_wrap(~grade)
+
+summary(lm(score ~ classtype + schoolid,mx[grade == "stark"]))
+
 
 ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_point() +
