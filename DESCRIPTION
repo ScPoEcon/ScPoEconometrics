@@ -40,7 +40,8 @@ Imports:
     equatiomatic,
     ungeviz,
     ggdag,
-    data.table
+    data.table,
+    huxtable
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,
