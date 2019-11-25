@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 STAR Experiment | Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 STAR Experiment | Introduction to Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 STAR Experiment | Introduction to Econometrics with R" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  
+
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+
+
+<meta name="date" content="2019-11-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+<link rel="prev" href="causality.html"/>
+<link rel="next" href="RDD.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
+<li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
+<li class="chapter" data-level="7.6" data-path="causality.html"><a href="causality.html#star-experiment"><i class="fa fa-check"></i><b>7.6</b> STAR Experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
+<li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
+<li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Econometrics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="STAR" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> STAR Experiment</h1>
+<p>How to best allocate spending on schooling is an important question. What’s the impact of spending money to finance smaller classrooms on student performance and outcomes, both in the short and in the long run? A vast literature in economics is concerned with this question, and for a long time there was no consensus.</p>
+<p>The big underlying problem in answering this question is that we do not really know how student outcomes are <em>produced</em>. In other words, what makes a successful student? Is it the quality of their teacher? Surely matters. is it quality of the school building? Could be. Is it that the other pupils are of high quality and this somehow <em>rubs off</em> to weaker pupils? Also possible. What about parental background? Sure. You see that there are many potential channels that could determine student outcomes. What is more, there could be several interdependencies amongst those factors. Here’s a DAG!</p>
+<div class="figure" style="text-align: center"><span id="fig:star1"></span>
+<img src="ScPoEconometrics_files/figure-html/star1-1.png" alt="Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links." width="672" />
+<p class="caption">
+Figure 8.1: Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links.
+</p>
+</div>
+<p>We will look at an important paper in this literature now, which used a randomized experiment to make some substantial progress in answering the question <em>what is the production function for student outcomes</em>. We will study <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>, which analyses the Tennessee Student/Teacher Achievement Ratio Experiment, STAR in short.</p>
+<div id="the-star-experiment" class="section level2">
+<h2><span class="header-section-number">8.1</span> The STAR Experiment</h2>
+<p>Starting in 1985-1986 and lasting for four years, young pupils starting Kindergarden <em>and their teachers</em> where randomly allocated to to several possible groups:</p>
+<ol style="list-style-type: decimal">
+<li>small classes with 13-17 students</li>
+<li>regular classes with 22-25 students</li>
+<li>regular classes with 22-25 students but with an additional full-time teaching aide.</li>
+</ol>
+<p>The experiment involved about 6000 students per year, for a total of 11,600 students from 80 schools. Each school was required to have at least on class of each size-type above, and random assignment happened <em>at the school level</em>. At the end of each school grade (kindergarden and grades 1 thru 3) the pupils were given a standardized test. Now, looking back at figure <a href="STAR.html#fig:star1">8.1</a>, what are the complications when we’d like to assess the impact of <em>class size</em> on student outcome? Put differently, why can’t we just look at observational data of all schools (absent any experiment!), group classes by their size, and compute the mean outcomes for each group? Here is a short list:</p>
+<ol style="list-style-type: decimal">
+<li>There is selection into schools with different sized classes. Suppose parents have a prior that smaller classes are better - they will try to get their kids into those schools.</li>
+<li>Relatedly, who ends up being in the classroom with a child could matter (peer effects). So, if high quality kids are sorting into schools with small classes, and if peer effects are strong, we could concluded that small classes improved student outcomes when in reality this was due to the high quality of peers in class.</li>
+<li>Also related, teachers could sort towards schools with smaller classes because it’s easier to teach a small rather than a large class, and if there is competition for those places, higher quality teachers will have an advantage.</li>
+</ol>
+<p>Now, what can STAR do for us here? There will still be selection into schools, however, once selected a school it is random whether one ends up in a small or a large class. So, the quality of peers present in the school (determined before the experiment through school choice) will be similar across small and big groups. In figure <a href="STAR.html#fig:star1">8.1</a>, you see that some factors are drawn as unobserved (dashed arrow), and some are observed (solid). In any observational dataset, the dashed arrows would be really troubling. Here, given randomisation into class sizes, <em>we don’t care</em> whether those factors are unobserved or not: It’s reasonable to assume that across randomly assigned groups, the distributions of each of those factors is roughly constant! If we <em>can</em> in fact proxy some of those factors (suppose we had data on teacher qualifications), even better, but not necessary to identify the causal effect of class size.</p>
+</div>
+<div id="po-as-regression" class="section level2">
+<h2><span class="header-section-number">8.2</span> PO as Regression</h2>
+<p>Before we start replicating the findings in <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>, let’s augment our potential outcomes (PO) notation from the previous chapter. To remind you, we had defined the PO model in equation <a href="causality.html#eq:rubin-model">(7.1)</a>:</p>
+<span class="math display">\[\begin{equation*}
+Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 
+\end{equation*}\]</span>
+<p>and we had defined the treatment effect of individual <span class="math inline">\(i\)</span> as in <a href="causality.html#eq:TE">(7.2)</a>:</p>
+<span class="math display">\[\begin{equation*}
+\delta_i = Y_i^1 - Y_i^0. 
+\end{equation*}\]</span>
+<p>Now, as a start, let’s assume that the treatment effect of <em>small class</em> is identical for all <span class="math inline">\(i\)</span>: in that case we have</p>
+<span class="math display">\[\begin{equation*}
+\delta_i = \delta ,\forall i
+\end{equation*}\]</span>
+<p>Next, let’s distribute the <span class="math inline">\(Y_i^0\)</span> in <a href="causality.html#eq:rubin-model">(7.1)</a> as follows:</p>
+<span class="math display">\[\begin{align*}
+Y_i &amp;= Y_i^0 + D_i (Y_i^1 - Y_i^0 )\\
+    &amp;= Y_i^0 + D_i \delta  
+\end{align*}\]</span>
+<p>finally, let’s add <span class="math inline">\(E[Y_i^0] - E[Y_i^0]=0\)</span> to the RHS of that last equation to get</p>
+<span class="math display">\[\begin{equation*}
+Y_i = E[Y_i^0] + D_i \delta + Y_i^0 - E[Y_i^0]  
+\end{equation*}\]</span>
+<p>which we can rewrite in our well-known regression format</p>
+<span class="math display" id="eq:PO-reg">\[\begin{equation}
+Y_i = b_0 + \delta D_i  + u_i  \tag{8.1}
+\end{equation}\]</span>
+<p>In that formulation, the first <span class="math inline">\(E[Y_i^0]\)</span> is the average non-treatment outcome, which we could regard as some sort of baseline - i.e. our intercept. <span class="math inline">\(\delta\)</span> is the coefficient on the binary treatment indicator. The random deviation <span class="math inline">\(Y_i^0 - E[Y_i^0]\)</span> is the residual <span class="math inline">\(u\)</span>. Under only very specific circumstances will the OLS estimator <span class="math inline">\(\hat{\delta}\)</span> identify the true Average Treatment Effect <span class="math inline">\(\delta^{ATE}\)</span>. Random assignment ensures that the crucial assumption <span class="math inline">\(E[u|D] = E[Y_i^0 - E[Y_i^0]|D] = E[Y_i^0|D] - E[Y_i^0] = 0\)</span>, in other words, there is no difference in nontreatment outcomes across treatment groups. Additionally, we could easily include regressors <span class="math inline">\(X_i\)</span> in equation <a href="STAR.html#eq:PO-reg">(8.1)</a> to account for additional variation in the outcome.</p>
+<p>With that out of the way, let’s write down the regression that <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> wants to estimate. Equation (2) in his paper reads like this:</p>
+<span class="math display" id="eq:krueger2">\[\begin{equation}
+Y_{ics} = \beta_0 + \beta_1 \text{small}_{cs} + \beta_2 \text{REG/A}_{cs} + \beta_3 X_{ics} + \alpha_s + \varepsilon_{ics} \tag{8.2}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(i\)</span> indexes pupil, <span class="math inline">\(c\)</span> is class id and <span class="math inline">\(s\)</span> is the school id. <span class="math inline">\(\text{small}_{cs}\)</span> and <span class="math inline">\(\text{REG/A}_{cs}\)</span> are both dummy variables equal to one if class <span class="math inline">\(c\)</span> in school <span class="math inline">\(s\)</span> is either <em>small</em>, or <em>regular with aide</em>. <span class="math inline">\(X_{ics}\)</span> contains student specific controls (like gender). Importantly, given that randomization was at the school level, we control for the identify of the school with a school fixed effect <span class="math inline">\(\alpha_s\)</span>.</p>
+<p>Before we proceed to run this regression, we need to define the outcome variable <span class="math inline">\(Y_{ics}\)</span>. <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> combines the various SAT test scores in an average score for each student in each grade. However, given that the SAT scores are on different scales, he first computes a ranking of all scores for each subject (reading or math), and then assigns to each student their percentile in the rank distribution. The highest score is 100, the lowest score is 0.</p>
+</div>
+<div id="implementing-star" class="section level2">
+<h2><span class="header-section-number">8.3</span> Implementing STAR</h2>
+<p>Let’s start with computing the ranking of grades. Let’s load the data and the <code>data.table</code> package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;STAR&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;AER&quot;</span>)
+<span class="kw">library</span>(data.table)
+x =<span class="st"> </span><span class="kw">as.data.table</span>(STAR)
+x</code></pre></div>
+<pre><code>#OUT&gt;        gender ethnicity   birth        stark        star1        star2
+#OUT&gt;     1: female      afam 1979.50         &lt;NA&gt;         &lt;NA&gt;         &lt;NA&gt;
+#OUT&gt;     2: female      cauc 1980.00        small        small        small
+#OUT&gt;     3: female      afam 1979.75        small        small regular+aide
+#OUT&gt;     4:   male      cauc 1979.75         &lt;NA&gt;         &lt;NA&gt;         &lt;NA&gt;
+#OUT&gt;     5:   male      afam 1980.00 regular+aide         &lt;NA&gt;         &lt;NA&gt;
+#OUT&gt;    ---                                                                
+#OUT&gt; 11594:   male      cauc 1979.50        small        small        small
+#OUT&gt; 11595: female      cauc 1980.50      regular      regular      regular
+#OUT&gt; 11596:   male      cauc 1980.00         &lt;NA&gt;      regular      regular
+#OUT&gt; 11597: female      afam 1980.00      regular regular+aide      regular
+#OUT&gt; 11598:   male      afam 1980.25 regular+aide regular+aide regular+aide
+#OUT&gt;               star3 readk read1 read2 read3 mathk math1 math2 math3   lunchk
+#OUT&gt;     1:      regular    NA    NA    NA   580    NA    NA    NA   564     &lt;NA&gt;
+#OUT&gt;     2:        small   447   507   568   587   473   538   579   593 non-free
+#OUT&gt;     3: regular+aide   450   579   588   644   536   592   579   639 non-free
+#OUT&gt;     4:        small    NA    NA    NA   686    NA    NA    NA   667     &lt;NA&gt;
+#OUT&gt;     5:         &lt;NA&gt;   439    NA    NA    NA   463    NA    NA    NA     free
+#OUT&gt;    ---                                                                      
+#OUT&gt; 11594:        small   483   590   650   675   559   584   648   678 non-free
+#OUT&gt; 11595:      regular   437   533   586   654   513   557   611   651     free
+#OUT&gt; 11596:      regular    NA   571   604   595    NA   557   620   672     &lt;NA&gt;
+#OUT&gt; 11597: regular+aide   431   475   542   624   478   486   541   610     free
+#OUT&gt; 11598: regular+aide   421   468   571   580   449   486   568   577 non-free
+#OUT&gt;          lunch1   lunch2   lunch3    schoolk    school1    school2    school3
+#OUT&gt;     1:     &lt;NA&gt;     &lt;NA&gt;     free       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;   suburban
+#OUT&gt;     2:     free non-free     free      rural      rural      rural      rural
+#OUT&gt;     3:     &lt;NA&gt; non-free non-free   suburban   suburban   suburban   suburban
+#OUT&gt;     4:     &lt;NA&gt;     &lt;NA&gt; non-free       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;      rural
+#OUT&gt;     5:     &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt; inner-city       &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;
+#OUT&gt;    ---                                                                       
+#OUT&gt; 11594: non-free non-free non-free      rural      rural      rural      rural
+#OUT&gt; 11595:     free     free     free      rural      rural      rural      rural
+#OUT&gt; 11596: non-free non-free non-free       &lt;NA&gt;   suburban   suburban   suburban
+#OUT&gt; 11597:     free     free     free inner-city inner-city inner-city inner-city
+#OUT&gt; 11598:     free     free non-free inner-city inner-city inner-city inner-city
+#OUT&gt;         degreek  degree1  degree2  degree3   ladderk   ladder1    ladder2
+#OUT&gt;     1:     &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt; bachelor      &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;
+#OUT&gt;     2: bachelor bachelor bachelor bachelor    level1    level1 apprentice
+#OUT&gt;     3: bachelor   master bachelor bachelor    level1 probation     level1
+#OUT&gt;     4:     &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt; bachelor      &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;
+#OUT&gt;     5: bachelor     &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt; probation      &lt;NA&gt;       &lt;NA&gt;
+#OUT&gt;    ---                                                                   
+#OUT&gt; 11594: bachelor   master   master   master    level1    level1     level3
+#OUT&gt; 11595: bachelor bachelor bachelor bachelor probation    level1 apprentice
+#OUT&gt; 11596:     &lt;NA&gt; bachelor bachelor bachelor      &lt;NA&gt; probation     level1
+#OUT&gt; 11597: bachelor bachelor bachelor   master    level1    level1     level1
+#OUT&gt; 11598: bachelor bachelor bachelor   master      &lt;NA&gt;    level1     level1
+#OUT&gt;           ladder3 experiencek experience1 experience2 experience3 tethnicityk
+#OUT&gt;     1:     level1          NA          NA          NA          30        &lt;NA&gt;
+#OUT&gt;     2: apprentice           7           7           3           1        cauc
+#OUT&gt;     3:     level1          21          32           4           4        cauc
+#OUT&gt;     4:     level1          NA          NA          NA          10        &lt;NA&gt;
+#OUT&gt;     5:       &lt;NA&gt;           0          NA          NA          NA        cauc
+#OUT&gt;    ---                                                                       
+#OUT&gt; 11594:     level1           8          13          15          17        cauc
+#OUT&gt; 11595:  notladder           0           7           1           7        cauc
+#OUT&gt; 11596:     level1          NA           0           8          22        &lt;NA&gt;
+#OUT&gt; 11597:  probation          24          27           7          12        afam
+#OUT&gt; 11598:     level1           2          10          14          33        cauc
+#OUT&gt;        tethnicity1 tethnicity2 tethnicity3 systemk system1 system2 system3
+#OUT&gt;     1:        &lt;NA&gt;        &lt;NA&gt;        cauc    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      22
+#OUT&gt;     2:        cauc        cauc        cauc      30      30      30      30
+#OUT&gt;     3:        afam        afam        cauc      11      11      11      11
+#OUT&gt;     4:        &lt;NA&gt;        &lt;NA&gt;        cauc    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;       6
+#OUT&gt;     5:        &lt;NA&gt;        &lt;NA&gt;        &lt;NA&gt;      11    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;
+#OUT&gt;    ---                                                                    
+#OUT&gt; 11594:        cauc        cauc        cauc      21      21      21      21
+#OUT&gt; 11595:        cauc        cauc        cauc      33      33      33      33
+#OUT&gt; 11596:        cauc        cauc        cauc    &lt;NA&gt;      25      25      25
+#OUT&gt; 11597:        afam        afam        cauc      11      11      11      11
+#OUT&gt; 11598:        cauc        cauc        afam      11      11      11      11
+#OUT&gt;        schoolidk schoolid1 schoolid2 schoolid3
+#OUT&gt;     1:      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;        54
+#OUT&gt;     2:        63        63        63        63
+#OUT&gt;     3:        20        20        20        20
+#OUT&gt;     4:      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;         8
+#OUT&gt;     5:        19      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;
+#OUT&gt;    ---                                        
+#OUT&gt; 11594:        49        49        49        49
+#OUT&gt; 11595:        67        67        67        67
+#OUT&gt; 11596:      &lt;NA&gt;        58        58        58
+#OUT&gt; 11597:        22        22        22        22
+#OUT&gt; 11598:        32        32        32        32</code></pre>
+<p>It’s a bit unfortunate to switch to data.table, but I haven’t been able to do what I wanted in dplyr :-( . Ok, here goes. First thing, you can see that this data set is <em>wide</em>. First thing we want to do is to make it <em>long</em>, i.e. reshape it so that if has 4 ID columns, and several measurements columns thereafter. First, let’s add a studend ID:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[, ID <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(x)]  <span class="co"># add student ID</span>
+
+<span class="co"># `melt` a data.table means to dissolve it and reassamble for some ID variables</span>
+mx =<span class="st"> </span><span class="kw">melt.data.table</span>(x, 
+                     <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>,<span class="st">&quot;gender&quot;</span>,<span class="st">&quot;ethnicity&quot;</span>,<span class="st">&quot;birth&quot;</span>), 
+                     <span class="dt">measure.vars =</span> <span class="kw">patterns</span>(<span class="st">&quot;star*&quot;</span>,<span class="st">&quot;read*&quot;</span>,<span class="st">&quot;math*&quot;</span>, <span class="st">&quot;schoolid*&quot;</span>,
+                                             <span class="st">&quot;degree*&quot;</span>,<span class="st">&quot;experience*&quot;</span>,<span class="st">&quot;tethnicity*&quot;</span>,<span class="st">&quot;lunch*&quot;</span>), 
+                     <span class="dt">value.name =</span> <span class="kw">c</span>(<span class="st">&quot;classtype&quot;</span>,<span class="st">&quot;read&quot;</span>,<span class="st">&quot;math&quot;</span>,<span class="st">&quot;schoolid&quot;</span>,<span class="st">&quot;degree&quot;</span>,
+                                    <span class="st">&quot;experience&quot;</span>,<span class="st">&quot;tethniticy&quot;</span>,<span class="st">&quot;lunch&quot;</span>),
+                     <span class="dt">variable.name =</span> <span class="st">&quot;grade&quot;</span>)
+
+<span class="kw">levels</span>(mx<span class="op">$</span>grade) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;stark&quot;</span>,<span class="st">&quot;star1&quot;</span>,<span class="st">&quot;star2&quot;</span>,<span class="st">&quot;star3&quot;</span>)  <span class="co"># reassign levels to grade factor</span>
+mx[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]  <span class="co"># show first 8 cols</span></code></pre></div>
+<pre><code>#OUT&gt;           ID gender ethnicity   birth grade    classtype read math
+#OUT&gt;     1:     1 female      afam 1979.50 stark         &lt;NA&gt;   NA   NA
+#OUT&gt;     2:     2 female      cauc 1980.00 stark        small  447  473
+#OUT&gt;     3:     3 female      afam 1979.75 stark        small  450  536
+#OUT&gt;     4:     4   male      cauc 1979.75 stark         &lt;NA&gt;   NA   NA
+#OUT&gt;     5:     5   male      afam 1980.00 stark regular+aide  439  463
+#OUT&gt;    ---                                                            
+#OUT&gt; 46388: 11594   male      cauc 1979.50 star3        small  675  678
+#OUT&gt; 46389: 11595 female      cauc 1980.50 star3      regular  654  651
+#OUT&gt; 46390: 11596   male      cauc 1980.00 star3      regular  595  672
+#OUT&gt; 46391: 11597 female      afam 1980.00 star3 regular+aide  624  610
+#OUT&gt; 46392: 11598   male      afam 1980.25 star3 regular+aide  580  577</code></pre>
+<p>You can see here that for example pupil <code>ID=1</code> was not present in kindergarden, but joined later. We will only keep complete records, hence we drop those NAs:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mx =<span class="st"> </span>mx[<span class="kw">complete.cases</span>(mx)]
+mx[ID<span class="op">==</span><span class="dv">2</span>]  <span class="co"># here is pupil number 2</span></code></pre></div>
+<pre><code>#OUT&gt;    ID gender ethnicity birth grade classtype read math schoolid   degree
+#OUT&gt; 1:  2 female      cauc  1980 stark     small  447  473       63 bachelor
+#OUT&gt; 2:  2 female      cauc  1980 star1     small  507  538       63 bachelor
+#OUT&gt; 3:  2 female      cauc  1980 star2     small  568  579       63 bachelor
+#OUT&gt; 4:  2 female      cauc  1980 star3     small  587  593       63 bachelor
+#OUT&gt;    experience tethniticy    lunch
+#OUT&gt; 1:          7       cauc non-free
+#OUT&gt; 2:          7       cauc     free
+#OUT&gt; 3:          3       cauc non-free
+#OUT&gt; 4:          1       cauc     free</code></pre>
+<p>Ok, now on to standardizing those <code>read</code> and <code>math</code> scores. you can see they are on their kind of arbitrary SAT scales</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mx[,<span class="kw">range</span>(read)]</code></pre></div>
+<pre><code>#OUT&gt; [1] 315 775</code></pre>
+<p>First thing to do is to create an empirical cdf of each of those scores within a certain grade. That is the <em>ranking</em> of scores from 0 to 1:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setkey</span>(mx, classtype)  <span class="co"># key mx by class type</span>
+ecdfs =<span class="st"> </span>mx[classtype <span class="op">!=</span><span class="st"> &quot;small&quot;</span>,        <span class="co"># subset data.table to this</span>
+    <span class="kw">list</span>(<span class="dt">readcdf =</span> <span class="kw">list</span>(<span class="kw">ecdf</span>(read)),    <span class="co"># create cols readcdf and mathcdf</span>
+         <span class="dt">mathcdf =</span> <span class="kw">list</span>(<span class="kw">ecdf</span>(math))
+         ),
+         by =<span class="st"> </span>grade]    <span class="co"># by grade</span>
+
+<span class="co"># let&#39;s look at those cdf!</span>
+om =<span class="st"> </span><span class="kw">par</span>(<span class="st">&quot;mar&quot;</span>)
+<span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>),<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>,om[<span class="dv">2</span>],<span class="fl">2.5</span>,om[<span class="dv">4</span>]))
+ecdfs[,.SD[,<span class="kw">plot</span>(mathcdf[[<span class="dv">1</span>]],<span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;math ecdf grade&quot;</span>,.BY))],by =<span class="st"> </span>grade]
+ecdfs[,.SD[,<span class="kw">plot</span>(readcdf[[<span class="dv">1</span>]],<span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;read ecdf grade&quot;</span>,.BY))],by =<span class="st"> </span>grade]</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-186-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="dt">mar =</span> om)</code></pre></div>
+<p>You can see here how the cdf maps SAT scores (650, for example), into the interval <span class="math inline">\([0,1]\)</span>. Now, in the <code>ecdfs</code> <code>data.table</code> object, the <code>readcdf</code> column contains a <em>function</em> (a cdf) for each grade. We can evaluate the observed test scores for each student in that function to get their ranking in <span class="math inline">\([0,1]\)</span>, by grade:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setkey</span>(ecdfs, grade)  <span class="co"># key ecdfs according to `grade`</span>
+<span class="kw">setkey</span>(mx,grade)
+
+z =<span class="st"> </span>mx[ , <span class="kw">list</span>(ID,<span class="dt">perc_read =</span> ecdfs[(.BY),readcdf][[<span class="dv">1</span>]](read),
+               <span class="dt">perc_math =</span> ecdfs[(.BY),mathcdf][[<span class="dv">1</span>]](math)),
+        by=grade]   <span class="co"># stick `grade` into `ecdfs` as `.BY`</span>
+
+z[,score <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">rowMeans</span>(.SD)<span class="op">*</span><span class="dv">100</span>, .SDcols =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;perc_read&quot;</span>,<span class="st">&quot;perc_math&quot;</span>)]  <span class="co"># take average of scores</span>
+<span class="co"># and multiply by 100, so it&#39;s comparable to Krueger</span>
+
+<span class="co"># merge back into main data</span>
+mxz =<span class="st"> </span><span class="kw">merge</span>(mx,z,<span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;grade&quot;</span>,<span class="st">&quot;ID&quot;</span>))
+
+<span class="co"># make a plot</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mxz, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> score,<span class="dt">color=</span>classtype)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>grade) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:gradedens"></span>
+<img src="ScPoEconometrics_files/figure-html/gradedens-1.png" alt="Reproducing Figure I in @krueger1999" width="672" />
+<p class="caption">
+Figure 8.2: Reproducing Figure I in <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>
+</p>
+</div>
+<p>You can compare figure <a href="STAR.html#fig:gradedens">8.2</a> to <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> figure 1. You can see that the density estimates are almost identical, the discrepancy comes mainly from the fact that we split the regular classes also by with/without aide.</p>
+<div class="figure" style="text-align: center"><span id="fig:kruegerdens"></span>
+<img src="images/krueger1.png" alt="Outcome densities, @krueger1999 figure 1." width="937" />
+<p class="caption">
+Figure 8.3: Outcome densities, <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> figure 1.
+</p>
+</div>
+<p>So far, so good! Now we can move to run a regression and estimate <a href="STAR.html#eq:krueger2">(8.2)</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create Krueger&#39;s dummy variables</span>
+mxz =<span class="st">  </span><span class="kw">as_tibble</span>(mxz) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">small =</span> classtype <span class="op">==</span><span class="st"> &quot;small&quot;</span>,
+           <span class="dt">rega  =</span> classtype <span class="op">==</span><span class="st"> &quot;regular+aide&quot;</span>,
+           <span class="dt">girl  =</span> gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>,
+           <span class="dt">freelunch =</span> lunch <span class="op">==</span><span class="st"> &quot;free&quot;</span>)
+
+<span class="co"># reproduce columns 1-3</span>
+m1 =<span class="st"> </span>mxz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(grade) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>small <span class="op">+</span><span class="st"> </span>rega, <span class="dt">data =</span> .))
+m2 =<span class="st"> </span>mxz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(grade) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>small <span class="op">+</span><span class="st"> </span>rega <span class="op">+</span><span class="st"> </span>schoolid, <span class="dt">data =</span> .))
+m3 =<span class="st"> </span>mxz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(grade) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">do</span>(<span class="dt">model =</span> <span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>small <span class="op">+</span><span class="st"> </span>rega <span class="op">+</span><span class="st"> </span>schoolid <span class="op">+</span><span class="st"> </span>girl <span class="op">+</span><span class="st"> </span>freelunch, <span class="dt">data =</span> .))
+
+<span class="co"># get school id names to omit from regression tables</span>
+school_co =<span class="st"> </span><span class="kw">grep</span>(<span class="kw">names</span>(<span class="kw">coef</span>(m2[<span class="dv">1</span>,]<span class="op">$</span>model[[<span class="dv">1</span>]])),<span class="dt">pattern =</span> <span class="st">&quot;schoolid*&quot;</span>,<span class="dt">value=</span>T)
+school_co =<span class="st"> </span><span class="kw">c</span>(<span class="kw">unique</span>(school_co,<span class="kw">grep</span>(<span class="kw">names</span>(<span class="kw">coef</span>(m3[<span class="dv">1</span>,]<span class="op">$</span>model[[<span class="dv">1</span>]])),<span class="dt">pattern =</span> <span class="st">&quot;schoolid*&quot;</span>,<span class="dt">value=</span>T)),<span class="st">&quot;schoolid77&quot;</span>)</code></pre></div>
+<p>Now let’s look at each grade’s models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h =<span class="st"> </span><span class="kw">list</span>()
+<span class="cf">for</span> (g <span class="cf">in</span> <span class="kw">unique</span>(mxz<span class="op">$</span>grade)) {
+    h[[g]] &lt;-<span class="st"> </span>huxtable<span class="op">::</span><span class="kw">huxreg</span>(<span class="kw">subset</span>(m1,grade <span class="op">==</span><span class="st"> </span>g)<span class="op">$</span>model[[<span class="dv">1</span>]],
+                 <span class="kw">subset</span>(m2,grade <span class="op">==</span><span class="st"> </span>g)<span class="op">$</span>model[[<span class="dv">1</span>]],
+                 <span class="kw">subset</span>(m3,grade <span class="op">==</span><span class="st"> </span>g)<span class="op">$</span>model[[<span class="dv">1</span>]],
+                 <span class="dt">omit_coefs =</span> school_co,  
+                 <span class="dt">statistics =</span> <span class="kw">c</span>(<span class="dt">N =</span> <span class="st">&quot;nobs&quot;</span>, <span class="dt">R2 =</span> <span class="st">&quot;r.squared&quot;</span>),
+                 <span class="dt">number_format =</span> <span class="dv">2</span>
+        ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>huxtable<span class="op">::</span><span class="kw">insert_row</span>(<span class="kw">c</span>(<span class="st">&quot;School FE&quot;</span>,<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Yes&quot;</span>,<span class="st">&quot;Yes&quot;</span>),<span class="dt">after =</span> <span class="dv">11</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>huxtable<span class="op">::</span><span class="kw">theme_article</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span>huxtable<span class="op">::</span><span class="kw">set_caption</span>(<span class="kw">paste</span>(<span class="st">&quot;Estimates for grade&quot;</span>,g)) <span class="op">%&gt;%</span>
+<span class="st">    </span>huxtable<span class="op">::</span><span class="kw">set_top_border</span>(<span class="dv">12</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">2</span>)
+}
+h<span class="op">$</span>stark</code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<caption style="caption-side: top; text-align: center;">Estimates for grade stark</caption><col><col><col><col><tr>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(1)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(2)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(3)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(Intercept)</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">51.44 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">58.49 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">60.20 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.61)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.92)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.83)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">smallTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">4.84 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5.59 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5.53 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.89)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.79)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.76)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">regaTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.19&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.29&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.41&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.86)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.76)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.73)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">girlTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">4.77 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.60)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">freelunchTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-14.29 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.72)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">School FE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">N</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5723&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5723&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5723&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">R2</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.25&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.31&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td colspan="4" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</td>
+</tr>
+</table>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star1</code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<caption style="caption-side: top; text-align: center;">Estimates for grade star1</caption><col><col><col><col><tr>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(1)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(2)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(3)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(Intercept)</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">49.43 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">53.84 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">56.95 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.56)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.45)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.39)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">smallTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">8.37 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">8.31 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">7.87 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.85)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.75)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.72)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">regaTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">3.38 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">2.00 **&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">2.07 **&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.82)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.73)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.71)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">girlTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">3.07 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.58)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">freelunchTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-14.45 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.68)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">School FE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">N</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6225&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6225&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6225&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">R2</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.02&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.26&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.32&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td colspan="4" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</td>
+</tr>
+</table>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star2</code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<caption style="caption-side: top; text-align: center;">Estimates for grade star2</caption><col><col><col><col><tr>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(1)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(2)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(3)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(Intercept)</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">49.75 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">65.02 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">66.68 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.61)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.79)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.72)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">smallTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6.19 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6.68 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">6.23 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.89)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.81)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.78)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">regaTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">2.22 **&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">2.02 **&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">1.85 *&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.85)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.77)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.74)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">girlTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">3.44 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.61)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">freelunchTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-14.49 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.73)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">School FE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">N</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5704&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5704&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5704&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">R2</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.23&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.29&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td colspan="4" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</td>
+</tr>
+</table>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star3</code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<caption style="caption-side: top; text-align: center;">Estimates for grade star3</caption><col><col><col><col><tr>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(1)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(2)</td>
+<td style="vertical-align: top; text-align: center; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(3)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">(Intercept)</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">50.87 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">45.90 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">49.15 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.66)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.66)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(2.63)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">smallTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">4.96 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5.19 ***</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">4.61 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.91)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.86)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.83)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">regaTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.08&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.03&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.21&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.88)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.82)&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.80)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">girlTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">3.19 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.64)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">freelunchTRUE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-13.30 ***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"></td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">(0.76)&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">School FE</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; border-style: solid solid solid solid; border-width: 2pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt;">Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">N</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5715&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5715&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">5715&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt; font-weight: bold;">R2</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.19&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="vertical-align: top; text-align: right; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.23&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td colspan="4" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt; font-weight: bold;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</td>
+</tr>
+</table>
+
+<p>You should compare those to table 5 in <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>, where it says <em>OLS: actual class size</em>. For the most part, we come quite close to his esimates! We did not follow his more sophisticated error structure (by allowing errors to be correlated at the classroom level), and we seem to have different number of individuals in each year. Here is his table 5:</p>
+<p><img src="images/krueger2.png" width="349" /><img src="images/krueger3.png" width="348" /><img src="images/krueger4.png" width="346" /><img src="images/krueger5.png" width="342" /></p>
+<p>So, based on those results we can say that attending a small class raises student’s test scores by about 5 percentage points. Unfortunately, says <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>, is it hard to gauge whether those are big or small effects: how important is it to score 5% more or less? Well, you might say, it depends how close you are to an important cutoff value (maybe entrance to the next school level requires a score of <code>x</code>, and the 5% boost would have made that school feasible). Be that as it may, now you know more about one of the most influential papers in education economics, and why using an experimental setup allowed it to achieve credible causal estimates.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-krueger1999">
+<p>Krueger, Alan B. 1999. “Experimental Estimates of Education Production Functions.” <em>The Quarterly Journal of Economics</em> 114 (2). MIT Press: 497–532.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="causality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="RDD.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/08-STAR.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

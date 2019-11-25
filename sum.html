@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Working With Data | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-17" />
+<meta name="date" content="2019-11-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,8 +183,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 <li class="chapter" data-level="7.6" data-path="causality.html"><a href="causality.html#star-experiment"><i class="fa fa-check"></i><b>7.6</b> STAR Experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>8</b> Projects</a><ul>
-<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.1</b> Trade Exercise</a></li>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
+<li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
+<li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -987,6 +996,7 @@ merge_GER <span class="op">%&gt;%</span>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
+"github": false,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -1005,6 +1015,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

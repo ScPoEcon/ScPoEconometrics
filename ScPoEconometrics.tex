@@ -128,7 +128,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-11-17}
+    \date{2019-11-25}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -143,6 +143,17 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+\usepackage{array}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{wrapfig}
 
 \begin{document}
 \maketitle
@@ -4885,8 +4896,8 @@ instead of \(y = wage\) as outcome variable on our regression
 coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
-17, 2019 - 08:43:47 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Nov
+25, 2019 - 10:11:16 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Effect of Scaling on Coefficients} 
@@ -5042,8 +5053,8 @@ above because it is a \emph{nonlinear} function. Let's compare the
 output between both models:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
-17, 2019 - 08:43:48 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Nov
+25, 2019 - 10:11:17 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Log Transformed Equation} 
@@ -5405,8 +5416,8 @@ this into a regression model now:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
-17, 2019 - 08:43:51 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Nov
+25, 2019 - 10:11:20 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5867,8 +5878,8 @@ on their education as well as their sex:
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
-University. E-mail: hlavac at fas.harvard.edu \% Date and time: Sun, Nov
-17, 2019 - 08:43:52 PM
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Nov
+25, 2019 - 10:11:21 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -7286,6 +7297,1365 @@ opposite directions. In other words, we have positive bias if
 \section{STAR Experiment}\label{star-experiment}
 
 tbd
+
+\chapter{STAR Experiment}\label{STAR}
+
+How to best allocate spending on schooling is an important question.
+What's the impact of spending money to finance smaller classrooms on
+student performance and outcomes, both in the short and in the long run?
+A vast literature in economics is concerned with this question, and for
+a long time there was no consensus.
+
+The big underlying problem in answering this question is that we do not
+really know how student outcomes are \emph{produced}. In other words,
+what makes a successful student? Is it the quality of their teacher?
+Surely matters. is it quality of the school building? Could be. Is it
+that the other pupils are of high quality and this somehow \emph{rubs
+off} to weaker pupils? Also possible. What about parental background?
+Sure. You see that there are many potential channels that could
+determine student outcomes. What is more, there could be several
+interdependencies amongst those factors. Here's a DAG!
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/star1-1} 
+
+}
+
+\caption{Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links.}\label{fig:star1}
+\end{figure}
+
+We will look at an important paper in this literature now, which used a
+randomized experiment to make some substantial progress in answering the
+question \emph{what is the production function for student outcomes}. We
+will study \citet{krueger1999}, which analyses the Tennessee
+Student/Teacher Achievement Ratio Experiment, STAR in short.
+
+\section{The STAR Experiment}\label{the-star-experiment}
+
+Starting in 1985-1986 and lasting for four years, young pupils starting
+Kindergarden \emph{and their teachers} where randomly allocated to to
+several possible groups:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  small classes with 13-17 students
+\item
+  regular classes with 22-25 students
+\item
+  regular classes with 22-25 students but with an additional full-time
+  teaching aide.
+\end{enumerate}
+
+The experiment involved about 6000 students per year, for a total of
+11,600 students from 80 schools. Each school was required to have at
+least on class of each size-type above, and random assignment happened
+\emph{at the school level}. At the end of each school grade
+(kindergarden and grades 1 thru 3) the pupils were given a standardized
+test. Now, looking back at figure \ref{fig:star1}, what are the
+complications when we'd like to assess the impact of \emph{class size}
+on student outcome? Put differently, why can't we just look at
+observational data of all schools (absent any experiment!), group
+classes by their size, and compute the mean outcomes for each group?
+Here is a short list:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  There is selection into schools with different sized classes. Suppose
+  parents have a prior that smaller classes are better - they will try
+  to get their kids into those schools.
+\item
+  Relatedly, who ends up being in the classroom with a child could
+  matter (peer effects). So, if high quality kids are sorting into
+  schools with small classes, and if peer effects are strong, we could
+  concluded that small classes improved student outcomes when in reality
+  this was due to the high quality of peers in class.
+\item
+  Also related, teachers could sort towards schools with smaller classes
+  because it's easier to teach a small rather than a large class, and if
+  there is competition for those places, higher quality teachers will
+  have an advantage.
+\end{enumerate}
+
+Now, what can STAR do for us here? There will still be selection into
+schools, however, once selected a school it is random whether one ends
+up in a small or a large class. So, the quality of peers present in the
+school (determined before the experiment through school choice) will be
+similar across small and big groups. In figure \ref{fig:star1}, you see
+that some factors are drawn as unobserved (dashed arrow), and some are
+observed (solid). In any observational dataset, the dashed arrows would
+be really troubling. Here, given randomisation into class sizes,
+\emph{we don't care} whether those factors are unobserved or not: It's
+reasonable to assume that across randomly assigned groups, the
+distributions of each of those factors is roughly constant! If we
+\emph{can} in fact proxy some of those factors (suppose we had data on
+teacher qualifications), even better, but not necessary to identify the
+causal effect of class size.
+
+\section{PO as Regression}\label{po-as-regression}
+
+Before we start replicating the findings in \citet{krueger1999}, let's
+augment our potential outcomes (PO) notation from the previous chapter.
+To remind you, we had defined the PO model in equation
+\eqref{eq:rubin-model}:
+
+\begin{equation*}
+Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 
+\end{equation*}
+
+and we had defined the treatment effect of individual \(i\) as in
+\eqref{eq:TE}:
+
+\begin{equation*}
+\delta_i = Y_i^1 - Y_i^0. 
+\end{equation*}
+
+Now, as a start, let's assume that the treatment effect of \emph{small
+class} is identical for all \(i\): in that case we have
+
+\begin{equation*}
+\delta_i = \delta ,\forall i
+\end{equation*}
+
+Next, let's distribute the \(Y_i^0\) in \eqref{eq:rubin-model} as follows:
+
+\begin{align*}
+Y_i &= Y_i^0 + D_i (Y_i^1 - Y_i^0 )\\
+    &= Y_i^0 + D_i \delta  
+\end{align*}
+
+finally, let's add \(E[Y_i^0] - E[Y_i^0]=0\) to the RHS of that last
+equation to get
+
+\begin{equation*}
+Y_i = E[Y_i^0] + D_i \delta + Y_i^0 - E[Y_i^0]  
+\end{equation*}
+
+which we can rewrite in our well-known regression format
+
+\begin{equation}
+Y_i = b_0 + \delta D_i  + u_i  \label{eq:PO-reg}
+\end{equation}
+
+In that formulation, the first \(E[Y_i^0]\) is the average non-treatment
+outcome, which we could regard as some sort of baseline - i.e.~our
+intercept. \(\delta\) is the coefficient on the binary treatment
+indicator. The random deviation \(Y_i^0 - E[Y_i^0]\) is the residual
+\(u\). Under only very specific circumstances will the OLS estimator
+\(\hat{\delta}\) identify the true Average Treatment Effect
+\(\delta^{ATE}\). Random assignment ensures that the crucial assumption
+\(E[u|D] = E[Y_i^0 - E[Y_i^0]|D] = E[Y_i^0|D] - E[Y_i^0] = 0\), in other
+words, there is no difference in nontreatment outcomes across treatment
+groups. Additionally, we could easily include regressors \(X_i\) in
+equation \eqref{eq:PO-reg} to account for additional variation in the
+outcome.
+
+With that out of the way, let's write down the regression that
+\citet{krueger1999} wants to estimate. Equation (2) in his paper reads
+like this:
+
+\begin{equation}
+Y_{ics} = \beta_0 + \beta_1 \text{small}_{cs} + \beta_2 \text{REG/A}_{cs} + \beta_3 X_{ics} + \alpha_s + \varepsilon_{ics} \label{eq:krueger2}
+\end{equation}
+
+where \(i\) indexes pupil, \(c\) is class id and \(s\) is the school id.
+\(\text{small}_{cs}\) and \(\text{REG/A}_{cs}\) are both dummy variables
+equal to one if class \(c\) in school \(s\) is either \emph{small}, or
+\emph{regular with aide}. \(X_{ics}\) contains student specific controls
+(like gender). Importantly, given that randomization was at the school
+level, we control for the identify of the school with a school fixed
+effect \(\alpha_s\).
+
+Before we proceed to run this regression, we need to define the outcome
+variable \(Y_{ics}\). \citet{krueger1999} combines the various SAT test
+scores in an average score for each student in each grade. However,
+given that the SAT scores are on different scales, he first computes a
+ranking of all scores for each subject (reading or math), and then
+assigns to each student their percentile in the rank distribution. The
+highest score is 100, the lowest score is 0.
+
+\section{Implementing STAR}\label{implementing-star}
+
+Let's start with computing the ranking of grades. Let's load the data
+and the \texttt{data.table} package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"STAR"}\NormalTok{, }\DataTypeTok{package =} \StringTok{"AER"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\NormalTok{x =}\StringTok{ }\KeywordTok{as.data.table}\NormalTok{(STAR)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT>        gender ethnicity   birth        stark        star1        star2
+#OUT>     1: female      afam 1979.50         <NA>         <NA>         <NA>
+#OUT>     2: female      cauc 1980.00        small        small        small
+#OUT>     3: female      afam 1979.75        small        small regular+aide
+#OUT>     4:   male      cauc 1979.75         <NA>         <NA>         <NA>
+#OUT>     5:   male      afam 1980.00 regular+aide         <NA>         <NA>
+#OUT>    ---                                                                
+#OUT> 11594:   male      cauc 1979.50        small        small        small
+#OUT> 11595: female      cauc 1980.50      regular      regular      regular
+#OUT> 11596:   male      cauc 1980.00         <NA>      regular      regular
+#OUT> 11597: female      afam 1980.00      regular regular+aide      regular
+#OUT> 11598:   male      afam 1980.25 regular+aide regular+aide regular+aide
+#OUT>               star3 readk read1 read2 read3 mathk math1 math2 math3   lunchk
+#OUT>     1:      regular    NA    NA    NA   580    NA    NA    NA   564     <NA>
+#OUT>     2:        small   447   507   568   587   473   538   579   593 non-free
+#OUT>     3: regular+aide   450   579   588   644   536   592   579   639 non-free
+#OUT>     4:        small    NA    NA    NA   686    NA    NA    NA   667     <NA>
+#OUT>     5:         <NA>   439    NA    NA    NA   463    NA    NA    NA     free
+#OUT>    ---                                                                      
+#OUT> 11594:        small   483   590   650   675   559   584   648   678 non-free
+#OUT> 11595:      regular   437   533   586   654   513   557   611   651     free
+#OUT> 11596:      regular    NA   571   604   595    NA   557   620   672     <NA>
+#OUT> 11597: regular+aide   431   475   542   624   478   486   541   610     free
+#OUT> 11598: regular+aide   421   468   571   580   449   486   568   577 non-free
+#OUT>          lunch1   lunch2   lunch3    schoolk    school1    school2    school3
+#OUT>     1:     <NA>     <NA>     free       <NA>       <NA>       <NA>   suburban
+#OUT>     2:     free non-free     free      rural      rural      rural      rural
+#OUT>     3:     <NA> non-free non-free   suburban   suburban   suburban   suburban
+#OUT>     4:     <NA>     <NA> non-free       <NA>       <NA>       <NA>      rural
+#OUT>     5:     <NA>     <NA>     <NA> inner-city       <NA>       <NA>       <NA>
+#OUT>    ---                                                                       
+#OUT> 11594: non-free non-free non-free      rural      rural      rural      rural
+#OUT> 11595:     free     free     free      rural      rural      rural      rural
+#OUT> 11596: non-free non-free non-free       <NA>   suburban   suburban   suburban
+#OUT> 11597:     free     free     free inner-city inner-city inner-city inner-city
+#OUT> 11598:     free     free non-free inner-city inner-city inner-city inner-city
+#OUT>         degreek  degree1  degree2  degree3   ladderk   ladder1    ladder2
+#OUT>     1:     <NA>     <NA>     <NA> bachelor      <NA>      <NA>       <NA>
+#OUT>     2: bachelor bachelor bachelor bachelor    level1    level1 apprentice
+#OUT>     3: bachelor   master bachelor bachelor    level1 probation     level1
+#OUT>     4:     <NA>     <NA>     <NA> bachelor      <NA>      <NA>       <NA>
+#OUT>     5: bachelor     <NA>     <NA>     <NA> probation      <NA>       <NA>
+#OUT>    ---                                                                   
+#OUT> 11594: bachelor   master   master   master    level1    level1     level3
+#OUT> 11595: bachelor bachelor bachelor bachelor probation    level1 apprentice
+#OUT> 11596:     <NA> bachelor bachelor bachelor      <NA> probation     level1
+#OUT> 11597: bachelor bachelor bachelor   master    level1    level1     level1
+#OUT> 11598: bachelor bachelor bachelor   master      <NA>    level1     level1
+#OUT>           ladder3 experiencek experience1 experience2 experience3 tethnicityk
+#OUT>     1:     level1          NA          NA          NA          30        <NA>
+#OUT>     2: apprentice           7           7           3           1        cauc
+#OUT>     3:     level1          21          32           4           4        cauc
+#OUT>     4:     level1          NA          NA          NA          10        <NA>
+#OUT>     5:       <NA>           0          NA          NA          NA        cauc
+#OUT>    ---                                                                       
+#OUT> 11594:     level1           8          13          15          17        cauc
+#OUT> 11595:  notladder           0           7           1           7        cauc
+#OUT> 11596:     level1          NA           0           8          22        <NA>
+#OUT> 11597:  probation          24          27           7          12        afam
+#OUT> 11598:     level1           2          10          14          33        cauc
+#OUT>        tethnicity1 tethnicity2 tethnicity3 systemk system1 system2 system3
+#OUT>     1:        <NA>        <NA>        cauc    <NA>    <NA>    <NA>      22
+#OUT>     2:        cauc        cauc        cauc      30      30      30      30
+#OUT>     3:        afam        afam        cauc      11      11      11      11
+#OUT>     4:        <NA>        <NA>        cauc    <NA>    <NA>    <NA>       6
+#OUT>     5:        <NA>        <NA>        <NA>      11    <NA>    <NA>    <NA>
+#OUT>    ---                                                                    
+#OUT> 11594:        cauc        cauc        cauc      21      21      21      21
+#OUT> 11595:        cauc        cauc        cauc      33      33      33      33
+#OUT> 11596:        cauc        cauc        cauc    <NA>      25      25      25
+#OUT> 11597:        afam        afam        cauc      11      11      11      11
+#OUT> 11598:        cauc        cauc        afam      11      11      11      11
+#OUT>        schoolidk schoolid1 schoolid2 schoolid3
+#OUT>     1:      <NA>      <NA>      <NA>        54
+#OUT>     2:        63        63        63        63
+#OUT>     3:        20        20        20        20
+#OUT>     4:      <NA>      <NA>      <NA>         8
+#OUT>     5:        19      <NA>      <NA>      <NA>
+#OUT>    ---                                        
+#OUT> 11594:        49        49        49        49
+#OUT> 11595:        67        67        67        67
+#OUT> 11596:      <NA>        58        58        58
+#OUT> 11597:        22        22        22        22
+#OUT> 11598:        32        32        32        32
+\end{verbatim}
+
+It's a bit unfortunate to switch to data.table, but I haven't been able
+to do what I wanted in dplyr :-( . Ok, here goes. First thing, you can
+see that this data set is \emph{wide}. First thing we want to do is to
+make it \emph{long}, i.e.~reshape it so that if has 4 ID columns, and
+several measurements columns thereafter. First, let's add a studend ID:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[, ID }\OperatorTok{:}\ErrorTok{=}\StringTok{ }\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(x)]  }\CommentTok{# add student ID}
+
+\CommentTok{# `melt` a data.table means to dissolve it and reassamble for some ID variables}
+\NormalTok{mx =}\StringTok{ }\KeywordTok{melt.data.table}\NormalTok{(x, }
+                     \DataTypeTok{id =} \KeywordTok{c}\NormalTok{(}\StringTok{"ID"}\NormalTok{,}\StringTok{"gender"}\NormalTok{,}\StringTok{"ethnicity"}\NormalTok{,}\StringTok{"birth"}\NormalTok{), }
+                     \DataTypeTok{measure.vars =} \KeywordTok{patterns}\NormalTok{(}\StringTok{"star*"}\NormalTok{,}\StringTok{"read*"}\NormalTok{,}\StringTok{"math*"}\NormalTok{, }\StringTok{"schoolid*"}\NormalTok{,}
+                                             \StringTok{"degree*"}\NormalTok{,}\StringTok{"experience*"}\NormalTok{,}\StringTok{"tethnicity*"}\NormalTok{,}\StringTok{"lunch*"}\NormalTok{), }
+                     \DataTypeTok{value.name =} \KeywordTok{c}\NormalTok{(}\StringTok{"classtype"}\NormalTok{,}\StringTok{"read"}\NormalTok{,}\StringTok{"math"}\NormalTok{,}\StringTok{"schoolid"}\NormalTok{,}\StringTok{"degree"}\NormalTok{,}
+                                    \StringTok{"experience"}\NormalTok{,}\StringTok{"tethniticy"}\NormalTok{,}\StringTok{"lunch"}\NormalTok{),}
+                     \DataTypeTok{variable.name =} \StringTok{"grade"}\NormalTok{)}
+
+\KeywordTok{levels}\NormalTok{(mx}\OperatorTok{$}\NormalTok{grade) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"stark"}\NormalTok{,}\StringTok{"star1"}\NormalTok{,}\StringTok{"star2"}\NormalTok{,}\StringTok{"star3"}\NormalTok{)  }\CommentTok{# reassign levels to grade factor}
+\NormalTok{mx[,}\DecValTok{1}\OperatorTok{:}\DecValTok{8}\NormalTok{]  }\CommentTok{# show first 8 cols}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT>           ID gender ethnicity   birth grade    classtype read math
+#OUT>     1:     1 female      afam 1979.50 stark         <NA>   NA   NA
+#OUT>     2:     2 female      cauc 1980.00 stark        small  447  473
+#OUT>     3:     3 female      afam 1979.75 stark        small  450  536
+#OUT>     4:     4   male      cauc 1979.75 stark         <NA>   NA   NA
+#OUT>     5:     5   male      afam 1980.00 stark regular+aide  439  463
+#OUT>    ---                                                            
+#OUT> 46388: 11594   male      cauc 1979.50 star3        small  675  678
+#OUT> 46389: 11595 female      cauc 1980.50 star3      regular  654  651
+#OUT> 46390: 11596   male      cauc 1980.00 star3      regular  595  672
+#OUT> 46391: 11597 female      afam 1980.00 star3 regular+aide  624  610
+#OUT> 46392: 11598   male      afam 1980.25 star3 regular+aide  580  577
+\end{verbatim}
+
+You can see here that for example pupil \texttt{ID=1} was not present in
+kindergarden, but joined later. We will only keep complete records,
+hence we drop those NAs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mx =}\StringTok{ }\NormalTok{mx[}\KeywordTok{complete.cases}\NormalTok{(mx)]}
+\NormalTok{mx[ID}\OperatorTok{==}\DecValTok{2}\NormalTok{]  }\CommentTok{# here is pupil number 2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT>    ID gender ethnicity birth grade classtype read math schoolid   degree
+#OUT> 1:  2 female      cauc  1980 stark     small  447  473       63 bachelor
+#OUT> 2:  2 female      cauc  1980 star1     small  507  538       63 bachelor
+#OUT> 3:  2 female      cauc  1980 star2     small  568  579       63 bachelor
+#OUT> 4:  2 female      cauc  1980 star3     small  587  593       63 bachelor
+#OUT>    experience tethniticy    lunch
+#OUT> 1:          7       cauc non-free
+#OUT> 2:          7       cauc     free
+#OUT> 3:          3       cauc non-free
+#OUT> 4:          1       cauc     free
+\end{verbatim}
+
+Ok, now on to standardizing those \texttt{read} and \texttt{math}
+scores. you can see they are on their kind of arbitrary SAT scales
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mx[,}\KeywordTok{range}\NormalTok{(read)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#OUT> [1] 315 775
+\end{verbatim}
+
+First thing to do is to create an empirical cdf of each of those scores
+within a certain grade. That is the \emph{ranking} of scores from 0 to
+1:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setkey}\NormalTok{(mx, classtype)  }\CommentTok{# key mx by class type}
+\NormalTok{ecdfs =}\StringTok{ }\NormalTok{mx[classtype }\OperatorTok{!=}\StringTok{ "small"}\NormalTok{,        }\CommentTok{# subset data.table to this}
+    \KeywordTok{list}\NormalTok{(}\DataTypeTok{readcdf =} \KeywordTok{list}\NormalTok{(}\KeywordTok{ecdf}\NormalTok{(read)),    }\CommentTok{# create cols readcdf and mathcdf}
+         \DataTypeTok{mathcdf =} \KeywordTok{list}\NormalTok{(}\KeywordTok{ecdf}\NormalTok{(math))}
+\NormalTok{         ),}
+\NormalTok{         by =}\StringTok{ }\NormalTok{grade]    }\CommentTok{# by grade}
+
+\CommentTok{# let's look at those cdf!}
+\NormalTok{om =}\StringTok{ }\KeywordTok{par}\NormalTok{(}\StringTok{"mar"}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfcol=}\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{),}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,om[}\DecValTok{2}\NormalTok{],}\FloatTok{2.5}\NormalTok{,om[}\DecValTok{4}\NormalTok{]))}
+\NormalTok{ecdfs[,.SD[,}\KeywordTok{plot}\NormalTok{(mathcdf[[}\DecValTok{1}\NormalTok{]],}\DataTypeTok{main =} \KeywordTok{paste}\NormalTok{(}\StringTok{"math ecdf grade"}\NormalTok{,.BY))],by =}\StringTok{ }\NormalTok{grade]}
+\NormalTok{ecdfs[,.SD[,}\KeywordTok{plot}\NormalTok{(readcdf[[}\DecValTok{1}\NormalTok{]],}\DataTypeTok{main =} \KeywordTok{paste}\NormalTok{(}\StringTok{"read ecdf grade"}\NormalTok{,.BY))],by =}\StringTok{ }\NormalTok{grade]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-186-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfcol=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}\DataTypeTok{mar =}\NormalTok{ om)}
+\end{Highlighting}
+\end{Shaded}
+
+You can see here how the cdf maps SAT scores (650, for example), into
+the interval \([0,1]\). Now, in the \texttt{ecdfs} \texttt{data.table}
+object, the \texttt{readcdf} column contains a \emph{function} (a cdf)
+for each grade. We can evaluate the observed test scores for each
+student in that function to get their ranking in \([0,1]\), by grade:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setkey}\NormalTok{(ecdfs, grade)  }\CommentTok{# key ecdfs according to `grade`}
+\KeywordTok{setkey}\NormalTok{(mx,grade)}
+
+\NormalTok{z =}\StringTok{ }\NormalTok{mx[ , }\KeywordTok{list}\NormalTok{(ID,}\DataTypeTok{perc_read =}\NormalTok{ ecdfs[(.BY),readcdf][[}\DecValTok{1}\NormalTok{]](read),}
+               \DataTypeTok{perc_math =}\NormalTok{ ecdfs[(.BY),mathcdf][[}\DecValTok{1}\NormalTok{]](math)),}
+\NormalTok{        by=grade]   }\CommentTok{# stick `grade` into `ecdfs` as `.BY`}
+
+\NormalTok{z[,score }\OperatorTok{:}\ErrorTok{=}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(.SD)}\OperatorTok{*}\DecValTok{100}\NormalTok{, .SDcols =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"perc_read"}\NormalTok{,}\StringTok{"perc_math"}\NormalTok{)]  }\CommentTok{# take average of scores}
+\CommentTok{# and multiply by 100, so it's comparable to Krueger}
+
+\CommentTok{# merge back into main data}
+\NormalTok{mxz =}\StringTok{ }\KeywordTok{merge}\NormalTok{(mx,z,}\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"grade"}\NormalTok{,}\StringTok{"ID"}\NormalTok{))}
+
+\CommentTok{# make a plot}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ mxz, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ score,}\DataTypeTok{color=}\NormalTok{classtype)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{grade) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/gradedens-1} 
+
+}
+
+\caption{Reproducing Figure I in @krueger1999}\label{fig:gradedens}
+\end{figure}
+
+You can compare figure \ref{fig:gradedens} to \citet{krueger1999} figure
+1. You can see that the density estimates are almost identical, the
+discrepancy comes mainly from the fact that we split the regular classes
+also by with/without aide.
+
+\begin{figure}
+
+{\centering \includegraphics[width=26.03in]{images/krueger1} 
+
+}
+
+\caption{Outcome densities, @krueger1999 figure 1.}\label{fig:kruegerdens}
+\end{figure}
+
+So far, so good! Now we can move to run a regression and estimate
+\eqref{eq:krueger2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create Krueger's dummy variables}
+\NormalTok{mxz =}\StringTok{  }\KeywordTok{as_tibble}\NormalTok{(mxz) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{small =}\NormalTok{ classtype }\OperatorTok{==}\StringTok{ "small"}\NormalTok{,}
+           \DataTypeTok{rega  =}\NormalTok{ classtype }\OperatorTok{==}\StringTok{ "regular+aide"}\NormalTok{,}
+           \DataTypeTok{girl  =}\NormalTok{ gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{,}
+           \DataTypeTok{freelunch =}\NormalTok{ lunch }\OperatorTok{==}\StringTok{ "free"}\NormalTok{)}
+
+\CommentTok{# reproduce columns 1-3}
+\NormalTok{m1 =}\StringTok{ }\NormalTok{mxz }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(grade) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{do}\NormalTok{(}\DataTypeTok{model =} \KeywordTok{lm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\NormalTok{small }\OperatorTok{+}\StringTok{ }\NormalTok{rega, }\DataTypeTok{data =}\NormalTok{ .))}
+\NormalTok{m2 =}\StringTok{ }\NormalTok{mxz }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(grade) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{do}\NormalTok{(}\DataTypeTok{model =} \KeywordTok{lm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\NormalTok{small }\OperatorTok{+}\StringTok{ }\NormalTok{rega }\OperatorTok{+}\StringTok{ }\NormalTok{schoolid, }\DataTypeTok{data =}\NormalTok{ .))}
+\NormalTok{m3 =}\StringTok{ }\NormalTok{mxz }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(grade) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{do}\NormalTok{(}\DataTypeTok{model =} \KeywordTok{lm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\NormalTok{small }\OperatorTok{+}\StringTok{ }\NormalTok{rega }\OperatorTok{+}\StringTok{ }\NormalTok{schoolid }\OperatorTok{+}\StringTok{ }\NormalTok{girl }\OperatorTok{+}\StringTok{ }\NormalTok{freelunch, }\DataTypeTok{data =}\NormalTok{ .))}
+
+\CommentTok{# get school id names to omit from regression tables}
+\NormalTok{school_co =}\StringTok{ }\KeywordTok{grep}\NormalTok{(}\KeywordTok{names}\NormalTok{(}\KeywordTok{coef}\NormalTok{(m2[}\DecValTok{1}\NormalTok{,]}\OperatorTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]])),}\DataTypeTok{pattern =} \StringTok{"schoolid*"}\NormalTok{,}\DataTypeTok{value=}\NormalTok{T)}
+\NormalTok{school_co =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{unique}\NormalTok{(school_co,}\KeywordTok{grep}\NormalTok{(}\KeywordTok{names}\NormalTok{(}\KeywordTok{coef}\NormalTok{(m3[}\DecValTok{1}\NormalTok{,]}\OperatorTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]])),}\DataTypeTok{pattern =} \StringTok{"schoolid*"}\NormalTok{,}\DataTypeTok{value=}\NormalTok{T)),}\StringTok{"schoolid77"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now let's look at each grade's models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (g }\ControlFlowTok{in} \KeywordTok{unique}\NormalTok{(mxz}\OperatorTok{$}\NormalTok{grade)) \{}
+\NormalTok{    h[[g]] <-}\StringTok{ }\NormalTok{huxtable}\OperatorTok{::}\KeywordTok{huxreg}\NormalTok{(}\KeywordTok{subset}\NormalTok{(m1,grade }\OperatorTok{==}\StringTok{ }\NormalTok{g)}\OperatorTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]],}
+                 \KeywordTok{subset}\NormalTok{(m2,grade }\OperatorTok{==}\StringTok{ }\NormalTok{g)}\OperatorTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]],}
+                 \KeywordTok{subset}\NormalTok{(m3,grade }\OperatorTok{==}\StringTok{ }\NormalTok{g)}\OperatorTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]],}
+                 \DataTypeTok{omit_coefs =}\NormalTok{ school_co,  }
+                 \DataTypeTok{statistics =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{N =} \StringTok{"nobs"}\NormalTok{, }\DataTypeTok{R2 =} \StringTok{"r.squared"}\NormalTok{),}
+                 \DataTypeTok{number_format =} \DecValTok{2}
+\NormalTok{        ) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{huxtable}\OperatorTok{::}\KeywordTok{insert_row}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"School FE"}\NormalTok{,}\StringTok{"No"}\NormalTok{,}\StringTok{"Yes"}\NormalTok{,}\StringTok{"Yes"}\NormalTok{),}\DataTypeTok{after =} \DecValTok{11}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{huxtable}\OperatorTok{::}\KeywordTok{theme_article}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{huxtable}\OperatorTok{::}\KeywordTok{set_caption}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Estimates for grade"}\NormalTok{,g)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{huxtable}\OperatorTok{::}\KeywordTok{set_top_border}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{h}\OperatorTok{$}\NormalTok{stark}
+\end{Highlighting}
+\end{Shaded}
+
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{\baselineskip+#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{Estimates for grade stark}
+\begin{tabularx}{0.5\textwidth}{p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(1)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(2)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(3)}\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{(Intercept)}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 51.44 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 58.49 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 60.20 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.61)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.92)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.83)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{smallTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 4.84 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5.59 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5.53 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.89)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.79)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.76)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{regaTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -0.19~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.29~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.41~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.86)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.76)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.73)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{girlTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 4.77 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.60)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{freelunchTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -14.29 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.72)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{School FE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft No~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{N}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5723~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5723~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5723~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{R2}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.01~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.25~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.31~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.5\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\parbox[b]{0.5\textwidth+6\tabcolsep-4pt-4pt}{\huxtpad{4pt}\raggedright \textbf{ *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05.}\huxbpad{4pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+\end{tabularx}\end{threeparttable}
+
+
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h}\OperatorTok{$}\NormalTok{star1}
+\end{Highlighting}
+\end{Shaded}
+
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{\baselineskip+#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{Estimates for grade star1}
+\begin{tabularx}{0.5\textwidth}{p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(1)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(2)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(3)}\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{(Intercept)}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 49.43 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 53.84 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 56.95 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.56)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.45)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.39)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{smallTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 8.37 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 8.31 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 7.87 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.85)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.75)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.72)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{regaTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 3.38 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 2.00 **~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 2.07 **~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.82)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.73)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.71)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{girlTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 3.07 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.58)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{freelunchTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -14.45 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.68)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{School FE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft No~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{N}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6225~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6225~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6225~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{R2}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.02~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.26~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.32~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.5\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\parbox[b]{0.5\textwidth+6\tabcolsep-4pt-4pt}{\huxtpad{4pt}\raggedright \textbf{ *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05.}\huxbpad{4pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+\end{tabularx}\end{threeparttable}
+
+
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h}\OperatorTok{$}\NormalTok{star2}
+\end{Highlighting}
+\end{Shaded}
+
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{\baselineskip+#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{Estimates for grade star2}
+\begin{tabularx}{0.5\textwidth}{p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(1)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(2)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(3)}\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{(Intercept)}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 49.75 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 65.02 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 66.68 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.61)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.79)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.72)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{smallTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6.19 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6.68 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 6.23 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.89)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.81)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.78)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{regaTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 2.22 **~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 2.02 **~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 1.85 *~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.85)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.77)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.74)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{girlTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 3.44 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.61)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{freelunchTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -14.49 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.73)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{School FE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft No~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{N}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5704~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5704~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5704~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{R2}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.01~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.23~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.29~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.5\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\parbox[b]{0.5\textwidth+6\tabcolsep-4pt-4pt}{\huxtpad{4pt}\raggedright \textbf{ *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05.}\huxbpad{4pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+\end{tabularx}\end{threeparttable}
+
+
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h}\OperatorTok{$}\NormalTok{star3}
+\end{Highlighting}
+\end{Shaded}
+
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{\baselineskip+#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{Estimates for grade star3}
+\begin{tabularx}{0.5\textwidth}{p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(1)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(2)}\huxbpad{4pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\centering \textbf{(3)}\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{(Intercept)}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 50.87 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 45.90 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 49.15 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.66)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.66)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (2.63)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{smallTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 4.96 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5.19 ***\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 4.61 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.91)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.86)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.83)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{regaTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -0.08~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.03~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -0.21~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.88)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.82)~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.80)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{girlTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 3.19 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.64)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{freelunchTRUE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft -13.30 ***\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft ~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft (0.76)~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}->{\huxb{0, 0, 0}{2}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{School FE}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft No~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft Yes~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{N}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5715~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5715~~~~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 5715~~~~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedright \textbf{R2}\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.01~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.19~~~~\huxbpad{4pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{4pt}\raggedleft 0.23~~~~\huxbpad{4pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.5\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\parbox[b]{0.5\textwidth+6\tabcolsep-4pt-4pt}{\huxtpad{4pt}\raggedright \textbf{ *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05.}\huxbpad{4pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}->{\huxb{0, 0, 0}{1}}-}
+\arrayrulecolor{black}
+\end{tabularx}\end{threeparttable}
+
+
+\end{table}
+
+You should compare those to table 5 in \citet{krueger1999}, where it
+says \emph{OLS: actual class size}. For the most part, we come quite
+close to his esimates! We did not follow his more sophisticated error
+structure (by allowing errors to be correlated at the classroom level),
+and we seem to have different number of individuals in each year. Here
+is his table 5:
+
+\includegraphics[width=3.64in]{images/krueger2}
+\includegraphics[width=3.62in]{images/krueger3}
+\includegraphics[width=3.6in]{images/krueger4}
+\includegraphics[width=3.56in]{images/krueger5}
+
+So, based on those results we can say that attending a small class
+raises student's test scores by about 5 percentage points.
+Unfortunately, says \citet{krueger1999}, is it hard to gauge whether
+those are big or small effects: how important is it to score 5\% more or
+less? Well, you might say, it depends how close you are to an important
+cutoff value (maybe entrance to the next school level requires a score
+of \texttt{x}, and the 5\% boost would have made that school feasible).
+Be that as it may, now you know more about one of the most influential
+papers in education economics, and why using an experimental setup
+allowed it to achieve credible causal estimates.
+
+\chapter{Regression Discontinuity Design}\label{RDD}
+
+In the previous chapter we have seen how an experimental setup can be
+useful to recover causal effects from an OLS regression. In this chapter
+we will look at a similar approach where we don't randomly allocate
+subjects to either treatment or control (maybe because that's impossible
+to do in that particular situation), but where we can \emph{zoom in} on
+a group of individuals where having been allocated to treatment is
+\textbf{as good as random} - hence not influenced by selection bias. The
+idea is called Regression Discontinuity Design, short RDD.
+
+\section{RDD Setup}\label{rdd-setup}
+
+Let's again start with a DAG for the main idea. Remember the numerical
+example in the set of slides on randomization, where we showed that if
+we know the allocating mechanism, we can recover the true ATE. RDD plays
+along those lines, in that we \emph{know} how individuals got assigned
+to treatment. As is the case in many real-life situations, people are
+eligible for some treatment if some value \textbf{crosses a threshold}:
+
+\begin{itemize}
+\tightlist
+\item
+  You are eligible to obtain a driving license as your age crosses the
+  18-year threshold.
+\item
+  You will receive pension benefits as your age crosses the 65-year
+  threshold.
+\item
+  You are liable to criminal charges if you are caught with more than 3g
+  of Marihuana in your pocket.
+\item
+  You are considered a subprime mortgage borrower if your loan-to-value
+  ratio is above 95\%.
+\end{itemize}
+
+In RDD parlance, we call that particular variable we are looking at the
+\emph{running variable} (age, quantity of Marihuana, LTV ratio etc). If
+we know the applicable threshold (18 years of age, say), and we know an
+individual's age, then it's trivial to figure out whether they were
+eligible to get a driving license. Let's formalize this a bit.
+
+Let's call the running variable \(x\), the outcome \(y\) as usual, let
+\(D\) be the treament indicator and let us define a \emph{threshold}
+value \(c\). Treatment for individual \(i\) will be such that
+
+\begin{equation*}
+D_i = \begin{cases}\begin{array}{c}1\text{ if }x_i > c \\
+                  0\text{ if }x_i \leq c. \end{array}
+                  \end{cases}
+\end{equation*}
+
+Here's the obligatory DAG!
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/rdd1-1} 
+
+}
+
+\caption{DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$}\label{fig:rdd1}
+\end{figure}
+
+The key idea can be glanced from figure \ref{fig:rdd1}: if we can
+\emph{know} who ends up in treatment \(D\), this can be useful for us to
+recover the true ATE. In particular, the idea is going to be to compare
+individuals who are \emph{close} to the threshold \(c\): Those with an
+\(x\) \emph{just above} the threshold should be comparable (in terms of
+their \(x\)!) to the ones \emph{just below} \(c\). Someone who has their
+18th birthday next week is almost identical to someone how had their
+18th birthday last week - in terms of age! So, computing our naive
+difference in mean outcomes for those narrowly defined groups should be
+a good approximation to a random allocation. Notice that there are two
+important things to keep in mind:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  None of the other variables in the model should exhibit any
+  discontinuity at \(c\), other than \(D\)!
+\item
+  We obtain only \emph{locally} valid identification of the ATE: as we
+  move further and further away from the threshold, our individuals will
+  cease to be really comparable.
+\end{enumerate}
+
+In our DAG, point 1 above is not currently visible. Let's augment this:
+
+\begin{figure}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/rdd2-1} 
+
+}
+
+\caption{Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$}\label{fig:rdd2}
+\end{figure}
+
+So, the condition we want is that additional explanatory variable \(z\)
+does \textbf{not} suddenly jump as \(x\) crosses \(c\). Because we will
+be comparing the mean outcomes of people slightly to the left and right
+of \(c\), we need to make sure that there is nothing that would
+\emph{confound} our estimate of the size of the effect \(\delta\). Let's
+look at an example of a recent RDD study now.
+
+\section{Clicking on Heaven's Door}\label{clicking-on-heavens-door}
+
+In a recent paper title
+\href{https://www.aeaweb.org/articles?id=10.1257/aer.20150355}{Clicking
+on Heaven's Door}, U Bocconi economist
+\href{https://sites.google.com/view/paolo-pinotti/home}{Paolo Pinotti}
+uses an RDD to show the effects of legal status of immigrants on
+criminal behaviour. The question of whether immigrants commit more or
+less crime than others (natives, for example) is a first order policy
+question. The question of that paper is what causal impact the
+\emph{legal status} we confer upon an immigrant has on their propensity
+to commit a crime one year later. The study is based in Italy, where the
+legal status refers to an official permission to work. The key detail is
+that the residence permit needs to be sponsored by the immigrant's
+employer.
+
+\subsection{Institutional Details}\label{institutional-details}
+
+In the Italian context, immigrants often enter illegally first, and then
+hope to obtain a residence permit through an employer later on. There is
+a quota system in place, which establishes how many permits are to be
+granted to how many people from each nationality, and to which Italian
+industries (construction, services, etc). See table \ref{fig:pin1} for
+an overview of those quotas.
+
+\begin{figure}
+
+{\centering \includegraphics[width=16.14in]{images/pinotti1} 
+
+}
+
+\caption{Table 1 from @pinotti.}\label{fig:pin1}
+\end{figure}
+
+Almost all of the estimated 650,000 illegal immigrants participate in
+the click days. \citet{pinotti} is able to link each immigrant to
+official interior ministry crime records, and is thus able to precisely
+identify whether an immigrant with a certain legal status is showing up
+in crime records in the year(s) after click days.
+
+\subsection{Discontinuity Feature}\label{discontinuity-feature}
+
+The principal feature of the Italian setting which makes this almost
+perfect for an RDD is the following: The quotas illustrated in
+\ref{fig:pin1} are defined for a total of 1751 employer groups (varying
+by industry and location). Applications for a permit must be submitted
+online by employers, \textbf{starting at 8:00 AM on specific click
+days}, and will be given out on a first come first served basis. This
+implies that thousands of applicants are denied their permit each year
+not because they were not eligible (they had an employer sponsoring
+them!), but because they got late online (some seconds) when all permits
+for their specific quota were gone already. Here we formalize as \(c\)
+the \emph{exact} time the quota for a certain group was full, and the
+running variable \(x\) is the \emph{exact} time that the sponsoring
+employer clicked on the \emph{submit} button on the website. This is
+measured at the level of milliseconds.
+
+The key observation is now that the exact timing when a certain quota is
+full, \(c\), is impossible to foresee. Even if it is the case the
+employers of highly-skilled individuals are the first ones to log on,
+there is sufficient random variation (slow internet connection
+today\ldots{}) in arrival times of employers on the platform such that
+we distribution of immigrant and employer types both sides of the cutoff
+\(c\) are almost identical. So, it's very hard to \emph{manipulate} the
+assignment rule.
+
+\citet{pinotti} experiments with several definitions of \emph{close by
+the cutoff}, from 1 minute up to 30 minutes. The results are stable
+regardless of the definition chosen.
+
+\subsection{Findings}\label{findings}
+
+\begin{itemize}
+\tightlist
+\item
+  In the year before click days, the crime rate for the individuals in
+  the study is 1.1\% in both treatment and control groups.
+\item
+  In the year after click days, crime rates decline to 0.8\% for people
+  who clicked before time \(c\), and it stayed at 1.1\% for people who
+  came late.
+\item
+  The effect is mainly driven by so-called type A permits, which are
+  given out to domestic employers (nannies, cleaning aides etc), while
+  type B is for formal firms. Type A permits are easy to manipulate.
+  Being granted legal status has a particularly large impact on reducing
+  crime for type A permits.
+\item
+  There is no effect for type B permits.
+\item
+  Firm-sponsored applicants (type B) have a higher opportunity cost of
+  crime already before click days - in the end they already are
+  (informally) employed somewhere! Undocumented immigrants in domestic
+  (fictitious) employment have a lower opportunity cost of crime.
+\item
+  At the same time, and crucially, that latter group seems to be
+  particularly responsive to legalization, most likely because because a
+  residence permit allows to search for work in the official labor
+  market.
+\item
+  For people at the margin between persuing illegal activities or not,
+  this is an important effect.
+\item
+  Figure \ref{fig:pin2} illustrates this finding graphically with a
+  typical RD plot. The vertical difference in red and green lines at the
+  cutoff \(T=0\) in the \emph{2008: type-A applicants} is the estimate
+  of the local average treatment effect (LATE), i.e.
+  \(0.5 - 1.8 = -1.3\).
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=19.53in]{images/pinotti2} 
+
+}
+
+\caption{Table 3 from @pinotti.}\label{fig:pin2}
+\end{figure}
 
 \chapter{Projects}\label{projects}
 
