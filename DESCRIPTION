@@ -39,7 +39,9 @@ Imports:
     infer,
     equatiomatic,
     ungeviz,
-    ggdag
+    ggdag,
+    data.table,
+    huxtable
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 Suggests:
   shinytest,
