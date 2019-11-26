@@ -23,15 +23,13 @@ knitr::opts_chunk$set(comment=ScPoEconometrics:::getprompt(),fig.align = 'center
 
 ![](ScPo.jpg)
 
-Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 is the first time this course will be taught, so we are still in a *beta* release stage - you should expect a couple of loose ends here and there, but we think the overall experience is going to be pleasant!
+Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 was the first time that we taught this course in this format, so we are in year 2 now. 
 
 ### Objective {-}
 
-This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts.
+This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts. We also add the principal elements of causal inference, such that you will start being able to distinguish between simple statistical correlation and actual causation.
 
 ### Syllabus and Requirements {-}
-
-You can find the topics we want to go over in the left panel of this page. The later chapters are optional and depend on the speed with which we will proceed eventually. Chapters 1-4 are the core material of the course.
 
 The only requirement is that **you bring your own personal computer** to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, please install `R` and `RStudio` as explained at the beginning of chapter \@ref(R-intro). 
 
@@ -41,6 +39,10 @@ The only requirement is that **you bring your own personal computer** to each se
 This course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
 
 Groups meet once per week for 2 hours. The main purpose of the weekly meetings is to clarify any questions, and to work together through tutorials. The little theory we need will be covered in this book, and **you are expected to read through this in your own time** before coming to class. 
+
+### Slides {-}
+
+There are slides for most book chapters at a [dedicated website](https://github.com/ScPoEcon/ScPoEconometrics-Slides).
 
 ### This Book and Other Material {-}
 
@@ -54,12 +56,12 @@ The book and all other content for this course are hosted under an open source l
 
 ### Assessments {-}
 
-We will assess participation in class and conduct a final exam.
+We will assess participation in class, quizzes on moodle and take home exams.
 
 
 ### Communication {-}
 
-We will communicate exclusively on our [`slack`](https://scpomtrics.slack.com) group. You will get an invitation email to join from your instructor in due course.
+We will communicate exclusively on our slack group. You will get an invitation email to join from your instructor in due course.
 
 
 
