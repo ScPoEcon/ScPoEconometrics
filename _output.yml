@@ -11,7 +11,7 @@ bookdown::gitbook:
     download: ["pdf","epub"]
   includes:
     in_header: GA-tracker.html
-
+---
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
@@ -19,4 +19,4 @@ bookdown::pdf_book:
   citation_package: natbib
   keep_tex: yes
 bookdown::epub_book: default
-
+---

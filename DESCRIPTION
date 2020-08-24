@@ -1,5 +1,5 @@
 Package: ScPoEconometrics
-Type: Package
+Type: Book
 Title: ScPoEconometrics
 Date: 2019-10-10
 Version: 0.2.6
@@ -10,20 +10,14 @@ Authors@R: c(
     person("Pierre", "Villedieu", email = "pierre.villedieu@sciencespo.fr", role = "ctb"))
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
-Description: The is the R package for the 2nd year UG course in econometrics at SciencesPo.
+Description: The is the 2nd year UG econometrics book at SciencesPo.
 URL: https://github.com/ScPoEcon/ScPoEconometrics
-Imports: 
-    bookdown,
-    shiny (>= 1.2.0),
-    learnr,
-    mvtnorm,
+Imports: bookdown,
     tidyverse,
-    reshape2,
     datasauRus,
     plotly,
     webshot,
     Ecdat,
-    EnvStats,
     rmarkdown (>= 1.11),
     AER,
     magick,
@@ -36,14 +30,10 @@ Imports:
     wooldridge,
     stargazer,
     quantreg,
-    infer,
     equatiomatic,
     ungeviz,
     ggdag,
     data.table,
     huxtable
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
-Suggests:
-  shinytest,
-  testthat
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

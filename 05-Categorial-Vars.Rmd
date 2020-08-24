@@ -118,7 +118,7 @@ abline(a=mean(dta$y),b=0,col="blue",lw=2)
 In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the straight line connecting the mean, or the *expected value* of $y$ when $\text{is.female}_i = 0$, i.e. $E[y|\text{is.female}_i=0]$, to the mean when $\text{is.female}_i=1$, i.e.  $E[y|\text{is.female}_i=1]$. It is useful to remember that the *unconditional mean* of $y$, i.e. $E[y]$, is going to be the result of regressing $y$ only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, $b_1$, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_dummy")
 ```
 
@@ -143,7 +143,7 @@ b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i & \text{if is.female=0}
 so that the intercept is $b_0 + b_1$ for women but $b_0$ for men. We will see this in the real-world example below, but for now let's see the effect of switching the dummy *on* and *off* in this app:
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_dummy_example")
 ```
 

@@ -233,7 +233,7 @@ plot_unexp_SSR(plot_data)
 We illustrate this in figure \@ref(fig:line-squares). This is the same data as in figure \@ref(fig:line-arrows), but instead of arrows of length $e_i$ for each observation $i$, now we draw a square with side $e_i$, i.e. an area of $e_i^2$. We have two apps for you at this point, one where you have to try and find the best line by choosing $b_0$ and $b_1$, only focusing on the sum of errors (and not their square), and a second one focusing on squared errors:
 
 ```{r app1, eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_simple_arrows")
 launchApp("reg_simple") # with squared errors
 launchApp("SSR_cone") # visualize the minimzation problem from above!
@@ -641,7 +641,7 @@ b_0^* &= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\
 That is, we change the slope by the *inverse* of the scaling factor applied to regressor $x$, but the intercept is unaffected from this. You should play around for a while with our rescaling app to get a feeling for this:
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp('Rescale')
 ```
 

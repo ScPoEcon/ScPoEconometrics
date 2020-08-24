@@ -3,6 +3,7 @@
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
 **Slides?** If you are looking for the slides, they are in the [ScPoEconometrics-Slides](https://github.com/ScPoEcon/ScPoEconometrics-Slides) repo.
+**Apps?** If you are looking for the apps, they are in the [ScPoApps](https://github.com/ScPoEcon/ScPoApps) repo.
 
 ## Contents
 
@@ -27,11 +28,11 @@ In order to participate in the course and to use the course material, you need t
 1. install `R`: download for free at [https://www.r-project.org](https://www.r-project.org)
 1. install the `RStudio` IDE at [RStudio.com](https://www.rstudio.com/products/rstudio/download/#download)
 1. We recommend to use our code **exclusively via `RStudio`**.
-1. install **this** `R` package in your computer. To do so, just copy and paste those lines into your `RStudio` console:
+1. install our *apps* `R` package in your computer. To do so, just copy and paste those lines into your `RStudio` console:
 
 ```R
 if (!require(devtools)) {install.packages("devtools"); library(devtools)}
-install_github(repo = "ScPoEcon/ScPoEconometrics")
+install_github(repo = "ScPoEcon/ScPoApps")
 ```
 
 ### Shiny Apps
@@ -39,7 +40,7 @@ install_github(repo = "ScPoEcon/ScPoEconometrics")
 A key part of this course are a series of interactive applications (or *apps*) that we developed with the `shiny` framework. You launch the apps from a running `R` session on your computer. The app will run in your web browser. You launch an app like this from `R`:
 
 ```R
-library(ScPoEconometrics)   # load our library
+library(ScPoApps)   # load our library
 launchApp('SSR_cone')       # runs the `SSR_cone` app in browser
 
 launchApp()                 # no arg produces an error that shows all available apps
@@ -59,7 +60,7 @@ Here is a screenshot of the `SSR_cone` app:
 In order to run the accompanying tutorials you would type, for example:
 
 ```R
-library(ScPoEconometrics)
+library(ScPoApps)
 runTutorial("chapter3")
 ```
 
@@ -118,7 +119,7 @@ You are free to:
 ```R
 > citation("ScPoEconometrics")
 
-Oswald F, Robin J, Viers V (2018).
+Oswald F, Viers V, Villedieu P, Kennedy G (2020).
 Introduction to Econometrics with
 R. SciencesPo Department of
 Economics, Paris, France. <URL:
@@ -128,10 +129,10 @@ A BibTeX entry for LaTeX users is
 
   @Manual{,
     title = {Introduction to Econometrics with R},
-    author = {Florian Oswald and Jean-Marc Robin and Vincent Viers},
+    author = {Florian Oswald and Vincent Viers and Pierre Villedieu and Gustave Kennedi},
     organization = {SciencesPo Department of Economics},
     address = {Paris, France},
-    year = {2018},
+    year = {2020},
     url = {https://scpoecon.github.io/ScPoEconometrics/},
   }
 
