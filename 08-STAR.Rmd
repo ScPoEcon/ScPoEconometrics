@@ -6,6 +6,7 @@ The big underlying problem in answering this question is that we do not really k
 
 ```{r star1,echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",fig.cap = "Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links."}
 library(ggdag)
+library(data.table)
 library(dplyr)
 p1 = dagify(outcome ~ teacher,
             size ~ building,
@@ -106,17 +107,19 @@ Let's start with computing the ranking of grades. Let's load the data and the `d
 
 ```{r,message = FALSE}
 data("STAR", package = "AER")
-library(data.table)
-x = as.data.table(STAR)
+x = setDT(STAR)
 x
 ```
 
 It's a bit unfortunate to switch to data.table, but I haven't been able to do what I wanted in dplyr :-( . Ok, here goes. First thing, you can see that this data set is *wide*. First thing we want to do is to make it *long*, i.e. reshape it so that if has 4 ID columns, and several measurements columns thereafter. First, let's add a studend ID:
 
 ```{r}
-x[, ID := 1:nrow(x)]  # add student ID
+x[ , ID := 1:nrow(x)]  # add a column called `ID`
 
 # `melt` a data.table means to dissolve it and reassamble for some ID variables
+```
+
+```{r}
 mx = melt.data.table(x, 
                      id = c("ID","gender","ethnicity","birth"), 
                      measure.vars = patterns("star*","read*","math*", "schoolid*",
@@ -127,12 +130,13 @@ mx = melt.data.table(x,
 
 levels(mx$grade) <- c("stark","star1","star2","star3")  # reassign levels to grade factor
 mx[,1:8]  # show first 8 cols
+
 ```
 
 You can see here that for example pupil `ID=1` was not present in kindergarden, but joined later. We will only keep complete records, hence we drop those NAs:
 
 ```{r}
-mx = mx[complete.cases(mx)]
+mx = mx[complete.cases(mx),]
 mx[ID==2]  # here is pupil number 2
 ```
 
