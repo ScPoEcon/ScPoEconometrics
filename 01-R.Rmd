@@ -173,7 +173,7 @@ devtools::install_github(repo = "ScPoEcon/ScPoApps")
 
 In order to check whether everything works fine, you could load the library, and check it's current version:
 
-```{r,warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE,eval=FALSE}
 library(ScPoApps)
 packageVersion("ScPoApps")
 ```
