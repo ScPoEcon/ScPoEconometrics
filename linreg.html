@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Linear Regression | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Linear Regression | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -223,21 +223,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.1</span> How are <code>x</code> and <code>y</code> related?</h2>
 <div id="data-on-cars" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Data on Cars</h3>
-<p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
-<pre><code>#OUT&gt;   speed dist
-#OUT&gt; 1     4    2
-#OUT&gt; 2     4   10
-#OUT&gt; 3     7    4
-#OUT&gt; 4     7   22
-#OUT&gt; 5     8   16
-#OUT&gt; 6     9   10</code></pre>
+<p>We will look at the built-in <code>cars</code> dataset. Let's get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
+<pre><code>##   speed dist
+## 1     4    2
+## 2     4   10
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10</code></pre>
 <p>We have a <code>data.frame</code> with two columns: <code>speed</code> and <code>dist</code>. Type <code>help(cars)</code> to find out more about the dataset. There you could read that</p>
 <blockquote>
 <p>The data give the speed of cars (mph) and the distances taken to stop (ft).</p>
 </blockquote>
-<p>It’s good practice to know the extent of a dataset. You could just type</p>
+<p>It's good practice to know the extent of a dataset. You could just type</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cars)</code></pre></div>
-<pre><code>#OUT&gt; [1] 50  2</code></pre>
+<pre><code>## [1] 50  2</code></pre>
 <p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
 </div>
 <div id="how-are-speed-and-dist-related" class="section level3">
@@ -250,7 +250,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-110-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="03-linear-reg_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Here, each dot represents one observation. In this case, one particular measurement <code>speed</code> and <code>dist</code> for a car. Now, again:</p>
 <div class="note">
 <p>
@@ -266,10 +266,10 @@ How are <code>speed</code> and <code>dist</code> related? How could one best <em
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">60</span>,<span class="dt">b =</span> <span class="dv">0</span>,<span class="dt">lw=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-112-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Now that doesn’t seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-113-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it’s too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. Let’s write down a simple formula which represents a line where some outcome <span class="math inline">\(z\)</span> is related to a variable <span class="math inline">\(x\)</span>:</p>
+<p><img src="03-linear-reg_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now that doesn't seem a particularly <em>good</em> way to summarize the relationship. Clearly, a <em>better</em> line would be not be flat, but have a <em>slope</em>, i.e. go upwards:</p>
+<p><img src="03-linear-reg_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the <em>intercept</em>; and it's too high. We just learned how to represent a <em>line</em>, i.e. with two numbers called <em>intercept</em> and <em>slope</em>. Let's write down a simple formula which represents a line where some outcome <span class="math inline">\(z\)</span> is related to a variable <span class="math inline">\(x\)</span>:</p>
 <span class="math display" id="eq:bline">\[\begin{equation}
 z = b_0 + b_1 x \tag{3.1}
 \end{equation}\]</span>
@@ -281,19 +281,19 @@ z = b_0 + b_1 x \tag{3.1}
 <span class="math display" id="eq:abline-pred">\[\begin{equation}
 \hat{y}_i = b_0 + b_1 x_i \tag{3.2}
 \end{equation}\]</span>
-<p>In general it is likely that we won’t be able to choose <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in such as way as to provide a perfect prediction, i.e. one where <span class="math inline">\(\hat{y}_i = y_i\)</span> for all <span class="math inline">\(i\)</span>. That is, we expect to make an <em>error</em> in our prediction <span class="math inline">\(\hat{y}_i\)</span>, so let’s denote this value <span class="math inline">\(e_i\)</span>. If we acknowlegdge that we will make errors, let’s at least make them as small as possible! Exactly this is going to be our task now.</p>
+<p>In general it is likely that we won't be able to choose <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in such as way as to provide a perfect prediction, i.e. one where <span class="math inline">\(\hat{y}_i = y_i\)</span> for all <span class="math inline">\(i\)</span>. That is, we expect to make an <em>error</em> in our prediction <span class="math inline">\(\hat{y}_i\)</span>, so let's denote this value <span class="math inline">\(e_i\)</span>. If we acknowlegdge that we will make errors, let's at least make them as small as possible! Exactly this is going to be our task now.</p>
 <p>Suppose we have the following set of 9 observations on <code>x</code> and <code>y</code>, and we put the <em>best</em> straight line into it, that we can think of. It would look like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:line-arrows"></span>
-<img src="ScPoEconometrics_files/figure-html/line-arrows-1.png" alt="The best line and its errors" width="672" />
+<img src="03-linear-reg_files/figure-html/line-arrows-1.png" alt="The best line and its errors" width="672" />
 <p class="caption">
 Figure 3.1: The best line and its errors
 </p>
 </div>
-<p>Here, the red arrows indicate the <strong>distance</strong> between the prediction (i.e. the black line) to each data point, in other words, each arrow is a particular <span class="math inline">\(e_i\)</span>. An upward pointing arrow indicates a positive value of a particular <span class="math inline">\(e_i\)</span>, and vice versa for downward pointing arrows. The erros are also called <em>residuals</em>, which comes from the way can write the equation for this relationship between two particular values <span class="math inline">\((y_i,x_i)\)</span> belonging to observation <span class="math inline">\(i\)</span>:</p>
+<p>Here, the red arrows indicate the <strong>distance</strong> between the prediction (i.e. the black line) to each data point, in other words, each arrow is a particular <span class="math inline">\(e_i\)</span>. An upward pointing arrow indicates a positive value of a particular <span class="math inline">\(e_i\)</span>, and vice versa for downward pointing arrows. The erros are also called <em>residuals</em>, which comes from the way can write the equation for this relationship between two particular values <span class="math inline">\((y_i,x_i)\)</span> belonging to observation <span class="math inline">\(i\)</span>:</p>
 <span class="math display" id="eq:abline">\[\begin{equation}
 y_i = b_0 + b_1 x_i + e_i \tag{3.3}
 \end{equation}\]</span>
-<p>You realize of course that <span class="math inline">\(\hat{y}_i = y_i - e_i\)</span>, which just means that our prediction is the observed value <span class="math inline">\(y_i\)</span> minus any error <span class="math inline">\(e_i\)</span> we make. In other words, <span class="math inline">\(e_i\)</span> is what is left to be explained on top of the line <span class="math inline">\(b_0 + b_1 x_i\)</span>, hence, it’s a residual to explain <span class="math inline">\(y_i\)</span>. Here are <span class="math inline">\(y,\hat{y}\)</span> and the resulting <span class="math inline">\(e\)</span> which are plotted in figure <a href="linreg.html#fig:line-arrows">3.1</a>:</p>
+<p>You realize of course that <span class="math inline">\(\hat{y}_i = y_i - e_i\)</span>, which just means that our prediction is the observed value <span class="math inline">\(y_i\)</span> minus any error <span class="math inline">\(e_i\)</span> we make. In other words, <span class="math inline">\(e_i\)</span> is what is left to be explained on top of the line <span class="math inline">\(b_0 + b_1 x_i\)</span>, hence, it's a residual to explain <span class="math inline">\(y_i\)</span>. Here are <span class="math inline">\(y,\hat{y}\)</span> and the resulting <span class="math inline">\(e\)</span> which are plotted in figure <a href="linreg.html#fig:line-arrows">3.1</a>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -372,14 +372,14 @@ e_1^2 + \dots + e_N^2 &amp;= \sum_{i=1}^N e_i^2 \equiv \text{SSR}(b_0,b_1) \\
 The best line chooses <span class="math inline"><span class="math inline">\(b_0\)</span></span> and <span class="math inline"><span class="math inline">\(b_1\)</span></span> so as to minimize the sum of <strong>squared residuals</strong> (SSR).
 </p>
 </div>
-<p><br> Wait a moment, why <em>squared</em> residuals? This is easy to understand: suppose that instead, we wanted to just make the <em>sum</em> of the arrows in figure <a href="linreg.html#fig:line-arrows">3.1</a> as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data – given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)</p>
+<p><br> Wait a moment, why <em>squared</em> residuals? This is easy to understand: suppose that instead, we wanted to just make the <em>sum</em> of the arrows in figure <a href="linreg.html#fig:line-arrows">3.1</a> as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)</p>
 <div class="figure" style="text-align: center"><span id="fig:line-squares"></span>
-<img src="ScPoEconometrics_files/figure-html/line-squares-1.png" alt="The best line and its SQUARED errors" width="672" />
+<img src="03-linear-reg_files/figure-html/line-squares-1.png" alt="The best line and its SQUARED errors" width="672" />
 <p class="caption">
 Figure 3.2: The best line and its SQUARED errors
 </p>
 </div>
-<p>We illustrate this in figure <a href="linreg.html#fig:line-squares">3.2</a>. This is the same data as in figure <a href="linreg.html#fig:line-arrows">3.1</a>, but instead of arrows of length <span class="math inline">\(e_i\)</span> for each observation <span class="math inline">\(i\)</span>, now we draw a square with side <span class="math inline">\(e_i\)</span>, i.e. an area of <span class="math inline">\(e_i^2\)</span>. We have two apps for you at this point, one where you have to try and find the best line by choosing <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, only focusing on the sum of errors (and not their square), and a second one focusing on squared errors:</p>
+<p>We illustrate this in figure <a href="linreg.html#fig:line-squares">3.2</a>. This is the same data as in figure <a href="linreg.html#fig:line-arrows">3.1</a>, but instead of arrows of length <span class="math inline">\(e_i\)</span> for each observation <span class="math inline">\(i\)</span>, now we draw a square with side <span class="math inline">\(e_i\)</span>, i.e. an area of <span class="math inline">\(e_i^2\)</span>. We have two apps for you at this point, one where you have to try and find the best line by choosing <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, only focusing on the sum of errors (and not their square), and a second one focusing on squared errors:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_simple_arrows&quot;</span>)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_simple&quot;</span>) <span class="co"># with squared errors</span>
@@ -396,7 +396,7 @@ Figure 3.2: The best line and its SQUARED errors
 <span class="math display" id="eq:beta1hat">\[\begin{equation}
 b_1 = \frac{cov(x,y)}{var(x)},  \tag{3.5}
 \end{equation}\]</span>
-<p>i.e. the estimate of the slope coefficient is the covariance between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> divided by the variance of <span class="math inline">\(x\)</span>, both computed from our sample of data. With <span class="math inline">\(b_1\)</span> in hand, we can get the estimate for the intercept as</p>
+<p>i.e. the estimate of the slope coefficient is the covariance between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> divided by the variance of <span class="math inline">\(x\)</span>, both computed from our sample of data. With <span class="math inline">\(b_1\)</span> in hand, we can get the estimate for the intercept as</p>
 <span class="math display" id="eq:beta0hat">\[\begin{equation}
 b_0 = \bar{y} - b_1 \bar{x}.  \tag{3.6}
 \end{equation}\]</span>
@@ -414,7 +414,7 @@ b_1 &amp;= \frac{cov(x,y)}{var(x)}\\
 <p>In other words, the slope coefficient is equal to the correlation coefficient <span class="math inline">\(r\)</span> times the ratio of standard deviations of <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p>
 <div id="linear-regression-without-regressor" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Linear Regression without Regressor</h3>
-<p>There are several important special cases for the linear regression introduced above. Let’s start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
+<p>There are several important special cases for the linear regression introduced above. Let's start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
 <span class="math display" id="eq:b0line">\[\begin{equation}
 y = b_0. \tag{3.8}
 \end{equation}\]</span>
@@ -426,7 +426,7 @@ b_0 = \frac{1}{N} \sum_{i=1}^N y_i = \overline{y}.
 \]</span></p>
 <div class="tip">
 <p>
-Least Squares <strong>without regressor</strong> <span class="math inline"><span class="math inline">\(x\)</span></span> estimates the sample mean of the outcome variable <span class="math inline"><span class="math inline">\(y\)</span></span>, i.e. it produces <span class="math inline"><span class="math inline">\(\overline{y}\)</span></span>.
+Least Squares <strong>without regressor</strong> <span class="math inline"><span class="math inline">\(x\)</span></span> estimates the sample mean of the outcome variable <span class="math inline"><span class="math inline">\(y\)</span></span>, i.e. it produces <span class="math inline"><span class="math inline">\(\overline{y}\)</span></span>.
 </p>
 </div>
 </div>
@@ -439,7 +439,7 @@ b_1 &amp;= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \r
 \end{align}\]</span>
 <div class="tip">
 <p>
-Least Squares <strong>without intercept</strong> (i.e. with <span class="math inline"><span class="math inline">\(b_0=0\)</span></span>) is a line that passes through the origin.
+Least Squares <strong>without intercept</strong> (i.e. with <span class="math inline"><span class="math inline">\(b_0=0\)</span></span>) is a line that passes through the origin.
 </p>
 </div>
 <p><br></p>
@@ -455,7 +455,7 @@ b_1 &amp;= \frac{\frac{1}{N}\sum_{i=1}^N \tilde{x}_i \tilde{y}_i}{\frac{1}{N}\su
     &amp;= \frac{cov(x,y)}{var(x)}
     \tag{3.10}
 \end{align}\]</span>
-<p>This last expression is <em>identical</em> to the one in <a href="linreg.html#eq:beta1hat">(3.5)</a>! It’s the standard OLS estimate for the slope coefficient. We note the following:</p>
+<p>This last expression is <em>identical</em> to the one in <a href="linreg.html#eq:beta1hat">(3.5)</a>! It's the standard OLS estimate for the slope coefficient. We note the following:</p>
 <div class="tip">
 <p>
 Adding a constant to a regression produces the same result as centering all variables and estimating without intercept. So, unless all variables are centered, <strong>always</strong> include an intercept in the regression.
@@ -484,7 +484,7 @@ After we standardize both <span class="math inline"><span class="math inline">\(
 </div>
 <div id="pred-resids" class="section level2">
 <h2><span class="header-section-number">3.3</span> Predictions and Residuals</h2>
-<p>Now we want to ask how our residuals <span class="math inline">\(e_i\)</span> relate to the prediction <span class="math inline">\(\hat{y_i}\)</span>. Let us first think about the average of all predictions <span class="math inline">\(\hat{y_i}\)</span>, i.e. the number <span class="math inline">\(\frac{1}{N} \sum_{i=1}^N \hat{y_i}\)</span>. Let’s just take <a href="linreg.html#eq:abline-pred">(3.2)</a> and plug this into this average, so that we get</p>
+<p>Now we want to ask how our residuals <span class="math inline">\(e_i\)</span> relate to the prediction <span class="math inline">\(\hat{y_i}\)</span>. Let us first think about the average of all predictions <span class="math inline">\(\hat{y_i}\)</span>, i.e. the number <span class="math inline">\(\frac{1}{N} \sum_{i=1}^N \hat{y_i}\)</span>. Let's just take <a href="linreg.html#eq:abline-pred">(3.2)</a> and plug this into this average, so that we get</p>
 <span class="math display">\[\begin{align}
 \frac{1}{N} \sum_{i=1}^N \hat{y_i} &amp;= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\
 &amp;= b_0 + b_1  \frac{1}{N} \sum_{i=1}^N x_i \\
@@ -504,18 +504,18 @@ The average of our predictions <span class="math inline"><span class="math inlin
 Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =   \frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})e_i \\
 &amp;=  \frac{1}{N} \sum_{i=1}^N \hat{y}_i e_i-\bar{y} \frac{1}{N} \sum_{i=1}^N e_i = 0
 \end{align}\]</span>
-<p>It’s useful to bring back the sample data which generate figure <a href="linreg.html#fig:line-arrows">3.1</a> at this point in order to verify these claims:</p>
-<pre><code>#OUT&gt;       y y_hat error
-#OUT&gt; 1  2.09  2.57 -0.48
-#OUT&gt; 2  2.79  3.41 -0.62
-#OUT&gt; 3  6.49  4.25  2.24
-#OUT&gt; 4  1.71  5.10 -3.39
-#OUT&gt; 5  9.89  5.94  3.95
-#OUT&gt; 6  7.62  6.78  0.83
-#OUT&gt; 7  4.86  7.63 -2.77
-#OUT&gt; 8  7.38  8.47 -1.09
-#OUT&gt; 9 10.63  9.31  1.32</code></pre>
-<p>Let’s check that these claims are true in this sample of data. We want that</p>
+<p>It's useful to bring back the sample data which generate figure <a href="linreg.html#fig:line-arrows">3.1</a> at this point in order to verify these claims:</p>
+<pre><code>##       y y_hat error
+## 1  2.09  2.57 -0.48
+## 2  2.79  3.41 -0.62
+## 3  6.49  4.25  2.24
+## 4  1.71  5.10 -3.39
+## 5  9.89  5.94  3.95
+## 6  7.62  6.78  0.83
+## 7  4.86  7.63 -2.77
+## 8  7.38  8.47 -1.09
+## 9 10.63  9.31  1.32</code></pre>
+<p>Let's check that these claims are true in this sample of data. We want that</p>
 <ol style="list-style-type: decimal">
 <li>The average of <span class="math inline">\(\hat{y}_i\)</span> to be the same as the mean of <span class="math inline">\(y\)</span></li>
 <li>The average of the errors should be zero.</li>
@@ -523,46 +523,46 @@ Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 1.</span>
 <span class="kw">all.equal</span>(<span class="kw">mean</span>(ss<span class="op">$</span>error), <span class="dv">0</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2.</span>
 <span class="kw">all.equal</span>(<span class="kw">mean</span>(ss<span class="op">$</span>y_hat), <span class="kw">mean</span>(ss<span class="op">$</span>y))</code></pre></div>
-<pre><code>#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 3.</span>
 <span class="kw">all.equal</span>(<span class="kw">cov</span>(ss<span class="op">$</span>error,ss<span class="op">$</span>y_hat), <span class="dv">0</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <p>So indeed we can confirm this result with our test dataset. Great!</p>
 </div>
 <div id="correlation-covariance-and-linearity" class="section level2">
 <h2><span class="header-section-number">3.4</span> Correlation, Covariance and Linearity</h2>
 <p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-129-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="03-linear-reg_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>The important lesson from this example is the following:</p>
 <div class="warning">
 <p>
-Always <strong>visually inspect</strong> your data, and don’t rely exclusively on summary statistics like <em>mean, variance, correlation and regression line</em>. All of those assume a <strong>linear</strong> relationship between the variables in your data.
+Always <strong>visually inspect</strong> your data, and don't rely exclusively on summary statistics like <em>mean, variance, correlation and regression line</em>. All of those assume a <strong>linear</strong> relationship between the variables in your data.
 </p>
 </div>
-<p><br> The mission of Anscombe has been continued recently. As a result of this we can have a look at the <code>datasauRus</code> package, which pursues Anscbombe’s idea through a multitude of funny data sets, all with the same linear statistics. Don’t just compute the covariance, or you might actually end up looking at a Dinosaur! What? Type this to find out:</p>
+<p><br> The mission of Anscombe has been continued recently. As a result of this we can have a look at the <code>datasauRus</code> package, which pursues Anscbombe's idea through a multitude of funny data sets, all with the same linear statistics. Don't just compute the covariance, or you might actually end up looking at a Dinosaur! What? Type this to find out:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">launchApp</span>(<span class="st">&quot;datasaurus&quot;</span>)
 <span class="kw">aboutApp</span>(<span class="st">&quot;datasaurus&quot;</span>)</code></pre></div>
 <div id="non-linear-relationships-in-data" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Non-Linear Relationships in Data</h3>
 <p>Suppose our data now looks like this:</p>
-<p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="03-linear-reg_files/figure-html/non-line-cars-1.png" width="672" /></p>
 <p>Putting our previous <em>best line</em> defined in equation <a href="linreg.html#eq:abline">(3.3)</a> as <span class="math inline">\(y = b_0 + b_1 x + e\)</span>, we get something like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols"></span>
-<img src="ScPoEconometrics_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
+<img src="03-linear-reg_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
 <p class="caption">
 Figure 3.3: Best line with non-linear data?
 </p>
 </div>
-<p>Somehow when looking at <a href="linreg.html#fig:non-line-cars-ols">3.3</a> one is not totally convinced that the straight line is a good summary of this relationship. For values <span class="math inline">\(x\in[50,120]\)</span> the line seems to low, then again too high, and it completely misses the right boundary. It’s easy to address this shortcoming by including <em>higher order terms</em> of an explanatory variable. We would modify <a href="linreg.html#eq:abline">(3.3)</a> to read now</p>
+<p>Somehow when looking at <a href="linreg.html#fig:non-line-cars-ols">3.3</a> one is not totally convinced that the straight line is a good summary of this relationship. For values <span class="math inline">\(x\in[50,120]\)</span> the line seems to low, then again too high, and it completely misses the right boundary. It's easy to address this shortcoming by including <em>higher order terms</em> of an explanatory variable. We would modify <a href="linreg.html#eq:abline">(3.3)</a> to read now</p>
 <span class="math display" id="eq:abline2">\[\begin{equation}
 y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i \tag{3.12}
 \end{equation}\]</span>
-<p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">4</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let’s just see how this performs:</p>
+<p>This is a special case of <em>multiple regression</em>, which we will talk about in chapter <a href="multiple-reg.html#multiple-reg">4</a>. You can see that there are <em>multiple</em> slope coefficients. For now, let's just see how this performs:</p>
 <div class="figure" style="text-align: center"><span id="fig:non-line-cars-ols2"></span>
-<img src="ScPoEconometrics_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
+<img src="03-linear-reg_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
 <p class="caption">
 Figure 3.4: Better line with non-linear data!
 </p>
@@ -577,7 +577,7 @@ Var(y) &amp;= Var(\hat{y} + e)\\
  &amp;= Var(\hat{y}) + Var(e) + 2 Cov(\hat{y},e)\\
  &amp;= Var(\hat{y}) + Var(e) \tag{3.13}
 \end{align}\]</span>
-<p>We have seen above in <a href="linreg.html#pred-resids">3.3</a> that the covariance between prediction <span class="math inline">\(\hat{y}\)</span> and error <span class="math inline">\(e\)</span> is zero, that’s why we have <span class="math inline">\(Cov(\hat{y},e)=0\)</span> in <a href="linreg.html#eq:anova">(3.13)</a>. What this tells us in words is that we can decompose the variance in the observed outcome <span class="math inline">\(y\)</span> into a part that relates to variance as <em>explained by the model</em> and a part that comes from unexplained variation. Finally, we know the definition of <em>variance</em>, and can thus write down the respective formulae for each part:</p>
+<p>We have seen above in <a href="linreg.html#pred-resids">3.3</a> that the covariance between prediction <span class="math inline">\(\hat{y}\)</span> and error <span class="math inline">\(e\)</span> is zero, that's why we have <span class="math inline">\(Cov(\hat{y},e)=0\)</span> in <a href="linreg.html#eq:anova">(3.13)</a>. What this tells us in words is that we can decompose the variance in the observed outcome <span class="math inline">\(y\)</span> into a part that relates to variance as <em>explained by the model</em> and a part that comes from unexplained variation. Finally, we know the definition of <em>variance</em>, and can thus write down the respective formulae for each part:</p>
 <ul>
 <li><span class="math inline">\(Var(y) = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{y})^2\)</span></li>
 <li><span class="math inline">\(Var(\hat{y}) = \frac{1}{N}\sum_{i=1}^N (\hat{y_i} - \bar{y})^2\)</span>, because the mean of <span class="math inline">\(\hat{y}\)</span> is <span class="math inline">\(\bar{y}\)</span> as we know. Finally,</li>
@@ -600,7 +600,7 @@ R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} 
 </div>
 <div id="an-example-a-log-wage-equation" class="section level2">
 <h2><span class="header-section-number">3.7</span> An Example: A Log Wage Equation</h2>
-<p>Let’s consider the following example concerning wage data collected in the 1976 Current Population Survey in the USA.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> We want to investigate the relationship between average hourly earnings, and years of education. Let’s start with a plot:</p>
+<p>Let's consider the following example concerning wage data collected in the 1976 Current Population Survey in the USA.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> We want to investigate the relationship between average hourly earnings, and years of education. Let's start with a plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;wage1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)   <span class="co"># load data</span>
 
 <span class="co"># a function that returns a plot</span>
@@ -628,8 +628,8 @@ plotfun &lt;-<span class="st"> </span><span class="cf">function</span>(wage1,<sp
 <span class="kw">hist</span>(wage1<span class="op">$</span>wage,<span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;red&quot;</span>, 
      <span class="dt">main =</span> <span class="st">&quot;Histogram of wages and Density&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;hourly wage&quot;</span>)
 <span class="kw">lines</span>(<span class="kw">density</span>(wage1<span class="op">$</span>wage), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lw =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:wooldridge-wages"></span>
-<img src="ScPoEconometrics_files/figure-html/wooldridge-wages-1.png" alt="Wages vs Education from the wooldridge dataset wage1." width="672" />
+<div class="figure"><span id="fig:wooldridge-wages"></span>
+<img src="03-linear-reg_files/figure-html/wooldridge-wages-1.png" alt="Wages vs Education from the wooldridge dataset wage1." width="672" />
 <p class="caption">
 Figure 3.5: Wages vs Education from the wooldridge dataset wage1.
 </p>
@@ -637,11 +637,11 @@ Figure 3.5: Wages vs Education from the wooldridge dataset wage1.
 <p>Looking at the top panel of figure <a href="linreg.html#fig:wooldridge-wages">3.5</a>, you notice two things: From the red ticks on the y axis, you see that wages are very concentrated at around 5 USD per hour, with fewer and fewer observations at higher rates; and second, that it seems that the hourly wage seems to increase with higher education levels. The bottom panel reinforces the first point, showing that the estimated pdf (probability density function) shown as a black line has a very long right tail: there are always fewer and fewer, but always larger and larger values of hourly wage in the data.</p>
 <div class="warning">
 <p>
-You have seen this shape of a distribution in the tutorial for chapter 2 already! Do you remember the name of this particular shape of a distribution? (why not type <code>ScPoEconometrics::runTutorial(‘chapter2’)</code>) to check?
+You have seen this shape of a distribution in the tutorial for chapter 2 already! Do you remember the name of this particular shape of a distribution? (why not type <code>ScPoEconometrics::runTutorial('chapter2')</code>) to check?
 </p>
 </div>
 <p><br></p>
-<p>Let’s run a first regression on this data to generate some intution:</p>
+<p>Let's run a first regression on this data to generate some intution:</p>
 <span class="math display" id="eq:wage">\[\begin{equation}
 \text{wage}_i = b_0 + b_1 \text{educ}_i + e_i \tag{3.15}
 \end{equation}\]</span>
@@ -650,32 +650,32 @@ You have seen this shape of a distribution in the tutorial for chapter 2 already
 <p>and we can add the resulting regression line to our above plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotfun</span>(wage1)
 <span class="kw">abline</span>(hourly_wage, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">lw =</span> <span class="dv">2</span>) <span class="co"># add regression line</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:wooldridge-wages2"></span>
-<img src="ScPoEconometrics_files/figure-html/wooldridge-wages2-1.png" alt="Wages vs Education from the wooldridge dataset wage1, with regression" width="672" />
+<div class="figure"><span id="fig:wooldridge-wages2"></span>
+<img src="03-linear-reg_files/figure-html/wooldridge-wages2-1.png" alt="Wages vs Education from the wooldridge dataset wage1, with regression" width="672" />
 <p class="caption">
 Figure 3.6: Wages vs Education from the wooldridge dataset wage1, with regression
 </p>
 </div>
 <p>The <code>hourly_wage</code> object contains the results of this estimation. We can get a summary of those results with the <code>summary</code> method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hourly_wage)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = wage ~ educ, data = wage1)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;     Min      1Q  Median      3Q     Max 
-#OUT&gt; -5.3396 -2.1501 -0.9674  1.1921 16.6085 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) -0.90485    0.68497  -1.321    0.187    
-#OUT&gt; educ         0.54136    0.05325  10.167   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 3.378 on 524 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.1648,  Adjusted R-squared:  0.1632 
-#OUT&gt; F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ, data = wage1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.3396 -2.1501 -0.9674  1.1921 16.6085 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.90485    0.68497  -1.321    0.187    
+## educ         0.54136    0.05325  10.167   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.378 on 524 degrees of freedom
+## Multiple R-squared:  0.1648, Adjusted R-squared:  0.1632 
+## F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The main interpretation of this table can be read off the column labelled <em>Estimate</em>, reporting estimated coefficients <span class="math inline">\(b_0,b_1\)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>With zero year of education, the hourly wage is about -0.9 dollars per hour (row named <code>(Intercept)</code>)</li>
@@ -691,8 +691,8 @@ Regression estimates (<span class="math inline"><span class="math inline">\(b_0,
 </p>
 </div>
 <p><br></p>
-<p>Suppose we wanted to use the above estimates to report the effect of years of education on <em>annual</em> wages instead of <em>hourly</em> ones. Let’s assume we have full-time workers, 7h per day, 5 days per week, 45 weeks per year. Calling this factor <span class="math inline">\(\delta = 7 \times 5 \times 45 = 1575\)</span>, we have that <span class="math inline">\(x\)</span> dollars per hour imply <span class="math inline">\(x \times \delta = x \times 1575\)</span> dollars per year.</p>
-<p>What would be the effect of using <span class="math inline">\(\tilde{y} = wage \times 1575\)</span> instead of <span class="math inline">\(y = wage\)</span> as outcome variable on our regression coefficients <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>? Well, let’s try!</p>
+<p>Suppose we wanted to use the above estimates to report the effect of years of education on <em>annual</em> wages instead of <em>hourly</em> ones. Let's assume we have full-time workers, 7h per day, 5 days per week, 45 weeks per year. Calling this factor <span class="math inline">\(\delta = 7 \times 5 \times 45 = 1575\)</span>, we have that <span class="math inline">\(x\)</span> dollars per hour imply <span class="math inline">\(x \times \delta = x \times 1575\)</span> dollars per year.</p>
+<p>What would be the effect of using <span class="math inline">\(\tilde{y} = wage \times 1575\)</span> instead of <span class="math inline">\(y = wage\)</span> as outcome variable on our regression coefficients <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>? Well, let's try!</p>
 <table style="text-align:center">
 <caption>
 <strong>Effect of Scaling on Coefficients</strong>
@@ -868,8 +868,8 @@ F Statistic (df = 1; 524)
 </td>
 </tr>
 </table>
-<p>Let’s call the coefficients in the column labelled (1) as <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, and let’s call the ones in column (2) <span class="math inline">\(b_0^*\)</span> and <span class="math inline">\(b_1^*\)</span>. In column (1) we see that another year increaeses hourly wage by 0.54 dollars, as before. In column (2), the corresponding number is 852.64, i.e. another year of education will increase <em>annual</em> wages by 852.64 dollars, on average. Notice however, that <span class="math inline">\(b_0 \times \delta = -0.9 \times 1575 = -1425.14 = b_0^*\)</span> and that <span class="math inline">\(b_1 \times \delta = 0.54 \times 1575 = 852.64 = b_1^*\)</span>, that is we just had to multiply both coefficients by the scaling factor applied to original outcome <span class="math inline">\(y\)</span> to obtain our new coefficients <span class="math inline">\(b_0^*\)</span> and <span class="math inline">\(b_1^*\)</span>! Also, observe that the <span class="math inline">\(R^2\)</span>s of both regressions are identical! So, really, we did not have to run the regression in column (2) at all to make this change: multiplying all coefficients through by <span class="math inline">\(\delta\)</span> is enough in this case. We keep the identically same fit to the data.</p>
-<p>Rescaling the regressors <span class="math inline">\(x\)</span> is slightly different, but it’s easy to work out <em>how</em> different, given the linear nature of the covariance operator, which is part of the OLS estimator. Suppose we rescale <span class="math inline">\(x\)</span> by the number <span class="math inline">\(c\)</span>. Then, using the OLS formula in <a href="linreg.html#eq:beta1hat">(3.5)</a>, we see that we get new slope coefficient <span class="math inline">\(b_1^*\)</span> via</p>
+<p>Let's call the coefficients in the column labelled (1) as <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, and let's call the ones in column (2) <span class="math inline">\(b_0^*\)</span> and <span class="math inline">\(b_1^*\)</span>. In column (1) we see that another year increaeses hourly wage by 0.54 dollars, as before. In column (2), the corresponding number is 852.64, i.e. another year of education will increase <em>annual</em> wages by 852.64 dollars, on average. Notice however, that <span class="math inline">\(b_0 \times \delta = -0.9 \times 1575 = -1425.14 = b_0^*\)</span> and that <span class="math inline">\(b_1 \times \delta = 0.54 \times 1575 = 852.64 = b_1^*\)</span>, that is we just had to multiply both coefficients by the scaling factor applied to original outcome <span class="math inline">\(y\)</span> to obtain our new coefficients <span class="math inline">\(b_0^*\)</span> and <span class="math inline">\(b_1^*\)</span>! Also, observe that the <span class="math inline">\(R^2\)</span>s of both regressions are identical! So, really, we did not have to run the regression in column (2) at all to make this change: multiplying all coefficients through by <span class="math inline">\(\delta\)</span> is enough in this case. We keep the identically same fit to the data.</p>
+<p>Rescaling the regressors <span class="math inline">\(x\)</span> is slightly different, but it's easy to work out <em>how</em> different, given the linear nature of the covariance operator, which is part of the OLS estimator. Suppose we rescale <span class="math inline">\(x\)</span> by the number <span class="math inline">\(c\)</span>. Then, using the OLS formula in <a href="linreg.html#eq:beta1hat">(3.5)</a>, we see that we get new slope coefficient <span class="math inline">\(b_1^*\)</span> via</p>
 <span class="math display">\[\begin{align} 
 b_1^* &amp;= \frac{Cov(cx,y)}{Var(cx)} \\ 
       &amp;= \frac{cCov(x,y)}{c^2 Var(x)} \\
@@ -895,11 +895,11 @@ b_0^* &amp;= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\
 <li>Applying the <span class="math inline">\(\log\)</span> reduces the impact of outliers.</li>
 <li>The transformation allows for a convenient interpretation in terms of <em>percentage changes</em> of the outcome variable.</li>
 </ol>
-<p>Let’s investigate this issue in our running example by transforming the wage data above. Look back at the bottom panel of figure <a href="linreg.html#fig:wooldridge-wages">3.5</a>: Of course you saw immediately that this looked a lot like a log-normal distribution, so point 1. above applies. We modify the left hand side of equation <a href="linreg.html#eq:wage">(3.15)</a>:</p>
+<p>Let's investigate this issue in our running example by transforming the wage data above. Look back at the bottom panel of figure <a href="linreg.html#fig:wooldridge-wages">3.5</a>: Of course you saw immediately that this looked a lot like a log-normal distribution, so point 1. above applies. We modify the left hand side of equation <a href="linreg.html#eq:wage">(3.15)</a>:</p>
 <span class="math display" id="eq:log-wage">\[\begin{equation}
 \log(\text{wage}_i) = b_0 + b_1 \text{educ}_i + e_i \tag{3.16}
 \end{equation}\]</span>
-<p>Let’s use the <code>update</code> function to modify our previous regression model:</p>
+<p>Let's use the <code>update</code> function to modify our previous regression model:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">log_hourly_wage =<span class="st"> </span><span class="kw">update</span>(hourly_wage, <span class="kw">log</span>(wage) <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> wage1)</code></pre></div>
 <p>The <code>update</code> function takes an existing <code>lm</code> object, like <code>hourly_wage</code> here, and updates the <code>formula</code>. Here the <code>.</code> on the right hand side means <em>leave unchanged</em> (so the RHS stays unchanged). How do our pictures change?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
@@ -909,9 +909,9 @@ b_0^* &amp;= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\
 
 <span class="kw">plotfun</span>(wage1,<span class="dt">log =</span> <span class="ot">TRUE</span>, <span class="dt">rug =</span> <span class="ot">FALSE</span>)
 <span class="kw">abline</span>(log_hourly_wage, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">lw =</span> <span class="dv">2</span>) <span class="co"># add regression line</span></code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/logplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="03-linear-reg_files/figure-html/logplot-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
-<p>It <em>looks as if</em> the regression line has the same slope, but beware of the different scales of the y-axis! You can clearly see that all y-values have been compressed by the log transformation. The log case behaves differently from our <em>scaling by a constant number</em> case above because it is a <em>nonlinear</em> function. Let’s compare the output between both models:</p>
+<p>It <em>looks as if</em> the regression line has the same slope, but beware of the different scales of the y-axis! You can clearly see that all y-values have been compressed by the log transformation. The log case behaves differently from our <em>scaling by a constant number</em> case above because it is a <em>nonlinear</em> function. Let's compare the output between both models:</p>
 <table style="text-align:center">
 <caption>
 <strong>Log Transformed Equation</strong>
@@ -1090,7 +1090,7 @@ F Statistic (df = 1; 524)
 <p>The interpretation of the transformed model in column (2) is now the following:</p>
 <div class="note">
 <p>
-We call a regression of the form <span class="math inline"><span class="math inline">\(\log(y) = b_0 + b_1 x + u\)</span></span> a <em>log-level</em> specification, because we regressed the log of a variable on the level (i.e not the log!) of another variable. Here, the impact of increasing <span class="math inline"><span class="math inline">\(x\)</span></span> by one unit is to increase <span class="math inline"><span class="math inline">\(y\)</span></span> by <span class="math inline"><span class="math inline">\(100 \times b_1\)</span></span> <strong>percent</strong>. In our example: an additional year of education will increase hourly wages by 8.3%. Notice that this is very different from saying <em>…increases log hourly wages by 8.3%</em>, which is wrong.
+We call a regression of the form <span class="math inline"><span class="math inline">\(\log(y) = b_0 + b_1 x + u\)</span></span> a <em>log-level</em> specification, because we regressed the log of a variable on the level (i.e not the log!) of another variable. Here, the impact of increasing <span class="math inline"><span class="math inline">\(x\)</span></span> by one unit is to increase <span class="math inline"><span class="math inline">\(y\)</span></span> by <span class="math inline"><span class="math inline">\(100 \times b_1\)</span></span> <strong>percent</strong>. In our example: an additional year of education will increase hourly wages by 8.3%. Notice that this is very different from saying <em>...increases log hourly wages by 8.3%</em>, which is wrong.
 </p>
 </div>
 <p><br></p>
@@ -1141,7 +1141,7 @@ We call a regression of the form <span class="math inline"><span class="math inl
 </tr>
 </tbody>
 </table>
-<p>You may remember from your introductory micro course what the definition of the <em>elasticity</em> of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span> is: This number tells us by how many percent <span class="math inline">\(y\)</span> will change, if we change <span class="math inline">\(x\)</span> by one percent. Let’s look at another example from the <code>wooldridge</code> package of datasets, this time concerning CEO salaries and their relationship with company sales.</p>
+<p>You may remember from your introductory micro course what the definition of the <em>elasticity</em> of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span> is: This number tells us by how many percent <span class="math inline">\(y\)</span> will change, if we change <span class="math inline">\(x\)</span> by one percent. Let's look at another example from the <code>wooldridge</code> package of datasets, this time concerning CEO salaries and their relationship with company sales.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;ceosal1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)  
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">plot</span>(salary <span class="op">~</span><span class="st"> </span>sales, <span class="dt">data =</span> ceosal1, <span class="dt">main =</span> <span class="st">&quot;Sales vs Salaries&quot;</span>,<span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>,<span class="dt">frame =</span> <span class="ot">FALSE</span>)
@@ -1149,15 +1149,15 @@ We call a regression of the form <span class="math inline"><span class="math inl
 <span class="kw">rug</span>(ceosal1<span class="op">$</span>salary,<span class="dt">side =</span> <span class="dv">2</span>)
 <span class="kw">rug</span>(ceosal1<span class="op">$</span>sales,<span class="dt">side =</span> <span class="dv">1</span>)
 <span class="kw">plot</span>(<span class="kw">log</span>(salary) <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(sales), <span class="dt">data =</span> ceosal1, <span class="dt">main =</span> <span class="st">&quot;Log(Sales) vs Log(Salaries)&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ceo-sal"></span>
-<img src="ScPoEconometrics_files/figure-html/ceo-sal-1.png" alt="The effect of log-transforming highly skewed data." width="672" />
+<div class="figure"><span id="fig:ceo-sal"></span>
+<img src="03-linear-reg_files/figure-html/ceo-sal-1.png" alt="The effect of log-transforming highly skewed data." width="672" />
 <p class="caption">
 Figure 3.7: The effect of log-transforming highly skewed data.
 </p>
 </div>
-<p>In the left panel of figure <a href="linreg.html#fig:ceo-sal">3.7</a> you clearly see that both <code>sales</code> and <code>salary</code> have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it’s hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let’s see what this gives in a regression model!</p>
+<p>In the left panel of figure <a href="linreg.html#fig:ceo-sal">3.7</a> you clearly see that both <code>sales</code> and <code>salary</code> have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it's hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let's see what this gives in a regression model!</p>
 <p><span class="math display">\[
-\text{logsalary} = 4.82 + 0.26(\text{logsales}) + \epsilon
+\operatorname{logsalary} = 4.82 + 0.26(\operatorname{logsales}) + \epsilon
 \]</span></p>
 <p>Refering back at table <a href="linreg.html#tab:loglog">3.1</a>, here we have a log-log specification. Therefore we interpret this regression as follows:</p>
 <div class="tip">
@@ -1171,7 +1171,7 @@ In a log-log equation, the slope coefficient <span class="math inline"><span cla
 <div class="footnotes">
 <hr />
 <ol start="3">
-<li id="fn3"><p>This slope is related to the angle between vectors <span class="math inline">\(\mathbf{a} = (\overline{x},\overline{y})\)</span>, and <span class="math inline">\(\mathbf{b} = (\overline{x},0)\)</span>. Hence, it’s related to the <a href="https://en.wikipedia.org/wiki/Scalar_projection">scalar projection</a> of <span class="math inline">\(\mathbf{a}\)</span> on <span class="math inline">\(\mathbf{b}\)</span>.<a href="linreg.html#fnref3">↩</a></p></li>
+<li id="fn3"><p>This slope is related to the angle between vectors <span class="math inline">\(\mathbf{a} = (\overline{x},\overline{y})\)</span>, and <span class="math inline">\(\mathbf{b} = (\overline{x},0)\)</span>. Hence, it's related to the <a href="https://en.wikipedia.org/wiki/Scalar_projection">scalar projection</a> of <span class="math inline">\(\mathbf{a}\)</span> on <span class="math inline">\(\mathbf{b}\)</span>.<a href="linreg.html#fnref3">↩</a></p></li>
 <li id="fn4"><p>This example is close to the vignette of the <a href="https://cloud.r-project.org/web/packages/wooldridge/index.html">wooldridge</a> package, whose author I hereby thank for the excellent work.<a href="linreg.html#fnref4">↩</a></p></li>
 </ol>
 </div>

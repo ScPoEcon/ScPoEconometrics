@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Causality | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Causality | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -218,15 +218,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="causality" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Causality</h1>
-<p>In this chapter we take on a challenging part of our course. Remember that in the <a href="https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html">first set of slides</a> we introduced Econometrics as the economist’s toolkit to answer questions like <em>does <span class="math inline">\(x\)</span> <strong>cause</strong> <span class="math inline">\(y\)</span>?</em> Let’s illustrate the issues at stake with a question from epidemiologie and public health:</p>
+<p>In this chapter we take on a challenging part of our course. Remember that in the <a href="https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html">first set of slides</a> we introduced Econometrics as the economist's toolkit to answer questions like <em>does <span class="math inline">\(x\)</span> <strong>cause</strong> <span class="math inline">\(y\)</span>?</em> Let's illustrate the issues at stake with a question from epidemiologie and public health:</p>
 <div class="warning">
 <p>
 Does smoking <strong>cause</strong> lung cancer?
 </p>
 </div>
 <p><br></p>
-<p>Just in case you were wondering: Yes it does! However, for a very long time the <em>causal impact</em> of smoking on lung cancer was hotly debated, and it’s instructive for us to look at this history.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
-<p>Let’s go back to the 1950’s. We are at the start of a big increase in deaths from lung cancer. At the same time cigarette consumption was growing very fast. With the benefit of hindsight, we can now draw this graph:</p>
+<p>Just in case you were wondering: Yes it does! However, for a very long time the <em>causal impact</em> of smoking on lung cancer was hotly debated, and it's instructive for us to look at this history.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
+<p>Let's go back to the 1950's. We are at the start of a big increase in deaths from lung cancer. At the same time cigarette consumption was growing very fast. With the benefit of hindsight, we can now draw this graph:</p>
 <div class="figure" style="text-align: center"><span id="fig:smoking-cancer"></span>
 <img src="images/Smoking_lung_cancer.png" alt="Two time series showing cigarette consumption per capita and incidence of lung cancer in the USA." width="355" />
 <p class="caption">
@@ -256,33 +256,33 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 <li>Still, notorious sceptics like R.A. Fisher were unconvinced. The studies <em>still</em> failed to compare <strong>otherwise identical</strong> smokers to non-smokers. There were <em>still</em> important unobserved confounders out there which could invalidate the conclusion that we observed indeed a <strong>causal</strong> relationship.</li>
 </ul></li>
 </ol>
-<p>Let’s put a some structure on this problem now, so we can make progress.</p>
+<p>Let's put a some structure on this problem now, so we can make progress.</p>
 <div id="dags" class="section level2">
 <h2><span class="header-section-number">7.1</span> Directed Acyclical Graphs (DAG)</h2>
 <p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). If an arrow starts at node <span class="math inline">\(x\)</span> and ends at node <span class="math inline">\(y\)</span>, we say that <span class="math inline">\(x\)</span> causes <span class="math inline">\(y\)</span>. Here is a simple example of such a DAG:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag1"></span>
-<img src="ScPoEconometrics_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
+<img src="07-Causality_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
 Figure 7.2: A simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
 <p>Now consider this setting, where there is a third variable, <span class="math inline">\(z\)</span>. It could be possible that also <span class="math inline">\(z\)</span> has a direct influence on <span class="math inline">\(y\)</span>:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag2"></span>
-<img src="ScPoEconometrics_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
+<img src="07-Causality_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
 <p class="caption">
 Figure 7.3: A simple DAG with with 2 causal paths: Both <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> have a direct impact on <span class="math inline">\(y\)</span>.
 </p>
 </div>
-<p>Now let’s change this and create a path from <span class="math inline">\(z\)</span> to <em>both</em> <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> instead. We call <span class="math inline">\(z\)</span> a <em>confounder</em> in the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: <span class="math inline">\(z\)</span> <em>confounds</em> the direct causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, by affecting them both at the same time. What is more, there is no arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> at all, so the only <em>real</em> explanatory variable here is in fact <span class="math inline">\(z\)</span>. Attributing any explanatory power to <span class="math inline">\(x\)</span> would be wrong in this setting.</p>
+<p>Now let's change this and create a path from <span class="math inline">\(z\)</span> to <em>both</em> <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> instead. We call <span class="math inline">\(z\)</span> a <em>confounder</em> in the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: <span class="math inline">\(z\)</span> <em>confounds</em> the direct causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, by affecting them both at the same time. What is more, there is no arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> at all, so the only <em>real</em> explanatory variable here is in fact <span class="math inline">\(z\)</span>. Attributing any explanatory power to <span class="math inline">\(x\)</span> would be wrong in this setting.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag3"></span>
-<img src="ScPoEconometrics_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
+<img src="07-Causality_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
 <p class="caption">
 Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confounder. There is no causal path from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>, and any correlation we observe between those variables is completely induced by <span class="math inline">\(z\)</span>. We call this spurious correlation.
 </p>
 </div>
 <p>Here is a second example where <span class="math inline">\(z\)</span> is a confounder, but slightly different.</p>
-<div class="figure" style="text-align: center"><span id="fig:dag41"></span>
-<img src="ScPoEconometrics_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
+<div class="figure"><span id="fig:dag41"></span>
+<img src="07-Causality_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
 <p class="caption">
 Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, but there is a causal link from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> now. If we observed <span class="math inline">\(z\)</span>, we can control for it.
 </p>
@@ -291,22 +291,22 @@ Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, b
 </div>
 <div id="smoking-in-a-dag" class="section level2">
 <h2><span class="header-section-number">7.2</span> Smoking in a DAG</h2>
-<p>Let’s use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:</p>
-<div class="figure" style="text-align: center"><span id="fig:dag-cig"></span>
-<img src="ScPoEconometrics_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
+<p>Let's use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:</p>
+<div class="figure"><span id="fig:dag-cig"></span>
+<img src="07-Causality_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
 <p class="caption">
-Figure 7.6: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher’s view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
+Figure 7.6: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
 </p>
 </div>
-<p>Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our <em>ceteris paribus</em> assumption was not satisfied. They were worried that <em>smoking</em> was not the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people <strong>self-selected</strong> into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000’s, when the human genome was sufficiently mapped to establish this fact (and indeed there <strong>is</strong> a smoking gene! But that’s beside the point), but they worried about this factor.</p>
-<p>The argument was settled in the eyes of most physicians, when Jerome Cornfield in 1959 wrote a rebuttal of Fisher’s points. Cornfield’s strategy was to allow Fisher to have his unobserved factor, but to show that there was an upper bound to <em>how important</em> it could be in determining the outcome. Here goes:</p>
+<p>Basically, what critics like Fisher were claiming was that the existing studies did not compare like for like. In other words, our <em>ceteris paribus</em> assumption was not satisfied. They were worried that <em>smoking</em> was not the only relevant difference between a population of smokers and one of non-smokers. In particular, they worried that people <strong>self-selected</strong> into smoking, and that the choice to become a smoker may be influenced by other, unobserved, underlying forces - like genetic predisposition, for example. That could mean that smokers were also more likely to take risks, or more likely to be heavy drinkers, or engage in other behaviours that might be conducive to develop lung cancer. They did not formulate it in terms of genetics at the time, because they could not know until the 2000's, when the human genome was sufficiently mapped to establish this fact (and indeed there <strong>is</strong> a smoking gene! But that's beside the point), but they worried about this factor.</p>
+<p>The argument was settled in the eyes of most physicians, when Jerome Cornfield in 1959 wrote a rebuttal of Fisher's points. Cornfield's strategy was to allow Fisher to have his unobserved factor, but to show that there was an upper bound to <em>how important</em> it could be in determining the outcome. Here goes:</p>
 <ol style="list-style-type: decimal">
-<li>Suppose there is indeed a confounding factor “smoking gene”, and that it completely determines the risk of cancer in smokers.</li>
+<li>Suppose there is indeed a confounding factor &quot;smoking gene&quot;, and that it completely determines the risk of cancer in smokers.</li>
 <li>Suppose smokers are observed to have 9 times the risk of non-smokers to develop lung cancer.</li>
 <li>The smoking gene needs to be at least 9 times more prevalent in smokers than in non-smokers to explain this difference in risk.</li>
 </ol>
-<p>But now consider what this implies. Let’s suppose that around 11% of all non-smokers have the smoking gene. That means that <span class="math inline">\(9\times 11 = 99\%\)</span> of smokers need to have it! What’s even more worrying, if only even 12% of non smokers have the gene, then the argument breaks down because it would require <span class="math inline">\(9\times 12 = 108\%\)</span> of smokers to have it, which is of course impossible.</p>
-<p>This argument was so important that it got a name: <strong>Cornfield’s inequality</strong>. It left of Fisher’s argument nothing but a pile of rubble. It’s impossible to think that genetic variation alone could be so important in determining a complex choice of becoming a smoker or not. Looking back at the right panel of figure <a href="causality.html#fig:dag-cig">7.6</a>, the link from smoking to lung cancer was much too strong to be explained by the genetic hypothesis alone.</p>
+<p>But now consider what this implies. Let's suppose that around 11% of all non-smokers have the smoking gene. That means that <span class="math inline">\(9\times 11 = 99\%\)</span> of smokers need to have it! What's even more worrying, if only even 12% of non smokers have the gene, then the argument breaks down because it would require <span class="math inline">\(9\times 12 = 108\%\)</span> of smokers to have it, which is of course impossible.</p>
+<p>This argument was so important that it got a name: <strong>Cornfield's inequality</strong>. It left of Fisher's argument nothing but a pile of rubble. It's impossible to think that genetic variation alone could be so important in determining a complex choice of becoming a smoker or not. Looking back at the right panel of figure <a href="causality.html#fig:dag-cig">7.6</a>, the link from smoking to lung cancer was much too strong to be explained by the genetic hypothesis alone.</p>
 </div>
 <div id="rct" class="section level2">
 <h2><span class="header-section-number">7.3</span> Randomized Control Trials (RCT) Primer</h2>
@@ -317,12 +317,12 @@ A randomized controlled trial is a type of scientific experiment that aims to re
 </p>
 </div>
 <p><br> That sounds really intuitive. If we <em>randomly</em> allocate people to receive treatment, there can be no concern of unobserved confounders, as we have relieved the subjects of making the choice to get treated. Remember the cigarette smokers above: The concern was that an unobserved genetic predisposition correlated with both choosing to become a smoker but also with other potentially cancer-inducing behaviours like drinking or risk taking. Imagine for a moment that we could randomly select people at some young age to be selected for treatment (smoking for 30 years, say). The genetic predisposition will be equally prevalent in both treatment and control group. However, only the treatment group is allowed (and indeed forced) to smoke. Observing higher cancer rates in the treatment group would provide <em>causal evidence</em> for the effect of smoking on lung cancer.</p>
-<p>Thankfully, such an experiment is impossible to run on ethical grounds. We could never subject individuals to such severe and prolongued health risks for the sake of a research study. That’s why the question took to long to be settled!</p>
-<p>Let’s introduce a formal framework now to think more about RCTs.</p>
+<p>Thankfully, such an experiment is impossible to run on ethical grounds. We could never subject individuals to such severe and prolongued health risks for the sake of a research study. That's why the question took to long to be settled!</p>
+<p>Let's introduce a formal framework now to think more about RCTs.</p>
 </div>
 <div id="rubin" class="section level2">
 <h2><span class="header-section-number">7.4</span> The Potential Outcomes Model</h2>
-<p>The Potential Outcomes Model, often named after one of it’s inventors the <em>Rubin Causal Model</em>, posits that there are two states of the world - the <em>potential outcomes</em>. A first state, where a certain intervention is administered to an individual, and a second state, where this is not the case. Formally, this idea is expressed with superscripts 0 and 1, like this:</p>
+<p>The Potential Outcomes Model, often named after one of it's inventors the <em>Rubin Causal Model</em>, posits that there are two states of the world - the <em>potential outcomes</em>. A first state, where a certain intervention is administered to an individual, and a second state, where this is not the case. Formally, this idea is expressed with superscripts 0 and 1, like this:</p>
 <ul>
 <li><span class="math inline">\(Y_i^1\)</span>: individual <span class="math inline">\(i\)</span> has been treated</li>
 <li><span class="math inline">\(Y_i^0\)</span>: individual <span class="math inline">\(i\)</span> has <strong>not</strong> been treated</li>
@@ -337,46 +337,46 @@ Y_i = D_i Y_i^1 + (1-D_i)Y_i^0 \tag{7.1}
 <li>What would have happened, had I chosen to study a different subject?</li>
 <li>What would have happend, had <a href="https://en.wikipedia.org/wiki/Neo_(The_Matrix)">Neo</a> taken the blue pill instead?</li>
 </ul>
-<p>Our ability to make those considerations distinguishes us from animals. It’s one of the biggest challenges for machines when trying to be <em>intelligent</em>.</p>
-<p>What makes this question so hard to answer for machines and animals alike is the fact that one has to <em>imagine a parallel universe</em> where the actions taken were different, <strong>without</strong> having observed that precise situation before. Neo did <em>not</em> take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It’s easy for us and <a href="https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/">still hard for machines</a>.</p>
+<p>Our ability to make those considerations distinguishes us from animals. It's one of the biggest challenges for machines when trying to be <em>intelligent</em>.</p>
+<p>What makes this question so hard to answer for machines and animals alike is the fact that one has to <em>imagine a parallel universe</em> where the actions taken were different, <strong>without</strong> having observed that precise situation before. Neo did <em>not</em> take the blue pill, and whatever happened after that originated from this decision - so how are we to tell what would have happened? It's easy for us and <a href="https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/">still hard for machines</a>.</p>
 <p>Potential outcome <span class="math inline">\(Y_i^0\)</span> above is what is known as the <em>counterfactual</em> outcome. What would have happened to subject <span class="math inline">\(i\)</span>, had they <strong>not</strong> received treatment <span class="math inline">\(D\)</span>?</p>
 <p>Following Rubin, let us define the <strong>treatment effect</strong> for individual <span class="math inline">\(i\)</span> as follows:</p>
 <span class="math display" id="eq:TE">\[\begin{equation}
 \delta_i = Y_i^1 - Y_i^0 \tag{7.2}
 \end{equation}\]</span>
-<p>Notice our insistence about talking about a single individual <span class="math inline">\(i\)</span> throughout here. Keeping the potential outcome model <a href="causality.html#eq:rubin-model">(7.1)</a> in mind, i.e. the fact that we only observe <em>one</em> of both outcomes, we face the <strong>fundamental identification problem of program evaluation</strong>:</p>
+<p>Notice our insistence about talking about a single individual <span class="math inline">\(i\)</span> throughout here. Keeping the potential outcome model <a href="causality.html#eq:rubin-model">(7.1)</a> in mind, i.e. the fact that we only observe <em>one</em> of both outcomes, we face the <strong>fundamental identification problem of program evaluation</strong>:</p>
 <div class="warning">
 <p>
 Given we only observe <em>one</em> potential outcome, we cannot compute the treatment effect <span class="math inline"><span class="math inline">\(\delta_i\)</span></span> for any individual <span class="math inline"><span class="math inline">\(i\)</span></span>.
 </p>
 </div>
-<p><br> That’s pretty dire news. Let’s see if we can do better with an average effect instead. Let’s define three <em>average</em> effects of interest:</p>
+<p><br> That's pretty dire news. Let's see if we can do better with an average effect instead. Let's define three <em>average</em> effects of interest:</p>
 <ol style="list-style-type: decimal">
 <li>the Average Treatment Effect (ATE): <span class="math display">\[\delta^{ATE} = E[\delta_i] = E[Y_i^1] - E[Y_i^0]\]</span></li>
 <li>the Average Treatment on the Treated (ATT): <span class="math display">\[\delta^{ATT} = E[\delta_i|D_i = 1] = E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 1]\]</span></li>
 <li>the Average Treatment on the Untreated (ATU): <span class="math display">\[\delta^{ATU} = E[\delta_i|D_i = 0] = E[Y_i^1|D_i = 0] - E[Y_i^0|D_i = 0]\]</span></li>
 </ol>
-<p>Notice that <em>none</em> of those can be computed from data either, because all of them require data on individual <span class="math inline">\(i\)</span> from <em>both</em> scenarios. Let’s focus on the ATE for now. Fundamentally we face a <strong>missing data problem</strong>: either <span class="math inline">\(Y_i^1\)</span> or <span class="math inline">\(Y_i^0\)</span> are missing from our dataset. Nevertheless, let’s setup the following <em>naive</em> simple difference in means estimator <span class="math inline">\(\hat{\delta}\)</span>:</p>
+<p>Notice that <em>none</em> of those can be computed from data either, because all of them require data on individual <span class="math inline">\(i\)</span> from <em>both</em> scenarios. Let's focus on the ATE for now. Fundamentally we face a <strong>missing data problem</strong>: either <span class="math inline">\(Y_i^1\)</span> or <span class="math inline">\(Y_i^0\)</span> are missing from our dataset. Nevertheless, let's setup the following <em>naive</em> simple difference in means estimator <span class="math inline">\(\hat{\delta}\)</span>:</p>
 <span class="math display" id="eq:SDO">\[\begin{align}
 \hat{\delta} =&amp; E[Y_i^1|D_i = 1] - E[Y_i^0|D_i = 0]\\
              =&amp; \frac{1}{N_T} \sum_{i \in T}^{N_T} T_i - \frac{1}{N_C} \sum_{j \in T}^{N_C} Y_j \tag{7.3}
 \end{align}\]</span>
 <p>in other words, we just difference the mean outcomes in both treatment (T) and control (C) groups. That is, <span class="math inline">\(N_C\)</span> is the number of people in the control group, <span class="math inline">\(N_T\)</span> is the same for treatment group.</p>
-<p>Now let’s consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span> from our naive <span class="math inline">\(\hat{\delta}\)</span>, it matters who ends up being treated!</p>
-<p>Imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
+<p>Now let's consider what randomly choosing people for treatment does. The key consideration here is that the true <span class="math inline">\(\delta_i\)</span> is potentially different for each person. That is, some people will have a high effect of treatment, while others may have a small (or even negative!) effect. To learn about the true <span class="math inline">\(\delta^{ATE}\)</span> from our naive <span class="math inline">\(\hat{\delta}\)</span>, it matters who ends up being treated!</p>
+<p>Imagine that individuals have at least some partial knowledge about their likely <em>gains from treatment</em>, i.e. their personal <span class="math inline">\(\delta_i\)</span>. If those who expect to benefit a lot will select disproportionately into treatment, then our estimator <span class="math inline">\(\hat{\delta}\)</span> will be biased upwards for the true average effect <span class="math inline">\(\delta^{ATE}\)</span>. This is so because the average of observed outcomes in the treatment group, i.e.</p>
 <p><span class="math display">\[
 \frac{1}{N_T} \sum_{i \in T}^{N_T} Y_i
 \]</span></p>
-<p>will be <strong>too high</strong>. It represents the disproportionately <em>high</em> treatment outcome <span class="math inline">\(Y_i^1\)</span> for all those who <em>anticipated</em> such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment. It’s not <em>representative</em> of the true population wide treatment outcome <span class="math inline">\(E[Y_i^1]\)</span>.</p>
-<p>Here is where randomization comes into play. Suppose we now flip a coin for each person to determine whether they obtain treatment or not. This takes away from them the possibility to select on expected gains into treatment. Crucially, the distribution of effects <span class="math inline">\(\delta_i\)</span> is still the same in the study population, i.e. there are still people with high and people with low effects. But we have solved the missing data problem mentioned above, because whether <span class="math inline">\(Y_i^1\)</span> or rather <span class="math inline">\(Y_i^0\)</span> is observed for each <span class="math inline">\(i\)</span> is now <strong>random</strong>, and no longer a function of any other factor that <span class="math inline">\(i\)</span> could act upon! Hooray!</p>
+<p>will be <strong>too high</strong>. It represents the disproportionately <em>high</em> treatment outcome <span class="math inline">\(Y_i^1\)</span> for all those who <em>anticipated</em> such a high outcome from treatment, and who therefore were particularly eager to get selected into treatment. It's not <em>representative</em> of the true population wide treatment outcome <span class="math inline">\(E[Y_i^1]\)</span>.</p>
+<p>Here is where randomization comes into play. Suppose we now flip a coin for each person to determine whether they obtain treatment or not. This takes away from them the possibility to select on expected gains into treatment. Crucially, the distribution of effects <span class="math inline">\(\delta_i\)</span> is still the same in the study population, i.e. there are still people with high and people with low effects. But we have solved the missing data problem mentioned above, because whether <span class="math inline">\(Y_i^1\)</span> or rather <span class="math inline">\(Y_i^0\)</span> is observed for each <span class="math inline">\(i\)</span> is now <strong>random</strong>, and no longer a function of any other factor that <span class="math inline">\(i\)</span> could act upon! Hooray!</p>
 <p>Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder <span class="math inline">\(z\)</span> in <a href="causality.html#fig:dag41">7.5</a>.</p>
 </div>
 <div id="omitted-variable-bias-and-dags" class="section level2">
 <h2><span class="header-section-number">7.5</span> Omitted Variable Bias and DAGs</h2>
-<p>We want to revisit the underlying assumptions of the classical model outlined in <a href="std-errors.html#class-reg">6.6</a> in the previous chapter, which is closely related to the previous discussion. Let’s talk a bit more about assumption number 2 of the definition in <a href="std-errors.html#class-reg">6.6</a>. It said this:</p>
+<p>We want to revisit the underlying assumptions of the classical model outlined in <a href="std-errors.html#class-reg">6.6</a> in the previous chapter, which is closely related to the previous discussion. Let's talk a bit more about assumption number 2 of the definition in <a href="std-errors.html#class-reg">6.6</a>. It said this:</p>
 <div class="warning">
 <p>
-The mean of the residuals conditional on <span class="math inline"><span class="math inline">\(x\)</span></span> should be zero, <span class="math inline"><span class="math inline">\(E[\varepsilon|x] = 0\)</span></span>. This means that <span class="math inline"><span class="math inline">\(Cov(\varepsilon,x) = 0\)</span></span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. We want <span class="math inline"><span class="math inline">\(x\)</span></span> to be <strong>strictly exogenous</strong> to the model.
+The mean of the residuals conditional on <span class="math inline"><span class="math inline">\(x\)</span></span> should be zero, <span class="math inline"><span class="math inline">\(E[\varepsilon|x] = 0\)</span></span>. This means that <span class="math inline"><span class="math inline">\(Cov(\varepsilon,x) = 0\)</span></span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. We want <span class="math inline"><span class="math inline">\(x\)</span></span> to be <strong>strictly exogenous</strong> to the model.
 </p>
 </div>
 <p><br></p>
@@ -386,22 +386,22 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{7.4}
 \end{equation}\]</span>
 <p>and imagine it represents the data generating process (DGP) of the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Writing down this equation is tightly linked to drawing this DAG from above:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag4"></span>
-<img src="ScPoEconometrics_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
+<img src="07-Causality_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
 Figure 7.7: The same simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
-<p>The role of <span class="math inline">\(\varepsilon_i\)</span> in equation <a href="causality.html#eq:DGP-h">(7.4)</a> is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to <em>fully</em> explain <span class="math inline">\(y_i\)</span> with our necessarily simple model. However, assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> (or <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>) makes sure that those other factors are in <strong>no systematic relationship</strong> with our regressor <span class="math inline">\(x\)</span>. Why? Well if it <em>were</em> the case that another factor <span class="math inline">\(z\)</span> is related to <span class="math inline">\(x\)</span>, we could never make our ceteris paribus statements of <em>holding all other factors fixed, the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is <span class="math inline">\(\beta\)</span></em>. In other words, we’d have a confounder in our regression.</p>
+<p>The role of <span class="math inline">\(\varepsilon_i\)</span> in equation <a href="causality.html#eq:DGP-h">(7.4)</a> is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to <em>fully</em> explain <span class="math inline">\(y_i\)</span> with our necessarily simple model. However, assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> (or <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>) makes sure that those other factors are in <strong>no systematic relationship</strong> with our regressor <span class="math inline">\(x\)</span>. Why? Well if it <em>were</em> the case that another factor <span class="math inline">\(z\)</span> is related to <span class="math inline">\(x\)</span>, we could never make our ceteris paribus statements of <em>holding all other factors fixed, the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is <span class="math inline">\(\beta\)</span></em>. In other words, we'd have a confounder in our regression.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag5"></span>
-<img src="ScPoEconometrics_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
+<img src="07-Causality_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
 <p class="caption">
 Figure 7.8: The same simple DAG where <span class="math inline">\(z\)</span> is a confounder that needs to be controlled for.
 </p>
 </div>
-<p>Notice, again, that the key here is that if we don’t control for <span class="math inline">\(z\)</span>, it will form part of the error term <span class="math inline">\(\varepsilon\)</span>. Given the causal link from <span class="math inline">\(z\)</span> to <span class="math inline">\(x\)</span>, we will then observe that <span class="math inline">\(Cov(x,u) = Cov(x,\varepsilon + z) \neq 0\)</span>, invalidating our assumption.</p>
+<p>Notice, again, that the key here is that if we don't control for <span class="math inline">\(z\)</span>, it will form part of the error term <span class="math inline">\(\varepsilon\)</span>. Given the causal link from <span class="math inline">\(z\)</span> to <span class="math inline">\(x\)</span>, we will then observe that <span class="math inline">\(Cov(x,u) = Cov(x,\varepsilon + z) \neq 0\)</span>, invalidating our assumption.</p>
 <div id="house-prices-and-bathrooms" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> House Prices and Bathrooms</h3>
-<p>Let’s imagine that equation <a href="causality.html#eq:DGP-h">(7.4)</a> represents the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). We run OLS as</p>
+<p>Let's imagine that equation <a href="causality.html#eq:DGP-h">(7.4)</a> represents the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). We run OLS as</p>
 <p><span class="math display">\[
 y_i = b_0 + b_1 x_i + e_i 
 \]</span></p>
@@ -409,39 +409,39 @@ y_i = b_0 + b_1 x_i + e_i
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Housing, <span class="dt">package=</span><span class="st">&quot;Ecdat&quot;</span>)
 hlm =<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>bathrms, <span class="dt">data =</span> Housing)
 <span class="kw">summary</span>(hlm)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = price ~ bathrms, data = Housing)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;    Min     1Q Median     3Q    Max 
-#OUT&gt; -77225 -15271  -2510  11704 102729 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept)    32794       2694   12.17   &lt;2e-16 ***
-#OUT&gt; bathrms        27477       1952   14.08   &lt;2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 22880 on 544 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.267,   Adjusted R-squared:  0.2657 
-#OUT&gt; F-statistic: 198.2 on 1 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>In fact, from this you conclude that each additional bathroom increases the sales price of a house by 27477 dollars. Let’s see if our assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> is satisfied:</p>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ bathrms, data = Housing)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -77225 -15271  -2510  11704 102729 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    32794       2694   12.17   &lt;2e-16 ***
+## bathrms        27477       1952   14.08   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22880 on 544 degrees of freedom
+## Multiple R-squared:  0.267,  Adjusted R-squared:  0.2657 
+## F-statistic: 198.2 on 1 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>In fact, from this you conclude that each additional bathroom increases the sales price of a house by 27477 dollars. Let's see if our assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> is satisfied:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co"># add residuals to the data</span>
 Housing<span class="op">$</span>resid &lt;-<span class="st"> </span><span class="kw">resid</span>(hlm)
 Housing <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(bathrms) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_of_resid=</span><span class="kw">mean</span>(resid))</code></pre></div>
-<pre><code>#OUT&gt; # A tibble: 4 x 2
-#OUT&gt;   bathrms mean_of_resid
-#OUT&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-#OUT&gt; 1       1         -118.
-#OUT&gt; 2       2          955.
-#OUT&gt; 3       3       -11195.
-#OUT&gt; 4       4        32298.</code></pre>
-<p>Oh, that doesn’t look good. Even though the unconditional mean <span class="math inline">\(E[e] = 0\)</span> is <em>very</em> close to zero (type <code>mean(resid(hlm))</code>!), this doesn’t seem to hold at all by categories of <span class="math inline">\(x\)</span>. This indicates that there is something in the error term <span class="math inline">\(e\)</span> which is <em>correlated</em> with <code>bathrms</code>. Going back to our discussion about <em>ceteris paribus</em> in section <a href="multiple-reg.html#ceteris">4.1</a>, we stated that the interpretation of our OLS slope estimate is that</p>
+<pre><code>## # A tibble: 4 x 2
+##   bathrms mean_of_resid
+##     &lt;dbl&gt;         &lt;dbl&gt;
+## 1       1         -118.
+## 2       2          955.
+## 3       3       -11195.
+## 4       4        32298.</code></pre>
+<p>Oh, that doesn't look good. Even though the unconditional mean <span class="math inline">\(E[e] = 0\)</span> is <em>very</em> close to zero (type <code>mean(resid(hlm))</code>!), this doesn't seem to hold at all by categories of <span class="math inline">\(x\)</span>. This indicates that there is something in the error term <span class="math inline">\(e\)</span> which is <em>correlated</em> with <code>bathrms</code>. Going back to our discussion about <em>ceteris paribus</em> in section <a href="multiple-reg.html#ceteris">4.1</a>, we stated that the interpretation of our OLS slope estimate is that</p>
 <div class="tip">
 <p>
 Keeping everything else fixed at the current value, what is the impact of <span class="math inline"><span class="math inline">\(x\)</span></span> on <span class="math inline"><span class="math inline">\(y\)</span></span>? <em>Everything</em> also includes things in <span class="math inline"><span class="math inline">\(\varepsilon\)</span></span> (and, hence, <span class="math inline"><span class="math inline">\(e\)</span></span>)!
@@ -453,35 +453,35 @@ y_i = \beta_0 + \beta_1 x_i + \beta_2 z_i + \varepsilon_i \tag{7.5}
 \end{equation}\]</span>
 <p>This would now mean that by running our regression, informed by the wrong DGP, what we estimate is in fact this: <span class="math display">\[
 y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
-\]</span> This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
+\]</span> This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let's take this idea to our running example.</p>
 </div>
 <div id="including-an-omitted-variable" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> Including an Omitted Variable</h3>
-<p>What we are discussing here is called <em>Omitted Variable Bias</em>. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it’s <em>reasonable</em> that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with <code>bathrms</code>?</p>
-<p>Let’s try with <code>lotsize</code>, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let’s check this out:</p>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = price ~ bathrms + lotsize, data = Housing)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;    Min     1Q Median     3Q    Max 
-#OUT&gt; -60752 -12532  -1674  10514  92931 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
-#OUT&gt; bathrms     2.281e+04  1.703e+03  13.397  &lt; 2e-16 ***
-#OUT&gt; lotsize     5.575e+00  3.944e-01  14.136  &lt; 2e-16 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 19580 on 543 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.4642,  Adjusted R-squared:  0.4622 
-#OUT&gt; F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
-<p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-180"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-180-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<p>What we are discussing here is called <em>Omitted Variable Bias</em>. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it's <em>reasonable</em> that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with <code>bathrms</code>?</p>
+<p>Let's try with <code>lotsize</code>, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let's check this out:</p>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ bathrms + lotsize, data = Housing)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -60752 -12532  -1674  10514  92931 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.008e+04  2.810e+03   3.588 0.000364 ***
+## bathrms     2.281e+04  1.703e+03  13.397  &lt; 2e-16 ***
+## lotsize     5.575e+00  3.944e-01  14.136  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 19580 on 543 degrees of freedom
+## Multiple R-squared:  0.4642, Adjusted R-squared:  0.4622 
+## F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that's the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn't seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
+<p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let's investigate that:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="07-Causality_files/figure-html/unnamed-chunk-8-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 7.9: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>
@@ -508,7 +508,7 @@ If the direction of correlation between omitted variable <span class="math inlin
 <hr />
 <ol start="8">
 <li id="fn8"><p>This chapter is drawn from chapter 5 of <em>The Book of Why</em> by <a href="http://bayes.cs.ucla.edu/jp_home.html">Judea Pearl</a>.<a href="causality.html#fnref8">↩</a></p></li>
-<li id="fn9"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham’s</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref9">↩</a></p></li>
+<li id="fn9"><p>I refer the interested student to the introduction of the <em>potential outcomes model</em> of <a href="https://twitter.com/causalinf">Scott Cunningham's</a> <a href="http://scunning.com/cunningham_mixtape.pdf">mixtape</a>, which heavily influences this section.<a href="causality.html#fnref9">↩</a></p></li>
 </ol>
 </div>
             </section>

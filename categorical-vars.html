@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Categorial Variables | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Categorial Variables | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -222,14 +222,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Probably the simplest type of categorical variable is the <em>binary</em>, <em>boolean</em>, or just <em>dummy</em> variable. As the name suggests, it can take on only two values, <code>0</code> and <code>1</code>, or <code>TRUE</code> and <code>FALSE</code>.</p>
 <div id="the-binary-regressor-case" class="section level2">
 <h2><span class="header-section-number">5.1</span> The Binary Regressor Case</h2>
-<p>Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation <span class="math inline">\(i\)</span> <strong>is a member</strong> of a certain category <span class="math inline">\(j\)</span>. For example, let’s imagine we have income data on males and females, and we would create a variable called <code>is.male</code> that is <code>TRUE</code> whenever <span class="math inline">\(i\)</span> is male, <code>FALSE</code> otherwise, and similarly for women. For example, to encode whether subject <span class="math inline">\(i\)</span> is male, one could do this:</p>
+<p>Even though this is an extremely parsimonious way of encoding that, it is a very powerful tool that allows us to represent that a certain observation <span class="math inline">\(i\)</span> <strong>is a member</strong> of a certain category <span class="math inline">\(j\)</span>. For example, let's imagine we have income data on males and females, and we would create a variable called <code>is.male</code> that is <code>TRUE</code> whenever <span class="math inline">\(i\)</span> is male, <code>FALSE</code> otherwise, and similarly for women. For example, to encode whether subject <span class="math inline">\(i\)</span> is male, one could do this:</p>
 <span class="math display">\[\begin{align*}
 \text{is.male}_i &amp;=  \begin{cases}
                     1 &amp; \text{if }i\text{ is male} \\
                     0 &amp; \text{if }i\text{ is not male}. \\
                  \end{cases}, \\
 \end{align*}\]</span>
-<p>and similarly for females, we’d have</p>
+<p>and similarly for females, we'd have</p>
 <span class="math display">\[\begin{align*}
 \text{is.female}_i &amp;=  \begin{cases}
                     1 &amp; \text{if }i\text{ is female} \\
@@ -246,13 +246,13 @@ In dummy variable regressions, we remove one category from the regression (for e
 </p>
 </div>
 <p><br></p>
-<p>Now let’s try this out. We start by creating the female indicator as above,</p>
+<p>Now let's try this out. We start by creating the female indicator as above,</p>
 <p><span class="math display">\[
 \text{is.female}_i = \begin{cases}
           1 &amp; \text{if }i\text{ is female} \\
             0 &amp; \text{if }i\text{ is not female}. \\
    \end{cases}
-\]</span> and let’s suppose that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>’s annual labor income. Our model is</p>
+\]</span> and let's suppose that <span class="math inline">\(y_i\)</span> is a measure of <span class="math inline">\(i\)</span>'s annual labor income. Our model is</p>
 <span class="math display" id="eq:dummy-reg">\[\begin{equation}
 y_i = b_0 + b_1 \text{is.female}_i + e_i \tag{5.1}
 \end{equation}\]</span>
@@ -261,24 +261,24 @@ y_i = b_0 + b_1 \text{is.female}_i + e_i \tag{5.1}
 dta<span class="op">$</span>is.female =<span class="st"> </span><span class="kw">factor</span>(x)  <span class="co"># convert x to factor</span>
 dummy_reg =<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>is.female,dta)
 <span class="kw">summary</span>(dummy_reg)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = y ~ is.female, data = dta)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;     Min      1Q  Median      3Q     Max 
-#OUT&gt; -2.4253 -0.6551  0.1321  0.7217  2.8129 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept)   2.0568     0.2125   9.680 7.27e-13 ***
-#OUT&gt; is.female1   -3.0169     0.3203  -9.418 1.74e-12 ***
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 1.124 on 48 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.6489,  Adjusted R-squared:  0.6416 
-#OUT&gt; F-statistic:  88.7 on 1 and 48 DF,  p-value: 1.737e-12</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ is.female, data = dta)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4253 -0.6551  0.1321  0.7217  2.8129 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   2.0568     0.2125   9.680 7.27e-13 ***
+## is.female1   -3.0169     0.3203  -9.418 1.74e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.124 on 48 degrees of freedom
+## Multiple R-squared:  0.6489, Adjusted R-squared:  0.6416 
+## F-statistic:  88.7 on 1 and 48 DF,  p-value: 1.737e-12</code></pre>
 <p>Notice that <code>R</code> displays the <em>level</em> of the factor to which coefficient <span class="math inline">\(b_1\)</span> belongs here, i.e. <code>is.female1</code> means this coefficient is on level <code>is.female = 1</code> - the reference level is <code>is.female = 0</code>, and it has no separate coefficient. Also interesting is that <span class="math inline">\(b_1\)</span> is equal to the difference in conditional means between male and female</p>
 <p><span class="math display">\[b_1 = E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0169.\]</span></p>
 <div class="note">
@@ -289,12 +289,12 @@ A dummy variable measures the difference or the <em>offset</em> in the mean of t
 <p><br></p>
 <p>It is instructive to reconsider this example graphically:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-zero-one"></span>
-<img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
+<img src="05-Categorial-Vars_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
 <p class="caption">
 Figure 5.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(\text{is.female}_i \in \{0,1\}\)</span>. The blue line is <span class="math inline">\(E[y]\)</span>, the red arrow is the size of <span class="math inline">\(b_1\)</span>. Which is the same as the slope of the regression line in this case and the difference in conditional means!
 </p>
 </div>
-<p>In figure <a href="categorical-vars.html#fig:x-zero-one">5.1</a> we see that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(\text{is.female}_i = 0\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=0]\)</span>, to the mean when <span class="math inline">\(\text{is.female}_i=1\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, <span class="math inline">\(b_1\)</span>, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what’s going on here:</p>
+<p>In figure <a href="categorical-vars.html#fig:x-zero-one">5.1</a> we see that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(\text{is.female}_i = 0\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=0]\)</span>, to the mean when <span class="math inline">\(\text{is.female}_i=1\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, <span class="math inline">\(b_1\)</span>, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy&quot;</span>)</code></pre></div>
 </div>
@@ -311,7 +311,7 @@ b_0 + b_1 + b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=1} \\
 b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=0}
 \end{cases}
 \end{equation}\]</span>
-<p>so that the intercept is <span class="math inline">\(b_0 + b_1\)</span> for women but <span class="math inline">\(b_0\)</span> for men. We will see this in the real-world example below, but for now let’s see the effect of switching the dummy <em>on</em> and <em>off</em> in this app:</p>
+<p>so that the intercept is <span class="math inline">\(b_0 + b_1\)</span> for women but <span class="math inline">\(b_0\)</span> for men. We will see this in the real-world example below, but for now let's see the effect of switching the dummy <em>on</em> and <em>off</em> in this app:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy_example&quot;</span>)</code></pre></div>
 </div>
@@ -320,17 +320,17 @@ b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=
 <p><code>R</code> has extensive support for categorical variables built-in. The relevant data type representing a categorical variable is called <code>factor</code>. We encountered them as basic data types in section <a href="R-intro.html#data-types">1.8</a> already, but it is worth repeating this here. We have seen that a factor <em>categorizes</em> a usually small number of numeric values by <em>labels</em>, as in this example which is similar to what I used to create regressor <code>is.female</code> for the above regression:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">is.female =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>))
 is.female</code></pre></div>
-<pre><code>#OUT&gt; [1] FALSE TRUE  TRUE  FALSE
-#OUT&gt; Levels: FALSE TRUE</code></pre>
+<pre><code>## [1] FALSE TRUE  TRUE  FALSE
+## Levels: FALSE TRUE</code></pre>
 <p>You can see the result is a vector object of type <code>factor</code> with 4 entries, whereby <code>0</code> is represented as <code>FALSE</code> and <code>1</code> as <code>TRUE</code>. An other example could be if we wanted to record a variable <em>sex</em> instead, and we could do</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sex =<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;male&quot;</span>,<span class="st">&quot;female&quot;</span>))
 sex</code></pre></div>
-<pre><code>#OUT&gt; [1] male   female female male  
-#OUT&gt; Levels: male female</code></pre>
+<pre><code>## [1] male   female female male  
+## Levels: male female</code></pre>
 <p>You can see that this is almost identical, just the <em>labels</em> are different.</p>
 <div id="more-levels" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> More Levels</h3>
-<p>We can go beyond <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
+<p>We can go beyond <em>binary</em> categorical variables such as <code>TRUE</code> vs <code>FALSE</code>. For example, suppose that <span class="math inline">\(x\)</span> measures educational attainment, i.e. it is now something like <span class="math inline">\(x_i \in \{\text{high school,some college,BA,MSc}\}\)</span>. In <code>R</code> parlance, <em>high school, some college, BA, MSc</em> are the <strong>levels of factor <span class="math inline">\(x\)</span></strong>. A straightforward extension of the above would dictate to create one dummy variable for each category (or level), like</p>
 <span class="math display">\[\begin{align*}
 \text{has.HS}_i &amp;= \mathbf{1}[x_i==\text{high school}] \\
 \text{has.someCol}_i &amp;= \mathbf{1}[x_i==\text{some college}] \\
@@ -339,14 +339,14 @@ sex</code></pre></div>
 \end{align*}\]</span>
 <p>but you can see that this is cumbersome. There is a better solution for us available:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">factor</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;HS&quot;</span>,<span class="st">&quot;someCol&quot;</span>,<span class="st">&quot;BA&quot;</span>,<span class="st">&quot;MSc&quot;</span>))</code></pre></div>
-<pre><code>#OUT&gt; [1] HS      HS      someCol MSc     BA      MSc    
-#OUT&gt; Levels: HS someCol BA MSc</code></pre>
-<p>Notice here that <code>R</code> will apply the labels in increasing order the way you supplied it (i.e. a numerical value <code>4</code> will correspond to “MSc”, no matter the ordering in <code>x</code>.)</p>
+<pre><code>## [1] HS      HS      someCol MSc     BA      MSc    
+## Levels: HS someCol BA MSc</code></pre>
+<p>Notice here that <code>R</code> will apply the labels in increasing order the way you supplied it (i.e. a numerical value <code>4</code> will correspond to &quot;MSc&quot;, no matter the ordering in <code>x</code>.)</p>
 </div>
 <div id="factors" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Log Wages and Dummies</h3>
-<p>The above developed <code>factor</code> terminology fits neatly into <code>R</code>’s linear model fitting framework. Let us illustrate the simplest use by way of example.</p>
-<p>Going back to our wage example, let’s say that a worker’s wage depends on their education as well as their sex:</p>
+<p>The above developed <code>factor</code> terminology fits neatly into <code>R</code>'s linear model fitting framework. Let us illustrate the simplest use by way of example.</p>
+<p>Going back to our wage example, let's say that a worker's wage depends on their education as well as their sex:</p>
 <span class="math display" id="eq:wage-sex">\[\begin{equation}
 \ln w_i = b_0 + b_1 educ_i + b_2 female_i + e_i \tag{5.3}
 \end{equation}\]</span>
@@ -551,9 +551,9 @@ F Statistic
 </td>
 </tr>
 </table>
-<p>We know the results from column (1) very well by now. How does the relationship change if we include the <code>female</code> indicator? Remember from above that <code>female</code> is a <code>factor</code> with two levels, <em>0</em> and <em>1</em>, where <em>1</em> means <em>that’s a female</em>. We see in the above output that <code>R</code> included a regressor called <code>female1</code>. This is a combination of the variable name <code>female</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>female==0</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being female <em>relative</em> to being male. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category.</p>
+<p>We know the results from column (1) very well by now. How does the relationship change if we include the <code>female</code> indicator? Remember from above that <code>female</code> is a <code>factor</code> with two levels, <em>0</em> and <em>1</em>, where <em>1</em> means <em>that's a female</em>. We see in the above output that <code>R</code> included a regressor called <code>female1</code>. This is a combination of the variable name <code>female</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>female==0</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being female <em>relative</em> to being male. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot"></span>
-<img src="ScPoEconometrics_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
+<img src="05-Categorial-Vars_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
 <p class="caption">
 Figure 5.2: log wage vs educ. Right panel with female dummy.
 </p>
@@ -571,62 +571,62 @@ Figure 5.2: log wage vs educ. Right panel with female dummy.
 <span class="math display">\[\begin{equation}
 \frac{\partial \log(price)}{\partial \text{area}} = b_1 + b_3 (\text{age}) 
 \end{equation}\]</span>
-<p>If we find that <span class="math inline">\(b_3 &gt; 0\)</span> in a regression, we conclude that the size of a house values more in older houses. We call <span class="math inline">\(b_3\)</span> the <strong>interaction effect</strong> between area and age. Let’s look at that regression model now.</p>
+<p>If we find that <span class="math inline">\(b_3 &gt; 0\)</span> in a regression, we conclude that the size of a house values more in older houses. We call <span class="math inline">\(b_3\)</span> the <strong>interaction effect</strong> between area and age. Let's look at that regression model now.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(hprice3, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
 <span class="kw">summary</span>(<span class="kw">lm</span>(lprice <span class="op">~</span><span class="st"> </span>area<span class="op">*</span>age, <span class="dt">data =</span> hprice3))</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lprice ~ area * age, data = hprice3)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -1.27226 -0.16538 -0.00298  0.20673  0.83985 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;               Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept)  1.071e+01  6.633e-02 161.448  &lt; 2e-16 ***
-#OUT&gt; area         3.647e-04  2.875e-05  12.686  &lt; 2e-16 ***
-#OUT&gt; age         -7.377e-03  1.358e-03  -5.434  1.1e-07 ***
-#OUT&gt; area:age     9.168e-07  4.898e-07   1.872   0.0622 .  
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.2925 on 317 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.5586,  Adjusted R-squared:  0.5545 
-#OUT&gt; F-statistic: 133.7 on 3 and 317 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lprice ~ area * age, data = hprice3)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.27226 -0.16538 -0.00298  0.20673  0.83985 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.071e+01  6.633e-02 161.448  &lt; 2e-16 ***
+## area         3.647e-04  2.875e-05  12.686  &lt; 2e-16 ***
+## age         -7.377e-03  1.358e-03  -5.434  1.1e-07 ***
+## area:age     9.168e-07  4.898e-07   1.872   0.0622 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2925 on 317 degrees of freedom
+## Multiple R-squared:  0.5586, Adjusted R-squared:  0.5545 
+## F-statistic: 133.7 on 3 and 317 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>In this instance, we see that indeed there is a small positive interaction between <code>area</code> and <code>age</code> on the sales price: even though <code>age</code> in isolation decreases the sales value, bigger houses command a small premium if they are older.</p>
 <div id="interactions-with-dummies-differential-slopes" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Interactions with Dummies: Differential Slopes</h3>
-<p>It is straightforward to extend the interactions logic to allow not only for different <em>intercepts</em>, but also different <em>slopes</em> for each subgroup in a dataset. Let’s go back to our dataset of wages from section <a href="categorical-vars.html#factors">5.3.2</a> above. Now that we know how to create and interaction between two variables, we can easily modify equation <a href="categorical-vars.html#eq:wage-sex">(5.3)</a> like this:</p>
+<p>It is straightforward to extend the interactions logic to allow not only for different <em>intercepts</em>, but also different <em>slopes</em> for each subgroup in a dataset. Let's go back to our dataset of wages from section <a href="categorical-vars.html#factors">5.3.2</a> above. Now that we know how to create and interaction between two variables, we can easily modify equation <a href="categorical-vars.html#eq:wage-sex">(5.3)</a> like this:</p>
 <span class="math display" id="eq:wage-sex2">\[\begin{equation}
 \ln w = b_0 + b_1 \text{female} + b_2 \text{educ} + b_3 (\text{female} \times \text{educ}) + e \tag{5.5}
 \end{equation}\]</span>
-<p>The only peculiarity here is that <code>female</code> is a factor with levels <code>0</code> and <code>1</code>: i.e. the interaction term <span class="math inline">\(b_3\)</span> will be zero for all men. Similarly to above, we can test whether there are indeed different returns to education or men and women by looking at the estimated value <span class="math inline">\(b_3\)</span>:</p>
+<p>The only peculiarity here is that <code>female</code> is a factor with levels <code>0</code> and <code>1</code>: i.e. the interaction term <span class="math inline">\(b_3\)</span> will be zero for all men. Similarly to above, we can test whether there are indeed different returns to education or men and women by looking at the estimated value <span class="math inline">\(b_3\)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_w_interact &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">*</span><span class="st"> </span>female , <span class="dt">data =</span> wage1)  <span class="co"># R expands to full interactions model</span>
 <span class="kw">summary</span>(lm_w_interact)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = lwage ~ educ * female, data = wage1)
-#OUT&gt; 
-#OUT&gt; Residuals:
-#OUT&gt;      Min       1Q   Median       3Q      Max 
-#OUT&gt; -2.02673 -0.27468 -0.03721  0.26221  1.34740 
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt;                Estimate Std. Error t value Pr(&gt;|t|)    
-#OUT&gt; (Intercept)   8.260e-01  1.181e-01   6.997 8.08e-12 ***
-#OUT&gt; educ          7.723e-02  8.988e-03   8.593  &lt; 2e-16 ***
-#OUT&gt; female1      -3.601e-01  1.854e-01  -1.942   0.0527 .  
-#OUT&gt; educ:female1 -6.408e-05  1.450e-02  -0.004   0.9965    
-#OUT&gt; ---
-#OUT&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#OUT&gt; 
-#OUT&gt; Residual standard error: 0.4459 on 522 degrees of freedom
-#OUT&gt; Multiple R-squared:  0.3002,  Adjusted R-squared:  0.2962 
-#OUT&gt; F-statistic: 74.65 on 3 and 522 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ educ * female, data = wage1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.02673 -0.27468 -0.03721  0.26221  1.34740 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   8.260e-01  1.181e-01   6.997 8.08e-12 ***
+## educ          7.723e-02  8.988e-03   8.593  &lt; 2e-16 ***
+## female1      -3.601e-01  1.854e-01  -1.942   0.0527 .  
+## educ:female1 -6.408e-05  1.450e-02  -0.004   0.9965    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4459 on 522 degrees of freedom
+## Multiple R-squared:  0.3002, Adjusted R-squared:  0.2962 
+## F-statistic: 74.65 on 3 and 522 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We will in the next chapter learn that the estimate for <span class="math inline">\(b_3\)</span> on the interaction <code>educ:female1</code> is difficult for us to distinguish from zero in a statistical sense; Hence for now we conclude that there are <em>no</em> significantly different returns in education for men and women in this data. This is easy to verify visually in this plot, where we are unable to detect a difference in slopes in the right panel.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
-<img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
+<img src="05-Categorial-Vars_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
 <p class="caption">
 Figure 5.3: log wage vs educ. Right panel allows slopes to be different - turns out they are not!
 </p>
@@ -642,15 +642,18 @@ Figure 5.3: log wage vs educ. Right panel allows slopes to be different - turns 
 <li>We expect to get a positive coefficient on <code>wage</code>: the higher the wage, the more hours worked.</li>
 <li>You know that individuals are members of either group <code>g=0</code> or <code>g=1</code>.</li>
 </ol>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-165-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let’s use this and include <code>g</code> as a dummy in the regression - suppose <code>g</code> encodes male and female.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
-<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-166-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let's use this and include <code>g</code> as a dummy in the regression - suppose <code>g</code> encodes male and female.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-12-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
 <p class="caption">
 Figure 5.4: Left and right panel exhibit the same data. The right panel controls for group composition.
 </p>
 </div>
-<p>This is an artificial example; yet it shows that you can be severly misled if you don’t account for group-specific effects in your data. The problem is particularly accute if we <em>don’t know group membership</em> - we can then resort to advanced methods that are beyond the scope of this course to <em>estimate</em> which group each individual belongs to. If we <em>do know</em> group membership, however, it is good practice to include a group dummy so as to control for group effects.</p>
+<p>This is an artificial example; yet it shows that you can be severly misled if you don't account for group-specific effects in your data. The problem is particularly accute if we <em>don't know group membership</em> - we can then resort to advanced methods that are beyond the scope of this course to <em>estimate</em> which group each individual belongs to. If we <em>do know</em> group membership, however, it is good practice to include a group dummy so as to control for group effects.</p>
 
 </div>
 </div>

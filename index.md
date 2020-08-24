@@ -1,0 +1,67 @@
+--- 
+title: "Introduction to Econometrics with R"
+author: "Florian Oswald, Jean-Marc Robin and Vincent Viers"
+date: "2020-08-24"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: ["packages.bib","book.bib"]
+biblio-style: apalike
+link-citations: yes
+url: 'https\://scpoecon.github.io/ScPoEconometrics/'
+favicon: "favicon.gif"
+github-repo: ScPoEcon/ScPoEconometrics
+description: "SciencesPo UG Econometrics online textbook. Almost no Maths."
+---
+
+
+
+
+# Syllabus {-}
+
+![](ScPo.jpg)
+
+Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 was the first time that we taught this course in this format, so we are in year 2 now. 
+
+### Objective {-}
+
+This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts. We also add the principal elements of causal inference, such that you will start being able to distinguish between simple statistical correlation and actual causation.
+
+### Syllabus and Requirements {-}
+
+The only requirement is that **you bring your own personal computer** to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, please install `R` and `RStudio` as explained at the beginning of chapter \@ref(R-intro). 
+
+
+### Course Structure {-}
+
+This course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
+
+Groups meet once per week for 2 hours. The main purpose of the weekly meetings is to clarify any questions, and to work together through tutorials. The little theory we need will be covered in this book, and **you are expected to read through this in your own time** before coming to class. 
+
+### Slides {-}
+
+There are slides for most book chapters at a [dedicated website](https://github.com/ScPoEcon/ScPoEconometrics-Slides).
+
+### This Book and Other Material {-}
+
+What you are looking at is an online textbook. You can therefore look at it in your browser (as you are doing just now), on your mobile phone or tablet, but you can also download it as a `pdf` file or as an `epub` file for your ebook-reader. We don't have any ambition to actually produce and publish a *book* for now, so you should just see this as a way to disseminate our lecture notes to you. 
+The second part of course material next to the book is an extensive suite of tutorials and interactive demonstrations, which are all contained in the `R` package that builds this book (and which you installed by issuing the above commands). 
+
+
+### Open Source {-}
+
+The book and all other content for this course are hosted under an open source license on github. You can contribute to the book by just clicking on the appropriate *edit* symbol in the top bar of this page. Other teachers who want to use our material can freely do so, observing the terms of the license on the [github repository](https://github.com/ScPoEcon/ScPoEconometrics).
+
+### Assessments {-}
+
+We will assess participation in class, quizzes on moodle and take home exams.
+
+
+### Communication {-}
+
+We will communicate exclusively on our slack group. You will get an invitation email to join from your instructor in due course.
+
+
+
+
+

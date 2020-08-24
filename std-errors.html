@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Regression Inference | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Regression Inference | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -220,12 +220,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 6</span> Regression Inference</h1>
 <p>In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the <code>Std. Error</code> column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:</p>
 <div class="figure" style="text-align: center"><span id="fig:confint"></span>
-<img src="ScPoEconometrics_files/figure-html/confint-1.png" alt="Confidence bands around a regression line." width="672" />
+<img src="06-StdErrors_files/figure-html/confint-1.png" alt="Confidence bands around a regression line." width="672" />
 <p class="caption">
 Figure 6.1: Confidence bands around a regression line.
 </p>
 </div>
-<p>In order to fully understand this, we need to go back and make sure we have a good grasp of <em>sampling</em>. Let’s do this first.</p>
+<p>In order to fully understand this, we need to go back and make sure we have a good grasp of <em>sampling</em>. Let's do this first.</p>
 <div id="sampling" class="section level2">
 <h2><span class="header-section-number">6.1</span> Sampling</h2>
 <p>In class we were confronted with a jar of Tricolore Fusilli pasta as picture in figure <a href="std-errors.html#fig:pasta1">6.2</a>.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> We asked ourselves a question which, secretly, many of you had asked themselves at one point in their lives, namely:</p>
@@ -235,22 +235,22 @@ What is the proportion of <strong>green</strong> Fusilli in a pack of Tricolore 
 </p>
 </div>
 <p><br></p>
-<p>Well, it’s time to find out.</p>
-<div class="figure" style="text-align: center"><span id="fig:pasta1"></span>
+<p>Well, it's time to find out.</p>
+<div class="figure"><span id="fig:pasta1"></span>
 <img src="images/pasta1.JPG" alt="A glass jar filled with Fusilli pasta in three different colors." width="90%" />
 <p class="caption">
 Figure 6.2: A glass jar filled with Fusilli pasta in three different colors.
 </p>
 </div>
-<p>Let’s call the fusilly in this jar our <em>study population</em>, i.e. the set of units about which we want to learn something. There are several approaches to address the question of how big a proportion in the population the green Fusilli make up. One obvious solution is to enumerate all Fusilli according to their color, and compute their proportion in the entire population. It works perfectly well as a solution, but is a long and arduous process, see figures <a href="std-errors.html#fig:pasta2">6.3</a> and <a href="std-errors.html#fig:pasta3">6.4</a>.</p>
-<div class="figure" style="text-align: center"><span id="fig:pasta2"></span>
+<p>Let's call the fusilly in this jar our <em>study population</em>, i.e. the set of units about which we want to learn something. There are several approaches to address the question of how big a proportion in the population the green Fusilli make up. One obvious solution is to enumerate all Fusilli according to their color, and compute their proportion in the entire population. It works perfectly well as a solution, but is a long and arduous process, see figures <a href="std-errors.html#fig:pasta2">6.3</a> and <a href="std-errors.html#fig:pasta3">6.4</a>.</p>
+<div class="figure"><span id="fig:pasta2"></span>
 <img src="images/pasta2.JPG" alt="Manually separating Fusilli by their color is very costly in terms of effort and cost." width="90%" />
 <p class="caption">
 Figure 6.3: Manually separating Fusilli by their color is very costly in terms of effort and cost.
 </p>
 </div>
 <p>Additionally, you may draw worried looks from the people around you, while you are doing it. Maybe this is not the right way to approach this task?<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
-<div class="figure" style="text-align: center"><span id="fig:pasta3"></span>
+<div class="figure"><span id="fig:pasta3"></span>
 <img src="images/pasta3.JPG" alt="Heaps of Fusilli pasta ready to be counted." width="90%" />
 <p class="caption">
 Figure 6.4: Heaps of Fusilli pasta ready to be counted.
@@ -285,8 +285,8 @@ Figure 6.4: Heaps of Fusilli pasta ready to be counted.
 </tr>
 </tbody>
 </table>
-<p>So far, so good. We have our first <em>estimate of the population proportion of green Fusilli in the overall population</em>: 0.25. Notice that taking a sample of <span class="math inline">\(N=20\)</span> was <em>much</em> quicker and <em>much less painful</em> than performing the full count (i.e. the <em>census</em>) of Fusilli performed above.</p>
-<div class="figure" style="text-align: center"><span id="fig:pasta5"></span>
+<p>So far, so good. We have our first <em>estimate of the population proportion of green Fusilli in the overall population</em>: 0.25. Notice that taking a sample of <span class="math inline">\(N=20\)</span> was <em>much</em> quicker and <em>much less painful</em> than performing the full count (i.e. the <em>census</em>) of Fusilli performed above.</p>
+<div class="figure"><span id="fig:pasta5"></span>
 <img src="images/pasta5.JPG" alt="Taking one sample of 20 Fusilli from the jar." width="90%" />
 <p class="caption">
 Figure 6.5: Taking one sample of 20 Fusilli from the jar.
@@ -298,13 +298,13 @@ Figure 6.5: Taking one sample of 20 Fusilli from the jar.
 <strong>Sampling Variation</strong> refers to the fact that if we <em>randomly</em> take samples from a wider population, the <em>random</em> composition of each sample will imply that we obtain statistics that vary - they take on potentially different values in each sample.
 </p>
 </div>
-<p>Let’s see how this story evolved as we started taking more samples at a time.</p>
+<p>Let's see how this story evolved as we started taking more samples at a time.</p>
 </div>
 </div>
 <div id="taking-eleven-samples-from-the-population" class="section level2">
 <h2><span class="header-section-number">6.2</span> Taking Eleven Samples From The Population</h2>
 <p>We formed teams of two students in class who would each in turn take samples from the jar (the population) of size <span class="math inline">\(N=20\)</span>, as before. Each team computed the proportion of green Fusilli they had in their sample, and we wrote this data down in a table on the board. Then, we drew a histogram which showed how many samples had fallen into which bins.</p>
-<div class="figure" style="text-align: center"><span id="fig:pasta6"></span>
+<div class="figure"><span id="fig:pasta6"></span>
 <img src="images/pasta6.JPG" alt="Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli." width="90%" />
 <p class="caption">
 Figure 6.6: Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.
@@ -320,29 +320,29 @@ Figure 6.6: Taking eleven samples of 20 Fusilli each from the jar, and plotting 
 <p>We collected the sample data into a data.frame:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pasta_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">group =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">replicate =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">prop_green =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.3</span>,<span class="fl">0.15</span>,<span class="fl">0.3</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>,<span class="fl">0.25</span>,<span class="fl">0.2</span>))
 pasta_samples</code></pre></div>
-<pre><code>#OUT&gt;    group replicate prop_green
-#OUT&gt; 1      1         1       0.30
-#OUT&gt; 2      2         2       0.25
-#OUT&gt; 3      3         3       0.25
-#OUT&gt; 4      4         4       0.30
-#OUT&gt; 5      5         5       0.15
-#OUT&gt; 6      6         6       0.30
-#OUT&gt; 7      7         7       0.25
-#OUT&gt; 8      8         8       0.25
-#OUT&gt; 9      9         9       0.20
-#OUT&gt; 10    10        10       0.25
-#OUT&gt; 11    11        11       0.20</code></pre>
+<pre><code>##    group replicate prop_green
+## 1      1         1       0.30
+## 2      2         2       0.25
+## 3      3         3       0.25
+## 4      4         4       0.30
+## 5      5         5       0.15
+## 6      6         6       0.30
+## 7      7         7       0.25
+## 8      8         8       0.25
+## 9      9         9       0.20
+## 10    10        10       0.25
+## 11    11        11       0.20</code></pre>
 <p>This produces an associated histogram which looks very much like the one we draws onto the board:</p>
-<p><img src="ScPoEconometrics_files/figure-html/pasta-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="06-StdErrors_files/figure-html/pasta-hist-1.png" width="672" /></p>
 <div id="recap" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Recap</h3>
-<p>Let’s recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure <a href="std-errors.html#fig:pasta1">6.2</a> are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a <em>random sample</em> from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.</p>
+<p>Let's recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure <a href="std-errors.html#fig:pasta1">6.2</a> are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a <em>random sample</em> from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.</p>
 <p>After replacing the Fusilli from the first sample in the jar, we asked ourselves if, upon drawing a <em>new</em> sample of 20 Fusilli, we should expect to see the same outcome - and we concluded: maybe, but maybe not. In short, we discovered some random variation from sample to sample. We called this <strong>sampling variation</strong>.</p>
 <p>The purpose of this little activity was three-fold:</p>
 <ol style="list-style-type: decimal">
 <li>To understand that random samples differ and that there is sampling variation.</li>
 <li>To understand that bigger samples will yield smaller sampling variation.</li>
-<li>To illustrate that the sampling distribution of <em>any</em> statistic (i.e. not only the sample proportion as in our case) computed from a random sample converges to a normal distribution as the sample size increases.</li>
+<li>To illustrate that the sampling distribution of <em>any</em> statistic (i.e. not only the sample proportion as in our case) computed from a random sample converges to a normal distribution as the sample size increases.</li>
 </ol>
 <div class="note">
 <p>
@@ -353,7 +353,7 @@ The value of this exercise consisted in making <strong>you</strong> perform the 
 </div>
 <div id="handover-to-moderndive" class="section level2">
 <h2><span class="header-section-number">6.3</span> Handover to <code>Moderndive</code></h2>
-<div class="figure" style="text-align: center"><span id="fig:handover"></span>
+<div class="figure"><span id="fig:handover"></span>
 <img src="images/transition.png" alt="The Moderndive package used red and white balls instead of fusilli pasta." width="90%" />
 <p class="caption">
 Figure 6.7: The Moderndive package used red and white balls instead of fusilli pasta.
@@ -377,14 +377,14 @@ How <em>confident</em> should we be about the estimated values <span class="math
 </div>
 <div id="class-reg" class="section level2">
 <h2><span class="header-section-number">6.6</span> The Classical Regression Model (CRM)</h2>
-<p>Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
+<p>Let's bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
 <span class="math display" id="eq:abline-5">\[\begin{equation}
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 \end{equation}\]</span>
 <p>The smallest set of assumptions used to define the <em>classical regression model</em> as in <a href="std-errors.html#eq:abline-5">(6.1)</a> are the following:</p>
 <ol style="list-style-type: decimal">
 <li>The data are <strong>not linearly dependent</strong>: Each variable provides new information for the outcome, and it cannot be replicated as a linear combination of other variables. We have seen this in section <a href="multiple-reg.html#multicol">4.2</a>. In the particular case of one regressor, as here, we require that <span class="math inline">\(x\)</span> exhibit some variation in the data, i.e. <span class="math inline">\(Var(x)\neq 0\)</span>.</li>
-<li>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Notice that this also means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. It is said that <span class="math inline">\(x\)</span> should be <strong>strictly exogenous</strong> to the model.</li>
+<li>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Notice that this also means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. It is said that <span class="math inline">\(x\)</span> should be <strong>strictly exogenous</strong> to the model.</li>
 </ol>
 <p>These assumptions are necessary to successfully (and correctly!) run an OLS regression. They are often supplemented with an additional set of assumptions, which help with certain aspects of the exposition, but are not strictly necessary:</p>
 <ol start="3" style="list-style-type: decimal">
@@ -395,7 +395,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <p>Invoking assumption 5. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
 <div id="b-is-not-beta" class="section level3">
 <h3><span class="header-section-number">6.6.1</span> <span class="math inline">\(b\)</span> is not <span class="math inline">\(\beta\)</span>!</h3>
-<p>Let’s talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
+<p>Let's talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> and intercept and slope parameters</li>
 <li><span class="math inline">\(\varepsilon\)</span> is the error term.</li>
@@ -404,35 +404,35 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 </div>
 <div id="violating-the-assumptions-of-the-crm" class="section level3">
 <h3><span class="header-section-number">6.6.2</span> Violating the Assumptions of the CRM</h3>
-<p>It’s interesting to consider in which circumstances we might violate those assumptions. Let’s give an example for each of them:</p>
+<p>It's interesting to consider in which circumstances we might violate those assumptions. Let's give an example for each of them:</p>
 <ol style="list-style-type: decimal">
 <li><p>No Perfect Collinearity. We have seen that a perfect collinearity makes it impossible to compute to OLS coefficients. Remember the example about adding <code>wtplus = wt + 1</code> to the <code>mtcars</code> dataset? Here it is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 mtcars <span class="op">%&gt;%</span>
 <span class="kw">mutate</span>(<span class="dt">wtplus =</span> wt <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
 <span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>wtplus, <span class="dt">data =</span> .)</code></pre></div>
-<pre><code>#OUT&gt; 
-#OUT&gt; Call:
-#OUT&gt; lm(formula = mpg ~ wt + wtplus, data = .)
-#OUT&gt; 
-#OUT&gt; Coefficients:
-#OUT&gt; (Intercept)           wt       wtplus  
-#OUT&gt;      37.285       -5.344           NA</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + wtplus, data = .)
+## 
+## Coefficients:
+## (Intercept)           wt       wtplus  
+##      37.285       -5.344           NA</code></pre>
 That the coefficient on <code>wtplus</code> is <code>NA</code> is the result of the direct linear dependence. (Notice that creating <code>wtplus2 = (wt + 1)^2</code>) would work, since that is not linear!)</li>
-<li>Conditional Mean of errors is zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Going back to our running example in figure <a href="std-errors.html#fig:confint">6.1</a> about wages and education: Suppose that each individual <span class="math inline">\(i\)</span> in our data something like <em>innate ability</em>, something we might wish to measure with an IQ-test, however imperfecty. Let’s call it <span class="math inline">\(a_i\)</span>. It seems reasonable to think that high <span class="math inline">\(a_i\)</span> will go together with high wages. At the same time, people with high <span class="math inline">\(a_i\)</span> will find studying for exams and school work much less burdensome than others, hence they might select into obtaining more years of schooling. The problem? Well, there is no <span class="math inline">\(a_i\)</span> in our regression equation - most of time we don’t have a good measure of it to start with. So it’s an <em>unobserved variable</em>, and as such, it is part of the error term <span class="math inline">\(\varepsilon\)</span> in our model. We will attribute to <code>educ</code> part of the effect on wages that is actually <em>caused</em> by ability <span class="math inline">\(a_i\)</span>! Sometimes we may be able to reason about whether our estimate on <code>educ</code> is too high or too low, but we will never know it’s true value. We don’t get the <em>ceteris paribus</em> effect (the true partial derivative of <code>educ</code> on <code>lwage</code>). Technically, the assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> implies that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, so that’s the part that is violated.</li>
+<li>Conditional Mean of errors is zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. Going back to our running example in figure <a href="std-errors.html#fig:confint">6.1</a> about wages and education: Suppose that each individual <span class="math inline">\(i\)</span> in our data something like <em>innate ability</em>, something we might wish to measure with an IQ-test, however imperfecty. Let's call it <span class="math inline">\(a_i\)</span>. It seems reasonable to think that high <span class="math inline">\(a_i\)</span> will go together with high wages. At the same time, people with high <span class="math inline">\(a_i\)</span> will find studying for exams and school work much less burdensome than others, hence they might select into obtaining more years of schooling. The problem? Well, there is no <span class="math inline">\(a_i\)</span> in our regression equation - most of time we don't have a good measure of it to start with. So it's an <em>unobserved variable</em>, and as such, it is part of the error term <span class="math inline">\(\varepsilon\)</span> in our model. We will attribute to <code>educ</code> part of the effect on wages that is actually <em>caused</em> by ability <span class="math inline">\(a_i\)</span>! Sometimes we may be able to reason about whether our estimate on <code>educ</code> is too high or too low, but we will never know it's true value. We don't get the <em>ceteris paribus</em> effect (the true partial derivative of <code>educ</code> on <code>lwage</code>). Technically, the assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> implies that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, so that's the part that is violated.</li>
 <li>Data from Random Sample. One common concern here is that the observations in the data could have been <em>selected</em> in a particular fashion, which would make it less representative of the underlying population. Suppose we had ended up with individuals only from the richest neighborhood of town; Our interpretation the impact of education on wages might not be valid for other areas.</li>
-<li>Homoskedasticity. For correct inference (below!), we want to know whether the variance of <span class="math inline">\(\varepsilon\)</span> varies with our explanatory variable <span class="math inline">\(x\)</span>, or not. Here is a typical example where it does: <img src="ScPoEconometrics_files/figure-html/unnamed-chunk-172-1.png" width="672" style="display: block; margin: auto;" /> As income increases, not all people increase their food consumption in an equal way. So <span class="math inline">\(Var(\varepsilon|x)\)</span> will vary with the value of <span class="math inline">\(x\)</span>, hence it won’t be equal to the constant <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>Homoskedasticity. For correct inference (below!), we want to know whether the variance of <span class="math inline">\(\varepsilon\)</span> varies with our explanatory variable <span class="math inline">\(x\)</span>, or not. Here is a typical example where it does: <img src="06-StdErrors_files/figure-html/unnamed-chunk-6-1.png" width="672" /> As income increases, not all people increase their food consumption in an equal way. So <span class="math inline">\(Var(\varepsilon|x)\)</span> will vary with the value of <span class="math inline">\(x\)</span>, hence it won't be equal to the constant <span class="math inline">\(\sigma^2\)</span>.</li>
 <li><p>If the distribution of <span class="math inline">\(\varepsilon\)</span> is not normal, it is more cumbersome to derive theoretical results about inference.</p></li>
 </ol>
 </div>
 </div>
 <div id="se-theory" class="section level2">
 <h2><span class="header-section-number">6.7</span> Standard Errors in Theory</h2>
-<p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance. Under assumptions 1. through 4. above we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
+<p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter's variance. Under assumptions 1. through 4. above we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>
 <span class="math display" id="eq:var-ols">\[\begin{equation}
 Var(b_1|x_i) = \frac{\sigma^2}{\sum_i^N (x_i - \bar{x})^2}  \tag{6.2}
 \end{equation}\]</span>
-<p>In pratice, we don’t know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
+<p>In pratice, we don't know the theoretical variance of <span class="math inline">\(\varepsilon\)</span>, i.e. <span class="math inline">\(\sigma^2\)</span>, but we form an estimate about it from our sample of data. A widely used estimate uses the already encountered SSR (sum of squared residuals), and is denoted <span class="math inline">\(s^2\)</span>:</p>
 <p><span class="math display">\[
 s^2 = \frac{SSR}{n-p} = \frac{\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2}{n-p} =  \frac{\sum_{i=1}^n e_i^2}{n-p}
 \]</span> where <span class="math inline">\(n-p\)</span> are the <em>degrees of freedom</em> available in this estimation. <span class="math inline">\(p\)</span> is the number of parameters we wish to estimate (here: 1). So, the variance formula would become</p>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction to R | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction to R | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -238,32 +238,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="starting-r-and-rstudio" class="section level2">
 <h2><span class="header-section-number">1.2</span> Starting R and RStudio</h2>
 <p>A key difference for you to understand is the one between <code>R</code>, the actual programming language, and <code>RStudio</code>, a popular interface to <code>R</code> which allows you to work efficiently and with greater ease with <code>R</code>.</p>
-<p>The best way to appreciate the value of <code>RStudio</code> is to start using <code>R</code> <em>without</em> <code>RStudio</code>. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows or Mac), or start R in your terminal (on Linux or Mac) by just typing <code>R</code> in a terminal, see figure <a href="#fig:console"><strong>??</strong></a>. You’ve just opened the R <strong>console</strong> which allows you to start typing code right after the <code>&gt;</code> sign, called <em>prompt</em>. Try typing <code>2 + 2</code> or <code>print(&quot;Your Name&quot;)</code> and hit the return key. And <em>voilà</em>, your first R commands!</p>
-<div class="figure" style="text-align: center"><span id="fig:console1"></span>
+<p>The best way to appreciate the value of <code>RStudio</code> is to start using <code>R</code> <em>without</em> <code>RStudio</code>. To do this, double-click on the R GUI that you should have downloaded on your computer following the steps above (on windows or Mac), or start R in your terminal (on Linux or Mac) by just typing <code>R</code> in a terminal, see figure <a href="#fig:console"><strong>??</strong></a>. You've just opened the R <strong>console</strong> which allows you to start typing code right after the <code>&gt;</code> sign, called <em>prompt</em>. Try typing <code>2 + 2</code> or <code>print(&quot;Your Name&quot;)</code> and hit the return key. And <em>voilà</em>, your first R commands!</p>
+<div class="figure" style="text-align: center"><span id="fig:console-1"></span>
 <img src="images/RLogo.png" alt="R GUI symbol and R in a MacOS Terminal" width="50%" />
 <p class="caption">
 Figure 1.1: R GUI symbol and R in a MacOS Terminal
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:console2"></span>
+<div class="figure" style="text-align: center"><span id="fig:console-2"></span>
 <img src="images/console.png" alt="R GUI symbol and R in a MacOS Terminal" width="50%" />
 <p class="caption">
 Figure 1.2: R GUI symbol and R in a MacOS Terminal
 </p>
 </div>
-<p>Typing one command after the other into the console is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called <strong>script files</strong> or just <strong>scripts</strong>, i.e. simple text files with extension <code>.R</code> or <code>.r</code> which can be <em>inserted</em> (or <em>sourced</em>) into an <code>R</code> session. RStudio makes this process very easy.</p>
+<p>Typing one command after the other into the console is not very convenient as our analysis becomes more involved. Ideally, we would like to collect all command statements in a file and run them one after the other, automatically. We can do this by writing so-called <strong>script files</strong> or just <strong>scripts</strong>, i.e. simple text files with extension <code>.R</code> or <code>.r</code> which can be <em>inserted</em> (or <em>sourced</em>) into an <code>R</code> session. RStudio makes this process very easy.</p>
 <p>Open <code>RStudio</code> by clicking on the <code>RStudio</code> application on your computer, and notice how different the whole environment is from the basic <code>R</code> console – in fact, that <em>very same</em> <code>R</code> console is running in your bottom left panel. The upper-left panel is a space for you to write scripts – that is to say many lines of codes which you can run when you choose to. To run a single line of code, simply highlight it and hit <code>Command</code> + <code>Return</code>.</p>
 <div class="note">
 <p>
 We highly recommend that you use <code>RStudio</code> for everything related to this course (in particular, to launch our apps and tutorials).
 </p>
 </div>
-<p>RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut – the keyboard shortcut to rule them all:</p>
+<p>RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut -- the keyboard shortcut to rule them all:</p>
 <ul>
 <li>On Windows: <code>Alt</code> + <code>Shift</code> + <code>K</code></li>
 <li>On Mac: <code>Option</code> + <code>Shift</code> + <code>K</code></li>
 </ul>
-<p>The <code>RStudio</code> team has developed <a href="https://www.rstudio.com/resources/cheatsheets/">a number of “cheatsheets”</a> for working with both <code>R</code> and <code>RStudio</code>. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This particular cheatseet for Base <code>R</code></a> will summarize many of the concepts in this document.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>The <code>RStudio</code> team has developed <a href="https://www.rstudio.com/resources/cheatsheets/">a number of &quot;cheatsheets&quot;</a> for working with both <code>R</code> and <code>RStudio</code>. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This particular cheatseet for Base <code>R</code></a> will summarize many of the concepts in this document.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <div id="first-glossary" class="section level3">
 <h3><span class="header-section-number">1.2.1</span> First Glossary</h3>
 <ul>
@@ -276,7 +276,7 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 </div>
 <div id="basic-calculations" class="section level2">
 <h2><span class="header-section-number">1.3</span> Basic Calculations</h2>
-<p>To get started, we’ll use <code>R</code> like a simple calculator. Run the following code either directly from your RStudio console, or in RStudio by writting them in a script and running them using <code>Command</code> + <code>Return</code>.</p>
+<p>To get started, we'll use <code>R</code> like a simple calculator. Run the following code either directly from your RStudio console, or in RStudio by writting them in a script and running them using <code>Command</code> + <code>Return</code>.</p>
 <div id="addition-subtraction-multiplication-and-division" class="section level4 unnumbered">
 <h4>Addition, Subtraction, Multiplication and Division</h4>
 <table>
@@ -451,7 +451,7 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <div id="installing-packages" class="section level2">
 <h2><span class="header-section-number">1.5</span> Installing Packages</h2>
 <p><code>R</code> comes with a number of built-in functions and datasets, but one of the main strengths of <code>R</code> as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in <code>R</code>, and it is not available by default, there is a good chance that there is a package that will fulfill your needs.</p>
-<p>To install a package, use the <code>install.packages()</code> function. Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf (i.e. into your library):</p>
+<p>To install a package, use the <code>install.packages()</code> function. Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf (i.e. into your library):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
 <p>Once a package is installed, it must be loaded into your current <code>R</code> session before being used. Think of this as taking the book off of the shelf and opening it up to read.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
@@ -461,7 +461,7 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <h2><span class="header-section-number">1.6</span> <code>Code</code> vs Output in this Book</h2>
 <p>A quick note on styling choices in this book. We had to make a decision how to visually separate <code>R</code> code and resulting output in this book. We decided to prefix all output lines with <code>#OUT&gt;</code> to make the distinction. A typical code snippet with output is thus going to look like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1] 4</code></pre>
+<pre><code>## [1] 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># everything after a # is a comment, i.e. R disregards it.</span></code></pre></div>
 <p>where you see on the first line the <code>R</code> code, and on the second line the output. As mentioned, that line starts with <code>#OUT&gt;</code> to say <em>this is an output</em>, followed by <code>[1]</code> (indicating this is a vector of length <em>one</em> - more on this below!), followed by the actual result - <code>1 + 3 = 4</code>!</p>
 <p>Notice that you can simply copy and paste all the code you see into your <code>R</code> console. In fact, you are <em>strongly</em> encouraged to actually do this and try out <strong>all the code</strong> you see in this book.</p>
@@ -475,14 +475,14 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
 <span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="dt">repo =</span> <span class="st">&quot;ScPoEcon/ScPoEconometrics&quot;</span>)</code></pre></div>
-<p>In order to check whether everything works fine, you could load the library, and check it’s current version:</p>
+<p>In order to check whether everything works fine, you could load the library, and check it's current version:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
 <span class="kw">packageVersion</span>(<span class="st">&quot;ScPoEconometrics&quot;</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] &#39;0.2.6&#39;</code></pre>
+<pre><code>## [1] &#39;0.2.6&#39;</code></pre>
 </div>
 <div id="data-types" class="section level2">
 <h2><span class="header-section-number">1.8</span> Data Types</h2>
-<p><code>R</code> has a number of basic <em>data types</em>. While <code>R</code> is not a <em>strongly typed language</em> (i.e. you can be agnostic about types most of the times), it is useful to know what data types are available to you:</p>
+<p><code>R</code> has a number of basic <em>data types</em>. While <code>R</code> is not a <em>strongly typed language</em> (i.e. you can be agnostic about types most of the times), it is useful to know what data types are available to you:</p>
 <ul>
 <li>Numeric
 <ul>
@@ -546,45 +546,45 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 <div id="vectors" class="section level3">
 <h3><span class="header-section-number">1.9.1</span> Vectors</h3>
 <p>Many operations in <code>R</code> make heavy use of <strong>vectors</strong>. A vector is a <em>container</em> for objects of identical type (see <a href="R-intro.html#data-types">1.8</a> above). Vectors in <code>R</code> are indexed starting at <code>1</code>. That is what the <code>[1]</code> in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with something like <code>[7]</code> where <code>7</code> is the index of the first element of that row.</p>
-<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for “combine”. As the name suggests, it combines a list of elements separated by commas. (Are you busy typing all of those examples into your <code>R</code> console? :-) )</p>
+<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for &quot;combine&quot;. As the name suggests, it combines a list of elements separated by commas. (Are you busy typing all of those examples into your <code>R</code> console? :-) )</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 3 5 7 8 9</code></pre>
+<pre><code>## [1] 1 3 5 7 8 9</code></pre>
 <p>Here <code>R</code> simply outputs this vector. If we would like to store this vector in a <strong>variable</strong> we can do so with the <strong>assignment</strong> operator <code>=</code>. In this case the variable <code>x</code> now holds the vector we just created, and we can access the vector by typing <code>x</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)
 x</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 3 5 7 8 9</code></pre>
+<pre><code>## [1] 1 3 5 7 8 9</code></pre>
 <p>As an aside, there is a long history of the assignment operator in <code>R</code>, partially due to the keys available on the <a href="https://twitter.com/kwbroman/status/747829864091127809">keyboards of the creators of the <code>S</code> language.</a> (Which preceded <code>R</code>.) For simplicity we will use <code>=</code>, but know that often you will see <code>&lt;-</code> as the assignment operator.</p>
-<p>Because vectors must contain elements that are all the same type, <code>R</code> will automatically <strong>coerce</strong> (i.e. convert) to a single type when attempting to create a vector that combines multiple types.</p>
+<p>Because vectors must contain elements that are all the same type, <code>R</code> will automatically <strong>coerce</strong> (i.e. convert) to a single type when attempting to create a vector that combines multiple types.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">42</span>, <span class="st">&quot;Statistics&quot;</span>, <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;42&quot;         &quot;Statistics&quot; &quot;TRUE&quot;</code></pre>
+<pre><code>## [1] &quot;42&quot;         &quot;Statistics&quot; &quot;TRUE&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">42</span>, <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 42  1</code></pre>
+<pre><code>## [1] 42  1</code></pre>
 <p>Frequently you may wish to create a vector based on a sequence of numbers. The quickest and easiest way to do this is with the <code>:</code> operator, which creates a sequence of integers between two specified integers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)</code></pre></div>
-<pre><code>#OUT&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
-#OUT&gt;  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
-#OUT&gt;  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
-#OUT&gt;  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
-#OUT&gt;  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
-#OUT&gt;  [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
+<pre><code>##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+##  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+##  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+##  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+##  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+##  [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
 <p>Here we see <code>R</code> labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, <code>R</code> both stores the vector in a variable called <code>y</code> and automatically outputs <code>y</code> to the console.</p>
 <p>Note that scalars do not exists in <code>R</code>. They are simply vectors of length <code>1</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span></code></pre></div>
-<pre><code>#OUT&gt; [1] 2</code></pre>
-<p>If we want to create a sequence that isn’t limited to integers and increasing by 1 at a time, we can use the <code>seq()</code> function.</p>
+<pre><code>## [1] 2</code></pre>
+<p>If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the <code>seq()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">1.5</span>, <span class="dt">to =</span> <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</code></pre></div>
-<pre><code>#OUT&gt;  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
-#OUT&gt; [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
+<pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
+## [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
 <p>We will discuss functions in detail later, but note here that the input labels <code>from</code>, <code>to</code>, and <code>by</code> are optional.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="fl">1.5</span>, <span class="fl">4.2</span>, <span class="fl">0.1</span>)</code></pre></div>
-<pre><code>#OUT&gt;  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
-#OUT&gt; [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
+<pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
+## [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
 <p>Another common operation to create a vector is <code>rep()</code>, which can repeat a single value a number of times.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">times =</span> <span class="dv">10</span>)</code></pre></div>
-<pre><code>#OUT&gt;  [1] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot;</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot;</code></pre>
 <p>The <code>rep()</code> function can be used to repeat a vector some number of times.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(x, <span class="dt">times =</span> <span class="dv">3</span>)</code></pre></div>
-<pre><code>#OUT&gt;  [1] 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9</code></pre>
+<pre><code>##  [1] 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9</code></pre>
 <p>We have now seen four different ways to create vectors:</p>
 <ul>
 <li><code>c()</code></li>
@@ -594,65 +594,65 @@ x</code></pre></div>
 </ul>
 <p>So far we have mostly used them in isolation, but they are often used together.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(x, <span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>), <span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">42</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)</code></pre></div>
-<pre><code>#OUT&gt;  [1]  1  3  5  7  8  9  1  3  5  7  9  1  3  5  7  9  1  3  5  7  9  1  2  3 42
-#OUT&gt; [26]  2  3  4</code></pre>
+<pre><code>##  [1]  1  3  5  7  8  9  1  3  5  7  9  1  3  5  7  9  1  3  5  7  9  1  2  3 42
+## [26]  2  3  4</code></pre>
 <p>The length of a vector can be obtained with the <code>length()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
-<pre><code>#OUT&gt; [1] 6</code></pre>
+<pre><code>## [1] 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(y)</code></pre></div>
-<pre><code>#OUT&gt; [1] 100</code></pre>
+<pre><code>## [1] 100</code></pre>
 <div class="warning">
 <p>
-Let’s try this out! <strong>Your turn</strong>:
+Let's try this out! <strong>Your turn</strong>:
 </p>
 </div>
 <div id="task-1" class="section level4">
 <h4><span class="header-section-number">1.9.1.1</span> Task 1</h4>
 <ol style="list-style-type: decimal">
 <li>Create a vector of five ones, i.e. <code>[1,1,1,1,1]</code></li>
-<li>Notice that the colon operator <code>a:b</code> is just short for <em>construct a sequence <strong>from</strong> <code>a</code> <strong>to</strong> <code>b</code></em>. Create a vector the counts down from 10 to 0, i.e. it looks like <code>[10,9,8,7,6,5,4,3,2,1,0]</code>!</li>
+<li>Notice that the colon operator <code>a:b</code> is just short for <em>construct a sequence <strong>from</strong> <code>a</code> <strong>to</strong> <code>b</code></em>. Create a vector the counts down from 10 to 0, i.e. it looks like <code>[10,9,8,7,6,5,4,3,2,1,0]</code>!</li>
 <li>the <code>rep</code> function takes additional arguments <code>times</code> (as above), and <code>each</code>, which tells you how often <em>each element</em> should be repeated (as opposed to the entire input vector). Use <code>rep</code> to create a vector that looks like this: <code>[1 1 1 2 2 2 3 3 3 1 1 1 2 2 2 3 3 3]</code></li>
 </ol>
 </div>
 <div id="subsetting" class="section level4">
 <h4><span class="header-section-number">1.9.1.2</span> Subsetting</h4>
-<p>To subset a vector, i.e. to choose only some elements of it, we use square brackets, <code>[]</code>. Here we see that <code>x[1]</code> returns the first element, and <code>x[3]</code> returns the third element:</p>
+<p>To subset a vector, i.e. to choose only some elements of it, we use square brackets, <code>[]</code>. Here we see that <code>x[1]</code> returns the first element, and <code>x[3]</code> returns the third element:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 3 5 7 8 9</code></pre>
+<pre><code>## [1] 1 3 5 7 8 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">1</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1</code></pre>
+<pre><code>## [1] 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">3</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 5</code></pre>
+<pre><code>## [1] 5</code></pre>
 <p>We can also exclude certain indexes, in this case the second element.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="op">-</span><span class="dv">2</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 5 7 8 9</code></pre>
+<pre><code>## [1] 1 5 7 8 9</code></pre>
 <p>Lastly we see that we can subset based on a vector of indices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 3 5</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 5 7</code></pre>
+<pre><code>## [1] 1 5 7</code></pre>
 <p>All of the above are subsetting a vector using a vector of indexes. (Remember a single number is still a vector.) We could instead use a vector of logical values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z =<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)
 z</code></pre></div>
-<pre><code>#OUT&gt; [1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE</code></pre>
+<pre><code>## [1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[z]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 3 7 8</code></pre>
+<pre><code>## [1] 1 3 7 8</code></pre>
 <p><code>R</code> is able to perform many operations on vectors and scalars alike:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>  <span class="co"># a vector</span>
 x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>     <span class="co"># add a scalar</span></code></pre></div>
-<pre><code>#OUT&gt;  [1]  2  3  4  5  6  7  8  9 10 11</code></pre>
+<pre><code>##  [1]  2  3  4  5  6  7  8  9 10 11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x     <span class="co"># multiply all elements by 2</span></code></pre></div>
-<pre><code>#OUT&gt;  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
+<pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">^</span><span class="st"> </span>x     <span class="co"># take 2 to the x as exponents</span></code></pre></div>
-<pre><code>#OUT&gt;  [1]    2    4    8   16   32   64  128  256  512 1024</code></pre>
+<pre><code>##  [1]    2    4    8   16   32   64  128  256  512 1024</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(x)   <span class="co"># compute the square root of all elements in x</span></code></pre></div>
-<pre><code>#OUT&gt;  [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
-#OUT&gt;  [9] 3.000000 3.162278</code></pre>
+<pre><code>##  [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
+##  [9] 3.000000 3.162278</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(x)    <span class="co"># take the natural log of all elements in x</span></code></pre></div>
-<pre><code>#OUT&gt;  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
-#OUT&gt;  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre><code>##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>x   <span class="co"># add vector x to vector 2x</span></code></pre></div>
-<pre><code>#OUT&gt;  [1]  3  6  9 12 15 18 21 24 27 30</code></pre>
+<pre><code>##  [1]  3  6  9 12 15 18 21 24 27 30</code></pre>
 <p>We see that when a function like <code>log()</code> is called on a vector <code>x</code>, a vector is returned which has applied the function to each element of the vector <code>x</code>.</p>
 </div>
 </div>
@@ -727,39 +727,39 @@ x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>   
 <p>In <code>R</code>, logical operators also work on vectors:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>## [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1]  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## [1]  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">==</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1] FALSE  TRUE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>## [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">|</span><span class="st"> </span>x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>#OUT&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p>This is quite useful for subsetting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 5 7 8 9</code></pre>
+<pre><code>## [1] 5 7 8 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 5 7 8 9</code></pre>
+<pre><code>## [1] 1 5 7 8 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 4</code></pre>
+<pre><code>## [1] 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 0 0 1 1 1 1</code></pre>
+<pre><code>## [1] 0 0 1 1 1 1</code></pre>
 <p>Here we saw that using the <code>sum()</code> function on a vector of logical <code>TRUE</code> and <code>FALSE</code> values that is the result of <code>x &gt; 3</code> results in a numeric result: you just <em>counted</em> for how many elements of <code>x</code>, the condition <code>&gt; 3</code> is <code>TRUE</code>. During the call to <code>sum()</code>, <code>R</code> is first automatically coercing the logical to numeric where <code>TRUE</code> is <code>1</code> and <code>FALSE</code> is <code>0</code>. This coercion from logical to numeric happens for most mathematical operations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># which(condition of x) returns true/false  </span>
 <span class="co"># each index of x where condition is true</span>
 <span class="kw">which</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 3 4 5 6</code></pre>
+<pre><code>## [1] 3 4 5 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="kw">which</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)]</code></pre></div>
-<pre><code>#OUT&gt; [1] 5 7 8 9</code></pre>
+<pre><code>## [1] 5 7 8 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(x)</code></pre></div>
-<pre><code>#OUT&gt; [1] 9</code></pre>
+<pre><code>## [1] 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(x <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(x))</code></pre></div>
-<pre><code>#OUT&gt; [1] 6</code></pre>
+<pre><code>## [1] 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which.max</span>(x)</code></pre></div>
-<pre><code>#OUT&gt; [1] 6</code></pre>
+<pre><code>## [1] 6</code></pre>
 <div id="task-2" class="section level4">
 <h4><span class="header-section-number">1.9.2.1</span> Task 2</h4>
 <ol style="list-style-type: decimal">
@@ -776,112 +776,112 @@ x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>   
 <p>Matrices can be created using the <code>matrix</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>
 x</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)
 X</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    1    4    7
-#OUT&gt; [2,]    2    5    8
-#OUT&gt; [3,]    3    6    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
 <p>Notice here that <code>R</code> is case sensitive (<code>x</code> vs <code>X</code>).</p>
 <p>By default the <code>matrix</code> function fills your data into the matrix column by column. But we can also tell <code>R</code> to fill rows instead:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    1    2    3
-#OUT&gt; [2,]    4    5    6
-#OUT&gt; [3,]    7    8    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9</code></pre>
 <p>We can also create a matrix of a specified dimension where every element is the same, in this case <code>0</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)
 Z</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3] [,4]
-#OUT&gt; [1,]    0    0    0    0
-#OUT&gt; [2,]    0    0    0    0</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    0    0    0
+## [2,]    0    0    0    0</code></pre>
 <p>Like vectors, matrices can be subsetted using square brackets, <code>[]</code>. However, since matrices are two-dimensional, we need to specify both a row and a column when subsetting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    1    4    7
-#OUT&gt; [2,]    2    5    8
-#OUT&gt; [3,]    3    6    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">1</span>, <span class="dv">2</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 4</code></pre>
+<pre><code>## [1] 4</code></pre>
 <p>Here we accessed the element in the first row and the second column. We could also subset an entire row or column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">1</span>, ]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 4 7</code></pre>
+<pre><code>## [1] 1 4 7</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[, <span class="dv">2</span>]</code></pre></div>
-<pre><code>#OUT&gt; [1] 4 5 6</code></pre>
+<pre><code>## [1] 4 5 6</code></pre>
 <p>We can also use vectors to subset more than one row or column at a time. Here we subset to the first and third column of the second row:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</code></pre></div>
-<pre><code>#OUT&gt; [1] 2 8</code></pre>
+<pre><code>## [1] 2 8</code></pre>
 <p>Matrices can also be created by combining vectors as columns, using <code>cbind</code>, or combining vectors as rows, using <code>rbind</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>
 <span class="kw">rev</span>(x)</code></pre></div>
-<pre><code>#OUT&gt; [1] 9 8 7 6 5 4 3 2 1</code></pre>
+<pre><code>## [1] 9 8 7 6 5 4 3 2 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 1 1 1 1 1 1 1 1</code></pre>
+<pre><code>## [1] 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbind</span>(x, <span class="kw">rev</span>(x), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</code></pre></div>
-<pre><code>#OUT&gt;   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
-#OUT&gt; x    1    2    3    4    5    6    7    8    9
-#OUT&gt;      9    8    7    6    5    4    3    2    1
-#OUT&gt;      1    1    1    1    1    1    1    1    1</code></pre>
+<pre><code>##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+## x    1    2    3    4    5    6    7    8    9
+##      9    8    7    6    5    4    3    2    1
+##      1    1    1    1    1    1    1    1    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>(<span class="dt">col_1 =</span> x, <span class="dt">col_2 =</span> <span class="kw">rev</span>(x), <span class="dt">col_3 =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</code></pre></div>
-<pre><code>#OUT&gt;       col_1 col_2 col_3
-#OUT&gt;  [1,]     1     9     1
-#OUT&gt;  [2,]     2     8     1
-#OUT&gt;  [3,]     3     7     1
-#OUT&gt;  [4,]     4     6     1
-#OUT&gt;  [5,]     5     5     1
-#OUT&gt;  [6,]     6     4     1
-#OUT&gt;  [7,]     7     3     1
-#OUT&gt;  [8,]     8     2     1
-#OUT&gt;  [9,]     9     1     1</code></pre>
-<p>When using <code>rbind</code> and <code>cbind</code> you can specify “argument” names that will be used as column names.</p>
+<pre><code>##       col_1 col_2 col_3
+##  [1,]     1     9     1
+##  [2,]     2     8     1
+##  [3,]     3     7     1
+##  [4,]     4     6     1
+##  [5,]     5     5     1
+##  [6,]     6     4     1
+##  [7,]     7     3     1
+##  [8,]     8     2     1
+##  [9,]     9     1     1</code></pre>
+<p>When using <code>rbind</code> and <code>cbind</code> you can specify &quot;argument&quot; names that will be used as column names.</p>
 <p><code>R</code> can then be used to perform matrix calculations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>
 y =<span class="st"> </span><span class="dv">9</span><span class="op">:</span><span class="dv">1</span>
 X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dv">3</span>, <span class="dv">3</span>)
 Y =<span class="st"> </span><span class="kw">matrix</span>(y, <span class="dv">3</span>, <span class="dv">3</span>)
 X</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    1    4    7
-#OUT&gt; [2,]    2    5    8
-#OUT&gt; [3,]    3    6    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    9    6    3
-#OUT&gt; [2,]    8    5    2
-#OUT&gt; [3,]    7    4    1</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9    6    3
+## [2,]    8    5    2
+## [3,]    7    4    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X <span class="op">+</span><span class="st"> </span>Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]   10   10   10
-#OUT&gt; [2,]   10   10   10
-#OUT&gt; [3,]   10   10   10</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   10   10   10
+## [2,]   10   10   10
+## [3,]   10   10   10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X <span class="op">-</span><span class="st"> </span>Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]   -8   -2    4
-#OUT&gt; [2,]   -6    0    6
-#OUT&gt; [3,]   -4    2    8</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -8   -2    4
+## [2,]   -6    0    6
+## [3,]   -4    2    8</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X <span class="op">*</span><span class="st"> </span>Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    9   24   21
-#OUT&gt; [2,]   16   25   16
-#OUT&gt; [3,]   21   24    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9   24   21
+## [2,]   16   25   16
+## [3,]   21   24    9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X <span class="op">/</span><span class="st"> </span>Y</code></pre></div>
-<pre><code>#OUT&gt;           [,1]      [,2]     [,3]
-#OUT&gt; [1,] 0.1111111 0.6666667 2.333333
-#OUT&gt; [2,] 0.2500000 1.0000000 4.000000
-#OUT&gt; [3,] 0.4285714 1.5000000 9.000000</code></pre>
+<pre><code>##           [,1]      [,2]     [,3]
+## [1,] 0.1111111 0.6666667 2.333333
+## [2,] 0.2500000 1.0000000 4.000000
+## [3,] 0.4285714 1.5000000 9.000000</code></pre>
 <p>Note that <code>X * Y</code> is <strong>not</strong> matrix multiplication. It is <em>element by element</em> multiplication. (Same for <code>X / Y</code>). Matrix multiplication uses <code>%*%</code>. Other matrix functions include <code>t()</code> which gives the transpose of a matrix and <code>solve()</code> which returns the inverse of a square matrix if it is invertible.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X <span class="op">%*%</span><span class="st"> </span>Y</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]   90   54   18
-#OUT&gt; [2,]  114   69   24
-#OUT&gt; [3,]  138   84   30</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   90   54   18
+## [2,]  114   69   24
+## [3,]  138   84   30</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(X)</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3]
-#OUT&gt; [1,]    1    2    3
-#OUT&gt; [2,]    4    5    6
-#OUT&gt; [3,]    7    8    9</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9</code></pre>
 </div>
 <div id="arrays" class="section level3">
 <h3><span class="header-section-number">1.9.4</span> Arrays</h3>
@@ -890,38 +890,38 @@ X</code></pre></div>
 d3 =<span class="st"> </span><span class="kw">array</span>(<span class="dt">data =</span> d,<span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>))
 d4 =<span class="st"> </span><span class="kw">array</span>(<span class="dt">data =</span> d,<span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>))  <span class="co"># will recycle 1:16</span>
 d3</code></pre></div>
-<pre><code>#OUT&gt; , , 1
-#OUT&gt; 
-#OUT&gt;      [,1] [,2]
-#OUT&gt; [1,]    1    5
-#OUT&gt; [2,]    2    6
-#OUT&gt; [3,]    3    7
-#OUT&gt; [4,]    4    8
-#OUT&gt; 
-#OUT&gt; , , 2
-#OUT&gt; 
-#OUT&gt;      [,1] [,2]
-#OUT&gt; [1,]    9   13
-#OUT&gt; [2,]   10   14
-#OUT&gt; [3,]   11   15
-#OUT&gt; [4,]   12   16</code></pre>
+<pre><code>## , , 1
+## 
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]    9   13
+## [2,]   10   14
+## [3,]   11   15
+## [4,]   12   16</code></pre>
 <p>You can see that <code>d3</code> are simply <em>two</em> (4,2) matrices laid on top of each other, as if there were <em>two pages</em>. Similary, <code>d4</code> would have two pages, and another 3 registers in a fourth dimension. And so on. You can subset an array like you would a vector or a matrix, taking care to index each dimension:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d3[ ,<span class="dv">1</span>,<span class="dv">1</span>]  <span class="co"># all elements from col 1, page 1</span></code></pre></div>
-<pre><code>#OUT&gt; [1] 1 2 3 4</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d3[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, , ]  <span class="co"># rows 2:3 from all pages</span></code></pre></div>
-<pre><code>#OUT&gt; , , 1
-#OUT&gt; 
-#OUT&gt;      [,1] [,2]
-#OUT&gt; [1,]    2    6
-#OUT&gt; [2,]    3    7
-#OUT&gt; 
-#OUT&gt; , , 2
-#OUT&gt; 
-#OUT&gt;      [,1] [,2]
-#OUT&gt; [1,]   10   14
-#OUT&gt; [2,]   11   15</code></pre>
+<pre><code>## , , 1
+## 
+##      [,1] [,2]
+## [1,]    2    6
+## [2,]    3    7
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]   10   14
+## [2,]   11   15</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d3[<span class="dv">2</span>,<span class="dv">2</span>, ]  <span class="co"># row 2, col 2 from both pages.</span></code></pre></div>
-<pre><code>#OUT&gt; [1]  6 14</code></pre>
+<pre><code>## [1]  6 14</code></pre>
 <div id="task-3" class="section level4">
 <h4><span class="header-section-number">1.9.4.1</span> Task 3</h4>
 <ol style="list-style-type: decimal">
@@ -937,14 +937,14 @@ d3</code></pre></div>
 <p>A list is a one-dimensional <em>heterogeneous</em> data structure. So it is indexed like a vector with a single integer value (or with a name), but each element can contain an element of any type. Lists are similar to a python or julia <code>Dict</code> object. Many <code>R</code> structures and outputs are lists themselves. Lists are extremely useful and versatile objects, so make sure you understand their useage:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creation without fieldnames</span>
 <span class="kw">list</span>(<span class="dv">42</span>, <span class="st">&quot;Hello&quot;</span>, <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>#OUT&gt; [[1]]
-#OUT&gt; [1] 42
-#OUT&gt; 
-#OUT&gt; [[2]]
-#OUT&gt; [1] &quot;Hello&quot;
-#OUT&gt; 
-#OUT&gt; [[3]]
-#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## [[1]]
+## [1] 42
+## 
+## [[2]]
+## [1] &quot;Hello&quot;
+## 
+## [[3]]
+## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creation with fieldnames</span>
 ex_list =<span class="st"> </span><span class="kw">list</span>(
   <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),
@@ -960,57 +960,57 @@ ex_list =<span class="st"> </span><span class="kw">list</span>(
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># subsetting</span>
 ex_list<span class="op">$</span>e</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
-#OUT&gt; [1,]    1    0    0    0    0
-#OUT&gt; [2,]    0    1    0    0    0
-#OUT&gt; [3,]    0    0    1    0    0
-#OUT&gt; [4,]    0    0    0    1    0
-#OUT&gt; [5,]    0    0    0    0    1</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</code></pre></div>
-<pre><code>#OUT&gt; $a
-#OUT&gt; [1] 1 2 3 4
-#OUT&gt; 
-#OUT&gt; $b
-#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## $a
+## [1] 1 2 3 4
+## 
+## $b
+## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[<span class="dv">1</span>]</code></pre></div>
-<pre><code>#OUT&gt; $a
-#OUT&gt; [1] 1 2 3 4</code></pre>
+<pre><code>## $a
+## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>#OUT&gt; [1] 1 2 3 4</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[<span class="kw">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;a&quot;</span>)]</code></pre></div>
-<pre><code>#OUT&gt; $e
-#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
-#OUT&gt; [1,]    1    0    0    0    0
-#OUT&gt; [2,]    0    1    0    0    0
-#OUT&gt; [3,]    0    0    1    0    0
-#OUT&gt; [4,]    0    0    0    1    0
-#OUT&gt; [5,]    0    0    0    0    1
-#OUT&gt; 
-#OUT&gt; $a
-#OUT&gt; [1] 1 2 3 4</code></pre>
+<pre><code>## $e
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1
+## 
+## $a
+## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[<span class="st">&quot;e&quot;</span>]</code></pre></div>
-<pre><code>#OUT&gt; $e
-#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
-#OUT&gt; [1,]    1    0    0    0    0
-#OUT&gt; [2,]    0    1    0    0    0
-#OUT&gt; [3,]    0    0    1    0    0
-#OUT&gt; [4,]    0    0    0    1    0
-#OUT&gt; [5,]    0    0    0    0    1</code></pre>
+<pre><code>## $e
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list[[<span class="st">&quot;e&quot;</span>]]</code></pre></div>
-<pre><code>#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
-#OUT&gt; [1,]    1    0    0    0    0
-#OUT&gt; [2,]    0    1    0    0    0
-#OUT&gt; [3,]    0    0    1    0    0
-#OUT&gt; [4,]    0    0    0    1    0
-#OUT&gt; [5,]    0    0    0    0    1</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list<span class="op">$</span>d</code></pre></div>
-<pre><code>#OUT&gt; function(arg = 42) {print(&quot;Hello World!&quot;)}</code></pre>
+<pre><code>## function(arg = 42) {print(&quot;Hello World!&quot;)}</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex_list<span class="op">$</span><span class="kw">d</span>(<span class="dt">arg =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;Hello World!&quot;</code></pre>
+<pre><code>## [1] &quot;Hello World!&quot;</code></pre>
 <div id="task-4" class="section level4">
 <h4><span class="header-section-number">1.9.5.1</span> Task 4</h4>
 <ol style="list-style-type: decimal">
-<li>Copy and paste the above code for <code>ex_list</code> into your R session. Remember that <code>list</code> can hold any kind of <code>R</code> object. Like…another list! So, create a new list <code>new_list</code> that has two fields: a first field called “this” with string content <code>&quot;is awesome&quot;</code>, and a second field called “ex_list” that contains <code>ex_list</code>.</li>
+<li>Copy and paste the above code for <code>ex_list</code> into your R session. Remember that <code>list</code> can hold any kind of <code>R</code> object. Like...another list! So, create a new list <code>new_list</code> that has two fields: a first field called &quot;this&quot; with string content <code>&quot;is awesome&quot;</code>, and a second field called &quot;ex_list&quot; that contains <code>ex_list</code>.</li>
 <li>Accessing members is like in a plain list, just with several layers now. Get the element <code>c</code> from <code>ex_list</code> in <code>new_list</code>!</li>
 <li>Compose a new string out of the first element in <code>new_list</code>, the element under label <code>this</code>. Use the function <code>paste</code> to print <code>R is awesome</code> to your screen.</li>
 </ol>
@@ -1029,39 +1029,39 @@ ex_list<span class="op">$</span>e</code></pre></div>
 A <strong>data.frame</strong> is similar to a typical Spreadsheet. There are <em>rows</em>, and there are <em>columns</em>. A row is typically thought of as an <em>observation</em>, and each column is a certain <em>variable</em>, <em>characteristic</em> or <em>feature</em> of that observation.
 </p>
 </div>
-<p><br> Let’s look at the data frame we just created above:</p>
+<p><br> Let's look at the data frame we just created above:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_data</code></pre></div>
-<pre><code>#OUT&gt;    x       y     z
-#OUT&gt; 1  1   Hello  TRUE
-#OUT&gt; 2  3   Hello FALSE
-#OUT&gt; 3  5   Hello  TRUE
-#OUT&gt; 4  7   Hello FALSE
-#OUT&gt; 5  9   Hello  TRUE
-#OUT&gt; 6  1   Hello FALSE
-#OUT&gt; 7  3   Hello  TRUE
-#OUT&gt; 8  5   Hello FALSE
-#OUT&gt; 9  7   Hello  TRUE
-#OUT&gt; 10 9 Goodbye FALSE</code></pre>
+<pre><code>##    x       y     z
+## 1  1   Hello  TRUE
+## 2  3   Hello FALSE
+## 3  5   Hello  TRUE
+## 4  7   Hello FALSE
+## 5  9   Hello  TRUE
+## 6  1   Hello FALSE
+## 7  3   Hello  TRUE
+## 8  5   Hello FALSE
+## 9  7   Hello  TRUE
+## 10 9 Goodbye FALSE</code></pre>
 <p>Unlike a list, which has more flexibility, the elements of a data frame must all be vectors. Again, we access any given column with the <code>$</code> operator:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_data<span class="op">$</span>x</code></pre></div>
-<pre><code>#OUT&gt;  [1] 1 3 5 7 9 1 3 5 7 9</code></pre>
+<pre><code>##  [1] 1 3 5 7 9 1 3 5 7 9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">length</span>(example_data<span class="op">$</span>x),
           <span class="kw">length</span>(example_data<span class="op">$</span>y),
           <span class="kw">length</span>(example_data<span class="op">$</span>z))</code></pre></div>
-<pre><code>#OUT&gt; [1] TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(example_data)</code></pre></div>
-<pre><code>#OUT&gt; &#39;data.frame&#39;: 10 obs. of  3 variables:
-#OUT&gt;  $ x: num  1 3 5 7 9 1 3 5 7 9
-#OUT&gt;  $ y: Factor w/ 2 levels &quot;Goodbye&quot;,&quot;Hello&quot;: 2 2 2 2 2 2 2 2 2 1
-#OUT&gt;  $ z: logi  TRUE FALSE TRUE FALSE TRUE FALSE ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  3 variables:
+##  $ x: num  1 3 5 7 9 1 3 5 7 9
+##  $ y: chr  &quot;Hello&quot; &quot;Hello&quot; &quot;Hello&quot; &quot;Hello&quot; ...
+##  $ z: logi  TRUE FALSE TRUE FALSE TRUE FALSE ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(example_data)</code></pre></div>
-<pre><code>#OUT&gt; [1] 10</code></pre>
+<pre><code>## [1] 10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(example_data)</code></pre></div>
-<pre><code>#OUT&gt; [1] 3</code></pre>
+<pre><code>## [1] 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(example_data)</code></pre></div>
-<pre><code>#OUT&gt; [1] 10  3</code></pre>
+<pre><code>## [1] 10  3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(example_data)</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <div id="working-with-data.frames" class="section level3">
 <h3><span class="header-section-number">1.10.1</span> Working with <code>data.frames</code></h3>
 <p>The <code>data.frame()</code> function above is one way to create a data frame. We can also import data from various file types in into <code>R</code>, as well as use data stored in packages.</p>
@@ -1070,17 +1070,17 @@ A <strong>data.frame</strong> is similar to a typical Spreadsheet. There are <em
 example_data_from_disk =<span class="st"> </span><span class="kw">read.csv</span>(path)</code></pre></div>
 <p>This particular line of code assumes that you installed the associated R package to this book, hence you have this dataset stored on your computer at <code>system.file(package = &quot;ScPoEconometrics&quot;,&quot;datasets&quot;,&quot;example-data.csv&quot;)</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_data_from_disk</code></pre></div>
-<pre><code>#OUT&gt;    x       y     z
-#OUT&gt; 1  1   Hello  TRUE
-#OUT&gt; 2  3   Hello FALSE
-#OUT&gt; 3  5   Hello  TRUE
-#OUT&gt; 4  7   Hello FALSE
-#OUT&gt; 5  9   Hello  TRUE
-#OUT&gt; 6  1   Hello FALSE
-#OUT&gt; 7  3   Hello  TRUE
-#OUT&gt; 8  5   Hello FALSE
-#OUT&gt; 9  7   Hello  TRUE
-#OUT&gt; 10 9 Goodbye FALSE</code></pre>
+<pre><code>##    x       y     z
+## 1  1   Hello  TRUE
+## 2  3   Hello FALSE
+## 3  5   Hello  TRUE
+## 4  7   Hello FALSE
+## 5  9   Hello  TRUE
+## 6  1   Hello FALSE
+## 7  3   Hello  TRUE
+## 8  5   Hello FALSE
+## 9  7   Hello  TRUE
+## 10 9 Goodbye FALSE</code></pre>
 <p>When using data, there are three things we would generally like to do:</p>
 <ul>
 <li>Look at the raw data.</li>
@@ -1090,108 +1090,108 @@ example_data_from_disk =<span class="st"> </span><span class="kw">read.csv</span
 <p>To look at data in a <code>data.frame</code>, we have two useful commands: <code>head()</code> and <code>str()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we are working with the built-in mtcars dataset:</span>
 mtcars</code></pre></div>
-<pre><code>#OUT&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#OUT&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-#OUT&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-#OUT&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#OUT&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-#OUT&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-#OUT&gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-#OUT&gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-#OUT&gt; Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-#OUT&gt; Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-#OUT&gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-#OUT&gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-#OUT&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-#OUT&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-#OUT&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-#OUT&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-#OUT&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-#OUT&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-#OUT&gt; Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#OUT&gt; Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#OUT&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#OUT&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-#OUT&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-#OUT&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-#OUT&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-#OUT&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-#OUT&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#OUT&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-#OUT&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#OUT&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-#OUT&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-#OUT&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-#OUT&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
 <p>You can see that this prints the entire data.frame to screen. The function <code>head()</code> will display the first <code>n</code> observations of the data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mtcars,<span class="dt">n=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>#OUT&gt;               mpg cyl disp  hp drat    wt  qsec vs am gear carb
-#OUT&gt; Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4    4
-#OUT&gt; Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4    4</code></pre>
+<pre><code>##               mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4    4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mtcars) <span class="co"># default</span></code></pre></div>
-<pre><code>#OUT&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-#OUT&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-#OUT&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-#OUT&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-#OUT&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-#OUT&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-#OUT&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-<p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>The function <code>str()</code> will display the &quot;structure&quot; of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the &quot;Environment&quot; window in RStudio.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mtcars)</code></pre></div>
-<pre><code>#OUT&gt; &#39;data.frame&#39;: 32 obs. of  11 variables:
-#OUT&gt;  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
-#OUT&gt;  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
-#OUT&gt;  $ disp: num  160 160 108 258 360 ...
-#OUT&gt;  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
-#OUT&gt;  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
-#OUT&gt;  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
-#OUT&gt;  $ qsec: num  16.5 17 18.6 19.4 17 ...
-#OUT&gt;  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
-#OUT&gt;  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
-#OUT&gt;  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
-#OUT&gt;  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
 <p>In this dataset an observation is for a particular model of a car, and the variables describe attributes of the car, for example its fuel efficiency, or its weight.</p>
 <p>To understand more about the data set, we use the <code>?</code> operator to pull up the documentation for the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?mtcars</code></pre></div>
 <p><code>R</code> has a number of functions for quickly working with and extracting basic information from data frames. To quickly obtain a vector of the variable names, we use the <code>names()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(mtcars)</code></pre></div>
-<pre><code>#OUT&gt;  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
-#OUT&gt; [11] &quot;carb&quot;</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
 <p>To access one of the variables <strong>as a vector</strong>, we use the <code>$</code> operator.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars<span class="op">$</span>mpg</code></pre></div>
-<pre><code>#OUT&gt;  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
-#OUT&gt; [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
-#OUT&gt; [31] 15.0 21.4</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
+## [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+## [31] 15.0 21.4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars<span class="op">$</span>wt</code></pre></div>
-<pre><code>#OUT&gt;  [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 3.440 3.440 4.070
-#OUT&gt; [13] 3.730 3.780 5.250 5.424 5.345 2.200 1.615 1.835 2.465 3.520 3.435 3.840
-#OUT&gt; [25] 3.845 1.935 2.140 1.513 3.170 2.770 3.570 2.780</code></pre>
+<pre><code>##  [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 3.440 3.440 4.070
+## [13] 3.730 3.780 5.250 5.424 5.345 2.200 1.615 1.835 2.465 3.520 3.435 3.840
+## [25] 3.845 1.935 2.140 1.513 3.170 2.770 3.570 2.780</code></pre>
 <p>We can use the <code>dim()</code>, <code>nrow()</code> and <code>ncol()</code> functions to obtain information about the dimension of the data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(mtcars)</code></pre></div>
-<pre><code>#OUT&gt; [1] 32 11</code></pre>
+<pre><code>## [1] 32 11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(mtcars)</code></pre></div>
-<pre><code>#OUT&gt; [1] 32</code></pre>
+<pre><code>## [1] 32</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(mtcars)</code></pre></div>
-<pre><code>#OUT&gt; [1] 11</code></pre>
+<pre><code>## [1] 11</code></pre>
 <p>Here <code>nrow()</code> is also the number of observations, which in most cases is the <em>sample size</em>.</p>
 <p>Subsetting data frames can work much like subsetting matrices using square brackets, <code>[ , ]</code>. Here, we find vehicles with mpg over 25 miles per gallon and only display columns <code>cyl</code>, <code>disp</code> and <code>wt</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mpg[row condition, col condition]</span>
 mtcars[mtcars<span class="op">$</span>mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>, <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;wt&quot;</span>)]</code></pre></div>
-<pre><code>#OUT&gt;                cyl  disp    wt
-#OUT&gt; Mazda RX4        6 160.0 2.620
-#OUT&gt; Mazda RX4 Wag    6 160.0 2.875
-#OUT&gt; Datsun 710       4 108.0 2.320
-#OUT&gt; Hornet 4 Drive   6 258.0 3.215
-#OUT&gt; Merc 240D        4 146.7 3.190
-#OUT&gt; Merc 230         4 140.8 3.150
-#OUT&gt; Fiat 128         4  78.7 2.200
-#OUT&gt; Honda Civic      4  75.7 1.615
-#OUT&gt; Toyota Corolla   4  71.1 1.835
-#OUT&gt; Toyota Corona    4 120.1 2.465
-#OUT&gt; Fiat X1-9        4  79.0 1.935
-#OUT&gt; Porsche 914-2    4 120.3 2.140
-#OUT&gt; Lotus Europa     4  95.1 1.513
-#OUT&gt; Volvo 142E       4 121.0 2.780</code></pre>
+<pre><code>##                cyl  disp    wt
+## Mazda RX4        6 160.0 2.620
+## Mazda RX4 Wag    6 160.0 2.875
+## Datsun 710       4 108.0 2.320
+## Hornet 4 Drive   6 258.0 3.215
+## Merc 240D        4 146.7 3.190
+## Merc 230         4 140.8 3.150
+## Fiat 128         4  78.7 2.200
+## Honda Civic      4  75.7 1.615
+## Toyota Corolla   4  71.1 1.835
+## Toyota Corona    4 120.1 2.465
+## Fiat X1-9        4  79.0 1.935
+## Porsche 914-2    4 120.3 2.140
+## Lotus Europa     4  95.1 1.513
+## Volvo 142E       4 121.0 2.780</code></pre>
 <p>An alternative would be to use the <code>subset()</code> function, which has a much more readable syntax.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(mtcars, <span class="dt">subset =</span> mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;wt&quot;</span>))</code></pre></div>
 <div id="task-5" class="section level4">
@@ -1200,7 +1200,7 @@ mtcars[mtcars<span class="op">$</span>mpg <span class="op">&gt;</span><span clas
 <li>How many observations are there in <code>mtcars</code>?</li>
 <li>How many variables?</li>
 <li>What is the average value of <code>mpg</code>?</li>
-<li>What is the average value of <code>mpg</code> for cars with more than 4 cylinders, i.e. with <code>cyl&gt;4</code>?</li>
+<li>What is the average value of <code>mpg</code> for cars with more than 4 cylinders, i.e. with <code>cyl&gt;4</code>?</li>
 </ol>
 </div>
 </div>
@@ -1214,11 +1214,11 @@ mtcars[mtcars<span class="op">$</span>mpg <span class="op">&gt;</span><span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>
 y =<span class="st"> &quot;roses&quot;</span>
 z =<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">sqrt</span>(x)}</code></pre></div>
-<p>Here <code>x</code> refers to the value <code>1</code>, <code>y</code> holds the string “roses”, and <code>z</code> is the name of a function that computes <span class="math inline">\(\sqrt{x}\)</span>. Notice that the argument <code>x</code> of the function is different from the <code>x</code> we just defined. It is <strong>local</strong> to the function:</p>
+<p>Here <code>x</code> refers to the value <code>1</code>, <code>y</code> holds the string &quot;roses&quot;, and <code>z</code> is the name of a function that computes <span class="math inline">\(\sqrt{x}\)</span>. Notice that the argument <code>x</code> of the function is different from the <code>x</code> we just defined. It is <strong>local</strong> to the function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
-<pre><code>#OUT&gt; [1] 1</code></pre>
+<pre><code>## [1] 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">z</span>(<span class="dv">9</span>)</code></pre></div>
-<pre><code>#OUT&gt; [1] 3</code></pre>
+<pre><code>## [1] 3</code></pre>
 </div>
 <div id="control-flow" class="section level3">
 <h3><span class="header-section-number">1.11.2</span> Control Flow</h3>
@@ -1240,9 +1240,9 @@ y =<span class="st"> </span><span class="dv">3</span>
   z =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>y
   <span class="kw">print</span>(<span class="st">&quot;x is less than or equal to y&quot;</span>)
 }</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;x is less than or equal to y&quot;</code></pre>
+<pre><code>## [1] &quot;x is less than or equal to y&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z</code></pre></div>
-<pre><code>#OUT&gt; [1] 16</code></pre>
+<pre><code>## [1] 16</code></pre>
 </div>
 <div id="loops" class="section level3">
 <h3><span class="header-section-number">1.11.3</span> Loops</h3>
@@ -1255,18 +1255,18 @@ y =<span class="st"> </span><span class="dv">3</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){
   <span class="kw">print</span>(i)
 }</code></pre></div>
-<pre><code>#OUT&gt; [1] 1
-#OUT&gt; [1] 2
-#OUT&gt; [1] 3
-#OUT&gt; [1] 4
-#OUT&gt; [1] 5</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre>
 <p>Notice that instead of <code>1:5</code>, we could have <em>any</em> kind of iterable collection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;mangos&quot;</span>,<span class="st">&quot;bananas&quot;</span>,<span class="st">&quot;apples&quot;</span>)){
   <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;I love&quot;</span>,i))  <span class="co"># the paste function pastes together strings</span>
 }</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;I love mangos&quot;
-#OUT&gt; [1] &quot;I love bananas&quot;
-#OUT&gt; [1] &quot;I love apples&quot;</code></pre>
+<pre><code>## [1] &quot;I love mangos&quot;
+## [1] &quot;I love bananas&quot;
+## [1] &quot;I love apples&quot;</code></pre>
 <p>We often also see <em>nested</em> loops, which are just what its name suggests:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>){
   <span class="co"># first nest: for each i</span>
@@ -1275,17 +1275,17 @@ y =<span class="st"> </span><span class="dv">3</span>
     <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Can I get&quot;</span>,i,j,<span class="st">&quot;please?&quot;</span>))
   }
 }</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;Can I get 2 mangos please?&quot;
-#OUT&gt; [1] &quot;Can I get 2 bananas please?&quot;
-#OUT&gt; [1] &quot;Can I get 2 apples please?&quot;
-#OUT&gt; [1] &quot;Can I get 3 mangos please?&quot;
-#OUT&gt; [1] &quot;Can I get 3 bananas please?&quot;
-#OUT&gt; [1] &quot;Can I get 3 apples please?&quot;</code></pre>
+<pre><code>## [1] &quot;Can I get 2 mangos please?&quot;
+## [1] &quot;Can I get 2 bananas please?&quot;
+## [1] &quot;Can I get 2 apples please?&quot;
+## [1] &quot;Can I get 3 mangos please?&quot;
+## [1] &quot;Can I get 3 bananas please?&quot;
+## [1] &quot;Can I get 3 apples please?&quot;</code></pre>
 <p>The important thing to note here is that you can do calculations with the iterators <em>while inside a loop</em>.</p>
 </div>
 <div id="functions" class="section level3">
 <h3><span class="header-section-number">1.11.4</span> Functions</h3>
-<p>So far we have been using functions, but haven’t actually discussed some of their details. A function is a set of instructions that <code>R</code> executes for us, much like those collected in a script file. The good thing is that functions are much more flexible than scripts, since they can depend on <em>input arguments</em>, which change the way the function behaves. Here is how to define a function:</p>
+<p>So far we have been using functions, but haven't actually discussed some of their details. A function is a set of instructions that <code>R</code> executes for us, much like those collected in a script file. The good thing is that functions are much more flexible than scripts, since they can depend on <em>input arguments</em>, which change the way the function behaves. Here is how to define a function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">function_name &lt;-<span class="st"> </span><span class="cf">function</span>(arg1,<span class="dt">arg2=</span>default_value){
   <span class="co"># function body</span>
   <span class="co"># you do stuff with arg1 and arg2</span>
@@ -1302,22 +1302,22 @@ y =<span class="st"> </span><span class="dv">3</span>
 
 <span class="co"># we call the function by typing it&#39;s name with round brackets</span>
 <span class="kw">hello</span>()</code></pre></div>
-<pre><code>#OUT&gt; [1] &quot;You R most welcome, Lord Vader&quot;</code></pre>
+<pre><code>## [1] &quot;You R most welcome, Lord Vader&quot;</code></pre>
 <p>You see that by not specifying the argument <code>your_name</code>, <code>R</code> reverts to the default value given. Try with your own name now!</p>
 <p>Just typing the function name returns the actual definition to us, which is handy sometimes:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hello</code></pre></div>
-<pre><code>#OUT&gt; function(your_name = &quot;Lord Vader&quot;){
-#OUT&gt;   paste(&quot;You R most welcome,&quot;,your_name)
-#OUT&gt;   # we could also write:
-#OUT&gt;   # return(paste(&quot;You R most welcome,&quot;,your_name))
-#OUT&gt; }</code></pre>
-<p>It’s instructive to consider that before we defined the function <code>hello</code> above, <code>R</code> did not know what to do, had you called <code>hello()</code>. The function did not exist! In this sense, we <em>taught <code>R</code> a new trick</em>. This feature to create new capabilities on top of a core language is one of the most powerful characteristics of programming languages. In general, it is good practice to split your code into several smaller functions, rather than one long script file. It makes your code more readable, and it is easier to track down mistakes.</p>
+<pre><code>## function(your_name = &quot;Lord Vader&quot;){
+##   paste(&quot;You R most welcome,&quot;,your_name)
+##   # we could also write:
+##   # return(paste(&quot;You R most welcome,&quot;,your_name))
+## }</code></pre>
+<p>It's instructive to consider that before we defined the function <code>hello</code> above, <code>R</code> did not know what to do, had you called <code>hello()</code>. The function did not exist! In this sense, we <em>taught <code>R</code> a new trick</em>. This feature to create new capabilities on top of a core language is one of the most powerful characteristics of programming languages. In general, it is good practice to split your code into several smaller functions, rather than one long script file. It makes your code more readable, and it is easier to track down mistakes.</p>
 <div id="task-6" class="section level4">
 <h4><span class="header-section-number">1.11.4.1</span> Task 6</h4>
 <ol style="list-style-type: decimal">
 <li>Write a for loop that counts down from 10 to 1, printing the value of the iterator to the screen.</li>
-<li>Modify that loop to write “i iterations to go” where <code>i</code> is the iterator</li>
-<li>Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command <code>Sys.sleep(1)</code> below the line that prints “i iterations to go”.</li>
+<li>Modify that loop to write &quot;i iterations to go&quot; where <code>i</code> is the iterator</li>
+<li>Modify that loop so that each iteration takes roughly one second. You can achieve that by adding the command <code>Sys.sleep(1)</code> below the line that prints &quot;i iterations to go&quot;.</li>
 </ol>
 
 </div>
@@ -1327,7 +1327,7 @@ y =<span class="st"> </span><span class="dv">3</span>
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is “correct” but it helps to be aware of what others do. The more import thing is to be consistent within your own code. Here are two guides: <a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham Style Guide</a>, and the <a href="https://google.github.io/styleguide/Rguide.xml">Google Style Guide</a>. For this course, our main deviation from these two guides is the use of <code>=</code> in place of <code>&lt;-</code>. For all practical purposes, you should think <code>=</code> whenever you see <code>&lt;-</code>.<a href="R-intro.html#fnref1">↩</a></p></li>
+<li id="fn1"><p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is &quot;correct&quot; but it helps to be aware of what others do. The more import thing is to be consistent within your own code. Here are two guides: <a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham Style Guide</a>, and the <a href="https://google.github.io/styleguide/Rguide.xml">Google Style Guide</a>. For this course, our main deviation from these two guides is the use of <code>=</code> in place of <code>&lt;-</code>. For all practical purposes, you should think <code>=</code> whenever you see <code>&lt;-</code>.<a href="R-intro.html#fnref1">↩</a></p></li>
 </ol>
 </div>
             </section>

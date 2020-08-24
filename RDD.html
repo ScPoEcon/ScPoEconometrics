@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Regression Discontinuity Design | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Regression Discontinuity Design | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2020-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,12 +51,12 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -190,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>10</b> Projects</a><ul>
 <li class="chapter" data-level="10.1" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>10.1</b> Trade Exercise</a></li>
@@ -218,26 +218,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="RDD" class="section level1">
 <h1><span class="header-section-number">Chapter 9</span> Regression Discontinuity Design</h1>
-<p>In the previous chapter we have seen how an experimental setup can be useful to recover causal effects from an OLS regression. In this chapter we will look at a similar approach where we don’t randomly allocate subjects to either treatment or control (maybe because that’s impossible to do in that particular situation), but where we can <em>zoom in</em> on a group of individuals where having been allocated to treatment is <strong>as good as random</strong> - hence not influenced by selection bias. The idea is called Regression Discontinuity Design, short RDD.</p>
+<p>In the previous chapter we have seen how an experimental setup can be useful to recover causal effects from an OLS regression. In this chapter we will look at a similar approach where we don't randomly allocate subjects to either treatment or control (maybe because that's impossible to do in that particular situation), but where we can <em>zoom in</em> on a group of individuals where having been allocated to treatment is <strong>as good as random</strong> - hence not influenced by selection bias. The idea is called Regression Discontinuity Design, short RDD.</p>
 <div id="rdd-setup" class="section level2">
 <h2><span class="header-section-number">9.1</span> RDD Setup</h2>
-<p>Let’s again start with a DAG for the main idea. Remember the numerical example in the set of slides on randomization, where we showed that if we know the allocating mechanism, we can recover the true ATE. RDD plays along those lines, in that we <em>know</em> how individuals got assigned to treatment. As is the case in many real-life situations, people are eligible for some treatment if some value <strong>crosses a threshold</strong>:</p>
+<p>Let's again start with a DAG for the main idea. Remember the numerical example in the set of slides on randomization, where we showed that if we know the allocating mechanism, we can recover the true ATE. RDD plays along those lines, in that we <em>know</em> how individuals got assigned to treatment. As is the case in many real-life situations, people are eligible for some treatment if some value <strong>crosses a threshold</strong>:</p>
 <ul>
 <li>You are eligible to obtain a driving license as your age crosses the 18-year threshold.</li>
 <li>You will receive pension benefits as your age crosses the 65-year threshold.</li>
 <li>You are liable to criminal charges if you are caught with more than 3g of Marihuana in your pocket.</li>
 <li>You are considered a subprime mortgage borrower if your loan-to-value ratio is above 95%.</li>
 </ul>
-<p>In RDD parlance, we call that particular variable we are looking at the <em>running variable</em> (age, quantity of Marihuana, LTV ratio etc). If we know the applicable threshold (18 years of age, say), and we know an individual’s age, then it’s trivial to figure out whether they were eligible to get a driving license. Let’s formalize this a bit.</p>
-<p>Let’s call the running variable <span class="math inline">\(x\)</span>, the outcome <span class="math inline">\(y\)</span> as usual, let <span class="math inline">\(D\)</span> be the treament indicator and let us define a <em>threshold</em> value <span class="math inline">\(c\)</span>. Treatment for individual <span class="math inline">\(i\)</span> will be such that</p>
+<p>In RDD parlance, we call that particular variable we are looking at the <em>running variable</em> (age, quantity of Marihuana, LTV ratio etc). If we know the applicable threshold (18 years of age, say), and we know an individual's age, then it's trivial to figure out whether they were eligible to get a driving license. Let's formalize this a bit.</p>
+<p>Let's call the running variable <span class="math inline">\(x\)</span>, the outcome <span class="math inline">\(y\)</span> as usual, let <span class="math inline">\(D\)</span> be the treament indicator and let us define a <em>threshold</em> value <span class="math inline">\(c\)</span>. Treatment for individual <span class="math inline">\(i\)</span> will be such that</p>
 <span class="math display">\[\begin{equation*}
 D_i = \begin{cases}\begin{array}{c}1\text{ if }x_i &gt; c \\
                   0\text{ if }x_i \leq c. \end{array}
                   \end{cases}
 \end{equation*}\]</span>
-<p>Here’s the obligatory DAG!</p>
+<p>Here's the obligatory DAG!</p>
 <div class="figure" style="text-align: center"><span id="fig:rdd1"></span>
-<img src="ScPoEconometrics_files/figure-html/rdd1-1.png" alt="DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
+<img src="09-RDD_files/figure-html/rdd1-1.png" alt="DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
 <p class="caption">
 Figure 9.1: DAG for a simple RDD design: <span class="math inline">\(x\)</span> determines treatment via the cutoff <span class="math inline">\(c\)</span>
 </p>
@@ -247,18 +247,18 @@ Figure 9.1: DAG for a simple RDD design: <span class="math inline">\(x\)</span> 
 <li>None of the other variables in the model should exhibit any discontinuity at <span class="math inline">\(c\)</span>, other than <span class="math inline">\(D\)</span>!</li>
 <li>We obtain only <em>locally</em> valid identification of the ATE: as we move further and further away from the threshold, our individuals will cease to be really comparable.</li>
 </ol>
-<p>In our DAG, point 1 above is not currently visible. Let’s augment this:</p>
+<p>In our DAG, point 1 above is not currently visible. Let's augment this:</p>
 <div class="figure" style="text-align: center"><span id="fig:rdd2"></span>
-<img src="ScPoEconometrics_files/figure-html/rdd2-1.png" alt="Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
+<img src="09-RDD_files/figure-html/rdd2-1.png" alt="Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
 <p class="caption">
 Figure 9.2: Augmented DAG for a simple RDD design: <span class="math inline">\(x\)</span> determines treatment via the cutoff <span class="math inline">\(c\)</span>
 </p>
 </div>
-<p>So, the condition we want is that additional explanatory variable <span class="math inline">\(z\)</span> does <strong>not</strong> suddenly jump as <span class="math inline">\(x\)</span> crosses <span class="math inline">\(c\)</span>. Because we will be comparing the mean outcomes of people slightly to the left and right of <span class="math inline">\(c\)</span>, we need to make sure that there is nothing that would <em>confound</em> our estimate of the size of the effect <span class="math inline">\(\delta\)</span>. Let’s look at an example of a recent RDD study now.</p>
+<p>So, the condition we want is that additional explanatory variable <span class="math inline">\(z\)</span> does <strong>not</strong> suddenly jump as <span class="math inline">\(x\)</span> crosses <span class="math inline">\(c\)</span>. Because we will be comparing the mean outcomes of people slightly to the left and right of <span class="math inline">\(c\)</span>, we need to make sure that there is nothing that would <em>confound</em> our estimate of the size of the effect <span class="math inline">\(\delta\)</span>. Let's look at an example of a recent RDD study now.</p>
 </div>
 <div id="clicking-on-heavens-door" class="section level2">
-<h2><span class="header-section-number">9.2</span> Clicking on Heaven’s Door</h2>
-<p>In a recent paper title <a href="https://www.aeaweb.org/articles?id=10.1257/aer.20150355">Clicking on Heaven’s Door</a>, U Bocconi economist <a href="https://sites.google.com/view/paolo-pinotti/home">Paolo Pinotti</a> uses an RDD to show the effects of legal status of immigrants on criminal behaviour. The question of whether immigrants commit more or less crime than others (natives, for example) is a first order policy question. The question of that paper is what causal impact the <em>legal status</em> we confer upon an immigrant has on their propensity to commit a crime one year later. The study is based in Italy, where the legal status refers to an official permission to work. The key detail is that the residence permit needs to be sponsored by the immigrant’s employer.</p>
+<h2><span class="header-section-number">9.2</span> Clicking on Heaven's Door</h2>
+<p>In a recent paper title <a href="https://www.aeaweb.org/articles?id=10.1257/aer.20150355">Clicking on Heaven's Door</a>, U Bocconi economist <a href="https://sites.google.com/view/paolo-pinotti/home">Paolo Pinotti</a> uses an RDD to show the effects of legal status of immigrants on criminal behaviour. The question of whether immigrants commit more or less crime than others (natives, for example) is a first order policy question. The question of that paper is what causal impact the <em>legal status</em> we confer upon an immigrant has on their propensity to commit a crime one year later. The study is based in Italy, where the legal status refers to an official permission to work. The key detail is that the residence permit needs to be sponsored by the immigrant's employer.</p>
 <div id="institutional-details" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Institutional Details</h3>
 <p>In the Italian context, immigrants often enter illegally first, and then hope to obtain a residence permit through an employer later on. There is a quota system in place, which establishes how many permits are to be granted to how many people from each nationality, and to which Italian industries (construction, services, etc). See table <a href="RDD.html#fig:pin1">9.3</a> for an overview of those quotas.</p>
@@ -274,7 +274,7 @@ Figure 9.3: Table 1 from <span class="citation">Pinotti (<a href="#ref-pinotti">
 <div id="discontinuity-feature" class="section level3">
 <h3><span class="header-section-number">9.2.2</span> Discontinuity Feature</h3>
 <p>The principal feature of the Italian setting which makes this almost perfect for an RDD is the following: The quotas illustrated in <a href="RDD.html#fig:pin1">9.3</a> are defined for a total of 1751 employer groups (varying by industry and location). Applications for a permit must be submitted online by employers, <strong>starting at 8:00 AM on specific click days</strong>, and will be given out on a first come first served basis. This implies that thousands of applicants are denied their permit each year not because they were not eligible (they had an employer sponsoring them!), but because they got late online (some seconds) when all permits for their specific quota were gone already. Here we formalize as <span class="math inline">\(c\)</span> the <em>exact</em> time the quota for a certain group was full, and the running variable <span class="math inline">\(x\)</span> is the <em>exact</em> time that the sponsoring employer clicked on the <em>submit</em> button on the website. This is measured at the level of milliseconds.</p>
-<p>The key observation is now that the exact timing when a certain quota is full, <span class="math inline">\(c\)</span>, is impossible to foresee. Even if it is the case the employers of highly-skilled individuals are the first ones to log on, there is sufficient random variation (slow internet connection today…) in arrival times of employers on the platform such that we distribution of immigrant and employer types both sides of the cutoff <span class="math inline">\(c\)</span> are almost identical. So, it’s very hard to <em>manipulate</em> the assignment rule.</p>
+<p>The key observation is now that the exact timing when a certain quota is full, <span class="math inline">\(c\)</span>, is impossible to foresee. Even if it is the case the employers of highly-skilled individuals are the first ones to log on, there is sufficient random variation (slow internet connection today...) in arrival times of employers on the platform such that we distribution of immigrant and employer types both sides of the cutoff <span class="math inline">\(c\)</span> are almost identical. So, it's very hard to <em>manipulate</em> the assignment rule.</p>
 <p><span class="citation">Pinotti (<a href="#ref-pinotti">2017</a>)</span> experiments with several definitions of <em>close by the cutoff</em>, from 1 minute up to 30 minutes. The results are stable regardless of the definition chosen.</p>
 </div>
 <div id="findings" class="section level3">
