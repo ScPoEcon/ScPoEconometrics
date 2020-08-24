@@ -15,7 +15,8 @@ description: "SciencesPo UG Econometrics online textbook. Almost no Maths."
 ---
 
 ```{r, setup, include=FALSE}
-knitr::opts_chunk$set(comment=ScPoEconometrics:::getprompt(),fig.align = 'center')
+# knitr::opts_chunk$set(comment=ScPoEconometrics:::getprompt(),fig.align = 'center')
+knitr::opts_chunk$set(fig.align = 'center')
 ```
 
 

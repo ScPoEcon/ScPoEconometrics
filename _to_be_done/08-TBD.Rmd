@@ -450,7 +450,7 @@ We define the p-value as the sum of rejection areas for a given test statistic $
 We would like to further make this point in an experiential way, i.e. we want you to experience what is going on. We invite you to spend some time with the following apps. In particular, make sure you have a thorough understanding of `launchApp("estimate")`.
 
 ```{r,eval=FALSE}
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("estimate")
 launchApp("sampling")  
 launchApp("standard_errors_simple") 
