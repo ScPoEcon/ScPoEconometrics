@@ -130,7 +130,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
 <li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
 <li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
 <li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
@@ -289,13 +289,13 @@ A dummy variable measures the difference or the <em>offset</em> in the mean of t
 <p><br></p>
 <p>It is instructive to reconsider this example graphically:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-zero-one"></span>
-<img src="05-Categorial-Vars_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
+<img src="ScPoEconometrics_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
 <p class="caption">
 Figure 5.1: regressing <span class="math inline">\(y \in \mathbb{R}\)</span> on <span class="math inline">\(\text{is.female}_i \in \{0,1\}\)</span>. The blue line is <span class="math inline">\(E[y]\)</span>, the red arrow is the size of <span class="math inline">\(b_1\)</span>. Which is the same as the slope of the regression line in this case and the difference in conditional means!
 </p>
 </div>
 <p>In figure <a href="categorical-vars.html#fig:x-zero-one">5.1</a> we see that this regression simplifies to the straight line connecting the mean, or the <em>expected value</em> of <span class="math inline">\(y\)</span> when <span class="math inline">\(\text{is.female}_i = 0\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=0]\)</span>, to the mean when <span class="math inline">\(\text{is.female}_i=1\)</span>, i.e. <span class="math inline">\(E[y|\text{is.female}_i=1]\)</span>. It is useful to remember that the <em>unconditional mean</em> of <span class="math inline">\(y\)</span>, i.e. <span class="math inline">\(E[y]\)</span>, is going to be the result of regressing <span class="math inline">\(y\)</span> only on an intercept, illustrated by the blue line. This line will always lie in between both conditional means. As indicated by the red arrow, the estimate of the coefficient on the dummy, <span class="math inline">\(b_1\)</span>, is equal to the difference in conditional means for both groups. You should look at our app now to deepen your understanding of what's going on here:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoApps)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy&quot;</span>)</code></pre></div>
 </div>
 <div id="dummy-and-continuous-variables" class="section level2">
@@ -312,7 +312,7 @@ b_0  + \hphantom{b_1} +b_2 \times \text{exper}_i + e_i &amp; \text{if is.female=
 \end{cases}
 \end{equation}\]</span>
 <p>so that the intercept is <span class="math inline">\(b_0 + b_1\)</span> for women but <span class="math inline">\(b_0\)</span> for men. We will see this in the real-world example below, but for now let's see the effect of switching the dummy <em>on</em> and <em>off</em> in this app:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoApps)
 <span class="kw">launchApp</span>(<span class="st">&quot;reg_dummy_example&quot;</span>)</code></pre></div>
 </div>
 <div id="categorical-variables-in-r-factor" class="section level2">
@@ -553,7 +553,7 @@ F Statistic
 </table>
 <p>We know the results from column (1) very well by now. How does the relationship change if we include the <code>female</code> indicator? Remember from above that <code>female</code> is a <code>factor</code> with two levels, <em>0</em> and <em>1</em>, where <em>1</em> means <em>that's a female</em>. We see in the above output that <code>R</code> included a regressor called <code>female1</code>. This is a combination of the variable name <code>female</code> and the level which was included in the regression. In other words, <code>R</code> chooses a <em>reference category</em> (by default the first of all levels by order of appearance), which is excluded - here this is <code>female==0</code>. The interpretation is that <span class="math inline">\(b_2\)</span> measures the effect of being female <em>relative</em> to being male. <code>R</code> automatically creates a dummy variable for each potential level, excluding the first category.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot"></span>
-<img src="05-Categorial-Vars_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
+<img src="ScPoEconometrics_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
 <p class="caption">
 Figure 5.2: log wage vs educ. Right panel with female dummy.
 </p>
@@ -626,7 +626,7 @@ Figure 5.2: log wage vs educ. Right panel with female dummy.
 ## F-statistic: 74.65 on 3 and 522 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We will in the next chapter learn that the estimate for <span class="math inline">\(b_3\)</span> on the interaction <code>educ:female1</code> is difficult for us to distinguish from zero in a statistical sense; Hence for now we conclude that there are <em>no</em> significantly different returns in education for men and women in this data. This is easy to verify visually in this plot, where we are unable to detect a difference in slopes in the right panel.</p>
 <div class="figure" style="text-align: center"><span id="fig:wage-plot2"></span>
-<img src="05-Categorial-Vars_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
+<img src="ScPoEconometrics_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
 <p class="caption">
 Figure 5.3: log wage vs educ. Right panel allows slopes to be different - turns out they are not!
 </p>
@@ -645,10 +645,10 @@ Figure 5.3: log wage vs educ. Right panel allows slopes to be different - turns 
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;
 ## `geom_smooth()` using formula &#39;y ~ x&#39;
 ## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-165-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let's use this and include <code>g</code> as a dummy in the regression - suppose <code>g</code> encodes male and female.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-12-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-166-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
 <p class="caption">
 Figure 5.4: Left and right panel exhibit the same data. The right panel controls for group composition.
 </p>

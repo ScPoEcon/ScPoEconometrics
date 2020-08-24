@@ -130,7 +130,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
 <li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
 <li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
 <li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
@@ -221,7 +221,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>How to best allocate spending on schooling is an important question. What's the impact of spending money to finance smaller classrooms on student performance and outcomes, both in the short and in the long run? A vast literature in economics is concerned with this question, and for a long time there was no consensus.</p>
 <p>The big underlying problem in answering this question is that we do not really know how student outcomes are <em>produced</em>. In other words, what makes a successful student? Is it the quality of their teacher? Surely matters. is it quality of the school building? Could be. Is it that the other pupils are of high quality and this somehow <em>rubs off</em> to weaker pupils? Also possible. What about parental background? Sure. You see that there are many potential channels that could determine student outcomes. What is more, there could be several interdependencies amongst those factors. Here's a DAG!</p>
 <div class="figure" style="text-align: center"><span id="fig:star1"></span>
-<img src="08-STAR_files/figure-html/star1-1.png" alt="Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links." width="672" />
+<img src="ScPoEconometrics_files/figure-html/star1-1.png" alt="Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links." width="672" />
 <p class="caption">
 Figure 8.1: Possible Channels determining student outcomes. Dashed arrows represent potentially unobserved links.
 </p>
@@ -282,7 +282,8 @@ Y_{ics} = \beta_0 + \beta_1 \text{small}_{cs} + \beta_2 \text{REG/A}_{cs} + \bet
 <h2><span class="header-section-number">8.3</span> Implementing STAR</h2>
 <p>Let's start with computing the ranking of grades. Let's load the data and the <code>data.table</code> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;STAR&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;AER&quot;</span>)
-x =<span class="st"> </span><span class="kw">setDT</span>(STAR)
+<span class="kw">library</span>(data.table)
+x =<span class="st"> </span><span class="kw">as.data.table</span>(STAR)
 x</code></pre></div>
 <pre><code>##        gender ethnicity   birth        stark        star1        star2
 ##     1: female      afam 1979.50         &lt;NA&gt;         &lt;NA&gt;         &lt;NA&gt;
@@ -369,10 +370,10 @@ x</code></pre></div>
 ## 11597:        22        22        22        22
 ## 11598:        32        32        32        32</code></pre>
 <p>It's a bit unfortunate to switch to data.table, but I haven't been able to do what I wanted in dplyr :-( . Ok, here goes. First thing, you can see that this data set is <em>wide</em>. First thing we want to do is to make it <em>long</em>, i.e. reshape it so that if has 4 ID columns, and several measurements columns thereafter. First, let's add a studend ID:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ , ID <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(x)]  <span class="co"># add a column called `ID`</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ , ID <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(x)]  <span class="co"># add a column called `ID`</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># `melt` a data.table means to dissolve it and reassamble for some ID variables</span>
 
-<span class="co"># `melt` a data.table means to dissolve it and reassamble for some ID variables</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mx =<span class="st"> </span><span class="kw">melt.data.table</span>(x, 
+mx =<span class="st"> </span><span class="kw">melt.data.table</span>(x, 
                      <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>,<span class="st">&quot;gender&quot;</span>,<span class="st">&quot;ethnicity&quot;</span>,<span class="st">&quot;birth&quot;</span>), 
                      <span class="dt">measure.vars =</span> <span class="kw">patterns</span>(<span class="st">&quot;star*&quot;</span>,<span class="st">&quot;read*&quot;</span>,<span class="st">&quot;math*&quot;</span>, <span class="st">&quot;schoolid*&quot;</span>,
                                              <span class="st">&quot;degree*&quot;</span>,<span class="st">&quot;experience*&quot;</span>,<span class="st">&quot;tethnicity*&quot;</span>,<span class="st">&quot;lunch*&quot;</span>), 
@@ -395,7 +396,7 @@ mx[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]
 ## 46391: 11597 female      afam 1980.00 star3 regular+aide  624  610
 ## 46392: 11598   male      afam 1980.25 star3 regular+aide  580  577</code></pre>
 <p>You can see here that for example pupil <code>ID=1</code> was not present in kindergarden, but joined later. We will only keep complete records, hence we drop those NAs:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mx =<span class="st"> </span>mx[<span class="kw">complete.cases</span>(mx),]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mx &lt;-<span class="st"> </span>mx[<span class="kw">complete.cases</span>(mx)]
 mx[ID<span class="op">==</span><span class="dv">2</span>]  <span class="co"># here is pupil number 2</span></code></pre></div>
 <pre><code>##    ID gender ethnicity birth grade classtype read math schoolid   degree
 ## 1:  2 female      cauc  1980 stark     small  447  473       63 bachelor
@@ -423,7 +424,7 @@ om =<span class="st"> </span><span class="kw">par</span>(<span class="st">&quot;
 <span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>),<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>,om[<span class="dv">2</span>],<span class="fl">2.5</span>,om[<span class="dv">4</span>]))
 ecdfs[,.SD[,<span class="kw">plot</span>(mathcdf[[<span class="dv">1</span>]],<span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;math ecdf grade&quot;</span>,.BY))],by =<span class="st"> </span>grade]
 ecdfs[,.SD[,<span class="kw">plot</span>(readcdf[[<span class="dv">1</span>]],<span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;read ecdf grade&quot;</span>,.BY))],by =<span class="st"> </span>grade]</code></pre></div>
-<p><img src="08-STAR_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-187-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="dt">mar =</span> om)</code></pre></div>
 <p>You can see here how the cdf maps SAT scores (650, for example), into the interval <span class="math inline">\([0,1]\)</span>. Now, in the <code>ecdfs</code> <code>data.table</code> object, the <code>readcdf</code> column contains a <em>function</em> (a cdf) for each grade. We can evaluate the observed test scores for each student in that function to get their ranking in <span class="math inline">\([0,1]\)</span>, by grade:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setkey</span>(ecdfs, grade)  <span class="co"># key ecdfs according to `grade`</span>
@@ -442,13 +443,13 @@ mxz =<span class="st"> </span><span class="kw">merge</span>(mx,z,<span class="dt
 <span class="co"># make a plot</span>
 <span class="kw">ggplot</span>(<span class="dt">data =</span> mxz, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> score,<span class="dt">color=</span>classtype)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>grade) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:gradedens"></span>
-<img src="08-STAR_files/figure-html/gradedens-1.png" alt="Reproducing Figure I in @krueger1999" width="672" />
+<img src="ScPoEconometrics_files/figure-html/gradedens-1.png" alt="Reproducing Figure I in @krueger1999" width="672" />
 <p class="caption">
 Figure 8.2: Reproducing Figure I in <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span>
 </p>
 </div>
 <p>You can compare figure <a href="STAR.html#fig:gradedens">8.2</a> to <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> figure 1. You can see that the density estimates are almost identical, the discrepancy comes mainly from the fact that we split the regular classes also by with/without aide.</p>
-<div class="figure"><span id="fig:kruegerdens"></span>
+<div class="figure" style="text-align: center"><span id="fig:kruegerdens"></span>
 <img src="images/krueger1.png" alt="Outcome densities, @krueger1999 figure 1." width="937" />
 <p class="caption">
 Figure 8.3: Outcome densities, <span class="citation">Krueger (<a href="#ref-krueger1999">1999</a>)</span> figure 1.
@@ -492,8 +493,8 @@ school_co =<span class="st"> </span><span class="kw">c</span>(<span class="kw">u
 <span class="st">    </span>huxtable<span class="op">::</span><span class="kw">set_top_border</span>(<span class="dv">12</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">2</span>)
 }
 h<span class="op">$</span>stark</code></pre></div>
-<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-8">
-<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-8">Table 8.1: </span> Estimates for grade stark</caption><col><col><col><col><tr>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-189">
+<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-189">Table 8.1: </span> Estimates for grade stark</caption><col><col><col><col><tr>
 <th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(1)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(2)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: bold;">(3)</th></tr>
 <tr>
 <th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">51.44 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">58.49 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: normal;">60.20 ***</td></tr>
@@ -526,8 +527,8 @@ h<span class="op">$</span>stark</code></pre></div>
 </table>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star1</code></pre></div>
-<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-8">
-<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-8">Table 8.1: </span> Estimates for grade star1</caption><col><col><col><col><tr>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-189">
+<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-189">Table 8.1: </span> Estimates for grade star1</caption><col><col><col><col><tr>
 <th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(1)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(2)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: bold;">(3)</th></tr>
 <tr>
 <th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">49.43 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">53.84 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: normal;">56.95 ***</td></tr>
@@ -560,8 +561,8 @@ h<span class="op">$</span>stark</code></pre></div>
 </table>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star2</code></pre></div>
-<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-8">
-<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-8">Table 8.1: </span> Estimates for grade star2</caption><col><col><col><col><tr>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-189">
+<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-189">Table 8.1: </span> Estimates for grade star2</caption><col><col><col><col><tr>
 <th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(1)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(2)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: bold;">(3)</th></tr>
 <tr>
 <th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">49.75 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">65.02 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: normal;">66.68 ***</td></tr>
@@ -594,8 +595,8 @@ h<span class="op">$</span>stark</code></pre></div>
 </table>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">h<span class="op">$</span>star3</code></pre></div>
-<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-8">
-<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-8">Table 8.1: </span> Estimates for grade star3</caption><col><col><col><col><tr>
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-189">
+<caption style="caption-side: top; text-align: center;"><span id="tab:unnamed-chunk-189">Table 8.1: </span> Estimates for grade star3</caption><col><col><col><col><tr>
 <th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(1)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: bold;">(2)</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.4pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: bold;">(3)</th></tr>
 <tr>
 <th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 0pt; font-weight: bold;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">50.87 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">45.90 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 0pt 6pt 6pt; font-weight: normal;">49.15 ***</td></tr>

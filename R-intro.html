@@ -130,7 +130,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
 <li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
 <li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
 <li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
@@ -459,26 +459,24 @@ We highly recommend that you use <code>RStudio</code> for everything related to 
 </div>
 <div id="code-output" class="section level2">
 <h2><span class="header-section-number">1.6</span> <code>Code</code> vs Output in this Book</h2>
-<p>A quick note on styling choices in this book. We had to make a decision how to visually separate <code>R</code> code and resulting output in this book. We decided to prefix all output lines with <code>#OUT&gt;</code> to make the distinction. A typical code snippet with output is thus going to look like this:</p>
+<p>A quick note on styling choices in this book. We had to make a decision how to visually separate <code>R</code> code and resulting output in this book. All output lines are prefixed with <code>##</code> to make the distinction. A typical code snippet with output is thus going to look like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># everything after a # is a comment, i.e. R disregards it.</span></code></pre></div>
-<p>where you see on the first line the <code>R</code> code, and on the second line the output. As mentioned, that line starts with <code>#OUT&gt;</code> to say <em>this is an output</em>, followed by <code>[1]</code> (indicating this is a vector of length <em>one</em> - more on this below!), followed by the actual result - <code>1 + 3 = 4</code>!</p>
+<p>where you see on the first line the <code>R</code> code, and on the second line the output. As mentioned, that line starts with <code>##</code> to say <em>this is an output</em>, followed by <code>[1]</code> (indicating this is a vector of length <em>one</em> - more on this below!), followed by the actual result - <code>1 + 3 = 4</code>!</p>
 <p>Notice that you can simply copy and paste all the code you see into your <code>R</code> console. In fact, you are <em>strongly</em> encouraged to actually do this and try out <strong>all the code</strong> you see in this book.</p>
 <p>Finally, please note that this way of showing output is fully our choice in this textbook, and that you should expect other output formats elsewhere. For example, in my <code>RStudio</code> console, the above code and output looks like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span>
 [<span class="dv">1</span>] <span class="dv">4</span></code></pre></div>
 </div>
 <div id="install-package" class="section level2">
-<h2><span class="header-section-number">1.7</span> <code>ScPoEconometrics</code> Package</h2>
+<h2><span class="header-section-number">1.7</span> <code>ScPoApps</code> Package</h2>
 <p>To fully take advantage of our course, please install the associated <code>R</code> package directly from its online code repository. You can do this by copy and pasting the following three lines into your <code>R</code> console:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
-<span class="kw">library</span>(devtools)
-<span class="kw">install_github</span>(<span class="dt">repo =</span> <span class="st">&quot;ScPoEcon/ScPoEconometrics&quot;</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="dt">repo =</span> <span class="st">&quot;ScPoEcon/ScPoApps&quot;</span>)</code></pre></div>
 <p>In order to check whether everything works fine, you could load the library, and check it's current version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoEconometrics)
-<span class="kw">packageVersion</span>(<span class="st">&quot;ScPoEconometrics&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;0.2.6&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ScPoApps)
+<span class="kw">packageVersion</span>(<span class="st">&quot;ScPoApps&quot;</span>)</code></pre></div>
 </div>
 <div id="data-types" class="section level2">
 <h2><span class="header-section-number">1.8</span> Data Types</h2>

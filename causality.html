@@ -130,7 +130,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
 <li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
 <li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
 <li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
@@ -261,28 +261,28 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 <h2><span class="header-section-number">7.1</span> Directed Acyclical Graphs (DAG)</h2>
 <p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). If an arrow starts at node <span class="math inline">\(x\)</span> and ends at node <span class="math inline">\(y\)</span>, we say that <span class="math inline">\(x\)</span> causes <span class="math inline">\(y\)</span>. Here is a simple example of such a DAG:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag1"></span>
-<img src="07-Causality_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
 Figure 7.2: A simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
 <p>Now consider this setting, where there is a third variable, <span class="math inline">\(z\)</span>. It could be possible that also <span class="math inline">\(z\)</span> has a direct influence on <span class="math inline">\(y\)</span>:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag2"></span>
-<img src="07-Causality_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
 <p class="caption">
 Figure 7.3: A simple DAG with with 2 causal paths: Both <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> have a direct impact on <span class="math inline">\(y\)</span>.
 </p>
 </div>
 <p>Now let's change this and create a path from <span class="math inline">\(z\)</span> to <em>both</em> <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> instead. We call <span class="math inline">\(z\)</span> a <em>confounder</em> in the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: <span class="math inline">\(z\)</span> <em>confounds</em> the direct causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, by affecting them both at the same time. What is more, there is no arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> at all, so the only <em>real</em> explanatory variable here is in fact <span class="math inline">\(z\)</span>. Attributing any explanatory power to <span class="math inline">\(x\)</span> would be wrong in this setting.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag3"></span>
-<img src="07-Causality_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
 <p class="caption">
 Figure 7.4: A simple DAG where <span class="math inline">\(z\)</span> is a confounder. There is no causal path from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>, and any correlation we observe between those variables is completely induced by <span class="math inline">\(z\)</span>. We call this spurious correlation.
 </p>
 </div>
 <p>Here is a second example where <span class="math inline">\(z\)</span> is a confounder, but slightly different.</p>
-<div class="figure"><span id="fig:dag41"></span>
-<img src="07-Causality_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:dag41"></span>
+<img src="ScPoEconometrics_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
 <p class="caption">
 Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, but there is a causal link from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> now. If we observed <span class="math inline">\(z\)</span>, we can control for it.
 </p>
@@ -292,8 +292,8 @@ Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, b
 <div id="smoking-in-a-dag" class="section level2">
 <h2><span class="header-section-number">7.2</span> Smoking in a DAG</h2>
 <p>Let's use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:</p>
-<div class="figure"><span id="fig:dag-cig"></span>
-<img src="07-Causality_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
+<div class="figure" style="text-align: center"><span id="fig:dag-cig"></span>
+<img src="ScPoEconometrics_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
 <p class="caption">
 Figure 7.6: Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.
 </p>
@@ -386,14 +386,14 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{7.4}
 \end{equation}\]</span>
 <p>and imagine it represents the data generating process (DGP) of the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Writing down this equation is tightly linked to drawing this DAG from above:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag4"></span>
-<img src="07-Causality_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">
 Figure 7.7: The same simple DAG showing the causal impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.
 </p>
 </div>
 <p>The role of <span class="math inline">\(\varepsilon_i\)</span> in equation <a href="causality.html#eq:DGP-h">(7.4)</a> is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to <em>fully</em> explain <span class="math inline">\(y_i\)</span> with our necessarily simple model. However, assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> (or <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>) makes sure that those other factors are in <strong>no systematic relationship</strong> with our regressor <span class="math inline">\(x\)</span>. Why? Well if it <em>were</em> the case that another factor <span class="math inline">\(z\)</span> is related to <span class="math inline">\(x\)</span>, we could never make our ceteris paribus statements of <em>holding all other factors fixed, the impact of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is <span class="math inline">\(\beta\)</span></em>. In other words, we'd have a confounder in our regression.</p>
 <div class="figure" style="text-align: center"><span id="fig:dag5"></span>
-<img src="07-Causality_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
+<img src="ScPoEconometrics_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
 <p class="caption">
 Figure 7.8: The same simple DAG where <span class="math inline">\(z\)</span> is a confounder that needs to be controlled for.
 </p>
@@ -480,8 +480,8 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 ## F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that's the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn't seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
 <p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let's investigate that:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="07-Causality_files/figure-html/unnamed-chunk-8-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-180"></span>
+<img src="ScPoEconometrics_files/figure-html/unnamed-chunk-180-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">
 Figure 7.9: Distribution of <code>lotsize</code> by <code>bathrms</code>
 </p>

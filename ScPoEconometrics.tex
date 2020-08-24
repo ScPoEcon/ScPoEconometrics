@@ -573,9 +573,9 @@ Book}{Code vs Output in this Book}}\label{code-output}
 
 A quick note on styling choices in this book. We had to make a decision
 how to visually separate \texttt{R} code and resulting output in this
-book. We decided to prefix all output lines with
-\texttt{\#OUT\textgreater{}} to make the distinction. A typical code
-snippet with output is thus going to look like this:
+book. All output lines are prefixed with \texttt{\#\#} to make the
+distinction. A typical code snippet with output is thus going to look
+like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -594,11 +594,10 @@ snippet with output is thus going to look like this:
 \end{Shaded}
 
 where you see on the first line the \texttt{R} code, and on the second
-line the output. As mentioned, that line starts with
-\texttt{\#OUT\textgreater{}} to say \emph{this is an output}, followed
-by \texttt{{[}1{]}} (indicating this is a vector of length \emph{one} -
-more on this below!), followed by the actual result -
-\texttt{1\ +\ 3\ =\ 4}!
+line the output. As mentioned, that line starts with \texttt{\#\#} to
+say \emph{this is an output}, followed by \texttt{{[}1{]}} (indicating
+this is a vector of length \emph{one} - more on this below!), followed
+by the actual result - \texttt{1\ +\ 3\ =\ 4}!
 
 Notice that you can simply copy and paste all the code you see into your
 \texttt{R} console. In fact, you are \emph{strongly} encouraged to
@@ -616,8 +615,8 @@ and output looks like this:
 \end{Highlighting}
 \end{Shaded}
 
-\section{\texorpdfstring{\texttt{ScPoEconometrics}
-Package}{ScPoEconometrics Package}}\label{install-package}
+\section{\texorpdfstring{\texttt{ScPoApps}
+Package}{ScPoApps Package}}\label{install-package}
 
 To fully take advantage of our course, please install the associated
 \texttt{R} package directly from its online code repository. You can do
@@ -627,8 +626,7 @@ console:
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{require}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
-\KeywordTok{library}\NormalTok{(devtools)}
-\KeywordTok{install_github}\NormalTok{(}\DataTypeTok{repo =} \StringTok{"ScPoEcon/ScPoEconometrics"}\NormalTok{)}
+\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\DataTypeTok{repo =} \StringTok{"ScPoEcon/ScPoApps"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -637,14 +635,10 @@ library, and check it's current version:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
-\KeywordTok{packageVersion}\NormalTok{(}\StringTok{"ScPoEconometrics"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(ScPoApps)}
+\KeywordTok{packageVersion}\NormalTok{(}\StringTok{"ScPoApps"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] '0.2.6'
-\end{verbatim}
 
 \section{Data Types}\label{data-types}
 
@@ -2790,7 +2784,7 @@ useful. It summarizes the \emph{distribution} of values in a vector. In
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-3-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-76-1} \end{center}
 
 The histogram function has a number of parameters which can be changed
 to make our plot look much nicer. Use the \texttt{?} operator to read
@@ -2808,7 +2802,7 @@ parameters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-4-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-77-1} \end{center}
 
 Importantly, you should always be sure to label your axes and give the
 plot a title. The argument \texttt{breaks} is specific to
@@ -2830,7 +2824,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-5-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2843,7 +2837,7 @@ values, like a ranking from 1 to 10.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-6-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-79-1} \end{center}
 
 \subsection{Boxplots}\label{boxplots}
 
@@ -2876,7 +2870,7 @@ dots are outliers.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-8-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-81-1} \end{center}
 
 However, more often we will use boxplots to compare a numerical variable
 for different values of a categorical variable.
@@ -2887,7 +2881,7 @@ for different values of a categorical variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-9-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-82-1} \end{center}
 
 Here used the \texttt{boxplot()} command to create side-by-side
 boxplots. However, since we are now dealing with two variables, the
@@ -2912,7 +2906,7 @@ course.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-10-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-83-1} \end{center}
 
 Again, \texttt{boxplot()} has a number of additional arguments which
 have the ability to make our plot more visually appealing.
@@ -2931,7 +2925,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-11-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-84-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2945,7 +2939,7 @@ more generally; see the documentation for details.)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-12-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-85-1} \end{center}
 
 \subsection{\texorpdfstring{\texttt{ggplot}}{ggplot}}\label{ggplot}
 
@@ -2961,7 +2955,7 @@ sometimes the other way around.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-13-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 \texttt{ggplot} is impossible to describe in brief terms, so please look
 at \href{http://ggplot2.tidyverse.org}{the package's website} which
@@ -2980,7 +2974,7 @@ demonstrate how one could further customize that first plot:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-14-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-87-1} \end{center}
 
 If you want to see \texttt{ggplot} in action, you could start with
 \href{http://jcyhong.github.io/ggplot_demo.html}{this} and then look at
@@ -2997,7 +2991,7 @@ against each other:
 
 \begin{figure}
 
-{\centering \includegraphics{02-SummaryStats_files/figure-latex/x-y-corr-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/x-y-corr-1} 
 
 }
 
@@ -3086,10 +3080,12 @@ deviation for a variable is to look at the range of \(x\), and simply
 divide that number by four.
 
 \begin{figure}
-\centering
-\includegraphics{02-SummaryStats_files/figure-latex/vis-1.pdf}
-\caption{\label{fig:vis}visual estimation on \(\sigma\). The x-axis labels
-min and max as well as mean of \(x\).}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/vis-1} 
+
+}
+
+\caption{visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$.}\label{fig:vis}
 \end{figure}
 
 This is illustrated in figure \ref{fig:vis}. Here we see that
@@ -3659,7 +3655,7 @@ time, in terms of millions of people. We will make use of the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/gather-plot-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/gather-plot-1} \end{center}
 
 \subsubsection*{\texorpdfstring{Arrange a
 \texttt{tibble}}{Arrange a tibble}}\label{arrange-a-tibble}
@@ -3944,7 +3940,7 @@ plotting code:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/psexes-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/psexes-1} \end{center}
 
 \subsubsection*{Always Compare to Germany
 :-)}\label{always-compare-to-germany--}
@@ -4020,7 +4016,7 @@ population each country amounts to:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{02-SummaryStats_files/figure-latex/unnamed-chunk-34-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-107-1} \end{center}
 
 \chapter{Linear Regression}\label{linreg}
 
@@ -4095,7 +4091,7 @@ coordinates and mark them in the graph. In \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{03-linear-reg_files/figure-latex/unnamed-chunk-3-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-110-1} \end{center}
 
 Here, each dot represents one observation. In this case, one particular
 measurement \texttt{speed} and \texttt{dist} for a car. Now, again:
@@ -4121,13 +4117,13 @@ scatterplot, like so:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{03-linear-reg_files/figure-latex/unnamed-chunk-5-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-112-1} \end{center}
 
 Now that doesn't seem a particularly \emph{good} way to summarize the
 relationship. Clearly, a \emph{better} line would be not be flat, but
 have a \emph{slope}, i.e.~go upwards:
 
-\includegraphics{03-linear-reg_files/figure-latex/unnamed-chunk-6-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-113-1} \end{center}
 
 That is slightly better. However, the line seems at too high a level -
 the point at which it crosses the y-axis is called the \emph{intercept};
@@ -4170,7 +4166,7 @@ can think of. It would look like this:
 
 \begin{figure}
 
-{\centering \includegraphics{03-linear-reg_files/figure-latex/line-arrows-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/line-arrows-1} 
 
 }
 
@@ -4253,7 +4249,7 @@ error avoids this (because now negative errors get positive values!)
 
 \begin{figure}
 
-{\centering \includegraphics{03-linear-reg_files/figure-latex/line-squares-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/line-squares-1} 
 
 }
 
@@ -4270,7 +4266,7 @@ square), and a second one focusing on squared errors:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{library}\NormalTok{(ScPoApps)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple_arrows"}\NormalTok{)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_simple"}\NormalTok{) }\CommentTok{# with squared errors}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"SSR_cone"}\NormalTok{) }\CommentTok{# visualize the minimzation problem from above!}
@@ -4584,7 +4580,7 @@ constructing 4 different datasets which all have identical
 line \emph{are identical}. However, the usefulness of the statistics to
 describe the relationship in the data is not clear.
 
-\includegraphics{03-linear-reg_files/figure-latex/unnamed-chunk-22-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-129-1} \end{center}
 
 The important lesson from this example is the following:
 
@@ -4614,14 +4610,14 @@ Data}\label{non-linear-relationships-in-data}
 
 Suppose our data now looks like this:
 
-\includegraphics{03-linear-reg_files/figure-latex/non-line-cars-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-1} \end{center}
 
 Putting our previous \emph{best line} defined in equation
 \eqref{eq:abline} as \(y = b_0 + b_1 x + e\), we get something like this:
 
 \begin{figure}
 
-{\centering \includegraphics{03-linear-reg_files/figure-latex/non-line-cars-ols-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-ols-1} 
 
 }
 
@@ -4646,7 +4642,7 @@ performs:
 
 \begin{figure}
 
-{\centering \includegraphics{03-linear-reg_files/figure-latex/non-line-cars-ols2-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/non-line-cars-ols2-1} 
 
 }
 
@@ -4762,10 +4758,12 @@ years of education. Let's start with a plot:
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{03-linear-reg_files/figure-latex/wooldridge-wages-1.pdf}
-\caption{\label{fig:wooldridge-wages}Wages vs Education from the wooldridge
-dataset wage1.}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wooldridge-wages-1} 
+
+}
+
+\caption{Wages vs Education from the wooldridge dataset wage1.}\label{fig:wooldridge-wages}
 \end{figure}
 
 Looking at the top panel of figure \ref{fig:wooldridge-wages}, you
@@ -4810,10 +4808,12 @@ and we can add the resulting regression line to our above plot:
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{03-linear-reg_files/figure-latex/wooldridge-wages2-1.pdf}
-\caption{\label{fig:wooldridge-wages2}Wages vs Education from the wooldridge
-dataset wage1, with regression}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wooldridge-wages2-1} 
+
+}
+
+\caption{Wages vs Education from the wooldridge dataset wage1, with regression}\label{fig:wooldridge-wages2}
 \end{figure}
 
 The \texttt{hourly\_wage} object contains the results of this
@@ -4887,7 +4887,7 @@ coefficients \(b_0\) and \(b_1\)? Well, let's try!
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Aug
-24, 2020 - 01:40:39 PM
+24, 2020 - 09:37:38 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Effect of Scaling on Coefficients} 
@@ -4963,7 +4963,7 @@ feeling for this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{library}\NormalTok{(ScPoApps)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{'Rescale'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5027,7 +5027,7 @@ RHS stays unchanged). How do our pictures change?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{03-linear-reg_files/figure-latex/logplot-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/logplot-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5044,7 +5044,7 @@ output between both models:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Aug
-24, 2020 - 01:40:39 PM
+24, 2020 - 09:37:38 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Log Transformed Equation} 
@@ -5133,10 +5133,12 @@ relationship with company sales.
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{03-linear-reg_files/figure-latex/ceo-sal-1.pdf}
-\caption{\label{fig:ceo-sal}The effect of log-transforming highly skewed
-data.}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/ceo-sal-1} 
+
+}
+
+\caption{The effect of log-transforming highly skewed data.}\label{fig:ceo-sal}
 \end{figure}
 
 In the left panel of figure \ref{fig:ceo-sal} you clearly see that both
@@ -5208,7 +5210,7 @@ The OLS regression plane through this dataset looks like in figure
 
 \begin{figure}
 
-{\centering \includegraphics{04-MultipleReg_files/figure-latex/plane3D-reg-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/plane3D-reg-1} 
 
 }
 
@@ -5359,7 +5361,7 @@ education? Here is a picture:
 
 \begin{figure}
 
-{\centering \includegraphics{04-MultipleReg_files/figure-latex/plane3D-lwage-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/plane3D-lwage-1} 
 
 }
 
@@ -5379,9 +5381,12 @@ other:
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{04-MultipleReg_files/figure-latex/corrplot-1.pdf}
-\caption{\label{fig:corrplot}correlation plot}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/corrplot-1} 
+
+}
+
+\caption{correlation plot}\label{fig:corrplot}
 \end{figure}
 
 The way to read the so-called \emph{correlation plot} in figure
@@ -5402,7 +5407,7 @@ this into a regression model now:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Aug
-24, 2020 - 01:40:44 PM
+24, 2020 - 09:37:42 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5701,7 +5706,7 @@ It is instructive to reconsider this example graphically:
 
 \begin{figure}
 
-{\centering \includegraphics{05-Categorial-Vars_files/figure-latex/x-zero-one-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/x-zero-one-1} 
 
 }
 
@@ -5723,7 +5728,7 @@ app now to deepen your understanding of what's going on here:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{library}\NormalTok{(ScPoApps)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_dummy"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5755,7 +5760,7 @@ effect of switching the dummy \emph{on} and \emph{off} in this app:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ScPoEconometrics)}
+\KeywordTok{library}\NormalTok{(ScPoApps)}
 \KeywordTok{launchApp}\NormalTok{(}\StringTok{"reg_dummy_example"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5864,7 +5869,7 @@ on their education as well as their sex:
 
 \% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
 University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, Aug
-24, 2020 - 01:40:46 PM
+24, 2020 - 09:37:42 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -5914,7 +5919,7 @@ level, excluding the first category.
 
 \begin{figure}
 
-{\centering \includegraphics{05-Categorial-Vars_files/figure-latex/wage-plot-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wage-plot-1} 
 
 }
 
@@ -6045,7 +6050,7 @@ we are unable to detect a difference in slopes in the right panel.
 
 \begin{figure}
 
-{\centering \includegraphics{05-Categorial-Vars_files/figure-latex/wage-plot2-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/wage-plot2-1} 
 
 }
 
@@ -6083,7 +6088,7 @@ example):
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{05-Categorial-Vars_files/figure-latex/unnamed-chunk-11-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-165-1} \end{center}
 
 Here we observe a slightly negative relationship: higher wages are
 associated with fewer hours worked? Maybe. But what is this, there is a
@@ -6092,11 +6097,11 @@ a dummy in the regression - suppose \texttt{g} encodes male and female.
 
 \begin{figure}
 
-{\centering \includegraphics{05-Categorial-Vars_files/figure-latex/unnamed-chunk-12-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-166-1} 
 
 }
 
-\caption{Left and right panel exhibit the same data. The right panel controls for group composition.}\label{fig:unnamed-chunk-12}
+\caption{Left and right panel exhibit the same data. The right panel controls for group composition.}\label{fig:unnamed-chunk-166}
 \end{figure}
 
 This is an artificial example; yet it shows that you can be severly
@@ -6117,7 +6122,7 @@ shaded area as in this one here:
 
 \begin{figure}
 
-{\centering \includegraphics{06-StdErrors_files/figure-latex/confint-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/confint-1} 
 
 }
 
@@ -6144,7 +6149,12 @@ Fusilli?
 Well, it's time to find out.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/pasta1} \caption{A glass jar filled with Fusilli pasta in three different colors.}\label{fig:pasta1}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta1} 
+
+}
+
+\caption{A glass jar filled with Fusilli pasta in three different colors.}\label{fig:pasta1}
 \end{figure}
 
 Let's call the fusilly in this jar our \emph{study population}, i.e.~the
@@ -6157,7 +6167,12 @@ solution, but is a long and arduous process, see figures
 \ref{fig:pasta2} and \ref{fig:pasta3}.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/pasta2} \caption{Manually separating Fusilli by their color is very costly in terms of effort and cost.}\label{fig:pasta2}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta2} 
+
+}
+
+\caption{Manually separating Fusilli by their color is very costly in terms of effort and cost.}\label{fig:pasta2}
 \end{figure}
 
 Additionally, you may draw worried looks from the people around you,
@@ -6170,7 +6185,12 @@ task?\footnote{Regardless of the worried onlookers, I did what I had to
   to recount.)}
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/pasta3} \caption{Heaps of Fusilli pasta ready to be counted.}\label{fig:pasta3}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta3} 
+
+}
+
+\caption{Heaps of Fusilli pasta ready to be counted.}\label{fig:pasta3}
 \end{figure}
 
 \subsection{Taking One Sample From the
@@ -6200,7 +6220,12 @@ less painful} than performing the full count (i.e.~the \emph{census}) of
 Fusilli performed above.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/pasta5} \caption{Taking one sample of 20 Fusilli from the jar.}\label{fig:pasta5}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta5} 
+
+}
+
+\caption{Taking one sample of 20 Fusilli from the jar.}\label{fig:pasta5}
 \end{figure}
 
 Then, we put my sample back into the jar, and we reshuffled the Fusilli.
@@ -6233,7 +6258,12 @@ and we wrote this data down in a table on the board. Then, we drew a
 histogram which showed how many samples had fallen into which bins.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/pasta6} \caption{Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.}\label{fig:pasta6}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/pasta6} 
+
+}
+
+\caption{Taking eleven samples of 20 Fusilli each from the jar, and plotting the histogram of obtained sample proportions of Green Fusilli.}\label{fig:pasta6}
 \end{figure}
 
 We looked at the histogram in figure \ref{fig:pasta6} and we noted
@@ -6280,7 +6310,7 @@ We collected the sample data into a data.frame:
 This produces an associated histogram which looks very much like the one
 we draws onto the board:
 
-\includegraphics{06-StdErrors_files/figure-latex/pasta-hist-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/pasta-hist-1} \end{center}
 
 \subsection{Recap}\label{recap}
 
@@ -6327,7 +6357,12 @@ sampling activity yourself. We will now hand over to the brilliant
 \texttt{Moderndive}}{Handover to Moderndive}}\label{handover-to-moderndive}
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/transition} \caption{The Moderndive package used red and white balls instead of fusilli pasta.}\label{fig:handover}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/transition} 
+
+}
+
+\caption{The Moderndive package used red and white balls instead of fusilli pasta.}\label{fig:handover}
 \end{figure}
 
 The sampling activity in \texttt{moderndive} was performed with red and
@@ -6531,7 +6566,9 @@ those assumptions. Let's give an example for each of them:
   Homoskedasticity. For correct inference (below!), we want to know
   whether the variance of \(\varepsilon\) varies with our explanatory
   variable \(x\), or not. Here is a typical example where it does:
-  \includegraphics{06-StdErrors_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+  \begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-172-1} \end{center}
+
   As income increases, not all people increase their food consumption in
   an equal way. So \(Var(\varepsilon|x)\) will vary with the value of
   \(x\), hence it won't be equal to the constant \(\sigma^2\).
@@ -6697,7 +6734,7 @@ example of such a DAG:
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/dag1-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag1-1} 
 
 }
 
@@ -6709,7 +6746,7 @@ could be possible that also \(z\) has a direct influence on \(y\):
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/dag2-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag2-1} 
 
 }
 
@@ -6726,7 +6763,7 @@ explanatory power to \(x\) would be wrong in this setting.
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/dag3-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag3-1} 
 
 }
 
@@ -6737,11 +6774,12 @@ Here is a second example where \(z\) is a confounder, but slightly
 different.
 
 \begin{figure}
-\centering
-\includegraphics{07-Causality_files/figure-latex/dag41-1.pdf}
-\caption{\label{fig:dag41}\(z\) is still a confounder here, but there is a
-causal link from \(x\) to \(y\) now. If we observed \(z\), we can
-control for it.}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag41-1} 
+
+}
+
+\caption{$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it.}\label{fig:dag41}
 \end{figure}
 
 In \ref{fig:dag41} there is an arrow from \(x\) to \(y\). In this
@@ -6760,14 +6798,12 @@ the 1950s faced where two competing models of the relationship between
 smoking and lung cancer:
 
 \begin{figure}
-\centering
-\includegraphics{07-Causality_files/figure-latex/dag-cig-1.pdf}
-\caption{\label{fig:dag-cig}Two competing causal graphs for the relationship
-between smoking and lung cancer. In the right panel Lung Cancer is
-directly impacted by a genetic factor, which at the same time also
-influences smoking. This is a stark representation of Fisher's view.
-Another version would have an additional arrow from Smoking to Lung
-Cancer in the right panel.}
+
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag-cig-1} 
+
+}
+
+\caption{Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.}\label{fig:dag-cig}
 \end{figure}
 
 Basically, what critics like Fisher were claiming was that the existing
@@ -7047,7 +7083,7 @@ to drawing this DAG from above:
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/dag4-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag4-1} 
 
 }
 
@@ -7068,7 +7104,7 @@ in our regression.
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/dag5-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/dag5-1} 
 
 }
 
@@ -7233,11 +7269,11 @@ important here, so let's investigate that:
 
 \begin{figure}
 
-{\centering \includegraphics{07-Causality_files/figure-latex/unnamed-chunk-8-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-180-1} 
 
 }
 
-\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-8}
+\caption{Distribution of `lotsize` by `bathrms`}\label{fig:unnamed-chunk-180}
 \end{figure}
 
 This shows that lotsize and the number of bathrooms is indeed positively
@@ -7278,7 +7314,7 @@ interdependencies amongst those factors. Here's a DAG!
 
 \begin{figure}
 
-{\centering \includegraphics{08-STAR_files/figure-latex/star1-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/star1-1} 
 
 }
 
@@ -7446,7 +7482,8 @@ and the \texttt{data.table} package:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{data}\NormalTok{(}\StringTok{"STAR"}\NormalTok{, }\DataTypeTok{package =} \StringTok{"AER"}\NormalTok{)}
-\NormalTok{x =}\StringTok{ }\KeywordTok{setDT}\NormalTok{(STAR)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\NormalTok{x =}\StringTok{ }\KeywordTok{as.data.table}\NormalTok{(STAR)}
 \NormalTok{x}
 \end{Highlighting}
 \end{Shaded}
@@ -7547,13 +7584,13 @@ several measurements columns thereafter. First, let's add a studend ID:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{x[ , ID }\OperatorTok{:}\ErrorTok{=}\StringTok{ }\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(x)]  }\CommentTok{# add a column called `ID`}
-
-\CommentTok{# `melt` a data.table means to dissolve it and reassamble for some ID variables}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# `melt` a data.table means to dissolve it and reassamble for some ID variables}
+
 \NormalTok{mx =}\StringTok{ }\KeywordTok{melt.data.table}\NormalTok{(x, }
                      \DataTypeTok{id =} \KeywordTok{c}\NormalTok{(}\StringTok{"ID"}\NormalTok{,}\StringTok{"gender"}\NormalTok{,}\StringTok{"ethnicity"}\NormalTok{,}\StringTok{"birth"}\NormalTok{), }
                      \DataTypeTok{measure.vars =} \KeywordTok{patterns}\NormalTok{(}\StringTok{"star*"}\NormalTok{,}\StringTok{"read*"}\NormalTok{,}\StringTok{"math*"}\NormalTok{, }\StringTok{"schoolid*"}\NormalTok{,}
@@ -7588,7 +7625,7 @@ hence we drop those NAs:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mx =}\StringTok{ }\NormalTok{mx[}\KeywordTok{complete.cases}\NormalTok{(mx),]}
+\NormalTok{mx <-}\StringTok{ }\NormalTok{mx[}\KeywordTok{complete.cases}\NormalTok{(mx)]}
 \NormalTok{mx[ID}\OperatorTok{==}\DecValTok{2}\NormalTok{]  }\CommentTok{# here is pupil number 2}
 \end{Highlighting}
 \end{Shaded}
@@ -7640,7 +7677,7 @@ within a certain grade. That is the \emph{ranking} of scores from 0 to
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-STAR_files/figure-latex/unnamed-chunk-6-1.pdf}
+\begin{center}\includegraphics{ScPoEconometrics_files/figure-latex/unnamed-chunk-187-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7676,7 +7713,7 @@ student in that function to get their ranking in \([0,1]\), by grade:
 
 \begin{figure}
 
-{\centering \includegraphics{08-STAR_files/figure-latex/gradedens-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/gradedens-1} 
 
 }
 
@@ -7689,7 +7726,12 @@ discrepancy comes mainly from the fact that we split the regular classes
 also by with/without aide.
 
 \begin{figure}
-\includegraphics[width=26.03in]{images/krueger1} \caption{Outcome densities, @krueger1999 figure 1.}\label{fig:kruegerdens}
+
+{\centering \includegraphics[width=26.03in]{images/krueger1} 
+
+}
+
+\caption{Outcome densities, @krueger1999 figure 1.}\label{fig:kruegerdens}
 \end{figure}
 
 So far, so good! Now we can move to run a regression and estimate
@@ -7752,7 +7794,7 @@ Now let's look at each grade's models.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:unnamed-chunk-8} Estimates for grade stark}
+\caption{\label{tab:unnamed-chunk-189} Estimates for grade stark}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l}
 
@@ -7911,7 +7953,7 @@ Now let's look at each grade's models.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:unnamed-chunk-8} Estimates for grade star1}
+\caption{\label{tab:unnamed-chunk-189} Estimates for grade star1}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l}
 
@@ -8070,7 +8112,7 @@ Now let's look at each grade's models.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:unnamed-chunk-8} Estimates for grade star2}
+\caption{\label{tab:unnamed-chunk-189} Estimates for grade star2}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l}
 
@@ -8229,7 +8271,7 @@ Now let's look at each grade's models.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:unnamed-chunk-8} Estimates for grade star3}
+\caption{\label{tab:unnamed-chunk-189} Estimates for grade star3}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l}
 
@@ -8452,7 +8494,7 @@ Here's the obligatory DAG!
 
 \begin{figure}
 
-{\centering \includegraphics{09-RDD_files/figure-latex/rdd1-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/rdd1-1} 
 
 }
 
@@ -8487,7 +8529,7 @@ In our DAG, point 1 above is not currently visible. Let's augment this:
 
 \begin{figure}
 
-{\centering \includegraphics{09-RDD_files/figure-latex/rdd2-1} 
+{\centering \includegraphics{ScPoEconometrics_files/figure-latex/rdd2-1} 
 
 }
 
