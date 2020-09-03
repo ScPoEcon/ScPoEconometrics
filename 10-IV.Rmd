@@ -1,0 +1,12 @@
+# Instrumental Variables (IV) {#IV}
+
+In the previous chapters we have seen how to get credible causal estimates for the effect of some intervention via randomization techniques. Randomly allocating a subject to treatment or control groups makes sure that *everything else is equal*, hence we are really comparing apples with apples. Unfortunately, oftentimes we cannot perform a randomized control trial (RCT), out of technological, ethical, or other constraints. (We mentioned that forcing people to smoke via lottery draw is impossible to justify.)
+
+So, that's it, no RCT, no causal estimates?
+
+No! Methods like instrumental variables can help us to establish causality if we only have *observational data* (i.e. data generated not via experiment). That's reassuring, because in many settings this kind of data is the only thing we have.
+
+(some examples of datasets)
+
+
+## John Snow
