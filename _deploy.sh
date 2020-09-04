@@ -2,6 +2,9 @@
 
 set -e
 
+echo ${TRAVIS_BRANCH}
+exit 0
+
 [ -z "${GH_TOKEN}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
 [ "${TRAVIS_PULL_REQUEST}" != "false" ] && exit 0
