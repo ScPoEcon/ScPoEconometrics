@@ -35,6 +35,7 @@ Imports: bookdown,
     ggdag,
     data.table,
     huxtable,
-    cholera
+    cholera, 
+    reshape2
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz
 RoxygenNote: 7.1.1

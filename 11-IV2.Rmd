@@ -1,0 +1,23 @@
+# IV Applications
+
+An important term in economics are the *returns to schooling*, by which we mean the causal effect of education on later earnings. If you think about it, it's a crucial question for every single student (like yourself), if not even more so for a policy maker who needs to decide where to allocate budget spending on (education or other things?).
+
+One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the *Mincer Equation* (we have encountered this equation before as a running example in chapter \@ref(linreg)):
+
+\begin{equation}
+\log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + e_i  (\#eq:mincer)
+\end{equation}
+
+with $\log Y_i$ annual earnings for man $i$, $S_i$ his schooling (years spent studying), and $X_i$ his (potential) work experience (age minus years of schooling minus 6). His results implied an estimate for $\rho$ of about 0.11, or an 11% earnings advantage for each additional year of education, given a certain level of experience. But is that a *causal* estimate? Well, why would it not be?
+
+## Ability Bias
+
+The model in \@ref(eq:mincer) compares earnings of men with certain schooling and work experience. The question to ask, if given those two controls, all else is equal? For a given value of $X$, are there more diligent and able workers out there? Do family connections vary across people with the same $X$? It seems quite likely that we'd answer yes. Well, then, all else is *not* equal, and we are in trouble. Because, again, our crucial identifying assumption for the linear model is violated, as
+
+$$E[e_i | S_i, X_i] \neq 0.$$
+
+Our concern can be formalized by explicitly introducing *ability* $A$ as an (unobserved) factor into our model:
+
+\begin{equation}
+\log Y_i = \alpha + \rho S_i + A_i + e_i  (\#eq:ability)
+\end{equation}
