@@ -2,13 +2,38 @@
 
 An important term in economics are the *returns to schooling*, by which we mean the causal effect of education on later earnings. If you think about it, it's a crucial question for every single student (like yourself), if not even more so for a policy maker who needs to decide where to allocate budget spending on (education or other things?).
 
-One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the *Mincer Equation* (we have encountered this equation before as a running example in chapter \@ref(linreg)):
+One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the *Mincer Equation* (we have encountered this equation before as a running example in chapter \@ref(linreg)). He measured $\log Y_i$, annual earnings for man $i$, $S_i$ his schooling (years spent studying), and $X_i$ his (potential) work experience (age minus years of schooling minus 6). The model can be drawn like this:
+
+```{r mincer,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="Jacob Mincer's model",fig.height = 3 }
+library(ggdag)
+library(dplyr)
+coords <- list(
+    x = c(e = 1, x = 2, y = 3, s = 2),
+    y = c(e=0, x = -.5, y = 0, s = 0.5)
+    )
+
+dag <- dagify(y ~ s,
+              y ~ e,
+              y ~ x, coords = coords)
+dag %>% 
+  tidy_dagitty() %>% 
+  mutate(linetype = ifelse(name == "e", "dashed", "solid")) %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text() + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  scale_x_continuous(limits = c(0,4))+
+  theme_void()
+
+```
+
+Hourly earnings are assumed to be affected by experience and schooling *only*. In terms of an equation, 
 
 \begin{equation}
 \log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + e_i  (\#eq:mincer)
 \end{equation}
 
-with $\log Y_i$ annual earnings for man $i$, $S_i$ his schooling (years spent studying), and $X_i$ his (potential) work experience (age minus years of schooling minus 6). His results implied an estimate for $\rho$ of about 0.11, or an 11% earnings advantage for each additional year of education, given a certain level of experience. But is that a *causal* estimate? Well, why would it not be?
+His results implied an estimate for $\rho$ of about 0.11, or an 11% earnings advantage for each additional year of education, given a certain level of experience. Notice that in the DAG in figure \@ref(fig:mincer), we explicitly drew other unobserved factors $e$ with *only* have an arrow directly into $y$. But is that a good model? Well, why would it not be? 
 
 ## Ability Bias
 
@@ -16,8 +41,193 @@ The model in \@ref(eq:mincer) compares earnings of men with certain schooling an
 
 $$E[e_i | S_i, X_i] \neq 0.$$
 
-Our concern can be formalized by explicitly introducing *ability* $A$ as an (unobserved) factor into our model:
+
+
+Our concern can be formalized by explicitly introducing *ability* $A$ as an (unobserved) factor into our model. That means we have now *two* unobservables - of course we can't tell them apart, so let's write them as a new unobservable factor $u_i = e_i + A_i$. Then we could visualize this new model as follows:
+
+```{r mincer2,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="Jacob Mincer's model with unobserved ability $A$. Given it's *unobserved* it is lumped together with all other unobservable factors in $e$, and we've called it $u = e + A$.",fig.height = 3 }
+coords <- list(
+    x = c(e_A = 1, x = 2, y = 3, s = 2),
+    y = c(e_A =0, x = -.5, y = 0, s = 0.5)
+    )
+
+dag <- dagify(y ~ s,
+              y ~ e_A,
+              s ~ e_A,
+              y ~ x,coords = coords)
+d = dag %>% 
+  tidy_dagitty() %>% 
+  dag_label(labels = c("y" = "y","s" = "s","x" = "x","e_A"= "u=e+A")) %>%
+  mutate(linetype = ifelse(label == "u=e+A", "dashed", "solid")) %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text(aes(label=label)) + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  scale_x_continuous(limits = c(0,4))+
+  theme_void()
+d
+```
+
+
+In figure \@ref(fig:mincer2), the unobserved factor $A$ influences *both* years of schooling and earnings on the labor market. For example, if we think for $A$ as something like *intelligence*, it might be that more intelligent students find it less painful to attend school (it's less costly for them in terms of effort), so they get more education, and also they earn higher wages because their intelligence is rewarded in the labor market. The same works if $A$ is related to family type and network. Suppose a family with high socio-economic status is also well connected. Then high $A$ could mean that the parents of $i$ know that education is a good signalling device (so they force $i$ to go to university, say), while at the same time their good network means that high $A$ will mean a good job and hence earnings. We would write in terms of an equation
 
 \begin{equation}
-\log Y_i = \alpha + \rho S_i + A_i + e_i  (\#eq:ability)
+\log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + \underbrace{u_i}_{A_i + e_i}  (\#eq:ability)
 \end{equation}
+
+Sometimes these considerations do not matter greatly, and the (biased) OLS estimate is close the causal IV estimate. But in other cases, we might be very far from the truth with OLS, even inferring the wrong sign of an effect. Let's look at an example!
+
+## Birthdate is as good as Random
+
+In an influential study, @angristkrueger address the above issues related to the ability bias in Mincer's equation by constructing an IV which encodes the birth date of a given student. The idea is that given certain features of the school system, children born shortly after a certain cutoff date will start school a year later than their peers who are a bit older than they are. 
+
+For example, suppose it is mandated that all children who reach the age of 6 by 31st of december 2021 are required to enroll in the first grade of school in september 2021. Then someone born in September 2015 (i.e. 6 years prior) will be 5 years and 3/4 by the time they start school, while someone born on the 1st of January 2016 will be 6 and 3/4 years when *they* enter school in september 2022. Furthermore, the legal dropout age in the US is 16, so by the time those pupils may decide to stop school, they have been exposed to different amounts of schooling. All of this means that an IV defined by  *quarter of birth of person $i$* will affect the outcome *earnings* through it's effect on more schooling - keeping other factors (in particular $A$!) constant across values of the IV. What's the implication for our model?
+
+```{r ak-mod,echo = FALSE,fig.cap="Angrist and Krueger's IV in to tackle ability bias.",fig.height = 3 }
+coords <- list(
+    x = c(e_A = 1, z = 1, y = 3, s = 2),
+    y = c(e_A =0, z = 0.5, y = 0, s = 0.5)
+    )
+
+dag <- dagify(y ~ s,
+              y ~ e_A,
+              s ~ e_A,
+              s ~ z,coords = coords)
+d = dag %>% 
+  tidy_dagitty() %>% 
+  dag_label(labels = c("y" = "y","s" = "s","z" = "z","e_A"= "u=e+A")) %>%
+  mutate(linetype = ifelse(label == "u=e+A", "dashed", "solid")) %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text(aes(label=label)) + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  scale_x_continuous(limits = c(0,4))+
+  theme_void()
+d
+```
+
+In the DAG for @angristkrueger's model in \@ref(fig:ak-mod) we see that the IV directly impacts the endogenous explanatory variable $s$, but is itself independent of $u$ - we argued that $A$ is equally distributed across different birth quarters $z$ (birth date is almost random). Let us now formulate the following two-stage procedure:
+
+1. We estimate a **first stage model** which uses only exogenous variables (like $z$) to explain our endgenous regressor $s$.
+2. We then use the first stage model to *predict* values of $s$ in what is called the **second stage** or the **reduced form** model.^[It's called reduced form because this second equation is supposed to be derived from a true underlying structural model.] Performing this procedure is supposed to take out any impact of $A$ in the correlation we observe in our data between $s$ and $y$.
+
+This estimation technique is called the **Two stage least squares** estimator, or 2SLS for short. The great virtue is that in the first stage we could have any number of exogenous variables helping to predict our exogenous $s$ (here we have just one - quarter of birth.) In terms of equations, we could write the following:
+
+\begin{align}
+\text{1. Stage: }s_i &= \alpha_0 + \alpha_1 z_i + \eta_i (\#eq:2SLS1)\\ 
+\text{2. Stage: }y_i &= \beta_0 + \beta_1 \hat{s}_i + u_i (\#eq:2SLS2)
+\end{align}
+
+where the $\hat{s}_i$ means to insert the *predicted* value from the first stage for $i$'s observed $s_i$ in the second stage regression. We can write down the conditions for a valid IV $z$ in this context:
+
+```{block, type = "warningl"}
+**Conditions for a valid Instrument in this simple 2SLS setup**:
+
+1. Relevance of the IV: $\alpha_1 \neq 0$
+1. Independence (IV assignment as good as random): $E[\eta | z] = 0$
+1. Exogeneity (our exclusion restriction): $E[u | z] = 0$
+```
+
+### Data on birth quarter and wages
+
+Let's load the data and look at a quick summary^[Code in this section comes from the great [mastering metrics with R](https://jrnold.github.io/masteringmetrics/) by J Arnold 👏 🙏]:
+
+```{r ak-data}
+data("ak91", package = "masteringmetrics")
+library(modelsummary)
+datasummary_skim(data.frame(ak91),histogram = TRUE)
+```
+
+We convert quarter of birth to a factor:
+
+```{r}
+ak91 <- mutate(ak91,
+               qob_fct = factor(qob),
+               q4 = as.integer(qob == "4"),
+               yob_fct = factor(yob))
+# get mean wage by year/quarter
+ak91_age <- ak91 %>%
+  group_by(qob, yob) %>%
+  summarise(lnw = mean(lnw), s = mean(s)) %>%
+  mutate(q4 = (qob == 4))
+```
+
+Let's reproduce their first figure now on education as a function of quarter of birth!
+
+```{r ak91-age,fig.cap = "Reproducing figure 1 from @angristkruegerIV"}
+ggplot(ak91_age, aes(x = yob + (qob - 1) / 4, y = s )) +
+  geom_line() + 
+  geom_label(mapping = aes(label = qob, color = q4)) +
+  theme(legend.position = "none") +
+  scale_x_continuous("Year of birth", breaks = 1930:1940) +
+  scale_y_continuous("Years of Education", breaks = seq(12.2, 13.2, by = 0.2),
+                     limits = c(12.2, 13.2))
+```
+
+In figure \@ref(fig:ak91-age) we see first that there was a trend in getting more and more education as time passed. Secondly, and more importantly here, is that for almost all birth years in the sample, the group born in quarter 4 has the highest value for years of education! So what we said above about the instutional rules of school attendance in the US seems to be born out in this dataset. What about earnings for those groups?
+
+```{r ak91-wage,fig.cap = "Reproducing figure 2 from @angristkruegerIV"}
+ggplot(ak91_age, aes(x = yob + (qob - 1) / 4, y = lnw)) +
+  geom_line() +
+  geom_label(mapping = aes(label = qob, color = q4)) +
+  scale_x_continuous("Year of birth", breaks = 1930:1940) +
+  scale_y_continuous("Log weekly wages") +
+  theme(legend.position = "none")
+```
+
+Figure \@ref(fig:ak91-wage) does not show a long running trend in earnings, so on average we'd say an hourly wage of 5 Dollars 90 per week. But, again, the group born in the fourth quarter seems special: In many cases they earn the highest or close to highest wage if compared to the other 3 groups in their birthyear. So, there really seems to be a relationship between quarter of birth and later in life earnings! Let us now construct an IV estimator, which will allow us to relate the sawtooth pattern in figure \@ref(fig:ak91-age) to the one in \@ref(fig:ak91-wage). We will start out with using just *born in fourth quarter* as our IV.
+
+### Running IV estimation in `R`
+
+There are several possibilities to run IV estimation in `R`. We will use the `iv_robust` function from the `estimatr` package.^[The formula interface is similar to `lm`. E.g. this:  `y ~ x1 + x2 | z1 + x2` means that `x1` is endogenous (only to the left of `|`), while `z1` is an instrument. `x2` is a simple exogenous regressor, hence needs to appear on both sides if the `|`.] Let's estimate a simple OLS version (subject to ability bias), the first stage and the final 2SLS estimate:
+
+```{r}
+mod                  <- list()
+mod$ols              <- lm(lnw ~ s, data = ak91)
+mod[["first stage"]] <- lm(s ~ q4, data = ak91)  # IV: born in q4 is TRUE?
+ak91$shat            <- predict(mod[["first stage"]])  
+mod[["second stage"]] <- lm(lnw ~ shat, data = ak91)
+mod$`2SLS`            <- estimatr::iv_robust(lnw ~ s | q4, data = ak91 ) # IV: born in q4 is TRUE?
+```
+
+Let's look at those models next to each other in table \@ref(tab:ms1):
+
+```{r ms1,echo = FALSE}
+modelsummary::msummary(models = mod, 
+                       stars = TRUE,
+                       statistic = 'std.error',
+                       gof_omit = 'DF|Deviance|AIC|BIC|R2|p.value|se_type|statistic|Log.Lik.|Num.Obs.|N',
+                       title = "OLS, first and sceond stages as well as 2SLS estimates for Angrist and Krueger (1991)")
+```
+
+Table \@ref(tab:ms1) contains a lot of information, so let's go column-wise:
+
+1. The column labelled **ols** is the basic earnings equation similar to Mincer's model (without experience). We are worried about bias from the omitted variable *ability*, but we note that here we estimate a 7% higher wage for each additional year of schooling.
+2. The next column is the first stage, i.e. the estimates for  $\alpha$ in equation \@ref(eq:2SLS1). Remember we require that $\alpha_1 \neq 0$. That seems to be the case here (p-value very small).
+3. Then we run the second stage model with the predicted values $\hat{s}$ from the first stage, i.e. we estimate the $\beta$s in \@ref(eq:2SLS2). You should compare `s` and `shat` in the first and third column.
+4. Finally, we perform first and second stag    e estimation in one go (you would usually go down this route directly) with 2SLS. You should compare `shat` from the second stage with the `s` estimate from the 2SLS model! The reason you should always go directly to something like `iv_robust` is that this procedure handles computation of standard errors correctly. In other words, the displayed standard error in the second stage for `shat` (0.03) is not taking into account that we estimated `shat` itself in a previous step - `iv_robust` does (note the small difference to 0.028).
+
+### Additional Control Variables
+
+We saw in figure @\ref(fig:ak91-age) that there is a clear time trend in years of schooling. There are also business-cycle fluctuations in earnings, even if we were not able to see them from the graph above. It is probably a good idea to control for calendar year in order to guard against any time effects in our results. Also, we can use more than one IV! Here is how:
+
+
+```{r}
+mod$ols_yr  <- update(mod$ols, . ~ . + yob_fct)  # just update previous model
+mod[["2SLS_yr"]] <- estimatr::iv_robust(lnw ~ s  + yob_fct | q4 + yob_fct, data = ak91 )  # add exogenous vars on both sides of | !
+mod[["2SLS_all"]] <- estimatr::iv_robust(lnw ~ s  + yob_fct | qob_fct + yob_fct, data = ak91 )  # use all quarters as IVs
+rows <- data.frame(term = c("Instruments","Year of birth"),
+                   ols  = c("none","no"),
+                   SLS  = c("Q4","no"),
+                   ols_yr  = c("none","yes"),
+                   SLS_yr  = c("Q4","yes"),
+                   SLS_all  = c("All Quarters","yes")
+                   )
+names(rows)[c(3,5,6)] <- c("2SLS","2SLS_yr","2SLS_all")
+modelsummary::msummary(models = mod[c("ols","2SLS","ols_yr","2SLS_yr","2SLS_all")], 
+                       statistic = 'std.error',
+                       gof_omit = 'DF|Deviance|AIC|BIC|R2|p.value|se_type|statistic|Log.Lik.|Num.Obs.|N',
+                       title = "Adding Year as control, and more IVs",
+                       add_rows = rows,
+                       coef_omit = 'yob_fct')
+```

@@ -67,9 +67,9 @@ Table: (\#tab:snow-tab9) John Snow's table IX
 |Lambeth | 26,107 | 98 | 37 |
 |Rest of London | 256,423 | 1,422 | 59 |
 
-With table \@ref(tab:snow-tab9) in hand, Snow concluded that *if* Southwark and Vauxhall water companies had moved their water intakes upstream to where Lambeth water was taking in their supply, roughly 1,000 lives could have been saved.
+With table \@ref(tab:snow-tab9) in hand, Snow concluded that *if* Southwark and Vauxhall water companies had moved their water intakes upstream to where Lambeth water was taking in their supply, roughly 1,000 lives could have been saved. For proponents of the miasma theory, this was still not evidence enough, because there were also many factors that led to poor air quality in those areas.
 
-Of course he was proven right later on, when in 1884 Koch first isolated the cholera *vibrio*, basically confirming Snow's version of the story. But what is really interesting for us is how he was able to us his **non-experimental** data set to make his point.
+Of course Snow was proven right later on, when in 1884 Koch first isolated the cholera *vibrio*, basically confirming Snow's version of the story. But what is really interesting for us is how he was able to us his **non-experimental** data set to make his point.
 
 ### Snow's Model of Cholera Transmission
 
@@ -89,14 +89,16 @@ John Snow could have used his data and assess the correlation between drinking p
 
 > The people who drank impure water were also more likely to be poor, and to live in an environment contaminated in many ways, not least by the ‘poison miasmas’ that were then thought to be the cause of cholera.
 
-In other words, it does not make sense to compare someone who drinks pure water with someone with impure water, as model \@ref(eq:snow-mod1) proposes to do, because *all else is not equal*: pure water is correlated with being poor, living in bad area, bad air quality and so on - all factors that we encounter in $u_i$. This violates the crucial assumption for valid OLS estimates, $E[u_i | w_i]=0$ in this context. Another way to say this, is that $Cov(w_i, u_i) \neq 0$, implying that $w_i$ is *endogenous* in equation \@ref(eq:snow-mod1): There are factors in $u_i$ that affect both $w_i$ and $c_i$, so we cannot reasonably say that *the effect of $w$ is that...*, because things in $u_i$ move at the same time as $w_i$ moves (and we can't see those things).
+In other words, it does not make sense to compare someone who drinks pure water with someone with impure water, as model \@ref(eq:snow-mod1) proposes to do, because *all else is not equal*: pure water is correlated with being poor, living in bad area, bad air quality and so on - all factors that we encounter in $u_i$. This violates the crucial assumption for valid OLS estimates, $E[u_i | w_i]=0$ in this context. Another way to say this, is that $Cov(w_i, u_i) \neq 0$, implying that $w_i$ is *endogenous* in equation \@ref(eq:snow-mod1): There are factors in $u_i$ that affect both $w_i$ and $c_i$, so we cannot reasonably say that *the effect of $w$ is that...*, because things in $u_i$ move at the same time as $w_i$ moves (and we can't see those things). So, the *miasma* theorists actually had a point.
 
-Let us conditioning equation \@ref(eq:snow-mod1) on either value $w$ might take:
+Let us condition equation \@ref(eq:snow-mod1) on either value $w$ might take:
 
-\begin{aligned}
+
+\begin{align}
 E[c_i | w_i = 1] &= \alpha + \delta + E[u_i | w_i = 1] \\
 E[c_i | w_i = 0] &= \alpha + \phantom{\delta} + E[u_i | w_i = 0]
-\end{aligned}
+\end{align}
+
 
 Simply differencing those two lines thus yields
 
@@ -104,17 +106,47 @@ Simply differencing those two lines thus yields
 E[c_i | w_i = 1] - E[c_i | w_i = 0] = \delta + \left\{ E[u_i | w_i = 1] - E[u_i | w_i = 0]\right\}
 \end{equation}
 
-and we said hat it stands to reason that this last term $\left\{ E[u_i | w_i = 1] - E[u_i | w_i = 0]\right\}$ is not equal to zero.
+and we said hat it stands to reason that this last term $\left\{ E[u_i | w_i = 1] - E[u_i | w_i = 0]\right\}$ is not equal to zero, hence our regression estimate for $\delta$ would be biased the that quantity.
 
 
 
 ## Defining the IV Estimator
 
-John Snow did not know what an IV estimator was because it had not yet been described yet. However, we can use the above setup to develop the idea. To get at this, it is useful to hear what John Snow has to say after he shows us his table IX, displayed in table \@ref(tab:snow-tab9) above:
+John Snow did not know what an IV estimator was because it had not been described yet.^[In @angristkruegerIV you can read that Philipp (or his son Sewal, or both) Wright  are widely attributed with this discovery in 1928] However, we can use the above setup to develop the idea. To get at this, it is useful to hear what John Snow has to say after he shows us his table IX, displayed in table \@ref(tab:snow-tab9) above:
 
 > [...] the mixing of the supply is of the most intimate kind. The pipes of each Company go down all the streets, and into nearly all the courts and alleys. [...] The experiment, too, is on the grandest scale. No fewer than three hundred thousand people of both sexes, of every age and occupation, and of every rank and station, from gentlefolks down to the very poor, were divided into two groups without their choice, and in most cases, without their knowledge; one group supplied with water containing the sewage of London, and amongst it, whatever might have come from the cholera patients, the other group having water quite free from such impurity.
 
-So, Snow is proposing an **instrumental variable** $z_i$, the identity of the water supplying company to household $i$, which is highly correlated with the water purity $w_i$. However, following his remarks above, it seems to be uncorrelated with all the other factors in $u_i$ which we worried about above: people in most cases didn't even know who supplied their water, as those decisions were taken years before. Very similar households, on either side of a street, may have had different water purity in their homes as a result of a different supplier.^[The formulation as an IV has been taken from [W. Greene's website](http://people.stern.nyu.edu/wgreene/Econometrics/Cholera-IV-Study.pdf)]
+So, without knowing, Snow is proposing an **instrumental variable** $z_i$, the *identity of the water supplying company* to household $i$, which is highly correlated with the water purity $w_i$. However, following his remarks above, it seems to be uncorrelated with all the other factors in $u_i$, which worried us before: people in most cases didn't even know who supplied their water, as those decisions were taken years before. Very similar households, on either side of a street, may have had different water purity in their homes as a result of a different supplier.^[The formulation as an IV has been taken from [W. Greene's website](http://people.stern.nyu.edu/wgreene/Econometrics/Cholera-IV-Study.pdf)] Let's visualize this setup in a DAG to start with:
+
+```{r IV-dag,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="DAG for IV setup in Snow's study setting. $u$ affects both explanatory variable $w$ and outcome $c$ at the same time. $z$ affects the outcome *only through* its impact on $w$. Solid arrows are measurable with data, dashed arrows are not.",fig.height = 3 }
+library(ggdag)
+library(dplyr)
+coords <- list(
+    x = c(z = 1, w = 3, u = 4, c = 5),
+    y = c(z = 0, w = 0, u = 0.5, c = 0)
+    )
+
+dag <- dagify(c ~ w + u,
+              w ~ z + u, coords = coords)
+
+dag %>% 
+  tidy_dagitty() %>% 
+  mutate(linetype = ifelse(name == "u", "dashed", "solid")) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text() + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  theme_void()
+
+```
+
+You can see that outcome $c$ is affected by water purity $w$ and other factors $u$. The point of the DAG in figure \@ref(fig:IV-dag) is to show that $u$ affects both the outcome $c$ *and* the explanatory variable $w$ at the same time, and the conditional mean assumption $E[u_i | w_i]=0$ is violated (this is an implication of the arrow from $u$ to $w$). Now, $z$ affects *only* $w$ (it is *relevant* for $w$) and, furthermore, it is *not affected* by $u$ (it is *exogenous* to the outcome equation). 
+
+Now, if you change the value of $z_i$ in this DAG, this will change $w_i$ (follow the solid arrow!), which will then change the outcome $c_i$. The key insight is that we can be sure that this change in $c_i$ had nothing to do with other factors $u_i$ - that's what our model assumes (no arrow from $u$ to $z$!). So, we can measure the part of the correlation between $w$ and $c$ that is *due to* correlation between $w$ and $z$, and obtain a *causal* effect! Spoiler alert: The formula for a one variable, one IV setting like this here is
+
+$$\frac{Cov(z,c)}{Cov(z,w)}.$$
+
+The DAG is silent about the strength of each of the arrows. Whether any of the arrows is more or less important is a statistical question (i.e. we have to *measure* their strengths in data somehow). The usefulness of a DAG like this one is purely to think about and justify the model we have in mind, and for that purpose it is a very good tool. I would encourage you to draw one of those each time before you want to use IV analysis. In particular, your theory needs to spell out why there is no arrow from $u$ to $z$ - see Snow's argumentation above that water supply was close to randomly allocated to households in 1850 London.
 
 More formally, let's define the instrument as follows:
 
@@ -133,21 +165,21 @@ We require two things from an instrument:
 ```
 <br>
 
-Point 2. is the difficult part, because there is no real test for it: we have to reason and argue to make the case that is a reasonable assumption. This is where Snow's citation from above comes into play: He reasons that water supply varies **randomly** over households, irrespective their unobservables $u$. The statement is that whatever factors are present in $u$, they are present in equal proportion in households with different $z$, because assignment of $z$ was random.
+Point 2. is the difficult part, because there is no real test for it: we have to reason and argue to make the case that is a reasonable assumption. This is where Snow's citation from above comes into play: He reasons that water supply varies **randomly** over households, irrespective their unobservables $u$. The statement is that whatever factors are present in $u$, they are present in equal proportion in households with different $z$, because assignment of $z$ was **random**.
 
 We are now ready to define a simple IV estimator. Notice that conditioning \@ref(eq:snow-mod1) on values of $z$ yields 
 
-\begin{aligned}
+\begin{align}
 E[c_i | z_i = 1] &= \alpha + \delta E[w_i | z_i = 1] + E[u_i | z_i = 1] \\
 E[c_i | z_i = 0] &= \alpha + \delta E[w_i | z_i = 0] + E[u_i | z_i = 0]
-\end{aligned}
+\end{align}
 
 which upon differencing both lines gives 
 
-\begin{aligned}
+\begin{align}
 E[c_i | z_i = 1] - E[c_i | z_i = 0] &= \delta  \left\{ E[w_i | z_i = 1] - E[w_i | z_i = 0]\right\} \\
 &+ \underbrace{\left\{ E[u_i | z_i = 1] - E[u_i | z_i = 0] \right\}}_{=0 \text{ by Exogeneity Assumption}}
-\end{aligned}
+\end{align}
 
 The IV estimator is then obtained by isolating $\delta$ and writing
 
@@ -160,7 +192,7 @@ Notice that this is only defined if the denominator is nonzero, i.e. the Relevan
 
 ### Computing the IV Estimate
 
-You remember from earlier chapters that equation \@ref(eq:IV) refers to a *population* parameter, i.e. *the true* value in an infinite population. To learn about it's value, we need to *estimate* it from data. We can use a simple sample analog of the population expectations, i.e. sample means. With some abuse of notation let's say that $x \mapsto y$ means that $x$ is an estimate for $y$:
+You remember from earlier chapters that equation \@ref(eq:IV) refers to a *population* parameter, i.e. *the true* value in an infinite population. To learn about it's value, we need to *estimate* it from data. We can use a simple sample analog of the population expectations, i.e. sample means. With some abuse of notation let's say that *$x \mapsto y$ means that $x$ is an estimate for $y$*:
 
 1. $\overline{c}_1 \mapsto E[c_i | z_i = 1]$: the proportion of households supplied by Lambeth with cholera.
 1. $\overline{w}_1 \mapsto E[w_i | z_i = 1]$: the proportion of households supplied by Lambeth with bad water.
@@ -173,9 +205,9 @@ The estimator would then be
 \hat{\delta} = \frac{\overline{c}_1 - \overline{c}_0}{\overline{w}_1 - \overline{w}_0} (\#eq:IVhat)
 \end{equation}
 
-and it is caused the *Wald estimator*.
+In this special case where all involved variables $c,w,z$ are binary, the estimator is called the *Wald estimator*.
 
-Unfortunately we do not know the values of the above numbers. With some effort, however, Snow could have canvassed all houses in the concerned areas, record their water supplying company, their water purity indicator, and whether or not they had a cholera death. So let's make some numbers up just for the sake of it.
+Unfortunately we do not know the values of the above numbers, or at least I did not find them in readily available format (I think they are in Snow's book). So let's make some numbers up just for the sake of it.
 
 1. $\overline{c}_1 = 0.002$: the proportion of households supplied by Lambeth with cholera.
 1. $\overline{w}_1 = 0.1$: the proportion of households supplied by Lambeth with bad water.
@@ -191,4 +223,11 @@ So, in this artificial dataset, we would have found an estimated **causal** effe
 \Delta \Pr(c = 1 | w ) = \alpha + \delta \times 1 - \alpha - \delta \times 0 = `r delta`
 \end{equation}
 
-so the probability of getting cholera is `r round(delta,2)` higher, if you have impure water (i.e. if $w$ goes from 0 to 1).
+so the probability of getting cholera is `r 100*round(delta,2)` percent higher, if you have impure water (i.e. if $w$ goes from 0 to 1).
+
+```{block, type = "warningl"}
+**Summary**: IVs are a powerful tool to establish causality in contexts with observational data only and where we are concerned that the conditional mean assumption $E[u_i | x_i]=0$ is violated, hence, we cannot say *all else equal, as $x$ changes, $y$ changes like this and that*. Then we say that $x$ is *endogenous*. The key features of IV $z$ are that 
+
+1. $z$ is *relevant* for $x$. For example, in a simple regression of $z$ on $x$, we want $z$ to have considerable predictive power. We can *test* this condition in data.
+2. We need a theory according to which is *reasonable* to assume that $z$ is *unrelated* to other unobservable factors that might impact the outcome. Hence, $z$ is *exogenous* to $u$, or $E[u | z] = 0$. This is an **assumption** (i.e. we can not test this with data).
+```

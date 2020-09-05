@@ -40,6 +40,12 @@ pre code {
     border-radius: 5px;
     text-align: center;
 }
+.warningl {
+    padding: 0.5em;
+    background-color: #f0b37e;
+    border-radius: 5px;
+    text-align: left;
+}
 
 .tip {
     padding: 0.5em;
