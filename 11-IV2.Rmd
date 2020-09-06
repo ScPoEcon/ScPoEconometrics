@@ -179,7 +179,7 @@ Figure \@ref(fig:ak91-wage) does not show a long running trend in earnings, so o
 
 ### Running IV estimation in `R`
 
-There are several possibilities to run IV estimation in `R`. We will use the `iv_robust` function from the `estimatr` package.^[The formula interface is similar to `lm`. E.g. this:  `y ~ x1 + x2 | z1 + x2` means that `x1` is endogenous (only to the left of `|`), while `z1` is an instrument. `x2` is a simple exogenous regressor, hence needs to appear on both sides if the `|`.] Let's estimate a simple OLS version (subject to ability bias), the first stage and the final 2SLS estimate:
+There are several possibilities to run IV estimation in `R`. We will use the `iv_robust` function from the `estimatr` package.^[the *robust* here refers to the fact that the `estimatr` package by default chooses formulae to compute standard errors which are correcting for heteroskedasticity - we have encountered this term before in \@ref(violating). See details [here](https://declaredesign.org/r/estimatr/articles/mathematical-notes.html)] Let's estimate a simple OLS version (subject to ability bias), the first stage and the final 2SLS estimate:
 
 ```{r}
 mod                  <- list()
@@ -231,3 +231,4 @@ modelsummary::msummary(models = mod[c("ols","2SLS","ols_yr","2SLS_yr","2SLS_all"
                        add_rows = rows,
                        coef_omit = 'yob_fct')
 ```
+

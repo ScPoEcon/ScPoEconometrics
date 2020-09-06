@@ -1,0 +1,391 @@
+# Panel Data
+
+
+
+## Crime Rate vs Probability of Arrest
+
+This part draws heavily on [Nick C Huntington-Klein's](http://nickchk.com) outstanding  [slides](https://github.com/NickCH-K/EconometricsSlides). 🙏
+
+Up until now we have dealt with data that looked like the following, where `County` is the idendifier for a county, `CrimeRate` is the number of crimes committed by person, and `ProbofArrest` is the probability of arrest, given crime committed:
+
+```{r,message=FALSE,warning=FALSE,echo = FALSE}
+library(dplyr)
+library(ggplot2)
+data(crime4,package = "wooldridge")
+crime4 %>%
+  filter(year == 81) %>%
+  arrange(county,year) %>%
+  select(county, crmrte, prbarr) %>%
+  rename(County = county,
+         CrimeRate = crmrte,
+         ProbofArrest = prbarr) %>%
+  slice(1:5) %>%
+  knitr::kable(align = "ccc")
+```
+
+We would have a unit identifier (like `County` here), and some observables on each unit. Such a dataset is usually called a **cross-sectional** dataset, providing one single snapshot view about variables from a study population at a single point in time. Each row, in other words, was one *observation*. **Panel data**, or **longitudinal** datasets, on the other hand, also index units over *time*. In the above dataset, for example, we could record crime rates in each county *and in each year*:
+
+```{r,echo = FALSE}
+crime4 %>%
+  select(county, year, crmrte, prbarr) %>%
+  arrange(county,year) %>%
+  rename(County = county,
+         Year = year,
+         CrimeRate = crmrte,
+         ProbofArrest = prbarr) %>%
+  slice(1:9) %>%
+  knitr::kable(align = "ccc")
+```
+
+Here each unit $i$ (e.g. county `1`) is observed *several times*. Let's start by looking at the dataset as a single cross section (i.e. we forget about the $t$ index and treat each observation as independent over time) and investigate the relationship between crime rates and probability of arrest in counties number `1,3,23,145`:
+
+```{r crime1,echo = FALSE,fig.cap = "Probability of arrest vs Crime rates in the cross section",message = FALSE}
+css = crime4 %>% 
+  filter(county %in% c(1,3,145, 23))
+
+ggplot(css,aes(x =  prbarr, y = crmrte)) + 
+  geom_point() + 
+  geom_smooth(method="lm",se=FALSE) + 
+  theme_bw() +
+  labs(x = 'Probability of Arrest', y = 'Crime Rate')
+
+# 
+#   group_by(county) %>%
+#   mutate(label = case_when(
+#     crmrte == max(crmrte) ~ paste('County',county),
+#     TRUE ~ NA_character_
+#   )) %>%
+#   ggplot(aes(x =  prbarr, y = crmrte, color = factor(county), label = label)) + 
+#   geom_point() + 
+#   geom_text(hjust = -.1, size = 14/.pt) + 
+#   labs(x = 'Probability of Arrest', 
+#        y = 'Crime Rate',
+#        caption = 'One outlier eliminated in County 7.') + 
+#   #scale_x_continuous(limits = c(.15, 2.5)) + 
+#   guides(color = FALSE, label = FALSE) + 
+#   scale_color_manual(values = c('black','blue','red','purple'))
+```
+
+
+We see an upward-sloping regression line, so it seems that the higher the crime rate, the higher the probability of arrest. In particular, we'd get:
+
+```{r}
+xsection = lm(crmrte ~ prbarr, css)
+coef(xsection)[2]  # gets slope coef
+```
+
+such that we'd associate a 10% higher probability of arrest with an increase of 0.006 for the crime rate (it would go from 0.02 to 0.026). Ok, but what does that *mean*? Does it mean that as there is more crime, the police get more efficient, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. A DAG to the rescue!
+
+```{r cri-dag,echo = FALSE,message = FALSE,fig.cap="DAG to answer *what causes the local crime rate?*"}
+library(ggdag)
+coords <- list(
+    x = c(ProbArrest = 1,LawAndOrder = 1, Police = 1.5, CivilRights = 3,Poverty = 3, CrimeRate = 5, LocalStuff = 5),
+    y = c(ProbArrest = 1,LawAndOrder = 4, Police = 2.5, CivilRights = 2,Poverty = 4, CrimeRate = 1, LocalStuff = 4)
+    )
+dagify(CrimeRate ~ ProbArrest,
+       CrimeRate ~ LocalStuff,
+       CrimeRate ~ Poverty,
+       CrimeRate ~ CivilRights,
+       ProbArrest ~ LocalStuff,
+       Poverty ~ LocalStuff,
+       ProbArrest ~ Poverty,
+       ProbArrest ~ LawAndOrder,
+       ProbArrest ~ Police,
+       ProbArrest ~ LawAndOrder,
+       CivilRights ~ LawAndOrder,
+       Police ~ LawAndOrder,
+       labels = c("CrimeRate" = "Crime Rate",
+                  "ProbArrest" = "ProbArrest",
+                  "LocalStuff" = "LocalStuff",
+                  "Poverty" = "Poverty",
+                  "Police" = "Police",
+                  "CivilRights" = "CivilRights",
+                  "LawAndOrder" = "LawAndOrder"
+                  ),
+       exposure = "ProbArrest",
+       outcome = "CrimeRate",
+       coords = coords) %>%
+  ggdag(text = FALSE, use_labels = "label") + ggtitle("What causes the Crime Rate in County i?") + theme_dag()
+```
+
+In figure \@ref(fig:cri-dag) we've written `LawAndOrder` for how committed local politicians are to *law and order politics*, and `LocalStuff` for everything that is unique to a particular county apart from the things we've listed. So, at least we can appreciate to full problem now, but it's still really complicated. Let's try to think about *at which level* (i.e. county or time) each of those factors *vary*:
+
+* `LocalStuff` are things that describe the County, like geography, and other persistent features.
+* `LawAndOrder` and how many `CivilRights` one gets might change a little from year to year, but not very drastically. Let's assume they are fixed characteristics as well.
+* `Police` budget and the `Poverty` level vary by county and by year: an elected politician has some discretion over police spending (not too much, but still), and poverty varies with the national/global state of the economy.
+
+You will often hear the terms *within* and *between* variation in panel data contexts. If we think of our data as classified into groups of $i$ (i.e., counties), the *within* variation refers to things that change *within each group* over time: here we said police budgets and poverty levels would change within each group and over time. On the other hand, we said that `LocalStuff`, `LawAndOrder` and `CivilRights` were persistent features of each group, hence they would *not* vary over time (or *within* the group) - they would differ only across or **between** groups. Let's try to separate those out visually!
+
+```{r,echo = FALSE,message = FALSE}
+pcolor = css %>% 
+  group_by(county) %>%
+  mutate(label = case_when(
+    crmrte == max(crmrte) ~ paste('County',county),
+    TRUE ~ NA_character_
+  ),
+  mcrm = mean(crmrte),
+  mpr = mean(prbarr)) %>%
+  ggplot(aes(x =  prbarr, y = crmrte, label = label)) + 
+  geom_point(aes(color = factor(county))) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se=FALSE) +
+  labs(x = 'Probability of Arrest', 
+       y = 'Crime Rate',
+       color = "County") 
+pcolor
+```
+
+That looks intriguing! Let's add the mean of `ProbofArrest` and `CrimeRate` for each of the counties to that plot, in order to show the *between* county variation:
+
+```{r,echo = FALSE,fig.height = 3,warning = FALSE,message = FALSE}
+p1 = css %>% 
+  group_by(county) %>%
+  mutate(label = case_when(
+    crmrte == max(crmrte) ~ paste('County',county),
+    TRUE ~ NA_character_
+  ),
+  mcrm = mean(crmrte),
+  mpr = mean(prbarr)) %>%
+  ggplot(aes(x =  prbarr, y = crmrte, label = label)) + 
+  geom_point(aes(color = factor(county))) + 
+  theme_bw() +
+  # geom_smooth(method = "lm", se=FALSE) +
+  scale_x_continuous(limits = c(0.1,0.43)) + 
+  scale_y_continuous(limits = c(0.01,0.041)) +
+  labs(x = 'Probability of Arrest', 
+       y = 'Crime Rate',
+       color = "County")  + 
+  # scale_color_manual(values = c('black','blue','red','purple'))
+  geom_point(aes(x = mpr, y = mcrm,color = factor(county)), size = 20, shape = 3) + 
+  annotate(geom = 'text', x = .3, y = .02, label = 'Means Within Each County', color = 'darkorange', size = 14/.pt) + 
+  guides(color = FALSE, labels = FALSE)
+
+# p11 = css %>%
+#   ggplot(aes(x =  prbarr, y = crmrte)) + geom_smooth(method = "lm", se = FALSE)
+
+p2 = css %>% 
+  group_by(county) %>%
+  mutate(label = case_when(
+    crmrte == max(crmrte) ~ paste('County',county),
+    TRUE ~ NA_character_
+  ),
+  mcrm = mean(crmrte),
+  mpr = mean(prbarr)) %>%
+  ggplot(aes(x = mpr, y = mcrm)) + 
+  theme_bw() +
+  geom_smooth(method = "lm",se = FALSE) +
+  geom_point(size = 20, shape = 3, aes(color = factor(county))) +   
+  scale_x_continuous(limits = c(0.1,0.43)) + 
+  scale_y_continuous(limits = c(0.01,0.041)) +
+  labs(x = 'Probability of Arrest', 
+       y = 'Crime Rate') + 
+  guides(color = FALSE, labels = FALSE)
+cowplot::plot_grid(p1,p2,axis = "tb")
+```
+
+Simple OLS on the cross section (i.e. not taking into account the panel structure) seems to recover only the *between* group differences. It fits a line to the group means. Well this considerably simplifies our DAG from above! Let's collect all group-specific time-invariant features in the factor `County` - we don't really care about what they all are, because we can net the group effects out of the data it seems:
+
+```{r cri-dag2,echo = FALSE,message = FALSE,fig.cap="DAG to answer *what causes the local crime rate?*"}
+coords <- list(
+    x = c(ProbArrest = 1,Poverty = 1, Police = 1.5, County = 3, CrimeRate = 4),
+    y = c(ProbArrest = 1,Police = 2.5, Poverty = 4, CrimeRate = 1, County = 4)
+    )
+dagify(CrimeRate ~ ProbArrest,
+       CrimeRate ~ County,
+       CrimeRate ~ Poverty,
+       ProbArrest ~ Poverty,
+       ProbArrest ~ County,
+       Poverty ~ County,
+       ProbArrest ~ Police,
+       Police ~ County,
+       labels = c("CrimeRate" = "Crime Rate",
+                  "ProbArrest" = "ProbArrest",
+                  "County" = "County",
+                  "Poverty" = "Poverty",
+                  "Police" = "Police"),
+       exposure = "ProbArrest",
+       outcome = "CrimeRate",
+       coords = coords) %>%
+  ggdag(text = FALSE, use_labels = "label")  + theme_dag()
+```
+
+So, controlling for `County` takes care of all factors which do *not* vary over time within each unit. Police and Poverty will have a specific County-specific mean value, but there will be variation over time. We will basically be able to compare each county with itself at different points in time.
+
+
+
+What's going on in figure \@ref(fig:anim)? 
+
+## Panel Data Estimation with `R`
+
+We have now seen several instances of problems with simple OLS arising from *unobserved variable bias*. For example, if the true model read
+
+$$
+y_i = \beta_0 + \beta_1 x_i + c_i + u_i
+$$
+with $c_i$ unobservable and potentially correlated with $x_i$, we were in trouble because the orthogonality assumption $E[u_i+c_i|x_i]\neq 0$ ($u_i+c_i$ is the total unobserved component). We have seen such an example where $c=A_i$ and $x=s$ was schooling and we were worried about *ability bias*. One solution we discussed was to find an IV which is correlated with schooling (quarter of birth) - but not with ability (we thought ability is equally distributed across birthdates). Today we'll look at solutions when we have *more than a single* observation for each unit $i$. To be precise, let's put down a basic unobserved effects model like this:
+
+$$
+y_{it} = \beta_1 x_{it} + c_i + u_{it},\quad t=1,2,...T  (\#eq:panel)
+$$
+
+The object of interest here is $c_i$, called the *individual fixed effect*, *unobserved effect* or *unobserved heterogeneity*. The important thing to note is that it is fixed over time (ability $A_i$ for example). 
+
+### Dummy Variable Regression
+
+The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each $i$. You can see in \@ref(eq:panel) that each $i$ has basically their own intercept $c_i$, so this works. Here is what we are talking about in a picture:
+
+```{r dummy,echo = FALSE,message = FALSE}
+# not sure that's helpful
+pcolor = css %>% 
+  group_by(county) %>%
+  mutate(label = case_when(
+    crmrte == max(crmrte) ~ paste('County',county),
+    TRUE ~ NA_character_
+  ),
+  mcrm = mean(crmrte),
+  mpr = mean(prbarr)) %>%
+  ggplot(aes(x =  prbarr, y = crmrte, color =factor(county) )) +
+  geom_point() + 
+  theme_bw() +
+  geom_smooth(method = "lm", se=FALSE) +
+  labs(x = 'Probability of Arrest', 
+       y = 'Crime Rate',
+       color = "County") 
+pcolor
+```
+
+It's evident that *within* each county, there is a negative relationship. The dummy variable regression below will allow for different intercepts (county `1` will be the reference group), and one unique slope coefficient $\beta$:
+
+```{r}
+data(crime4, package = "wooldridge")  # load data
+css = crime4 %>% 
+  filter(county %in% c(1,3,145, 23))  # subset to 4 counties
+
+mod = list()
+mod$dummy <- lm(crmrte ~ prbarr + factor(county), css)  # i is the unit ID
+broom::tidy(mod$dummy)
+```
+You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1. (notice that the plot allows different slopes for each group, in our regression they are all parallel).
+
+
+### First Differencing
+
+If we only had $T=2$ periods, we could just difference both periods, basically leaving us with
+    \begin{align}
+y_{i1} &= \beta_1 x_{i1} + c_i + u_{i1} \\
+y_{i2} &= \beta_1 x_{i2} + c_i + u_{i2} \\
+       & \Rightarrow \\
+y_{i1}-y_{i2} &= \beta_1 (x_{i1} - x_{i2}) + c_i-c_i + u_{i1}-u_{i2} \\
+\Delta y_{i} &= \beta_1 \Delta x_{i} + \Delta u_{i}
+    \end{align}
+    where $\Delta$ means *difference over time of* and to recover the parameter of interest $\beta_1$ we would run
+```{r,eval=FALSE}
+lm(deltay ~ deltax, diff_data) 
+```
+    
+### The Within Transformation
+
+In cases with $T>2$ we need a different approach - this is the most relevant case. One important concept is called the *within* transformation.^[Different packages implement different flavours of this procedure, this is the main gist] This is directly related to our discussion from above when we simplified our DAG. So, *controlling for group identity and only looking at time variation* is what we said - let's write it down! Here we denote as $\bar{x}_i$ the average *over time* of $i$'s $x$ values:
+
+$$
+\bar{x}_i = \frac{1}{T} \sum_{t=1}^T x_{it}
+$$
+
+With this in hand, the transformation goes like this:
+
+1. for all variables compute their time-mean for each unit $i$: $\bar{x}_i,\bar{y}_i$ etc
+1. for each observation, substract that time mean from the actual value and define $(x_{it} - \bar{x}_i),(y_{it}-\bar{y}_i)$
+1. Finally, regress $(x_{it} - \bar{x}_i)$ on $(y_{it}-\bar{y}_i)$
+
+This *works* for our problem with fixed effect $c_i$ because $c_i$ is not time varying by assumption! hence it drops out: 
+
+$$
+y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + c_i - c_i + u_{it}-\bar{u}_i 
+$$
+
+
+It's easy to do yourself! First let's compute the demeaned values:
+
+```{r}
+cdata <- css %>%
+  group_by(county) %>%
+  mutate(mean_crime = mean(crmrte),
+         mean_prob = mean(prbarr)) %>%
+  mutate(demeaned_crime = crmrte - mean_crime,
+         demeaned_prob = prbarr - mean_prob)
+```
+
+Then lets run the models with OLS:
+
+```{r tab1}
+mod$xsect <- lm(crmrte ~ prbarr, data = cdata)
+mod$demeaned <- lm(demeaned_crime ~ demeaned_prob, data = cdata)
+gom = 'DF|Deviance|AIC|BIC|p.value|se_type|R2 Adj. |statistic|Log.Lik.|Num.Obs.'  # stuff to omit from table
+modelsummary::modelsummary(mod[c("xsect","dummy","demeaned")],
+                           statistic = 'std.error',
+                           title = "Comparing (biased) X-secional OLS, dummy variable and manual demeaning panel regressions",
+                           coef_omit = "factor",
+                           gof_omit = gom)
+```
+
+Notice how in table \@ref(tab:tab1) the estimate for `prbarr` is positive in the cross-section, like in figure \@ref(fig:crime1). If we take care of the unobservered heterogeneity $c_i$ either by including an intercept for each $i$ or by time-demeaning the data, we obtain the same estimate: `r round(coef(mod$demeaned)[2],3)` in both cases.
+
+We interpret those *within* estimates by imagining to look at a single unit $i$ and ask: *if the arrest probability in $i$ increases by 1 from year $t$ to $t+1$, we expect crimes per person to fall by `r abs(round(coef(mod$demeaned)[2],3))`*. 
+
+### Using a Package
+
+In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (fixest if fastest)
+
+
+```{r}
+mod$FE = fixest::feols(crmrte ~ prbarr | county, cdata)
+modelsummary::modelsummary(mod[c("xsect","dummy","demeaned","FE")],
+                           statistic = 'std.error',
+                           title = "Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest  panel regressions",
+                           coef_omit = "factor",
+                           gof_omit = paste(gom,"Std. errors","R2",sep = "|"))
+```
+
+Again, we get the same result as with manual demeaning 😅. Let's finish off with a nice visualisation by [Nick C Huntington-Klein's](http://nickchk.com) which illustrates how the within transformation works in this example. If you look back at
+
+$$
+y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + u_{it}-\bar{u}_i 
+$$
+
+you can see that we perform a form of **data centering** in the within transformation: substracting their respective time means from all variables means to center all variables! Here's how this looks.
+
+```{r anim, echo=FALSE, fig.cap = "Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only", fig.width=5, fig.height=4.5,message = FALSE, warning = FALSE,eval=TRUE}
+library(gganimate)
+cranim <- css %>%
+  mutate(allcrm = mean(crmrte),
+         allmpr = mean(prbarr)) %>%
+  group_by(county) %>%
+  mutate(label = case_when(
+    crmrte == max(crmrte) ~ paste('County',county),
+    TRUE ~ NA_character_
+  ),
+  mcrm = mean(crmrte),
+  mpr = mean(prbarr),
+  stage = '1. Raw Data')
+cranim <- cranim %>%
+  bind_rows(cranim %>% 
+              mutate(crmrte = crmrte - mcrm + allcrm,
+                     prbarr = prbarr - mpr + allmpr,
+                     mcrm = allcrm,
+                     mpr = allmpr,
+                     stage = '2. Remove all between variation'))
+
+p <- ggplot(cranim, aes(x =  prbarr, y = crmrte, color = factor(county), label = label)) + 
+  geom_point() + 
+  geom_text(hjust = -.1, size = 14/.pt)  + 
+  labs(x = 'Probability of Arrest', 
+       y = 'Crime Rate') + 
+  guides(color = FALSE, label = FALSE) + 
+  # scale_color_manual(values = c('black','blue','red','purple')) + 
+  geom_smooth(aes(color = NULL), method = 'lm', se = FALSE)+
+  theme_bw() +
+  geom_point(aes(x = mpr, y = mcrm), size = 20, shape = 3, color = 'darkorange') + 
+  transition_states(stage) 
+
+animate(p, nframes = 80)
+```

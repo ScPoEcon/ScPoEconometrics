@@ -37,5 +37,5 @@ Imports: bookdown,
     huxtable,
     cholera, 
     reshape2
-Remotes: datalorax/equatiomatic, wilkelab/ungeviz
+Remotes: datalorax/equatiomatic, wilkelab/ungeviz, jrnold/masteringmetrics
 RoxygenNote: 7.1.1

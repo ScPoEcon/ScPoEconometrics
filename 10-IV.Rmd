@@ -116,6 +116,12 @@ John Snow did not know what an IV estimator was because it had not been describe
 
 > [...] the mixing of the supply is of the most intimate kind. The pipes of each Company go down all the streets, and into nearly all the courts and alleys. [...] The experiment, too, is on the grandest scale. No fewer than three hundred thousand people of both sexes, of every age and occupation, and of every rank and station, from gentlefolks down to the very poor, were divided into two groups without their choice, and in most cases, without their knowledge; one group supplied with water containing the sewage of London, and amongst it, whatever might have come from the cholera patients, the other group having water quite free from such impurity.
 
+To back this up, he produced the following map showing which areas were served by which water company. As you can see from the legend, the purple areas denote those with mixed water supply.
+
+```{r snow-supply,fig.cap="Snow's map of water supply in London",echo=FALSE}
+knitr::include_graphics("images/snow-supply.jpg",dpi = 100)
+```
+
 So, without knowing, Snow is proposing an **instrumental variable** $z_i$, the *identity of the water supplying company* to household $i$, which is highly correlated with the water purity $w_i$. However, following his remarks above, it seems to be uncorrelated with all the other factors in $u_i$, which worried us before: people in most cases didn't even know who supplied their water, as those decisions were taken years before. Very similar households, on either side of a street, may have had different water purity in their homes as a result of a different supplier.^[The formulation as an IV has been taken from [W. Greene's website](http://people.stern.nyu.edu/wgreene/Econometrics/Cholera-IV-Study.pdf)] Let's visualize this setup in a DAG to start with:
 
 ```{r IV-dag,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="DAG for IV setup in Snow's study setting. $u$ affects both explanatory variable $w$ and outcome $c$ at the same time. $z$ affects the outcome *only through* its impact on $w$. Solid arrows are measurable with data, dashed arrows are not.",fig.height = 3 }
@@ -157,15 +163,17 @@ z_i &=  \begin{cases}
                  \end{cases} \\
 \end{align*}
 
-We require two things from an instrument:
+Here are the conditions for a valid instrument:
 
 ```{block, type="notel"}
-1. **Relevance**: Water purity is indeed a function of supplier identity. We want that $$E[w_i | z_i = 1] \neq E[w_i | z_i = 0]$$ i.e. the average water purity differs across suppliers. We can *verify* this condition with observational data.
-2. **Exogeneity** or **Excludability** of $z$: We want that water supplier identity $z$ be *exogenous* to all other unobservables $u$ in the model, such that whether we condition $u$ on certain values of $z$ does not change the result - we want $$E[u_i | z_i = 1] = E[u_i | z_i = 0].$$ $z$ is said to be *excludable* from the outcome equation because it would not add any information, after we observed $w$.
+1. **Relevance** or **First Stage**: Water purity is indeed a function of supplier identity. We want that $$E[w_i | z_i = 1] \neq E[w_i | z_i = 0]$$ i.e. the average water purity differs across suppliers. We can *verify* this condition with observational data. We want this effect to be reliably causal.
+2. **Independence**: Whether a household has $z_i = 1$ or $z_i = 0$ is unrelated to $u$, hence *as good as random*. Whether we condition $u$ on certain values of $z$ does not change the result - we want $$E[u_i | z_i = 1] = E[u_i | z_i = 0].$$
+3. **Excludability** the instrument should affect the outcome $c$ *only* through the specified channel (i.e. via water purity $w$), and nothing else.
 ```
 <br>
 
-Point 2. is the difficult part, because there is no real test for it: we have to reason and argue to make the case that is a reasonable assumption. This is where Snow's citation from above comes into play: He reasons that water supply varies **randomly** over households, irrespective their unobservables $u$. The statement is that whatever factors are present in $u$, they are present in equal proportion in households with different $z$, because assignment of $z$ was **random**.
+Point 3. is the difficult part, because there is no real test for it: we have to reason and argue to make the case that is a reasonable assumption. This is where Snow's citation from above comes into play: He reasons that water supply varies **randomly** over households, irrespective their unobservables $u$. The statement is that whatever factors are present in $u$, they are present in equal proportion in households with different $z$, because assignment of $z$ was **random**. So it is hard to imagine that the identity of the water company could affect $c$ through other channels (like, whether you are poor or not is *not* a function of $z$). 
+
 
 We are now ready to define a simple IV estimator. Notice that conditioning \@ref(eq:snow-mod1) on values of $z$ yields 
 

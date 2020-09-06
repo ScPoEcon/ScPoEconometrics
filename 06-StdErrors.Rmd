@@ -179,7 +179,7 @@ First, we *assumed* that \@ref(eq:abline-5) is the correct represenation of the 
 
 
 
-### Violating the Assumptions of the CRM
+### Violating the Assumptions of the CRM {#violating}
 
 It's interesting to consider in which circumstances we might violate those assumptions. Let's give an example for each of them:
 
