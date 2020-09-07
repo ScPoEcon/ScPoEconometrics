@@ -328,9 +328,9 @@ $$
 y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + u_{it}-\bar{u}_i 
 $$
 
-you can see that we perform a form of **data centering** in the within transformation: substracting their respective time means from all variables means to center all variables! Here's how this looks.
+you can see that we perform a form of **data centering** in the within transformation: substracting their respective time means from all variables means to center all variables! Here's how this looks (only visible in HTML version online).
 
-```{r anim, echo=FALSE, fig.cap = "Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only", fig.width=5, fig.height=4.5,message = FALSE, warning = FALSE,eval=TRUE}
+```{r anim, echo=FALSE, fig.cap = "Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only", fig.width=5, fig.height=4.5,message = FALSE, warning = FALSE,eval=TRUE, eval = knitr::is_html_output()}
 library(gganimate)
 cranim <- css %>%
   mutate(allcrm = mean(crmrte),
