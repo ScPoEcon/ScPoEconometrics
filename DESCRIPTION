@@ -40,6 +40,7 @@ Imports: bookdown,
     reshape2,
     modelsummary,
     estimatr,
-    gganimate
+    gganimate,
+    fixest
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz, jrnold/masteringmetrics/masteringmetrics
 RoxygenNote: 7.1.1
