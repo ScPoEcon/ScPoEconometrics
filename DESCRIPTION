@@ -37,6 +37,7 @@ Imports: bookdown,
     data.table,
     huxtable,
     cholera, 
-    reshape2
+    reshape2,
+    modelsummary
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz, jrnold/masteringmetrics/masteringmetrics
 RoxygenNote: 7.1.1
