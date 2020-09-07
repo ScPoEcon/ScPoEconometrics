@@ -158,10 +158,12 @@ Let's reproduce their first figure now on education as a function of quarter of 
 ggplot(ak91_age, aes(x = yob + (qob - 1) / 4, y = s )) +
   geom_line() + 
   geom_label(mapping = aes(label = qob, color = q4)) +
-  theme(legend.position = "none") +
+  guides(label = FALSE, color = FALSE) +
   scale_x_continuous("Year of birth", breaks = 1930:1940) +
   scale_y_continuous("Years of Education", breaks = seq(12.2, 13.2, by = 0.2),
-                     limits = c(12.2, 13.2))
+                     limits = c(12.2, 13.2)) +
+  theme_bw()
+
 ```
 
 In figure \@ref(fig:ak91-age) we see first that there was a trend in getting more and more education as time passed. Secondly, and more importantly here, is that for almost all birth years in the sample, the group born in quarter 4 has the highest value for years of education! So what we said above about the instutional rules of school attendance in the US seems to be born out in this dataset. What about earnings for those groups?
@@ -172,7 +174,8 @@ ggplot(ak91_age, aes(x = yob + (qob - 1) / 4, y = lnw)) +
   geom_label(mapping = aes(label = qob, color = q4)) +
   scale_x_continuous("Year of birth", breaks = 1930:1940) +
   scale_y_continuous("Log weekly wages") +
-  theme(legend.position = "none")
+  guides(label = FALSE, color = FALSE) +  
+  theme_bw()
 ```
 
 Figure \@ref(fig:ak91-wage) does not show a long running trend in earnings, so on average we'd say an hourly wage of 5 Dollars 90 per week. But, again, the group born in the fourth quarter seems special: In many cases they earn the highest or close to highest wage if compared to the other 3 groups in their birthyear. So, there really seems to be a relationship between quarter of birth and later in life earnings! Let us now construct an IV estimator, which will allow us to relate the sawtooth pattern in figure \@ref(fig:ak91-age) to the one in \@ref(fig:ak91-wage). We will start out with using just *born in fourth quarter* as our IV.
@@ -209,13 +212,15 @@ Table \@ref(tab:ms1) contains a lot of information, so let's go column-wise:
 
 ### Additional Control Variables
 
-We saw in figure @\ref(fig:ak91-age) that there is a clear time trend in years of schooling. There are also business-cycle fluctuations in earnings, even if we were not able to see them from the graph above. It is probably a good idea to control for calendar year in order to guard against any time effects in our results. Also, we can use more than one IV! Here is how:
+We saw in figure \@ref(fig:ak91-age) that there is a clear time trend in years of schooling. There are also business-cycle fluctuations in earnings, even if we were not able to see them from the graph above. It is probably a good idea to control for calendar year in order to guard against any time effects in our results. Also, we can use more than one IV! Here is how:
 
 
 ```{r}
 mod$ols_yr  <- update(mod$ols, . ~ . + yob_fct)  # just update previous model
 mod[["2SLS_yr"]] <- estimatr::iv_robust(lnw ~ s  + yob_fct | q4 + yob_fct, data = ak91 )  # add exogenous vars on both sides of | !
 mod[["2SLS_all"]] <- estimatr::iv_robust(lnw ~ s  + yob_fct | qob_fct + yob_fct, data = ak91 )  # use all quarters as IVs
+
+# here is how to make the table:
 rows <- data.frame(term = c("Instruments","Year of birth"),
                    ols  = c("none","no"),
                    SLS  = c("Q4","no"),

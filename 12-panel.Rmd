@@ -8,7 +8,7 @@ This part draws heavily on [Nick C Huntington-Klein's](http://nickchk.com) outst
 
 Up until now we have dealt with data that looked like the following, where `County` is the idendifier for a county, `CrimeRate` is the number of crimes committed by person, and `ProbofArrest` is the probability of arrest, given crime committed:
 
-```{r,message=FALSE,warning=FALSE,echo = FALSE}
+```{r,message=FALSE,warning=FALSE,echo = TRUE}
 library(dplyr)
 library(ggplot2)
 data(crime4,package = "wooldridge")
@@ -39,31 +39,15 @@ crime4 %>%
 
 Here each unit $i$ (e.g. county `1`) is observed *several times*. Let's start by looking at the dataset as a single cross section (i.e. we forget about the $t$ index and treat each observation as independent over time) and investigate the relationship between crime rates and probability of arrest in counties number `1,3,23,145`:
 
-```{r crime1,echo = FALSE,fig.cap = "Probability of arrest vs Crime rates in the cross section",message = FALSE}
+```{r crime1,echo = TRUE,fig.cap = "Probability of arrest vs Crime rates in the cross section",message = FALSE}
 css = crime4 %>% 
-  filter(county %in% c(1,3,145, 23))
+  filter(county %in% c(1,3,145, 23))  # subset to 4 counties
 
 ggplot(css,aes(x =  prbarr, y = crmrte)) + 
   geom_point() + 
   geom_smooth(method="lm",se=FALSE) + 
   theme_bw() +
   labs(x = 'Probability of Arrest', y = 'Crime Rate')
-
-# 
-#   group_by(county) %>%
-#   mutate(label = case_when(
-#     crmrte == max(crmrte) ~ paste('County',county),
-#     TRUE ~ NA_character_
-#   )) %>%
-#   ggplot(aes(x =  prbarr, y = crmrte, color = factor(county), label = label)) + 
-#   geom_point() + 
-#   geom_text(hjust = -.1, size = 14/.pt) + 
-#   labs(x = 'Probability of Arrest', 
-#        y = 'Crime Rate',
-#        caption = 'One outlier eliminated in County 7.') + 
-#   #scale_x_continuous(limits = c(.15, 2.5)) + 
-#   guides(color = FALSE, label = FALSE) + 
-#   scale_color_manual(values = c('black','blue','red','purple'))
 ```
 
 
@@ -212,9 +196,6 @@ dagify(CrimeRate ~ ProbArrest,
 So, controlling for `County` takes care of all factors which do *not* vary over time within each unit. Police and Poverty will have a specific County-specific mean value, but there will be variation over time. We will basically be able to compare each county with itself at different points in time.
 
 
-
-What's going on in figure \@ref(fig:anim)? 
-
 ## Panel Data Estimation with `R`
 
 We have now seen several instances of problems with simple OLS arising from *unobserved variable bias*. For example, if the true model read
@@ -232,39 +213,34 @@ The object of interest here is $c_i$, called the *individual fixed effect*, *uno
 
 ### Dummy Variable Regression
 
-The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each $i$. You can see in \@ref(eq:panel) that each $i$ has basically their own intercept $c_i$, so this works. Here is what we are talking about in a picture:
+The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each $i$. This is closest to what we said above is *controlling for county* - that's exactly what we do here. You can see in \@ref(eq:panel) that each $i$ has basically their own intercept $c_i$, so this works. In `R` you achieve this like so:
+
+```{r}
+mod = list()
+mod$dummy <- lm(crmrte ~ prbarr + factor(county), css)  # i is the unit ID
+broom::tidy(mod$dummy)
+```
+
+Here is what we are talking about in a picture:
 
 ```{r dummy,echo = FALSE,message = FALSE}
 # not sure that's helpful
+css$pred <- predict(mod$dummy)  # get predicted line
 pcolor = css %>% 
   group_by(county) %>%
-  mutate(label = case_when(
-    crmrte == max(crmrte) ~ paste('County',county),
-    TRUE ~ NA_character_
-  ),
-  mcrm = mean(crmrte),
-  mpr = mean(prbarr)) %>%
   ggplot(aes(x =  prbarr, y = crmrte, color =factor(county) )) +
   geom_point() + 
+  geom_line(aes(y = pred )) +
   theme_bw() +
-  geom_smooth(method = "lm", se=FALSE) +
+  # geom_smooth(method = "lm", se=FALSE) +
   labs(x = 'Probability of Arrest', 
        y = 'Crime Rate',
        color = "County") 
 pcolor
 ```
 
-It's evident that *within* each county, there is a negative relationship. The dummy variable regression below will allow for different intercepts (county `1` will be the reference group), and one unique slope coefficient $\beta$:
+It's evident that *within* each county, there is a negative relationship. The dummy variable regression allows for different intercepts (county `1` is be the reference group), and one unique slope coefficient $\beta$. (you observe that the lines are parallel).
 
-```{r}
-data(crime4, package = "wooldridge")  # load data
-css = crime4 %>% 
-  filter(county %in% c(1,3,145, 23))  # subset to 4 counties
-
-mod = list()
-mod$dummy <- lm(crmrte ~ prbarr + factor(county), css)  # i is the unit ID
-broom::tidy(mod$dummy)
-```
 You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1. (notice that the plot allows different slopes for each group, in our regression they are all parallel).
 
 
