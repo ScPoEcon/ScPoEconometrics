@@ -1,9 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
 # Regression Inference {#std-errors}
 
 In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the `Std. Error` column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:
