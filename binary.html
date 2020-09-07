@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Binary Outcomes | Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Binary Outcomes | Introduction to Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Binary Outcomes | Introduction to Econometrics with R" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  
+
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+
+
+<meta name="date" content="2020-09-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+<link rel="prev" href="panel-data.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
+<li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
+<li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
+<li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
+<li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
+<li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Econometrics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="binary" class="section level1">
+<h1><span class="header-section-number">Chapter 13</span> Binary Outcomes</h1>
+<p>Until now we have encountered only contiunously distributed outcomes on the right hand side of our estimation equations. For example, in our typical linear model, we would define</p>
+<span class="math display">\[\begin{align}
+y &amp;= b_0 + b_1 + e \\
+e &amp;\sim N\left(0,\sigma^2\right)
+\end{align}\]</span>
+<p>where the second line defines the unobservable <span class="math inline">\(e\)</span> to be drawn from the Normal distribution with mean zero and variance <span class="math inline">\(\sigma^2\)</span>.<a href="#fn17" class="footnoteRef" id="fnref17"><sup>17</sup></a> That means that, at least in principle, <span class="math inline">\(y\)</span> could be any number from the real line (<span class="math inline">\(e\)</span> could be arbitrarily small or large), and we can say that <span class="math inline">\(y \in \mathbb{R}\)</span>.</p>
+<p>For the outcomes we studied, that was fine: test scores, earnings, crime rates etc are all continuous outcomes. But some outcomes are clearly binary (i.e. either <code>TRUE</code> or <code>FALSE</code>):</p>
+<ul>
+<li>You either work or you don't,</li>
+<li>You either have children or you don't,</li>
+<li>You either bought a product or you didn't,</li>
+<li>You flipped a coin and it came up either heads or tails.</li>
+</ul>
+<p>In this situation, our outcome is restricted to come from a small set of values: <code>FALSE</code> vs <code>TRUE</code>, or <code>0</code> vs <code>1</code>. We'd have <span class="math inline">\(y \in \{0,1\}\)</span>. In those situations we are primarily interested in estimating the <strong>response probability</strong> or the <strong>probability of success</strong>,</p>
+<p><span class="math display">\[
+p(x) = \Pr(y=1 | x), 
+\]</span> or in words, <em>the probability to observe <span class="math inline">\(y=1\)</span> (a success), given explanatory variables <span class="math inline">\(x\)</span></em>. In particular, we will often be interested in learning how <span class="math inline">\(p(x)\)</span> changes as we change <span class="math inline">\(x\)</span> - that is, we are interested in the same <em>partial effect</em> of <span class="math inline">\(x\)</span> on the outcome as in our usual linear regression setup. Here, we ask</p>
+<div class="tip">
+<p>
+If we increase <span class="math inline"><span class="math inline">\(x\)</span></span> by one unit, how would the probability of <span class="math inline"><span class="math inline">\(y=1\)</span></span> change?
+</p>
+</div>
+<p>It is worth reminding ourselves about two simple facts about binary random variables (i.e drawn from the <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli</a> distribution). So, we call a random variable <span class="math inline">\(y \in \{0,1\}\)</span> such that</p>
+<span class="math display">\[\begin{align}
+\Pr(y = 1) &amp;= p \\
+\Pr(y = 0) &amp;= 1-p \\
+p &amp;\in[0,1]
+\end{align}\]</span>
+<p>a <em>Bernoulli</em> random variable. In our setting, we just <em>condition</em> those probabilities on a covariate <span class="math inline">\(x\)</span>, as above - that is, we measure the probability <em>given that <span class="math inline">\(X\)</span> takes value <span class="math inline">\(x\)</span></em>:</p>
+<span class="math display">\[\begin{align}
+\Pr(y = 1 | X = x) &amp;= p(x) \\
+\Pr(y = 0 | X = x) &amp;= 1-p(x) \\
+p(x) &amp;\in[0,1]
+\end{align}\]</span>
+<p>Of particular interest for us is the fact that the <em>expected value</em> (i.e. the average) of <span class="math inline">\(Y\)</span> given <span class="math inline">\(x\)</span> is</p>
+<p><span class="math display">\[
+E[y | x] = p(x) \times 1 + (1-p(x)) \times 0 = p(x)
+\]</span></p>
+<p>There are several ways to model such binary outcomes. Let's look at them.</p>
+<div id="the-linear-probability-model" class="section level2">
+<h2><span class="header-section-number">13.1</span> The Linear Probability Model</h2>
+<p>The Linear Probability Model (LPM) is the simplest option. In this case, we model the response probability as</p>
+<p><span class="math display" id="eq:LPM">\[
+\Pr(y = 1 | x) = p(x) = \beta_0 + \beta_1 x_1 + \dots + \beta_K x_K \tag{13.1}
+\]</span> Our interpretation is slightly changed to our usual setup, as we'd say <em>a 1 unit change in <span class="math inline">\(x_1\)</span>, say, results in a change of <span class="math inline">\(p(x)\)</span> of <span class="math inline">\(\beta_1\)</span>.</em></p>
+<p>Estimation of the LPM as in equation <a href="binary.html#eq:LPM">(13.1)</a> can be performed by standard OLS. Let's look at an example. The Mroz (1987) dataset let's us female labor market participation. How does a woman's <code>inlf</code> (<em>in labor force</em>) status depend on non-wife household income, her education, age and number of small children? First, let's look at a quick plot that shows how the outcome varies with 1 variable, age say:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mroz, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
+<span class="kw">plot</span>(<span class="kw">factor</span>(inlf) <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> mroz, 
+     <span class="dt">ylevels =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;in labor force?&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-208-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Not so much variation with respect to age, except for the later years. Let's run the LPM now:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LPM =<span class="st"> </span><span class="kw">lm</span>(inlf <span class="op">~</span><span class="st"> </span>nwifeinc <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>exper 
+         <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(exper<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="kw">I</span>(age<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>kidslt6, mroz)
+<span class="kw">summary</span>(LPM)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = inlf ~ nwifeinc + educ + exper + I(exper^2) + age + 
+##     I(age^2) + kidslt6, data = mroz)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.94194 -0.37773  0.08935  0.34283  0.97979 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.3219554  0.4863667   0.662  0.50820    
+## nwifeinc    -0.0034271  0.0014531  -2.358  0.01861 *  
+## educ         0.0374662  0.0073476   5.099 4.33e-07 ***
+## exper        0.0382568  0.0057700   6.630 6.44e-11 ***
+## I(exper^2)  -0.0005649  0.0001895  -2.981  0.00296 ** 
+## age         -0.0011177  0.0225100  -0.050  0.96041    
+## I(age^2)    -0.0001822  0.0002581  -0.706  0.48044    
+## kidslt6     -0.2603675  0.0340826  -7.639 6.72e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4273 on 745 degrees of freedom
+## Multiple R-squared:  0.2637, Adjusted R-squared:  0.2568 
+## F-statistic: 38.13 on 7 and 745 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>You can see that this is <em>identical</em> to our previous linear regression models - with the exception that the outcome <code>inlf</code> takes on only two values, 0 or 1. The results from this: if non-wife income increases by 10 (i.e 10,000 USD), the probability of being in the labor force falls by 0.034 (that's a small effect!), whereas an additional small child would reduce the probability of work by 0.26 (that's large). So far, so simple.</p>
+<p>One often-mentioned problem of this model is that fact that nothing restricts our predictions of <span class="math inline">\(p(x)\)</span> to be proper probabilities, i.e. to lie in the unit interval <span class="math inline">\([0,1]\)</span>. You can see that quite easily here:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr =<span class="st"> </span><span class="kw">predict</span>(LPM)
+<span class="kw">plot</span>(pr[<span class="kw">order</span>(pr)],<span class="dt">ylab =</span> <span class="st">&quot;p(inlf = 1)&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-210-1.png" width="672" style="display: block; margin: auto;" /> This picture tells you that for quite a few observations, this model predicts a probability of working which is either greater than 1, or smaller than zero. This may or may not be a big problem for your analysis. If you only care about marginal effects (i.e. the <span class="math inline">\(\beta\)</span>s, that may be ok, if you want actual <em>predictions</em> than that's problematic).</p>
+<p>In the case of a <em>saturated model</em> - if we only have dummy explanatory variables - then this problem does not exist for the LPM:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+LPM_saturated =<span class="st"> </span>mroz <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_fct =</span> <span class="kw">cut</span>(age,<span class="dt">breaks =</span> <span class="dv">3</span>),
+         <span class="dt">huswage_fct =</span> <span class="kw">cut</span>(huswage, <span class="dt">breaks =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">lm</span>(inlf <span class="op">~</span><span class="st"> </span>age_fct <span class="op">+</span><span class="st"> </span>huswage_fct, <span class="dt">data =</span> .)
+
+pr =<span class="st"> </span><span class="kw">predict</span>(LPM_saturated)
+<span class="kw">plot</span>(pr[<span class="kw">order</span>(pr)],<span class="dt">ylab =</span> <span class="st">&quot;p(inlf = 1)&quot;</span>,<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),
+     <span class="dt">main =</span> <span class="st">&quot;Saturated LPM&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-211-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="nonlinear-binary-response-models" class="section level2">
+<h2><span class="header-section-number">13.2</span> Nonlinear Binary Response Models</h2>
+<p>In this class of models we change the way we model the response probability <span class="math inline">\(p(x)\)</span>. Instead of the simple linear structure from above, we write</p>
+<p><span class="math display" id="eq:GLM">\[
+\Pr(y = 1 | x) = p(x) = G \left(\beta_0 + \beta_1 x_1 + \dots + \beta_K x_K \right) \tag{13.2}
+\]</span> You note that this is <em>almost</em> identical, only that the entire sum <span class="math inline">\(\beta_0 + \beta_1 x_1 + \dots + \beta_K x_K\)</span> is now inside some function <span class="math inline">\(G(\cdot)\)</span>. The main property of <span class="math inline">\(G\)</span> is that it can transform any value <span class="math inline">\(z\in \mathbb{R}\)</span> you give it to a number in the interval <span class="math inline">\((0,1)\)</span>. This immediately solves our problem of getting weird predictions for probabilities. The two most widely used forms of <span class="math inline">\(G\)</span> are the <strong>probit</strong> and the <strong>logit</strong> model. here are both forms for <span class="math inline">\(G\)</span> in one plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>)), <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> pnorm, <span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;Probit&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> plogis, <span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;Logit&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Function G&quot;</span>,<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Pr(y = 1 | x)&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cdfs"></span>
+<img src="ScPoEconometrics_files/figure-html/cdfs-1.png" alt="The Probit and Logit functional forms for binary choice models" width="672" />
+<p class="caption">
+Figure 13.1: The Probit and Logit functional forms for binary choice models
+</p>
+</div>
+<p>You can see that</p>
+<ol style="list-style-type: decimal">
+<li>any value <span class="math inline">\(x\)</span> results in a value <span class="math inline">\(y\)</span> between 0 and 1</li>
+<li>the higher <span class="math inline">\(x\)</span>, the higher the resulting <span class="math inline">\(p(x)\)</span>.</li>
+</ol>
+<div id="interpretation-of-coefficients" class="section level3">
+<h3><span class="header-section-number">13.2.1</span> Interpretation of Coefficients</h3>
+<p>Let's run the Mroz example from above in both probit and logit now:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probit &lt;-<span class="st"> </span><span class="kw">glm</span>(inlf <span class="op">~</span><span class="st"> </span>age, 
+                    <span class="dt">data =</span> mroz, 
+                    <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;probit&quot;</span>))
+
+logit &lt;-<span class="st"> </span><span class="kw">glm</span>(inlf <span class="op">~</span><span class="st"> </span>age, 
+                    <span class="dt">data =</span> mroz, 
+                    <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))
+modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(<span class="kw">list</span>(<span class="st">&quot;probit&quot;</span> =<span class="st"> </span>probit,<span class="st">&quot;logit&quot;</span> =<span class="st"> </span>logit))</code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+probit
+</th>
+<th style="text-align:left;">
+logit
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+0.707
+</td>
+<td style="text-align:left;">
+1.136
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.248)
+</td>
+<td style="text-align:left;">
+(0.398)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:left;">
+-0.013
+</td>
+<td style="text-align:left;">
+-0.020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.006)
+</td>
+<td style="text-align:left;">
+(0.009)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AIC
+</td>
+<td style="text-align:left;">
+1028.9
+</td>
+<td style="text-align:left;">
+1028.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BIC
+</td>
+<td style="text-align:left;">
+1038.1
+</td>
+<td style="text-align:left;">
+1038.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log.Lik.
+</td>
+<td style="text-align:left;">
+-512.442
+</td>
+<td style="text-align:left;">
+-512.431
+</td>
+</tr>
+</tbody>
+</table>
+<p>From this table, we learn that the coefficient for <code>age</code> is -0.013 for probit and -0.02 for logit, respectively. In both cases, this tells us that the impact of an additional yeaer of age on the probability of working is <strong>negative</strong>. However, we cannot straightforwardly read off the <em>magnitude</em> of the effect. Why is that?</p>
+<p>One simple way to see this is to look back at figure <a href="binary.html#fig:cdfs">13.1</a> and imagine we had just one explanatory variable (like here - <code>age</code>).</p>
+<p>Here is why.</p>
+<p>glm_logitmfx = logitmfx(glm_logit, atmean = TRUE, data = mtcars)</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="17">
+<li id="fn17"><p>We have not insisted too much on the fact that <span class="math inline">\(e\)</span> should be distributed according to the <em>Normal</em> distribution (this is required in particular for the theoretical derivation of standard errors as seen in chapter <a href="std-errors.html#std-errors">6</a>). However, we'd always have an unbounded and continuous distribution underlying our models<a href="binary.html#fnref17">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="panel-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/13-discrete.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
