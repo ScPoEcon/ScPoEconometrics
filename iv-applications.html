@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 IV Applications | Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 IV Applications | Introduction to Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
+  
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 IV Applications | Introduction to Econometrics with R" />
+  
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  
+
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+
+
+<meta name="date" content="2020-09-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
+<link rel="prev" href="IV.html"/>
+<link rel="next" href="panel-data.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41584331-4');
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ScPo 2nd Year Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
+<li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
+<li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
+<li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
+<li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
+<li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
+<li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
+<li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
+<li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
+<li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
+<li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
+<li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
+<li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
+<li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
+<li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
+<li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
+<li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Econometrics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="iv-applications" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> IV Applications</h1>
+<p>An important term in economics are the <em>returns to schooling</em>, by which we mean the causal effect of education on later earnings. If you think about it, it's a crucial question for every single student (like yourself), if not even more so for a policy maker who needs to decide where to allocate budget spending on (education or other things?).</p>
+<p>One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the <em>Mincer Equation</em> (we have encountered this equation before as a running example in chapter <a href="linreg.html#linreg">3</a>). He measured <span class="math inline">\(\log Y_i\)</span>, annual earnings for man <span class="math inline">\(i\)</span>, <span class="math inline">\(S_i\)</span> his schooling (years spent studying), and <span class="math inline">\(X_i\)</span> his (potential) work experience (age minus years of schooling minus 6). The model can be drawn like this:</p>
+<div class="figure" style="text-align: center"><span id="fig:mincer"></span>
+<img src="ScPoEconometrics_files/figure-html/mincer-1.png" alt="Jacob Mincer's model" width="672" />
+<p class="caption">
+Figure 11.1: Jacob Mincer's model
+</p>
+</div>
+<p>Hourly earnings are assumed to be affected by experience and schooling <em>only</em>. In terms of an equation,</p>
+<span class="math display" id="eq:mincer">\[\begin{equation}
+\log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + e_i  \tag{11.1}
+\end{equation}\]</span>
+<p>His results implied an estimate for <span class="math inline">\(\rho\)</span> of about 0.11, or an 11% earnings advantage for each additional year of education, given a certain level of experience. Notice that in the DAG in figure <a href="iv-applications.html#fig:mincer">11.1</a>, we explicitly drew other unobserved factors <span class="math inline">\(e\)</span> with <em>only</em> have an arrow directly into <span class="math inline">\(y\)</span>. But is that a good model? Well, why would it not be?</p>
+<div id="ability-bias" class="section level2">
+<h2><span class="header-section-number">11.1</span> Ability Bias</h2>
+<p>The model in <a href="iv-applications.html#eq:mincer">(11.1)</a> compares earnings of men with certain schooling and work experience. The question to ask, if given those two controls, all else is equal? For a given value of <span class="math inline">\(X\)</span>, are there more diligent and able workers out there? Do family connections vary across people with the same <span class="math inline">\(X\)</span>? It seems quite likely that we'd answer yes. Well, then, all else is <em>not</em> equal, and we are in trouble. Because, again, our crucial identifying assumption for the linear model is violated, as</p>
+<p><span class="math display">\[E[e_i | S_i, X_i] \neq 0.\]</span></p>
+<p>Our concern can be formalized by explicitly introducing <em>ability</em> <span class="math inline">\(A\)</span> as an (unobserved) factor into our model. That means we have now <em>two</em> unobservables - of course we can't tell them apart, so let's write them as a new unobservable factor <span class="math inline">\(u_i = e_i + A_i\)</span>. Then we could visualize this new model as follows:</p>
+<div class="figure" style="text-align: center"><span id="fig:mincer2"></span>
+<img src="ScPoEconometrics_files/figure-html/mincer2-1.png" alt="Jacob Mincer's model with unobserved ability $A$. Given it's *unobserved* it is lumped together with all other unobservable factors in $e$, and we've called it $u = e + A$." width="672" />
+<p class="caption">
+Figure 11.2: Jacob Mincer's model with unobserved ability <span class="math inline">\(A\)</span>. Given it's <em>unobserved</em> it is lumped together with all other unobservable factors in <span class="math inline">\(e\)</span>, and we've called it <span class="math inline">\(u = e + A\)</span>.
+</p>
+</div>
+<p>In figure <a href="iv-applications.html#fig:mincer2">11.2</a>, the unobserved factor <span class="math inline">\(A\)</span> influences <em>both</em> years of schooling and earnings on the labor market. For example, if we think for <span class="math inline">\(A\)</span> as something like <em>intelligence</em>, it might be that more intelligent students find it less painful to attend school (it's less costly for them in terms of effort), so they get more education, and also they earn higher wages because their intelligence is rewarded in the labor market. The same works if <span class="math inline">\(A\)</span> is related to family type and network. Suppose a family with high socio-economic status is also well connected. Then high <span class="math inline">\(A\)</span> could mean that the parents of <span class="math inline">\(i\)</span> know that education is a good signalling device (so they force <span class="math inline">\(i\)</span> to go to university, say), while at the same time their good network means that high <span class="math inline">\(A\)</span> will mean a good job and hence earnings. We would write in terms of an equation</p>
+<span class="math display" id="eq:ability">\[\begin{equation}
+\log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + \underbrace{u_i}_{A_i + e_i}  \tag{11.2}
+\end{equation}\]</span>
+<p>Sometimes these considerations do not matter greatly, and the (biased) OLS estimate is close the causal IV estimate. But in other cases, we might be very far from the truth with OLS, even inferring the wrong sign of an effect. Let's look at an example!</p>
+</div>
+<div id="birthdate-is-as-good-as-random" class="section level2">
+<h2><span class="header-section-number">11.2</span> Birthdate is as good as Random</h2>
+<p>In an influential study, <span class="citation">Joshua D. Angrist and Krueger (<a href="#ref-angristkrueger">1991</a>)</span> address the above issues related to the ability bias in Mincer's equation by constructing an IV which encodes the birth date of a given student. The idea is that given certain features of the school system, children born shortly after a certain cutoff date will start school a year later than their peers who are a bit older than they are.</p>
+<p>For example, suppose it is mandated that all children who reach the age of 6 by 31st of december 2021 are required to enroll in the first grade of school in september 2021. Then someone born in September 2015 (i.e. 6 years prior) will be 5 years and 3/4 by the time they start school, while someone born on the 1st of January 2016 will be 6 and 3/4 years when <em>they</em> enter school in september 2022. Furthermore, the legal dropout age in the US is 16, so by the time those pupils may decide to stop school, they have been exposed to different amounts of schooling. All of this means that an IV defined by <em>quarter of birth of person <span class="math inline">\(i\)</span></em> will affect the outcome <em>earnings</em> through it's effect on more schooling - keeping other factors (in particular <span class="math inline">\(A\)</span>!) constant across values of the IV. What's the implication for our model?</p>
+<div class="figure" style="text-align: center"><span id="fig:ak-mod"></span>
+<img src="ScPoEconometrics_files/figure-html/ak-mod-1.png" alt="Angrist and Krueger's IV in to tackle ability bias." width="672" />
+<p class="caption">
+Figure 11.3: Angrist and Krueger's IV in to tackle ability bias.
+</p>
+</div>
+<p>In the DAG for <span class="citation">Joshua D. Angrist and Krueger (<a href="#ref-angristkrueger">1991</a>)</span>'s model in <a href="iv-applications.html#fig:ak-mod">11.3</a> we see that the IV directly impacts the endogenous explanatory variable <span class="math inline">\(s\)</span>, but is itself independent of <span class="math inline">\(u\)</span> - we argued that <span class="math inline">\(A\)</span> is equally distributed across different birth quarters <span class="math inline">\(z\)</span> (birth date is almost random). Let us now formulate the following two-stage procedure:</p>
+<ol style="list-style-type: decimal">
+<li>We estimate a <strong>first stage model</strong> which uses only exogenous variables (like <span class="math inline">\(z\)</span>) to explain our endgenous regressor <span class="math inline">\(s\)</span>.</li>
+<li>We then use the first stage model to <em>predict</em> values of <span class="math inline">\(s\)</span> in what is called the <strong>second stage</strong> or the <strong>reduced form</strong> model.<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a> Performing this procedure is supposed to take out any impact of <span class="math inline">\(A\)</span> in the correlation we observe in our data between <span class="math inline">\(s\)</span> and <span class="math inline">\(y\)</span>.</li>
+</ol>
+<p>This estimation technique is called the <strong>Two stage least squares</strong> estimator, or 2SLS for short. The great virtue is that in the first stage we could have any number of exogenous variables helping to predict our exogenous <span class="math inline">\(s\)</span> (here we have just one - quarter of birth.) In terms of equations, we could write the following:</p>
+<span class="math display" id="eq:2SLS2" id="eq:2SLS1">\[\begin{align}
+\text{1. Stage: }s_i &amp;= \alpha_0 + \alpha_1 z_i + \eta_i \tag{11.3}\\ 
+\text{2. Stage: }y_i &amp;= \beta_0 + \beta_1 \hat{s}_i + u_i \tag{11.4}
+\end{align}\]</span>
+<p>where the <span class="math inline">\(\hat{s}_i\)</span> means to insert the <em>predicted</em> value from the first stage for <span class="math inline">\(i\)</span>'s observed <span class="math inline">\(s_i\)</span> in the second stage regression. We can write down the conditions for a valid IV <span class="math inline">\(z\)</span> in this context:</p>
+<div class="warningl">
+<p>
+<strong>Conditions for a valid Instrument in this simple 2SLS setup</strong>:
+</p>
+<ol style="list-style-type: decimal">
+<li>
+Relevance of the IV: <span class="math inline"><span class="math inline">\(\alpha_1 \neq 0\)</span></span>
+</li>
+<li>
+Independence (IV assignment as good as random): <span class="math inline"><span class="math inline">\(E[\eta | z] = 0\)</span></span>
+</li>
+<li>
+Exogeneity (our exclusion restriction): <span class="math inline"><span class="math inline">\(E[u | z] = 0\)</span></span>
+</li>
+</ol>
+</div>
+<div id="data-on-birth-quarter-and-wages" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Data on birth quarter and wages</h3>
+<p>Let's load the data and look at a quick summary<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;ak91&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;masteringmetrics&quot;</span>)
+<span class="kw">library</span>(modelsummary)
+<span class="kw">datasummary_skim</span>(<span class="kw">data.frame</span>(ak91),<span class="dt">histogram =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+P0
+</th>
+<th style="text-align:right;">
+P25
+</th>
+<th style="text-align:right;">
+P50
+</th>
+<th style="text-align:right;">
+P75
+</th>
+<th style="text-align:right;">
+P100
+</th>
+<th style="text-align:right;">
+Histogram
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+lnw
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+-2.3
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+10.5
+</td>
+<td style="text-align:right;">
+▁▇▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+s
+</td>
+<td style="text-align:right;">
+12.8
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:right;">
+15.0
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+<td style="text-align:right;">
+▁▂▇▂▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+yob
+</td>
+<td style="text-align:right;">
+1934.6
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+1930.0
+</td>
+<td style="text-align:right;">
+1932.0
+</td>
+<td style="text-align:right;">
+1935.0
+</td>
+<td style="text-align:right;">
+1937.0
+</td>
+<td style="text-align:right;">
+1939.0
+</td>
+<td style="text-align:right;">
+▇▆▆▆▆▆▆▇▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+qob
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+▇▆▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sob
+</td>
+<td style="text-align:right;">
+30.7
+</td>
+<td style="text-align:right;">
+14.2
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:right;">
+34.0
+</td>
+<td style="text-align:right;">
+42.0
+</td>
+<td style="text-align:right;">
+56.0
+</td>
+<td style="text-align:right;">
+▃▁▃▄▅▃▇▅▃▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+45.0
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+40.2
+</td>
+<td style="text-align:right;">
+42.5
+</td>
+<td style="text-align:right;">
+45.0
+</td>
+<td style="text-align:right;">
+47.5
+</td>
+<td style="text-align:right;">
+50.0
+</td>
+<td style="text-align:right;">
+▇▇▇▆▆▆▆▆▆▇
+</td>
+</tr>
+</tbody>
+</table>
+<p>We convert quarter of birth to a factor:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ak91 &lt;-<span class="st"> </span><span class="kw">mutate</span>(ak91,
+               <span class="dt">qob_fct =</span> <span class="kw">factor</span>(qob),
+               <span class="dt">q4 =</span> <span class="kw">as.integer</span>(qob <span class="op">==</span><span class="st"> &quot;4&quot;</span>),
+               <span class="dt">yob_fct =</span> <span class="kw">factor</span>(yob))
+<span class="co"># get mean wage by year/quarter</span>
+ak91_age &lt;-<span class="st"> </span>ak91 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(qob, yob) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">lnw =</span> <span class="kw">mean</span>(lnw), <span class="dt">s =</span> <span class="kw">mean</span>(s)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">q4 =</span> (qob <span class="op">==</span><span class="st"> </span><span class="dv">4</span>))</code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;qob&#39; (override with `.groups` argument)</code></pre>
+<p>Let's reproduce their first figure now on education as a function of quarter of birth!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ak91_age, <span class="kw">aes</span>(<span class="dt">x =</span> yob <span class="op">+</span><span class="st"> </span>(qob <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="dv">4</span>, <span class="dt">y =</span> s )) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">label =</span> qob, <span class="dt">color =</span> q4)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">label =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Year of birth&quot;</span>, <span class="dt">breaks =</span> <span class="dv">1930</span><span class="op">:</span><span class="dv">1940</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;Years of Education&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="fl">12.2</span>, <span class="fl">13.2</span>, <span class="dt">by =</span> <span class="fl">0.2</span>),
+                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">12.2</span>, <span class="fl">13.2</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ak91-age"></span>
+<img src="ScPoEconometrics_files/figure-html/ak91-age-1.png" alt="Reproducing figure 1 from @angristkruegerIV" width="672" />
+<p class="caption">
+Figure 11.4: Reproducing figure 1 from <span class="citation">Joshua D Angrist and Krueger (<a href="#ref-angristkruegerIV">2001</a>)</span>
+</p>
+</div>
+<p>In figure <a href="iv-applications.html#fig:ak91-age">11.4</a> we see first that there was a trend in getting more and more education as time passed. Secondly, and more importantly here, is that for almost all birth years in the sample, the group born in quarter 4 has the highest value for years of education! So what we said above about the instutional rules of school attendance in the US seems to be born out in this dataset. What about earnings for those groups?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ak91_age, <span class="kw">aes</span>(<span class="dt">x =</span> yob <span class="op">+</span><span class="st"> </span>(qob <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="dv">4</span>, <span class="dt">y =</span> lnw)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">label =</span> qob, <span class="dt">color =</span> q4)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Year of birth&quot;</span>, <span class="dt">breaks =</span> <span class="dv">1930</span><span class="op">:</span><span class="dv">1940</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;Log weekly wages&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">label =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ak91-wage"></span>
+<img src="ScPoEconometrics_files/figure-html/ak91-wage-1.png" alt="Reproducing figure 2 from @angristkruegerIV" width="672" />
+<p class="caption">
+Figure 11.5: Reproducing figure 2 from <span class="citation">Joshua D Angrist and Krueger (<a href="#ref-angristkruegerIV">2001</a>)</span>
+</p>
+</div>
+<p>Figure <a href="iv-applications.html#fig:ak91-wage">11.5</a> does not show a long running trend in earnings, so on average we'd say an hourly wage of 5 Dollars 90 per week. But, again, the group born in the fourth quarter seems special: In many cases they earn the highest or close to highest wage if compared to the other 3 groups in their birthyear. So, there really seems to be a relationship between quarter of birth and later in life earnings! Let us now construct an IV estimator, which will allow us to relate the sawtooth pattern in figure <a href="iv-applications.html#fig:ak91-age">11.4</a> to the one in <a href="iv-applications.html#fig:ak91-wage">11.5</a>. We will start out with using just <em>born in fourth quarter</em> as our IV.</p>
+</div>
+<div id="running-iv-estimation-in-r" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Running IV estimation in <code>R</code></h3>
+<p>There are several possibilities to run IV estimation in <code>R</code>. We will use the <code>iv_robust</code> function from the <code>estimatr</code> package.<a href="#fn15" class="footnoteRef" id="fnref15"><sup>15</sup></a> Let's estimate a simple OLS version (subject to ability bias), the first stage and the final 2SLS estimate:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod                  &lt;-<span class="st"> </span><span class="kw">list</span>()
+mod<span class="op">$</span>ols              &lt;-<span class="st"> </span><span class="kw">lm</span>(lnw <span class="op">~</span><span class="st"> </span>s, <span class="dt">data =</span> ak91)
+mod[[<span class="st">&quot;first stage&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">lm</span>(s <span class="op">~</span><span class="st"> </span>q4, <span class="dt">data =</span> ak91)  <span class="co"># IV: born in q4 is TRUE?</span>
+ak91<span class="op">$</span>shat            &lt;-<span class="st"> </span><span class="kw">predict</span>(mod[[<span class="st">&quot;first stage&quot;</span>]])  
+mod[[<span class="st">&quot;second stage&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">lm</span>(lnw <span class="op">~</span><span class="st"> </span>shat, <span class="dt">data =</span> ak91)
+mod<span class="op">$</span><span class="st">`</span><span class="dt">2SLS</span><span class="st">`</span>            &lt;-<span class="st"> </span>estimatr<span class="op">::</span><span class="kw">iv_robust</span>(lnw <span class="op">~</span><span class="st"> </span>s <span class="op">|</span><span class="st"> </span>q4, <span class="dt">data =</span> ak91 ) <span class="co"># IV: born in q4 is TRUE?</span></code></pre></div>
+<p>Let's look at those models next to each other in table <a href="iv-applications.html#tab:ms1">11.1</a>:</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ms1">Table 11.1: </span>OLS, first and sceond stages as well as 2SLS estimates for Angrist and Krueger (1991)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+ols
+</th>
+<th style="text-align:left;">
+first stage
+</th>
+<th style="text-align:left;">
+second stage
+</th>
+<th style="text-align:left;">
+2SLS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+4.995***
+</td>
+<td style="text-align:left;">
+12.747***
+</td>
+<td style="text-align:left;">
+4.955***
+</td>
+<td style="text-align:left;">
+4.955***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.004)
+</td>
+<td style="text-align:left;">
+(0.007)
+</td>
+<td style="text-align:left;">
+(0.381)
+</td>
+<td style="text-align:left;">
+(0.358)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+s
+</td>
+<td style="text-align:left;">
+0.071***
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.074***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.000)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.028)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.092***
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.013)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shat
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.074**
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.030)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+43782.556
+</td>
+<td style="text-align:left;">
+48.095
+</td>
+<td style="text-align:left;">
+6.146
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table>
+<p>Table <a href="iv-applications.html#tab:ms1">11.1</a> contains a lot of information, so let's go column-wise:</p>
+<ol style="list-style-type: decimal">
+<li>The column labelled <strong>ols</strong> is the basic earnings equation similar to Mincer's model (without experience). We are worried about bias from the omitted variable <em>ability</em>, but we note that here we estimate a 7% higher wage for each additional year of schooling.</li>
+<li>The next column is the first stage, i.e. the estimates for <span class="math inline">\(\alpha\)</span> in equation <a href="iv-applications.html#eq:2SLS1">(11.3)</a>. Remember we require that <span class="math inline">\(\alpha_1 \neq 0\)</span>. That seems to be the case here (p-value very small).</li>
+<li>Then we run the second stage model with the predicted values <span class="math inline">\(\hat{s}\)</span> from the first stage, i.e. we estimate the <span class="math inline">\(\beta\)</span>s in <a href="iv-applications.html#eq:2SLS2">(11.4)</a>. You should compare <code>s</code> and <code>shat</code> in the first and third column.</li>
+<li>Finally, we perform first and second stag e estimation in one go (you would usually go down this route directly) with 2SLS. You should compare <code>shat</code> from the second stage with the <code>s</code> estimate from the 2SLS model! The reason you should always go directly to something like <code>iv_robust</code> is that this procedure handles computation of standard errors correctly. In other words, the displayed standard error in the second stage for <code>shat</code> (0.03) is not taking into account that we estimated <code>shat</code> itself in a previous step - <code>iv_robust</code> does (note the small difference to 0.028).</li>
+</ol>
+</div>
+<div id="additional-control-variables" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> Additional Control Variables</h3>
+<p>We saw in figure <a href="iv-applications.html#fig:ak91-age">11.4</a> that there is a clear time trend in years of schooling. There are also business-cycle fluctuations in earnings, even if we were not able to see them from the graph above. It is probably a good idea to control for calendar year in order to guard against any time effects in our results. Also, we can use more than one IV! Here is how:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod<span class="op">$</span>ols_yr  &lt;-<span class="st"> </span><span class="kw">update</span>(mod<span class="op">$</span>ols, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>yob_fct)  <span class="co"># just update previous model</span>
+mod[[<span class="st">&quot;2SLS_yr&quot;</span>]] &lt;-<span class="st"> </span>estimatr<span class="op">::</span><span class="kw">iv_robust</span>(lnw <span class="op">~</span><span class="st"> </span>s  <span class="op">+</span><span class="st"> </span>yob_fct <span class="op">|</span><span class="st"> </span>q4 <span class="op">+</span><span class="st"> </span>yob_fct, <span class="dt">data =</span> ak91 )  <span class="co"># add exogenous vars on both sides of | !</span>
+mod[[<span class="st">&quot;2SLS_all&quot;</span>]] &lt;-<span class="st"> </span>estimatr<span class="op">::</span><span class="kw">iv_robust</span>(lnw <span class="op">~</span><span class="st"> </span>s  <span class="op">+</span><span class="st"> </span>yob_fct <span class="op">|</span><span class="st"> </span>qob_fct <span class="op">+</span><span class="st"> </span>yob_fct, <span class="dt">data =</span> ak91 )  <span class="co"># use all quarters as IVs</span>
+
+<span class="co"># here is how to make the table:</span>
+rows &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">term =</span> <span class="kw">c</span>(<span class="st">&quot;Instruments&quot;</span>,<span class="st">&quot;Year of birth&quot;</span>),
+                   <span class="dt">ols  =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>,<span class="st">&quot;no&quot;</span>),
+                   <span class="dt">SLS  =</span> <span class="kw">c</span>(<span class="st">&quot;Q4&quot;</span>,<span class="st">&quot;no&quot;</span>),
+                   <span class="dt">ols_yr  =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>,<span class="st">&quot;yes&quot;</span>),
+                   <span class="dt">SLS_yr  =</span> <span class="kw">c</span>(<span class="st">&quot;Q4&quot;</span>,<span class="st">&quot;yes&quot;</span>),
+                   <span class="dt">SLS_all  =</span> <span class="kw">c</span>(<span class="st">&quot;All Quarters&quot;</span>,<span class="st">&quot;yes&quot;</span>)
+                   )
+<span class="kw">names</span>(rows)[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>)] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;2SLS&quot;</span>,<span class="st">&quot;2SLS_yr&quot;</span>,<span class="st">&quot;2SLS_all&quot;</span>)
+modelsummary<span class="op">::</span><span class="kw">msummary</span>(<span class="dt">models =</span> mod[<span class="kw">c</span>(<span class="st">&quot;ols&quot;</span>,<span class="st">&quot;2SLS&quot;</span>,<span class="st">&quot;ols_yr&quot;</span>,<span class="st">&quot;2SLS_yr&quot;</span>,<span class="st">&quot;2SLS_all&quot;</span>)], 
+                       <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,
+                       <span class="dt">gof_omit =</span> <span class="st">&#39;DF|Deviance|AIC|BIC|R2|p.value|se_type|statistic|Log.Lik.|Num.Obs.|N&#39;</span>,
+                       <span class="dt">title =</span> <span class="st">&quot;Adding Year as control, and more IVs&quot;</span>,
+                       <span class="dt">add_rows =</span> rows,
+                       <span class="dt">coef_omit =</span> <span class="st">&#39;yob_fct&#39;</span>)</code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-197">Table 11.2: </span>Adding Year as control, and more IVs
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+ols
+</th>
+<th style="text-align:left;">
+2SLS
+</th>
+<th style="text-align:left;">
+ols_yr
+</th>
+<th style="text-align:left;">
+2SLS_yr
+</th>
+<th style="text-align:left;">
+2SLS_all
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+4.995
+</td>
+<td style="text-align:left;">
+4.955
+</td>
+<td style="text-align:left;">
+5.017
+</td>
+<td style="text-align:left;">
+4.966
+</td>
+<td style="text-align:left;">
+4.592
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.004)
+</td>
+<td style="text-align:left;">
+(0.358)
+</td>
+<td style="text-align:left;">
+(0.005)
+</td>
+<td style="text-align:left;">
+(0.354)
+</td>
+<td style="text-align:left;">
+(0.251)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+s
+</td>
+<td style="text-align:left;">
+0.071
+</td>
+<td style="text-align:left;">
+0.074
+</td>
+<td style="text-align:left;">
+0.071
+</td>
+<td style="text-align:left;">
+0.075
+</td>
+<td style="text-align:left;">
+0.105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.000)
+</td>
+<td style="text-align:left;">
+(0.028)
+</td>
+<td style="text-align:left;">
+(0.000)
+</td>
+<td style="text-align:left;">
+(0.028)
+</td>
+<td style="text-align:left;">
+(0.020)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+43782.556
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+4397.455
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Instruments
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Q4
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Q4
+</td>
+<td style="text-align:left;">
+All Quarters
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Year of birth
+</td>
+<td style="text-align:left;">
+no
+</td>
+<td style="text-align:left;">
+no
+</td>
+<td style="text-align:left;">
+yes
+</td>
+<td style="text-align:left;">
+yes
+</td>
+<td style="text-align:left;">
+yes
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-angristkruegerIV">
+<p>Angrist, Joshua D, and Alan B Krueger. 2001. “Instrumental Variables and the Search for Identification: From Supply and Demand to Natural Experiments.” <em>Journal of Economic Perspectives</em> 15 (4): 69–85.</p>
+</div>
+<div id="ref-angristkrueger">
+<p>Angrist, Joshua D., and Alan B. Krueger. 1991. “Does Compulsory School Attendance Affect Schooling and Earnings?” <em>The Quarterly Journal of Economics</em> 106 (4): 979–1014. doi:<a href="https://doi.org/10.2307/2937954">10.2307/2937954</a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="13">
+<li id="fn13"><p>It's called reduced form because this second equation is supposed to be derived from a true underlying structural model.<a href="iv-applications.html#fnref13">↩</a></p></li>
+<li id="fn14"><p>Code in this section comes from the great <a href="https://jrnold.github.io/masteringmetrics/">mastering metrics with R</a> by J Arnold 👏 🙏<a href="iv-applications.html#fnref14">↩</a></p></li>
+<li id="fn15"><p>the <em>robust</em> here refers to the fact that the <code>estimatr</code> package by default chooses formulae to compute standard errors which are correcting for heteroskedasticity - we have encountered this term before in <a href="std-errors.html#violating">6.6.2</a>. See details <a href="https://declaredesign.org/r/estimatr/articles/mathematical-notes.html">here</a><a href="iv-applications.html#fnref15">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="IV.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="panel-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/11-IV2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Instrumental Variables | Introduction to Econometrics with R</title>
+  <title>Chapter 10 Instrumental Variables (IV) | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Instrumental Variables | Introduction to Econometrics with R" />
+  <meta property="og:title" content="Chapter 10 Instrumental Variables (IV) | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Instrumental Variables | Introduction to Econometrics with R" />
+  <meta name="twitter:title" content="Chapter 10 Instrumental Variables (IV) | Introduction to Econometrics with R" />
   
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2019-08-28" />
+<meta name="date" content="2020-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
-<link rel="prev" href="std-errors.html">
-<link rel="next" href="projects.html">
+<link rel="prev" href="RDD.html"/>
+<link rel="next" href="iv-applications.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,13 +48,19 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -66,66 +73,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -152,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="R-intro.html"><a href="R-intro.html#getting-help"><i class="fa fa-check"></i><b>1.4</b> Getting Help</a></li>
 <li class="chapter" data-level="1.5" data-path="R-intro.html"><a href="R-intro.html#installing-packages"><i class="fa fa-check"></i><b>1.5</b> Installing Packages</a></li>
 <li class="chapter" data-level="1.6" data-path="R-intro.html"><a href="R-intro.html#code-output"><i class="fa fa-check"></i><b>1.6</b> <code>Code</code> vs Output in this Book</a></li>
-<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoEconometrics</code> Package</a></li>
+<li class="chapter" data-level="1.7" data-path="R-intro.html"><a href="R-intro.html#install-package"><i class="fa fa-check"></i><b>1.7</b> <code>ScPoApps</code> Package</a></li>
 <li class="chapter" data-level="1.8" data-path="R-intro.html"><a href="R-intro.html#data-types"><i class="fa fa-check"></i><b>1.8</b> Data Types</a></li>
 <li class="chapter" data-level="1.9" data-path="R-intro.html"><a href="R-intro.html#data-structures"><i class="fa fa-check"></i><b>1.9</b> Data Structures</a></li>
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
@@ -171,33 +153,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="linreg.html"><a href="linreg.html#correlation-covariance-and-linearity"><i class="fa fa-check"></i><b>3.4</b> Correlation, Covariance and Linearity</a></li>
 <li class="chapter" data-level="3.5" data-path="linreg.html"><a href="linreg.html#analysing-vary"><i class="fa fa-check"></i><b>3.5</b> Analysing <span class="math inline">\(Var(y)\)</span></a></li>
 <li class="chapter" data-level="3.6" data-path="linreg.html"><a href="linreg.html#assessing-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Assessing the <em>Goodness of Fit</em></a></li>
-<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#lm-example1"><i class="fa fa-check"></i><b>3.7</b> An Example: California Student Test Scores</a></li>
+<li class="chapter" data-level="3.7" data-path="linreg.html"><a href="linreg.html#an-example-a-log-wage-equation"><i class="fa fa-check"></i><b>3.7</b> An Example: A Log Wage Equation</a></li>
+<li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
+<li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
-<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#california-test-scores-2"><i class="fa fa-check"></i><b>4.3</b> California Test Scores 2</a></li>
-<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
-<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
-<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#back-to-sampling"><i class="fa fa-check"></i><b>6.3</b> Back to Sampling</a></li>
-<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.4</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.5</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
+<li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
+<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#uncertainty-in-regression-estimates"><i class="fa fa-check"></i><b>6.4</b> Uncertainty in Regression Estimates</a></li>
+<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.5</b> What is <em>true</em>? What are Statistical Models?</a></li>
+<li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
+<li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>7</b> Instrumental Variables</a><ul>
-<li class="chapter" data-level="7.1" data-path="IV.html"><a href="IV.html#simultaneity-bias"><i class="fa fa-check"></i><b>7.1</b> Simultaneity Bias</a></li>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
+<li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
+<li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
+<li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
+<li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>8</b> Projects</a><ul>
-<li class="chapter" data-level="8.1" data-path="projects.html"><a href="projects.html#opp-atlas"><i class="fa fa-check"></i><b>8.1</b> Opportunity Atlas</a></li>
-<li class="chapter" data-level="8.2" data-path="projects.html"><a href="projects.html#trade-exercise"><i class="fa fa-check"></i><b>8.2</b> Trade Exercise</a></li>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
+<li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
+<li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
+<li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
+<li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -221,48 +229,267 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="IV" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Instrumental Variables</h1>
+<h1><span class="header-section-number">Chapter 10</span> Instrumental Variables (IV)</h1>
+<p>In the previous chapters we have seen how to get credible causal estimates for the effect of some intervention via randomization techniques. Randomly allocating a subject to treatment or control groups makes sure that <em>everything else is equal</em>, hence we are really comparing apples with apples. Unfortunately, oftentimes we cannot perform a randomized control trial (RCT), out of technological, ethical, or other constraints. (We mentioned that forcing people to smoke via lottery draw is impossible to justify.)</p>
+<p>So, that's it, no RCT, no causal estimates?</p>
+<p>No! Methods like instrumental variables can help us to establish causality if we only have <em>observational data</em> (i.e. data generated not via experiment). That's reassuring, because in many settings this kind of data is the only thing we have.</p>
+<div id="john-snow-and-the-london-cholera-epidemic" class="section level2">
+<h2><span class="header-section-number">10.1</span> John Snow and the London Cholera Epidemic</h2>
+<div class="figure" style="text-align: center"><span id="fig:father-thames"></span>
+<img src="images/father-thames.jpg" alt="Father Thames Introducing his Offspring to the Fair City of London, [Punch (1858)](https://www.bl.uk/collection-items/father-thames-introducing-his-offspring-to-the-fair-city-of-london-from-punch)" width="1000" />
+<p class="caption">
+Figure 10.1: Father Thames Introducing his Offspring to the Fair City of London, <a href="https://www.bl.uk/collection-items/father-thames-introducing-his-offspring-to-the-fair-city-of-london-from-punch">Punch (1858)</a>
+</p>
+</div>
+<p>The 1853-1854 Cholera outbreak in London killed 616 people. Physician <a href="https://en.wikipedia.org/wiki/John_Snow">John Snow</a> was able to use data collected during this period to demonstrate that the illness was water-borne, and not transmitted via air, as was widely believed at the time. In order to better appreciate this section, let's imagine the world of John Snow in 1853<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a>:</p>
+<div class="notel">
 <ul>
-<li>Measurement error</li>
-<li>Omitted Variable Bias</li>
-<li>Reverse Causality / Simultaneity Bias</li>
+<li>
+It is not yet known that germs can cause disease (or indeed, that they exist).
+</li>
+<li>
+Microscopes exist, but work at rather poor resolution.
+</li>
+<li>
+Most human pathogens are not visible to the naked eye, and the isolation of such microbes is still several decades away.
+</li>
+<li>
+The so-called <em>infection theory</em> (i.e. infection via <em>germs</em>) has some supporters, but the dominant idea is that disease, in general, results from <a href="https://en.wikipedia.org/wiki/Miasma_theory"><em>miasmas</em></a>: very small, non-living poisonous particles that float in the air - basically rotting organic matter would emanate foul air, that caused disease. The figure below shows an illustration.
+</li>
 </ul>
-<p>are all called <em>endogeneity</em> problems.</p>
-<div id="simultaneity-bias" class="section level2">
-<h2><span class="header-section-number">7.1</span> Simultaneity Bias</h2>
+</div>
+<br>
+<div class="figure" style="text-align: center"><span id="fig:miasma"></span>
+<img src="images/Cholera_art.jpg" alt="Miasma in the Air. Robert Seymour - A Short History of the National Institutes of Health National Library of Medicine photographic archive." width="448" />
+<p class="caption">
+Figure 10.2: Miasma in the Air. Robert Seymour - A Short History of the National Institutes of Health National Library of Medicine photographic archive.
+</p>
+</div>
+<p>Snow hypothesized that the pathogen causing cholera was taken into the body via food or drink, multiplied and generated a poisonous substance causing the body to expel water, i.e. an extreme form of diarrhea. The active agent then would leave the human body via those excrements, and find their way back into the water supply, infecting the next victim. So, the question at the time was: is cholera a result of <em>miasmas</em> (foul, poisonous air), or a pathogen that was water-borne and infected new victims via excrements of former victims (the <em>infection theory</em>)?</p>
+<p>Snow conducted some impressive detective work tracking down exceptional cases that would refute the miasma theory. For example he documented that two adjacent appartment buildings, one hit by cholera and the other not, had different water supplies: the first building's supply was contaminated by runoffs from privies (toilets), while the second one had arguably cleaner water. He studied the wider water supply system of London, finding that several water providers took their water from the heavily polluted River Thames.</p>
+<p>During 1853-1854, John Snow drew a map (see figure <a href="IV.html#fig:snow-map">10.3</a>) that showed where the fatalities had occured. It became obvious that the cases clustered around the Broad Street pump.</p>
+<div class="figure" style="text-align: center"><span id="fig:snow-map"></span>
+<img src="images/snow-map.jpg" alt="John Snow's original map of the Broad Street pump. https://commons.wikimedia.org/wiki/File:Snow-cholera-map-1.jpg" width="384" />
+<p class="caption">
+Figure 10.3: John Snow's original map of the Broad Street pump. <a href="https://commons.wikimedia.org/wiki/File:Snow-cholera-map-1.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Snow-cholera-map-1.jpg</a>
+</p>
+</div>
+<p>The history goes that after observing the map and insisting with the local council, the handle of the water pump was removed, and the outbreak was ended. Alas, Snow himself showed that the epidemic was stopping anyway and the that removal of the pump handle was close to irrelevant. This can be seen in figure <a href="IV.html#fig:snow-TS">10.4</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:snow-TS"></span>
+<img src="ScPoEconometrics_files/figure-html/snow-TS-1.png" alt="Time series of cholera deaths and timing of pump removal" width="672" />
+<p class="caption">
+Figure 10.4: Time series of cholera deaths and timing of pump removal
+</p>
+</div>
+<p>What seemed much more interesting to him were other observations, like for example:</p>
+<ol style="list-style-type: decimal">
+<li>He found that a large poorhouse in the Broad Street area had very few cholera cases. He observed that the poorhouse had its own well (no need for the inmates to go the public Broad Street pump).</li>
+<li>There was a large brewery in the vicinity of the pump, whose workers did not die of cholera. The workers drank beer, and there was a private well on the premises.</li>
+</ol>
+<div id="mapping-londons-water-supply" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Mapping London's Water Supply</h3>
+<p>A few years before the outbreak, Lambeth water company had decided to move its water intake point upstream along the Thames, beyond the main sewage discharge points. Two other companies, the Southwark and Vauxhall water companies, however, left their intake points where they were, i.e. downstream from the sewage discharges. Snows analysis of the data showed that cholera was more prevalent in the Southwark and Vauxhall serviced areas and largely had spared Lambeth. He was able to compile the data in table <a href="IV.html#tab:snow-tab9">10.1</a>:</p>
+<table>
+<caption><span id="tab:snow-tab9">Table 10.1: </span> John Snow's table IX</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Number of houses</th>
+<th align="center">Deaths from Cholera</th>
+<th align="center">Deaths per 1000 Houses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Southwark and Vauxhall</td>
+<td align="center">40,046</td>
+<td align="center">1,263</td>
+<td align="center">315</td>
+</tr>
+<tr class="even">
+<td>Lambeth</td>
+<td align="center">26,107</td>
+<td align="center">98</td>
+<td align="center">37</td>
+</tr>
+<tr class="odd">
+<td>Rest of London</td>
+<td align="center">256,423</td>
+<td align="center">1,422</td>
+<td align="center">59</td>
+</tr>
+</tbody>
+</table>
+<p>With table <a href="IV.html#tab:snow-tab9">10.1</a> in hand, Snow concluded that <em>if</em> Southwark and Vauxhall water companies had moved their water intakes upstream to where Lambeth water was taking in their supply, roughly 1,000 lives could have been saved. For proponents of the miasma theory, this was still not evidence enough, because there were also many factors that led to poor air quality in those areas.</p>
+<p>Of course Snow was proven right later on, when in 1884 Koch first isolated the cholera <em>vibrio</em>, basically confirming Snow's version of the story. But what is really interesting for us is how he was able to use his <strong>non-experimental</strong> data set to make his point.</p>
+</div>
+<div id="snows-model-of-cholera-transmission" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> Snow's Model of Cholera Transmission</h3>
+<p>Even though he never formally wrote it down in this way, we can formulate Snow's way of thinking about the issue in the following terms:</p>
 <ul>
-<li>Detroit has a large police force</li>
-<li>Detroit has a high crime rate</li>
-<li>Omaha has a small police force</li>
-<li>Omana has a small crime rate</li>
+<li>Suppose that <span class="math inline">\(c_i\)</span> takes the value 1 if individiual <span class="math inline">\(i\)</span> dies of cholera, 0 else.</li>
+<li>Let <span class="math inline">\(w_i = 1\)</span> mean that <span class="math inline">\(i\)</span>'s water supply is impure and <span class="math inline">\(w_i = 0\)</span> vice versa. Water purity is assessed with a technology that cannot detect small microbes.</li>
+<li>Collect in <span class="math inline">\(u_i\)</span> all unobservable factors that impact <span class="math inline">\(i\)</span>'s likelihood of dying from the disease: whether <span class="math inline">\(i\)</span> is poor, where exactly they reside, whether there is bad air quality in <span class="math inline">\(i\)</span>'s surrounding, and other invidivual characteristics which impact the outcome (like genetic setup of <span class="math inline">\(i\)</span>).</li>
 </ul>
-<p>Do large police forces <strong>cause</strong> high crime rates?</p>
-<p>Absurd! Absurd? How could we use data to tell?</p>
-<p>We have the problem that large police forces and high crime rates covary positively in the data, and for obvious reasons: Cities want to protect their citizens and therefore respond to increased crime with increased police. Using mathematical symbols, we have the following <em>system of linear equations</em>, i.e. two equations which are <strong>jointly determined</strong>:</p>
-<p><span class="math display">\[\begin{align*}
-\text{crime}_{it} &amp;= f(\text{police}_{it}) \\
-\text{police}_{it}&amp;= g(\text{crime}_{it} )
-\end{align*}\]</span></p>
-<p>We need a factor that is outside this circular system, affecting <strong>only</strong> the size of the police force, but not the actual crime rate. Such a factor is called an <em>instrumental variable</em>.</p>
+<p>With this, can write model <a href="IV.html#eq:snow-mod1">(10.1)</a>:</p>
+<span class="math display" id="eq:snow-mod1">\[\begin{equation}
+c_i = \alpha + \delta w_i + u_i \tag{10.1}
+\end{equation}\]</span>
+<p>John Snow could have used his data and assess the correlation between drinking pure water and cholera incidence, i.e. try to measure <span class="math inline">\(Cor(c_i,w_i)\)</span>, or, which is similar, just run model <a href="IV.html#eq:snow-mod1">(10.1)</a> as a linear regression. There is a problem with this, however. As <span class="citation">Deaton (<a href="#ref-deaton1997">1997</a>)</span> says,</p>
+<blockquote>
+<p>The people who drank impure water were also more likely to be poor, and to live in an environment contaminated in many ways, not least by the ‘poison miasmas’ that were then thought to be the cause of cholera.</p>
+</blockquote>
+<p>In other words, it does not make sense to compare someone who drinks pure water with someone with impure water, as model <a href="IV.html#eq:snow-mod1">(10.1)</a> proposes to do, because <em>all else is not equal</em>: pure water is correlated with being poor, living in bad area, bad air quality and so on - all factors that we encounter in <span class="math inline">\(u_i\)</span>. This violates the crucial orthogonality assumption for valid OLS estimates, <span class="math inline">\(E[u_i | w_i]=0\)</span> in this context. Another way to say this, is that <span class="math inline">\(Cov(w_i, u_i) \neq 0\)</span>, implying that <span class="math inline">\(w_i\)</span> is <em>endogenous</em> in equation <a href="IV.html#eq:snow-mod1">(10.1)</a>: There are factors in <span class="math inline">\(u_i\)</span> that affect both <span class="math inline">\(w_i\)</span> and <span class="math inline">\(c_i\)</span>, so we cannot reasonably say that <em>the effect of <span class="math inline">\(w\)</span> is that...</em>, because things in <span class="math inline">\(u_i\)</span> move at the same time as <span class="math inline">\(w_i\)</span> moves (and we can't see those things). So, the <em>miasma</em> theorists actually had a point.</p>
+<p>Let us condition equation <a href="IV.html#eq:snow-mod1">(10.1)</a> on either value <span class="math inline">\(w\)</span> might take:</p>
+<span class="math display">\[\begin{align}
+E[c_i | w_i = 1] &amp;= \alpha + \delta + E[u_i | w_i = 1] \\
+E[c_i | w_i = 0] &amp;= \alpha + \phantom{\delta} + E[u_i | w_i = 0]
+\end{align}\]</span>
+<p>Simply differencing those two lines thus yields</p>
+<span class="math display">\[\begin{equation}
+E[c_i | w_i = 1] - E[c_i | w_i = 0] = \delta + \left\{ E[u_i | w_i = 1] - E[u_i | w_i = 0]\right\}
+\end{equation}\]</span>
+<p>and we said that it stands to reason that this last term <span class="math inline">\(\left\{ E[u_i | w_i = 1] - E[u_i | w_i = 0]\right\}\)</span> is not equal to zero, hence our regression estimate for <span class="math inline">\(\delta\)</span> would be biased by that quantity.</p>
+</div>
+</div>
+<div id="defining-the-iv-estimator" class="section level2">
+<h2><span class="header-section-number">10.2</span> Defining the IV Estimator</h2>
+<p>John Snow did not know what an IV estimator was because it had not been described yet.<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a> However, we can use the above setup to develop the idea. To get at this, it is useful to hear what John Snow has to say after he shows us his table IX, displayed in table <a href="IV.html#tab:snow-tab9">10.1</a> above:</p>
+<blockquote>
+<p>[...] the mixing of the supply is of the most intimate kind. The pipes of each Company go down all the streets, and into nearly all the courts and alleys. [...] The experiment, too, is on the grandest scale. No fewer than three hundred thousand people of both sexes, of every age and occupation, and of every rank and station, from gentlefolks down to the very poor, were divided into two groups without their choice, and in most cases, without their knowledge; one group supplied with water containing the sewage of London, and amongst it, whatever might have come from the cholera patients, the other group having water quite free from such impurity.</p>
+</blockquote>
+<p>To back this up, he produced the following map showing which areas were served by which water company. As you can see from the legend, the purple areas denote those with mixed water supply.</p>
+<div class="figure" style="text-align: center"><span id="fig:snow-supply"></span>
+<img src="images/snow-supply.jpg" alt="Snow's map of water supply in London" width="912" />
+<p class="caption">
+Figure 10.5: Snow's map of water supply in London
+</p>
+</div>
+<p>So, without knowing, Snow is proposing an <strong>instrumental variable</strong> <span class="math inline">\(z_i\)</span>, the <em>identity of the water supplying company</em> to household <span class="math inline">\(i\)</span>, which is highly correlated with the water purity <span class="math inline">\(w_i\)</span>. However, following his remarks above, it seems to be uncorrelated with all the other factors in <span class="math inline">\(u_i\)</span>, which worried us before: people in most cases didn't even know who supplied their water, as those decisions were taken years before. Very similar households, on either side of a street, may have had different water purity in their homes as a result of a different supplier.<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a> Let's visualize this setup in a DAG to start with:</p>
+<div class="figure" style="text-align: center"><span id="fig:IV-dag"></span>
+<img src="ScPoEconometrics_files/figure-html/IV-dag-1.png" alt="DAG for IV setup in Snow's study setting. $u$ affects both explanatory variable $w$ and outcome $c$ at the same time. $z$ affects the outcome *only through* its impact on $w$. Solid arrows are measurable with data, dashed arrows are not." width="672" />
+<p class="caption">
+Figure 10.6: DAG for IV setup in Snow's study setting. <span class="math inline">\(u\)</span> affects both explanatory variable <span class="math inline">\(w\)</span> and outcome <span class="math inline">\(c\)</span> at the same time. <span class="math inline">\(z\)</span> affects the outcome <em>only through</em> its impact on <span class="math inline">\(w\)</span>. Solid arrows are measurable with data, dashed arrows are not.
+</p>
+</div>
+<p>You can see that outcome <span class="math inline">\(c\)</span> is affected by water purity <span class="math inline">\(w\)</span> and other factors <span class="math inline">\(u\)</span>. The point of the DAG in figure <a href="IV.html#fig:IV-dag">10.6</a> is to show that <span class="math inline">\(u\)</span> affects both the outcome <span class="math inline">\(c\)</span> <em>and</em> the explanatory variable <span class="math inline">\(w\)</span> at the same time, and the conditional mean assumption <span class="math inline">\(E[u_i | w_i]=0\)</span> is violated (this is an implication of the arrow from <span class="math inline">\(u\)</span> to <span class="math inline">\(w\)</span>). Now, <span class="math inline">\(z\)</span> affects <em>only</em> <span class="math inline">\(w\)</span> (it is <em>relevant</em> for <span class="math inline">\(w\)</span>) and, furthermore, it is <em>not affected</em> by <span class="math inline">\(u\)</span> (it is <em>exogenous</em> to the outcome equation).</p>
+<p>Now, if you change the value of <span class="math inline">\(z_i\)</span> in this DAG, this will change <span class="math inline">\(w_i\)</span> (follow the solid arrow!), which will then change the outcome <span class="math inline">\(c_i\)</span>. The key insight is that we can be sure that this change in <span class="math inline">\(c_i\)</span> had nothing to do with other factors <span class="math inline">\(u_i\)</span> - that's what our model assumes (no arrow from <span class="math inline">\(u\)</span> to <span class="math inline">\(z\)</span>!). So, we can measure the part of the correlation between <span class="math inline">\(w\)</span> and <span class="math inline">\(c\)</span> that is <em>due to</em> correlation between <span class="math inline">\(w\)</span> and <span class="math inline">\(z\)</span>, and obtain a <em>causal</em> effect! Spoiler alert: The formula for a one variable, one IV setting like this here is</p>
+<p><span class="math display">\[\frac{Cov(z,c)}{Cov(z,w)}.\]</span></p>
+<p>The DAG is silent about the strength of each of the arrows. Whether any of the arrows is more or less important is a statistical question (i.e. we have to <em>measure</em> their strengths in data somehow). The usefulness of a DAG like this one is purely to think about and justify the model we have in mind, and for that purpose it is a very good tool. I would encourage you to draw one of those each time before you want to use IV analysis. In particular, your theory needs to spell out why there is no arrow from <span class="math inline">\(u\)</span> to <span class="math inline">\(z\)</span> - see Snow's argumentation above that water supply was close to randomly allocated to households in 1850 London.</p>
+<p>More formally, let's define the instrument as follows:</p>
+<span class="math display">\[\begin{align*}
+z_i &amp;=  \begin{cases}
+                    1 &amp; \text{if water supplied by Lambeth} \\
+                    0 &amp; \text{if water supplied by Southwark or Vauxhall.} \\
+                 \end{cases} \\
+\end{align*}\]</span>
+<p>Here are the conditions for a valid instrument:</p>
+<div class="notel">
+<ol style="list-style-type: decimal">
+<li>
+<strong>Relevance</strong> or <strong>First Stage</strong>: Water purity is indeed a function of supplier identity. We want that <span class="math display"><span class="math display">\[E[w_i | z_i = 1] \neq E[w_i | z_i = 0]\]</span></span> i.e. the average water purity differs across suppliers. We can <em>verify</em> this condition with observational data. We want this effect to be reliably causal.
+</li>
+<li>
+<strong>Independence</strong>: Whether a household has <span class="math inline"><span class="math inline">\(z_i = 1\)</span></span> or <span class="math inline"><span class="math inline">\(z_i = 0\)</span></span> is unrelated to <span class="math inline"><span class="math inline">\(u\)</span></span>, hence <em>as good as random</em>. Whether we condition <span class="math inline"><span class="math inline">\(u\)</span></span> on certain values of <span class="math inline"><span class="math inline">\(z\)</span></span> does not change the result - we want <span class="math display"><span class="math display">\[E[u_i | z_i = 1] = E[u_i | z_i = 0].\]</span></span>
+</li>
+<li>
+<strong>Excludability</strong> the instrument should affect the outcome <span class="math inline"><span class="math inline">\(c\)</span></span> <em>only</em> through the specified channel (i.e. via water purity <span class="math inline"><span class="math inline">\(w\)</span></span>), and nothing else.
+</li>
+</ol>
+</div>
+<p><br></p>
+<p>Point 3. is the difficult part, because there is no real test for it: we have to reason and argue to make the case that is a reasonable assumption. This is where Snow's citation from above comes into play: He reasons that water supply varies <strong>randomly</strong> over households, irrespective their unobservables <span class="math inline">\(u\)</span>. The statement is that whatever factors are present in <span class="math inline">\(u\)</span>, they are present in equal proportion in households with different <span class="math inline">\(z\)</span>, because assignment of <span class="math inline">\(z\)</span> was <strong>random</strong>. So it is hard to imagine that the identity of the water company could affect <span class="math inline">\(c\)</span> through other channels (like, whether you are poor or not is <em>not</em> a function of <span class="math inline">\(z\)</span>).</p>
+<p>We are now ready to define a simple IV estimator. Notice that conditioning <a href="IV.html#eq:snow-mod1">(10.1)</a> on values of <span class="math inline">\(z\)</span> yields</p>
+<span class="math display">\[\begin{align}
+E[c_i | z_i = 1] &amp;= \alpha + \delta E[w_i | z_i = 1] + E[u_i | z_i = 1] \\
+E[c_i | z_i = 0] &amp;= \alpha + \delta E[w_i | z_i = 0] + E[u_i | z_i = 0]
+\end{align}\]</span>
+<p>which upon differencing both lines gives</p>
+<span class="math display">\[\begin{align}
+E[c_i | z_i = 1] - E[c_i | z_i = 0] &amp;= \delta  \left\{ E[w_i | z_i = 1] - E[w_i | z_i = 0]\right\} \\
+&amp;+ \underbrace{\left\{ E[u_i | z_i = 1] - E[u_i | z_i = 0] \right\}}_{=0 \text{ by Exogeneity Assumption}}
+\end{align}\]</span>
+<p>The IV estimator is then obtained by isolating <span class="math inline">\(\delta\)</span> and writing</p>
+<span class="math display" id="eq:IV">\[\begin{equation}
+\delta = \frac{E[c_i | z_i = 1] - E[c_i | z_i = 0]}{E[w_i | z_i = 1] - E[w_i | z_i = 0]} \tag{10.2}
+\end{equation}\]</span>
+<p>Notice that this is only defined if the denominator is nonzero, i.e. the Relevance condition (point 1. above) holds.</p>
+<div id="computing-the-iv-estimate" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> Computing the IV Estimate</h3>
+<p>You remember from earlier chapters that equation <a href="IV.html#eq:IV">(10.2)</a> refers to a <em>population</em> parameter, i.e. <em>the true</em> value in an infinite population. To learn about it's value, we need to <em>estimate</em> it from data. We can use a simple sample analog of the population expectations, i.e. sample means. With some abuse of notation let's say that <em><span class="math inline">\(x \mapsto y\)</span> means that <span class="math inline">\(x\)</span> is an estimate for <span class="math inline">\(y\)</span></em>:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\overline{c}_1 \mapsto E[c_i | z_i = 1]\)</span>: the proportion of households supplied by Lambeth with cholera.</li>
+<li><span class="math inline">\(\overline{w}_1 \mapsto E[w_i | z_i = 1]\)</span>: the proportion of households supplied by Lambeth with bad water.</li>
+<li><span class="math inline">\(\overline{c}_0 \mapsto E[c_i | z_i = 0]\)</span>: the proportion of households not supplied by Lambeth with cholera.</li>
+<li><span class="math inline">\(\overline{w}_0 \mapsto E[w_i | z_i = 0]\)</span>: the proportion of households not supplied by Lambeth with bad water.</li>
+</ol>
+<p>The estimator would then be</p>
+<span class="math display" id="eq:IVhat">\[\begin{equation}
+\hat{\delta} = \frac{\overline{c}_1 - \overline{c}_0}{\overline{w}_1 - \overline{w}_0} \tag{10.3}
+\end{equation}\]</span>
+<p>In this special case where all involved variables <span class="math inline">\(c,w,z\)</span> are binary, the estimator is called the <em>Wald estimator</em>.</p>
+<p>Unfortunately we do not know the values of the above numbers, or at least I did not find them in readily available format (I think they are in Snow's book). So let's make some numbers up just for the sake of it.</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\overline{c}_1 = 0.002\)</span>: the proportion of households supplied by Lambeth with cholera.</li>
+<li><span class="math inline">\(\overline{w}_1 = 0.1\)</span>: the proportion of households supplied by Lambeth with bad water.</li>
+<li><span class="math inline">\(\overline{c}_0 = 0.315\)</span>: the proportion of households not supplied by Lambeth with cholera.</li>
+<li><span class="math inline">\(\overline{w}_0 = 0.5\)</span>: the proportion of households not supplied by Lambeth with bad water.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">delta =<span class="st"> </span>(<span class="fl">0.002</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.315</span>) <span class="op">/</span><span class="st"> </span>(<span class="fl">0.1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>)</code></pre></div>
+<p>So, in this artificial dataset, we would have found an estimated <strong>causal</strong> effect of 0.7825 of impure water on the likelihood of contracting cholera. We would write</p>
+<span class="math display">\[\begin{equation}
+\Delta \Pr(c = 1 | w ) = \alpha + \delta \times 1 - \alpha - \delta \times 0 = 0.7825
+\end{equation}\]</span>
+<p>so the probability of getting cholera is 78 percent higher, if you have impure water (i.e. if <span class="math inline">\(w\)</span> goes from 0 to 1).</p>
+<div class="warningl">
+<p>
+<strong>Summary</strong>: IVs are a powerful tool to establish causality in contexts with observational data only and where we are concerned that the conditional mean assumption <span class="math inline"><span class="math inline">\(E[u_i | x_i]=0\)</span></span> is violated, hence, we cannot say <em>all else equal, as <span class="math inline"><span class="math inline">\(x\)</span></span> changes, <span class="math inline"><span class="math inline">\(y\)</span></span> changes like this and that</em>. Then we say that <span class="math inline"><span class="math inline">\(x\)</span></span> is <em>endogenous</em>. The key features of IV <span class="math inline"><span class="math inline">\(z\)</span></span> are that
+</p>
+<ol style="list-style-type: decimal">
+<li>
+<span class="math inline"><span class="math inline">\(z\)</span></span> is <em>relevant</em> for <span class="math inline"><span class="math inline">\(x\)</span></span>. For example, in a simple regression of <span class="math inline"><span class="math inline">\(z\)</span></span> on <span class="math inline"><span class="math inline">\(x\)</span></span>, we want <span class="math inline"><span class="math inline">\(z\)</span></span> to have considerable predictive power. We can <em>test</em> this condition in data.
+</li>
+<li>
+We need a theory according to which is <em>reasonable</em> to assume that <span class="math inline"><span class="math inline">\(z\)</span></span> is <em>unrelated</em> to other unobservable factors that might impact the outcome. Hence, <span class="math inline"><span class="math inline">\(z\)</span></span> is <em>exogenous</em> to <span class="math inline"><span class="math inline">\(u\)</span></span>, or <span class="math inline"><span class="math inline">\(E[u | z] = 0\)</span></span>. This is an <strong>assumption</strong> (i.e. we can not test this with data).
+</li>
+</ol>
+</div>
 
 </div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-deaton1997">
+<p>Deaton, Angus. 1997. <em>The Analysis of Household Surveys: A Microeconometric Approach to Development Policy</em>. The World Bank.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="10">
+<li id="fn10"><p>The following is based on <span class="citation">Freedman (<a href="#ref-freedman1991">1991</a>)</span><a href="IV.html#fnref10">↩</a></p></li>
+<li id="fn11"><p>In <span class="citation">Joshua D Angrist and Krueger (<a href="#ref-angristkruegerIV">2001</a>)</span> you can read that Philipp (or his son Sewal, or both) Wright are widely attributed with this discovery in 1928<a href="IV.html#fnref11">↩</a></p></li>
+<li id="fn12"><p>The formulation as an IV has been taken from <a href="http://people.stern.nyu.edu/wgreene/Econometrics/Cholera-IV-Study.pdf">W. Greene's website</a><a href="IV.html#fnref12">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="std-errors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="projects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="RDD.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="iv-applications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -270,12 +497,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -283,10 +509,14 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/07-Causality.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/10-IV.Rmd",
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -303,10 +533,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
