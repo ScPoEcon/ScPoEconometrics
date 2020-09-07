@@ -38,6 +38,8 @@ Imports: bookdown,
     huxtable,
     cholera, 
     reshape2,
-    modelsummary
+    modelsummary,
+    estimatr,
+    gganimate
 Remotes: datalorax/equatiomatic, wilkelab/ungeviz, jrnold/masteringmetrics/masteringmetrics
 RoxygenNote: 7.1.1
