@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2020-09-07" />
+<meta name="date" content="2020-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,7 +279,7 @@ E[y | x] = p(x) \times 1 + (1-p(x)) \times 0 = p(x)
 <p><span class="math display" id="eq:LPM">\[
 \Pr(y = 1 | x) = p(x) = \beta_0 + \beta_1 x_1 + \dots + \beta_K x_K \tag{13.1}
 \]</span> Our interpretation is slightly changed to our usual setup, as we'd say <em>a 1 unit change in <span class="math inline">\(x_1\)</span>, say, results in a change of <span class="math inline">\(p(x)\)</span> of <span class="math inline">\(\beta_1\)</span>.</em></p>
-<p>Estimation of the LPM as in equation <a href="binary.html#eq:LPM">(13.1)</a> can be performed by standard OLS. Let's look at an example. The Mroz (1987) dataset let's us female labor market participation. How does a woman's <code>inlf</code> (<em>in labor force</em>) status depend on non-wife household income, her education, age and number of small children? First, let's look at a quick plot that shows how the outcome varies with 1 variable, age say:</p>
+<p>Estimation of the LPM as in equation <a href="binary.html#eq:LPM">(13.1)</a> can be performed by standard OLS. Let's look at an example. The Mroz (1987) dataset let's us investigate female labor market participation. How does a woman's <code>inlf</code> (<em>in labor force</em>) status depend on non-wife household income, her education, age and number of small children? First, let's look at a quick plot that shows how the outcome varies with 1 variable, age say:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mroz, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
 <span class="kw">plot</span>(<span class="kw">factor</span>(inlf) <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> mroz, 
      <span class="dt">ylevels =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,
@@ -320,20 +320,34 @@ E[y | x] = p(x) \times 1 + (1-p(x)) \times 0 = p(x)
 <span class="kw">plot</span>(pr[<span class="kw">order</span>(pr)],<span class="dt">ylab =</span> <span class="st">&quot;p(inlf = 1)&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-210-1.png" width="672" style="display: block; margin: auto;" /> This picture tells you that for quite a few observations, this model predicts a probability of working which is either greater than 1, or smaller than zero. This may or may not be a big problem for your analysis. If you only care about marginal effects (i.e. the <span class="math inline">\(\beta\)</span>s, that may be ok, if you want actual <em>predictions</em> than that's problematic).</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-210-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>This picture tells you that for quite a few observations, this model predicts a probability of working which is either greater than 1, or smaller than zero. This may or may not be a big problem for your analysis. If you only care about marginal effects (i.e. the <span class="math inline">\(\beta\)</span>s, that may be ok, in particular if you have discrete variables on the RHS; if you want actual <em>predictions</em> than that's more problematic).</p>
 <p>In the case of a <em>saturated model</em> - if we only have dummy explanatory variables - then this problem does not exist for the LPM:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
+mroz <span class="op">%&lt;&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="co"># classify age into 3 and huswage into 2 classes</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_fct =</span> <span class="kw">cut</span>(age,<span class="dt">breaks =</span> <span class="dv">3</span>,<span class="dt">labels =</span> <span class="ot">FALSE</span>),
+         <span class="dt">huswage_fct =</span> <span class="kw">cut</span>(huswage, <span class="dt">breaks =</span> <span class="dv">2</span>,<span class="dt">labels =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">classes =</span> <span class="kw">paste0</span>(<span class="st">&quot;age_&quot;</span>,age_fct,<span class="st">&quot;_hus_&quot;</span>,huswage_fct))
+
 LPM_saturated =<span class="st"> </span>mroz <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_fct =</span> <span class="kw">cut</span>(age,<span class="dt">breaks =</span> <span class="dv">3</span>),
-         <span class="dt">huswage_fct =</span> <span class="kw">cut</span>(huswage, <span class="dt">breaks =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">lm</span>(inlf <span class="op">~</span><span class="st"> </span>age_fct <span class="op">+</span><span class="st"> </span>huswage_fct, <span class="dt">data =</span> .)
 
-pr =<span class="st"> </span><span class="kw">predict</span>(LPM_saturated)
-<span class="kw">plot</span>(pr[<span class="kw">order</span>(pr)],<span class="dt">ylab =</span> <span class="st">&quot;p(inlf = 1)&quot;</span>,<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),
-     <span class="dt">main =</span> <span class="st">&quot;Saturated LPM&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-211-1.png" width="672" style="display: block; margin: auto;" /></p>
+mroz<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(LPM_saturated)
+
+<span class="kw">ggplot</span>(mroz[<span class="kw">order</span>(mroz<span class="op">$</span>pred),], <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mroz),<span class="dt">y =</span> pred,<span class="dt">color =</span> classes)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;p(inlf)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;LPM in a Saturated Model is Perfectly Fine&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:saturated"></span>
+<img src="ScPoEconometrics_files/figure-html/saturated-1.png" alt="LPM model in a saturated setting, i.e. only mutually exhaustive dummy variables on the RHS." width="672" />
+<p class="caption">
+Figure 13.1: LPM model in a saturated setting, i.e. only mutually exhaustive dummy variables on the RHS.
+</p>
+</div>
+<p>In figure <a href="binary.html#fig:saturated">13.1</a> each line segment corresponds to the average probability of work <em>within that cell</em> of people. For example you see that women from the youngest age category and lowest husband income (class <code>age_1_hus_1</code>) have the highest probability of working (0.621).</p>
 </div>
 <div id="nonlinear-binary-response-models" class="section level2">
 <h2><span class="header-section-number">13.2</span> Nonlinear Binary Response Models</h2>
@@ -351,7 +365,7 @@ pr =<span class="st"> </span><span class="kw">predict</span>(LPM_saturated)
 <div class="figure" style="text-align: center"><span id="fig:cdfs"></span>
 <img src="ScPoEconometrics_files/figure-html/cdfs-1.png" alt="The Probit and Logit functional forms for binary choice models" width="672" />
 <p class="caption">
-Figure 13.1: The Probit and Logit functional forms for binary choice models
+Figure 13.2: The Probit and Logit functional forms for binary choice models
 </p>
 </div>
 <p>You can see that</p>
@@ -472,10 +486,298 @@ Log.Lik.
 </tr>
 </tbody>
 </table>
-<p>From this table, we learn that the coefficient for <code>age</code> is -0.013 for probit and -0.02 for logit, respectively. In both cases, this tells us that the impact of an additional yeaer of age on the probability of working is <strong>negative</strong>. However, we cannot straightforwardly read off the <em>magnitude</em> of the effect. Why is that?</p>
-<p>One simple way to see this is to look back at figure <a href="binary.html#fig:cdfs">13.1</a> and imagine we had just one explanatory variable (like here - <code>age</code>).</p>
-<p>Here is why.</p>
-<p>glm_logitmfx = logitmfx(glm_logit, atmean = TRUE, data = mtcars)</p>
+<p>From this table, we learn that the coefficient for <code>age</code> is -0.013 for probit and -0.02 for logit, respectively. In both cases, this tells us that the impact of an additional year of age on the probability of working is <strong>negative</strong>. However, we cannot straightforwardly read off the <em>magnitude</em> of the effect - <strong>how much</strong> does the probability decrease we can't tell. Why is that?</p>
+<p>One simple way to see this is to look back at figure <a href="binary.html#fig:cdfs">13.2</a> and imagine we had just one explanatory variable (like here - <code>age</code>). The model is</p>
+<p><span class="math display">\[
+\Pr(y = 1 | \text{age})= G \left(x \beta\right) = G \left(\beta_0 + \beta_1 \text{age} \right) 
+\]</span> and the <em>marginal effect</em> of <code>age</code> on the response probability is <span class="math display" id="eq:ME">\[
+\frac{\partial{\Pr(y = 1 | \text{age})}}{ \partial{\text{age}}} = g \left(\beta_0 + \beta_1 \text{age} \right) \beta_1 \tag{13.3}
+\]</span> where function <span class="math inline">\(g\)</span> is defined as <span class="math inline">\(g(z) = \frac{dG}{dz}(z)\)</span> - the first derivative function of <span class="math inline">\(G\)</span> (i.e. the <em>slope</em> of <span class="math inline">\(G\)</span>). The formulation in <a href="binary.html#eq:ME">(13.3)</a> is a result of the <a href="https://en.wikipedia.org/wiki/Chain_rule">chain rule</a>. Now, given that in figure <a href="binary.html#fig:cdfs">13.2</a> we see <span class="math inline">\(G\)</span> that is nonlinear, this means that also <span class="math inline">\(g\)</span> will be non-linear: sometimes (close to the edges of the graph) the slope will be really small and close to zero, but sometimes (in the center of the graph), the slope will be really steep. You are able to try this out yourself with our <a href="https://github.com/ScPoEcon/ScPoApps/issues/4">app -issue</a>.</p>
+<p>So you can see that there is not one single <em>marginal effect</em> in those models, as that depends on <em>where we evaluate</em> expression <a href="binary.html#eq:ME">(13.3)</a>. Notice that the case is identical for more than one <span class="math inline">\(x\)</span>. In practice, there are two common approaches:</p>
+<ol style="list-style-type: decimal">
+<li>report <a href="binary.html#eq:ME">(13.3)</a> at the average values of <span class="math inline">\(x\)</span>: <span class="math display">\[g(\bar{x} \beta) \beta_j\]</span></li>
+<li>report the sample average of all marginal effects: <span class="math display">\[\frac{1}{n} \sum_{i=1}^N g(x_i \beta) \beta_j\]</span></li>
+</ol>
+<p>Thankfully there are packages available that help us to compute those marginal effects fairly easily. One of them is called <a href="https://cran.r-project.org/web/packages/mfx/"><code>mfx</code></a>, and we would use it as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> &quot;inlf ~ age + kidslt6 + nwifeinc&quot;</span> <span class="co"># setup a formula</span>
+glms &lt;-<span class="st"> </span><span class="kw">list</span>()
+glms<span class="op">$</span>probit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, 
+                    <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;probit&quot;</span>))
+glms<span class="op">$</span>logit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, 
+                    <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))
+<span class="co"># now the marginal effects versions</span>
+glms<span class="op">$</span>probitMean &lt;-<span class="st"> </span>mfx<span class="op">::</span><span class="kw">probitmfx</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, <span class="dt">atmean =</span> <span class="ot">TRUE</span>)
+glms<span class="op">$</span>probitAvg &lt;-<span class="st"> </span>mfx<span class="op">::</span><span class="kw">probitmfx</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, <span class="dt">atmean =</span> <span class="ot">FALSE</span>)
+glms<span class="op">$</span>logitMean &lt;-<span class="st"> </span>mfx<span class="op">::</span><span class="kw">logitmfx</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, <span class="dt">atmean =</span> <span class="ot">TRUE</span>)
+glms<span class="op">$</span>logitAvg &lt;-<span class="st"> </span>mfx<span class="op">::</span><span class="kw">logitmfx</span>(<span class="dt">formula =</span> f, 
+                    <span class="dt">data =</span> mroz, <span class="dt">atmean =</span> <span class="ot">FALSE</span>)
+
+modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(glms, 
+                           <span class="dt">stars =</span> <span class="ot">TRUE</span>,
+                           <span class="dt">gof_omit =</span> <span class="st">&quot;AIC|BIC&quot;</span>,
+                           <span class="dt">title =</span> <span class="st">&quot;Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects&quot;</span>)</code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:glms">Table 13.1: </span>Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+probit
+</th>
+<th style="text-align:left;">
+logit
+</th>
+<th style="text-align:left;">
+probitMean
+</th>
+<th style="text-align:left;">
+probitAvg
+</th>
+<th style="text-align:left;">
+logitMean
+</th>
+<th style="text-align:left;">
+logitAvg
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+2.080***
+</td>
+<td style="text-align:left;">
+3.394***
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.309)
+</td>
+<td style="text-align:left;">
+(0.516)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:left;">
+-0.035***
+</td>
+<td style="text-align:left;">
+-0.057***
+</td>
+<td style="text-align:left;">
+-0.014***
+</td>
+<td style="text-align:left;">
+-0.013***
+</td>
+<td style="text-align:left;">
+-0.014***
+</td>
+<td style="text-align:left;">
+-0.013***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.007)
+</td>
+<td style="text-align:left;">
+(0.011)
+</td>
+<td style="text-align:left;">
+(0.003)
+</td>
+<td style="text-align:left;">
+(0.002)
+</td>
+<td style="text-align:left;">
+(0.003)
+</td>
+<td style="text-align:left;">
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+kidslt6
+</td>
+<td style="text-align:left;">
+-0.800***
+</td>
+<td style="text-align:left;">
+-1.313***
+</td>
+<td style="text-align:left;">
+-0.314***
+</td>
+<td style="text-align:left;">
+-0.290***
+</td>
+<td style="text-align:left;">
+-0.322***
+</td>
+<td style="text-align:left;">
+-0.292***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.111)
+</td>
+<td style="text-align:left;">
+(0.188)
+</td>
+<td style="text-align:left;">
+(0.044)
+</td>
+<td style="text-align:left;">
+(0.036)
+</td>
+<td style="text-align:left;">
+(0.046)
+</td>
+<td style="text-align:left;">
+(0.047)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nwifeinc
+</td>
+<td style="text-align:left;">
+-0.011***
+</td>
+<td style="text-align:left;">
+-0.019***
+</td>
+<td style="text-align:left;">
+-0.004***
+</td>
+<td style="text-align:left;">
+-0.004***
+</td>
+<td style="text-align:left;">
+-0.005***
+</td>
+<td style="text-align:left;">
+-0.004***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(0.004)
+</td>
+<td style="text-align:left;">
+(0.007)
+</td>
+<td style="text-align:left;">
+(0.002)
+</td>
+<td style="text-align:left;">
+(0.001)
+</td>
+<td style="text-align:left;">
+(0.002)
+</td>
+<td style="text-align:left;">
+(0.002)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+<td style="text-align:left;">
+753
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log.Lik.
+</td>
+<td style="text-align:left;">
+-478.395
+</td>
+<td style="text-align:left;">
+-478.377
+</td>
+<td style="text-align:left;">
+-478.395
+</td>
+<td style="text-align:left;">
+-478.395
+</td>
+<td style="text-align:left;">
+-478.377
+</td>
+<td style="text-align:left;">
+-478.377
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table>
+<p>In table <a href="binary.html#tab:glms">13.1</a> you should first note that the estimates of the first two columns (probit or logit) don't correspond to the remaining columns. That's because they only give you the <span class="math inline">\(\beta\)</span>'s. As we have learned above, that in itself is not informative, as it depends <em>where</em> one computes the marginal effects. Hence the remaining columns compute the marginal effects either at the mean of all regressors (<code>probitMean</code>) or as the sample average over all effects in the data (<code>probitAvg</code>). You can notice some differences here, for example we find at the average regressor, an additional child below age of 6 reduces the probability of work by 0.314, whereas as an averag over all sample effects it reduces it by 0.29. Furthermore, you see that the marginal effect estimates between probit and logit don't correspond exactly, which is a consequence of the different shapes of the curves in figure <a href="binary.html#fig:cdfs">13.2</a>. No one approach is correct here and depends on how your data is distributed (e.g. is the mean a good summary of the data here?). What is clear, though, is that in most cases reporting coefficient estimates only is not very informative (it only tells you the direction of any effect).</p>
 
 </div>
 </div>

@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2020-09-07" />
+<meta name="date" content="2020-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1173,7 +1173,7 @@ Figure 3.7: The effect of log-transforming highly skewed data.
 </div>
 <p>In the left panel of figure <a href="linreg.html#fig:ceo-sal">3.7</a> you clearly see that both <code>sales</code> and <code>salary</code> have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it's hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let's see what this gives in a regression model!</p>
 <p><span class="math display">\[
-\operatorname{logsalary} = 4.82 + 0.26(\operatorname{logsales}) + \epsilon
+\operatorname{\widehat{logsalary}} = 4.82 + 0.26(\operatorname{logsales})
 \]</span></p>
 <p>Refering back at table <a href="linreg.html#tab:loglog">3.1</a>, here we have a log-log specification. Therefore we interpret this regression as follows:</p>
 <div class="tip">
