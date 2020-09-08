@@ -60,7 +60,7 @@ $$
 $$
 Our interpretation is slightly changed to our usual setup, as we'd say *a 1 unit change in $x_1$, say, results in a change of $p(x)$ of $\beta_1$.*
 
-Estimation of the LPM as in equation \@ref(eq:LPM) can be performed by standard OLS. Let's look at an example. The Mroz (1987) dataset let's us female labor market participation. How does a woman's `inlf` (*in labor force*) status depend on non-wife household income, her education, age and number of small children? First, let's look at a quick plot that shows how the outcome varies with 1 variable, age say:
+Estimation of the LPM as in equation \@ref(eq:LPM) can be performed by standard OLS. Let's look at an example. The Mroz (1987) dataset let's us investigate female labor market participation. How does a woman's `inlf` (*in labor force*) status depend on non-wife household income, her education, age and number of small children? First, let's look at a quick plot that shows how the outcome varies with 1 variable, age say:
 
 ```{r}
 data(mroz, package = "wooldridge")
@@ -87,24 +87,33 @@ plot(pr[order(pr)],ylab = "p(inlf = 1)")
 abline(a = 0, b = 0, col = "red")
 abline(a = 1, b = 0, col = "red")
 ```
-This picture tells you that for quite a few observations, this model predicts a probability of working which is either greater than 1, or smaller than zero. This may or may not be a big problem for your analysis. If you only care about marginal effects (i.e. the $\beta$s, that may be ok, if you want actual *predictions* than that's problematic).
+
+This picture tells you that for quite a few observations, this model predicts a probability of working which is either greater than 1, or smaller than zero. This may or may not be a big problem for your analysis. If you only care about marginal effects (i.e. the $\beta$s, that may be ok, in particular if you have discrete variables on the RHS; if you want actual *predictions* than that's more problematic).
 
 In the case of a *saturated model* - if we only have dummy explanatory variables - then this problem does not exist for the LPM:
 
-```{r,message=FALSE,warning=FALSE}
+```{r saturated,message=FALSE,warning=FALSE,fig.cap = "LPM model in a saturated setting, i.e. only mutually exhaustive dummy variables on the RHS."}
 library(dplyr)
+library(ggplot2)
+mroz %<>% 
+  # classify age into 3 and huswage into 2 classes
+  mutate(age_fct = cut(age,breaks = 3,labels = FALSE),
+         huswage_fct = cut(huswage, breaks = 2,labels = FALSE)) %>%
+  mutate(classes = paste0("age_",age_fct,"_hus_",huswage_fct))
+
 LPM_saturated = mroz %>%
-  mutate(age_fct = cut(age,breaks = 3),
-         huswage_fct = cut(huswage, breaks = 2)) %>%
   lm(inlf ~ age_fct + huswage_fct, data = .)
 
-pr = predict(LPM_saturated)
-plot(pr[order(pr)],ylab = "p(inlf = 1)",ylim = c(0,1),
-     main = "Saturated LPM")
-abline(a = 0, b = 0, col = "red")
-abline(a = 1, b = 0, col = "red")
+mroz$pred <- predict(LPM_saturated)
+
+ggplot(mroz[order(mroz$pred),], aes(x = 1:nrow(mroz),y = pred,color = classes)) + 
+  geom_point() + 
+  theme_bw() + 
+  scale_y_continuous(limits = c(0,1), name = "p(inlf)") +
+  ggtitle("LPM in a Saturated Model is Perfectly Fine")
 ```
 
+In figure \@ref(fig:saturated) each line segment corresponds to the average probability of work *within that cell* of people. For example you see that women from the youngest age category and lowest husband income (class `age_1_hus_1`) have the highest probability of working (`r round(max(mroz$pred),3)`).
 
 ## Nonlinear Binary Response Models
 
@@ -145,11 +154,51 @@ logit <- glm(inlf ~ age,
 modelsummary::modelsummary(list("probit" = probit,"logit" = logit))
 ```
 
-From this table, we learn that the coefficient for `age` is `r round(coef(probit)[2],3)` for probit and `r round(coef(logit)[2],3)` for logit, respectively. In both cases, this tells us that the impact of an additional yeaer of age on the probability of working is **negative**. However, we cannot straightforwardly read off the *magnitude* of the effect. Why is that? 
+From this table, we learn that the coefficient for `age` is `r round(coef(probit)[2],3)` for probit and `r round(coef(logit)[2],3)` for logit, respectively. In both cases, this tells us that the impact of an additional year of age on the probability of working is **negative**. However, we cannot straightforwardly read off the *magnitude* of the effect - **how much** does the probability decrease we can't tell. Why is that? 
 
-One simple way to see this is to look back at figure \@ref(fig:cdfs) and imagine we had just one explanatory variable (like here - `age`). 
+One simple way to see this is to look back at figure \@ref(fig:cdfs) and imagine we had just one explanatory variable (like here - `age`). The model is
 
-Here is why.
+$$
+\Pr(y = 1 | \text{age})= G \left(x \beta\right) = G \left(\beta_0 + \beta_1 \text{age} \right) 
+$$
+and the *marginal effect* of `age` on the response probability is
+$$
+\frac{\partial{\Pr(y = 1 | \text{age})}}{ \partial{\text{age}}} = g \left(\beta_0 + \beta_1 \text{age} \right) \beta_1 (\#eq:ME)
+$$
+where function $g$ is defined as $g(z) = \frac{dG}{dz}(z)$ - the first derivative function of $G$ (i.e. the *slope* of $G$). The formulation in \@ref(eq:ME) is a result of the [chain rule](https://en.wikipedia.org/wiki/Chain_rule). Now, given that in figure \@ref(fig:cdfs) we see $G$ that is nonlinear, this means that also $g$ will be non-linear: sometimes (close to the edges of the graph) the slope will be really small and close to zero, but sometimes (in the center of the graph), the slope will be really steep. You are able to try this out yourself with our [app -issue](https://github.com/ScPoEcon/ScPoApps/issues/4).
 
-glm_logitmfx = logitmfx(glm_logit, atmean = TRUE, data = mtcars)
+So you can see that there is not one single *marginal effect* in those models, as that depends on *where we evaluate* expression \@ref(eq:ME). Notice that the case is identical for more than one $x$. In practice, there are two common approaches:
+
+1. report \@ref(eq:ME) at the average values of $x$:             $$g(\bar{x} \beta) \beta_j$$
+1. report the sample average of all marginal effects: $$\frac{1}{n} \sum_{i=1}^N g(x_i \beta) \beta_j$$
+
+Thankfully there are packages available that help us to compute those marginal effects fairly easily. One of them is called [`mfx`](https://cran.r-project.org/web/packages/mfx/), and we would use it as follows:
+
+```{r glms}
+f <- "inlf ~ age + kidslt6 + nwifeinc" # setup a formula
+glms <- list()
+glms$probit <- glm(formula = f, 
+                    data = mroz, 
+                    family = binomial(link = "probit"))
+glms$logit <- glm(formula = f, 
+                    data = mroz, 
+                    family = binomial(link = "logit"))
+# now the marginal effects versions
+glms$probitMean <- mfx::probitmfx(formula = f, 
+                    data = mroz, atmean = TRUE)
+glms$probitAvg <- mfx::probitmfx(formula = f, 
+                    data = mroz, atmean = FALSE)
+glms$logitMean <- mfx::logitmfx(formula = f, 
+                    data = mroz, atmean = TRUE)
+glms$logitAvg <- mfx::logitmfx(formula = f, 
+                    data = mroz, atmean = FALSE)
+
+modelsummary::modelsummary(glms, 
+                           stars = TRUE,
+                           gof_omit = "AIC|BIC",
+                           title = "Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects")
+```
+
+In table \@ref(tab:glms) you should first note that the estimates of the first two columns (probit or logit) don't correspond to the remaining columns. That's because they only give you the $\beta$'s. As we have learned above, that in itself is not informative, as it depends *where* one computes the marginal effects. Hence the remaining columns compute the marginal effects either at the mean of all regressors (`probitMean`) or as the sample average over all effects in the data (`probitAvg`). You can notice some differences here, for example we find at the average regressor, an additional child below age of 6 reduces the probability of work by 0.314, whereas as an averag over all sample effects it reduces it by 0.29. Furthermore, you see that the marginal effect estimates between probit and logit don't correspond exactly, which is a consequence of the different shapes of the curves in figure \@ref(fig:cdfs). No one approach is correct here and depends on how your data is distributed (e.g. is the mean a good summary of the data here?). What is clear, though, is that in most cases reporting coefficient estimates only is not very informative (it only tells you the direction of any effect).
+
 
