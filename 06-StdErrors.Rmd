@@ -1,9 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
 # Regression Inference {#std-errors}
 
 In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the `Std. Error` column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:
@@ -179,7 +173,7 @@ First, we *assumed* that \@ref(eq:abline-5) is the correct represenation of the 
 
 
 
-### Violating the Assumptions of the CRM
+### Violating the Assumptions of the CRM {#violating}
 
 It's interesting to consider in which circumstances we might violate those assumptions. Let's give an example for each of them:
 

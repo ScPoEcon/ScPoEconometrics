@@ -13,3 +13,9 @@ pasta_maker <- function(){
   pasta_jar
 }
 
+pasta_image <- function(){
+  data(pasta_jar)
+  pasta_jar$cf = as.numeric(factor(pasta_jar$color))
+  m = matrix(c(pasta_jar$cf),44,45)
+  image(m,col = c("green","orange","white"),xaxt="n",yaxt = "n")
+}

@@ -5,7 +5,7 @@ os:
 
 before_install:
 #  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; sudo add-apt-repository -y ppa:cran/poppler; sudo apt-get update; sudo apt-get install -y libpoppler-cpp-dev; sudo apt-get install -y libv8-dev ;fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y ghostscript; sudo apt-get install -y libmagick++-dev; sudo add-apt-repository -y ppa:cran/poppler;sudo apt-get install -y libpoppler-cpp-dev; sudo apt-get install -y libv8-dev ;  sudo apt-get install -y libudunits2-dev libgdal-dev libgeos-dev libproj-dev libfontconfig1-dev;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm; brew install v8;  brew install poppler;
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
@@ -29,4 +29,3 @@ script:
   - if [ $TRAVIS_OS_NAME = osx ]; then R CMD check *tar.gz ; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then R CMD check *tar.gz; fi
   - if [ $TRAVIS_OS_NAME = linux ] && [[ $TRAVIS_COMMIT_MESSAGE != *"[nobook]"* ]]; then ./_build.sh && ./_deploy.sh; fi
-

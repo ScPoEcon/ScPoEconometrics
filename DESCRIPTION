@@ -1,5 +1,5 @@
 Package: ScPoEconometrics
-Type: Book
+Type: Package
 Title: ScPoEconometrics
 Date: 2019-10-10
 Version: 0.2.6
@@ -32,8 +32,17 @@ Imports: bookdown,
     quantreg,
     equatiomatic,
     ungeviz,
+    masteringmetrics,
     ggdag,
     data.table,
-    huxtable
-Remotes: datalorax/equatiomatic, wilkelab/ungeviz
+    huxtable,
+    cholera, 
+    reshape2,
+    modelsummary,
+    estimatr,
+    gganimate,
+    fixest,
+    transformr,
+    mfx
+Remotes: datalorax/equatiomatic, wilkelab/ungeviz, jrnold/masteringmetrics/masteringmetrics
 RoxygenNote: 7.1.1

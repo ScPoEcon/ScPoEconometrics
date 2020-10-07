@@ -25,7 +25,13 @@ pre code {
     background-color: #e7f2fa;
     border-radius: 5px;
     text-align: center;
+}
 
+.notel {
+    padding: 0.5em;
+    background-color: #e7f2fa;
+    border-radius: 5px;
+    text-align: left;
 }
 
 .warning {
@@ -33,6 +39,12 @@ pre code {
     background-color: #f0b37e;
     border-radius: 5px;
     text-align: center;
+}
+.warningl {
+    padding: 0.5em;
+    background-color: #f0b37e;
+    border-radius: 5px;
+    text-align: left;
 }
 
 .tip {

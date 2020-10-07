@@ -4,8 +4,6 @@ set -e
 
 [ -z "${GH_TOKEN}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
-[ "${TRAVIS_PULL_REQUEST}" != "false" ] && exit 0
-
 
 git config --global user.email "florian.oswald@gmail.com"
 git config --global user.name "Florian Oswald"

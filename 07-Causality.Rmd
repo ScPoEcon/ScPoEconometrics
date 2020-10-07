@@ -312,7 +312,3 @@ If the direction of correlation between omitted variable $z$ and $x$ is the same
 <br>
 
 
-
-## STAR Experiment
-
-tbd
