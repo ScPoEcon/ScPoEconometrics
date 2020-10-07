@@ -1,5 +1,14 @@
 # IV Applications
 
+```{r, echo = FALSE}
+library(modelsummary)
+gm = modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[gm$clean == "R2"] <- FALSE
+gm$omit[gm$clean == "Num.Obs."] <- FALSE
+gom = "p.value.|se_type|statistic.end|statistic.overid|statistic.weakinst"
+```
+
 An important term in economics are the *returns to schooling*, by which we mean the causal effect of education on later earnings. If you think about it, it's a crucial question for every single student (like yourself), if not even more so for a policy maker who needs to decide where to allocate budget spending on (education or other things?).
 
 One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the *Mincer Equation* (we have encountered this equation before as a running example in chapter \@ref(linreg)). He measured $\log Y_i$, annual earnings for man $i$, $S_i$ his schooling (years spent studying), and $X_i$ his (potential) work experience (age minus years of schooling minus 6). The model can be drawn like this:
@@ -134,7 +143,7 @@ Let's load the data and look at a quick summary^[Code in this section comes from
 
 ```{r ak-data}
 data("ak91", package = "masteringmetrics")
-library(modelsummary)
+# library(modelsummary) # loaded already for me
 datasummary_skim(data.frame(ak91),histogram = TRUE)
 ```
 
@@ -182,7 +191,7 @@ Figure \@ref(fig:ak91-wage) does not show a long running trend in earnings, so o
 
 ### Running IV estimation in `R`
 
-There are several possibilities to run IV estimation in `R`. We will use the `iv_robust` function from the `estimatr` package.^[the *robust* here refers to the fact that the `estimatr` package by default chooses formulae to compute standard errors which are correcting for heteroskedasticity - we have encountered this term before in \@ref(violating). See details [here](https://declaredesign.org/r/estimatr/articles/mathematical-notes.html)] Let's estimate a simple OLS version (subject to ability bias), the first stage and the final 2SLS estimate:
+There are several possibilities to run IV estimation in `R`. We will use the `iv_robust` function from the `estimatr` package.^[the *robust* here refers to the fact that the `estimatr` package by default chooses formulae to compute standard errors which are correcting for heteroskedasticity - we have encountered this term before in \@ref(violating). See details [here](https://declaredesign.org/r/estimatr/articles/mathematical-notes.html)] Let's estimate a simple OLS version (subject to ability bias), the first stage and second stages, and the final 2SLS estimate:
 
 ```{r}
 mod                  <- list()
@@ -196,11 +205,11 @@ mod$`2SLS`            <- estimatr::iv_robust(lnw ~ s | q4, data = ak91 ) # IV: b
 Let's look at those models next to each other in table \@ref(tab:ms1):
 
 ```{r ms1,echo = FALSE}
-modelsummary::msummary(models = mod, 
-                       stars = TRUE,
-                       statistic = 'std.error',
-                       gof_omit = 'DF|Deviance|AIC|BIC|R2|p.value|se_type|statistic|Log.Lik.|Num.Obs.|N',
-                       title = "OLS, first and sceond stages as well as 2SLS estimates for Angrist and Krueger (1991)")
+msummary(models = mod, 
+                   stars = TRUE,
+                   statistic = 'std.error',
+                   gof_omit = 'DF|Deviance|AIC|BIC|R2|p.value|se_type|statistic|Log.Lik.|Num.Obs.|N',
+                   title = "OLS, first and sceond stages as well as 2SLS estimates for Angrist and Krueger (1991)")
 ```
 
 Table \@ref(tab:ms1) contains a lot of information, so let's go column-wise:
@@ -237,3 +246,186 @@ modelsummary::msummary(models = mod[c("ols","2SLS","ols_yr","2SLS_yr","2SLS_all"
                        coef_omit = 'yob_fct')
 ```
 
+## IV Mechanics {#IV-mech}
+
+Let's now look a little closer under the hood of our simple IV estimator. We want to understand how inference of IV relates to OLS inference, and what we can say about *weak* instruments, i.e. IVs with small predictive power in the first stage.
+
+Let's go back to our simple linear model
+
+$$
+y = \beta_0 + \beta_1 x + u (#eq:iv0)
+$$
+
+where we think that $Cov(x,u) \neq 0$, hence, that $x$ is *endogenous* in this equation. By the way, IV estimation will work whether or not $Cov(x,u) \neq 0$, but we should prefer OLS if $x$ is exogenous, as should become clear soon.
+
+We now know that the conditions under which IV $z$ will deliver consistent estimates are the following:
+
+1. **first stage** or **relevance**: $Cov(z,x) \neq 0$
+2. **IV exogeneity**: $Cov(z,u) = 0$: the IV is exogenous in the outcome equation.
+
+To reiterate, condition 2 here calls for $z$ to have no partial effect on $y$, after $x$ and other omitted variables have been considered (they are in $u$), hence, that $z$ is uncorrelated with $u$. Figure \@ref(fig:IV-dag2) shows a valid IV in panel A and an IV which violates condition 2 in panel B.
+
+```{r IV-dag2,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="A valid IV (A) and one where the exogeneity assumption is violated (B).",fig.height = 2.5 }
+coords <- list(
+    x = c(z = 1, x = 3, u = 4, y = 5),
+    y = c(z = 0, x = 0, u = 0.5, y = 0)
+    )
+
+dag1 <- dagify(y ~ x + u,
+              x ~ z + u, coords = coords)
+
+d1 = dag1 %>% 
+  tidy_dagitty() %>% 
+  mutate(linetype = ifelse(name == "u", "dashed", "solid")) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text() + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  theme_void()
+
+dag2 <- dagify(y ~ x + u,
+              x ~ z + u, 
+              z ~ u, coords = coords)
+
+d2 = dag2 %>% 
+  tidy_dagitty() %>% 
+  mutate(linetype = ifelse(name == "u", "dashed", "solid")) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  geom_dag_point() + 
+  geom_dag_text() + 
+  geom_dag_edges(aes(edge_linetype = linetype), show.legend = FALSE) + 
+  theme_void()
+cowplot::plot_grid(d1,NULL,d2,nrow = 1
+  , rel_widths = c(1, 0.15, 1)
+  , labels = c("(A)", "", "(B)"))
+```
+
+Let us now discuss how conditions 1. and 2. are helpful in *identifying* parameter $\beta_1$ above. By this we mean our ability to express $\beta_1$ in terms of population moments, which we can estimate from a sample of data. We start by computing the covariance of the instrument $z$ with outcome $y$.
+
+\begin{align}
+Cov(z,y) &= Cov(z, \beta_0 + \beta_1 x + u) \\
+         &= \beta_1 Cov(z,x) + Cov(z,u) 
+\end{align}
+
+Under condition 2. above (*IV exogeneity*), we have $Cov(z,u)=0$, hence
+
+$$
+Cov(z,y) = \beta_1 Cov(z,x) 
+$$
+and under condition 1. (*relevance*), we have $Cov(z,x)\neq0$, so that we can divide the equation through to obtain
+
+$$
+\beta_1 =  \frac{Cov(z,y)}{Cov(z,x)}.
+$$
+This shows that the parameter $\beta_1$ is *identified* via population moments $Cov(z,y)$ and $Cov(z,x)$. What is more, we can *estimate* those moments via their *sample analogs*, hence we have as an IV estimator this expression, where we just *plug in* the sample estimators for the population moments:
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (z_i - \bar{z})(y_i - \bar{y})}{\sum_{i=1}^n (z_i - \bar{z})(x_i - \bar{x})} (#eq:iv-estim)
+$$
+The corresponding intercept estimate $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$ is identical to before (modulo using \@ref(eq:iv-estim)).
+
+Given both assumptions 1. and 2. are satisfied, we say that *the IV estimator is consistent for $\beta_1$*. This can also be written as
+
+$$
+\text{plim}(\hat{\beta}_1) = \beta_1
+$$
+
+meaning that, as the sample size $n$ increases, the **probability limit** (plim) of the estimator $\beta_1$ converges to the true parameter value with probability one. 
+
+### IV Inference
+
+Let us extend the homoskedasticity assumption $z$, $E(u^2|z) = \sigma^2$, such that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by
+
+$$
+Var(\hat{\beta}_{1,IV}) = \frac{\sigma^2}{n \sigma_x^2 \rho_{x,z}^2}  (#eq:iv-var)
+$$
+where $\sigma_x^2$ is the population variance of $x$, $\sigma^2$ the one of $u$, and  $\rho_{x,z}$ is the population correlation between $x$ and $z$ - a measure of *how strongly* our IV and endogenous variable $x$ are correlated in the population. 
+
+You can see 2 important things in equation \@ref(eq:iv-var):
+
+1. Without the term $\rho_{x,z}^2$ in the denominator, this is identical to the variance of the OLS slope estimator.
+2. As with the variance of the OLS slope estimator, as sample size $n$ increases, the variance decreases.
+
+It is convenient to replace $\rho_{x,z}^2$ with $R_{x,z}^2$, i.e. the R-squared of a regression of $x$ on $z$ - in a single regressor model we have this exact correspondence. It is convenient because we rewrite the variance of the IV slope now as
+
+$$
+Var(\hat{\beta}_{1,IV}) = \frac{\sigma^2}{n \sigma_x^2 R_{x,z}^2}
+$$
+
+1. Given $R_{x,z}^2 < 1$ in most real life situations, we have that $Var(\hat{\beta}_{1,IV}) > Var(\hat{\beta}_{1,OLS})$ almost certainly.
+1. The higher the correlation between $z$ and $x$, the closer their $R_{x,z}^2$ is to 1. With $R_{x,z}^2 = 1$ we get back to the OLS variance. This is no surprise, because that implies that in fact $z = x$.
+
+So, if you have a valid, exogenous regressor $x$, you should *not* perform IV estimation using $z$ to obtain $\hat{\beta}$, since your variance will be unnecessarily large.
+
+
+#### Returns to Education for Married Women
+
+Consider the following model for married women's wages:
+
+$$
+\log wage = \beta_0 + \beta_1 educ + u
+$$
+Let's run an OLS on this, and then compare it to an IV estimate using *father's education*. Keep in mind that this is a valid IV $z$ if 
+
+1. *fatheduc* and *educ* are correlated
+2. *fatheduc* and $u$ are not correlated.
+
+```{r mroz1}
+data(mroz,package = "wooldridge")
+mods = list()
+mods$OLS <- lm(lwage ~ educ, data = mroz)
+mods[['First Stage']] <- lm(educ ~ fatheduc, data = subset(mroz, inlf == 1))
+mods$IV  <- estimatr::iv_robust(lwage ~ educ | fatheduc, data = mroz)
+modelsummary::modelsummary(mods, gof_map = gm, gof_omit = gom, title = "Mroz female labor supply and wage data.")
+```
+
+The results in table \@ref(tab:mroz1) show in the first column that an additional year of education implies an 11% increase in annual wages for women. This is a standard OLS estimator which be biased because of *ability bias*.
+
+In the second column we show the first stage of the IV procedure. We see that *fatheduc* is indeed a statistically significant predictor of $educ$: Each additional year of father's education increases women's education by more than a quarter of a year (0.269). Also important, we observe that the $R^2$ here is about 17%.
+
+Turning to the final IV estimate in the third column, we can see that using *fatheduc* as an IV reduces the return to education by about half to 5.9%! This result *suggests* that OLS is biased upwards (for example by ability bias). But let's compare the standard errors of OLS and IV estimates, which are 0.014 for OLS vs 0.037 for IV. This can be seen in figure \@ref(fig:se-plot). You can clearly see that the standard errors of both estimators overlap, hence from this alone we cannot conclude they are different (we need a special statistical test to decide this).
+
+```{r se-plot,echo = FALSE,fig.cap="OLS vs IV Standard Errors"}
+coefs_ols = broom::tidy(mods$OLS, conf.int = TRUE)
+coefs_IV = broom::tidy(mods$IV, conf.int = TRUE)
+
+bind_rows(
+  coefs_ols %>% filter(term == "educ") %>% mutate(estimator = "OLS"),
+  coefs_IV %>% filter(term == "educ") %>% mutate(estimator = "IV")
+  ) %>%
+  ggplot(aes(x=estimator, y=estimate, ymin=conf.low, ymax=conf.high)) +
+  geom_hline(yintercept = 0.0, color = "red", size =1.5) +
+  geom_pointrange() +
+  theme_bw()
+```
+
+### IV with a Poor Instrument
+
+We have seen that IV will produce consistent estimates under our stated assumptions. However, even under valid assumption, we get large IV standard errors if the the correlation between IV and endogenous $x$ is small.  
+What is even worse is that *even if* we have only very small correlation between $z$ and $u$, so that we might *almost* be happy to assume exogeneity, a small corrleation between $x$ and $z$ can produce **inconsistent** estimates. To see this, consider the probability limit of the IV estimator again
+
+$$
+\text{plim}(\hat{\beta}_{1,IV}) = \beta_1 + \frac{Cor(z,u)}{Cor(z,x)} \cdot \frac{\sigma_u}{\sigma_x}
+$$
+
+The interesting part here involves the correlation terms. *Even if* $Cor(z,u)$ is very small, a **weak instrument**, i.e. one with only a small absolute value for $Cor(z,x)$ will blow up this second term in the probability limit. This would mean that even with a very big sample size $n$, our estimator would *not* converge to the true population parameter $\beta_1$, because we are using a weak instrument.
+
+To illustrate this point, let's assume we want to look at the impact of number of packs of cigarettes smoked per day by pregnant women (*packs*) on the birthweight of their child (*bwght*):
+
+$$
+\log(bwght) = \beta_0 + \beta_1 packs + u
+$$
+
+We are worried that smoking behavior is correlated with a range of other health-related variables which are in $u$ and which could impact the birthweight of the child. So we look for an IV. Suppose we use the price of cigarettes (*cigprice*), assuming that the price of cigarettes is uncorrelated with factors in $u$. Let's run the first stage of *cigprice* on *packs* and then let's show the 2SLS estimates:
+
+```{r bw}
+data(bwght, package = "wooldridge")
+mods <- list()
+mods[["First Stage"]] <- lm(packs ~ cigprice, data = bwght)
+mods[["IV"]] <- estimatr::iv_robust(log(bwght) ~  packs | cigprice, data = bwght)
+modelsummary(mods, gof_map = gm, 
+             gof_omit = gom, 
+             title = "IV regression with weak instrument *cigprice*")
+```
+
+The first column of table \@ref(tab:bw) shows that the first stage is *very* weak. The partial effect of *cigprice* on *packs* smoked is zero! People don't seem to care a great deal about the price of cigarettes (at least in the range of price variation observed in this dataset). The $R^2$ of that first stage is thus zero. What do we get if we use that IV nonetheless in a 2SLS estimation as in column 2? We get a huge coefficient of unexpected sign on *packs* (smoking more increases birthweight? 🤔), with very large standard error, so statistically speaking, we cannot distinguish this from zero. What is more important, however, is that even if they *were* significant, the estimates of column 2 are **invalid**. The *relevance* of the IV condition is clearly not satisfied, hence, invalid approach.  

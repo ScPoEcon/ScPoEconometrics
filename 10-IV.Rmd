@@ -1,5 +1,14 @@
 # Instrumental Variables (IV) {#IV}
 
+```{r, echo = FALSE}
+library(modelsummary)
+gm = modelsummary::gof_map
+gm$omit <- TRUE
+gm$omit[gm$clean == "R2"] <- FALSE
+gm$omit[gm$clean == "Num.Obs."] <- FALSE
+gom = "p.value.|se_type|statistic.end|statistic.overid|statistic.weakinst"
+```
+
 In the previous chapters we have seen how to get credible causal estimates for the effect of some intervention via randomization techniques. Randomly allocating a subject to treatment or control groups makes sure that *everything else is equal*, hence we are really comparing apples with apples. Unfortunately, oftentimes we cannot perform a randomized control trial (RCT), out of technological, ethical, or other constraints. (We mentioned that forcing people to smoke via lottery draw is impossible to justify.)
 
 So, that's it, no RCT, no causal estimates?
@@ -239,3 +248,4 @@ so the probability of getting cholera is `r 100*round(delta,2)` percent higher, 
 1. $z$ is *relevant* for $x$. For example, in a simple regression of $z$ on $x$, we want $z$ to have considerable predictive power. We can *test* this condition in data.
 2. We need a theory according to which is *reasonable* to assume that $z$ is *unrelated* to other unobservable factors that might impact the outcome. Hence, $z$ is *exogenous* to $u$, or $E[u | z] = 0$. This is an **assumption** (i.e. we can not test this with data).
 ```
+
