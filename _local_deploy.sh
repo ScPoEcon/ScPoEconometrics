@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# this script builds the book on your computer
+# and deploys it to your gh-pages branch.
+
 set -e
 
 gitbranch=$(git symbolic-ref --short -q HEAD)
@@ -14,6 +17,7 @@ then
   # git clone -b gh-pages git@github.com:ScPoEcon/ScPoEconometrics.git ScPoEconometrics-book
   cd ../ScPoEconometrics-book
   cp -r ../ScPoEconometrics/_book/* ./
+  git checkout gh-pages && git pull origin gh-pages
 
   echo deploying
   git add --all *

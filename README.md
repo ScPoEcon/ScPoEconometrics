@@ -2,67 +2,12 @@
 
 This is the git repo for the UG Econometrics book taught to 2nd year students at SciencesPo.
 
-**Slides?** If you are looking for the slides, they are in the [ScPoEconometrics-Slides](https://github.com/ScPoEcon/ScPoEconometrics-Slides) repo.
-**Apps?** If you are looking for the apps, they are in the [ScPoApps](https://github.com/ScPoEcon/ScPoApps) repo.
+**Slides for the Intro Course?** If you are looking for the introductory course slides, they are in the [ScPoEconometrics-Slides](https://github.com/ScPoEcon/ScPoEconometrics-Slides) repo.
 
-## Contents
+**Slides for the Advanced Course?** If you are looking for the advanced course slides, they are in the [Advanced-Metrics-Slides](https://github.com/ScPoEcon/Advanced-Metrics-slides) repo.
 
-1. [Status](#status)
-2. [Usage and Installation](#usage-and-installation) 
-3. [Meta Infos for Teachers](#meta-information-for-teachers)
-4. [How to Contribute](#contribution-workflow)
-5. [License and Copyright](#license)
+**Apps and Tutorials?** If you are looking for our apps and tutorials, they are in the [ScPoApps](https://github.com/ScPoEcon/ScPoApps) repo.
 
-## Status
-
-**Tests on MacOS and Linux**: [![Build Status](https://travis-ci.org/ScPoEcon/ScPoEconometrics.svg?branch=master)](https://travis-ci.org/ScPoEcon/ScPoEconometrics)
-
-**Tests on Windows**: [![Build status](https://ci.appveyor.com/api/projects/status/9ctm2rneexsid3t2?svg=true)](https://ci.appveyor.com/project/FlorianOswald/scpoeconometrics)
-
-
-
-## Usage and Installation
-
-In order to participate in the course and to use the course material, you need to 
-
-1. install `R`: download for free at [https://www.r-project.org](https://www.r-project.org)
-1. install the `RStudio` IDE at [RStudio.com](https://www.rstudio.com/products/rstudio/download/#download)
-1. We recommend to use our code **exclusively via `RStudio`**.
-1. install our *apps* `R` package in your computer. To do so, just copy and paste those lines into your `RStudio` console:
-
-```R
-if (!require(devtools)) {install.packages("devtools"); library(devtools)}
-install_github(repo = "ScPoEcon/ScPoApps")
-```
-
-### Shiny Apps
-
-A key part of this course are a series of interactive applications (or *apps*) that we developed with the `shiny` framework. You launch the apps from a running `R` session on your computer. The app will run in your web browser. You launch an app like this from `R`:
-
-```R
-library(ScPoApps)   # load our library
-launchApp('SSR_cone')       # runs the `SSR_cone` app in browser
-
-launchApp()                 # no arg produces an error that shows all available apps
-Error: Please run `launchApp()` with a valid app as an argument.
-Valid apps are: 'anscombe', 'confidence_intervals', 'corr_continuous', 
-'datasaurus', 'reg_constrained', 'reg_dummy', 'reg_dummy_example', 
-'reg_full', 'reg_multivariate', 'reg_simple', 'reg_standardized', 
-'sampling', 'SSR_cone', 'standard_errors_changeN', 'standard_errors_simple'
-```
-
-Here is a screenshot of the `SSR_cone` app:
-
-![SSR_cone](images/SSR_cone.png)
-
-### Tutorials
-
-In order to run the accompanying tutorials you would type, for example:
-
-```R
-library(ScPoApps)
-runTutorial("chapter3")
-```
 
 ## Meta Information for Teachers
 

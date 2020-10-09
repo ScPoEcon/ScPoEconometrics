@@ -265,7 +265,7 @@ We now know that the conditions under which IV $z$ will deliver consistent estim
 
 To reiterate, condition 2 here calls for $z$ to have no partial effect on $y$, after $x$ and other omitted variables have been considered (they are in $u$), hence, that $z$ is uncorrelated with $u$. Figure \@ref(fig:IV-dag2) shows a valid IV in panel A and an IV which violates condition 2 in panel B.
 
-```{r IV-dag2,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="A valid IV (A) and one where the exogeneity assumption is violated (B).",fig.height = 2.5 }
+```{r IV-dag2,warning = FALSE,message = FALSE,echo = FALSE,fig.cap="A valid IV (A) and one where the exogeneity assumption is violated (B).",fig.height = 3 }
 coords <- list(
     x = c(z = 1, x = 3, u = 4, y = 5),
     y = c(z = 0, x = 0, u = 0.5, y = 0)
