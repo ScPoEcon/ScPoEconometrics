@@ -56,7 +56,7 @@ plot(dist ~ speed, data = cars,
      col  = "red")
 ```
 
-![](03-linear-reg_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 Here, each dot represents one observation. In this case, one particular measurement `speed` and `dist` for a car. Now, again: 
 
@@ -80,11 +80,11 @@ plot(dist ~ speed, data = cars,
 abline(a = 60,b = 0,lw=3)
 ```
 
-![](03-linear-reg_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 Now that doesn't seem a particularly *good* way to summarize the relationship. Clearly, a *better* line would be not be flat, but have a *slope*, i.e. go upwards:
 
-![](03-linear-reg_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 That is slightly better. However, the line seems at too high a level - the point at which it crosses the y-axis is called the *intercept*; and it's too high. We just learned how to represent a *line*, i.e. with two numbers called *intercept* and *slope*. Let's write down a simple formula which represents a line where some outcome $z$ is related to a variable $x$:
 
@@ -111,7 +111,7 @@ In general it is likely that we won't be able to choose $b_0$ and $b_1$ in such 
 Suppose we have the following set of 9 observations on `x` and `y`, and we put the *best* straight line into it, that we can think of. It would look like this: 
 
 <div class="figure" style="text-align: center">
-<img src="03-linear-reg_files/figure-epub3/line-arrows-1.png" alt="The best line and its errors"  />
+<img src="03-linear-reg_files/figure-html/line-arrows-1.png" alt="The best line and its errors" width="672" />
 <p class="caption">(\#fig:line-arrows)The best line and its errors</p>
 </div>
 
@@ -124,17 +124,17 @@ y_i = b_0 + b_1 x_i + e_i (\#eq:abline)
 You realize of course that $\hat{y}_i = y_i - e_i$, which just means that our prediction is the observed value $y_i$ minus any error $e_i$ we make. In other words, $e_i$ is what is left to be explained on top of the line $b_0 + b_1 x_i$, hence, it's a residual to explain $y_i$. Here are $y,\hat{y}$ and the resulting $e$ which are plotted in figure \@ref(fig:line-arrows):
 
 
-|   x   |   y   | y_hat | error |
-|:-----:|:-----:|:-----:|:-----:|
-| 0.00  | 2.09  | 2.57  | -0.48 |
-| 1.25  | 2.79  | 3.41  | -0.62 |
-| 2.50  | 6.49  | 4.25  | 2.24  |
-| 3.75  | 1.71  | 5.10  | -3.39 |
-| 5.00  | 9.89  | 5.94  | 3.95  |
-| 6.25  | 7.62  | 6.78  | 0.83  |
-| 7.50  | 4.86  | 7.63  | -2.77 |
-| 8.75  | 7.38  | 8.47  | -1.09 |
-| 10.00 | 10.63 | 9.31  | 1.32  |
+   x        y      y_hat    error 
+-------  -------  -------  -------
+ 0.00     2.09     2.57     -0.48 
+ 1.25     2.79     3.41     -0.62 
+ 2.50     6.49     4.25     2.24  
+ 3.75     1.71     5.10     -3.39 
+ 5.00     9.89     5.94     3.95  
+ 6.25     7.62     6.78     0.83  
+ 7.50     4.86     7.63     -2.77 
+ 8.75     7.38     8.47     -1.09 
+ 10.00    10.63    9.31     1.32  
 
 If our line was a **perfect fit** to the data, all $e_i = 0$, and the column `error` would display `0` for each row - there would be no errors at all. (All points in figure \@ref(fig:line-arrows) would perfectly line up on a straight line). 
 
@@ -154,7 +154,7 @@ e_1^2 + \dots + e_N^2 &= \sum_{i=1}^N e_i^2 \equiv \text{SSR}(b_0,b_1) \\
 Wait a moment, why *squared* residuals? This is easy to understand: suppose that instead, we wanted to just make the *sum* of the arrows in figure \@ref(fig:line-arrows) as small as possible (that is, no squares). Choosing our line to make this number small would not give a particularly good representation of the data -- given that errors of opposite sign and equal magnitude offset, we could have very long arrows (but of opposite signs), and a poor resulting line. Squaring each error avoids this (because now negative errors get positive values!)
 
 <div class="figure" style="text-align: center">
-<img src="03-linear-reg_files/figure-epub3/line-squares-1.png" alt="The best line and its SQUARED errors"  />
+<img src="03-linear-reg_files/figure-html/line-squares-1.png" alt="The best line and its SQUARED errors" width="672" />
 <p class="caption">(\#fig:line-squares)The best line and its SQUARED errors</p>
 </div>
 
@@ -162,7 +162,7 @@ We illustrate this in figure \@ref(fig:line-squares). This is the same data as i
 
 
 ```r
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_simple_arrows")
 launchApp("reg_simple") # with squared errors
 launchApp("SSR_cone") # visualize the minimzation problem from above!
@@ -224,7 +224,7 @@ b_0 = \frac{1}{N} \sum_{i=1}^N y_i = \overline{y}.
 $$
 
 <div class="tip">
-<p>Least Squares <strong>without regressor</strong> <span class="math inline">\(x\)</span> estimates the sample mean of the outcome variable <span class="math inline">\(y\)</span>, i.e. it produces <span class="math inline">\(\overline{y}\)</span>.</p>
+<p>Least Squares <strong>without regressor</strong> <span class="math inline">\(x\)</span> estimates the sample mean of the outcome variable <span class="math inline">\(y\)</span>, i.e. it produces <span class="math inline">\(\overline{y}\)</span>.</p>
 </div>
 
 
@@ -238,7 +238,7 @@ b_1 &= \arg\min_{\text{slope}} \sum_{i=1}^N \left[y_i - \text{slope } x_i \right
 \end{align}
 
 <div class="tip">
-<p>Least Squares <strong>without intercept</strong> (i.e. with <span class="math inline">\(b_0=0\)</span>) is a line that passes through the origin.</p>
+<p>Least Squares <strong>without intercept</strong> (i.e. with <span class="math inline">\(b_0=0\)</span>) is a line that passes through the origin.</p>
 </div>
 <br>
 
@@ -381,12 +381,12 @@ So indeed we can confirm this result with our test dataset. Great!
 It is important to keep in mind that Correlation and Covariance relate to a *linear* relationship between `x` and `y`. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance. 
 A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical **linear** statistics: mean, variance, correlation and regression line *are identical*. However, the usefulness of the statistics to describe the relationship in the data is not clear.
 
-![](03-linear-reg_files/figure-epub3/unnamed-chunk-22-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 The important lesson from this example is the following:
 
 <div class="warning">
-<p>Always <strong>visually inspect</strong> your data, and don't rely exclusively on summary statistics like <em>mean, variance, correlation and regression line</em>. All of those assume a <strong>linear</strong> relationship between the variables in your data.</p>
+<p>Always <strong>visually inspect</strong> your data, and don’t rely exclusively on summary statistics like <em>mean, variance, correlation and regression line</em>. All of those assume a <strong>linear</strong> relationship between the variables in your data.</p>
 </div>
 <br>
 The mission of Anscombe has been continued recently. As a result of this we can have a look at the `datasauRus` package, which pursues Anscbombe's idea through a multitude of funny data sets, all with the same linear statistics. Don't just compute the covariance, or you might actually end up looking at a Dinosaur! What? Type this to find out:
@@ -402,12 +402,12 @@ aboutApp("datasaurus")
 
 Suppose our data now looks like this:
 
-![](03-linear-reg_files/figure-epub3/non-line-cars-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/non-line-cars-1.png" width="672" />
 
 Putting our previous *best line* defined in equation \@ref(eq:abline) as $y = b_0 + b_1 x + e$, we get something like this:
 
 <div class="figure" style="text-align: center">
-<img src="03-linear-reg_files/figure-epub3/non-line-cars-ols-1.png" alt="Best line with non-linear data?"  />
+<img src="03-linear-reg_files/figure-html/non-line-cars-ols-1.png" alt="Best line with non-linear data?" width="672" />
 <p class="caption">(\#fig:non-line-cars-ols)Best line with non-linear data?</p>
 </div>
 
@@ -420,7 +420,7 @@ y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i (\#eq:abline2)
 This is a special case of *multiple regression*, which we will talk about in chapter \@ref(multiple-reg). You can see that there are *multiple* slope coefficients. For now, let's just see how this performs:
 
 <div class="figure" style="text-align: center">
-<img src="03-linear-reg_files/figure-epub3/non-line-cars-ols2-1.png" alt="Better line with non-linear data!"  />
+<img src="03-linear-reg_files/figure-html/non-line-cars-ols2-1.png" alt="Better line with non-linear data!" width="672" />
 <p class="caption">(\#fig:non-line-cars-ols2)Better line with non-linear data!</p>
 </div>
 
@@ -496,7 +496,7 @@ lines(density(wage1$wage), col = "black", lw = 2)
 ```
 
 <div class="figure">
-<img src="03-linear-reg_files/figure-epub3/wooldridge-wages-1.png" alt="Wages vs Education from the wooldridge dataset wage1."  />
+<img src="03-linear-reg_files/figure-html/wooldridge-wages-1.png" alt="Wages vs Education from the wooldridge dataset wage1." width="672" />
 <p class="caption">(\#fig:wooldridge-wages)Wages vs Education from the wooldridge dataset wage1.</p>
 </div>
 
@@ -531,7 +531,7 @@ abline(hourly_wage, col = 'black', lw = 2) # add regression line
 ```
 
 <div class="figure">
-<img src="03-linear-reg_files/figure-epub3/wooldridge-wages2-1.png" alt="Wages vs Education from the wooldridge dataset wage1, with regression"  />
+<img src="03-linear-reg_files/figure-html/wooldridge-wages2-1.png" alt="Wages vs Education from the wooldridge dataset wage1, with regression" width="672" />
 <p class="caption">(\#fig:wooldridge-wages2)Wages vs Education from the wooldridge dataset wage1, with regression</p>
 </div>
 
@@ -623,7 +623,7 @@ That is, we change the slope by the *inverse* of the scaling factor applied to r
 
 
 ```r
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp('Rescale')
 ```
 
@@ -661,7 +661,7 @@ plotfun(wage1,log = TRUE, rug = FALSE)
 abline(log_hourly_wage, col = 'black', lw = 2) # add regression line
 ```
 
-![](03-linear-reg_files/figure-epub3/logplot-1.png)<!-- -->
+<img src="03-linear-reg_files/figure-html/logplot-1.png" width="672" />
 
 ```r
 par(mfrow = c(1,1))
@@ -692,7 +692,7 @@ It *looks as if* the regression line has the same slope, but beware of the diffe
 The interpretation of the transformed model in column (2) is now the following: 
 
 <div class="note">
-<p>We call a regression of the form <span class="math inline">\(\log(y) = b_0 + b_1 x + u\)</span> a <em>log-level</em> specification, because we regressed the log of a variable on the level (i.e not the log!) of another variable. Here, the impact of increasing <span class="math inline">\(x\)</span> by one unit is to increase <span class="math inline">\(y\)</span> by <span class="math inline">\(100 \times b_1\)</span> <strong>percent</strong>. In our example: an additional year of education will increase hourly wages by 8.3%. Notice that this is very different from saying <em>...increases log hourly wages by 8.3%</em>, which is wrong.</p>
+<p>We call a regression of the form <span class="math inline">\(\log(y) = b_0 + b_1 x + u\)</span> a <em>log-level</em> specification, because we regressed the log of a variable on the level (i.e not the log!) of another variable. Here, the impact of increasing <span class="math inline">\(x\)</span> by one unit is to increase <span class="math inline">\(y\)</span> by <span class="math inline">\(100 \times b_1\)</span> <strong>percent</strong>. In our example: an additional year of education will increase hourly wages by 8.3%. Notice that this is very different from saying <em>…increases log hourly wages by 8.3%</em>, which is wrong.</p>
 </div>
 <br>
 
@@ -720,14 +720,14 @@ plot(log(salary) ~ log(sales), data = ceosal1, main = "Log(Sales) vs Log(Salarie
 ```
 
 <div class="figure">
-<img src="03-linear-reg_files/figure-epub3/ceo-sal-1.png" alt="The effect of log-transforming highly skewed data."  />
+<img src="03-linear-reg_files/figure-html/ceo-sal-1.png" alt="The effect of log-transforming highly skewed data." width="672" />
 <p class="caption">(\#fig:ceo-sal)The effect of log-transforming highly skewed data.</p>
 </div>
 
 In the left panel of figure \@ref(fig:ceo-sal) you clearly see that both `sales` and `salary` have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it's hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let's see what this gives in a regression model!
 
 $$
-\operatorname{logsalary} = 4.82 + 0.26(\operatorname{logsales}) + \epsilon
+\text{logsalary} = 4.82 + 0.26(\text{logsales}) + \epsilon
 $$
 
 Refering back at table \@ref(tab:loglog), here we have a log-log specification. Therefore we interpret this regression as follows: 

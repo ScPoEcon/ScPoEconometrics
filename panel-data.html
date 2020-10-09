@@ -24,7 +24,7 @@
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
 
 
-<meta name="date" content="2020-09-08" />
+<meta name="date" content="2020-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -73,41 +74,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -193,7 +221,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
-<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven's Door</a></li>
+<li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
@@ -202,6 +230,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
+<li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
@@ -236,20 +265,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 12</span> Panel Data</h1>
 <div id="crime-rate-vs-probability-of-arrest" class="section level2">
 <h2><span class="header-section-number">12.1</span> Crime Rate vs Probability of Arrest</h2>
-<p>This part draws heavily on <a href="http://nickchk.com">Nick C Huntington-Klein's</a> outstanding <a href="https://github.com/NickCH-K/EconometricsSlides">slides</a>. 🙏</p>
+<p>This part draws heavily on <a href="http://nickchk.com">Nick C Huntington-Klein’s</a> outstanding <a href="https://github.com/NickCH-K/EconometricsSlides">slides</a>. 🙏</p>
 <p>Up until now we have dealt with data that looked like the following, where <code>County</code> is the idendifier for a county, <code>CrimeRate</code> is the number of crimes committed by person, and <code>ProbofArrest</code> is the probability of arrest, given crime committed:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">data</span>(crime4,<span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)
-crime4 <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">81</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(county,year) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(county, crmrte, prbarr) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">County =</span> county,
-         <span class="dt">CrimeRate =</span> crmrte,
-         <span class="dt">ProbofArrest =</span> prbarr) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">&quot;ccc&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="panel-data.html#cb397-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb397-2"><a href="panel-data.html#cb397-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb397-3"><a href="panel-data.html#cb397-3"></a><span class="kw">data</span>(crime4,<span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)</span>
+<span id="cb397-4"><a href="panel-data.html#cb397-4"></a>crime4 <span class="op">%&gt;%</span></span>
+<span id="cb397-5"><a href="panel-data.html#cb397-5"></a><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">81</span>) <span class="op">%&gt;%</span></span>
+<span id="cb397-6"><a href="panel-data.html#cb397-6"></a><span class="st">  </span><span class="kw">arrange</span>(county,year) <span class="op">%&gt;%</span></span>
+<span id="cb397-7"><a href="panel-data.html#cb397-7"></a><span class="st">  </span><span class="kw">select</span>(county, crmrte, prbarr) <span class="op">%&gt;%</span></span>
+<span id="cb397-8"><a href="panel-data.html#cb397-8"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">County =</span> county,</span>
+<span id="cb397-9"><a href="panel-data.html#cb397-9"></a>         <span class="dt">CrimeRate =</span> crmrte,</span>
+<span id="cb397-10"><a href="panel-data.html#cb397-10"></a>         <span class="dt">ProbofArrest =</span> prbarr) <span class="op">%&gt;%</span></span>
+<span id="cb397-11"><a href="panel-data.html#cb397-11"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">%&gt;%</span></span>
+<span id="cb397-12"><a href="panel-data.html#cb397-12"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">&quot;ccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -469,44 +498,44 @@ ProbofArrest
 </tr>
 </tbody>
 </table>
-<p>Here each unit <span class="math inline">\(i\)</span> (e.g. county <code>1</code>) is observed <em>several times</em>. Let's start by looking at the dataset as a single cross section (i.e. we forget about the <span class="math inline">\(t\)</span> index and treat each observation as independent over time) and investigate the relationship between crime rates and probability of arrest in counties number <code>1,3,23,145</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">css =<span class="st"> </span>crime4 <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(county <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">145</span>, <span class="dv">23</span>))  <span class="co"># subset to 4 counties</span>
-
-<span class="kw">ggplot</span>(css,<span class="kw">aes</span>(<span class="dt">x =</span>  prbarr, <span class="dt">y =</span> crmrte)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>,<span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Probability of Arrest&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Crime Rate&#39;</span>)</code></pre></div>
+<p>Here each unit <span class="math inline">\(i\)</span> (e.g. county <code>1</code>) is observed <em>several times</em>. Let’s start by looking at the dataset as a single cross section (i.e. we forget about the <span class="math inline">\(t\)</span> index and treat each observation as independent over time) and investigate the relationship between crime rates and probability of arrest in counties number <code>1,3,23,145</code>:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="panel-data.html#cb398-1"></a>css =<span class="st"> </span>crime4 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb398-2"><a href="panel-data.html#cb398-2"></a><span class="st">  </span><span class="kw">filter</span>(county <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">145</span>, <span class="dv">23</span>))  <span class="co"># subset to 4 counties</span></span>
+<span id="cb398-3"><a href="panel-data.html#cb398-3"></a></span>
+<span id="cb398-4"><a href="panel-data.html#cb398-4"></a><span class="kw">ggplot</span>(css,<span class="kw">aes</span>(<span class="dt">x =</span>  prbarr, <span class="dt">y =</span> crmrte)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb398-5"><a href="panel-data.html#cb398-5"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb398-6"><a href="panel-data.html#cb398-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>,<span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb398-7"><a href="panel-data.html#cb398-7"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb398-8"><a href="panel-data.html#cb398-8"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Probability of Arrest&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Crime Rate&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:crime1"></span>
 <img src="ScPoEconometrics_files/figure-html/crime1-1.png" alt="Probability of arrest vs Crime rates in the cross section" width="672" />
 <p class="caption">
 Figure 12.1: Probability of arrest vs Crime rates in the cross section
 </p>
 </div>
-<p>We see an upward-sloping regression line, so it seems that the higher the crime rate, the higher the probability of arrest. In particular, we'd get:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xsection =<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr, css)
-<span class="kw">coef</span>(xsection)[<span class="dv">2</span>]  <span class="co"># gets slope coef</span></code></pre></div>
+<p>We see an upward-sloping regression line, so it seems that the higher the crime rate, the higher the probability of arrest. In particular, we’d get:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="panel-data.html#cb399-1"></a>xsection =<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr, css)</span>
+<span id="cb399-2"><a href="panel-data.html#cb399-2"></a><span class="kw">coef</span>(xsection)[<span class="dv">2</span>]  <span class="co"># gets slope coef</span></span></code></pre></div>
 <pre><code>##     prbarr 
 ## 0.06480104</code></pre>
-<p>such that we'd associate a 10% higher probability of arrest with an increase of 0.006 for the crime rate (it would go from 0.02 to 0.026). Ok, but what does that <em>mean</em>? Does it mean that as there is more crime, the police get more efficient, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. A DAG to the rescue!</p>
+<p>such that we’d associate a 10% higher probability of arrest with an increase of 0.006 for the crime rate (it would go from 0.02 to 0.026). Ok, but what does that <em>mean</em>? Does it mean that as there is more crime, the police get more efficient, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. A DAG to the rescue!</p>
 <div class="figure" style="text-align: center"><span id="fig:cri-dag"></span>
 <img src="ScPoEconometrics_files/figure-html/cri-dag-1.png" alt="DAG to answer *what causes the local crime rate?*" width="672" />
 <p class="caption">
 Figure 12.2: DAG to answer <em>what causes the local crime rate?</em>
 </p>
 </div>
-<p>In figure <a href="panel-data.html#fig:cri-dag">12.2</a> we've written <code>LawAndOrder</code> for how committed local politicians are to <em>law and order politics</em>, and <code>LocalStuff</code> for everything that is unique to a particular county apart from the things we've listed. So, at least we can appreciate to full problem now, but it's still really complicated. Let's try to think about <em>at which level</em> (i.e. county or time) each of those factors <em>vary</em>:</p>
+<p>In figure <a href="panel-data.html#fig:cri-dag">12.2</a> we’ve written <code>LawAndOrder</code> for how committed local politicians are to <em>law and order politics</em>, and <code>LocalStuff</code> for everything that is unique to a particular county apart from the things we’ve listed. So, at least we can appreciate to full problem now, but it’s still really complicated. Let’s try to think about <em>at which level</em> (i.e. county or time) each of those factors <em>vary</em>:</p>
 <ul>
 <li><code>LocalStuff</code> are things that describe the County, like geography, and other persistent features.</li>
-<li><code>LawAndOrder</code> and how many <code>CivilRights</code> one gets might change a little from year to year, but not very drastically. Let's assume they are fixed characteristics as well.</li>
+<li><code>LawAndOrder</code> and how many <code>CivilRights</code> one gets might change a little from year to year, but not very drastically. Let’s assume they are fixed characteristics as well.</li>
 <li><code>Police</code> budget and the <code>Poverty</code> level vary by county and by year: an elected politician has some discretion over police spending (not too much, but still), and poverty varies with the national/global state of the economy.</li>
 </ul>
-<p>You will often hear the terms <em>within</em> and <em>between</em> variation in panel data contexts. If we think of our data as classified into groups of <span class="math inline">\(i\)</span> (i.e., counties), the <em>within</em> variation refers to things that change <em>within each group</em> over time: here we said police budgets and poverty levels would change within each group and over time. On the other hand, we said that <code>LocalStuff</code>, <code>LawAndOrder</code> and <code>CivilRights</code> were persistent features of each group, hence they would <em>not</em> vary over time (or <em>within</em> the group) - they would differ only across or <strong>between</strong> groups. Let's try to separate those out visually!</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-201-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>That looks intriguing! Let's add the mean of <code>ProbofArrest</code> and <code>CrimeRate</code> for each of the counties to that plot, in order to show the <em>between</em> county variation:</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-202-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Simple OLS on the cross section (i.e. not taking into account the panel structure) seems to recover only the <em>between</em> group differences. It fits a line to the group means. Well this considerably simplifies our DAG from above! Let's collect all group-specific time-invariant features in the factor <code>County</code> - we don't really care about what they all are, because we can net the group effects out of the data it seems:</p>
+<p>You will often hear the terms <em>within</em> and <em>between</em> variation in panel data contexts. If we think of our data as classified into groups of <span class="math inline">\(i\)</span> (i.e., counties), the <em>within</em> variation refers to things that change <em>within each group</em> over time: here we said police budgets and poverty levels would change within each group and over time. On the other hand, we said that <code>LocalStuff</code>, <code>LawAndOrder</code> and <code>CivilRights</code> were persistent features of each group, hence they would <em>not</em> vary over time (or <em>within</em> the group) - they would differ only across or <strong>between</strong> groups. Let’s try to separate those out visually!</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>That looks intriguing! Let’s add the mean of <code>ProbofArrest</code> and <code>CrimeRate</code> for each of the counties to that plot, in order to show the <em>between</em> county variation:</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-204-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Simple OLS on the cross section (i.e. not taking into account the panel structure) seems to recover only the <em>between</em> group differences. It fits a line to the group means. Well this considerably simplifies our DAG from above! Let’s collect all group-specific time-invariant features in the factor <code>County</code> - we don’t really care about what they all are, because we can net the group effects out of the data it seems:</p>
 <div class="figure" style="text-align: center"><span id="fig:cri-dag2"></span>
 <img src="ScPoEconometrics_files/figure-html/cri-dag2-1.png" alt="DAG to answer *what causes the local crime rate?*" width="672" />
 <p class="caption">
@@ -520,17 +549,18 @@ Figure 12.3: DAG to answer <em>what causes the local crime rate?</em>
 <p>We have now seen several instances of problems with simple OLS arising from <em>unobserved variable bias</em>. For example, if the true model read</p>
 <p><span class="math display">\[
 y_i = \beta_0 + \beta_1 x_i + c_i + u_i
-\]</span> with <span class="math inline">\(c_i\)</span> unobservable and potentially correlated with <span class="math inline">\(x_i\)</span>, we were in trouble because the orthogonality assumption <span class="math inline">\(E[u_i+c_i|x_i]\neq 0\)</span> (<span class="math inline">\(u_i+c_i\)</span> is the total unobserved component). We have seen such an example where <span class="math inline">\(c=A_i\)</span> and <span class="math inline">\(x=s\)</span> was schooling and we were worried about <em>ability bias</em>. One solution we discussed was to find an IV which is correlated with schooling (quarter of birth) - but not with ability (we thought ability is equally distributed across birthdates). Today we'll look at solutions when we have <em>more than a single</em> observation for each unit <span class="math inline">\(i\)</span>. To be precise, let's put down a basic unobserved effects model like this:</p>
+\]</span>
+with <span class="math inline">\(c_i\)</span> unobservable and potentially correlated with <span class="math inline">\(x_i\)</span>, we were in trouble because the orthogonality assumption <span class="math inline">\(E[u_i+c_i|x_i]\neq 0\)</span> (<span class="math inline">\(u_i+c_i\)</span> is the total unobserved component). We have seen such an example where <span class="math inline">\(c=A_i\)</span> and <span class="math inline">\(x=s\)</span> was schooling and we were worried about <em>ability bias</em>. One solution we discussed was to find an IV which is correlated with schooling (quarter of birth) - but not with ability (we thought ability is equally distributed across birthdates). Today we’ll look at solutions when we have <em>more than a single</em> observation for each unit <span class="math inline">\(i\)</span>. To be precise, let’s put down a basic unobserved effects model like this:</p>
 <p><span class="math display" id="eq:panel">\[
 y_{it} = \beta_1 x_{it} + c_i + u_{it},\quad t=1,2,...T  \tag{12.1}
 \]</span></p>
 <p>The object of interest here is <span class="math inline">\(c_i\)</span>, called the <em>individual fixed effect</em>, <em>unobserved effect</em> or <em>unobserved heterogeneity</em>. The important thing to note is that it is fixed over time (ability <span class="math inline">\(A_i\)</span> for example).</p>
 <div id="dummy-variable-regression" class="section level3">
 <h3><span class="header-section-number">12.2.1</span> Dummy Variable Regression</h3>
-<p>The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each <span class="math inline">\(i\)</span>. This is closest to what we said above is <em>controlling for county</em> - that's exactly what we do here. You can see in <a href="panel-data.html#eq:panel">(12.1)</a> that each <span class="math inline">\(i\)</span> has basically their own intercept <span class="math inline">\(c_i\)</span>, so this works. In <code>R</code> you achieve this like so:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod =<span class="st"> </span><span class="kw">list</span>()
-mod<span class="op">$</span>dummy &lt;-<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(county), css)  <span class="co"># i is the unit ID</span>
-broom<span class="op">::</span><span class="kw">tidy</span>(mod<span class="op">$</span>dummy)</code></pre></div>
+<p>The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each <span class="math inline">\(i\)</span>. This is closest to what we said above is <em>controlling for county</em> - that’s exactly what we do here. You can see in <a href="panel-data.html#eq:panel">(12.1)</a> that each <span class="math inline">\(i\)</span> has basically their own intercept <span class="math inline">\(c_i\)</span>, so this works. In <code>R</code> you achieve this like so:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="panel-data.html#cb401-1"></a>mod =<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb401-2"><a href="panel-data.html#cb401-2"></a>mod<span class="op">$</span>dummy &lt;-<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(county), css)  <span class="co"># i is the unit ID</span></span>
+<span id="cb401-3"><a href="panel-data.html#cb401-3"></a>broom<span class="op">::</span><span class="kw">tidy</span>(mod<span class="op">$</span>dummy)</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   term              estimate std.error statistic  p.value
 ##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -541,12 +571,12 @@ broom<span class="op">::</span><span class="kw">tidy</span>(mod<span class="op">
 ## 5 factor(county)145 -0.00650   0.00160     -4.07 4.70e- 4</code></pre>
 <p>Here is what we are talking about in a picture:</p>
 <p><img src="ScPoEconometrics_files/figure-html/dummy-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>It's evident that <em>within</em> each county, there is a negative relationship. The dummy variable regression allows for different intercepts (county <code>1</code> is be the reference group), and one unique slope coefficient <span class="math inline">\(\beta\)</span>. (you observe that the lines are parallel).</p>
+<p>It’s evident that <em>within</em> each county, there is a negative relationship. The dummy variable regression allows for different intercepts (county <code>1</code> is be the reference group), and one unique slope coefficient <span class="math inline">\(\beta\)</span>. (you observe that the lines are parallel).</p>
 <p>You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1. (notice that the plot allows different slopes for each group, in our regression they are all parallel).</p>
 </div>
 <div id="first-differencing" class="section level3">
 <h3><span class="header-section-number">12.2.2</span> First Differencing</h3>
-If we only had <span class="math inline">\(T=2\)</span> periods, we could just difference both periods, basically leaving us with
+<p>If we only had <span class="math inline">\(T=2\)</span> periods, we could just difference both periods, basically leaving us with
 <span class="math display">\[\begin{align}
 y_{i1} &amp;= \beta_1 x_{i1} + c_i + u_{i1} \\
 y_{i2} &amp;= \beta_1 x_{i2} + c_i + u_{i2} \\
@@ -554,12 +584,12 @@ y_{i2} &amp;= \beta_1 x_{i2} + c_i + u_{i2} \\
 y_{i1}-y_{i2} &amp;= \beta_1 (x_{i1} - x_{i2}) + c_i-c_i + u_{i1}-u_{i2} \\
 \Delta y_{i} &amp;= \beta_1 \Delta x_{i} + \Delta u_{i}
     \end{align}\]</span>
-<p>where <span class="math inline">\(\Delta\)</span> means <em>difference over time of</em> and to recover the parameter of interest <span class="math inline">\(\beta_1\)</span> we would run</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(deltay <span class="op">~</span><span class="st"> </span>deltax, diff_data) </code></pre></div>
+where <span class="math inline">\(\Delta\)</span> means <em>difference over time of</em> and to recover the parameter of interest <span class="math inline">\(\beta_1\)</span> we would run</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="panel-data.html#cb403-1"></a><span class="kw">lm</span>(deltay <span class="op">~</span><span class="st"> </span>deltax, diff_data) </span></code></pre></div>
 </div>
 <div id="the-within-transformation" class="section level3">
 <h3><span class="header-section-number">12.2.3</span> The Within Transformation</h3>
-<p>In cases with <span class="math inline">\(T&gt;2\)</span> we need a different approach - this is the most relevant case. One important concept is called the <em>within</em> transformation.<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a> This is directly related to our discussion from above when we simplified our DAG. So, <em>controlling for group identity and only looking at time variation</em> is what we said - let's write it down! Here we denote as <span class="math inline">\(\bar{x}_i\)</span> the average <em>over time</em> of <span class="math inline">\(i\)</span>'s <span class="math inline">\(x\)</span> values:</p>
+<p>In cases with <span class="math inline">\(T&gt;2\)</span> we need a different approach - this is the most relevant case. One important concept is called the <em>within</em> transformation.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> This is directly related to our discussion from above when we simplified our DAG. So, <em>controlling for group identity and only looking at time variation</em> is what we said - let’s write it down! Here we denote as <span class="math inline">\(\bar{x}_i\)</span> the average <em>over time</em> of <span class="math inline">\(i\)</span>’s <span class="math inline">\(x\)</span> values:</p>
 <p><span class="math display">\[
 \bar{x}_i = \frac{1}{T} \sum_{t=1}^T x_{it}
 \]</span></p>
@@ -573,22 +603,22 @@ y_{i1}-y_{i2} &amp;= \beta_1 (x_{i1} - x_{i2}) + c_i-c_i + u_{i1}-u_{i2} \\
 <p><span class="math display">\[
 y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + c_i - c_i + u_{it}-\bar{u}_i 
 \]</span></p>
-<p>It's easy to do yourself! First let's compute the demeaned values:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cdata &lt;-<span class="st"> </span>css <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(county) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_crime =</span> <span class="kw">mean</span>(crmrte),
-         <span class="dt">mean_prob =</span> <span class="kw">mean</span>(prbarr)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">demeaned_crime =</span> crmrte <span class="op">-</span><span class="st"> </span>mean_crime,
-         <span class="dt">demeaned_prob =</span> prbarr <span class="op">-</span><span class="st"> </span>mean_prob)</code></pre></div>
+<p>It’s easy to do yourself! First let’s compute the demeaned values:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="panel-data.html#cb404-1"></a>cdata &lt;-<span class="st"> </span>css <span class="op">%&gt;%</span></span>
+<span id="cb404-2"><a href="panel-data.html#cb404-2"></a><span class="st">  </span><span class="kw">group_by</span>(county) <span class="op">%&gt;%</span></span>
+<span id="cb404-3"><a href="panel-data.html#cb404-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_crime =</span> <span class="kw">mean</span>(crmrte),</span>
+<span id="cb404-4"><a href="panel-data.html#cb404-4"></a>         <span class="dt">mean_prob =</span> <span class="kw">mean</span>(prbarr)) <span class="op">%&gt;%</span></span>
+<span id="cb404-5"><a href="panel-data.html#cb404-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">demeaned_crime =</span> crmrte <span class="op">-</span><span class="st"> </span>mean_crime,</span>
+<span id="cb404-6"><a href="panel-data.html#cb404-6"></a>         <span class="dt">demeaned_prob =</span> prbarr <span class="op">-</span><span class="st"> </span>mean_prob)</span></code></pre></div>
 <p>Then lets run the models with OLS:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod<span class="op">$</span>xsect &lt;-<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr, <span class="dt">data =</span> cdata)
-mod<span class="op">$</span>demeaned &lt;-<span class="st"> </span><span class="kw">lm</span>(demeaned_crime <span class="op">~</span><span class="st"> </span>demeaned_prob, <span class="dt">data =</span> cdata)
-gom =<span class="st"> &#39;DF|Deviance|AIC|BIC|p.value|se_type|R2 Adj. |statistic|Log.Lik.|Num.Obs.&#39;</span>  <span class="co"># stuff to omit from table</span>
-modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mod[<span class="kw">c</span>(<span class="st">&quot;xsect&quot;</span>,<span class="st">&quot;dummy&quot;</span>,<span class="st">&quot;demeaned&quot;</span>)],
-                           <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,
-                           <span class="dt">title =</span> <span class="st">&quot;Comparing (biased) X-secional OLS, dummy variable and manual demeaning panel regressions&quot;</span>,
-                           <span class="dt">coef_omit =</span> <span class="st">&quot;factor&quot;</span>,
-                           <span class="dt">gof_omit =</span> gom)</code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="panel-data.html#cb405-1"></a>mod<span class="op">$</span>xsect &lt;-<span class="st"> </span><span class="kw">lm</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr, <span class="dt">data =</span> cdata)</span>
+<span id="cb405-2"><a href="panel-data.html#cb405-2"></a>mod<span class="op">$</span>demeaned &lt;-<span class="st"> </span><span class="kw">lm</span>(demeaned_crime <span class="op">~</span><span class="st"> </span>demeaned_prob, <span class="dt">data =</span> cdata)</span>
+<span id="cb405-3"><a href="panel-data.html#cb405-3"></a>gom =<span class="st"> &#39;DF|Deviance|AIC|BIC|p.value|se_type|R2 Adj. |statistic|Log.Lik.|Num.Obs.&#39;</span>  <span class="co"># stuff to omit from table</span></span>
+<span id="cb405-4"><a href="panel-data.html#cb405-4"></a>modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mod[<span class="kw">c</span>(<span class="st">&quot;xsect&quot;</span>,<span class="st">&quot;dummy&quot;</span>,<span class="st">&quot;demeaned&quot;</span>)],</span>
+<span id="cb405-5"><a href="panel-data.html#cb405-5"></a>                           <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,</span>
+<span id="cb405-6"><a href="panel-data.html#cb405-6"></a>                           <span class="dt">title =</span> <span class="st">&quot;Comparing (biased) X-secional OLS, dummy variable and manual demeaning panel regressions&quot;</span>,</span>
+<span id="cb405-7"><a href="panel-data.html#cb405-7"></a>                           <span class="dt">coef_omit =</span> <span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb405-8"><a href="panel-data.html#cb405-8"></a>                           <span class="dt">gof_omit =</span> gom)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:tab1">Table 12.1: </span>Comparing (biased) X-secional OLS, dummy variable and manual demeaning panel regressions
@@ -734,15 +764,15 @@ F
 <div id="using-a-package" class="section level3">
 <h3><span class="header-section-number">12.2.4</span> Using a Package</h3>
 <p>In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (fixest if fastest)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod<span class="op">$</span>FE =<span class="st"> </span>fixest<span class="op">::</span><span class="kw">feols</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr <span class="op">|</span><span class="st"> </span>county, cdata)
-modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mod[<span class="kw">c</span>(<span class="st">&quot;xsect&quot;</span>,<span class="st">&quot;dummy&quot;</span>,<span class="st">&quot;demeaned&quot;</span>,<span class="st">&quot;FE&quot;</span>)],
-                           <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,
-                           <span class="dt">title =</span> <span class="st">&quot;Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest  panel regressions&quot;</span>,
-                           <span class="dt">coef_omit =</span> <span class="st">&quot;factor&quot;</span>,
-                           <span class="dt">gof_omit =</span> <span class="kw">paste</span>(gom,<span class="st">&quot;Std. errors&quot;</span>,<span class="st">&quot;R2&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;|&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="panel-data.html#cb406-1"></a>mod<span class="op">$</span>FE =<span class="st"> </span>fixest<span class="op">::</span><span class="kw">feols</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr <span class="op">|</span><span class="st"> </span>county, cdata)</span>
+<span id="cb406-2"><a href="panel-data.html#cb406-2"></a>modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mod[<span class="kw">c</span>(<span class="st">&quot;xsect&quot;</span>,<span class="st">&quot;dummy&quot;</span>,<span class="st">&quot;demeaned&quot;</span>,<span class="st">&quot;FE&quot;</span>)],</span>
+<span id="cb406-3"><a href="panel-data.html#cb406-3"></a>                           <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,</span>
+<span id="cb406-4"><a href="panel-data.html#cb406-4"></a>                           <span class="dt">title =</span> <span class="st">&quot;Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest  panel regressions&quot;</span>,</span>
+<span id="cb406-5"><a href="panel-data.html#cb406-5"></a>                           <span class="dt">coef_omit =</span> <span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb406-6"><a href="panel-data.html#cb406-6"></a>                           <span class="dt">gof_omit =</span> <span class="kw">paste</span>(gom,<span class="st">&quot;Std. errors&quot;</span>,<span class="st">&quot;R2&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;|&quot;</span>))</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-206">Table 12.2: </span>Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest panel regressions
+<span id="tab:unnamed-chunk-208">Table 12.2: </span>Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest panel regressions
 </caption>
 <thead>
 <tr>
@@ -884,11 +914,11 @@ X
 </tr>
 </tbody>
 </table>
-<p>Again, we get the same result as with manual demeaning 😅. Let's finish off with a nice visualisation by <a href="http://nickchk.com">Nick C Huntington-Klein's</a> which illustrates how the within transformation works in this example. If you look back at</p>
+<p>Again, we get the same result as with manual demeaning 😅. Let’s finish off with a nice visualisation by <a href="http://nickchk.com">Nick C Huntington-Klein’s</a> which illustrates how the within transformation works in this example. If you look back at</p>
 <p><span class="math display">\[
 y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + u_{it}-\bar{u}_i 
 \]</span></p>
-<p>you can see that we perform a form of <strong>data centering</strong> in the within transformation: substracting their respective time means from all variables means to center all variables! Here's how this looks (only visible in HTML version online).</p>
+<p>you can see that we perform a form of <strong>data centering</strong> in the within transformation: substracting their respective time means from all variables means to center all variables! Here’s how this looks (only visible in HTML version online).</p>
 <div class="figure" style="text-align: center"><span id="fig:anim"></span>
 <img src="ScPoEconometrics_files/figure-html/anim-1.gif" alt="Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only"  />
 <p class="caption">
@@ -902,7 +932,7 @@ Figure 12.4: Animation of a fixed effects panel data estimator: we remove <em>be
 <div class="footnotes">
 <hr />
 <ol start="16">
-<li id="fn16"><p>Different packages implement different flavours of this procedure, this is the main gist<a href="panel-data.html#fnref16">↩</a></p></li>
+<li id="fn16"><p>Different packages implement different flavours of this procedure, this is the main gist<a href="panel-data.html#fnref16" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -966,7 +996,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))

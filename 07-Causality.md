@@ -12,7 +12,7 @@ Just in case you were wondering: Yes it does! However, for a very long time the 
 Let's go back to the 1950's. We are at the start of a big increase in deaths from lung cancer. At the same time cigarette consumption was growing very fast. With the benefit of hindsight, we can now draw this graph:
 
 <div class="figure" style="text-align: center">
-<img src="images/Smoking_lung_cancer.png" alt="Two time series showing cigarette consumption per capita and incidence of lung cancer in the USA." width="710" />
+<img src="images/Smoking_lung_cancer.png" alt="Two time series showing cigarette consumption per capita and incidence of lung cancer in the USA." width="355" />
 <p class="caption">(\#fig:smoking-cancer)Two time series showing cigarette consumption per capita and incidence of lung cancer in the USA.</p>
 </div>
 
@@ -43,28 +43,28 @@ Let's put a some structure on this problem now, so we can make progress.
 A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, *directed* graph). If an arrow starts at node $x$ and ends at node $y$, we say that $x$ causes $y$. Here is a simple example of such a DAG:
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$."  />
+<img src="07-Causality_files/figure-html/dag1-1.png" alt="A simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">(\#fig:dag1)A simple DAG showing the causal impact of $x$ on $y$.</p>
 </div>
 
 Now consider this setting, where there is a third variable, $z$. It could be possible that also $z$ has a direct influence on $y$:
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$."  />
+<img src="07-Causality_files/figure-html/dag2-1.png" alt="A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$." width="384" />
 <p class="caption">(\#fig:dag2)A simple DAG with with 2 causal paths: Both $x$ and $z$ have a direct impact on $y$.</p>
 </div>
 
 Now let's change this and create a path from $z$ to *both* $x$ and $y$ instead. We call $z$ a *confounder* in the relationship between $x$ and $y$: $z$ *confounds* the direct causal impact of $x$ on $y$, by affecting them both at the same time. What is more, there is no arrow from $x$ to $y$ at all, so the only *real* explanatory variable here is in fact $z$. Attributing any explanatory power to $x$ would be wrong in this setting.
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation."  />
+<img src="07-Causality_files/figure-html/dag3-1.png" alt="A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation." width="384" />
 <p class="caption">(\#fig:dag3)A simple DAG where $z$ is a confounder. There is no causal path from $x$ to $y$, and any correlation we observe between those variables is completely induced by $z$. We call this spurious correlation.</p>
 </div>
 
 Here is a second example where $z$ is a confounder, but slightly different. 
 
 <div class="figure">
-<img src="07-Causality_files/figure-epub3/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it."  />
+<img src="07-Causality_files/figure-html/dag41-1.png" alt="$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it." width="672" />
 <p class="caption">(\#fig:dag41)$z$ is still a confounder here, but there is a causal link from $x$ to $y$ now. If we observed $z$, we can control for it.</p>
 </div>
 
@@ -76,7 +76,7 @@ In \@ref(fig:dag41) there is an arrow from $x$ to $y$. In this setting, if we ar
 Let's use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:
 
 <div class="figure">
-<img src="07-Causality_files/figure-epub3/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel."  />
+<img src="07-Causality_files/figure-html/dag-cig-1.png" alt="Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel." width="672" />
 <p class="caption">(\#fig:dag-cig)Two competing causal graphs for the relationship between smoking and lung cancer. In the right panel Lung Cancer is directly impacted by a genetic factor, which at the same time also influences smoking. This is a stark representation of Fisher's view. Another version would have an additional arrow from Smoking to Lung Cancer in the right panel.</p>
 </div>
 
@@ -180,7 +180,7 @@ Notice how this links back to our initial discussion about DAGs above. Randomisa
 We want to revisit the underlying assumptions of the classical model outlined in \@ref(class-reg) in the previous chapter, which is closely related to the previous discussion. Let's talk a bit more about assumption number 2 of the definition in \@ref(class-reg). It said this:
 
 <div class="warning">
-<p>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. This means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. We want <span class="math inline">\(x\)</span> to be <strong>strictly exogenous</strong> to the model.</p>
+<p>The mean of the residuals conditional on <span class="math inline">\(x\)</span> should be zero, <span class="math inline">\(E[\varepsilon|x] = 0\)</span>. This means that <span class="math inline">\(Cov(\varepsilon,x) = 0\)</span>, i.e. that the errors and our explanatory variable(s) should be <em>uncorrelated</em>. We want <span class="math inline">\(x\)</span> to be <strong>strictly exogenous</strong> to the model.</p>
 </div>
 <br>
 
@@ -193,14 +193,14 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i (\#eq:DGP-h)
 and imagine it represents the data generating process (DGP) of the impact of $x$ on $y$. Writing down this equation is tightly linked to drawing this DAG from above:
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$."  />
+<img src="07-Causality_files/figure-html/dag4-1.png" alt="The same simple DAG showing the causal impact of $x$ on $y$." width="384" />
 <p class="caption">(\#fig:dag4)The same simple DAG showing the causal impact of $x$ on $y$.</p>
 </div>
 
 The role of $\varepsilon_i$ in equation \@ref(eq:DGP-h) is to allow for random variability in the data not captured by our model, almost as an acknowledgement that we would never be able to *fully* explain $y_i$ with our necessarily simple model. However, assumption $E[\varepsilon|x] = 0$ (or $Cov(\varepsilon,x) = 0$) makes sure that those other factors are in **no systematic relationship** with our regressor $x$. Why? Well if it *were* the case that another factor $z$ is related to $x$, we could never make our ceteris paribus statements of *holding all other factors fixed, the impact of $x$ on $y$ is $\beta$*. In other words, we'd have a confounder in our regression. 
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for."  />
+<img src="07-Causality_files/figure-html/dag5-1.png" alt="The same simple DAG where $z$ is a confounder that needs to be controlled for." width="384" />
 <p class="caption">(\#fig:dag5)The same simple DAG where $z$ is a confounder that needs to be controlled for.</p>
 </div>
 
@@ -322,7 +322,7 @@ The way in which `bathrms` and `lotsize` are correlated is important here, so le
 
 
 <div class="figure" style="text-align: center">
-<img src="07-Causality_files/figure-epub3/unnamed-chunk-8-1.png" alt="Distribution of `lotsize` by `bathrms`"  />
+<img src="07-Causality_files/figure-html/unnamed-chunk-8-1.png" alt="Distribution of `lotsize` by `bathrms`" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-8)Distribution of `lotsize` by `bathrms`</p>
 </div>
 

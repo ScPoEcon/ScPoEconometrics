@@ -24,7 +24,7 @@ D_i = \begin{cases}\begin{array}{c}1\text{ if }x_i > c \\
 Here's the obligatory DAG!
 
 <div class="figure" style="text-align: center">
-<img src="09-RDD_files/figure-epub3/rdd1-1.png" alt="DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$"  />
+<img src="09-RDD_files/figure-html/rdd1-1.png" alt="DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
 <p class="caption">(\#fig:rdd1)DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$</p>
 </div>
 
@@ -36,7 +36,7 @@ The key idea can be glanced from figure \@ref(fig:rdd1): if we can *know* who en
 In our DAG, point 1 above is not currently visible. Let's augment this:
 
 <div class="figure" style="text-align: center">
-<img src="09-RDD_files/figure-epub3/rdd2-1.png" alt="Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$"  />
+<img src="09-RDD_files/figure-html/rdd2-1.png" alt="Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$" width="672" />
 <p class="caption">(\#fig:rdd2)Augmented DAG for a simple RDD design: $x$ determines treatment via the cutoff $c$</p>
 </div>
 
@@ -51,7 +51,7 @@ In a recent paper title [Clicking on Heaven's Door](https://www.aeaweb.org/artic
 In the Italian context, immigrants often enter illegally first, and then hope to obtain a residence permit through an employer later on. There is a quota system in place, which establishes how many permits are to be granted to how many people from each nationality, and to which Italian industries (construction, services, etc). See table \@ref(fig:pin1) for an overview of those quotas.
 
 <div class="figure" style="text-align: center">
-<img src="images/pinotti1.png" alt="Table 1 from @pinotti." width="1162" />
+<img src="images/pinotti1.png" alt="Table 1 from @pinotti." width="581" />
 <p class="caption">(\#fig:pin1)Table 1 from @pinotti.</p>
 </div>
 
@@ -78,6 +78,6 @@ The key observation is now that the exact timing when a certain quota is full, $
 * Figure \@ref(fig:pin2) illustrates this finding graphically with a typical RD plot. The vertical difference in red and green lines at the cutoff $T=0$ in the *2008: type-A applicants* is the estimate of the local average treatment effect (LATE), i.e. $0.5 - 1.8 = -1.3$.  
 
 <div class="figure" style="text-align: center">
-<img src="images/pinotti2.png" alt="Table 3 from @pinotti." width="1406" />
+<img src="images/pinotti2.png" alt="Table 3 from @pinotti." width="703" />
 <p class="caption">(\#fig:pin2)Table 3 from @pinotti.</p>
 </div>

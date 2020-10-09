@@ -13,6 +13,10 @@ In this chapter we will first learn some basic concepts that help summarizing da
 library(ggplot2)
 ```
 
+```
+## Warning: package 'ggplot2' was built under R version 3.6.2
+```
+
 ### Central Tendency {-}
 
 Suppose we want to know the *mean* and *median* of all the values stored in the `data.frame` column `mpg$cty`:
@@ -80,7 +84,7 @@ When visualizing a single numerical variable, a **histogram** is useful. It summ
 hist(mpg$cty)
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the `?` operator to read the documentation for the `hist()` to see a full list of these parameters.
 
@@ -94,7 +98,7 @@ hist(mpg$cty,
      border = "blue")
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 Importantly, you should always be sure to label your axes and give the plot a title. The argument `breaks` is specific to `hist()`. Entering an integer will give a suggestion to `R` for how many bars to use for the histogram. By default `R` will attempt to intelligently guess a good number of `breaks`, but as we can see here, it is sometimes useful to modify this yourself.
 
@@ -107,7 +111,7 @@ Somewhat similar to a histogram, a barplot can provide a visual summary of a cat
 barplot(table(mpg$drv))
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 ```r
@@ -119,7 +123,7 @@ barplot(table(mpg$drv),
         border = "darkorange")
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ### Boxplots
 
@@ -141,7 +145,7 @@ First note that we can use a single boxplot as an alternative to a histogram for
 boxplot(mpg$hwy)
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-8-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.
 
@@ -150,7 +154,7 @@ However, more often we will use boxplots to compare a numerical variable for dif
 boxplot(hwy ~ drv, data = mpg)
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-9-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 Here used the `boxplot()` command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`." We see the use of a `~` (which specifies a formula) and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course. 
 
@@ -166,7 +170,7 @@ boxplot(hwy ~ drv, data = mpg,
      border = "dodgerblue")
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-10-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Again, `boxplot()` has a number of additional arguments which have the ability to make our plot more visually appealing.
 
@@ -179,7 +183,7 @@ Lastly, to visualize the relationship between two numeric variables we will use 
 plot(hwy ~ displ, data = mpg)
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-11-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 
 ```r
@@ -192,7 +196,7 @@ plot(hwy ~ displ, data = mpg,
      col  = "dodgerblue")
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-12-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 ### `ggplot` {#ggplot}
 
@@ -203,7 +207,7 @@ All of the above plots could also have been generated using the `ggplot` functio
 ggplot(data = mpg,mapping = aes(x=displ,y=hwy)) + geom_point()
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-13-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 `ggplot` is impossible to describe in brief terms, so please look at [the package's website](http://ggplot2.tidyverse.org) which provides excellent guidance. We will from time to time use ggplot in this book, so you could familiarize yourself with it. Let's quickly demonstrate how one could further customize that first plot:
 
@@ -217,7 +221,7 @@ ggplot(data = mpg, mapping = aes(x=displ,y=hwy)) +   # ggplot() makes base plot
   ggtitle("MPG (Highway) vs Engine Displacement")   # add a title
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-14-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 If you want to see `ggplot` in action, you could start with [this](http://jcyhong.github.io/ggplot_demo.html) and then look at that [very nice tutorial](https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html)? It's fun!
 
@@ -226,7 +230,7 @@ If you want to see `ggplot` in action, you could start with [this](http://jcyhon
 We often are interested in how two variables are related to each other. The core concepts here are *covariance* and *correlation*. Let's generate some data on `x` and `y` and plot them against each other:
 
 <div class="figure" style="text-align: center">
-<img src="02-SummaryStats_files/figure-epub3/x-y-corr-1.png" alt="How are $x$ and $y$ related?"  />
+<img src="02-SummaryStats_files/figure-html/x-y-corr-1.png" alt="How are $x$ and $y$ related?" width="672" />
 <p class="caption">(\#fig:x-y-corr)How are $x$ and $y$ related?</p>
 </div>
 
@@ -281,7 +285,7 @@ Note that $x,y$ being drawn from a *continuous distribution* (they are joint nor
 Sometimes it is useful to estimate the standard deviation of some data *without* the help of a computer (for example during an exam ;-) ). If $x$ is approximately normally distributed, 95% of its observations will lie within a range of $\bar{x}\pm$ two standard deviations of $x$. That is to say, *four* standard deviations of $x$ cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of $x$, and simply divide that number by four. 
  
 <div class="figure">
-<img src="02-SummaryStats_files/figure-epub3/vis-1.png" alt="visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$."  />
+<img src="02-SummaryStats_files/figure-html/vis-1.png" alt="visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$." width="672" />
 <p class="caption">(\#fig:vis)visual estimation on $\sigma$. The x-axis labels min and max as well as mean of $x$.</p>
 </div>
 
@@ -684,7 +688,7 @@ tot_pop %>%
   ggplot(mapping = aes(x=year,y=millions,color=Country,group=Country)) + geom_line(size=1)
 ```
 
-![](02-SummaryStats_files/figure-epub3/gather-plot-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/gather-plot-1.png" width="672" />
 
 #### Arrange a `tibble` {-} 
 
@@ -786,28 +790,21 @@ missings = tot_pop %>%
   filter(is.na(counts)) %>% # is.na(x) returns TRUE if x is NA
   group_by(Country) %>%
   summarise(n_missing = n(),years = paste(year,collapse = ", "))
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```r
 knitr:::kable(missings)  # knitr:::kable makes a nice table
 ```
 
 
 
-|Country               | n_missing|years                                    |
-|:---------------------|---------:|:----------------------------------------|
-|Albania               |         2|2010, 2012                               |
-|Andorra               |         2|2014, 2015                               |
-|Armenia               |         1|2014                                     |
-|France (metropolitan) |         4|2014, 2015, 2016, 2017                   |
-|Georgia               |         1|2013                                     |
-|Monaco                |         7|2008, 2009, 2010, 2011, 2012, 2013, 2014 |
-|Russia                |         4|2013, 2015, 2016, 2017                   |
-|San Marino            |         1|2010                                     |
+Country                  n_missing  years                                    
+----------------------  ----------  -----------------------------------------
+Albania                          2  2010, 2012                               
+Andorra                          2  2014, 2015                               
+Armenia                          1  2014                                     
+France (metropolitan)            4  2014, 2015, 2016, 2017                   
+Georgia                          1  2013                                     
+Monaco                           7  2008, 2009, 2010, 2011, 2012, 2013, 2014 
+Russia                           4  2013, 2015, 2016, 2017                   
+San Marino                       1  2010                                     
 
 
 #### Males and Females {-} 
@@ -905,7 +902,7 @@ sexes %>%
   facet_wrap(~sex)   # make two panels, splitting by groups `sex`
 ```
 
-![](02-SummaryStats_files/figure-epub3/psexes-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/psexes-1.png" width="672" />
 
 #### Always Compare to Germany :-) {-}
 
@@ -974,7 +971,7 @@ merge_GER %>%
   theme_bw()  # new theme for a change?
 ```
 
-![](02-SummaryStats_files/figure-epub3/unnamed-chunk-34-1.png)<!-- -->
+<img src="02-SummaryStats_files/figure-html/unnamed-chunk-34-1.png" width="672" />
 
 
 

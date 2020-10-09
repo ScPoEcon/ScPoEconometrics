@@ -9,7 +9,7 @@ output:
 In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the `Std. Error` column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:
 
 <div class="figure" style="text-align: center">
-<img src="06-StdErrors_files/figure-epub3/confint-1.png" alt="Confidence bands around a regression line."  />
+<img src="06-StdErrors_files/figure-html/confint-1.png" alt="Confidence bands around a regression line." width="672" />
 <p class="caption">(\#fig:confint)Confidence bands around a regression line.</p>
 </div>
 
@@ -113,7 +113,7 @@ pasta_samples
 
 This produces an associated histogram which looks very much like the one we draws onto the board:
 
-![](06-StdErrors_files/figure-epub3/pasta-hist-1.png)<!-- -->
+<img src="06-StdErrors_files/figure-html/pasta-hist-1.png" width="672" />
 
 ### Recap
 
@@ -219,7 +219,7 @@ It's interesting to consider in which circumstances we might violate those assum
 1. Conditional Mean of errors is zero, $E[\varepsilon|x] = 0$. Going back to our running example in figure \@ref(fig:confint) about wages and education: Suppose that each individual $i$ in our data  something like *innate ability*, something we might wish to measure with an IQ-test, however imperfecty. Let's call it $a_i$. It seems reasonable to think that high $a_i$ will go together with high wages. At the same time, people with high $a_i$ will find studying for exams and school work much less burdensome than others, hence they might select into obtaining more years of schooling. The problem? Well, there is no $a_i$ in our regression equation - most of time we don't have a good measure of it to start with. So it's an *unobserved variable*, and as such, it is part of the error term $\varepsilon$ in our model. We will attribute to `educ` part of the effect on wages that is actually *caused* by ability $a_i$! Sometimes we may be able to reason about whether our estimate on `educ` is too high or too low, but we will never know it's true value. We don't get the *ceteris paribus* effect (the true partial derivative of `educ` on `lwage`). Technically, the assumption $E[\varepsilon|x] = 0$ implies that $Cov(\varepsilon,x) = 0$, so that's the part that is violated.
 1. Data from Random Sample. One common concern here is that the observations in the data could have been *selected* in a particular fashion, which would make it less representative of the underlying population. Suppose we had ended up with individuals only from the richest neighborhood of town; Our interpretation the impact of education on wages might not be valid for other areas.
 1. Homoskedasticity. For correct inference (below!), we want to know whether the variance of $\varepsilon$ varies with our explanatory variable $x$, or not. Here is a typical example where it does:
-    ![](06-StdErrors_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+    <img src="06-StdErrors_files/figure-html/unnamed-chunk-6-1.png" width="672" />
     As income increases, not all people increase their food consumption in an equal way. So $Var(\varepsilon|x)$ will vary with the value of $x$, hence it won't be equal to the constant $\sigma^2$. 
 1. If the distribution of $\varepsilon$ is not normal, it is more cumbersome to derive theoretical results about inference. 
 

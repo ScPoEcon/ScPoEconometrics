@@ -96,7 +96,7 @@ $$b_1 = E[y|\text{is.female}=1] - E[y|\text{is.female}=0]=-3.0169.$$
 It is instructive to reconsider this example graphically:
 
 <div class="figure" style="text-align: center">
-<img src="05-Categorial-Vars_files/figure-epub3/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!"  />
+<img src="05-Categorial-Vars_files/figure-html/x-zero-one-1.png" alt="regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!" width="672" />
 <p class="caption">(\#fig:x-zero-one)regressing $y \in \mathbb{R}$ on $\text{is.female}_i \in \{0,1\}$. The blue line is $E[y]$, the red arrow is the size of $b_1$. Which is the same as the slope of the regression line in this case and the difference in conditional means!</p>
 </div>
 
@@ -104,7 +104,7 @@ In figure \@ref(fig:x-zero-one) we see that this regression simplifies to the st
 
 
 ```r
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_dummy")
 ```
 
@@ -130,7 +130,7 @@ so that the intercept is $b_0 + b_1$ for women but $b_0$ for men. We will see th
 
 
 ```r
-library(ScPoEconometrics)
+library(ScPoApps)
 launchApp("reg_dummy_example")
 ```
 
@@ -238,7 +238,7 @@ stargazer::stargazer(lm_w,lm_w_sex,type = if (knitr:::is_latex_output()) "latex"
 We know the results from column (1) very well by now. How does the relationship change if we include the `female` indicator? Remember from above that `female` is a `factor` with two levels, *0* and *1*, where *1* means *that's a female*. We see in the above output that `R` included a regressor called `female1`. This is a combination of the variable name `female` and the level which was included in the regression. In other words, `R` chooses a *reference category* (by default the first of all levels by order of appearance), which is excluded - here this is `female==0`. The interpretation is that $b_2$ measures the effect of being female *relative* to being male. `R` automatically creates a dummy variable for each potential level, excluding the first category.
 
 <div class="figure" style="text-align: center">
-<img src="05-Categorial-Vars_files/figure-epub3/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy."  />
+<img src="05-Categorial-Vars_files/figure-html/wage-plot-1.png" alt="log wage vs educ. Right panel with female dummy." width="672" />
 <p class="caption">(\#fig:wage-plot)log wage vs educ. Right panel with female dummy.</p>
 </div>
 
@@ -337,7 +337,7 @@ summary(lm_w_interact)
 We will in the next chapter learn that the estimate for $b_3$ on the interaction `educ:female1` is difficult for us to distinguish from zero in a statistical sense; Hence for now we conclude that there are *no* significantly different returns in education for men and women in this data. This is easy to verify visually in this plot, where we are unable to detect a difference in slopes in the right panel.
 
 <div class="figure" style="text-align: center">
-<img src="05-Categorial-Vars_files/figure-epub3/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!"  />
+<img src="05-Categorial-Vars_files/figure-html/wage-plot2-1.png" alt="log wage vs educ. Right panel allows slopes to be different - turns out they are not!" width="672" />
 <p class="caption">(\#fig:wage-plot2)log wage vs educ. Right panel allows slopes to be different - turns out they are not!</p>
 </div>
 
@@ -358,12 +358,12 @@ Finally, dummary variables are sometimes very important to account for spurious 
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](05-Categorial-Vars_files/figure-epub3/unnamed-chunk-11-1.png)<!-- -->
+<img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 Here we observe a slightly negative relationship: higher wages are associated with fewer hours worked? Maybe. But what is this, there is a group identifier in this data! Let's use this and include `g` as a dummy in the regression - suppose `g` encodes male and female. 
 
 <div class="figure" style="text-align: center">
-<img src="05-Categorial-Vars_files/figure-epub3/unnamed-chunk-12-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition."  />
+<img src="05-Categorial-Vars_files/figure-html/unnamed-chunk-12-1.png" alt="Left and right panel exhibit the same data. The right panel controls for group composition." width="672" />
 <p class="caption">(\#fig:unnamed-chunk-12)Left and right panel exhibit the same data. The right panel controls for group composition.</p>
 </div>
 
