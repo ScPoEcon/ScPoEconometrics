@@ -997,10 +997,10 @@ The corresponding intercept estimate <span class="math inline">\(\hat{\beta}_0 =
 <p><span class="math display">\[
 \text{plim}(\hat{\beta}_1) = \beta_1
 \]</span></p>
-<p>meaning that, as the sample size <span class="math inline">\(n\)</span> increases, the <strong>probability limit</strong> (plim) of the estimator <span class="math inline">\(\beta_1\)</span> converges to the true parameter value with probability one.</p>
+<p>meaning that, as the sample size <span class="math inline">\(n\)</span> increases, the <strong>probability limit</strong> (plim) of the estimator <span class="math inline">\(\hat{\beta}_1\)</span> is the true value <span class="math inline">\(\beta_1\)</span>.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
 <div id="iv-inference" class="section level3">
 <h3><span class="header-section-number">11.3.1</span> IV Inference</h3>
-<p>Let us extend the homoskedasticity assumption <span class="math inline">\(z\)</span>, <span class="math inline">\(E(u^2|z) = \sigma^2\)</span>, such that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by</p>
+<p>Let us extend the homoskedasticity assumption to <span class="math inline">\(z\)</span>, such that <span class="math inline">\(E(u^2|z) = \sigma^2\)</span>, implying that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by</p>
 <p><span class="math display" id="eq:iv-var">\[
 Var(\hat{\beta}_{1,IV}) = \frac{\sigma^2}{n \sigma_x^2 \rho_{x,z}^2}  \tag{11.7}
 \]</span>
@@ -1035,7 +1035,9 @@ Let’s run an OLS on this, and then compare it to an IV estimate using <em>fath
 <span id="cb395-3"><a href="iv-applications.html#cb395-3"></a>mods<span class="op">$</span>OLS &lt;-<span class="st"> </span><span class="kw">lm</span>(lwage <span class="op">~</span><span class="st"> </span>educ, <span class="dt">data =</span> mroz)</span>
 <span id="cb395-4"><a href="iv-applications.html#cb395-4"></a>mods[[<span class="st">&#39;First Stage&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">lm</span>(educ <span class="op">~</span><span class="st"> </span>fatheduc, <span class="dt">data =</span> <span class="kw">subset</span>(mroz, inlf <span class="op">==</span><span class="st"> </span><span class="dv">1</span>))</span>
 <span id="cb395-5"><a href="iv-applications.html#cb395-5"></a>mods<span class="op">$</span>IV  &lt;-<span class="st"> </span>estimatr<span class="op">::</span><span class="kw">iv_robust</span>(lwage <span class="op">~</span><span class="st"> </span>educ <span class="op">|</span><span class="st"> </span>fatheduc, <span class="dt">data =</span> mroz)</span>
-<span id="cb395-6"><a href="iv-applications.html#cb395-6"></a>modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mods, <span class="dt">gof_map =</span> gm, <span class="dt">gof_omit =</span> gom, <span class="dt">title =</span> <span class="st">&quot;Mroz female labor supply and wage data.&quot;</span>)</span></code></pre></div>
+<span id="cb395-6"><a href="iv-applications.html#cb395-6"></a>modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mods, <span class="dt">gof_map =</span> gm, </span>
+<span id="cb395-7"><a href="iv-applications.html#cb395-7"></a>                           <span class="dt">gof_omit =</span> gom, </span>
+<span id="cb395-8"><a href="iv-applications.html#cb395-8"></a>                           <span class="dt">title =</span> <span class="st">&quot;Mroz female labor supply and wage data.&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:mroz1">Table 11.3: </span>Mroz female labor supply and wage data.
@@ -1176,26 +1178,26 @@ N
 <p>In the second column we show the first stage of the IV procedure. We see that <em>fatheduc</em> is indeed a statistically significant predictor of <span class="math inline">\(educ\)</span>: Each additional year of father’s education increases women’s education by more than a quarter of a year (0.269). Also important, we observe that the <span class="math inline">\(R^2\)</span> here is about 17%.</p>
 <p>Turning to the final IV estimate in the third column, we can see that using <em>fatheduc</em> as an IV reduces the return to education by about half to 5.9%! This result <em>suggests</em> that OLS is biased upwards (for example by ability bias). But let’s compare the standard errors of OLS and IV estimates, which are 0.014 for OLS vs 0.037 for IV. This can be seen in figure <a href="iv-applications.html#fig:se-plot">11.7</a>. You can clearly see that the standard errors of both estimators overlap, hence from this alone we cannot conclude they are different (we need a special statistical test to decide this).</p>
 <div class="figure" style="text-align: center"><span id="fig:se-plot"></span>
-<img src="ScPoEconometrics_files/figure-html/se-plot-1.png" alt="OLS vs IV Standard Errors" width="672" />
+<img src="ScPoEconometrics_files/figure-html/se-plot-1.png" alt="OLS vs IV Standard Errors: The dots represent the point estimates, and the solid vertical lines the standard error for both estimators." width="672" />
 <p class="caption">
-Figure 11.7: OLS vs IV Standard Errors
+Figure 11.7: OLS vs IV Standard Errors: The dots represent the point estimates, and the solid vertical lines the standard error for both estimators.
 </p>
 </div>
 </div>
 </div>
-<div id="iv-with-a-poor-instrument" class="section level3">
-<h3><span class="header-section-number">11.3.2</span> IV with a Poor Instrument</h3>
+<div id="iv-with-a-weak-instrument" class="section level3">
+<h3><span class="header-section-number">11.3.2</span> IV with a <em>Weak</em> Instrument</h3>
 <p>We have seen that IV will produce consistent estimates under our stated assumptions. However, even under valid assumption, we get large IV standard errors if the the correlation between IV and endogenous <span class="math inline">\(x\)</span> is small.<br />
 What is even worse is that <em>even if</em> we have only very small correlation between <span class="math inline">\(z\)</span> and <span class="math inline">\(u\)</span>, so that we might <em>almost</em> be happy to assume exogeneity, a small corrleation between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> can produce <strong>inconsistent</strong> estimates. To see this, consider the probability limit of the IV estimator again</p>
 <p><span class="math display">\[
 \text{plim}(\hat{\beta}_{1,IV}) = \beta_1 + \frac{Cor(z,u)}{Cor(z,x)} \cdot \frac{\sigma_u}{\sigma_x}
 \]</span></p>
-<p>The interesting part here involves the correlation terms. <em>Even if</em> <span class="math inline">\(Cor(z,u)\)</span> is very small, a <strong>weak instrument</strong>, i.e. one with only a small absolute value for <span class="math inline">\(Cor(z,x)\)</span> will blow up this second term in the probability limit. This would mean that even with a very big sample size <span class="math inline">\(n\)</span>, our estimator would <em>not</em> converge to the true population parameter <span class="math inline">\(\beta_1\)</span>, because we are using a weak instrument.</p>
+<p>The interesting part here involves the correlation terms. <em>Even if</em> <span class="math inline">\(Cor(z,u)\)</span> is very small, a <strong>weak instrument</strong>, i.e. one with only a small absolute value for <span class="math inline">\(Cor(z,x)\)</span> will blow up this second term in the probability limit. This would mean that even with a very big sample size <span class="math inline">\(n\)</span>, our estimator would <strong>not converge</strong> to the true population parameter <span class="math inline">\(\beta_1\)</span>, because we are using a weak instrument.</p>
 <p>To illustrate this point, let’s assume we want to look at the impact of number of packs of cigarettes smoked per day by pregnant women (<em>packs</em>) on the birthweight of their child (<em>bwght</em>):</p>
 <p><span class="math display">\[
 \log(bwght) = \beta_0 + \beta_1 packs + u
 \]</span></p>
-<p>We are worried that smoking behavior is correlated with a range of other health-related variables which are in <span class="math inline">\(u\)</span> and which could impact the birthweight of the child. So we look for an IV. Suppose we use the price of cigarettes (<em>cigprice</em>), assuming that the price of cigarettes is uncorrelated with factors in <span class="math inline">\(u\)</span>. Let’s run the first stage of <em>cigprice</em> on <em>packs</em> and then let’s show the 2SLS estimates:</p>
+<p>We are worried that smoking behavior is correlated with a range of other health-related variables which are in <span class="math inline">\(u\)</span> and which could impact the birthweight of the child - think of diet, physical exercise, and other lifestyle choices. So we look for an IV. Suppose we use the price of cigarettes (<em>cigprice</em>), assuming that the price of cigarettes is uncorrelated with factors in <span class="math inline">\(u\)</span> - the price of cigarettes would not impact birthweight (apart from through its effect on smoking behaviour, of course). Let’s run the first stage of <em>cigprice</em> on <em>packs</em> and then let’s show the 2SLS estimates:</p>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="iv-applications.html#cb396-1"></a><span class="kw">data</span>(bwght, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)</span>
 <span id="cb396-2"><a href="iv-applications.html#cb396-2"></a>mods &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
 <span id="cb396-3"><a href="iv-applications.html#cb396-3"></a>mods[[<span class="st">&quot;First Stage&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">lm</span>(packs <span class="op">~</span><span class="st"> </span>cigprice, <span class="dt">data =</span> bwght)</span>
@@ -1312,7 +1314,7 @@ N
 </tr>
 </tbody>
 </table>
-<p>The first column of table <a href="iv-applications.html#tab:bw">11.4</a> shows that the first stage is <em>very</em> weak. The partial effect of <em>cigprice</em> on <em>packs</em> smoked is zero! People don’t seem to care a great deal about the price of cigarettes (at least in the range of price variation observed in this dataset). The <span class="math inline">\(R^2\)</span> of that first stage is thus zero. What do we get if we use that IV nonetheless in a 2SLS estimation as in column 2? We get a huge coefficient of unexpected sign on <em>packs</em> (smoking more increases birthweight? 🤔), with very large standard error, so statistically speaking, we cannot distinguish this from zero. What is more important, however, is that even if they <em>were</em> significant, the estimates of column 2 are <strong>invalid</strong>. The <em>relevance</em> of the IV condition is clearly not satisfied, hence, invalid approach.</p>
+<p>The first column of table <a href="iv-applications.html#tab:bw">11.4</a> shows that the first stage is <em>very</em> weak. The partial effect of <em>cigprice</em> on <em>packs</em> smoked is zero! People don’t seem to care a great deal about the price of cigarettes (at least in the range of price variation observed in this dataset). The <span class="math inline">\(R^2\)</span> of that first stage is thus zero. What do we get if we use that IV nonetheless in a 2SLS estimation as in column 2? We get a huge coefficient of unexpected sign on <em>packs</em> (smoking more increases birthweight? 🤔), with very large standard error, so statistically speaking, we cannot distinguish this from zero. What is more important, however, is that even if they <em>were</em> significant, the estimates of column 2 are <strong>invalid</strong>. The <em>relevance</em> of the IV condition is clearly not satisfied, hence, invalid approach. ⛔</p>
 
 </div>
 </div>
@@ -1332,6 +1334,10 @@ N
 <li id="fn13"><p>It’s called reduced form because this second equation is supposed to be derived from a true underlying structural model.<a href="iv-applications.html#fnref13" class="footnote-back">↩︎</a></p></li>
 <li id="fn14"><p>Code in this section comes from the great <a href="https://jrnold.github.io/masteringmetrics/">mastering metrics with R</a> by J Arnold 👏 🙏<a href="iv-applications.html#fnref14" class="footnote-back">↩︎</a></p></li>
 <li id="fn15"><p>the <em>robust</em> here refers to the fact that the <code>estimatr</code> package by default chooses formulae to compute standard errors which are correcting for heteroskedasticity - we have encountered this term before in <a href="std-errors.html#violating">6.6.2</a>. See details <a href="https://declaredesign.org/r/estimatr/articles/mathematical-notes.html">here</a><a href="iv-applications.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>More precisely, we say that a sequence of random variables indexed by sample size <span class="math inline">\(n\)</span>, <span class="math inline">\({X_n}\)</span> say, <em>converges in probability</em> to the random variable <span class="math inline">\(X\)</span>, if for all <span class="math inline">\(\varepsilon &gt; 0\)</span>,
+<span class="math display">\[
+\lim_{n \to \infty} \Pr \left(|X_n - X | &gt; \varepsilon \right) = 0
+\]</span><a href="iv-applications.html#fnref16" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
