@@ -330,11 +330,15 @@ $$
 \text{plim}(\hat{\beta}_1) = \beta_1
 $$
 
-meaning that, as the sample size $n$ increases, the **probability limit** (plim) of the estimator $\beta_1$ converges to the true parameter value with probability one. 
+meaning that, as the sample size $n$ increases, the **probability limit** (plim) of the estimator $\hat{\beta}_1$ is the true value $\beta_1$.^[More precisely, we say that a sequence of random variables indexed by sample size $n$, ${X_n}$ say, *converges in probability* to the random variable $X$, if for all $\varepsilon > 0$, 
+$$
+\lim_{n \to \infty} \Pr \left(|X_n - X | > \varepsilon \right) = 0
+$$
+]
 
 ### IV Inference
 
-Let us extend the homoskedasticity assumption $z$, $E(u^2|z) = \sigma^2$, such that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by
+Let us extend the homoskedasticity assumption to $z$, such that $E(u^2|z) = \sigma^2$, implying that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by
 
 $$
 Var(\hat{\beta}_{1,IV}) = \frac{\sigma^2}{n \sigma_x^2 \rho_{x,z}^2}  (#eq:iv-var)
@@ -376,7 +380,9 @@ mods = list()
 mods$OLS <- lm(lwage ~ educ, data = mroz)
 mods[['First Stage']] <- lm(educ ~ fatheduc, data = subset(mroz, inlf == 1))
 mods$IV  <- estimatr::iv_robust(lwage ~ educ | fatheduc, data = mroz)
-modelsummary::modelsummary(mods, gof_map = gm, gof_omit = gom, title = "Mroz female labor supply and wage data.")
+modelsummary::modelsummary(mods, gof_map = gm, 
+                           gof_omit = gom, 
+                           title = "Mroz female labor supply and wage data.")
 ```
 
 The results in table \@ref(tab:mroz1) show in the first column that an additional year of education implies an 11% increase in annual wages for women. This is a standard OLS estimator which be biased because of *ability bias*.
@@ -385,7 +391,7 @@ In the second column we show the first stage of the IV procedure. We see that *f
 
 Turning to the final IV estimate in the third column, we can see that using *fatheduc* as an IV reduces the return to education by about half to 5.9%! This result *suggests* that OLS is biased upwards (for example by ability bias). But let's compare the standard errors of OLS and IV estimates, which are 0.014 for OLS vs 0.037 for IV. This can be seen in figure \@ref(fig:se-plot). You can clearly see that the standard errors of both estimators overlap, hence from this alone we cannot conclude they are different (we need a special statistical test to decide this).
 
-```{r se-plot,echo = FALSE,fig.cap="OLS vs IV Standard Errors"}
+```{r se-plot,echo = FALSE,fig.cap="OLS vs IV Standard Errors: The dots represent the point estimates, and the solid vertical lines the standard error for both estimators."}
 coefs_ols = broom::tidy(mods$OLS, conf.int = TRUE)
 coefs_IV = broom::tidy(mods$IV, conf.int = TRUE)
 
@@ -394,12 +400,12 @@ bind_rows(
   coefs_IV %>% filter(term == "educ") %>% mutate(estimator = "IV")
   ) %>%
   ggplot(aes(x=estimator, y=estimate, ymin=conf.low, ymax=conf.high)) +
-  geom_hline(yintercept = 0.0, color = "red", size =1.5) +
+  geom_hline(yintercept = 0.0, color = "red", size =1.2) +
   geom_pointrange() +
   theme_bw()
 ```
 
-### IV with a Poor Instrument
+### IV with a *Weak* Instrument
 
 We have seen that IV will produce consistent estimates under our stated assumptions. However, even under valid assumption, we get large IV standard errors if the the correlation between IV and endogenous $x$ is small.  
 What is even worse is that *even if* we have only very small correlation between $z$ and $u$, so that we might *almost* be happy to assume exogeneity, a small corrleation between $x$ and $z$ can produce **inconsistent** estimates. To see this, consider the probability limit of the IV estimator again
@@ -408,7 +414,7 @@ $$
 \text{plim}(\hat{\beta}_{1,IV}) = \beta_1 + \frac{Cor(z,u)}{Cor(z,x)} \cdot \frac{\sigma_u}{\sigma_x}
 $$
 
-The interesting part here involves the correlation terms. *Even if* $Cor(z,u)$ is very small, a **weak instrument**, i.e. one with only a small absolute value for $Cor(z,x)$ will blow up this second term in the probability limit. This would mean that even with a very big sample size $n$, our estimator would *not* converge to the true population parameter $\beta_1$, because we are using a weak instrument.
+The interesting part here involves the correlation terms. *Even if* $Cor(z,u)$ is very small, a **weak instrument**, i.e. one with only a small absolute value for $Cor(z,x)$ will blow up this second term in the probability limit. This would mean that even with a very big sample size $n$, our estimator would **not converge** to the true population parameter $\beta_1$, because we are using a weak instrument.
 
 To illustrate this point, let's assume we want to look at the impact of number of packs of cigarettes smoked per day by pregnant women (*packs*) on the birthweight of their child (*bwght*):
 
@@ -416,7 +422,7 @@ $$
 \log(bwght) = \beta_0 + \beta_1 packs + u
 $$
 
-We are worried that smoking behavior is correlated with a range of other health-related variables which are in $u$ and which could impact the birthweight of the child. So we look for an IV. Suppose we use the price of cigarettes (*cigprice*), assuming that the price of cigarettes is uncorrelated with factors in $u$. Let's run the first stage of *cigprice* on *packs* and then let's show the 2SLS estimates:
+We are worried that smoking behavior is correlated with a range of other health-related variables which are in $u$ and which could impact the birthweight of the child - think of diet, physical exercise, and other lifestyle choices. So we look for an IV. Suppose we use the price of cigarettes (*cigprice*), assuming that the price of cigarettes is uncorrelated with factors in $u$ - the price of cigarettes would not impact birthweight (apart from through its effect on smoking behaviour, of course). Let's run the first stage of *cigprice* on *packs* and then let's show the 2SLS estimates:
 
 ```{r bw}
 data(bwght, package = "wooldridge")
@@ -428,4 +434,4 @@ modelsummary(mods, gof_map = gm,
              title = "IV regression with weak instrument *cigprice*")
 ```
 
-The first column of table \@ref(tab:bw) shows that the first stage is *very* weak. The partial effect of *cigprice* on *packs* smoked is zero! People don't seem to care a great deal about the price of cigarettes (at least in the range of price variation observed in this dataset). The $R^2$ of that first stage is thus zero. What do we get if we use that IV nonetheless in a 2SLS estimation as in column 2? We get a huge coefficient of unexpected sign on *packs* (smoking more increases birthweight? 🤔), with very large standard error, so statistically speaking, we cannot distinguish this from zero. What is more important, however, is that even if they *were* significant, the estimates of column 2 are **invalid**. The *relevance* of the IV condition is clearly not satisfied, hence, invalid approach.  
+The first column of table \@ref(tab:bw) shows that the first stage is *very* weak. The partial effect of *cigprice* on *packs* smoked is zero! People don't seem to care a great deal about the price of cigarettes (at least in the range of price variation observed in this dataset). The $R^2$ of that first stage is thus zero. What do we get if we use that IV nonetheless in a 2SLS estimation as in column 2? We get a huge coefficient of unexpected sign on *packs* (smoking more increases birthweight? 🤔), with very large standard error, so statistically speaking, we cannot distinguish this from zero. What is more important, however, is that even if they *were* significant, the estimates of column 2 are **invalid**. The *relevance* of the IV condition is clearly not satisfied, hence, invalid approach. ⛔

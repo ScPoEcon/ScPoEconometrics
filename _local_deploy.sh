@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # this script builds the book on your computer
 # and deploys it to your gh-pages branch.
