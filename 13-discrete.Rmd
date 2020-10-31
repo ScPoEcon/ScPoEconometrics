@@ -165,7 +165,11 @@ and the *marginal effect* of `age` on the response probability is
 $$
 \frac{\partial{\Pr(y = 1 | \text{age})}}{ \partial{\text{age}}} = g \left(\beta_0 + \beta_1 \text{age} \right) \beta_1 (\#eq:ME)
 $$
-where function $g$ is defined as $g(z) = \frac{dG}{dz}(z)$ - the first derivative function of $G$ (i.e. the *slope* of $G$). The formulation in \@ref(eq:ME) is a result of the [chain rule](https://en.wikipedia.org/wiki/Chain_rule). Now, given that in figure \@ref(fig:cdfs) we see $G$ that is nonlinear, this means that also $g$ will be non-linear: sometimes (close to the edges of the graph) the slope will be really small and close to zero, but sometimes (in the center of the graph), the slope will be really steep. You are able to try this out yourself with our [app -issue](https://github.com/ScPoEcon/ScPoApps/issues/4).
+where function $g$ is defined as $g(z) = \frac{dG}{dz}(z)$ - the first derivative function of $G$ (i.e. the *slope* of $G$). The formulation in \@ref(eq:ME) is a result of the [chain rule](https://en.wikipedia.org/wiki/Chain_rule). Now, given that in figure \@ref(fig:cdfs) we see $G$ that is nonlinear, this means that also $g$ will be non-linear: sometimes (close to the edges of the graph) the slope will be really small and close to zero, but sometimes (in the center of the graph), the slope will be really steep. You are able to try this out yourself using this app:
+
+```{r, eval = FALSE}
+ScPoApps::launchApp("marginal_effects_of_logit_probit")
+```
 
 So you can see that there is not one single *marginal effect* in those models, as that depends on *where we evaluate* expression \@ref(eq:ME). Notice that the case is identical for more than one $x$. In practice, there are two common approaches:
 
