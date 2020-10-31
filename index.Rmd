@@ -1,6 +1,6 @@
 --- 
 title: "Introduction to Econometrics with R"
-author: "Florian Oswald, Jean-Marc Robin and Vincent Viers"
+author: "Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi "
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(fig.align = 'center')
 
 ![](ScPo.jpg)
 
-Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 was the first time that we taught this course in this format, so we are in year 2 now. 
+Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On this page we outline the course and present the Syllabus. 2018/2019 was the first time that we taught this course in this format, so we are in year 3 now. 
 
 ### Objective {-}
 
@@ -37,18 +37,26 @@ The only requirement is that **you bring your own personal computer** to each se
 
 ### Course Structure {-}
 
-This course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
+We teach this course split over two levels: *Introduction* and *Advanced*. Having taken the *Introduction* course is a requirement to enrol in *Advanced*.
+
+Either course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
 
 Groups meet once per week for 2 hours. The main purpose of the weekly meetings is to clarify any questions, and to work together through tutorials. The little theory we need will be covered in this book, and **you are expected to read through this in your own time** before coming to class. 
 
 ### Slides {-}
 
-There are slides for most book chapters at a [dedicated website](https://github.com/ScPoEcon/ScPoEconometrics-Slides).
+**Introductory Level**
+
+There are slides for each book chapter at a [dedicated website](https://github.com/ScPoEcon/ScPoEconometrics-Slides).
+
+**Advanced Level**
+
+We host slides [here](https://github.com/ScPoEcon/Advanced-Metrics-slides).
 
 ### This Book and Other Material {-}
 
 What you are looking at is an online textbook. You can therefore look at it in your browser (as you are doing just now), on your mobile phone or tablet, but you can also download it as a `pdf` file or as an `epub` file for your ebook-reader. We don't have any ambition to actually produce and publish a *book* for now, so you should just see this as a way to disseminate our lecture notes to you. 
-The second part of course material next to the book is an extensive suite of tutorials and interactive demonstrations, which are all contained in the `R` package that builds this book (and which you installed by issuing the above commands). 
+The second part of course material next to the book is an extensive suite of tutorials and interactive demonstrations, which are all contained in the `R` package which is associated to this book and which you will install in chapter 1. 
 
 
 ### Open Source {-}
