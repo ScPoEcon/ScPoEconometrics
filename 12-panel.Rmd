@@ -1,7 +1,5 @@
 # Panel Data
 
-
-
 ## Crime Rate vs Probability of Arrest
 
 This part draws heavily on [Nick C Huntington-Klein's](http://nickchk.com) outstanding  [slides](https://github.com/NickCH-K/EconometricsSlides). 🙏
@@ -58,7 +56,10 @@ xsection = lm(crmrte ~ prbarr, css)
 coef(xsection)[2]  # gets slope coef
 ```
 
-such that we'd associate a 10% higher probability of arrest with an increase of 0.006 for the crime rate (it would go from 0.02 to 0.026). Ok, but what does that *mean*? Does it mean that as there is more crime, the police get more efficient, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. A DAG to the rescue!
+```{r,echo = FALSE}
+xsection_p = round(predict(xsection,newdata = data.frame(prbarr = c(0.2,0.3))),3)
+```
+such that we'd associate an increase of 10 percentage points in the probability of arrest (`prbarr` goes from 0.2 to 0.3) with an increase in crime rate from `r xsection_p[1]` to `r xsection_p[2]`, or a `r round(100 * diff(xsection_p) / xsection_p[1],2)` percent increase. Ok, but what does that *mean*? Literally, it tells us counties with a higher probability of being arrested also have a higher crime rate. So, does it mean that as there is more crime in certain areas, the police become more efficient at arresting criminals, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. It's impossible to decide whether this estimate *makes sense* or not like this. A DAG to the rescue!
 
 ```{r cri-dag,echo = FALSE,message = FALSE,fig.cap="DAG to answer *what causes the local crime rate?*"}
 library(ggdag)
@@ -241,7 +242,7 @@ pcolor
 
 It's evident that *within* each county, there is a negative relationship. The dummy variable regression allows for different intercepts (county `1` is be the reference group), and one unique slope coefficient $\beta$. (you observe that the lines are parallel).
 
-You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1. (notice that the plot allows different slopes for each group, in our regression they are all parallel).
+You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1.
 
 
 ### First Differencing
@@ -306,11 +307,15 @@ modelsummary::modelsummary(mod[c("xsect","dummy","demeaned")],
 
 Notice how in table \@ref(tab:tab1) the estimate for `prbarr` is positive in the cross-section, like in figure \@ref(fig:crime1). If we take care of the unobservered heterogeneity $c_i$ either by including an intercept for each $i$ or by time-demeaning the data, we obtain the same estimate: `r round(coef(mod$demeaned)[2],3)` in both cases.
 
-We interpret those *within* estimates by imagining to look at a single unit $i$ and ask: *if the arrest probability in $i$ increases by 1 from year $t$ to $t+1$, we expect crimes per person to fall by `r abs(round(coef(mod$demeaned)[2],3))`*. 
+```{r,echo = FALSE}
+panel_p = round(predict(mod$dummy,newdata = data.frame(prbarr = c(0.2,0.3), county = factor(1))),3)
+```
+
+We interpret those *within* estimates by imagining to look at a single unit $i$ and ask: *if the arrest probability in $i$ increases by 10 percentage points (i.e. from 0.2 to 0.3) from year $t$ to $t+1$, we expect crimes per person to fall from `r panel_p[1]` to `r panel_p[2]`, or by `r round(100 * diff(panel_p) / panel_p[1],2)` percent* (in the reference county number 1).
 
 ### Using a Package
 
-In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (fixest if fastest)
+In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (`fixest` if fastest).
 
 
 ```{r}
@@ -328,9 +333,9 @@ $$
 y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + u_{it}-\bar{u}_i 
 $$
 
-you can see that we perform a form of **data centering** in the within transformation: substracting their respective time means from all variables means to center all variables! Here's how this looks (only visible in HTML version online).
+you can see that we perform a form of **data centering** in the within transformation: subtracting their respective time means from all variables means to center all variables! Here's how this looks (only visible in HTML version online).
 
-```{r anim, echo=FALSE, fig.cap = "Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only", fig.width=5, fig.height=4.5,message = FALSE, warning = FALSE,eval=TRUE, eval = knitr::is_html_output()}
+```{r anim, echo=FALSE, fig.cap = "Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only", fig.width=5, fig.height=4.5,message = FALSE, warning = FALSE, eval = knitr::is_html_output()}
 library(gganimate)
 cranim <- css %>%
   mutate(allcrm = mean(crmrte),
