@@ -28,20 +28,62 @@ Welcome to Introductory Econometrics for 2nd year undergraduates at ScPo! On thi
 
 ### Objective {-}
 
-This course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts. We also add the principal elements of causal inference, such that you will start being able to distinguish between simple statistical correlation and actual causation.
+We teach this course split over two levels and two semesters: *Introduction* and *Advanced*. Having taken the *Introduction* course is a requirement to enroll in *Advanced*.
 
-### Syllabus and Requirements {-}
+The *Introduction* course aims to teach you the basics of data analysis needed in a Social Sciences oriented University like SciencesPo. We purposefully start at a level that assumes no prior knowledge about statistics whatsoever. Our objective is to have you understand and be able to interpret linear regression analysis. We will not rely on maths and statistics, but practical learning in order to teach the main concepts. We also add the principal elements of causal inference, such that you will start being able to distinguish between simple statistical correlation and actual causation.
 
-The only requirement is that **you bring your own personal computer** to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, please install `R` and `RStudio` as explained at the beginning of chapter \@ref(R-intro). 
+The *Advanced* course will continue in the semester *after* you have taken the *Introduction* course, following the same philosophie of staying away as much as possible from formal derivations and proofs.  We treat important further classical econometric topics like Instrumental Variables, Panel Data, Discrete Dependent Variables. Towards the end of the course we reserve a good amount of time to give an oveview of *Statistical Learning*. We will study and apply important concepts from machine learning in an accessible way.
 
 
 ### Course Structure {-}
 
-We teach this course split over two levels: *Introduction* and *Advanced*. Having taken the *Introduction* course is a requirement to enrol in *Advanced*.
-
 Either course is taught in several different groups across various campuses of SciencesPo. All groups will go over the same material, do the same exercises, and will have the same assessments.
 
 Groups meet once per week for 2 hours. The main purpose of the weekly meetings is to clarify any questions, and to work together through tutorials. The little theory we need will be covered in this book, and **you are expected to read through this in your own time** before coming to class. 
+
+### Introduction Course: Syllabus and Requirements {-}
+
+**Requirements**
+
+The only requirement is that **you bring your own personal computer** to each session. We will be using the free statistical computing language [`R`](https://www.r-project.org) very intensively. Before coming to the first session, please install `R` and `RStudio` as explained at the beginning of chapter \@ref(R-intro). 
+
+**Syllabus**
+
+1. Introduction: Chapters 1.1 and 1.2 from this book, Introduction from *Mastering Metrics*, *The Credibility Revolution in Empirical Economics* by Angrist and Pischke (JEP 2010)
+2. Summarizing, Visualizing and Tidying Data: Chapter 2 of this book, Chapters 2 and 3 from [ModernDive](https://moderndive.com)
+3. Continues with previous session.
+4. Simple Linear Regression: Chapter \@ref(linreg) of this book, Chapter 5 of [ModernDive](https://moderndive.com)
+5. Introduction to Causality: Chapter \@ref(causality) of this book, Chapter 1 Mastering Metrics, Potential Outcomes Model in *Causal Inerence, The Mixtape* by Scott Cunningham
+6. Multiple Linear Regression: Chapter \@ref(multiple-reg)
+7. Sampling: Chapter 7 of [ModernDive](https://moderndive.com)
+8. Confidence Interval and Hypothesis Testing: Chapters 8 and 9 of [ModernDive](https://moderndive.com)
+9. Regression Inference: Chapter \@ref(std-errors) of this book, Chapter 10 of [ModernDive](https://moderndive.com)
+10. Differences-in-Differences: Chapter 5 of Mastering Metrics, Card and Krueger (AER 1994)
+11. Regression Discontinuity: Chapter 4 of Mastering Metrics, Carpenter and Dobkin (AEJ, Applied, 2009), Imbens and Lemieux (Journal of Econometrics, 2008), Lee and Lemieux (JEL 2010)
+12. Review Session
+
+### Advanced Course: Syllabus and Requirements {-}
+
+
+**Requirements**
+
+*You must have taken the Intro course before, or a course with similar syllabus at your home institution.*
+
+**Syllabus**
+
+1. Logistics, Organisation, Recap 1 from Intro Course
+2. Recap 2 from Intro Course
+3. Intro to `data.table`
+4. Instrumental Variables and Causality 1
+5. Instrumental Variables and Causality 2
+6. Instrumental Variables and Causality 3
+7. Panel Data: What, How and Why?
+8. Discrete Outcomes: Logit and Probit
+9. Intro to Statistical Learning 1: Taxonomy and Intro to Machine Learning
+9. Intro to Statistical Learning 2: Model Validation
+10. Intro to Statistical Learning 3: Unsupervised Learning
+Session 11: Recap / Buffer 1
+Session 11: Recap / Buffer 2
 
 ### Slides {-}
 
