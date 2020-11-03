@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Regression Discontinuity Design | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Regression Discontinuity Design | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="STAR.html"/>
 <link rel="next" href="IV.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,10 +276,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="RDD" class="section level1">
+<div id="RDD" class="section level1" number="9">
 <h1><span class="header-section-number">Chapter 9</span> Regression Discontinuity Design</h1>
 <p>In the previous chapter we have seen how an experimental setup can be useful to recover causal effects from an OLS regression. In this chapter we will look at a similar approach where we don’t randomly allocate subjects to either treatment or control (maybe because that’s impossible to do in that particular situation), but where we can <em>zoom in</em> on a group of individuals where having been allocated to treatment is <strong>as good as random</strong> - hence not influenced by selection bias. The idea is called Regression Discontinuity Design, short RDD.</p>
-<div id="rdd-setup" class="section level2">
+<div id="rdd-setup" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> RDD Setup</h2>
 <p>Let’s again start with a DAG for the main idea. Remember the numerical example in the set of slides on randomization, where we showed that if we know the allocating mechanism, we can recover the true ATE. RDD plays along those lines, in that we <em>know</em> how individuals got assigned to treatment. As is the case in many real-life situations, people are eligible for some treatment if some value <strong>crosses a threshold</strong>:</p>
 <ul>
@@ -301,10 +316,10 @@ Figure 9.2: Augmented DAG for a simple RDD design: <span class="math inline">\(x
 </div>
 <p>So, the condition we want is that additional explanatory variable <span class="math inline">\(z\)</span> does <strong>not</strong> suddenly jump as <span class="math inline">\(x\)</span> crosses <span class="math inline">\(c\)</span>. Because we will be comparing the mean outcomes of people slightly to the left and right of <span class="math inline">\(c\)</span>, we need to make sure that there is nothing that would <em>confound</em> our estimate of the size of the effect <span class="math inline">\(\delta\)</span>. Let’s look at an example of a recent RDD study now.</p>
 </div>
-<div id="clicking-on-heavens-door" class="section level2">
+<div id="clicking-on-heavens-door" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Clicking on Heaven’s Door</h2>
 <p>In a recent paper title <a href="https://www.aeaweb.org/articles?id=10.1257/aer.20150355">Clicking on Heaven’s Door</a>, U Bocconi economist <a href="https://sites.google.com/view/paolo-pinotti/home">Paolo Pinotti</a> uses an RDD to show the effects of legal status of immigrants on criminal behaviour. The question of whether immigrants commit more or less crime than others (natives, for example) is a first order policy question. The question of that paper is what causal impact the <em>legal status</em> we confer upon an immigrant has on their propensity to commit a crime one year later. The study is based in Italy, where the legal status refers to an official permission to work. The key detail is that the residence permit needs to be sponsored by the immigrant’s employer.</p>
-<div id="institutional-details" class="section level3">
+<div id="institutional-details" class="section level3" number="9.2.1">
 <h3><span class="header-section-number">9.2.1</span> Institutional Details</h3>
 <p>In the Italian context, immigrants often enter illegally first, and then hope to obtain a residence permit through an employer later on. There is a quota system in place, which establishes how many permits are to be granted to how many people from each nationality, and to which Italian industries (construction, services, etc). See table <a href="RDD.html#fig:pin1">9.3</a> for an overview of those quotas.</p>
 <div class="figure" style="text-align: center"><span id="fig:pin1"></span>
@@ -316,13 +331,13 @@ Figure 9.3: Table 1 from <span class="citation">Pinotti (<a href="#ref-pinotti" 
 <!-- There are type A and type B permits. Type A permits are mainly used by families and individuals to obtain permits for domestic employment, but those are open to fraudulent behaviour - i.e. it's easy to get a friend with a permit to say that they would be ones employer. Type B permits are for actual firms. -->
 <p>Almost all of the estimated 650,000 illegal immigrants participate in the click days. <span class="citation">Pinotti (<a href="#ref-pinotti" role="doc-biblioref">2017</a>)</span> is able to link each immigrant to official interior ministry crime records, and is thus able to precisely identify whether an immigrant with a certain legal status is showing up in crime records in the year(s) after click days.</p>
 </div>
-<div id="discontinuity-feature" class="section level3">
+<div id="discontinuity-feature" class="section level3" number="9.2.2">
 <h3><span class="header-section-number">9.2.2</span> Discontinuity Feature</h3>
 <p>The principal feature of the Italian setting which makes this almost perfect for an RDD is the following: The quotas illustrated in <a href="RDD.html#fig:pin1">9.3</a> are defined for a total of 1751 employer groups (varying by industry and location). Applications for a permit must be submitted online by employers, <strong>starting at 8:00 AM on specific click days</strong>, and will be given out on a first come first served basis. This implies that thousands of applicants are denied their permit each year not because they were not eligible (they had an employer sponsoring them!), but because they got late online (some seconds) when all permits for their specific quota were gone already. Here we formalize as <span class="math inline">\(c\)</span> the <em>exact</em> time the quota for a certain group was full, and the running variable <span class="math inline">\(x\)</span> is the <em>exact</em> time that the sponsoring employer clicked on the <em>submit</em> button on the website. This is measured at the level of milliseconds.</p>
 <p>The key observation is now that the exact timing when a certain quota is full, <span class="math inline">\(c\)</span>, is impossible to foresee. Even if it is the case the employers of highly-skilled individuals are the first ones to log on, there is sufficient random variation (slow internet connection today…) in arrival times of employers on the platform such that we distribution of immigrant and employer types both sides of the cutoff <span class="math inline">\(c\)</span> are almost identical. So, it’s very hard to <em>manipulate</em> the assignment rule.</p>
 <p><span class="citation">Pinotti (<a href="#ref-pinotti" role="doc-biblioref">2017</a>)</span> experiments with several definitions of <em>close by the cutoff</em>, from 1 minute up to 30 minutes. The results are stable regardless of the definition chosen.</p>
 </div>
-<div id="findings" class="section level3">
+<div id="findings" class="section level3" number="9.2.3">
 <h3><span class="header-section-number">9.2.3</span> Findings</h3>
 <ul>
 <li>In the year before click days, the crime rate for the individuals in the study is 1.1% in both treatment and control groups.</li>

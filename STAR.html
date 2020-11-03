@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 STAR Experiment | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 STAR Experiment | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="causality.html"/>
 <link rel="next" href="RDD.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="STAR" class="section level1">
+<div id="STAR" class="section level1" number="8">
 <h1><span class="header-section-number">Chapter 8</span> STAR Experiment</h1>
 <p>How to best allocate spending on schooling is an important question. What’s the impact of spending money to finance smaller classrooms on student performance and outcomes, both in the short and in the long run? A vast literature in economics is concerned with this question, and for a long time there was no consensus.</p>
 <p>The big underlying problem in answering this question is that we do not really know how student outcomes are <em>produced</em>. In other words, what makes a successful student? Is it the quality of their teacher? Surely matters. is it quality of the school building? Could be. Is it that the other pupils are of high quality and this somehow <em>rubs off</em> to weaker pupils? Also possible. What about parental background? Sure. You see that there are many potential channels that could determine student outcomes. What is more, there could be several interdependencies amongst those factors. Here’s a DAG!</p>
@@ -272,7 +287,7 @@ Figure 8.1: Possible Channels determining student outcomes. Dashed arrows repres
 </p>
 </div>
 <p>We will look at an important paper in this literature now, which used a randomized experiment to make some substantial progress in answering the question <em>what is the production function for student outcomes</em>. We will study <span class="citation">Krueger (<a href="#ref-krueger1999" role="doc-biblioref">1999</a>)</span>, which analyses the Tennessee Student/Teacher Achievement Ratio Experiment, STAR in short.</p>
-<div id="the-star-experiment" class="section level2">
+<div id="the-star-experiment" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> The STAR Experiment</h2>
 <p>Starting in 1985-1986 and lasting for four years, young pupils starting Kindergarden <em>and their teachers</em> where randomly allocated to to several possible groups:</p>
 <ol style="list-style-type: decimal">
@@ -288,7 +303,7 @@ Figure 8.1: Possible Channels determining student outcomes. Dashed arrows repres
 </ol>
 <p>Now, what can STAR do for us here? There will still be selection into schools, however, once selected a school it is random whether one ends up in a small or a large class. So, the quality of peers present in the school (determined before the experiment through school choice) will be similar across small and big groups. In figure <a href="STAR.html#fig:star1">8.1</a>, you see that some factors are drawn as unobserved (dashed arrow), and some are observed (solid). In any observational dataset, the dashed arrows would be really troubling. Here, given randomisation into class sizes, <em>we don’t care</em> whether those factors are unobserved or not: It’s reasonable to assume that across randomly assigned groups, the distributions of each of those factors is roughly constant! If we <em>can</em> in fact proxy some of those factors (suppose we had data on teacher qualifications), even better, but not necessary to identify the causal effect of class size.</p>
 </div>
-<div id="po-as-regression" class="section level2">
+<div id="po-as-regression" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> PO as Regression</h2>
 <p>Before we start replicating the findings in <span class="citation">Krueger (<a href="#ref-krueger1999" role="doc-biblioref">1999</a>)</span>, let’s augment our potential outcomes (PO) notation from the previous chapter. To remind you, we had defined the PO model in equation <a href="causality.html#eq:rubin-model">(7.1)</a>:</p>
 <p><span class="math display">\[\begin{equation*}
@@ -323,7 +338,7 @@ Y_{ics} = \beta_0 + \beta_1 \text{small}_{cs} + \beta_2 \text{REG/A}_{cs} + \bet
 <p>where <span class="math inline">\(i\)</span> indexes pupil, <span class="math inline">\(c\)</span> is class id and <span class="math inline">\(s\)</span> is the school id. <span class="math inline">\(\text{small}_{cs}\)</span> and <span class="math inline">\(\text{REG/A}_{cs}\)</span> are both dummy variables equal to one if class <span class="math inline">\(c\)</span> in school <span class="math inline">\(s\)</span> is either <em>small</em>, or <em>regular with aide</em>. <span class="math inline">\(X_{ics}\)</span> contains student specific controls (like gender). Importantly, given that randomization was at the school level, we control for the identify of the school with a school fixed effect <span class="math inline">\(\alpha_s\)</span>.</p>
 <p>Before we proceed to run this regression, we need to define the outcome variable <span class="math inline">\(Y_{ics}\)</span>. <span class="citation">Krueger (<a href="#ref-krueger1999" role="doc-biblioref">1999</a>)</span> combines the various SAT test scores in an average score for each student in each grade. However, given that the SAT scores are on different scales, he first computes a ranking of all scores for each subject (reading or math), and then assigns to each student their percentile in the rank distribution. The highest score is 100, the lowest score is 0.</p>
 </div>
-<div id="implementing-star" class="section level2">
+<div id="implementing-star" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Implementing STAR</h2>
 <p>Let’s start with computing the ranking of grades. Let’s load the data and the <code>data.table</code> package:</p>
 <div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="STAR.html#cb370-1"></a><span class="kw">data</span>(<span class="st">&quot;STAR&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;AER&quot;</span>)</span>

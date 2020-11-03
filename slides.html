@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Slides | Introduction to Econometrics with R</title>
-  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 8 Slides | Introduction to Econometrics with R" />
+  <meta property="og:title" content="Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
-  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Slides | Introduction to Econometrics with R" />
+  <meta name="twitter:title" content="Introduction to Econometrics with R" />
   
-  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2019-08-16" />
+<meta name="date" content="2018-10-05">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
-  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
-<link rel="prev" href="IV.html">
-<link rel="next" href="projects.html">
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
+<link rel="prev" href="notes.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -47,13 +47,13 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -68,9 +68,10 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -80,11 +81,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -180,27 +183,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
-<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
-<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
-<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.2</b> Saturated Models: Main Effects and Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#back-to-sampling"><i class="fa fa-check"></i><b>6.3</b> Back to Sampling</a></li>
-<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.4</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.5</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.3</b> What’s in my model? (And what is not?)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>7</b> Instrumental Variables</a><ul>
-<li class="chapter" data-level="7.1" data-path="IV.html"><a href="IV.html#simultaneity-bias"><i class="fa fa-check"></i><b>7.1</b> Simultaneity Bias</a></li>
+<li class="chapter" data-level="7" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>7</b> Quantile Regression</a></li>
+<li class="chapter" data-level="8" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>8</b> Panel Data</a><ul>
+<li class="chapter" data-level="8.1" data-path="panel-data.html"><a href="panel-data.html#fixed-effects"><i class="fa fa-check"></i><b>8.1</b> fixed effects</a></li>
+<li class="chapter" data-level="8.2" data-path="panel-data.html"><a href="panel-data.html#did"><i class="fa fa-check"></i><b>8.2</b> DiD</a></li>
+<li class="chapter" data-level="8.3" data-path="panel-data.html"><a href="panel-data.html#rdd"><i class="fa fa-check"></i><b>8.3</b> RDD</a></li>
+<li class="chapter" data-level="8.4" data-path="panel-data.html"><a href="panel-data.html#example"><i class="fa fa-check"></i><b>8.4</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>8</b> Slides</a><ul>
-<li class="chapter" data-level="8.1" data-path="slides.html"><a href="slides.html#worked-tutorials"><i class="fa fa-check"></i><b>8.1</b> Worked Tutorials</a></li>
+<li class="chapter" data-level="9" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>9</b> Instrumental Variables</a><ul>
+<li class="chapter" data-level="9.1" data-path="IV.html"><a href="IV.html#simultaneity-bias"><i class="fa fa-check"></i><b>9.1</b> Simultaneity Bias</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>9</b> Projects</a><ul>
-<li class="chapter" data-level="9.1" data-path="projects.html"><a href="projects.html#opp-atlas"><i class="fa fa-check"></i><b>9.1</b> Opportunity Atlas</a></li>
+<li class="chapter" data-level="10" data-path="logit-probit.html"><a href="logit-probit.html"><i class="fa fa-check"></i><b>10</b> Logit and Probit</a></li>
+<li class="chapter" data-level="11" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11</b> Principal Component Analysis</a></li>
+<li class="chapter" data-level="12" data-path="R-advanced.html"><a href="R-advanced.html"><i class="fa fa-check"></i><b>12</b> Advanced <code>R</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="R-advanced.html"><a href="R-advanced.html#more-vectorization"><i class="fa fa-check"></i><b>12.1</b> More Vectorization</a></li>
+<li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
+<li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>14</b> Slides</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -223,30 +234,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="slides" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Slides</h1>
+<h1><span class="header-section-number">Chapter 14</span> Slides</h1>
 <ul>
 <li><a href="http://rpubs.com/floswald/ScPoMetrics-1">chapter 1</a></li>
 <li><a href="http://rpubs.com/floswald/ScPoMetrics-2">chapter 2</a></li>
 <li><a href="http://rpubs.com/floswald/ScPoMetrics-3">chapter 3</a></li>
 <li><a href="slides/chapter4/chapter4.html">chapter 4</a></li>
-<li><a href="slides/chapter5/chapter5.html">chapter 5</a></li>
-<li><a href="slides/chapter6/chapter6.html">chapter 6</a></li>
-</ul>
-<div id="worked-tutorials" class="section level2">
-<h2><span class="header-section-number">8.1</span> Worked Tutorials</h2>
-<ul>
-<li><a href="images/trade.html">Trade exercise</a></li>
 </ul>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="IV.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="projects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="notes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -266,7 +269,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -276,12 +279,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/08-slides.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/15-slides.Rmd",
 "text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
 "toc": {
@@ -297,7 +296,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

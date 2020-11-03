@@ -7,6 +7,7 @@ output:
         highlight: textmate
         widescreen: true
         logo: ../../images/ScPo.png
+        mathjax: local
         self_contained: false
 
 ---
@@ -61,35 +62,14 @@ $$
     lm(formula = mpg ~ wt + hp, data = mtcars)
     ```
 
-## Let's find the best fit in 3D!
-
-* We have done this before in two dimensions.
-* Now, we have to choose not only $b_0,b_1$, but also $b_2$!
-* Let's do it!
-
-```{r,eval=FALSE}
-launchApp("reg_multivariate")
-```
 
 ## Multicolinearity
 
 > * Multiple regression requires that variables are **linearly independent**.
-> * Imagine we had this instead to our initial equation:
-    $$
-    mpg_i = b_0 + b_1 wt_i + b_2 wtplus1_i + e_i
-    $$
-    where `wtplus1 = wt + 1`.
-> * `wtplus1` wouldn't add any information - it's redundant
+> * Imagine we had `wt_plus` defined as `wt + 1` above.
+> * `wt_plus` wouldn't add any information - hence it's redundant
 > * If we only have one `x`, this translates into $Var(x)\neq0$.
 > * Gives rise to the *rank condition*, i.e. that $N\geq K+1$
-> * The higher the *linear dependence* amongst our explanatory variable, the less information we can extract from them: Our estimtes **become less precise** as a result!
-
-## Multicolinearity App!
-
-```{r,eval=FALSE}
-library(ScPoEconometrics)
-launchApp("multicolinearity")
-```
 
 
 ## California Test Scores 2
@@ -100,12 +80,11 @@ launchApp("multicolinearity")
     \text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
     $$
 * We simply add `avginc` to our `formula`:
-
-```{r,echo=TRUE,eval=FALSE}
-library("Ecdat") # reload the data
-fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
-summary(fit_multivariate)
-```
+  ```{r,echo=TRUE,eval=FALSE}
+  library("Ecdat") # reload the data
+  fit_multivariate <- lm(formula = "testscr ~ str + avginc", data = Caschool)
+  summary(fit_multivariate)
+  ```
 
 ## Visualizing California Test Scores 2
 

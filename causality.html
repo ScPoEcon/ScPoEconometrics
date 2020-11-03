@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Causality | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Causality | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="std-errors.html"/>
 <link rel="next" href="STAR.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="causality" class="section level1">
+<div id="causality" class="section level1" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Causality</h1>
 <p>In this chapter we take on a challenging part of our course. Remember that in the <a href="https://rawcdn.githack.com/ScPoEcon/ScPoEconometrics-Slides/session2_1/chapter1/chapter1.html">first set of slides</a> we introduced Econometrics as the economist’s toolkit to answer questions like <em>does <span class="math inline">\(x\)</span> <strong>cause</strong> <span class="math inline">\(y\)</span>?</em> Let’s illustrate the issues at stake with a question from epidemiologie and public health:</p>
 <div class="warning">
@@ -302,7 +317,7 @@ Figure 7.1: Two time series showing cigarette consumption per capita and inciden
 </ul></li>
 </ol>
 <p>Let’s put a some structure on this problem now, so we can make progress.</p>
-<div id="dags" class="section level2">
+<div id="dags" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Directed Acyclical Graphs (DAG)</h2>
 <p>A DAG is a tool to visualize a causal relationship. It is a graph where nodes are connected via arrows, where an arrow can run in one direction only (hence, <em>directed</em> graph). If an arrow starts at node <span class="math inline">\(x\)</span> and ends at node <span class="math inline">\(y\)</span>, we say that <span class="math inline">\(x\)</span> causes <span class="math inline">\(y\)</span>. Here is a simple example of such a DAG:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag1"></span>
@@ -334,7 +349,7 @@ Figure 7.5: <span class="math inline">\(z\)</span> is still a confounder here, b
 </div>
 <p>In <a href="causality.html#fig:dag41">7.5</a> there is an arrow from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>. In this setting, if we are able to <em>observe</em> <span class="math inline">\(z\)</span>, we can adjust the correlation we observe between <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> for the variation induced by <span class="math inline">\(z\)</span>. In practice, this is precisely what multiple regression will do: holding <span class="math inline">\(z\)</span> fixed at some value, what is the partial effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Notice that <span class="math inline">\(z\)</span> cedes to be a confounder in this situation, and interpreting our regression coefficient on <span class="math inline">\(x\)</span> as <em>causal</em> is correct.</p>
 </div>
-<div id="smoking-in-a-dag" class="section level2">
+<div id="smoking-in-a-dag" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Smoking in a DAG</h2>
 <p>Let’s use this and cast our problem as a DAG now. What the scientists in the 1950s faced where two competing models of the relationship between smoking and lung cancer:</p>
 <div class="figure" style="text-align: center"><span id="fig:dag-cig"></span>
@@ -353,7 +368,7 @@ Figure 7.6: Two competing causal graphs for the relationship between smoking and
 <p>But now consider what this implies. Let’s suppose that around 11% of all non-smokers have the smoking gene. That means that <span class="math inline">\(9\times 11 = 99\%\)</span> of smokers need to have it! What’s even more worrying, if only even 12% of non smokers have the gene, then the argument breaks down because it would require <span class="math inline">\(9\times 12 = 108\%\)</span> of smokers to have it, which is of course impossible.</p>
 <p>This argument was so important that it got a name: <strong>Cornfield’s inequality</strong>. It left of Fisher’s argument nothing but a pile of rubble. It’s impossible to think that genetic variation alone could be so important in determining a complex choice of becoming a smoker or not. Looking back at the right panel of figure <a href="causality.html#fig:dag-cig">7.6</a>, the link from smoking to lung cancer was much too strong to be explained by the genetic hypothesis alone.</p>
 </div>
-<div id="rct" class="section level2">
+<div id="rct" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Randomized Control Trials (RCT) Primer</h2>
 <p>We now present a quick introduction to Randomized Control Trials (RCTs). The history of randomization is fascinating and goes back a long time, again involving R.A. Fisher from above.<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> Suffice it to say that RCTs have become so important in Economics that the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/">Nobel Price in Economics 2019</a> has been awarded to three exponents of the RCT literature, <a href="https://www.economist.com/finance-and-economics/2019/10/17/a-nobel-economics-prize-goes-to-pioneers-in-understanding-poverty">Duflo, Banerje and Kremer</a>. RCTs are widely used in Medicine, where they originate from (in some sense). But, what <em>are</em> RCTs?</p>
 <div class="note">
@@ -366,7 +381,7 @@ That sounds really intuitive. If we <em>randomly</em> allocate people to receive
 <p>Thankfully, such an experiment is impossible to run on ethical grounds. We could never subject individuals to such severe and prolongued health risks for the sake of a research study. That’s why the question took to long to be settled!</p>
 <p>Let’s introduce a formal framework now to think more about RCTs.</p>
 </div>
-<div id="rubin" class="section level2">
+<div id="rubin" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> The Potential Outcomes Model</h2>
 <p>The Potential Outcomes Model, often named after one of it’s inventors the <em>Rubin Causal Model</em>, posits that there are two states of the world - the <em>potential outcomes</em>. A first state, where a certain intervention is administered to an individual, and a second state, where this is not the case. Formally, this idea is expressed with superscripts 0 and 1, like this:</p>
 <ul>
@@ -418,7 +433,7 @@ That’s pretty dire news. Let’s see if we can do better with an average effec
 <p>Here is where randomization comes into play. Suppose we now flip a coin for each person to determine whether they obtain treatment or not. This takes away from them the possibility to select on expected gains into treatment. Crucially, the distribution of effects <span class="math inline">\(\delta_i\)</span> is still the same in the study population, i.e. there are still people with high and people with low effects. But we have solved the missing data problem mentioned above, because whether <span class="math inline">\(Y_i^1\)</span> or rather <span class="math inline">\(Y_i^0\)</span> is observed for each <span class="math inline">\(i\)</span> is now <strong>random</strong>, and no longer a function of any other factor that <span class="math inline">\(i\)</span> could act upon! Hooray!</p>
 <p>Notice how this links back to our initial discussion about DAGs above. Randomisation essentially cancels the links starting at confounder <span class="math inline">\(z\)</span> in <a href="causality.html#fig:dag41">7.5</a>.</p>
 </div>
-<div id="omitted-variable-bias-and-dags" class="section level2">
+<div id="omitted-variable-bias-and-dags" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Omitted Variable Bias and DAGs</h2>
 <p>We want to revisit the underlying assumptions of the classical model outlined in <a href="std-errors.html#class-reg">6.6</a> in the previous chapter, which is closely related to the previous discussion. Let’s talk a bit more about assumption number 2 of the definition in <a href="std-errors.html#class-reg">6.6</a>. It said this:</p>
 <div class="warning">
@@ -446,7 +461,7 @@ Figure 7.8: The same simple DAG where <span class="math inline">\(z\)</span> is 
 </p>
 </div>
 <p>Notice, again, that the key here is that if we don’t control for <span class="math inline">\(z\)</span>, it will form part of the error term <span class="math inline">\(\varepsilon\)</span>. Given the causal link from <span class="math inline">\(z\)</span> to <span class="math inline">\(x\)</span>, we will then observe that <span class="math inline">\(Cov(x,u) = Cov(x,\varepsilon + z) \neq 0\)</span>, invalidating our assumption.</p>
-<div id="house-prices-and-bathrooms" class="section level3">
+<div id="house-prices-and-bathrooms" class="section level3" number="7.5.1">
 <h3><span class="header-section-number">7.5.1</span> House Prices and Bathrooms</h3>
 <p>Let’s imagine that equation <a href="causality.html#eq:DGP-h">(7.4)</a> represents the impact of number of bathrooms (<span class="math inline">\(x\)</span>) on the sales price of houses (<span class="math inline">\(y\)</span>). We run OLS as</p>
 <p><span class="math display">\[
@@ -472,7 +487,7 @@ y_i = b_0 + b_1 x_i + e_i
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 22880 on 544 degrees of freedom
-## Multiple R-squared:  0.267,	Adjusted R-squared:  0.2657 
+## Multiple R-squared:  0.267,  Adjusted R-squared:  0.2657 
 ## F-statistic: 198.2 on 1 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>In fact, from this you conclude that each additional bathroom increases the sales price of a house by 27477 dollars. Let’s see if our assumption <span class="math inline">\(E[\varepsilon|x] = 0\)</span> is satisfied:</p>
 <div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="causality.html#cb367-1"></a><span class="kw">library</span>(dplyr)</span>
@@ -505,7 +520,7 @@ y_i = b_0 + b_1 x_i + (b_2 z_i + e_i)  = b_0 + b_1 x_i + u_i.
 \]</span>
 This is to say that by <em>omitting</em> variable <span class="math inline">\(z\)</span>, we relegate it to a new error term, here called <span class="math inline">\(u_i = b_2 z_i + e_i\)</span>. Our assumption above states that <em>all regressors need to be uncorrelated with the error term</em> - so, if <span class="math inline">\(Corr(x,z)\neq 0\)</span>, we have a problem. Let’s take this idea to our running example.</p>
 </div>
-<div id="including-an-omitted-variable" class="section level3">
+<div id="including-an-omitted-variable" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Including an Omitted Variable</h3>
 <p>What we are discussing here is called <em>Omitted Variable Bias</em>. There is a variable which we omitted from our regression, i.e. we forgot to include it. It is often difficult to find out what that variable could be, and you can go a long way by just reasoning about the data-generating process. In other words, do you think it’s <em>reasonable</em> that price be determined by the number of bathrooms only? Or could there be another variable, omitted from our model, that is important to explain prices, and at the same time correlated with <code>bathrms</code>?</p>
 <p>Let’s try with <code>lotsize</code>, i.e. the size of the area on which the house stands. Intuitively, larger lots should command a higher price; At the same time, however, larger lots imply more space, hence, you can also have more bathrooms! Let’s check this out:</p>
@@ -526,7 +541,7 @@ This is to say that by <em>omitting</em> variable <span class="math inline">\(z\
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 19580 on 543 degrees of freedom
-## Multiple R-squared:  0.4642,	Adjusted R-squared:  0.4622 
+## Multiple R-squared:  0.4642, Adjusted R-squared:  0.4622 
 ## F-statistic: 235.2 on 2 and 543 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here we see that the estimate for the effect of an additional bathroom <em>decreased</em> from 27477 to 22811.5 by almost 5000 dollars! Well that’s the problem then. We said above that one more bathroom is worth 27477 dollars - if <strong>nothing else changes</strong>! But that doesn’t seem to hold, because we have seen that as we increase <code>bathrms</code> from <code>1</code> to <code>2</code>, the mean of the resulting residuals changes quite a bit. So there <strong>is something in <span class="math inline">\(\varepsilon\)</span> which does change</strong>, hence, our conclusion that one more bathroom is worth 27477 dollars is in fact <em>invalid</em>!</p>
 <p>The way in which <code>bathrms</code> and <code>lotsize</code> are correlated is important here, so let’s investigate that:</p>

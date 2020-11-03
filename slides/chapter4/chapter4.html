@@ -4,12 +4,13 @@
   <title>ScPoEconometrics4</title>
 
   <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="generator" content="pandoc" />
 
 
 
-  <meta name="date" content="2019-08-16" />
+  <meta name="date" content="2018-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -63,10 +64,6 @@
       font-style: italic;
     }
 
-    summary {
-      display: list-item;
-    }
-
     slides > slide {
       -webkit-transition: all 0.4s ease-in-out;
       -moz-transition: all 0.4s ease-in-out;
@@ -82,10 +79,6 @@
       transition: opacity 0.6s ease-in 0.4s;
       opacity: 0;
     }
-/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
-slide:not(.current) .plotly.html-widget{
-  display: block;
-}
 
     slides > slide:not(.nobackground):before {
       font-size: 12pt;
@@ -118,7 +111,7 @@ slide:not(.current) .plotly.html-widget{
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2019-08-16</p>
+            <p style="margin-top: 6px; margin-left: -2px;">2018-10-05</p>
           </hgroup>
   </slide>
 
@@ -127,15 +120,15 @@ slide:not(.current) .plotly.html-widget{
 <ul>
 <li>Instead of one regressor, we can have <em>multiple</em> ones.</li>
 <li><p>For example, how do horse power (hp) and weight (wt) relate to miles per gallon? \[
-  mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i
-  \]</p></li>
+mpg_i = b_0 + b_1 hp_i + b_2 wt_i + e_i
+\]</p></li>
 <li><p>Well, how?</p></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Multiple Regression Visualized</h2></hgroup><article  id="multiple-regression-visualized">
 
 <ul>
-<li>Let&#39;s have a look at <a href='https://scpoecon.github.io/ScPoEconometrics/multiple-reg.html' title=''>the 3D figure in the book</a></li>
+<li>Let’s have a look at <a href='https://scpoecon.github.io/ScPoEconometrics/multiple-reg.html' title=''>the 3D figure in the book</a></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2><em>Multiple</em> Regression: \(K\) regressors</h2></hgroup><article  id="multiple-regression-k-regressors">
@@ -168,52 +161,34 @@ e_i &amp;= y_i - \widehat{y}_i
 <pre class = 'prettyprint lang-r'>lm(formula = mpg ~ wt + hp, data = mtcars)</pre></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Let&#39;s find the best fit in 3D!</h2></hgroup><article  id="lets-find-the-best-fit-in-3d">
-
-<ul>
-<li>We have done this before in two dimensions.</li>
-<li>Now, we have to choose not only \(b_0,b_1\), but also \(b_2\)!</li>
-<li>Let&#39;s do it!</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>launchApp(&quot;reg_multivariate&quot;)</pre>
-
 </article></slide><slide class=""><hgroup><h2>Multicolinearity</h2></hgroup><article  id="multicolinearity">
 
 <ul class = 'build'>
 <li>Multiple regression requires that variables are <strong>linearly independent</strong>.</li>
-<li>Imagine we had this instead to our initial equation: \[
-mpg_i = b_0 + b_1 wt_i + b_2 wtplus1_i + e_i
-\] where <code>wtplus1 = wt + 1</code>.</li>
-<li><code>wtplus1</code> wouldn&#39;t add any information - it&#39;s redundant</li>
+<li>Imagine we had <code>wt_plus</code> defined as <code>wt + 1</code> above.</li>
+<li><code>wt_plus</code> wouldn’t add any information - hence it’s redundant</li>
 <li>If we only have one <code>x</code>, this translates into \(Var(x)\neq0\).</li>
-<li>Gives rise to the <em>rank condition</em>, i.e. that \(N\geq K+1\)</li>
-<li>The higher the <em>linear dependence</em> amongst our explanatory variable, the less information we can extract from them: Our estimtes <strong>become less precise</strong> as a result!</li>
+<li>Gives rise to the <em>rank condition</em>, i.e. that \(N\geq K+1\)</li>
 </ul>
-
-</article></slide><slide class=""><hgroup><h2>Multicolinearity App!</h2></hgroup><article  id="multicolinearity-app">
-
-<pre class = 'prettyprint lang-r'>library(ScPoEconometrics)
-launchApp(&quot;multicolinearity&quot;)</pre>
 
 </article></slide><slide class=""><hgroup><h2>California Test Scores 2</h2></hgroup><article  id="california-test-scores-2">
 
 <ul>
-<li>Let&#39;s go back to the <code>Caschool</code> dataset.</li>
+<li>Let’s go back to the <code>Caschool</code> dataset.</li>
 <li>Could <code>testscr</code> also depend on average income in the school area? \[
-\text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
-\]</li>
-<li>We simply add <code>avginc</code> to our <code>formula</code>:</li>
-</ul>
+  \text{testscr}_i = b_0 + b_1  \text{str}_i + b_2  \text{avginc}_i + e_i
+  \]</li>
+<li><p>We simply add <code>avginc</code> to our <code>formula</code>:</p>
 
 <pre class = 'prettyprint lang-r'>library(&quot;Ecdat&quot;) # reload the data
 fit_multivariate &lt;- lm(formula = &quot;testscr ~ str + avginc&quot;, data = Caschool)
-summary(fit_multivariate)</pre>
+summary(fit_multivariate)</pre></li>
+</ul>
 
 </article></slide><slide class=""><hgroup><h2>Visualizing California Test Scores 2</h2></hgroup><article  id="visualizing-california-test-scores-2">
 
 <ul>
-<li>Let&#39;s again look at the <a href='https://scpoecon.github.io/ScPoEconometrics/multiple-reg.html#california-test-scores-2' title=''>plot</a></li>
+<li>Let’s again look at the <a href='https://scpoecon.github.io/ScPoEconometrics/multiple-reg.html#california-test-scores-2' title=''>plot</a></li>
 </ul>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Interactions</h2></hgroup><article  id="interactions">
@@ -244,7 +219,7 @@ runTutorial(&quot;lm-example&quot;)</pre></article></slide>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "chapter4_files/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

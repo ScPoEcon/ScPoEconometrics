@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 IV Applications | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 IV Applications | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="IV.html"/>
 <link rel="next" href="panel-data.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="iv-applications" class="section level1">
+<div id="iv-applications" class="section level1" number="11">
 <h1><span class="header-section-number">Chapter 11</span> IV Applications</h1>
 <p>An important term in economics are the <em>returns to schooling</em>, by which we mean the causal effect of education on later earnings. If you think about it, it’s a crucial question for every single student (like yourself), if not even more so for a policy maker who needs to decide where to allocate budget spending on (education or other things?).</p>
 <p>One very famous and early study to estimate those returns to schooling was proposed by Jacob Mincer, and an equation of this kind was henceforth known as the <em>Mincer Equation</em> (we have encountered this equation before as a running example in chapter <a href="linreg.html#linreg">3</a>). He measured <span class="math inline">\(\log Y_i\)</span>, annual earnings for man <span class="math inline">\(i\)</span>, <span class="math inline">\(S_i\)</span> his schooling (years spent studying), and <span class="math inline">\(X_i\)</span> his (potential) work experience (age minus years of schooling minus 6). The model can be drawn like this:</p>
@@ -276,7 +291,7 @@ Figure 11.1: Jacob Mincer’s model
 \log Y_i = \alpha + \rho S_i + \beta_1 X_i + \beta_2 X_i^2 + e_i  \tag{11.1}
 \end{equation}\]</span></p>
 <p>His results implied an estimate for <span class="math inline">\(\rho\)</span> of about 0.11, or an 11% earnings advantage for each additional year of education, given a certain level of experience. Notice that in the DAG in figure <a href="iv-applications.html#fig:mincer">11.1</a>, we explicitly drew other unobserved factors <span class="math inline">\(e\)</span> with <em>only</em> have an arrow directly into <span class="math inline">\(y\)</span>. But is that a good model? Well, why would it not be?</p>
-<div id="ability-bias" class="section level2">
+<div id="ability-bias" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Ability Bias</h2>
 <p>The model in <a href="iv-applications.html#eq:mincer">(11.1)</a> compares earnings of men with certain schooling and work experience. The question to ask, if given those two controls, all else is equal? For a given value of <span class="math inline">\(X\)</span>, are there more diligent and able workers out there? Do family connections vary across people with the same <span class="math inline">\(X\)</span>? It seems quite likely that we’d answer yes. Well, then, all else is <em>not</em> equal, and we are in trouble. Because, again, our crucial identifying assumption for the linear model is violated, as</p>
 <p><span class="math display">\[E[e_i | S_i, X_i] \neq 0.\]</span></p>
@@ -293,7 +308,7 @@ Figure 11.2: Jacob Mincer’s model with unobserved ability <span class="math in
 \end{equation}\]</span></p>
 <p>Sometimes these considerations do not matter greatly, and the (biased) OLS estimate is close the causal IV estimate. But in other cases, we might be very far from the truth with OLS, even inferring the wrong sign of an effect. Let’s look at an example!</p>
 </div>
-<div id="birthdate-is-as-good-as-random" class="section level2">
+<div id="birthdate-is-as-good-as-random" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Birthdate is as good as Random</h2>
 <p>In an influential study, <span class="citation">Angrist and Krueger (<a href="#ref-angristkrueger" role="doc-biblioref">1991</a>)</span> address the above issues related to the ability bias in Mincer’s equation by constructing an IV which encodes the birth date of a given student. The idea is that given certain features of the school system, children born shortly after a certain cutoff date will start school a year later than their peers who are a bit older than they are.</p>
 <p>For example, suppose it is mandated that all children who reach the age of 6 by 31st of december 2021 are required to enroll in the first grade of school in september 2021. Then someone born in September 2015 (i.e. 6 years prior) will be 5 years and 3/4 by the time they start school, while someone born on the 1st of January 2016 will be 6 and 3/4 years when <em>they</em> enter school in september 2022. Furthermore, the legal dropout age in the US is 16, so by the time those pupils may decide to stop school, they have been exposed to different amounts of schooling. All of this means that an IV defined by <em>quarter of birth of person <span class="math inline">\(i\)</span></em> will affect the outcome <em>earnings</em> through it’s effect on more schooling - keeping other factors (in particular <span class="math inline">\(A\)</span>!) constant across values of the IV. What’s the implication for our model?</p>
@@ -330,7 +345,7 @@ Exogeneity (our exclusion restriction): <span class="math inline"><span class="m
 </li>
 </ol>
 </div>
-<div id="data-on-birth-quarter-and-wages" class="section level3">
+<div id="data-on-birth-quarter-and-wages" class="section level3" number="11.2.1">
 <h3><span class="header-section-number">11.2.1</span> Data on birth quarter and wages</h3>
 <p>Let’s load the data and look at a quick summary<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>:</p>
 <div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="iv-applications.html#cb388-1"></a><span class="kw">data</span>(<span class="st">&quot;ak91&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;masteringmetrics&quot;</span>)</span>
@@ -342,28 +357,27 @@ Exogeneity (our exclusion restriction): <span class="math inline"><span class="m
 <th style="text-align:left;">
 </th>
 <th style="text-align:right;">
+Unique (#)
+</th>
+<th style="text-align:right;">
+Missing (%)
+</th>
+<th style="text-align:right;">
 Mean
 </th>
 <th style="text-align:right;">
 SD
 </th>
 <th style="text-align:right;">
-P0
+Min
 </th>
 <th style="text-align:right;">
-P25
+Median
 </th>
 <th style="text-align:right;">
-P50
+Max
 </th>
 <th style="text-align:right;">
-P75
-</th>
-<th style="text-align:right;">
-P100
-</th>
-<th style="text-align:right;">
-Histogram
 </th>
 </tr>
 </thead>
@@ -371,6 +385,12 @@ Histogram
 <tr>
 <td style="text-align:left;">
 lnw
+</td>
+<td style="text-align:right;">
+26732
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 5.9
@@ -382,24 +402,26 @@ lnw
 -2.3
 </td>
 <td style="text-align:right;">
-5.6
-</td>
-<td style="text-align:right;">
 6.0
-</td>
-<td style="text-align:right;">
-6.3
 </td>
 <td style="text-align:right;">
 10.5
 </td>
 <td style="text-align:right;">
-▁▇▁
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface1"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.230469 11.664062 L 2.957031 11.664062 L 2.957031 11.660156 L 1.230469 11.660156 Z M 1.230469 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 2.957031 11.664062 L 4.683594 11.664062 Z M 2.957031 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.683594 11.664062 L 6.410156 11.664062 L 6.410156 11.660156 L 4.683594 11.660156 Z M 4.683594 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.410156 11.664062 L 8.136719 11.664062 L 8.136719 11.660156 L 6.410156 11.660156 Z M 6.410156 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 8.136719 11.664062 L 9.863281 11.664062 L 9.863281 11.660156 L 8.136719 11.660156 Z M 8.136719 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 9.863281 11.664062 L 11.589844 11.664062 L 11.589844 11.660156 L 9.863281 11.660156 Z M 9.863281 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 11.589844 11.664062 L 13.316406 11.664062 L 13.316406 11.65625 L 11.589844 11.65625 Z M 11.589844 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.316406 11.664062 L 15.042969 11.664062 L 15.042969 11.648438 L 13.316406 11.648438 Z M 13.316406 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15.039062 11.664062 L 16.765625 11.664062 L 16.765625 11.644531 L 15.039062 11.644531 Z M 15.039062 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.765625 11.664062 L 18.492188 11.664062 L 18.492188 11.640625 L 16.765625 11.640625 Z M 16.765625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.492188 11.664062 L 20.21875 11.664062 L 20.21875 11.628906 L 18.492188 11.628906 Z M 18.492188 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20.21875 11.664062 L 21.945312 11.664062 L 21.945312 11.523438 L 20.21875 11.523438 Z M 20.21875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 21.945312 11.664062 L 23.671875 11.664062 L 23.671875 11.460938 L 21.945312 11.460938 Z M 21.945312 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 23.671875 11.664062 L 25.398438 11.664062 L 25.398438 11.417969 L 23.671875 11.417969 Z M 23.671875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 25.398438 11.664062 L 27.125 11.664062 L 27.125 10.871094 L 25.398438 10.871094 Z M 25.398438 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.125 11.664062 L 28.851562 11.664062 L 28.851562 8.644531 L 27.125 8.644531 Z M 27.125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.851562 11.664062 L 30.578125 11.664062 L 30.578125 3.691406 L 28.851562 3.691406 Z M 28.851562 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 30.574219 11.664062 L 32.300781 11.664062 L 32.300781 3.21875 L 30.574219 3.21875 Z M 30.574219 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.300781 11.664062 L 34.027344 11.664062 L 34.027344 9.414062 L 32.300781 9.414062 Z M 32.300781 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.027344 11.664062 L 35.753906 11.664062 L 35.753906 11.023438 L 34.027344 11.023438 Z M 34.027344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 35.753906 11.664062 L 37.480469 11.664062 L 37.480469 11.640625 L 35.753906 11.640625 Z M 35.753906 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.480469 11.664062 L 39.207031 11.664062 L 39.207031 11.652344 L 37.480469 11.652344 Z M 37.480469 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 39.207031 11.664062 L 40.933594 11.664062 L 40.933594 11.65625 L 39.207031 11.65625 Z M 39.207031 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40.933594 11.664062 L 42.660156 11.664062 L 42.660156 11.660156 L 40.933594 11.660156 Z M 40.933594 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.660156 11.664062 L 44.386719 11.664062 Z M 42.660156 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 44.386719 11.664062 L 46.113281 11.664062 Z M 44.386719 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 46.113281 11.664062 L 47.839844 11.664062 Z M 46.113281 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 s
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 12.8
@@ -414,21 +436,23 @@ s
 12.0
 </td>
 <td style="text-align:right;">
-12.0
-</td>
-<td style="text-align:right;">
-15.0
-</td>
-<td style="text-align:right;">
 20.0
 </td>
 <td style="text-align:right;">
-▁▂▇▂▂▁▁
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface6"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.777344 11.664062 L 4 11.664062 L 4 11.609375 L 1.777344 11.609375 Z M 1.777344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4 11.664062 L 6.222656 11.664062 L 6.222656 11.621094 L 4 11.621094 Z M 4 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.222656 11.664062 L 8.445312 11.664062 L 8.445312 11.589844 L 6.222656 11.589844 Z M 6.222656 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 8.445312 11.664062 L 10.667969 11.664062 L 10.667969 11.570312 L 8.445312 11.570312 Z M 8.445312 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 10.667969 11.664062 L 12.890625 11.664062 L 12.890625 11.527344 L 10.667969 11.527344 Z M 10.667969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 12.890625 11.664062 L 15.113281 11.664062 L 15.113281 11.398438 L 12.890625 11.398438 Z M 12.890625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15.109375 11.664062 L 17.332031 11.664062 L 17.332031 11.238281 L 15.109375 11.238281 Z M 15.109375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.332031 11.664062 L 19.554688 11.664062 L 19.554688 10.558594 L 17.332031 10.558594 Z M 17.332031 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 19.554688 11.664062 L 21.777344 11.664062 L 21.777344 10.757812 L 19.554688 10.757812 Z M 19.554688 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 21.777344 11.664062 L 24 11.664062 L 24 10.527344 L 21.777344 10.527344 Z M 21.777344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24 11.664062 L 26.222656 11.664062 L 26.222656 10.726562 L 24 10.726562 Z M 24 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 26.222656 11.664062 L 28.445312 11.664062 L 28.445312 3.21875 L 26.222656 3.21875 Z M 26.222656 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.445312 11.664062 L 30.667969 11.664062 L 30.667969 10.410156 L 28.445312 10.410156 Z M 28.445312 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 30.667969 11.664062 L 32.890625 11.664062 L 32.890625 9.898438 L 30.667969 9.898438 Z M 30.667969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.890625 11.664062 L 35.113281 11.664062 L 35.113281 10.980469 L 32.890625 10.980469 Z M 32.890625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 35.109375 11.664062 L 37.332031 11.664062 L 37.332031 9.207031 L 35.109375 9.207031 Z M 35.109375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.332031 11.664062 L 39.554688 11.664062 L 39.554688 10.835938 L 37.332031 10.835938 Z M 37.332031 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 39.554688 11.664062 L 41.777344 11.664062 L 41.777344 10.863281 L 39.554688 10.863281 Z M 39.554688 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 41.777344 11.664062 L 44 11.664062 L 44 11.230469 L 41.777344 11.230469 Z M 41.777344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 44 11.664062 L 46.222656 11.664062 L 46.222656 10.875 L 44 10.875 Z M 44 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 yob
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 1934.6
@@ -440,24 +464,26 @@ yob
 1930.0
 </td>
 <td style="text-align:right;">
-1932.0
-</td>
-<td style="text-align:right;">
 1935.0
-</td>
-<td style="text-align:right;">
-1937.0
 </td>
 <td style="text-align:right;">
 1939.0
 </td>
 <td style="text-align:right;">
-▇▆▆▆▆▆▆▇▇▇
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface11"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.777344 11.664062 L 4.246094 11.664062 L 4.246094 3.738281 L 1.777344 3.738281 Z M 1.777344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.246094 11.664062 L 6.714844 11.664062 L 6.714844 4.453125 L 4.246094 4.453125 Z M 4.246094 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.714844 11.664062 L 9.183594 11.664062 Z M 6.714844 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 9.183594 11.664062 L 11.652344 11.664062 L 11.652344 4.066406 L 9.183594 4.066406 Z M 9.183594 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 11.65625 11.664062 L 14.125 11.664062 Z M 11.65625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 14.125 11.664062 L 16.59375 11.664062 L 16.59375 4.410156 L 14.125 4.410156 Z M 14.125 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.59375 11.664062 L 19.0625 11.664062 Z M 16.59375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 19.0625 11.664062 L 21.53125 11.664062 L 21.53125 4.136719 L 19.0625 4.136719 Z M 19.0625 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 21.53125 11.664062 L 24 11.664062 Z M 21.53125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24 11.664062 L 26.46875 11.664062 L 26.46875 3.933594 L 24 3.933594 Z M 24 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 26.46875 11.664062 L 28.9375 11.664062 Z M 26.46875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.9375 11.664062 L 31.40625 11.664062 L 31.40625 3.957031 L 28.9375 3.957031 Z M 28.9375 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 31.40625 11.664062 L 33.875 11.664062 Z M 31.40625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 33.875 11.664062 L 36.34375 11.664062 L 36.34375 3.652344 L 33.875 3.652344 Z M 33.875 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 36.34375 11.664062 L 38.8125 11.664062 Z M 36.34375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 38.816406 11.664062 L 41.285156 11.664062 L 41.285156 3.355469 L 38.816406 3.355469 Z M 38.816406 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 41.285156 11.664062 L 43.753906 11.664062 Z M 41.285156 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 43.753906 11.664062 L 46.222656 11.664062 L 46.222656 3.21875 L 43.753906 3.21875 Z M 43.753906 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 qob
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 2.5
@@ -469,24 +495,26 @@ qob
 1.0
 </td>
 <td style="text-align:right;">
-2.0
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
 3.0
 </td>
 <td style="text-align:right;">
 4.0
 </td>
 <td style="text-align:right;">
-▇▆▇▇
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface16"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.777344 11.664062 L 4.742188 11.664062 L 4.742188 3.722656 L 1.777344 3.722656 Z M 1.777344 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.742188 11.664062 L 7.707031 11.664062 Z M 4.742188 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.703125 11.664062 L 10.667969 11.664062 Z M 7.703125 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 10.667969 11.664062 L 13.632812 11.664062 Z M 10.667969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.628906 11.664062 L 16.59375 11.664062 L 16.59375 3.871094 L 13.628906 3.871094 Z M 13.628906 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.59375 11.664062 L 19.558594 11.664062 Z M 16.59375 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 19.554688 11.664062 L 22.519531 11.664062 Z M 19.554688 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.519531 11.664062 L 25.484375 11.664062 Z M 22.519531 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 25.480469 11.664062 L 28.445312 11.664062 Z M 25.480469 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.445312 11.664062 L 31.410156 11.664062 L 31.410156 3.21875 L 28.445312 3.21875 Z M 28.445312 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 31.40625 11.664062 L 34.371094 11.664062 Z M 31.40625 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.371094 11.664062 L 37.335938 11.664062 Z M 34.371094 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.332031 11.664062 L 40.296875 11.664062 Z M 37.332031 11.664062 "></path><path style="fill:none;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40.296875 11.664062 L 43.261719 11.664062 Z M 40.296875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 43.257812 11.664062 L 46.222656 11.664062 L 46.222656 3.804688 L 43.257812 3.804688 Z M 43.257812 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 sob
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 30.7
@@ -498,24 +526,26 @@ sob
 1.0
 </td>
 <td style="text-align:right;">
-19.0
-</td>
-<td style="text-align:right;">
 34.0
-</td>
-<td style="text-align:right;">
-42.0
 </td>
 <td style="text-align:right;">
 56.0
 </td>
 <td style="text-align:right;">
-▃▁▃▄▅▃▇▅▃▃
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface21"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.96875 11.664062 L 2.585938 11.664062 L 2.585938 9.265625 L 0.96875 9.265625 Z M 0.96875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 2.585938 11.664062 L 4.203125 11.664062 L 4.203125 11.367188 L 2.585938 11.367188 Z M 2.585938 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.203125 11.664062 L 5.820312 11.664062 L 5.820312 6.96875 L 4.203125 6.96875 Z M 4.203125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.816406 11.664062 L 7.433594 11.664062 L 7.433594 10.878906 L 5.816406 10.878906 Z M 5.816406 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.433594 11.664062 L 9.050781 11.664062 L 9.050781 10.425781 L 7.433594 10.425781 Z M 7.433594 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 9.050781 11.664062 L 10.667969 11.664062 L 10.667969 10.230469 L 9.050781 10.230469 Z M 9.050781 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 10.667969 11.664062 L 12.285156 11.664062 L 12.285156 9.324219 L 10.667969 9.324219 Z M 10.667969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 12.28125 11.664062 L 13.898438 11.664062 L 13.898438 11.152344 L 12.28125 11.152344 Z M 12.28125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.898438 11.664062 L 15.515625 11.664062 L 15.515625 4.066406 L 13.898438 4.066406 Z M 13.898438 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15.515625 11.664062 L 17.132812 11.664062 L 17.132812 8.460938 L 15.515625 8.460938 Z M 15.515625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.132812 11.664062 L 18.75 11.664062 L 18.75 7.515625 L 17.132812 7.515625 Z M 17.132812 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.746094 11.664062 L 20.363281 11.664062 L 20.363281 9.835938 L 18.746094 9.835938 Z M 18.746094 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20.363281 11.664062 L 21.980469 11.664062 L 21.980469 4.976562 L 20.363281 4.976562 Z M 20.363281 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 21.980469 11.664062 L 23.597656 11.664062 L 23.597656 8.035156 L 21.980469 8.035156 Z M 21.980469 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 23.597656 11.664062 L 25.214844 11.664062 L 25.214844 8.691406 L 23.597656 8.691406 Z M 23.597656 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 25.210938 11.664062 L 26.828125 11.664062 L 26.828125 10.609375 L 25.210938 10.609375 Z M 25.210938 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 26.828125 11.664062 L 28.445312 11.664062 L 28.445312 8.835938 L 26.828125 8.835938 Z M 26.828125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.445312 11.664062 L 30.0625 11.664062 L 30.0625 3.21875 L 28.445312 3.21875 Z M 28.445312 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 30.0625 11.664062 L 31.679688 11.664062 L 31.679688 8.09375 L 30.0625 8.09375 Z M 30.0625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 31.675781 11.664062 L 33.292969 11.664062 L 33.292969 4.980469 L 31.675781 4.980469 Z M 31.675781 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 33.292969 11.664062 L 34.910156 11.664062 L 34.910156 3.726562 L 33.292969 3.726562 Z M 33.292969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.910156 11.664062 L 36.527344 11.664062 L 36.527344 11.191406 L 34.910156 11.191406 Z M 34.910156 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 36.523438 11.664062 L 38.140625 11.664062 L 38.140625 9.714844 L 36.523438 9.714844 Z M 36.523438 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 38.140625 11.664062 L 39.757812 11.664062 L 39.757812 4.910156 L 38.140625 4.910156 Z M 38.140625 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 39.757812 11.664062 L 41.375 11.664062 L 41.375 10.828125 L 39.757812 10.828125 Z M 39.757812 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 41.375 11.664062 L 42.992188 11.664062 L 42.992188 9.628906 L 41.375 9.628906 Z M 41.375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.988281 11.664062 L 44.605469 11.664062 L 44.605469 8.875 L 42.988281 8.875 Z M 42.988281 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 44.605469 11.664062 L 46.222656 11.664062 L 46.222656 9.070312 L 44.605469 9.070312 Z M 44.605469 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 age
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 45.0
@@ -527,19 +557,15 @@ age
 40.2
 </td>
 <td style="text-align:right;">
-42.5
-</td>
-<td style="text-align:right;">
 45.0
-</td>
-<td style="text-align:right;">
-47.5
 </td>
 <td style="text-align:right;">
 50.0
 </td>
 <td style="text-align:right;">
-▇▇▇▆▆▆▆▆▆▇
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48pt" height="12pt" viewBox="0 0 48 12" version="1.1">
+<g id="surface26"><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.636719 11.664062 L 2.914062 11.664062 L 2.914062 3.21875 L 0.636719 3.21875 Z M 0.636719 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 2.917969 11.664062 L 5.195312 11.664062 L 5.195312 3.785156 L 2.917969 3.785156 Z M 2.917969 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.195312 11.664062 L 7.472656 11.664062 L 7.472656 3.441406 L 5.195312 3.441406 Z M 5.195312 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.476562 11.664062 L 9.753906 11.664062 L 9.753906 3.828125 L 7.476562 3.828125 Z M 7.476562 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 9.753906 11.664062 L 12.03125 11.664062 L 12.03125 3.640625 L 9.753906 3.640625 Z M 9.753906 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 12.035156 11.664062 L 14.3125 11.664062 L 14.3125 4.203125 L 12.035156 4.203125 Z M 12.035156 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 14.3125 11.664062 L 16.589844 11.664062 L 16.589844 4.125 L 14.3125 4.125 Z M 14.3125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16.59375 11.664062 L 18.871094 11.664062 L 18.871094 4.308594 L 16.59375 4.308594 Z M 16.59375 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.871094 11.664062 L 21.148438 11.664062 L 21.148438 4.015625 L 18.871094 4.015625 Z M 18.871094 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 21.152344 11.664062 L 23.429688 11.664062 L 23.429688 4.371094 L 21.152344 4.371094 Z M 21.152344 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 23.429688 11.664062 L 25.707031 11.664062 L 25.707031 4.121094 L 23.429688 4.121094 Z M 23.429688 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 25.710938 11.664062 L 27.988281 11.664062 L 27.988281 4.65625 L 25.710938 4.65625 Z M 25.710938 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.988281 11.664062 L 30.265625 11.664062 L 30.265625 4.660156 L 27.988281 4.660156 Z M 27.988281 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 30.269531 11.664062 L 32.546875 11.664062 L 32.546875 4.648438 L 30.269531 4.648438 Z M 30.269531 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.546875 11.664062 L 34.824219 11.664062 L 34.824219 4.273438 L 32.546875 4.273438 Z M 32.546875 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 34.828125 11.664062 L 37.105469 11.664062 L 37.105469 4.367188 L 34.828125 4.367188 Z M 34.828125 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.105469 11.664062 L 39.382812 11.664062 L 39.382812 4.683594 L 37.105469 4.683594 Z M 37.105469 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 39.382812 11.664062 L 41.660156 11.664062 L 41.660156 4.699219 L 39.382812 4.699219 Z M 39.382812 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 41.664062 11.664062 L 43.941406 11.664062 L 43.941406 4 L 41.664062 4 Z M 41.664062 11.664062 "></path><path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 43.941406 11.664062 L 46.21875 11.664062 L 46.21875 4.007812 L 43.941406 4.007812 Z M 43.941406 11.664062 "></path></g>
+</svg>
 </td>
 </tr>
 </tbody>
@@ -586,7 +612,7 @@ Figure 11.5: Reproducing figure 2 from <span class="citation">Angrist and Kruege
 </div>
 <p>Figure <a href="iv-applications.html#fig:ak91-wage">11.5</a> does not show a long running trend in earnings, so on average we’d say an hourly wage of 5 Dollars 90 per week. But, again, the group born in the fourth quarter seems special: In many cases they earn the highest or close to highest wage if compared to the other 3 groups in their birthyear. So, there really seems to be a relationship between quarter of birth and later in life earnings! Let us now construct an IV estimator, which will allow us to relate the sawtooth pattern in figure <a href="iv-applications.html#fig:ak91-age">11.4</a> to the one in <a href="iv-applications.html#fig:ak91-wage">11.5</a>. We will start out with using just <em>born in fourth quarter</em> as our IV.</p>
 </div>
-<div id="running-iv-estimation-in-r" class="section level3">
+<div id="running-iv-estimation-in-r" class="section level3" number="11.2.2">
 <h3><span class="header-section-number">11.2.2</span> Running IV estimation in <code>R</code></h3>
 <p>There are several possibilities to run IV estimation in <code>R</code>. We will use the <code>iv_robust</code> function from the <code>estimatr</code> package.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> Let’s estimate a simple OLS version (subject to ability bias), the first stage and second stages, and the final 2SLS estimate:</p>
 <div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="iv-applications.html#cb393-1"></a>mod                  &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
@@ -604,16 +630,16 @@ Figure 11.5: Reproducing figure 2 from <span class="citation">Angrist and Kruege
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 ols
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 first stage
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 second stage
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 2SLS
 </th>
 </tr>
@@ -623,32 +649,32 @@ second stage
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.995***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 12.747***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.955***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.955***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.004)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.007)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.381)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.358)
 </td>
 </tr>
@@ -656,28 +682,28 @@ second stage
 <td style="text-align:left;">
 s
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.071***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.074***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.000)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.028)
 </td>
 </tr>
@@ -685,70 +711,70 @@ s
 <td style="text-align:left;">
 q4
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.092***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.013)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 shat
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.074**
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.030)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 F
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 43782.556
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 48.095
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 6.146
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 </tbody>
@@ -768,7 +794,7 @@ F
 <li>Finally, we perform first and second stag e estimation in one go (you would usually go down this route directly) with 2SLS. You should compare <code>shat</code> from the second stage with the <code>s</code> estimate from the 2SLS model! The reason you should always go directly to something like <code>iv_robust</code> is that this procedure handles computation of standard errors correctly. In other words, the displayed standard error in the second stage for <code>shat</code> (0.03) is not taking into account that we estimated <code>shat</code> itself in a previous step - <code>iv_robust</code> does (note the small difference to 0.028).</li>
 </ol>
 </div>
-<div id="additional-control-variables" class="section level3">
+<div id="additional-control-variables" class="section level3" number="11.2.3">
 <h3><span class="header-section-number">11.2.3</span> Additional Control Variables</h3>
 <p>We saw in figure <a href="iv-applications.html#fig:ak91-age">11.4</a> that there is a clear time trend in years of schooling. There are also business-cycle fluctuations in earnings, even if we were not able to see them from the graph above. It is probably a good idea to control for calendar year in order to guard against any time effects in our results. Also, we can use more than one IV! Here is how:</p>
 <div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="iv-applications.html#cb394-1"></a>mod<span class="op">$</span>ols_yr  &lt;-<span class="st"> </span><span class="kw">update</span>(mod<span class="op">$</span>ols, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>yob_fct)  <span class="co"># just update previous model</span></span>
@@ -798,19 +824,19 @@ F
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 ols
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 2SLS
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 ols_yr
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 2SLS_yr
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 2SLS_all
 </th>
 </tr>
@@ -820,38 +846,38 @@ ols_yr
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.995
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.955
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 5.017
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.966
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.592
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.004)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.358)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.354)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.251)
 </td>
 </tr>
@@ -859,38 +885,38 @@ ols_yr
 <td style="text-align:left;">
 s
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.071
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.074
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.071
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.075
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.105
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.000)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.028)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.000)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.028)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.020)
 </td>
 </tr>
@@ -898,36 +924,36 @@ s
 <td style="text-align:left;">
 F
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 43782.556
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4397.455
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Instruments
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 none
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Q4
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 none
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Q4
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 All Quarters
 </td>
 </tr>
@@ -935,19 +961,19 @@ All Quarters
 <td style="text-align:left;">
 Year of birth
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 no
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 no
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 yes
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 yes
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 yes
 </td>
 </tr>
@@ -955,7 +981,7 @@ yes
 </table>
 </div>
 </div>
-<div id="IV-mech" class="section level2">
+<div id="IV-mech" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> IV Mechanics</h2>
 <p>Let’s now look a little closer under the hood of our simple IV estimator. We want to understand how inference of IV relates to OLS inference, and what we can say about <em>weak</em> instruments, i.e. IVs with small predictive power in the first stage.</p>
 <p>Let’s go back to our simple linear model</p>
@@ -998,7 +1024,7 @@ The corresponding intercept estimate <span class="math inline">\(\hat{\beta}_0 =
 \text{plim}(\hat{\beta}_1) = \beta_1
 \]</span></p>
 <p>meaning that, as the sample size <span class="math inline">\(n\)</span> increases, the <strong>probability limit</strong> (plim) of the estimator <span class="math inline">\(\hat{\beta}_1\)</span> is the true value <span class="math inline">\(\beta_1\)</span>.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
-<div id="iv-inference" class="section level3">
+<div id="iv-inference" class="section level3" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> IV Inference</h3>
 <p>Let us extend the homoskedasticity assumption to <span class="math inline">\(z\)</span>, such that <span class="math inline">\(E(u^2|z) = \sigma^2\)</span>, implying that the asymptotic (i.e. as the sample size gets very large) variance of the IV slope estimator is given by</p>
 <p><span class="math display" id="eq:iv-var">\[
@@ -1019,7 +1045,7 @@ Var(\hat{\beta}_{1,IV}) = \frac{\sigma^2}{n \sigma_x^2 R_{x,z}^2}
 <li>The higher the correlation between <span class="math inline">\(z\)</span> and <span class="math inline">\(x\)</span>, the closer their <span class="math inline">\(R_{x,z}^2\)</span> is to 1. With <span class="math inline">\(R_{x,z}^2 = 1\)</span> we get back to the OLS variance. This is no surprise, because that implies that in fact <span class="math inline">\(z = x\)</span>.</li>
 </ol>
 <p>So, if you have a valid, exogenous regressor <span class="math inline">\(x\)</span>, you should <em>not</em> perform IV estimation using <span class="math inline">\(z\)</span> to obtain <span class="math inline">\(\hat{\beta}\)</span>, since your variance will be unnecessarily large.</p>
-<div id="returns-to-education-for-married-women" class="section level4">
+<div id="returns-to-education-for-married-women" class="section level4" number="11.3.1.1">
 <h4><span class="header-section-number">11.3.1.1</span> Returns to Education for Married Women</h4>
 <p>Consider the following model for married women’s wages:</p>
 <p><span class="math display">\[
@@ -1046,13 +1072,13 @@ Let’s run an OLS on this, and then compare it to an IV estimate using <em>fath
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 OLS
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 First Stage
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 IV
 </th>
 </tr>
@@ -1062,26 +1088,26 @@ IV
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.185
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 10.237
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.441
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.185)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.276)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.467)
 </td>
 </tr>
@@ -1089,24 +1115,24 @@ IV
 <td style="text-align:left;">
 educ
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.109
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.059
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.014)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.037)
 </td>
 </tr>
@@ -1114,62 +1140,51 @@ educ
 <td style="text-align:left;">
 fatheduc
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.269
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.029)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Num.Obs.
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 428
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 428
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+428
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 R2
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.118
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.173
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.093
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-428
 </td>
 </tr>
 </tbody>
@@ -1185,7 +1200,7 @@ Figure 11.7: OLS vs IV Standard Errors: The dots represent the point estimates, 
 </div>
 </div>
 </div>
-<div id="iv-with-a-weak-instrument" class="section level3">
+<div id="iv-with-a-weak-instrument" class="section level3" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> IV with a <em>Weak</em> Instrument</h3>
 <p>We have seen that IV will produce consistent estimates under our stated assumptions. However, even under valid assumption, we get large IV standard errors if the the correlation between IV and endogenous <span class="math inline">\(x\)</span> is small.<br />
 What is even worse is that <em>even if</em> we have only very small correlation between <span class="math inline">\(z\)</span> and <span class="math inline">\(u\)</span>, so that we might <em>almost</em> be happy to assume exogeneity, a small corrleation between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> can produce <strong>inconsistent</strong> estimates. To see this, consider the probability limit of the IV estimator again</p>
@@ -1213,10 +1228,10 @@ What is even worse is that <em>even if</em> we have only very small correlation 
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 First Stage
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 IV
 </th>
 </tr>
@@ -1226,20 +1241,20 @@ IV
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.067
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.448
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.103)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.940)
 </td>
 </tr>
@@ -1247,37 +1262,37 @@ IV
 <td style="text-align:left;">
 cigprice
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.000
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.001)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 packs
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 2.989
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (8.996)
 </td>
 </tr>
@@ -1285,31 +1300,22 @@ packs
 <td style="text-align:left;">
 Num.Obs.
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 1388
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1388
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 R2
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.000
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -23.230
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-1388
 </td>
 </tr>
 </tbody>

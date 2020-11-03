@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Panel Data | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Panel Data | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="iv-applications.html"/>
 <link rel="next" href="binary.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,9 +276,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="panel-data" class="section level1">
+<div id="panel-data" class="section level1" number="12">
 <h1><span class="header-section-number">Chapter 12</span> Panel Data</h1>
-<div id="crime-rate-vs-probability-of-arrest" class="section level2">
+<div id="crime-rate-vs-probability-of-arrest" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> Crime Rate vs Probability of Arrest</h2>
 <p>This part draws heavily on <a href="http://nickchk.com">Nick C Huntington-Klein’s</a> outstanding <a href="https://github.com/NickCH-K/EconometricsSlides">slides</a>. 🙏</p>
 <p>Up until now we have dealt with data that looked like the following, where <code>County</code> is the idendifier for a county, <code>CrimeRate</code> is the number of crimes committed by person, and <code>ProbofArrest</code> is the probability of arrest, given crime committed:</p>
@@ -518,7 +533,7 @@ Figure 12.1: Probability of arrest vs Crime rates in the cross section
 <span id="cb399-2"><a href="panel-data.html#cb399-2"></a><span class="kw">coef</span>(xsection)[<span class="dv">2</span>]  <span class="co"># gets slope coef</span></span></code></pre></div>
 <pre><code>##     prbarr 
 ## 0.06480104</code></pre>
-<p>such that we’d associate a 10% higher probability of arrest with an increase of 0.006 for the crime rate (it would go from 0.02 to 0.026). Ok, but what does that <em>mean</em>? Does it mean that as there is more crime, the police get more efficient, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. A DAG to the rescue!</p>
+<p>such that we’d associate an increase of 10 percentage points in the probability of arrest (<code>prbarr</code> goes from 0.2 to 0.3) with an increase in crime rate from 0.021 to 0.028, or a 33.33 percent increase. Ok, but what does that <em>mean</em>? Literally, it tells us counties with a higher probability of being arrested also have a higher crime rate. So, does it mean that as there is more crime in certain areas, the police become more efficient at arresting criminals, and so the probability of getting arrested on any committed crime goes up? What does police efficiency depend on? Does the poverty level in a county matter for this? The local laws? 🤯 wow, there seem to be too many things left out of this simple picture. It’s impossible to decide whether this estimate <em>makes sense</em> or not like this. A DAG to the rescue!</p>
 <div class="figure" style="text-align: center"><span id="fig:cri-dag"></span>
 <img src="ScPoEconometrics_files/figure-html/cri-dag-1.png" alt="DAG to answer *what causes the local crime rate?*" width="672" />
 <p class="caption">
@@ -532,9 +547,9 @@ Figure 12.2: DAG to answer <em>what causes the local crime rate?</em>
 <li><code>Police</code> budget and the <code>Poverty</code> level vary by county and by year: an elected politician has some discretion over police spending (not too much, but still), and poverty varies with the national/global state of the economy.</li>
 </ul>
 <p>You will often hear the terms <em>within</em> and <em>between</em> variation in panel data contexts. If we think of our data as classified into groups of <span class="math inline">\(i\)</span> (i.e., counties), the <em>within</em> variation refers to things that change <em>within each group</em> over time: here we said police budgets and poverty levels would change within each group and over time. On the other hand, we said that <code>LocalStuff</code>, <code>LawAndOrder</code> and <code>CivilRights</code> were persistent features of each group, hence they would <em>not</em> vary over time (or <em>within</em> the group) - they would differ only across or <strong>between</strong> groups. Let’s try to separate those out visually!</p>
-<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>That looks intriguing! Let’s add the mean of <code>ProbofArrest</code> and <code>CrimeRate</code> for each of the counties to that plot, in order to show the <em>between</em> county variation:</p>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-204-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>That looks intriguing! Let’s add the mean of <code>ProbofArrest</code> and <code>CrimeRate</code> for each of the counties to that plot, in order to show the <em>between</em> county variation:</p>
+<p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-205-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Simple OLS on the cross section (i.e. not taking into account the panel structure) seems to recover only the <em>between</em> group differences. It fits a line to the group means. Well this considerably simplifies our DAG from above! Let’s collect all group-specific time-invariant features in the factor <code>County</code> - we don’t really care about what they all are, because we can net the group effects out of the data it seems:</p>
 <div class="figure" style="text-align: center"><span id="fig:cri-dag2"></span>
 <img src="ScPoEconometrics_files/figure-html/cri-dag2-1.png" alt="DAG to answer *what causes the local crime rate?*" width="672" />
@@ -544,7 +559,7 @@ Figure 12.3: DAG to answer <em>what causes the local crime rate?</em>
 </div>
 <p>So, controlling for <code>County</code> takes care of all factors which do <em>not</em> vary over time within each unit. Police and Poverty will have a specific County-specific mean value, but there will be variation over time. We will basically be able to compare each county with itself at different points in time.</p>
 </div>
-<div id="panel-data-estimation-with-r" class="section level2">
+<div id="panel-data-estimation-with-r" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Panel Data Estimation with <code>R</code></h2>
 <p>We have now seen several instances of problems with simple OLS arising from <em>unobserved variable bias</em>. For example, if the true model read</p>
 <p><span class="math display">\[
@@ -555,7 +570,7 @@ with <span class="math inline">\(c_i\)</span> unobservable and potentially corre
 y_{it} = \beta_1 x_{it} + c_i + u_{it},\quad t=1,2,...T  \tag{12.1}
 \]</span></p>
 <p>The object of interest here is <span class="math inline">\(c_i\)</span>, called the <em>individual fixed effect</em>, <em>unobserved effect</em> or <em>unobserved heterogeneity</em>. The important thing to note is that it is fixed over time (ability <span class="math inline">\(A_i\)</span> for example).</p>
-<div id="dummy-variable-regression" class="section level3">
+<div id="dummy-variable-regression" class="section level3" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> Dummy Variable Regression</h3>
 <p>The simplest approach is arguably this: we could take the equation literally and estimate a linear model where we include a dummy variable for each <span class="math inline">\(i\)</span>. This is closest to what we said above is <em>controlling for county</em> - that’s exactly what we do here. You can see in <a href="panel-data.html#eq:panel">(12.1)</a> that each <span class="math inline">\(i\)</span> has basically their own intercept <span class="math inline">\(c_i\)</span>, so this works. In <code>R</code> you achieve this like so:</p>
 <div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="panel-data.html#cb401-1"></a>mod =<span class="st"> </span><span class="kw">list</span>()</span>
@@ -572,9 +587,9 @@ y_{it} = \beta_1 x_{it} + c_i + u_{it},\quad t=1,2,...T  \tag{12.1}
 <p>Here is what we are talking about in a picture:</p>
 <p><img src="ScPoEconometrics_files/figure-html/dummy-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It’s evident that <em>within</em> each county, there is a negative relationship. The dummy variable regression allows for different intercepts (county <code>1</code> is be the reference group), and one unique slope coefficient <span class="math inline">\(\beta\)</span>. (you observe that the lines are parallel).</p>
-<p>You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1. (notice that the plot allows different slopes for each group, in our regression they are all parallel).</p>
+<p>You can see from this by looking at the picture that what the dummies are doing is shifting their line down from the reference group 1.</p>
 </div>
-<div id="first-differencing" class="section level3">
+<div id="first-differencing" class="section level3" number="12.2.2">
 <h3><span class="header-section-number">12.2.2</span> First Differencing</h3>
 <p>If we only had <span class="math inline">\(T=2\)</span> periods, we could just difference both periods, basically leaving us with
 <span class="math display">\[\begin{align}
@@ -587,7 +602,7 @@ y_{i1}-y_{i2} &amp;= \beta_1 (x_{i1} - x_{i2}) + c_i-c_i + u_{i1}-u_{i2} \\
 where <span class="math inline">\(\Delta\)</span> means <em>difference over time of</em> and to recover the parameter of interest <span class="math inline">\(\beta_1\)</span> we would run</p>
 <div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="panel-data.html#cb403-1"></a><span class="kw">lm</span>(deltay <span class="op">~</span><span class="st"> </span>deltax, diff_data) </span></code></pre></div>
 </div>
-<div id="the-within-transformation" class="section level3">
+<div id="the-within-transformation" class="section level3" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> The Within Transformation</h3>
 <p>In cases with <span class="math inline">\(T&gt;2\)</span> we need a different approach - this is the most relevant case. One important concept is called the <em>within</em> transformation.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> This is directly related to our discussion from above when we simplified our DAG. So, <em>controlling for group identity and only looking at time variation</em> is what we said - let’s write it down! Here we denote as <span class="math inline">\(\bar{x}_i\)</span> the average <em>over time</em> of <span class="math inline">\(i\)</span>’s <span class="math inline">\(x\)</span> values:</p>
 <p><span class="math display">\[
@@ -627,13 +642,13 @@ y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + c_i - c_i + u_{it}-\bar{u}_i
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 xsect
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 dummy
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 demeaned
 </th>
 </tr>
@@ -643,26 +658,26 @@ demeaned
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.009
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.045
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.000
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.001)
 </td>
 </tr>
@@ -670,47 +685,47 @@ demeaned
 <td style="text-align:left;">
 prbarr
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.065
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.028
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.016)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.014)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 demeaned_prob
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.028
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.013)
 </td>
 </tr>
@@ -718,13 +733,13 @@ demeaned_prob
 <td style="text-align:left;">
 R2
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.390
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.893
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.159
 </td>
 </tr>
@@ -732,13 +747,13 @@ R2
 <td style="text-align:left;">
 R2 Adj.
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.366
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.874
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.126
 </td>
 </tr>
@@ -746,24 +761,24 @@ R2 Adj.
 <td style="text-align:left;">
 F
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 16.609
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 47.777
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.900
 </td>
 </tr>
 </tbody>
 </table>
 <p>Notice how in table <a href="panel-data.html#tab:tab1">12.1</a> the estimate for <code>prbarr</code> is positive in the cross-section, like in figure <a href="panel-data.html#fig:crime1">12.1</a>. If we take care of the unobservered heterogeneity <span class="math inline">\(c_i\)</span> either by including an intercept for each <span class="math inline">\(i\)</span> or by time-demeaning the data, we obtain the same estimate: -0.028 in both cases.</p>
-<p>We interpret those <em>within</em> estimates by imagining to look at a single unit <span class="math inline">\(i\)</span> and ask: <em>if the arrest probability in <span class="math inline">\(i\)</span> increases by 1 from year <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>, we expect crimes per person to fall by 0.028</em>.</p>
+<p>We interpret those <em>within</em> estimates by imagining to look at a single unit <span class="math inline">\(i\)</span> and ask: <em>if the arrest probability in <span class="math inline">\(i\)</span> increases by 10 percentage points (i.e. from 0.2 to 0.3) from year <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>, we expect crimes per person to fall from 0.039 to 0.036, or by -7.69 percent</em> (in the reference county number 1).</p>
 </div>
-<div id="using-a-package" class="section level3">
+<div id="using-a-package" class="section level3" number="12.2.4">
 <h3><span class="header-section-number">12.2.4</span> Using a Package</h3>
-<p>In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (fixest if fastest)</p>
+<p>In real life you will hardly ever perform the within-transformation by yourself and use a package instead. There are several options (<code>fixest</code> if fastest).</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="panel-data.html#cb406-1"></a>mod<span class="op">$</span>FE =<span class="st"> </span>fixest<span class="op">::</span><span class="kw">feols</span>(crmrte <span class="op">~</span><span class="st"> </span>prbarr <span class="op">|</span><span class="st"> </span>county, cdata)</span>
 <span id="cb406-2"><a href="panel-data.html#cb406-2"></a>modelsummary<span class="op">::</span><span class="kw">modelsummary</span>(mod[<span class="kw">c</span>(<span class="st">&quot;xsect&quot;</span>,<span class="st">&quot;dummy&quot;</span>,<span class="st">&quot;demeaned&quot;</span>,<span class="st">&quot;FE&quot;</span>)],</span>
 <span id="cb406-3"><a href="panel-data.html#cb406-3"></a>                           <span class="dt">statistic =</span> <span class="st">&#39;std.error&#39;</span>,</span>
@@ -772,22 +787,22 @@ F
 <span id="cb406-6"><a href="panel-data.html#cb406-6"></a>                           <span class="dt">gof_omit =</span> <span class="kw">paste</span>(gom,<span class="st">&quot;Std. errors&quot;</span>,<span class="st">&quot;R2&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;|&quot;</span>))</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-208">Table 12.2: </span>Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest panel regressions
+<span id="tab:unnamed-chunk-210">Table 12.2: </span>Comparing (biased) X-secional OLS, dummy variable, manual demeaning and fixest panel regressions
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 xsect
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 dummy
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 demeaned
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 FE
 </th>
 </tr>
@@ -797,61 +812,61 @@ FE
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.009
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.045
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.000
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.001)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 prbarr
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.065
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.028
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.028
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.016)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.014)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.005)
 </td>
 </tr>
@@ -859,56 +874,56 @@ prbarr
 <td style="text-align:left;">
 demeaned_prob
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.028
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 (0.013)
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 F
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 16.609
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 47.777
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 4.900
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 FE: county
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 X
 </td>
 </tr>
@@ -918,7 +933,7 @@ X
 <p><span class="math display">\[
 y_{it}-\bar{y}_i = \beta_1 (x_{it} - \bar{x}_i) + u_{it}-\bar{u}_i 
 \]</span></p>
-<p>you can see that we perform a form of <strong>data centering</strong> in the within transformation: substracting their respective time means from all variables means to center all variables! Here’s how this looks (only visible in HTML version online).</p>
+<p>you can see that we perform a form of <strong>data centering</strong> in the within transformation: subtracting their respective time means from all variables means to center all variables! Here’s how this looks (only visible in HTML version online).</p>
 <div class="figure" style="text-align: center"><span id="fig:anim"></span>
 <img src="ScPoEconometrics_files/figure-html/anim-1.gif" alt="Animation of a fixed effects panel data estimator: we remove *between group* variation and concentrate on *within group* variation only"  />
 <p class="caption">

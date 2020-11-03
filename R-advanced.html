@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 12 Advanced R | Introduction to Econometrics with R</title>
-  <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <title>Introduction to Econometrics with R</title>
+  <meta name="description" content="SciencesPo UG Econometrics online textbook. No Maths.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 12 Advanced R | Introduction to Econometrics with R" />
+  <meta property="og:title" content="Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://scpoecon.github.io/ScPoEconometrics/" />
   
-  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta property="og:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   <meta name="github-repo" content="ScPoEcon/ScPoEconometrics" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 12 Advanced R | Introduction to Econometrics with R" />
+  <meta name="twitter:title" content="Introduction to Econometrics with R" />
   
-  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
+  <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. No Maths." />
   
 
 <meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers">
 
 
-<meta name="date" content="2019-03-05">
+<meta name="date" content="2018-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,10 +33,9 @@
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
 <link rel="prev" href="pca.html">
-<link rel="next" href="slides.html">
+<link rel="next" href="notes.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -48,13 +47,13 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41584331-4"></script>
 <script>
@@ -67,41 +66,69 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -156,17 +183,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#mreg-interactions"><i class="fa fa-check"></i><b>4.4</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
-<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
-<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
-<li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
-<li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.4</b> Saturated Models: Main Effects and Interactions</a></li>
+<li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.1</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
+<li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#saturated-models-main-effects-and-interactions"><i class="fa fa-check"></i><b>5.2</b> Saturated Models: Main Effects and Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Standard Errors</a><ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#what-is-true-what-are-statistical-models"><i class="fa fa-check"></i><b>6.1</b> What is <em>true</em>? What are Statistical Models?</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.2</b> The Classical Regression Model</a></li>
-<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#back-to-sampling"><i class="fa fa-check"></i><b>6.3</b> Back to Sampling</a></li>
-<li class="chapter" data-level="6.4" data-path="std-errors.html"><a href="std-errors.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.4</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="6.5" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.5</b> What’s in my model? (And what is not?)</a></li>
+<li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#whats-in-my-model-and-what-is-not"><i class="fa fa-check"></i><b>6.3</b> What’s in my model? (And what is not?)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="quantreg.html"><a href="quantreg.html"><i class="fa fa-check"></i><b>7</b> Quantile Regression</a></li>
 <li class="chapter" data-level="8" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>8</b> Panel Data</a><ul>
@@ -185,10 +208,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="R-advanced.html"><a href="R-advanced.html#calculations-with-vectors-and-matrices"><i class="fa fa-check"></i><b>12.2</b> Calculations with Vectors and Matrices</a></li>
 <li class="chapter" data-level="12.3" data-path="R-advanced.html"><a href="R-advanced.html#matrices-1"><i class="fa fa-check"></i><b>12.3</b> Matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>13</b> Slides</a><ul>
-<li class="chapter" data-level="13.1" data-path="slides.html"><a href="slides.html#worked-tutorials"><i class="fa fa-check"></i><b>13.1</b> Worked Tutorials</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a><ul>
+<li class="chapter" data-level="13.1" data-path="notes.html"><a href="notes.html#book-usage"><i class="fa fa-check"></i><b>13.1</b> Book usage</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a></li>
+<li class="chapter" data-level="14" data-path="slides.html"><a href="slides.html"><i class="fa fa-check"></i><b>14</b> Slides</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -215,17 +238,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This chapter continues with some advanced usage examples from chapter <a href="R-intro.html#R-intro">1</a></p>
 <div id="more-vectorization" class="section level2">
 <h2><span class="header-section-number">12.1</span> More Vectorization</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)
-y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb361-2" data-line-number="2">y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1">x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <pre><code>#OUT&gt; [1]  3  5  7  9 10 11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span><span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">6</span>)</code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb364-1" data-line-number="1">x <span class="op">+</span><span class="st"> </span><span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">6</span>)</a></code></pre></div>
 <pre><code>#OUT&gt; [1]  3  5  7  9 10 11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span></a></code></pre></div>
 <pre><code>#OUT&gt; [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">6</span>)</code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">x <span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">6</span>)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span>y</code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>#OUT&gt; Warning in x + y: longer object length is not a multiple of shorter object
 #OUT&gt; length</code></pre>
 <pre><code>#OUT&gt;   [1]   2   5   8  11  13  15   8  11  14  17  19  21  14  17  20  23  25
@@ -234,80 +257,80 @@ y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><s
 #OUT&gt;  [52]  59  61  63  56  59  62  65  67  69  62  65  68  71  73  75  68  71
 #OUT&gt;  [69]  74  77  79  81  74  77  80  83  85  87  80  83  86  89  91  93  86
 #OUT&gt;  [86]  89  92  95  97  99  92  95  98 101 103 105  98 101 104 107</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1"><span class="kw">length</span>(x)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(y)</code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb375-1" data-line-number="1"><span class="kw">length</span>(y)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 100</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(x)</code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1"><span class="kw">length</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(x)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 16.66667</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(x <span class="op">+</span><span class="st"> </span>y) <span class="op">-</span><span class="st"> </span>y</code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1">(x <span class="op">+</span><span class="st"> </span>y) <span class="op">-</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>#OUT&gt; Warning in x + y: longer object length is not a multiple of shorter object
 #OUT&gt; length</code></pre>
 <pre><code>#OUT&gt;   [1] 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8
 #OUT&gt;  [36] 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7
 #OUT&gt;  [71] 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7 8 9 1 3 5 7</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">60</span>
-x <span class="op">+</span><span class="st"> </span>y</code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1">y =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">60</span></a>
+<a class="sourceLine" id="cb382-2" data-line-number="2">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>#OUT&gt;  [1]  2  5  8 11 13 15  8 11 14 17 19 21 14 17 20 23 25 27 20 23 26 29 31
 #OUT&gt; [24] 33 26 29 32 35 37 39 32 35 38 41 43 45 38 41 44 47 49 51 44 47 50 53
 #OUT&gt; [47] 55 57 50 53 56 59 61 63 56 59 62 65 67 69</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(x)</code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb384-1" data-line-number="1"><span class="kw">length</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(x)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y</code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb386-1" data-line-number="1"><span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>#OUT&gt;  [1]  2  5  8 11 13 15  8 11 14 17 19 21 14 17 20 23 25 27 20 23 26 29 31
 #OUT&gt; [24] 33 26 29 32 35 37 39 32 35 38 41 43 45 38 41 44 47 49 51 44 47 50 53
 #OUT&gt; [47] 55 57 50 53 56 59 61 63 56 59 62 65 67 69</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(x <span class="op">+</span><span class="st"> </span>y <span class="op">==</span><span class="st"> </span><span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y)</code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1"><span class="kw">all</span>(x <span class="op">+</span><span class="st"> </span>y <span class="op">==</span><span class="st"> </span><span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(x <span class="op">+</span><span class="st"> </span>y, <span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y)</code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="kw">identical</span>(x <span class="op">+</span><span class="st"> </span>y, <span class="kw">rep</span>(x, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>y)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ?any</span>
-<span class="co"># ?all.equal</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb392-1" data-line-number="1"><span class="co"># ?any</span></a>
+<a class="sourceLine" id="cb392-2" data-line-number="2"><span class="co"># ?all.equal</span></a></code></pre></div>
 </div>
 <div id="calculations-with-vectors-and-matrices" class="section level2">
 <h2><span class="header-section-number">12.2</span> Calculations with Vectors and Matrices</h2>
 <p>Certain operations in <code>R</code>, for example <code>%*%</code> have different behavior on vectors and matrices. To illustrate this, we will first create two vectors.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb393-1" data-line-number="1">a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb393-2" data-line-number="2">b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</a></code></pre></div>
 <p>Note that these are indeed vectors. They are not matrices.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">is.vector</span>(a_vec), <span class="kw">is.vector</span>(b_vec))</code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb394-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">is.vector</span>(a_vec), <span class="kw">is.vector</span>(b_vec))</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb396-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</a></code></pre></div>
 <pre><code>#OUT&gt; [1] FALSE FALSE</code></pre>
 <p>When this is the case, the <code>%*%</code> operator is used to calculate the <strong>dot product</strong>, also know as the <strong>inner product</strong> of the two vectors.</p>
 <p>The dot product of vectors <span class="math inline">\(\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack\)</span> and <span class="math inline">\(\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack\)</span> is defined to be</p>
 <p><span class="math display">\[
 \boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
 \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec <span class="op">%*%</span><span class="st"> </span>b_vec <span class="co"># inner product</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1">a_vec <span class="op">%*%</span><span class="st"> </span>b_vec <span class="co"># inner product</span></a></code></pre></div>
 <pre><code>#OUT&gt;      [,1]
 #OUT&gt; [1,]   12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec <span class="op">%o%</span><span class="st"> </span>b_vec <span class="co"># outer product</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb400-1" data-line-number="1">a_vec <span class="op">%o%</span><span class="st"> </span>b_vec <span class="co"># outer product</span></a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    2    2    2
 #OUT&gt; [2,]    4    4    4
 #OUT&gt; [3,]    6    6    6</code></pre>
 <p>The <code>%o%</code> operator is used to calculate the <strong>outer product</strong> of the two vectors.</p>
 <p>When vectors are coerced to become matrices, they are column vectors. So a vector of length <span class="math inline">\(n\)</span> becomes an <span class="math inline">\(n \times 1\)</span> matrix after coercion.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec)</code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1"><span class="kw">as.matrix</span>(a_vec)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1]
 #OUT&gt; [1,]    1
 #OUT&gt; [2,]    2
 #OUT&gt; [3,]    3</code></pre>
 <p>If we use the <code>%*%</code> operator on matrices, <code>%*%</code> again performs the expected matrix multiplication. So you might expect the following to produce an error, because the dimensions are incorrect.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span>b_vec</code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb404-1" data-line-number="1"><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span>b_vec</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    2    2    2
 #OUT&gt; [2,]    4    4    4
 #OUT&gt; [3,]    6    6    6</code></pre>
 <p>At face value this is a <span class="math inline">\(3 \times 1\)</span> matrix, multiplied by a <span class="math inline">\(3 \times 1\)</span> matrix. However, when <code>b_vec</code> is automatically coerced to be a matrix, <code>R</code> decided to make it a “row vector”, a <span class="math inline">\(1 \times 3\)</span> matrix, so that the multiplication has conformable dimensions.</p>
 <p>If we had coerced both, then <code>R</code> would produce an error.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb406-1" data-line-number="1"><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</a></code></pre></div>
 <p>Another way to calculate a <em>dot product</em> is with the <code>crossprod()</code> function. Given two vectors, the <code>crossprod()</code> function calculates their dot product. The function has a rather misleading name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(a_vec, b_vec)  <span class="co"># inner product</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1"><span class="kw">crossprod</span>(a_vec, b_vec)  <span class="co"># inner product</span></a></code></pre></div>
 <pre><code>#OUT&gt;      [,1]
 #OUT&gt; [1,]   12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tcrossprod</span>(a_vec, b_vec)  <span class="co"># outer product</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1"><span class="kw">tcrossprod</span>(a_vec, b_vec)  <span class="co"># outer product</span></a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    2    2    2
 #OUT&gt; [2,]    4    4    4
@@ -321,81 +344,81 @@ X^\top Y.
 X^\top X
 \]</span></p>
 <p>is used repeatedly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">C_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dv">2</span>, <span class="dv">3</span>)
-D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1">C_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb411-2" data-line-number="2">D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
 <p>This is useful both as a shortcut for a frequent calculation and as a more efficient implementation than using <code>t()</code> and <code>%*%</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(C_mat, D_mat)</code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1"><span class="kw">crossprod</span>(C_mat, D_mat)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    6    6    6
 #OUT&gt; [2,]   14   14   14
 #OUT&gt; [3,]   22   22   22</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat</code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb414-1" data-line-number="1"><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    6    6    6
 #OUT&gt; [2,]   14   14   14
 #OUT&gt; [3,]   22   22   22</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, D_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat)</code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, D_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(C_mat, C_mat)</code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb418-1" data-line-number="1"><span class="kw">crossprod</span>(C_mat, C_mat)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    5   11   17
 #OUT&gt; [2,]   11   25   39
 #OUT&gt; [3,]   17   39   61</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat</code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1"><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    5   11   17
 #OUT&gt; [2,]   11   25   39
 #OUT&gt; [3,]   17   39   61</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, C_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat)</code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, C_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
 </div>
 <div id="matrices-1" class="section level2">
 <h2><span class="header-section-number">12.3</span> Matrices</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
-Z</code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb424-1" data-line-number="1">Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">-3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">-2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb424-2" data-line-number="2">Z</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    9    2   -3
 #OUT&gt; [2,]    2    4   -2
 #OUT&gt; [3,]   -3   -2   16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">solve</span>(Z)</code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb426-1" data-line-number="1"><span class="kw">solve</span>(Z)</a></code></pre></div>
 <pre><code>#OUT&gt;             [,1]        [,2]       [,3]
 #OUT&gt; [1,]  0.12931034 -0.05603448 0.01724138
 #OUT&gt; [2,] -0.05603448  0.29094828 0.02586207
 #OUT&gt; [3,]  0.01724138  0.02586207 0.06896552</code></pre>
 <p>To verify that <code>solve(Z)</code> returns the inverse, we multiply it by <code>Z</code>. We would expect this to return the identity matrix, however we see that this is not the case due to some computational issues. However, <code>R</code> also has the <code>all.equal()</code> function which checks for equality, with some small tolerance which accounts for some computational issues. The <code>identical()</code> function is used to check for exact equality.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z</code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1"><span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z</a></code></pre></div>
 <pre><code>#OUT&gt;              [,1]          [,2]         [,3]
 #OUT&gt; [1,] 1.000000e+00 -6.245005e-17 0.000000e+00
 #OUT&gt; [2,] 8.326673e-17  1.000000e+00 5.551115e-17
 #OUT&gt; [3,] 2.775558e-17  0.000000e+00 1.000000e+00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1"><span class="kw">diag</span>(<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    1    0    0
 #OUT&gt; [2,]    0    1    0
 #OUT&gt; [3,]    0    0    1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="kw">diag</span>(<span class="dv">3</span>))</code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1"><span class="kw">all.equal</span>(<span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="kw">diag</span>(<span class="dv">3</span>))</a></code></pre></div>
 <pre><code>#OUT&gt; [1] TRUE</code></pre>
 <p><code>R</code> has a number of matrix specific functions for obtaining dimension and summary information.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-X</code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb434-1" data-line-number="1">X =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb434-2" data-line-number="2">X</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3]
 #OUT&gt; [1,]    1    3    5
 #OUT&gt; [2,]    2    4    6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(X)</code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb436-1" data-line-number="1"><span class="kw">dim</span>(X)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 2 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowSums</span>(X)</code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb438-1" data-line-number="1"><span class="kw">rowSums</span>(X)</a></code></pre></div>
 <pre><code>#OUT&gt; [1]  9 12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(X)</code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb440-1" data-line-number="1"><span class="kw">colSums</span>(X)</a></code></pre></div>
 <pre><code>#OUT&gt; [1]  3  7 11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowMeans</span>(X)</code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb442-1" data-line-number="1"><span class="kw">rowMeans</span>(X)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 3 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(X)</code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb444-1" data-line-number="1"><span class="kw">colMeans</span>(X)</a></code></pre></div>
 <pre><code>#OUT&gt; [1] 1.5 3.5 5.5</code></pre>
 <p>The <code>diag()</code> function can be used in a number of ways. We can extract the diagonal of a matrix.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(Z)</code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb446-1" data-line-number="1"><span class="kw">diag</span>(Z)</a></code></pre></div>
 <pre><code>#OUT&gt; [1]  9  4 16</code></pre>
 <p>Or create a matrix with specified elements on the diagonal. (And <code>0</code> on the off-diagonals.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb448-1" data-line-number="1"><span class="kw">diag</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
 #OUT&gt; [1,]    1    0    0    0    0
 #OUT&gt; [2,]    0    2    0    0    0
@@ -403,7 +426,7 @@ X</code></pre></div>
 #OUT&gt; [4,]    0    0    0    4    0
 #OUT&gt; [5,]    0    0    0    0    5</code></pre>
 <p>Or, lastly, create a square matrix of a certain dimension with <code>1</code> for every element of the diagonal and <code>0</code> for the off-diagonals.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1"><span class="kw">diag</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>#OUT&gt;      [,1] [,2] [,3] [,4] [,5]
 #OUT&gt; [1,]    1    0    0    0    0
 #OUT&gt; [2,]    0    1    0    0    0
@@ -419,7 +442,7 @@ X</code></pre></div>
         </div>
       </div>
 <a href="pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="slides.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="notes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -439,7 +462,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -449,12 +472,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/12-R-advanced.Rmd",
+"link": "https://github.com/ScPoEcon/ScPoEconometrics/edit/master/13-R-advanced.Rmd",
 "text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
 },
 "download": ["ScPoEconometrics.pdf", "ScPoEconometrics.epub"],
 "toc": {
@@ -469,8 +488,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

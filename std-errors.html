@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Regression Inference | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Regression Inference | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="categorical-vars.html"/>
 <link rel="next" href="causality.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="std-errors" class="section level1">
+<div id="std-errors" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Regression Inference</h1>
 <p>In this chapter we want to investigate uncertainty in regression estimates. We want to understand what the precise meaning of the <code>Std. Error</code> column in a typical regression table is telling us. In terms of a picture, we want to understand better the meaning of the shaded area as in this one here:</p>
 <div class="figure" style="text-align: center"><span id="fig:confint"></span>
@@ -271,7 +286,7 @@ Figure 6.1: Confidence bands around a regression line.
 </p>
 </div>
 <p>In order to fully understand this, we need to go back and make sure we have a good grasp of <em>sampling</em>. Let’s do this first.</p>
-<div id="sampling" class="section level2">
+<div id="sampling" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Sampling</h2>
 <p>In class we were confronted with a jar of Tricolore Fusilli pasta as picture in figure <a href="std-errors.html#fig:pasta1">6.2</a>.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> We asked ourselves a question which, secretly, many of you had asked themselves at one point in their lives, namely:</p>
 <div class="tip">
@@ -301,7 +316,7 @@ Figure 6.3: Manually separating Fusilli by their color is very costly in terms o
 Figure 6.4: Heaps of Fusilli pasta ready to be counted.
 </p>
 </div>
-<div id="taking-one-sample-from-the-population" class="section level3">
+<div id="taking-one-sample-from-the-population" class="section level3" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> Taking One Sample From the Population</h3>
 <p>We started by randomly grabbing a handful of Fusilli from the jar and by letting drop exactly <span class="math inline">\(N=20\)</span> into a paper coffee cup, pictured in <a href="std-errors.html#fig:pasta5">6.5</a>. We call <span class="math inline">\(N\)</span> the <em>sample size</em>. The count and corresponding proportions of each color in this first sample are shown in the following table:</p>
 <table>
@@ -346,7 +361,7 @@ Figure 6.5: Taking one sample of 20 Fusilli from the jar.
 <p>Let’s see how this story evolved as we started taking more samples at a time.</p>
 </div>
 </div>
-<div id="taking-eleven-samples-from-the-population" class="section level2">
+<div id="taking-eleven-samples-from-the-population" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Taking Eleven Samples From The Population</h2>
 <p>We formed teams of two students in class who would each in turn take samples from the jar (the population) of size <span class="math inline">\(N=20\)</span>, as before. Each team computed the proportion of green Fusilli they had in their sample, and we wrote this data down in a table on the board. Then, we drew a histogram which showed how many samples had fallen into which bins.</p>
 <div class="figure" style="text-align: center"><span id="fig:pasta6"></span>
@@ -379,7 +394,7 @@ Figure 6.6: Taking eleven samples of 20 Fusilli each from the jar, and plotting 
 ## 11    11        11       0.20</code></pre>
 <p>This produces an associated histogram which looks very much like the one we draws onto the board:</p>
 <p><img src="ScPoEconometrics_files/figure-html/pasta-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="recap" class="section level3">
+<div id="recap" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Recap</h3>
 <p>Let’s recaptiulate what we just did. We wanted to know what proportion of Fusilli in the glass jar in figure <a href="std-errors.html#fig:pasta1">6.2</a> are green. We acknowledged that an exclusive count, or a census, is a costly and cumbersome exercise, which in most circumstances we will try to avoid. In order to make some progress nonetheless, we took a <em>random sample</em> from the full population in the jar: we randomly selected 20 Fusilli, and looked at the proportion of green ones in there. We found a proportion of 0.25.</p>
 <p>After replacing the Fusilli from the first sample in the jar, we asked ourselves if, upon drawing a <em>new</em> sample of 20 Fusilli, we should expect to see the same outcome - and we concluded: maybe, but maybe not. In short, we discovered some random variation from sample to sample. We called this <strong>sampling variation</strong>.</p>
@@ -396,7 +411,7 @@ The value of this exercise consisted in making <strong>you</strong> perform the 
 </div>
 </div>
 </div>
-<div id="handover-to-moderndive" class="section level2">
+<div id="handover-to-moderndive" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Handover to <code>Moderndive</code></h2>
 <div class="figure" style="text-align: center"><span id="fig:handover"></span>
 <img src="images/transition.png" alt="The Moderndive package used red and white balls instead of fusilli pasta." width="90%" />
@@ -406,7 +421,7 @@ Figure 6.7: The Moderndive package used red and white balls instead of fusilli p
 </div>
 <p>The sampling activity in <code>moderndive</code> was performed with red and white balls instead of green fusilli pasta. The rest is identical. We will now read sections <a href="https://moderndive.com/7-sampling.html#sampling-simulation">7.2</a> and <a href="https://moderndive.com/7-sampling.html#sampling-framework">7.3</a> in their book, as well as <a href="https://moderndive.com/8-confidence-intervals.html">chapter 8 on confidence intervals adn bootstrapping</a>, and <a href="https://moderndive.com/9-hypothesis-testing.html">chapter 9 on hypothesis testing</a>.</p>
 </div>
-<div id="uncertainty-in-regression-estimates" class="section level2">
+<div id="uncertainty-in-regression-estimates" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Uncertainty in Regression Estimates</h2>
 <p>In the previous chapters we have seen how the OLS method can produce estimates about intercept and slope coefficients from data. You have seen this method at work in <code>R</code> by using the <code>lm</code> function as well. It is now time to introduce the notion that given that <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> are <em>estimates</em> of some unkown <em>population parameters</em>, there is some degree of <strong>uncertainty</strong> about their values. An other way to say this is that we want some indication about the <em>precision</em> of those estimates. The underlying issue that the data we have at hand are usually <em>samples</em> from a larger population.</p>
 <div class="note">
@@ -416,11 +431,11 @@ How <em>confident</em> should we be about the estimated values <span class="math
 </div>
 <p><br></p>
 </div>
-<div id="what-is-true-what-are-statistical-models" class="section level2">
+<div id="what-is-true-what-are-statistical-models" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> What is <em>true</em>? What are Statistical Models?</h2>
 <p>A <strong>statistical model</strong> is simply a set of assumptions about how some data have been generated. As such, it models the data-generating process (DGP), as we have it in mind. Once we define a DGP, we could simulate data from it and see how this compares to the data we observe in the real world. Or, we could change the parameters of the DGP so as to understand how the real world data <em>would</em> change, could we (or some policy) change the corresponding parameters in reality. Let us now consider one particular statistical model, which in fact we have seen so many times already.</p>
 </div>
-<div id="class-reg" class="section level2">
+<div id="class-reg" class="section level2" number="6.6">
 <h2><span class="header-section-number">6.6</span> The Classical Regression Model (CRM)</h2>
 <p>Let’s bring back our simple model <a href="linreg.html#eq:abline">(3.3)</a> to explain this concept.</p>
 <p><span class="math display" id="eq:abline-5">\[\begin{equation}
@@ -438,7 +453,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 <li>The error is normally distributed, i.e. <span class="math inline">\(\varepsilon \sim \mathcal{N}(0,\sigma^2)\)</span></li>
 </ol>
 <p>Invoking assumption 5. in particular defines what is commonly called the <em>normal</em> linear regression model.</p>
-<div id="b-is-not-beta" class="section level3">
+<div id="b-is-not-beta" class="section level3" number="6.6.1">
 <h3><span class="header-section-number">6.6.1</span> <span class="math inline">\(b\)</span> is not <span class="math inline">\(\beta\)</span>!</h3>
 <p>Let’s talk about the small but important modifications we applied to model <a href="linreg.html#eq:abline">(3.3)</a> to end up at <a href="std-errors.html#eq:abline-5">(6.1)</a> above:</p>
 <ul>
@@ -447,7 +462,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \tag{6.1}
 </ul>
 <p>First, we <em>assumed</em> that <a href="std-errors.html#eq:abline-5">(6.1)</a> is the correct represenation of the DGP. With that assumption in place, the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <em>true parameter values</em> which generated the data. Notice that <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are potentially different from <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in <a href="linreg.html#eq:abline">(3.3)</a> for a given sample of data - they could in practice be very close to each other, but <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are <em>estimates</em> of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. And, crucially, those estimates are generated from a sample of data. Now, the fact that our data <span class="math inline">\(\{y_i,x_i\}_{i=1}^N\)</span> are a sample from a larger population, means that there will be <em>sampling variation</em> in our estimates - exactly like in the case of the sample mean estimating the population average as mentioned above. One particular sample of data will generate one particular set of estimates <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>, whereas another sample of data will generate estimates which will in general be different - by <em>how much</em> those estimates differ across samples is the question in this chapter. In general, the more observations we have the greater the precision of our estimates, hence, the closer the estimates from different samples will lie together.</p>
 </div>
-<div id="violating" class="section level3">
+<div id="violating" class="section level3" number="6.6.2">
 <h3><span class="header-section-number">6.6.2</span> Violating the Assumptions of the CRM</h3>
 <p>It’s interesting to consider in which circumstances we might violate those assumptions. Let’s give an example for each of them:</p>
 <ol style="list-style-type: decimal">
@@ -473,7 +488,7 @@ As income increases, not all people increase their food consumption in an equal 
 </ol>
 </div>
 </div>
-<div id="se-theory" class="section level2">
+<div id="se-theory" class="section level2" number="6.7">
 <h2><span class="header-section-number">6.7</span> Standard Errors in Theory</h2>
 <p>The standard deviation of the OLS parameters is generally called <em>standard error</em>. As such, it is just the square root of the parameter’s variance.
 Under assumptions 1. through 4. above we can define the formula for the variance of our slope coefficient in the context of our single regressor model <a href="std-errors.html#eq:abline-5">(6.1)</a> as follows:</p>

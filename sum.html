@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Working With Data | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Working With Data | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="R-intro.html"/>
 <link rel="next" href="linreg.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,15 +276,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sum" class="section level1">
+<div id="sum" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Working With Data</h1>
 <p>In this chapter we will first learn some basic concepts that help summarizing data. Then, we will tackle a real-world task and read, clean, and summarize data from the web.</p>
-<div id="summary-statistics" class="section level2">
+<div id="summary-statistics" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Summary Statistics</h2>
 <p><code>R</code> has built in functions for a large number of summary statistics. For numeric variables, we can summarize data by looking at their center and spread, for example.</p>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="sum.html#cb232-1"></a><span class="co"># for the mpg dataset, we load:</span></span>
 <span id="cb232-2"><a href="sum.html#cb232-2"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
-<div id="central-tendency" class="section level3 unnumbered">
+<div id="central-tendency" class="section level3 unnumbered" number="">
 <h3>Central Tendency</h3>
 <p>Suppose we want to know the <em>mean</em> and <em>median</em> of all the values stored in the <code>data.frame</code> column <code>mpg$cty</code>:</p>
 <table>
@@ -294,7 +309,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="spread" class="section level3 unnumbered">
+<div id="spread" class="section level3 unnumbered" number="">
 <h3>Spread</h3>
 <p>How do the values in that column <em>vary</em>? How far <em>spread out</em> are they?</p>
 <table>
@@ -339,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="categorical" class="section level3 unnumbered">
+<div id="categorical" class="section level3 unnumbered" number="">
 <h3>Categorical</h3>
 <p>For categorical variables, counts and percentages can be used for summary.</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="sum.html#cb233-1"></a><span class="kw">table</span>(mpg<span class="op">$</span>drv)</span></code></pre></div>
@@ -352,7 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 0.4401709 0.4529915 0.1068376</code></pre>
 </div>
 </div>
-<div id="plotting" class="section level2">
+<div id="plotting" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Plotting</h2>
 <p>Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks will be to visualize it. Often, a proper visualization can illuminate features of the data that can inform further analysis.</p>
 <p>We will look at four methods of visualizing data by using the basic <code>plot</code> facilities built-in with <code>R</code>:</p>
@@ -362,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Boxplots</li>
 <li>Scatterplots</li>
 </ul>
-<div id="histograms" class="section level3">
+<div id="histograms" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Histograms</h3>
 <p>When visualizing a single numerical variable, a <strong>histogram</strong> is useful. It summarizes the <em>distribution</em> of values in a vector. In <code>R</code> you create one using the <code>hist()</code> function:</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="sum.html#cb237-1"></a><span class="kw">hist</span>(mpg<span class="op">$</span>cty)</span></code></pre></div>
@@ -377,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-77-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
 </div>
-<div id="barplots" class="section level3">
+<div id="barplots" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Barplots</h3>
 <p>Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.</p>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="sum.html#cb239-1"></a><span class="kw">barplot</span>(<span class="kw">table</span>(mpg<span class="op">$</span>drv))</span></code></pre></div>
@@ -390,7 +405,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb240-6"><a href="sum.html#cb240-6"></a>        <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-79-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="boxplots" class="section level3">
+<div id="boxplots" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Boxplots</h3>
 <p>To visualize the relationship between a numerical and categorical variable, once could use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="sum.html#cb241-1"></a><span class="kw">unique</span>(mpg<span class="op">$</span>drv)</span></code></pre></div>
@@ -413,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
 </div>
-<div id="scatterplots" class="section level3">
+<div id="scatterplots" class="section level3" number="2.2.4">
 <h3><span class="header-section-number">2.2.4</span> Scatterplots</h3>
 <p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="sum.html#cb246-1"></a><span class="kw">plot</span>(hwy <span class="op">~</span><span class="st"> </span>displ, <span class="dt">data =</span> mpg)</span></code></pre></div>
@@ -427,7 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb247-7"><a href="sum.html#cb247-7"></a>     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="ggplot" class="section level3">
+<div id="ggplot" class="section level3" number="2.2.5">
 <h3><span class="header-section-number">2.2.5</span> <code>ggplot</code></h3>
 <p>All of the above plots could also have been generated using the <code>ggplot</code> function from the already loaded <code>ggplot2</code> package. Which function you use is up to you, but sometimes a plot is easier to build in base R (like in the <code>boxplot</code> example maybe), sometimes the other way around.</p>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="sum.html#cb248-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>displ,<span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
@@ -443,7 +458,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you want to see <code>ggplot</code> in action, you could start with <a href="http://jcyhong.github.io/ggplot_demo.html">this</a> and then look at that <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">very nice tutorial</a>? It’s fun!</p>
 </div>
 </div>
-<div id="summarize-two" class="section level2">
+<div id="summarize-two" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Summarizing Two Variables</h2>
 <p>We often are interested in how two variables are related to each other. The core concepts here are <em>covariance</em> and <em>correlation</em>. Let’s generate some data on <code>x</code> and <code>y</code> and plot them against each other:</p>
 <div class="figure" style="text-align: center"><span id="fig:x-y-corr"></span>
@@ -476,7 +491,7 @@ r_{x,y} = \frac{cov(x,y)}{\sigma_x \sigma_y},
 <pre><code>## [1] 0.9142495</code></pre>
 <p>Now this is better. Given that the correlation has to lie in <span class="math inline">\([-1,1]\)</span>, a value of 0.91 is indicative of a rather strong positive relationship for the data in figure <a href="sum.html#fig:x-y-corr">2.1</a></p>
 <p>Note that <span class="math inline">\(x,y\)</span> being drawn from a <em>continuous distribution</em> (they are joint normally distributed) had no implication for covariance and correlation: We can compute those measures also for discrete random variables (like the throws of two dice, as you will see in one of our tutorials).</p>
-<div id="visually-estimating-sigma" class="section level3">
+<div id="visually-estimating-sigma" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Visually estimating <span class="math inline">\(\sigma\)</span></h3>
 <p>Sometimes it is useful to estimate the standard deviation of some data <em>without</em> the help of a computer (for example during an exam ;-) ). If <span class="math inline">\(x\)</span> is approximately normally distributed, 95% of its observations will lie within a range of <span class="math inline">\(\bar{x}\pm\)</span> two standard deviations of <span class="math inline">\(x\)</span>. That is to say, <em>four</em> standard deviations of <span class="math inline">\(x\)</span> cover 95% of its observations. Hence, a simple way to estimate the standard deviation for a variable is to look at the range of <span class="math inline">\(x\)</span>, and simply divide that number by four.</p>
 <div class="figure" style="text-align: center"><span id="fig:vis"></span>
@@ -488,7 +503,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 <p>This is illustrated in figure <a href="sum.html#fig:vis">2.2</a>. Here we see that <code>range(x)/4</code> gives 3.16 which compares favourably to the actual standard deviation 3.</p>
 </div>
 </div>
-<div id="the-tidyverse" class="section level2">
+<div id="the-tidyverse" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> The <code>tidyverse</code></h2>
 <p><a href="http://hadley.nz">Hadley Wickham</a> is the author of R packages <code>ggplot2</code> and also of <code>dplyr</code> (and also a myriad of others). With <code>ggplot2</code> he introduced what is called the <em>grammar of graphics</em> (hence, <code>gg</code>) to <code>R</code>. Grammar in the sense that there are <strong>nouns</strong> and <strong>verbs</strong> and a <strong>syntax</strong>, i.e. rules of how nouns and verbs are to be put together to construct an understandable sentence. He has extended the <em>grammar</em> idea into various other packages. The <code>tidyverse</code> package is a collection of those packages.</p>
 <p><code>tidy</code> data is data where:</p>
@@ -498,14 +513,14 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 <li>Each value is a cell</li>
 </ul>
 <p>Fair enough, you might say, that is a regular spreadsheet. And you are right! However, data comes to us <em>not</em> tidy most of the times, and we first need to clean, or <code>tidy</code>, it up. Once it’s in <code>tidy</code> format, we can use the tools in the <code>tidyverse</code> with great efficiency to analyse the data and stop worrying about which tool to use.</p>
-<div id="reading-.csv-data-in-the-tidy-way" class="section level3">
+<div id="reading-.csv-data-in-the-tidy-way" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Reading <code>.csv</code> data in the <em>tidy</em> way</h3>
 <p>We could have used the <code>read_csv()</code> function from the <code>readr</code> package to read our example dataset from the previous chapter. The <code>readr</code> function <code>read_csv()</code> has a number of advantages over the built-in <code>read.csv</code>. For example, it is much faster reading larger data. <a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html">It also uses the <code>tibble</code> package to read the data as a tibble.</a> <strong>A <code>tibble</code> is simply a data frame that prints with sanity.</strong> Notice in the output below that we are given additional information such as dimension and variable type.</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="sum.html#cb254-1"></a><span class="kw">library</span>(readr)  <span class="co"># you need `install.packages(&quot;readr&quot;)` once!</span></span>
 <span id="cb254-2"><a href="sum.html#cb254-2"></a>path =<span class="st"> </span><span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;ScPoEconometrics&quot;</span>,<span class="st">&quot;datasets&quot;</span>,<span class="st">&quot;example-data.csv&quot;</span>)</span>
 <span id="cb254-3"><a href="sum.html#cb254-3"></a>example_data_from_disk =<span class="st"> </span><span class="kw">read_csv</span>(path)</span></code></pre></div>
 </div>
-<div id="tidy-data.frames-are-tibbles" class="section level3">
+<div id="tidy-data.frames-are-tibbles" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Tidy <code>data.frames</code> are <code>tibbles</code></h3>
 <p>Let’s grab some data from the <code>ggplot2</code> package:</p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="sum.html#cb255-1"></a><span class="kw">data</span>(mpg,<span class="dt">package =</span> <span class="st">&quot;ggplot2&quot;</span>)  <span class="co"># load dataset `mpg` from `ggplot2` package</span></span>
@@ -630,7 +645,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 ## 5 volkswagen   new beetle  1999
 ## 6 volkswagen   new beetle  1999</code></pre>
 <p>All three approaches produce the same results. Which you use will be largely based on a given situation as well as your preference.</p>
-<div id="task-1" class="section level4">
+<div id="task-1-1" class="section level4" number="2.4.2.1">
 <h4><span class="header-section-number">2.4.2.1</span> Task 1</h4>
 <ol style="list-style-type: decimal">
 <li>Make sure to have the <code>mpg</code> dataset loaded by typing <code>data(mpg)</code> (and <code>library(ggplot2)</code> if you haven’t!). Use the <code>table</code> function to find out how many cars were built by <em>mercury</em>?</li>
@@ -639,7 +654,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 </ol>
 </div>
 </div>
-<div id="tidy-example-importing-non-tidy-excel-data" class="section level3">
+<div id="tidy-example-importing-non-tidy-excel-data" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Tidy Example: Importing Non-Tidy Excel Data</h3>
 <p>The data we will look at is from <a href="http://ec.europa.eu/eurostat/data/database">Eurostat</a> on demography and migration. You should download the data yourself (click on previous link, then drill down to <em>database by themes &gt; Population and social conditions &gt; Demograph and migration &gt; Population change - Demographic balance and crude rates at national level (demo_gind)</em>).</p>
 <p>Once downloaded, we can read the data with the function <code>read_excel</code> from the package <a href="http://readxl.tidyverse.org"><code>readxl</code></a>, again part of the <code>tidyverse</code> suite.</p>
@@ -686,7 +701,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 ## 10 German… 82217… 82002… 81802… 80222… 80327… 80523… 80767… 81197… 82175… 82521…
 ## # … with 49 more rows</code></pre>
 <p>This shows a <code>tibble</code>, which we encountered just above. The column names are <code>Country,2008,2009,...</code>, and the rows are numbered <code>1,2,3,...</code>. Notice, in particular, that <em>all</em> columns seem to be of type <code>&lt;chr&gt;</code>, i.e. characters - a string, not a number! We’ll have to fix that, as this is clearly numeric data.</p>
-<div id="tidyr" class="section level4">
+<div id="tidyr" class="section level4" number="2.4.3.1">
 <h4><span class="header-section-number">2.4.3.1</span> <code>tidyr</code></h4>
 <p>In the previous <code>tibble</code>, each year is a column name (like <code>2008</code>) instead of all years being collected in one column <code>year</code>. We really would like to have several rows for each Country, one row per year. We want to <code>gather()</code> all years into a new column to tidy this up - and here is how:</p>
 <ol style="list-style-type: decimal">
@@ -731,7 +746,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 ## # … with 580 more rows</code></pre>
 <p>Now you can see that column <code>counts</code> is indeed <code>int</code>, i.e. an integer number, and we are fine. The <code>Warning: NAs introduced by coercion</code> means that <code>R</code> converted some values to <code>NA</code>, because it couldn’t convert them into <code>numeric</code>. More below!</p>
 </div>
-<div id="dplyr" class="section level4">
+<div id="dplyr" class="section level4" number="2.4.3.2">
 <h4><span class="header-section-number">2.4.3.2</span> <code>dplyr</code></h4>
 <blockquote>
 <p>The <a href="http://r4ds.had.co.nz/transform.html">transform</a> chapter of Hadley Wickham’s book is a great place to read up more on using <code>dplyr</code>.</p>
@@ -764,7 +779,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 <span id="cb283-11"><a href="sum.html#cb283-11"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>millions,<span class="dt">color=</span>Country,<span class="dt">group=</span>Country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/gather-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="arrange-a-tibble" class="section level4 unnumbered">
+<div id="arrange-a-tibble" class="section level4 unnumbered" number="">
 <h4>Arrange a <code>tibble</code></h4>
 <ul>
 <li>What are the top/bottom 5 most populated areas?</li>
@@ -825,7 +840,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 ## 5 San Marino        33014.</code></pre>
 <p>That’s better!</p>
 </div>
-<div id="look-for-nas-in-a-tibble" class="section level4 unnumbered">
+<div id="look-for-nas-in-a-tibble" class="section level4 unnumbered" number="">
 <h4>Look for <code>NA</code>s in a <code>tibble</code></h4>
 <p>Sometimes data is <em>missing</em>, and <code>R</code> represents it with the special value <code>NA</code> (not available). It is good to know where in our dataset we are going to encounter any missing values, so the task here is: let’s produce a table that has three columns:</p>
 <ol style="list-style-type: decimal">
@@ -891,7 +906,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 </tbody>
 </table>
 </div>
-<div id="males-and-females" class="section level4 unnumbered">
+<div id="males-and-females" class="section level4 unnumbered" number="">
 <h4>Males and Females</h4>
 <p>Let’s look at the numbers by male and female population. They are in the same xls file, but at different cell ranges. Also, I just realised that the special character <code>:</code> indicates <em>missing</em> data. We can feed that to <code>read_excel</code> and that will spare us the need to convert data types afterwards. Let’s see:</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="sum.html#cb295-1"></a>females_raw =<span class="st"> </span><span class="kw">read_excel</span>(</span>
@@ -957,7 +972,7 @@ Figure 2.2: visual estimation on <span class="math inline">\(\sigma\)</span>. Th
 <span id="cb301-8"><a href="sum.html#cb301-8"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>sex)   <span class="co"># make two panels, splitting by groups `sex`</span></span></code></pre></div>
 <p><img src="ScPoEconometrics_files/figure-html/psexes-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="always-compare-to-germany--" class="section level4 unnumbered">
+<div id="always-compare-to-germany--" class="section level4 unnumbered" number="">
 <h4>Always Compare to Germany :-)</h4>
 <p>How do our three countries compare with respect to the biggest country in the EU in terms of population? What <em>fraction</em> of Germany does the French population make in any given year, for example?</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="sum.html#cb302-1"></a><span class="co"># remember that the pipe operator %&gt;% takes the </span></span>

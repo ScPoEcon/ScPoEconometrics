@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Linear Regression | Introduction to Econometrics with R</title>
   <meta name="description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Linear Regression | Introduction to Econometrics with R" />
   <meta property="og:type" content="book" />
@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="SciencesPo UG Econometrics online textbook. Almost no Maths." />
   
 
-<meta name="author" content="Florian Oswald, Jean-Marc Robin and Vincent Viers" />
+<meta name="author" content="Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="sum.html"/>
 <link rel="next" href="multiple-reg.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +52,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -74,18 +77,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +107,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -155,7 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
-<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="1" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="R-intro.html"><a href="R-intro.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
 <li class="chapter" data-level="1.2" data-path="R-intro.html"><a href="R-intro.html#starting-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> Starting R and RStudio</a></li>
 <li class="chapter" data-level="1.3" data-path="R-intro.html"><a href="R-intro.html#basic-calculations"><i class="fa fa-check"></i><b>1.3</b> Basic Calculations</a></li>
@@ -168,13 +171,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10" data-path="R-intro.html"><a href="R-intro.html#dataframes"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a></li>
 <li class="chapter" data-level="1.11" data-path="R-intro.html"><a href="R-intro.html#programming-basics"><i class="fa fa-check"></i><b>1.11</b> Programming Basics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a><ul>
+<li class="chapter" data-level="2" data-path="sum.html"><a href="sum.html"><i class="fa fa-check"></i><b>2</b> Working With Data</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sum.html"><a href="sum.html#summary-statistics"><i class="fa fa-check"></i><b>2.1</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.2" data-path="sum.html"><a href="sum.html#plotting"><i class="fa fa-check"></i><b>2.2</b> Plotting</a></li>
 <li class="chapter" data-level="2.3" data-path="sum.html"><a href="sum.html#summarize-two"><i class="fa fa-check"></i><b>2.3</b> Summarizing Two Variables</a></li>
 <li class="chapter" data-level="2.4" data-path="sum.html"><a href="sum.html#the-tidyverse"><i class="fa fa-check"></i><b>2.4</b> The <code>tidyverse</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="3" data-path="linreg.html"><a href="linreg.html"><i class="fa fa-check"></i><b>3</b> Linear Regression</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="linreg.html"><a href="linreg.html#how-are-x-and-y-related"><i class="fa fa-check"></i><b>3.1</b> How are <code>x</code> and <code>y</code> related?</a></li>
 <li class="chapter" data-level="3.2" data-path="linreg.html"><a href="linreg.html#OLS"><i class="fa fa-check"></i><b>3.2</b> Ordinary Least Squares (OLS) Estimator</a></li>
 <li class="chapter" data-level="3.3" data-path="linreg.html"><a href="linreg.html#pred-resids"><i class="fa fa-check"></i><b>3.3</b> Predictions and Residuals</a></li>
@@ -185,20 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="linreg.html"><a href="linreg.html#scaling-regressions"><i class="fa fa-check"></i><b>3.8</b> Scaling Regressions</a></li>
 <li class="chapter" data-level="3.9" data-path="linreg.html"><a href="linreg.html#a-particular-rescaling-the-log-transform"><i class="fa fa-check"></i><b>3.9</b> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#ceteris"><i class="fa fa-check"></i><b>4.1</b> All Else Equal</a></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#multicol"><i class="fa fa-check"></i><b>4.2</b> Multicolinearity</a></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#log-wage-equation"><i class="fa fa-check"></i><b>4.3</b> Log Wage Equation</a></li>
 <li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#make-preds"><i class="fa fa-check"></i><b>4.4</b> How To Make Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a><ul>
+<li class="chapter" data-level="5" data-path="categorical-vars.html"><a href="categorical-vars.html"><i class="fa fa-check"></i><b>5</b> Categorial Variables</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="categorical-vars.html"><a href="categorical-vars.html#the-binary-regressor-case"><i class="fa fa-check"></i><b>5.1</b> The Binary Regressor Case</a></li>
 <li class="chapter" data-level="5.2" data-path="categorical-vars.html"><a href="categorical-vars.html#dummy-and-continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Dummy and Continuous Variables</a></li>
 <li class="chapter" data-level="5.3" data-path="categorical-vars.html"><a href="categorical-vars.html#categorical-variables-in-r-factor"><i class="fa fa-check"></i><b>5.3</b> Categorical Variables in <code>R</code>: <code>factor</code></a></li>
 <li class="chapter" data-level="5.4" data-path="categorical-vars.html"><a href="categorical-vars.html#interactions"><i class="fa fa-check"></i><b>5.4</b> Interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="categorical-vars.html"><a href="categorical-vars.html#unobserved-individual-heterogeneity"><i class="fa fa-check"></i><b>5.5</b> (Unobserved) Individual Heterogeneity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a><ul>
+<li class="chapter" data-level="6" data-path="std-errors.html"><a href="std-errors.html"><i class="fa fa-check"></i><b>6</b> Regression Inference</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="std-errors.html"><a href="std-errors.html#sampling"><i class="fa fa-check"></i><b>6.1</b> Sampling</a></li>
 <li class="chapter" data-level="6.2" data-path="std-errors.html"><a href="std-errors.html#taking-eleven-samples-from-the-population"><i class="fa fa-check"></i><b>6.2</b> Taking Eleven Samples From The Population</a></li>
 <li class="chapter" data-level="6.3" data-path="std-errors.html"><a href="std-errors.html#handover-to-moderndive"><i class="fa fa-check"></i><b>6.3</b> Handover to <code>Moderndive</code></a></li>
@@ -207,36 +215,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="std-errors.html"><a href="std-errors.html#class-reg"><i class="fa fa-check"></i><b>6.6</b> The Classical Regression Model (CRM)</a></li>
 <li class="chapter" data-level="6.7" data-path="std-errors.html"><a href="std-errors.html#se-theory"><i class="fa fa-check"></i><b>6.7</b> Standard Errors in Theory</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a><ul>
+<li class="chapter" data-level="7" data-path="causality.html"><a href="causality.html"><i class="fa fa-check"></i><b>7</b> Causality</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="causality.html"><a href="causality.html#dags"><i class="fa fa-check"></i><b>7.1</b> Directed Acyclical Graphs (DAG)</a></li>
 <li class="chapter" data-level="7.2" data-path="causality.html"><a href="causality.html#smoking-in-a-dag"><i class="fa fa-check"></i><b>7.2</b> Smoking in a DAG</a></li>
 <li class="chapter" data-level="7.3" data-path="causality.html"><a href="causality.html#rct"><i class="fa fa-check"></i><b>7.3</b> Randomized Control Trials (RCT) Primer</a></li>
 <li class="chapter" data-level="7.4" data-path="causality.html"><a href="causality.html#rubin"><i class="fa fa-check"></i><b>7.4</b> The Potential Outcomes Model</a></li>
 <li class="chapter" data-level="7.5" data-path="causality.html"><a href="causality.html#omitted-variable-bias-and-dags"><i class="fa fa-check"></i><b>7.5</b> Omitted Variable Bias and DAGs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a><ul>
+<li class="chapter" data-level="8" data-path="STAR.html"><a href="STAR.html"><i class="fa fa-check"></i><b>8</b> STAR Experiment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="STAR.html"><a href="STAR.html#the-star-experiment"><i class="fa fa-check"></i><b>8.1</b> The STAR Experiment</a></li>
 <li class="chapter" data-level="8.2" data-path="STAR.html"><a href="STAR.html#po-as-regression"><i class="fa fa-check"></i><b>8.2</b> PO as Regression</a></li>
 <li class="chapter" data-level="8.3" data-path="STAR.html"><a href="STAR.html#implementing-star"><i class="fa fa-check"></i><b>8.3</b> Implementing STAR</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a><ul>
+<li class="chapter" data-level="9" data-path="RDD.html"><a href="RDD.html"><i class="fa fa-check"></i><b>9</b> Regression Discontinuity Design</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="RDD.html"><a href="RDD.html#rdd-setup"><i class="fa fa-check"></i><b>9.1</b> RDD Setup</a></li>
 <li class="chapter" data-level="9.2" data-path="RDD.html"><a href="RDD.html#clicking-on-heavens-door"><i class="fa fa-check"></i><b>9.2</b> Clicking on Heaven’s Door</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a><ul>
+<li class="chapter" data-level="10" data-path="IV.html"><a href="IV.html"><i class="fa fa-check"></i><b>10</b> Instrumental Variables (IV)</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="IV.html"><a href="IV.html#john-snow-and-the-london-cholera-epidemic"><i class="fa fa-check"></i><b>10.1</b> John Snow and the London Cholera Epidemic</a></li>
 <li class="chapter" data-level="10.2" data-path="IV.html"><a href="IV.html#defining-the-iv-estimator"><i class="fa fa-check"></i><b>10.2</b> Defining the IV Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a><ul>
+<li class="chapter" data-level="11" data-path="iv-applications.html"><a href="iv-applications.html"><i class="fa fa-check"></i><b>11</b> IV Applications</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="iv-applications.html"><a href="iv-applications.html#ability-bias"><i class="fa fa-check"></i><b>11.1</b> Ability Bias</a></li>
 <li class="chapter" data-level="11.2" data-path="iv-applications.html"><a href="iv-applications.html#birthdate-is-as-good-as-random"><i class="fa fa-check"></i><b>11.2</b> Birthdate is as good as Random</a></li>
 <li class="chapter" data-level="11.3" data-path="iv-applications.html"><a href="iv-applications.html#IV-mech"><i class="fa fa-check"></i><b>11.3</b> IV Mechanics</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a><ul>
+<li class="chapter" data-level="12" data-path="panel-data.html"><a href="panel-data.html"><i class="fa fa-check"></i><b>12</b> Panel Data</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="panel-data.html"><a href="panel-data.html#crime-rate-vs-probability-of-arrest"><i class="fa fa-check"></i><b>12.1</b> Crime Rate vs Probability of Arrest</a></li>
 <li class="chapter" data-level="12.2" data-path="panel-data.html"><a href="panel-data.html#panel-data-estimation-with-r"><i class="fa fa-check"></i><b>12.2</b> Panel Data Estimation with <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a><ul>
+<li class="chapter" data-level="13" data-path="binary.html"><a href="binary.html"><i class="fa fa-check"></i><b>13</b> Binary Outcomes</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="binary.html"><a href="binary.html#the-linear-probability-model"><i class="fa fa-check"></i><b>13.1</b> The Linear Probability Model</a></li>
 <li class="chapter" data-level="13.2" data-path="binary.html"><a href="binary.html#nonlinear-binary-response-models"><i class="fa fa-check"></i><b>13.2</b> Nonlinear Binary Response Models</a></li>
 </ul></li>
@@ -261,12 +276,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linreg" class="section level1">
+<div id="linreg" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Linear Regression</h1>
 <p>In this chapter we will learn an additional way how one can represent the relationship between <em>outcome</em>, or <em>dependent</em> variable variable <span class="math inline">\(y\)</span> and an <em>explanatory</em> or <em>independent</em> variable <span class="math inline">\(x\)</span>. We will refer throughout to the graphical representation of a collection of independent observations on <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, i.e., a <em>dataset</em>.</p>
-<div id="how-are-x-and-y-related" class="section level2">
+<div id="how-are-x-and-y-related" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> How are <code>x</code> and <code>y</code> related?</h2>
-<div id="data-on-cars" class="section level3">
+<div id="data-on-cars" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Data on Cars</h3>
 <p>We will look at the built-in <code>cars</code> dataset. Let’s get a view of this by just typing <code>View(cars)</code> in Rstudio. You can see something like this:</p>
 <pre><code>##   speed dist
@@ -285,7 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 50  2</code></pre>
 <p>to find out that we have 50 rows and 2 columns. A central question that we want to ask now is the following:</p>
 </div>
-<div id="how-are-speed-and-dist-related" class="section level3">
+<div id="how-are-speed-and-dist-related" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> How are <code>speed</code> and <code>dist</code> related?</h3>
 <p>The simplest way to start is to plot the data. Remembering that we view each row of a data.frame as an observation, we could just label one axis of a graph <code>speed</code>, and the other one <code>dist</code>, and go through our table above row by row. We just have to read off the x/y coordinates and mark them in the graph. In <code>R</code>:</p>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="linreg.html#cb308-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</span>
@@ -321,7 +336,7 @@ z = b_0 + b_1 x \tag{3.1}
 \end{equation}\]</span></p>
 <p>Here <span class="math inline">\(b_0\)</span> represents the value of the intercept (i.e. <span class="math inline">\(z\)</span> when <span class="math inline">\(x=0\)</span>), and <span class="math inline">\(b_1\)</span> is the value of the slope. The question for us is now: How to choose the number <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> such that the result is the <strong>good</strong> line?</p>
 </div>
-<div id="choosing-the-best-line" class="section level3">
+<div id="choosing-the-best-line" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Choosing the Best Line</h3>
 <p>In order to be able to reason about good or bad line, we need to denote the <em>output</em> of equation <a href="linreg.html#eq:bline">(3.1)</a>. We call the value <span class="math inline">\(\hat{y}_i\)</span> the <em>predicted value</em> for obseration <span class="math inline">\(i\)</span>, after having chosen some particular values <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>:</p>
 <p><span class="math display" id="eq:abline-pred">\[\begin{equation}
@@ -437,7 +452,7 @@ Figure 3.2: The best line and its SQUARED errors
 <span id="cb311-3"><a href="linreg.html#cb311-3"></a><span class="kw">aboutApp</span>(<span class="st">&quot;SSR_cone&quot;</span>) </span></code></pre></div>
 </div>
 </div>
-<div id="OLS" class="section level2">
+<div id="OLS" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Ordinary Least Squares (OLS) Estimator</h2>
 <p>The method to compute (or <em>estimate</em>) <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> we illustrated above is called <em>Ordinary Least Squares</em>, or OLS. <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> are therefore also often called the <em>OLS coefficients</em>. By solving problem <a href="linreg.html#eq:ols-min">(3.4)</a> one can derive an explicit formula for them:</p>
 <p><span class="math display" id="eq:beta1hat">\[\begin{equation}
@@ -459,7 +474,7 @@ b_1 &amp;= \frac{cov(x,y)}{var(x)}\\
     &amp;= r\frac{s_y}{s_x} \tag{3.7}
 \end{align}\]</span>
 In other words, the slope coefficient is equal to the correlation coefficient <span class="math inline">\(r\)</span> times the ratio of standard deviations of <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p>
-<div id="linear-regression-without-regressor" class="section level3">
+<div id="linear-regression-without-regressor" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Linear Regression without Regressor</h3>
 <p>There are several important special cases for the linear regression introduced above. Let’s start with the most obvious one: What is the meaning of running a regression <em>without any regressor</em>, i.e. without a <span class="math inline">\(x\)</span>? Our line becomes very simple. Instead of <a href="linreg.html#eq:bline">(3.1)</a>, we get</p>
 <p><span class="math display" id="eq:b0line">\[\begin{equation}
@@ -479,7 +494,7 @@ Least Squares <strong>without regressor</strong> <span class="math inline"><span
 </p>
 </div>
 </div>
-<div id="regression-without-an-intercept" class="section level3">
+<div id="regression-without-an-intercept" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Regression without an Intercept</h3>
 <p>We follow the same logic here, just that we miss another bit from our initial equation and the minimisation problem in <a href="linreg.html#eq:ols-min">(3.4)</a> now becomes:</p>
 <p><span class="math display" id="eq:b1line">\[\begin{align}
@@ -495,7 +510,7 @@ Least Squares <strong>without intercept</strong> (i.e. with <span class="math i
 <p>In this case we only get to choose the slope <span class="math inline">\(b_1\)</span> of this anchored line.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> You should now try out both of those restrictions on our linear model by spending some time with</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="linreg.html#cb312-1"></a><span class="kw">launchApp</span>(<span class="st">&quot;reg_constrained&quot;</span>)</span></code></pre></div>
 </div>
-<div id="centering-a-regression" class="section level3">
+<div id="centering-a-regression" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Centering A Regression</h3>
 <p>By <em>centering</em> or <em>demeaning</em> a regression, we mean to substract from both <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> their respective averages to obtain <span class="math inline">\(\tilde{y}_i = y_i - \bar{y}\)</span> and <span class="math inline">\(\tilde{x}_i = x_i - \bar{x}\)</span>. We then run a regression <em>without intercept</em> as above. That is, we use <span class="math inline">\(\tilde{x}_i,\tilde{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.9)</a> to obtain our slope estimate <span class="math inline">\(b_1\)</span>:</p>
 <p><span class="math display" id="eq:bline-centered">\[\begin{align}
@@ -514,7 +529,7 @@ Adding a constant to a regression produces the same result as centering all vari
 To get a better feel for what is going on here, you can try this out now by yourself by typing:</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="linreg.html#cb313-1"></a><span class="kw">launchApp</span>(<span class="st">&quot;demeaned_reg&quot;</span>)</span></code></pre></div>
 </div>
-<div id="reg-standard" class="section level3">
+<div id="reg-standard" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Standardizing A Regression</h3>
 <p><em>Standardizing</em> a variable <span class="math inline">\(z\)</span> means to demean as above, but in addition to divide the demeaned value by its own standard deviation. Similarly to what we did above for <em>centering</em>, we define transformed variables <span class="math inline">\(\breve{y}_i = \frac{y_i-\bar{y}}{\sigma_y}\)</span> and <span class="math inline">\(\breve{x}_i = \frac{x_i-\bar{x}}{\sigma_x}\)</span> where <span class="math inline">\(\sigma_z\)</span> is the standard deviation of variable <span class="math inline">\(z\)</span>. From here on, you should by now be used to what comes next! As above, we use <span class="math inline">\(\breve{x}_i,\breve{y}_i\)</span> instead of <span class="math inline">\(x_i,y_i\)</span> in <a href="linreg.html#eq:b1line">(3.9)</a> to this time obtain:</p>
 <p><span class="math display" id="eq:bline-standardized">\[\begin{align}
@@ -533,7 +548,7 @@ And also for this case we have a practical application for you. Just type this a
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="linreg.html#cb314-1"></a><span class="kw">launchApp</span>(<span class="st">&quot;reg_standardized&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="pred-resids" class="section level2">
+<div id="pred-resids" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Predictions and Residuals</h2>
 <p>Now we want to ask how our residuals <span class="math inline">\(e_i\)</span> relate to the prediction <span class="math inline">\(\hat{y_i}\)</span>. Let us first think about the average of all predictions <span class="math inline">\(\hat{y_i}\)</span>, i.e. the number <span class="math inline">\(\frac{1}{N} \sum_{i=1}^N \hat{y_i}\)</span>. Let’s just take <a href="linreg.html#eq:abline-pred">(3.2)</a> and plug this into this average, so that we get</p>
 <p><span class="math display">\[\begin{align}
@@ -585,7 +600,7 @@ Cov(\hat{y},e) &amp;=\frac{1}{N} \sum_{i=1}^N (\hat{y}_i-\bar{y})(e_i-\bar{e}) =
 <pre><code>## [1] TRUE</code></pre>
 <p>So indeed we can confirm this result with our test dataset. Great!</p>
 </div>
-<div id="correlation-covariance-and-linearity" class="section level2">
+<div id="correlation-covariance-and-linearity" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Correlation, Covariance and Linearity</h2>
 <p>It is important to keep in mind that Correlation and Covariance relate to a <em>linear</em> relationship between <code>x</code> and <code>y</code>. Given how the regression line is estimated by OLS (see just above), you can see that the regression line inherits this property from the Covariance.
 A famous exercise by Francis Anscombe (1973) illustrates this by constructing 4 different datasets which all have identical <strong>linear</strong> statistics: mean, variance, correlation and regression line <em>are identical</em>. However, the usefulness of the statistics to describe the relationship in the data is not clear.</p>
@@ -600,7 +615,7 @@ Always <strong>visually inspect</strong> your data, and don’t rely exclusively
 The mission of Anscombe has been continued recently. As a result of this we can have a look at the <code>datasauRus</code> package, which pursues Anscbombe’s idea through a multitude of funny data sets, all with the same linear statistics. Don’t just compute the covariance, or you might actually end up looking at a Dinosaur! What? Type this to find out:</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="linreg.html#cb322-1"></a><span class="kw">launchApp</span>(<span class="st">&quot;datasaurus&quot;</span>)</span>
 <span id="cb322-2"><a href="linreg.html#cb322-2"></a><span class="kw">aboutApp</span>(<span class="st">&quot;datasaurus&quot;</span>)</span></code></pre></div>
-<div id="non-linear-relationships-in-data" class="section level3">
+<div id="non-linear-relationships-in-data" class="section level3" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Non-Linear Relationships in Data</h3>
 <p>Suppose our data now looks like this:</p>
 <p><img src="ScPoEconometrics_files/figure-html/non-line-cars-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -624,7 +639,7 @@ Figure 3.4: Better line with non-linear data!
 </div>
 </div>
 </div>
-<div id="analysing-vary" class="section level2">
+<div id="analysing-vary" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Analysing <span class="math inline">\(Var(y)\)</span></h2>
 <p>Analysis of Variance (ANOVA) refers to a method to decompose variation in one variable as a function of several others. We can use this idea on our outcome <span class="math inline">\(y\)</span>. Suppose we wanted to know the variance of <span class="math inline">\(y\)</span>, keeping in mind that, by definition, <span class="math inline">\(y_i = \hat{y}_i + e_i\)</span>. We would write</p>
 <p><span class="math display" id="eq:anova">\[\begin{align}
@@ -646,7 +661,7 @@ The total variation in outcome <span class="math inline"><span class="math inlin
 </p>
 </div>
 </div>
-<div id="assessing-the-goodness-of-fit" class="section level2">
+<div id="assessing-the-goodness-of-fit" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Assessing the <em>Goodness of Fit</em></h2>
 <p>In our setup, there exists a convenient measure for how good a particular statistical model fits the data. It is called <span class="math inline">\(R^2\)</span> (<em>R squared</em>), also called the <em>coefficient of determination</em>. We make use of the just introduced decomposition of variance, and write the formula as</p>
 <p><span class="math display" id="eq:Rsquared">\[\begin{equation}
@@ -654,7 +669,7 @@ R^2 = \frac{\text{variance explained}}{\text{total variance}} = \frac{SSE}{SST} 
 \end{equation}\]</span></p>
 <p>It is easy to see that a <em>good fit</em> is one where the sum of <em>explained</em> squares (SSE) is large relativ to the total variation (SST). In such a case, we observe an <span class="math inline">\(R^2\)</span> close to one. In the opposite case, we will see an <span class="math inline">\(R^2\)</span> close to zero. Notice that a small <span class="math inline">\(R^2\)</span> does not imply that the model is useless, just that it explains a small fraction of the observed variation.</p>
 </div>
-<div id="an-example-a-log-wage-equation" class="section level2">
+<div id="an-example-a-log-wage-equation" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> An Example: A Log Wage Equation</h2>
 <p>Let’s consider the following example concerning wage data collected in the 1976 Current Population Survey in the USA.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> We want to investigate the relationship between average hourly earnings, and years of education. Let’s start with a plot:</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="linreg.html#cb323-1"></a><span class="kw">data</span>(<span class="st">&quot;wage1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;wooldridge&quot;</span>)   <span class="co"># load data</span></span>
@@ -730,7 +745,7 @@ Figure 3.6: Wages vs Education from the wooldridge dataset wage1, with regressio
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 3.378 on 524 degrees of freedom
-## Multiple R-squared:  0.1648,	Adjusted R-squared:  0.1632 
+## Multiple R-squared:  0.1648, Adjusted R-squared:  0.1632 
 ## F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The main interpretation of this table can be read off the column labelled <em>Estimate</em>, reporting estimated coefficients <span class="math inline">\(b_0,b_1\)</span>:</p>
 <ol style="list-style-type: decimal">
@@ -739,7 +754,7 @@ Figure 3.6: Wages vs Education from the wooldridge dataset wage1, with regressio
 <li>For example, for 15 years of education, we predict roughly -0.9 + 0.541 * 15 = 7.215 dollars/h.</li>
 </ol>
 </div>
-<div id="scaling-regressions" class="section level2">
+<div id="scaling-regressions" class="section level2" number="3.8">
 <h2><span class="header-section-number">3.8</span> Scaling Regressions</h2>
 <div class="tip">
 <p>
@@ -943,7 +958,7 @@ b_0^* &amp;= \bar{y} -             b_1^* \frac{1}{N}\sum_{i=1}^N c \cdot x_i \\
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="linreg.html#cb328-1"></a><span class="kw">library</span>(ScPoApps)</span>
 <span id="cb328-2"><a href="linreg.html#cb328-2"></a><span class="kw">launchApp</span>(<span class="st">&#39;Rescale&#39;</span>)</span></code></pre></div>
 </div>
-<div id="a-particular-rescaling-the-log-transform" class="section level2">
+<div id="a-particular-rescaling-the-log-transform" class="section level2" number="3.9">
 <h2><span class="header-section-number">3.9</span> A Particular Rescaling: The <span class="math inline">\(\log\)</span> Transform</h2>
 <p>The natural logarithm is a particularly important transformation that we often encounter in economics. Why would we transform a variable with the <span class="math inline">\(\log\)</span> function to start with?</p>
 <ol style="list-style-type: decimal">
@@ -1213,7 +1228,7 @@ Figure 3.7: The effect of log-transforming highly skewed data.
 </div>
 <p>In the left panel of figure <a href="linreg.html#fig:ceo-sal">3.7</a> you clearly see that both <code>sales</code> and <code>salary</code> have very long right tails, as indicated by the rug plots on either axis. As a consequence, the points are clustered in the bottom left corner of the plot. We suspect a positive relationship, but it’s hard to see. Contrast this with the right panel, where both axis have been log transformed: the points are nicely spread out, clearly spelling out a positive correlation. Let’s see what this gives in a regression model!</p>
 <p><span class="math display">\[
-\operatorname{logsalary} = 4.82 + 0.26(\operatorname{logsales}) + \epsilon
+\operatorname{\widehat{logsalary}} = 4.82 + 0.26(\operatorname{logsales})
 \]</span></p>
 <p>Refering back at table <a href="linreg.html#tab:loglog">3.1</a>, here we have a log-log specification. Therefore we interpret this regression as follows:</p>
 <div class="tip">
